@@ -90,9 +90,12 @@ namespace gpudb
          *                         type columns; makes the column available for
          *                         GPU queries.
          *                                 <li> gpudb::create_type_text_search:
-         *                         Valid only for 'string' columns. Enables
-         *                         full text search for string columns. Can be
-         *                         set independently of @a data and @a
+         *                         Valid only for select 'string' columns.
+         *                         Enables full text search--see <a
+         *                         href="../../../concepts/full_text_search/"
+         *                         target="_top">Full Text Search</a> for
+         *                         details and applicable string column types.
+         *                         Can be set independently of @a data and @a
          *                         store_only.
          *                                 <li> gpudb::create_type_store_only:
          *                         Persist the column value but do not make it

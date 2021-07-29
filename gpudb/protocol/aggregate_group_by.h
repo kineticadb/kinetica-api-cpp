@@ -251,24 +251,6 @@ namespace gpudb
          *                              <li> gpudb::aggregate_group_by_view_id:
          *                      ID of view of which the result table will be a
          *                      member.  The default value is ''.
-         *                              <li>
-         *                      gpudb::aggregate_group_by_materialize_on_gpu:
-         *                      No longer used.  See <a
-         *                      href="../../../rm/concepts/"
-         *                      target="_top">Resource Management Concepts</a>
-         *                      for information about how resources are
-         *                      managed, <a href="../../../rm/concepts/"
-         *                      target="_top">Tier Strategy Concepts</a> for
-         *                      how resources are targeted for VRAM, and <a
-         *                      href="../../../rm/usage/#tier-strategies"
-         *                      target="_top">Tier Strategy Usage</a> for how
-         *                      to specify a table's priority in VRAM.
-         *                      <ul>
-         *                              <li> gpudb::aggregate_group_by_true
-         *                              <li> gpudb::aggregate_group_by_false
-         *                      </ul>
-         *                      The default value is
-         *                      gpudb::aggregate_group_by_false.
          *                              <li> gpudb::aggregate_group_by_pivot:
          *                      pivot column
          *                              <li>
@@ -468,24 +450,6 @@ namespace gpudb
          *                              <li> gpudb::aggregate_group_by_view_id:
          *                      ID of view of which the result table will be a
          *                      member.  The default value is ''.
-         *                              <li>
-         *                      gpudb::aggregate_group_by_materialize_on_gpu:
-         *                      No longer used.  See <a
-         *                      href="../../../rm/concepts/"
-         *                      target="_top">Resource Management Concepts</a>
-         *                      for information about how resources are
-         *                      managed, <a href="../../../rm/concepts/"
-         *                      target="_top">Tier Strategy Concepts</a> for
-         *                      how resources are targeted for VRAM, and <a
-         *                      href="../../../rm/usage/#tier-strategies"
-         *                      target="_top">Tier Strategy Usage</a> for how
-         *                      to specify a table's priority in VRAM.
-         *                      <ul>
-         *                              <li> gpudb::aggregate_group_by_true
-         *                              <li> gpudb::aggregate_group_by_false
-         *                      </ul>
-         *                      The default value is
-         *                      gpudb::aggregate_group_by_false.
          *                              <li> gpudb::aggregate_group_by_pivot:
          *                      pivot column
          *                              <li>

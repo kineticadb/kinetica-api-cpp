@@ -137,20 +137,18 @@ namespace gpudb
          *                      from the first run ID specified in the list
          *                      that includes that table will be used.  The
          *                      default value is ''.
-         *                              <li>
-         *                      gpudb::execute_proc_kifs_input_dirs: A
-         *                      comma-delimited list of KiFS directories whose
-         *                      local files will be made directly accessible to
-         *                      the proc through the API. (All KiFS files,
-         *                      local or not, are also accessible through the
-         *                      file system below the KiFS mount point.) Each
-         *                      name specified must the name of an existing
-         *                      KiFS directory.  The default value is ''.
          *                              <li> gpudb::execute_proc_run_tag: A
          *                      string that, if not empty, can be used in
          *                      subsequent calls to /show/proc/status or
          *                      /kill/proc to identify the proc instance.  The
          *                      default value is ''.
+         *                              <li>
+         *                      gpudb::execute_proc_max_output_lines: The
+         *                      maximum number of lines of output from stdout
+         *                      and stderr to return via /show/proc/status. If
+         *                      the number of lines output exceeds the maximum,
+         *                      earlier lines are discarded.  The default value
+         *                      is '100'.
          *                      </ul>
          * 
          */

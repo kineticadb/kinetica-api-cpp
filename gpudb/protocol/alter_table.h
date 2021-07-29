@@ -274,12 +274,22 @@ namespace gpudb
          *                     target="_top">tier strategy</a> for the table
          *                     and its columns to the one specified in @a
          *                     value, replacing the existing tier strategy in
-         *                     its entirety. See <a
-         *                     href="../../../rm/concepts/#tier-strategies"
-         *                     target="_top">tier strategy usage</a> for format
-         *                     and <a href="../../../rm/usage/#tier-strategies"
-         *                     target="_top">tier strategy examples</a> for
-         *                     examples.
+         *                     its entirety.
+         *                             <li>
+         *                     gpudb::alter_table_cancel_datasource_subscription:
+         *                     Permanently unsubscribe a data source that is
+         *                     loading continuously as a stream. The data
+         *                     source can be kafka / S3 / Azure.
+         *                             <li>
+         *                     gpudb::alter_table_pause_datasource_subscription:
+         *                     Temporarily unsubscribe a data source that is
+         *                     loading continuously as a stream. The data
+         *                     source can be kafka / S3 / Azure.
+         *                             <li>
+         *                     gpudb::alter_table_resume_datasource_subscription:
+         *                     Resubscribe to a paused data source
+         *                     subscription. The data source can be kafka / S3
+         *                     / Azure.
          *                     </ul>
          * @param[in] value_  The value of the modification, depending on @a
          *                    action.  For example, if @a action is @a
@@ -376,14 +386,7 @@ namespace gpudb
          *                      target="_top">tier strategy</a> for the table
          *                      and its columns when @a action is @a
          *                      set_strategy_definition, replacing the existing
-         *                      tier strategy in its entirety. See <a
-         *                      href="../../../rm/concepts/#tier-strategies"
-         *                      target="_top">tier strategy usage</a> for
-         *                      format and <a
-         *                      href="../../../rm/usage/#tier-strategies"
-         *                      target="_top">tier strategy examples</a> for
-         *                      examples.  This option will be ignored if @a
-         *                      value is also specified.
+         *                      tier strategy in its entirety.
          *                              <li> gpudb::alter_table_index_type:
          *                      Type of index to create, when @a action is @a
          *                      create_index, or to delete, when @a action is

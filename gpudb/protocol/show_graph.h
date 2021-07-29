@@ -131,7 +131,9 @@ namespace gpudb
             directed(std::vector<bool>()),
             numNodes(std::vector<int64_t>()),
             numEdges(std::vector<int64_t>()),
+            numBytes(std::vector<int64_t>()),
             isPersisted(std::vector<bool>()),
+            isPartitioned(std::vector<bool>()),
             isSyncDb(std::vector<bool>()),
             hasInsertTableMonitor(std::vector<bool>()),
             originalRequest(std::vector<std::string>()),
@@ -147,7 +149,9 @@ namespace gpudb
         std::vector<bool> directed;
         std::vector<int64_t> numNodes;
         std::vector<int64_t> numEdges;
+        std::vector<int64_t> numBytes;
         std::vector<bool> isPersisted;
+        std::vector<bool> isPartitioned;
         std::vector<bool> isSyncDb;
         std::vector<bool> hasInsertTableMonitor;
         std::vector<std::string> originalRequest;
@@ -169,7 +173,9 @@ namespace avro
             ::avro::encode(e, v.directed);
             ::avro::encode(e, v.numNodes);
             ::avro::encode(e, v.numEdges);
+            ::avro::encode(e, v.numBytes);
             ::avro::encode(e, v.isPersisted);
+            ::avro::encode(e, v.isPartitioned);
             ::avro::encode(e, v.isSyncDb);
             ::avro::encode(e, v.hasInsertTableMonitor);
             ::avro::encode(e, v.originalRequest);
@@ -219,22 +225,30 @@ namespace avro
                             break;
 
                         case 8:
-                            ::avro::decode(d, v.isPersisted);
+                            ::avro::decode(d, v.numBytes);
                             break;
 
                         case 9:
-                            ::avro::decode(d, v.isSyncDb);
+                            ::avro::decode(d, v.isPersisted);
                             break;
 
                         case 10:
-                            ::avro::decode(d, v.hasInsertTableMonitor);
+                            ::avro::decode(d, v.isPartitioned);
                             break;
 
                         case 11:
-                            ::avro::decode(d, v.originalRequest);
+                            ::avro::decode(d, v.isSyncDb);
                             break;
 
                         case 12:
+                            ::avro::decode(d, v.hasInsertTableMonitor);
+                            break;
+
+                        case 13:
+                            ::avro::decode(d, v.originalRequest);
+                            break;
+
+                        case 14:
                             ::avro::decode(d, v.info);
                             break;
 
@@ -253,7 +267,9 @@ namespace avro
                 ::avro::decode(d, v.directed);
                 ::avro::decode(d, v.numNodes);
                 ::avro::decode(d, v.numEdges);
+                ::avro::decode(d, v.numBytes);
                 ::avro::decode(d, v.isPersisted);
+                ::avro::decode(d, v.isPartitioned);
                 ::avro::decode(d, v.isSyncDb);
                 ::avro::decode(d, v.hasInsertTableMonitor);
                 ::avro::decode(d, v.originalRequest);

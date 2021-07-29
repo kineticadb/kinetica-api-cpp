@@ -1124,6 +1124,12 @@ namespace gpudb {
             {
                 throw GPUdbException("Insufficient credentials");
             }
+            else if ((httpResponse.getResponseCode() >= 300) &&
+                     (httpResponse.getResponseCode() != 400)) // GPUdb errors returned as 400
+            {
+                char buffer[100];
+                throw GPUdbException(std::to_string(httpResponse.getResponseCode()) + ": " + httpResponse.getResponseMessage());
+            }
 
             avro::decode(response, httpResponse.getResponseBody());
         }

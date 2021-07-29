@@ -22,11 +22,11 @@ namespace gpudb
      * <a href="../../../graph_solver/network_graph_solver/"
      * target="_top">Network Graphs & Solvers</a>
      * concepts documentation, the
-     * <a href="../../../graph_solver/examples/graph_rest_guide/"
-     * target="_top">Graph REST Tutorial</a>,
+     * <a href="../../../guides/graph_rest_guide/" target="_top">Graph REST
+     * Tutorial</a>,
      * and/or some
-     * <a href="../../../graph_solver/examples/#match-graph"
-     * target="_top">/match/graph examples</a>
+     * <a href="../../../guide-tags/graph-match/" target="_top">/match/graph
+     * examples</a>
      * before using this endpoint.
      */
     struct MatchGraphRequest
@@ -104,6 +104,11 @@ namespace gpudb
          *                          Matches @a samplePoints source and
          *                          destination pairs for the shortest path
          *                          solves in batch mode.
+         *                                  <li>
+         *                          gpudb::match_graph_match_loops: Matches
+         *                          closed loops (Eulerian paths) originating
+         *                          and ending at each graph node within min
+         *                          and max hops (levels).
          *                          </ul>
          *                          The default value is
          *                          gpudb::match_graph_markov_chain.
@@ -295,12 +300,53 @@ namespace gpudb
          *                      are scheduled only once from their depots.
          *                      </ul>
          *                      The default value is gpudb::match_graph_false.
+         *                              <li>
+         *                      gpudb::match_graph_max_truck_stops: For the @a
+         *                      match_supply_demand solver only. If specified
+         *                      (greater than zero), a truck can at most have
+         *                      this many stops (demand locations) in one round
+         *                      trip. Otherwise, it is unlimited. If
+         *                      'enable_truck_reuse' is on, this condition will
+         *                      be applied separately at each round trip use of
+         *                      the same truck.  The default value is '0'.
          *                              <li> gpudb::match_graph_server_id:
          *                      Indicates which graph server(s) to send the
          *                      request to. Default is to send to the server,
          *                      amongst those containing the corresponding
          *                      graph, that has the most computational
          *                      bandwidth.  The default value is ''.
+         *                              <li> gpudb::match_graph_inverse_solve:
+         *                      For the @a match_batch_solves solver only.
+         *                      Solves source-destination pairs using inverse
+         *                      shortest path solver.
+         *                      <ul>
+         *                              <li> gpudb::match_graph_true: Solves
+         *                      using inverse shortest path solver.
+         *                              <li> gpudb::match_graph_false: Solves
+         *                      using direct shortest path solver.
+         *                      </ul>
+         *                      The default value is gpudb::match_graph_false.
+         *                              <li> gpudb::match_graph_min_loop_level:
+         *                      For the @a match_loops solver only. Finds
+         *                      closed loops around each node deducible not
+         *                      less than this minimal hop (level) deep.  The
+         *                      default value is '0'.
+         *                              <li> gpudb::match_graph_max_loop_level:
+         *                      For the @a match_loops solver only. Finds
+         *                      closed loops around each node deducible not
+         *                      more than this maximal hop (level) deep.  The
+         *                      default value is '5'.
+         *                              <li> gpudb::match_graph_search_limit:
+         *                      For the @a match_loops solver only. Searches
+         *                      within this limit of nodes per vertex to detect
+         *                      loops. The value zero means there is no limit.
+         *                      The default value is '10000'.
+         *                              <li>
+         *                      gpudb::match_graph_output_batch_size: For the
+         *                      @a match_loops solver only. Uses this value as
+         *                      the batch size of the number of loops in
+         *                      flushing(inserting) to the output table.  The
+         *                      default value is '1000'.
          *                      </ul>
          * 
          */
@@ -397,11 +443,11 @@ namespace gpudb
      * <a href="../../../graph_solver/network_graph_solver/"
      * target="_top">Network Graphs & Solvers</a>
      * concepts documentation, the
-     * <a href="../../../graph_solver/examples/graph_rest_guide/"
-     * target="_top">Graph REST Tutorial</a>,
+     * <a href="../../../guides/graph_rest_guide/" target="_top">Graph REST
+     * Tutorial</a>,
      * and/or some
-     * <a href="../../../graph_solver/examples/#match-graph"
-     * target="_top">/match/graph examples</a>
+     * <a href="../../../guide-tags/graph-match/" target="_top">/match/graph
+     * examples</a>
      * before using this endpoint.
      */
     struct MatchGraphResponse

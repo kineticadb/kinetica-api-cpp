@@ -112,6 +112,9 @@ public:
 
     // Return the key's hash code
     int32_t get_hash_code() const { return m_hash_code; }
+    
+    // Return the key's routing hash code
+    int64_t get_routing_hash() const { return m_routing_hash; }
 
     // Resets the key to be an empty one with the new buffer size
     void reset( size_t buffer_size );

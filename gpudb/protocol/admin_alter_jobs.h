@@ -13,10 +13,12 @@ namespace gpudb
      * A set of input parameters for {@link
      * #adminAlterJobs(const AdminAlterJobsRequest&) const}.
      * <p>
-     * Perform the requested action on a list of one or more job(s). Based on
-     * the type of job and the current state of execution, the action may not
-     * be successfully executed. The final result of the attempted actions for
-     * each specified job is returned in the status array of the response. See
+     * Perform the requested action on a list of one or more job(s). Based
+     * on the type of job and the current state of execution, the action may
+     * not be
+     * successfully executed. The final result of the attempted actions for
+     * each
+     * specified job is returned in the status array of the response. See
      * <a href="../../../admin/job_manager/" target="_top">Job Manager</a> for
      * more information.
      */
@@ -119,10 +121,12 @@ namespace gpudb
      * A set of output parameters for {@link
      * #adminAlterJobs(const AdminAlterJobsRequest&) const}.
      * <p>
-     * Perform the requested action on a list of one or more job(s). Based on
-     * the type of job and the current state of execution, the action may not
-     * be successfully executed. The final result of the attempted actions for
-     * each specified job is returned in the status array of the response. See
+     * Perform the requested action on a list of one or more job(s). Based
+     * on the type of job and the current state of execution, the action may
+     * not be
+     * successfully executed. The final result of the attempted actions for
+     * each
+     * specified job is returned in the status array of the response. See
      * <a href="../../../admin/job_manager/" target="_top">Job Manager</a> for
      * more information.
      */

@@ -117,6 +117,7 @@ namespace gpudb
             authId(std::vector<std::string>()),
             sourceIp(std::vector<std::string>()),
             userData(std::vector<std::string>()),
+            flags(std::vector<std::string>()),
             info(std::map<std::string, std::string>())
         {
         }
@@ -128,6 +129,7 @@ namespace gpudb
         std::vector<std::string> authId;
         std::vector<std::string> sourceIp;
         std::vector<std::string> userData;
+        std::vector<std::string> flags;
         std::map<std::string, std::string> info;
     };
 }
@@ -145,6 +147,7 @@ namespace avro
             ::avro::encode(e, v.authId);
             ::avro::encode(e, v.sourceIp);
             ::avro::encode(e, v.userData);
+            ::avro::encode(e, v.flags);
             ::avro::encode(e, v.info);
         }
 
@@ -187,6 +190,10 @@ namespace avro
                             break;
 
                         case 7:
+                            ::avro::decode(d, v.flags);
+                            break;
+
+                        case 8:
                             ::avro::decode(d, v.info);
                             break;
 
@@ -204,6 +211,7 @@ namespace avro
                 ::avro::decode(d, v.authId);
                 ::avro::decode(d, v.sourceIp);
                 ::avro::decode(d, v.userData);
+                ::avro::decode(d, v.flags);
                 ::avro::decode(d, v.info);
             }
         }

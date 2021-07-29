@@ -80,6 +80,11 @@ namespace gpudb
          *                      Amazon S3 region where the given bucket is
          *                      located
          *                              <li>
+         *                      gpudb::create_datasource_s3_aws_role_arn:
+         *                      Amazon IAM Role ARN which has required S3
+         *                      permissions that can be assumed for the given
+         *                      S3 IAM user
+         *                              <li>
          *                      gpudb::create_datasource_hdfs_kerberos_keytab:
          *                      Kerberos keytab file location for the given
          *                      HDFS user
@@ -115,6 +120,18 @@ namespace gpudb
          *                              <li>
          *                      gpudb::create_datasource_azure_oauth_token:
          *                      Oauth token to access given storage container
+         *                              <li>
+         *                      gpudb::create_datasource_is_stream: To load
+         *                      from S3/Azure as a stream continuously.
+         *                      <ul>
+         *                              <li> gpudb::create_datasource_true
+         *                              <li> gpudb::create_datasource_false
+         *                      </ul>
+         *                      The default value is
+         *                      gpudb::create_datasource_false.
+         *                              <li>
+         *                      gpudb::create_datasource_kafka_topic_name: Name
+         *                      of the Kafka topic to use as the data source
          *                      </ul>
          * 
          */

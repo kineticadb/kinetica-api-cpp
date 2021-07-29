@@ -15,7 +15,8 @@ namespace gpudb
      * <p>
      * Rebalance the data in the cluster so that all nodes contain an equal
      * number of records approximately and/or rebalance the shards to be
-     * equally distributed (as much as possible) across all the ranks.
+     * equally
+     * distributed (as much as possible) across all the ranks.
      * <p>
      * The database must be offline for this operation, see {@link
      * #adminOffline(const AdminOfflineRequest&) const}
@@ -40,8 +41,10 @@ namespace gpudb
      * NOTE: Replicated data will not move as a result of this call
      * <p>
      * This endpoint's processing time depends on the amount of data in the
-     * system, thus the API call may time out if run directly.  It is
-     * recommended to run this endpoint asynchronously via {@link
+     * system,
+     * thus the API call may time out if run directly.  It is recommended to
+     * run this
+     * endpoint asynchronously via {@link
      * #createJob(const CreateJobRequest&) const}.
      */
     struct AdminRebalanceRequest
@@ -222,7 +225,8 @@ namespace gpudb
      * <p>
      * Rebalance the data in the cluster so that all nodes contain an equal
      * number of records approximately and/or rebalance the shards to be
-     * equally distributed (as much as possible) across all the ranks.
+     * equally
+     * distributed (as much as possible) across all the ranks.
      * <p>
      * The database must be offline for this operation, see {@link
      * #adminOffline(const AdminOfflineRequest&) const}
@@ -247,8 +251,10 @@ namespace gpudb
      * NOTE: Replicated data will not move as a result of this call
      * <p>
      * This endpoint's processing time depends on the amount of data in the
-     * system, thus the API call may time out if run directly.  It is
-     * recommended to run this endpoint asynchronously via {@link
+     * system,
+     * thus the API call may time out if run directly.  It is recommended to
+     * run this
+     * endpoint asynchronously via {@link
      * #createJob(const CreateJobRequest&) const}.
      */
     struct AdminRebalanceResponse

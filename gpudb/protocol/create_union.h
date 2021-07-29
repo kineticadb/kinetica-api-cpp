@@ -94,23 +94,6 @@ namespace gpudb
          *                      the output table. If the schema provided is
          *                      non-existent, it will be automatically created.
          *                      The default value is ''.
-         *                              <li>
-         *                      gpudb::create_union_materialize_on_gpu: No
-         *                      longer used.  See <a
-         *                      href="../../../rm/concepts/"
-         *                      target="_top">Resource Management Concepts</a>
-         *                      for information about how resources are
-         *                      managed, <a href="../../../rm/concepts/"
-         *                      target="_top">Tier Strategy Concepts</a> for
-         *                      how resources are targeted for VRAM, and <a
-         *                      href="../../../rm/usage/#tier-strategies"
-         *                      target="_top">Tier Strategy Usage</a> for how
-         *                      to specify a table's priority in VRAM.
-         *                      <ul>
-         *                              <li> gpudb::create_union_true
-         *                              <li> gpudb::create_union_false
-         *                      </ul>
-         *                      The default value is gpudb::create_union_false.
          *                              <li> gpudb::create_union_mode: If @a
          *                      merge_views, then this operation will merge the
          *                      provided views. All @a tableNames must be views

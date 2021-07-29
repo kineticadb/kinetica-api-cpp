@@ -92,7 +92,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\..;..\..\thirdparty\boost_1_65_1;..\..\thirdparty\avro-cpp-1.7.7;..\..\thirdparty\snappy-windows-1.1.1.8\src;$(ProjectDir)..\gpudbapidll\packages\zeroc.openssl.v120.1.0.2.4\build\native\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..;..\..\thirdparty\boost_1_65_1;..\..\thirdparty\avro-cpp-1.7.7;..\..\thirdparty\snappy-windows-1.1.1.8\src;$(ProjectDir)..\..\..\gpudb-connector-odbc-master\KineticaODBC\Source\packages\zeroc.openssl.v140.1.1.1\build\native\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>-D_WIN32_WINNT=0x0501 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
@@ -107,7 +107,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\..;..\..\thirdparty\boost_1_65_1;..\..\thirdparty\avro-cpp-1.7.7;..\..\thirdparty\snappy-windows-1.1.1.8\src;$(ProjectDir)..\gpudbapidll\packages\zeroc.openssl.v120.1.0.2.4\build\native\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..;..\..\thirdparty\boost_1_65_1;..\..\thirdparty\avro-cpp-1.7.7;..\..\thirdparty\snappy-windows-1.1.1.8\src;$(ProjectDir)..\..\..\gpudb-connector-odbc-master\KineticaODBC\Source\packages\zeroc.openssl.v140.1.1.1\build\native\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>-D_WIN32_WINNT=0x0501 /bigobj %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
@@ -124,7 +124,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\..;..\..\thirdparty\boost_1_65_1;..\..\thirdparty\avro-cpp-1.7.7;..\..\thirdparty\snappy-windows-1.1.1.8\src;$(ProjectDir)..\gpudbapidll\packages\zeroc.openssl.v120.1.0.2.4\build\native\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..;..\..\thirdparty\boost_1_65_1;..\..\thirdparty\avro-cpp-1.7.7;..\..\thirdparty\snappy-windows-1.1.1.8\src;$(ProjectDir)..\..\..\gpudb-connector-odbc-master\KineticaODBC\Source\packages\zeroc.openssl.v140.1.1.1\build\native\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>-D_WIN32_WINNT=0x0501 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
@@ -143,7 +143,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\..;..\..\thirdparty\boost_1_65_1;..\..\thirdparty\avro-cpp-1.7.7;..\..\thirdparty\snappy-windows-1.1.1.8\src;$(ProjectDir)..\gpudbapidll\packages\zeroc.openssl.v120.1.0.2.4\build\native\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..;..\..\thirdparty\boost_1_65_1;..\..\thirdparty\avro-cpp-1.7.7;..\..\thirdparty\snappy-windows-1.1.1.8\src;$(ProjectDir)..\..\..\gpudb-connector-odbc-master\KineticaODBC\Source\packages\zeroc.openssl.v140.1.1.1\build\native\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>-D_WIN32_WINNT=0x0501 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
@@ -191,8 +191,16 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\README.md" />
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
+    <Import Project="..\..\..\gpudb-connector-odbc-master\KineticaODBC\Source\packages\zeroc.openssl.v140.1.1.1\build\native\zeroc.openssl.v140.targets" Condition="Exists('..\..\..\gpudb-connector-odbc-master\KineticaODBC\Source\packages\zeroc.openssl.v140.1.1.1\build\native\zeroc.openssl.v140.targets')" />
   </ImportGroup>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\..\..\gpudb-connector-odbc-master\KineticaODBC\Source\packages\zeroc.openssl.v140.1.1.1\build\native\zeroc.openssl.v140.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\gpudb-connector-odbc-master\KineticaODBC\Source\packages\zeroc.openssl.v140.1.1.1\build\native\zeroc.openssl.v140.targets'))" />
+  </Target>
 </Project>

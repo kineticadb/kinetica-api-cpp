@@ -211,6 +211,22 @@ namespace gpudb
          *                                 gpudb::alter_system_properties_enable_overlapped_equi_join:
          *                                 Enable overlapped-equi-join filter.
          *                                 The default value is 'true'.
+         *                                         <li>
+         *                                 gpudb::alter_system_properties_kafka_batch_size:
+         *                                 Maximum number of records to be read
+         *                                 in a single kafka batched request.
+         *                                 The default value is '1000'.
+         *                                         <li>
+         *                                 gpudb::alter_system_properties_kafka_wait_time:
+         *                                 Maximum number of seconds to wait in
+         *                                 a single kafka batched request.  The
+         *                                 default value is '30'.
+         *                                         <li>
+         *                                 gpudb::alter_system_properties_kafka_timeout:
+         *                                 Number of seconds after which kakfa
+         *                                 poll will timeout if datasource has
+         *                                 no records.  The default value is
+         *                                 '5'.
          *                                 </ul>
          * @param[in] options_  Optional parameters.
          * 

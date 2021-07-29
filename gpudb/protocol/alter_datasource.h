@@ -88,6 +88,12 @@ namespace gpudb
          *                                   Name of the Amazon S3 region where
          *                                   the given bucket is located
          *                                           <li>
+         *                                   gpudb::alter_datasource_s3_aws_role_arn:
+         *                                   Amazon IAM Role ARN which has
+         *                                   required S3 permissions that can
+         *                                   be assumed for the given S3 IAM
+         *                                   user
+         *                                           <li>
          *                                   gpudb::alter_datasource_hdfs_kerberos_keytab:
          *                                   Kerberos keytab file location for
          *                                   the given HDFS user
@@ -131,6 +137,15 @@ namespace gpudb
          *                                   gpudb::alter_datasource_azure_oauth_token:
          *                                   Oauth token to access given
          *                                   storage container
+         *                                           <li>
+         *                                   gpudb::alter_datasource_kafka_url:
+         *                                   The publicly-accessible full path
+         *                                   URL to the kafka broker, e.g.,
+         *                                   'http://172.123.45.67:9300'.
+         *                                           <li>
+         *                                   gpudb::alter_datasource_kafka_topic_name:
+         *                                   Name of the Kafka topic to use as
+         *                                   the data source
          *                                   </ul>
          * @param[in] options_  Optional parameters.
          * 

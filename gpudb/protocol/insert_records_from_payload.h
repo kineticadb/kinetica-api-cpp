@@ -162,6 +162,12 @@ namespace gpudb
          *                                 Use <a
          *                                 href="../../../concepts/tables/#partitioning-by-hash"
          *                                 target="_top">hash partitioning</a>.
+         *                                         <li>
+         *                                 gpudb::insert_records_from_payload_SERIES:
+         *                                 Use <a
+         *                                 href="../../../concepts/tables/#partitioning-by-series"
+         *                                 target="_top">series
+         *                                 partitioning</a>.
          *                                 </ul>
          *                                         <li>
          *                                 gpudb::insert_records_from_payload_partition_keys:
@@ -184,10 +190,14 @@ namespace gpudb
          *                                 partitioning</a>, <a
          *                                 href="../../../concepts/tables/#partitioning-by-list"
          *                                 target="_top">list partitioning</a>,
-         *                                 or <a
+         *                                 <a
          *                                 href="../../../concepts/tables/#partitioning-by-hash"
-         *                                 target="_top">hash partitioning</a>
-         *                                 for example formats.
+         *                                 target="_top">hash partitioning</a>,
+         *                                 or <a
+         *                                 href="../../../concepts/tables/#partitioning-by-series"
+         *                                 target="_top">series
+         *                                 partitioning</a> for example
+         *                                 formats.
          *                                         <li>
          *                                 gpudb::insert_records_from_payload_is_automatic_partition:
          *                                 If @a true, a new partition will be
@@ -242,13 +252,7 @@ namespace gpudb
          *                                 The <a
          *                                 href="../../../rm/concepts/#tier-strategies"
          *                                 target="_top">tier strategy</a> for
-         *                                 the table and its columns. See <a
-         *                                 href="../../../rm/concepts/#tier-strategies"
-         *                                 target="_top">tier strategy
-         *                                 usage</a> for format and <a
-         *                                 href="../../../rm/usage/#tier-strategies"
-         *                                 target="_top">tier strategy
-         *                                 examples</a> for examples.
+         *                                 the table and its columns.
          *                                 </ul>
          * @param[in] options_  Optional parameters.
          *                      <ul>
@@ -414,6 +418,9 @@ namespace gpudb
          *                              <li>
          *                      gpudb::insert_records_from_payload_json: Json
          *                      file format
+         *                              <li>
+         *                      gpudb::insert_records_from_payload_shapefile:
+         *                      ShapeFile file format
          *                      </ul>
          *                      The default value is
          *                      gpudb::insert_records_from_payload_delimited_text.
@@ -555,7 +562,19 @@ namespace gpudb
          *                      values will fit with minimum data scanned
          *                      </ul>
          *                      The default value is
-         *                      gpudb::insert_records_from_payload_accuracy.
+         *                      gpudb::insert_records_from_payload_speed.
+         *                              <li>
+         *                      gpudb::insert_records_from_payload_text_search_columns:
+         *                      Add 'text_search' property to internally
+         *                      inferenced string columns. Comma seperated list
+         *                      of column names or '*' for all columns. To add
+         *                      text_search property only to string columns of
+         *                      minimum size, set also the option
+         *                      'text_search_min_column_length'
+         *                              <li>
+         *                      gpudb::insert_records_from_payload_text_search_min_column_length:
+         *                      Set minimum column size. Used only when
+         *                      'text_search_columns' has a value.
          *                      </ul>
          * 
          */

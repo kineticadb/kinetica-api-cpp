@@ -15,16 +15,13 @@ namespace gpudb
      * <p>
      * Update an existing graph network using given nodes, edges, weights,
      * restrictions, and options.
-
+     * <p>
      * IMPORTANT: It's highly recommended that you review the
      * <a href="../../../graph_solver/network_graph_solver/"
      * target="_top">Network Graphs & Solvers</a>
-     * concepts documentation, the
-     * <a href="../../../graph_solver/examples/graph_rest_guide/"
-     * target="_top">Graph REST Tutorial</a>,
-     * and/or some
-     * <a href="../../../graph_solver/examples/#match-graph"
-     * target="_top">/match/graph examples</a>
+     * concepts documentation and
+     * <a href="../../../guides/graph_rest_guide/" target="_top">Graph REST
+     * Tutorial</a>
      * before using this endpoint.
      */
     struct ModifyGraphRequest
@@ -347,16 +344,13 @@ namespace gpudb
      * <p>
      * Update an existing graph network using given nodes, edges, weights,
      * restrictions, and options.
-
+     * <p>
      * IMPORTANT: It's highly recommended that you review the
      * <a href="../../../graph_solver/network_graph_solver/"
      * target="_top">Network Graphs & Solvers</a>
-     * concepts documentation, the
-     * <a href="../../../graph_solver/examples/graph_rest_guide/"
-     * target="_top">Graph REST Tutorial</a>,
-     * and/or some
-     * <a href="../../../graph_solver/examples/#match-graph"
-     * target="_top">/match/graph examples</a>
+     * concepts documentation and
+     * <a href="../../../guides/graph_rest_guide/" target="_top">Graph REST
+     * Tutorial</a>
      * before using this endpoint.
      */
     struct ModifyGraphResponse

@@ -36,7 +36,7 @@ namespace gpudb
      *   being added in @a hosts. The key of each map would be
      *   the configuration parameter name and the value would be the
      *   parameter's value, e.g. '{"rank.gpu":"1"}'
-
+     * <p>
      * This endpoint's processing includes copying all replicated table data to
      * the new rank(s) and therefore could take a long time. The API call may
      * time out if run directly.  It is recommended to run this endpoint
@@ -214,7 +214,7 @@ namespace gpudb
      *   being added in @a hosts. The key of each map would be
      *   the configuration parameter name and the value would be the
      *   parameter's value, e.g. '{"rank.gpu":"1"}'
-
+     * <p>
      * This endpoint's processing includes copying all replicated table data to
      * the new rank(s) and therefore could take a long time. The API call may
      * time out if run directly.  It is recommended to run this endpoint

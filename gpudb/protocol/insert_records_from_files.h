@@ -30,7 +30,7 @@ namespace gpudb
      * being used, names matching
      * the file header's names may be provided to @a columns_to_load instead of
      * numbers, but ranges are not supported.
-
+     * <p>
      * Returns once all files are processed.
      */
     struct InsertRecordsFromFilesRequest
@@ -79,6 +79,10 @@ namespace gpudb
          *                        will be defaulted to a tab character. If the
          *                        first path ends in .psv, the text delimiter
          *                        will be defaulted to a pipe character (|).
+         *                        For paths in <a href="../../../tools/kifs/"
+         *                        target="_top">KiFS</a>, use the uri prefix of
+         *                        kifs:// followed by the full path to a file
+         *                        or directory
          * @param[in] modifyColumns_  Not implemented yet
          * @param[in] createTableOptions_  Options used when creating the
          *                                 target table.
@@ -181,6 +185,12 @@ namespace gpudb
          *                                 Use <a
          *                                 href="../../../concepts/tables/#partitioning-by-hash"
          *                                 target="_top">hash partitioning</a>.
+         *                                         <li>
+         *                                 gpudb::insert_records_from_files_SERIES:
+         *                                 Use <a
+         *                                 href="../../../concepts/tables/#partitioning-by-series"
+         *                                 target="_top">series
+         *                                 partitioning</a>.
          *                                 </ul>
          *                                         <li>
          *                                 gpudb::insert_records_from_files_partition_keys:
@@ -203,10 +213,14 @@ namespace gpudb
          *                                 partitioning</a>, <a
          *                                 href="../../../concepts/tables/#partitioning-by-list"
          *                                 target="_top">list partitioning</a>,
-         *                                 or <a
+         *                                 <a
          *                                 href="../../../concepts/tables/#partitioning-by-hash"
-         *                                 target="_top">hash partitioning</a>
-         *                                 for example formats.
+         *                                 target="_top">hash partitioning</a>,
+         *                                 or <a
+         *                                 href="../../../concepts/tables/#partitioning-by-series"
+         *                                 target="_top">series
+         *                                 partitioning</a> for example
+         *                                 formats.
          *                                         <li>
          *                                 gpudb::insert_records_from_files_is_automatic_partition:
          *                                 If @a true, a new partition will be
@@ -261,13 +275,7 @@ namespace gpudb
          *                                 The <a
          *                                 href="../../../rm/concepts/#tier-strategies"
          *                                 target="_top">tier strategy</a> for
-         *                                 the table and its columns. See <a
-         *                                 href="../../../rm/concepts/#tier-strategies"
-         *                                 target="_top">tier strategy
-         *                                 usage</a> for format and <a
-         *                                 href="../../../rm/usage/#tier-strategies"
-         *                                 target="_top">tier strategy
-         *                                 examples</a> for examples.
+         *                                 the table and its columns.
          *                                 </ul>
          * @param[in] options_  Optional parameters.
          *                      <ul>
@@ -438,6 +446,9 @@ namespace gpudb
          *                              <li>
          *                      gpudb::insert_records_from_files_json: Json
          *                      file format
+         *                              <li>
+         *                      gpudb::insert_records_from_files_shapefile:
+         *                      ShapeFile file format
          *                      </ul>
          *                      The default value is
          *                      gpudb::insert_records_from_files_delimited_text.
@@ -532,6 +543,26 @@ namespace gpudb
          *                      Optional: comma separated list of column names,
          *                      to set as primary keys, when not specified in
          *                      the type.  The default value is ''.
+         *                              <li>
+         *                      gpudb::insert_records_from_files_subscribe:
+         *                      Continuously poll the data source to check for
+         *                      new data and load it into the table.
+         *                      <ul>
+         *                              <li>
+         *                      gpudb::insert_records_from_files_true
+         *                              <li>
+         *                      gpudb::insert_records_from_files_false
+         *                      </ul>
+         *                      The default value is
+         *                      gpudb::insert_records_from_files_false.
+         *                              <li>
+         *                      gpudb::insert_records_from_files_poll_interval:
+         *                      If @a true, the number of seconds between
+         *                      attempts to load external files into the table.
+         *                      If zero, polling will be continuous as long as
+         *                      data is found.  If no data is found, the
+         *                      interval will steadily increase to a maximum of
+         *                      60 seconds.
          *                              <li>
          *                      gpudb::insert_records_from_files_text_comment_string:
          *                      Specifies the character string that should be
@@ -650,7 +681,38 @@ namespace gpudb
          *                      values will fit with minimum data scanned
          *                      </ul>
          *                      The default value is
-         *                      gpudb::insert_records_from_files_accuracy.
+         *                      gpudb::insert_records_from_files_speed.
+         *                              <li>
+         *                      gpudb::insert_records_from_files_table_insert_mode:
+         *                      Optional: table_insert_mode. When inserting
+         *                      records from multiple files: if table_per_file
+         *                      then insert from each file into a new table.
+         *                      Currently supported only for shapefiles.
+         *                      <ul>
+         *                              <li>
+         *                      gpudb::insert_records_from_files_single
+         *                              <li>
+         *                      gpudb::insert_records_from_files_table_per_file
+         *                      </ul>
+         *                      The default value is
+         *                      gpudb::insert_records_from_files_single.
+         *                              <li>
+         *                      gpudb::insert_records_from_files_kafka_group_id:
+         *                      The group id to be used consuming data from a
+         *                      kakfa topic (valid only for kafka datasource
+         *                      subscriptions).
+         *                              <li>
+         *                      gpudb::insert_records_from_files_text_search_columns:
+         *                      Add 'text_search' property to internally
+         *                      inferenced string columns. Comma seperated list
+         *                      of column names or '*' for all columns. To add
+         *                      text_search property only to string columns of
+         *                      minimum size, set also the option
+         *                      'text_search_min_column_length'
+         *                              <li>
+         *                      gpudb::insert_records_from_files_text_search_min_column_length:
+         *                      Set minimum column size. Used only when
+         *                      'text_search_columns' has a value.
          *                      </ul>
          * 
          */
@@ -755,7 +817,7 @@ namespace gpudb
      * being used, names matching
      * the file header's names may be provided to @a columns_to_load instead of
      * numbers, but ranges are not supported.
-
+     * <p>
      * Returns once all files are processed.
      */
     struct InsertRecordsFromFilesResponse

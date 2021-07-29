@@ -132,24 +132,6 @@ namespace gpudb
          *                      than the original column name.  The default
          *                      value is ''.
          *                              <li>
-         *                      gpudb::create_projection_materialize_on_gpu: No
-         *                      longer used.  See <a
-         *                      href="../../../rm/concepts/"
-         *                      target="_top">Resource Management Concepts</a>
-         *                      for information about how resources are
-         *                      managed, <a href="../../../rm/concepts/"
-         *                      target="_top">Tier Strategy Concepts</a> for
-         *                      how resources are targeted for VRAM, and <a
-         *                      href="../../../rm/usage/#tier-strategies"
-         *                      target="_top">Tier Strategy Usage</a> for how
-         *                      to specify a table's priority in VRAM.
-         *                      <ul>
-         *                              <li> gpudb::create_projection_true
-         *                              <li> gpudb::create_projection_false
-         *                      </ul>
-         *                      The default value is
-         *                      gpudb::create_projection_false.
-         *                              <li>
          *                      gpudb::create_projection_chunk_size: Indicates
          *                      the number of records per chunk to be used for
          *                      this projection.

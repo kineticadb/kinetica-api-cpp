@@ -2,9 +2,27 @@
 
 ## Version 7.1
 
+### Version 7.1.4.0 - TBD
+
+#### Added
+-   xxx
+
+#### Changed
+-   xxx
+
+#### Fixed
+-   xxx
+
+
 ### Version 7.1.3.0 - 2021-03-05
 
-#### Note
+#### Notes
+-   Check CHANGELOG-FUNCTIONS.md for endpoint related changes.
+
+
+### Version 7.1.3.0 - TBD
+
+#### Notes
 -   Check CHANGELOG-FUNCTIONS.md for endpoint related changes.
 
 

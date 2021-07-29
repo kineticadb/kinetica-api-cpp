@@ -15,19 +15,24 @@ namespace gpudb
      * <p>
      * Remove one or more ranks from an existing Kinetica cluster. All data
      * will be rebalanced to other ranks before the rank(s) is removed unless
-     * the @a rebalance_sharded_data or @a rebalance_unsharded_data parameters
-     * are set to @a false in the @a options, in which case the corresponding
+     * the
+     * @a rebalance_sharded_data or
+     * @a rebalance_unsharded_data parameters are set to
+     * @a false in the
+     * @a options, in which case the corresponding
      * <a href="../../../concepts/tables/#sharding" target="_top">sharded
-     * data</a> and/or unsharded data (a.k.a. <a
-     * href="../../../concepts/tables/#random-sharding"
+     * data</a> and/or unsharded data (a.k.a.
+     * <a href="../../../concepts/tables/#random-sharding"
      * target="_top">randomly-sharded</a>) will be deleted.
      * <p>
      * The database must be offline for this operation, see {@link
      * #adminOffline(const AdminOfflineRequest&) const}
      * <p>
      * This endpoint's processing time depends on the amount of data in the
-     * system, thus the API call may time out if run directly.  It is
-     * recommended to run this endpoint asynchronously via {@link
+     * system,
+     * thus the API call may time out if run directly.  It is recommended to
+     * run this
+     * endpoint asynchronously via {@link
      * #createJob(const CreateJobRequest&) const}.
      */
     struct AdminRemoveRanksRequest
@@ -166,19 +171,24 @@ namespace gpudb
      * <p>
      * Remove one or more ranks from an existing Kinetica cluster. All data
      * will be rebalanced to other ranks before the rank(s) is removed unless
-     * the @a rebalance_sharded_data or @a rebalance_unsharded_data parameters
-     * are set to @a false in the @a options, in which case the corresponding
+     * the
+     * @a rebalance_sharded_data or
+     * @a rebalance_unsharded_data parameters are set to
+     * @a false in the
+     * @a options, in which case the corresponding
      * <a href="../../../concepts/tables/#sharding" target="_top">sharded
-     * data</a> and/or unsharded data (a.k.a. <a
-     * href="../../../concepts/tables/#random-sharding"
+     * data</a> and/or unsharded data (a.k.a.
+     * <a href="../../../concepts/tables/#random-sharding"
      * target="_top">randomly-sharded</a>) will be deleted.
      * <p>
      * The database must be offline for this operation, see {@link
      * #adminOffline(const AdminOfflineRequest&) const}
      * <p>
      * This endpoint's processing time depends on the amount of data in the
-     * system, thus the API call may time out if run directly.  It is
-     * recommended to run this endpoint asynchronously via {@link
+     * system,
+     * thus the API call may time out if run directly.  It is recommended to
+     * run this
+     * endpoint asynchronously via {@link
      * #createJob(const CreateJobRequest&) const}.
      */
     struct AdminRemoveRanksResponse

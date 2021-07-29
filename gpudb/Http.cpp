@@ -762,6 +762,18 @@ namespace gpudb
 
             headerStream << " HTTP/1.0\r\n";
 
+            std::string host = url.getHost() + ":" + std::to_string(url.getPort());
+            // This is needed according to the RFC, but the Java API sends it, so commenting it for now
+            //size_t found = host.find_first_not_of("0123456789.:");
+            //if (found == std::string::npos) // Just an IP address
+            //    host = ""; // Send an empty host if not a host name (per spec)
+            headerStream << "Host: " << host << "\r\n";
+
+            // These may be needed for HTTP/1.1
+            //headerStream << "Accept: */*\r\n";
+            //headerStream << "User-Agent: C/1.0\r\n";
+            //headerStream << "Transfer-Encoding: identity\r\n";
+
             const std::map<std::string, std::string>& requestHeaders = m_request.m_requestHeaders;
 
             for (std::map<std::string, std::string>::const_iterator it = requestHeaders.begin();
@@ -770,6 +782,8 @@ namespace gpudb
                 headerStream << it->first << ": " << it->second << "\r\n";
             }
 
+            // This may be needed for HTTP/1.1
+            //headerStream << "Connection: close\r\n";
             headerStream << "\r\n";
             std::vector<boost::asio::const_buffer> request;
             boost::asio::streambuf::const_buffers_type headerBuffers = headers.data();

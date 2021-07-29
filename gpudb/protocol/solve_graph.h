@@ -22,11 +22,11 @@ namespace gpudb
      * <a href="../../../graph_solver/network_graph_solver/"
      * target="_top">Network Graphs & Solvers</a>
      * concepts documentation, the
-     * <a href="../../../graph_solver/examples/graph_rest_guide/"
-     * target="_top">Graph REST Tutorial</a>,
+     * <a href="../../../guides/graph_rest_guide/" target="_top">Graph REST
+     * Tutorial</a>,
      * and/or some
-     * <a href="../../../graph_solver/examples/#match-graph"
-     * target="_top">/match/graph examples</a>
+     * <a href="../../../guide-tags/graph-solve" target="_top">/solve/graph
+     * examples</a>
      * before using this endpoint.
      */
     struct SolveGraphRequest
@@ -160,6 +160,15 @@ namespace gpudb
          *                         sure to limit by the 'max_solution_targets'
          *                         option. Min cost shoudl be >= shortest_path
          *                         cost.
+         *                                 <li> gpudb::solve_graph_STATS_ALL:
+         *                         Solves for graph statistics such as graph
+         *                         diameter, longest pairs, vertex valences,
+         *                         topology numbers, average and max cluster
+         *                         sizes, etc.
+         *                                 <li> gpudb::solve_graph_CLOSENESS:
+         *                         Solves for the centrality closeness score
+         *                         per node as the sum of the inverse shortest
+         *                         path costs to all nodes in the graph.
          *                         </ul>
          *                         The default value is
          *                         gpudb::solve_graph_SHORTEST_PATH.
@@ -181,33 +190,33 @@ namespace gpudb
          *                      <ul>
          *                              <li>
          *                      gpudb::solve_graph_max_solution_radius: For @a
-         *                      SHORTEST_PATH and @a INVERSE_SHORTEST_PATH
-         *                      solvers only. Sets the maximum solution cost
-         *                      radius, which ignores the @a destinationNodes
-         *                      list and instead outputs the nodes within the
-         *                      radius sorted by ascending cost. If set to
-         *                      '0.0', the setting is ignored.  The default
-         *                      value is '0.0'.
-         *                              <li>
-         *                      gpudb::solve_graph_min_solution_radius: For @a
-         *                      SHORTEST_PATH and @a INVERSE_SHORTEST_PATH
-         *                      solvers only. Applicable only when @a
-         *                      max_solution_radius is set. Sets the minimum
-         *                      solution cost radius, which ignores the @a
-         *                      destinationNodes list and instead outputs the
-         *                      nodes within the radius sorted by ascending
+         *                      ALLPATHS, @a SHORTEST_PATH and @a
+         *                      INVERSE_SHORTEST_PATH solvers only. Sets the
+         *                      maximum solution cost radius, which ignores the
+         *                      @a destinationNodes list and instead outputs
+         *                      the nodes within the radius sorted by ascending
          *                      cost. If set to '0.0', the setting is ignored.
          *                      The default value is '0.0'.
          *                              <li>
+         *                      gpudb::solve_graph_min_solution_radius: For @a
+         *                      ALLPATHS, @a SHORTEST_PATH and @a
+         *                      INVERSE_SHORTEST_PATH solvers only. Applicable
+         *                      only when @a max_solution_radius is set. Sets
+         *                      the minimum solution cost radius, which ignores
+         *                      the @a destinationNodes list and instead
+         *                      outputs the nodes within the radius sorted by
+         *                      ascending cost. If set to '0.0', the setting is
+         *                      ignored.  The default value is '0.0'.
+         *                              <li>
          *                      gpudb::solve_graph_max_solution_targets: For @a
-         *                      SHORTEST_PATH and @a INVERSE_SHORTEST_PATH
-         *                      solvers only. Sets the maximum number of
-         *                      solution targets, which ignores the @a
-         *                      destinationNodes list and instead outputs no
-         *                      more than n number of nodes sorted by ascending
-         *                      cost where n is equal to the setting value. If
-         *                      set to 0, the setting is ignored.  The default
-         *                      value is '0'.
+         *                      ALLPATHS, @a SHORTEST_PATH and @a
+         *                      INVERSE_SHORTEST_PATH solvers only. Sets the
+         *                      maximum number of solution targets, which
+         *                      ignores the @a destinationNodes list and
+         *                      instead outputs no more than n number of nodes
+         *                      sorted by ascending cost where n is equal to
+         *                      the setting value. If set to 0, the setting is
+         *                      ignored.  The default value is '1000'.
          *                              <li>
          *                      gpudb::solve_graph_export_solve_results:
          *                      Returns solution results inside the @a
@@ -331,6 +340,39 @@ namespace gpudb
          *                      bandwidth. For SHORTEST_PATH solver type, the
          *                      input is split amongst the server containing
          *                      the corresponding graph.
+         *                              <li>
+         *                      gpudb::solve_graph_convergence_limit: For @a
+         *                      PAGE_RANK solvers only; Maximum percent
+         *                      relative threshold on the pagerank scores of
+         *                      each node between consecutive iterations to
+         *                      satisfy convergence. Default value is 1 (one)
+         *                      percent.  The default value is '1.0'.
+         *                              <li> gpudb::solve_graph_max_iterations:
+         *                      For @a PAGE_RANK solvers only; Maximum number
+         *                      of pagerank iterations for satisfying
+         *                      convergence. Default value is 100.  The default
+         *                      value is '100'.
+         *                              <li> gpudb::solve_graph_max_runs: For
+         *                      all @a CENTRALITY solvers only; Sets the
+         *                      maximum number of shortest path runs; maximum
+         *                      possible value is the number of nodes in the
+         *                      graph. Default value of 0 enables this value to
+         *                      be auto computed by the solver.  The default
+         *                      value is '0'.
+         *                              <li>
+         *                      gpudb::solve_graph_output_clusters: For @a
+         *                      STATS_ALL solvers only; the cluster index for
+         *                      each node will be inserted as an additional
+         *                      column in the output.
+         *                      <ul>
+         *                              <li> gpudb::solve_graph_true: An
+         *                      additional column 'CLUSTER' will be added for
+         *                      each node
+         *                              <li> gpudb::solve_graph_false: No extra
+         *                      cluster info per node will be available in the
+         *                      output
+         *                      </ul>
+         *                      The default value is gpudb::solve_graph_false.
          *                      </ul>
          * 
          */
@@ -451,11 +493,11 @@ namespace gpudb
      * <a href="../../../graph_solver/network_graph_solver/"
      * target="_top">Network Graphs & Solvers</a>
      * concepts documentation, the
-     * <a href="../../../graph_solver/examples/graph_rest_guide/"
-     * target="_top">Graph REST Tutorial</a>,
+     * <a href="../../../guides/graph_rest_guide/" target="_top">Graph REST
+     * Tutorial</a>,
      * and/or some
-     * <a href="../../../graph_solver/examples/#match-graph"
-     * target="_top">/match/graph examples</a>
+     * <a href="../../../guide-tags/graph-solve" target="_top">/solve/graph
+     * examples</a>
      * before using this endpoint.
      */
     struct SolveGraphResponse

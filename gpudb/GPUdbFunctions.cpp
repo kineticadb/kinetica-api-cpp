@@ -6,12 +6,15 @@
 
 
 // GPUdb Version
-const std::string GPUdb::API_VERSION( "7.1.3.0" );
+const std::string GPUdb::API_VERSION( "7.1.4.0" );
 
 
 
 /**
  * Adds a host to an existing cluster.
+ * <p>
+ * @attention This method should be used for on-premise deployments only.
+ * <p>
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -30,6 +33,9 @@ AdminAddHostResponse GPUdb::adminAddHost( const AdminAddHostRequest& request_ ) 
 
 /**
  * Adds a host to an existing cluster.
+ * <p>
+ * @attention This method should be used for on-premise deployments only.
+ * <p>
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -51,6 +57,9 @@ AdminAddHostResponse& GPUdb::adminAddHost( const AdminAddHostRequest& request_,
 
 /**
  * Adds a host to an existing cluster.
+ * <p>
+ * @attention This method should be used for on-premise deployments only.
+ * <p>
  * 
  * @param hostAddress  IP address of the host that will be added to the
  *                     cluster. This host must have installed the same version
@@ -119,6 +128,9 @@ AdminAddHostResponse GPUdb::adminAddHost( const std::string& hostAddress,
 
 /**
  * Adds a host to an existing cluster.
+ * <p>
+ * @attention This method should be used for on-premise deployments only.
+ * <p>
  * 
  * @param hostAddress  IP address of the host that will be added to the
  *                     cluster. This host must have installed the same version
@@ -211,11 +223,14 @@ AdminAddHostResponse& GPUdb::adminAddHost( const std::string& hostAddress,
  *   being added in @a hosts. The key of each map would be
  *   the configuration parameter name and the value would be the
  *   parameter's value, e.g. '{"rank.gpu":"1"}'
-
+ * <p>
  * This endpoint's processing includes copying all replicated table data to the
  * new rank(s) and therefore could take a long time. The API call may time out
  * if run directly.  It is recommended to run this endpoint asynchronously via
  * {@link #createJob(const CreateJobRequest&) const}.
+ * <p>
+ * @attention This method should be used for on-premise deployments only.
+ * <p>
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -256,11 +271,14 @@ AdminAddRanksResponse GPUdb::adminAddRanks( const AdminAddRanksRequest& request_
  *   being added in @a hosts. The key of each map would be
  *   the configuration parameter name and the value would be the
  *   parameter's value, e.g. '{"rank.gpu":"1"}'
-
+ * <p>
  * This endpoint's processing includes copying all replicated table data to the
  * new rank(s) and therefore could take a long time. The API call may time out
  * if run directly.  It is recommended to run this endpoint asynchronously via
  * {@link #createJob(const CreateJobRequest&,CreateJobResponse&) const}.
+ * <p>
+ * @attention This method should be used for on-premise deployments only.
+ * <p>
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -304,12 +322,15 @@ AdminAddRanksResponse& GPUdb::adminAddRanks( const AdminAddRanksRequest& request
  *   being added in @a hosts. The key of each map would be
  *   the configuration parameter name and the value would be the
  *   parameter's value, e.g. '{"rank.gpu":"1"}'
-
+ * <p>
  * This endpoint's processing includes copying all replicated table data to the
  * new rank(s) and therefore could take a long time. The API call may time out
  * if run directly.  It is recommended to run this endpoint asynchronously via
  * {@link
  * #createJob(const std::string&,const std::string&,const std::vector<uint8_t>&,const std::string&,const std::map<std::string, std::string>&) const}.
+ * <p>
+ * @attention This method should be used for on-premise deployments only.
+ * <p>
  * 
  * @param hosts  Array of host IP addresses (matching a hostN.address from the
  *               gpudb.conf file), or host identifiers (e.g. 'host0' from the
@@ -402,12 +423,15 @@ AdminAddRanksResponse GPUdb::adminAddRanks( const std::vector<std::string>& host
  *   being added in @a hosts. The key of each map would be
  *   the configuration parameter name and the value would be the
  *   parameter's value, e.g. '{"rank.gpu":"1"}'
-
+ * <p>
  * This endpoint's processing includes copying all replicated table data to the
  * new rank(s) and therefore could take a long time. The API call may time out
  * if run directly.  It is recommended to run this endpoint asynchronously via
  * {@link
  * #createJob(const std::string&,const std::string&,const std::vector<uint8_t>&,const std::string&,const std::map<std::string, std::string>&,CreateJobResponse&) const}.
+ * <p>
+ * @attention This method should be used for on-premise deployments only.
+ * <p>
  * 
  * @param hosts  Array of host IP addresses (matching a hostN.address from the
  *               gpudb.conf file), or host identifiers (e.g. 'host0' from the
@@ -602,11 +626,11 @@ AdminAlterHostResponse& GPUdb::adminAlterHost( const std::string& host,
 
 
 /**
- * Perform the requested action on a list of one or more job(s). Based on the
- * type of job and the current state of execution, the action may not be
+ * Perform the requested action on a list of one or more job(s). Based
+ * on the type of job and the current state of execution, the action may not be
  * successfully executed. The final result of the attempted actions for each
- * specified job is returned in the status array of the response. See <a
- * href="../../../admin/job_manager/" target="_top">Job Manager</a> for more
+ * specified job is returned in the status array of the response. See
+ * <a href="../../../admin/job_manager/" target="_top">Job Manager</a> for more
  * information.
  * 
  * @param[in] request_  Request object containing the parameters for the
@@ -625,11 +649,11 @@ AdminAlterJobsResponse GPUdb::adminAlterJobs( const AdminAlterJobsRequest& reque
 
 
 /**
- * Perform the requested action on a list of one or more job(s). Based on the
- * type of job and the current state of execution, the action may not be
+ * Perform the requested action on a list of one or more job(s). Based
+ * on the type of job and the current state of execution, the action may not be
  * successfully executed. The final result of the attempted actions for each
- * specified job is returned in the status array of the response. See <a
- * href="../../../admin/job_manager/" target="_top">Job Manager</a> for more
+ * specified job is returned in the status array of the response. See
+ * <a href="../../../admin/job_manager/" target="_top">Job Manager</a> for more
  * information.
  * 
  * @param[in] request_  Request object containing the parameters for the
@@ -651,11 +675,11 @@ AdminAlterJobsResponse& GPUdb::adminAlterJobs( const AdminAlterJobsRequest& requ
 
 
 /**
- * Perform the requested action on a list of one or more job(s). Based on the
- * type of job and the current state of execution, the action may not be
+ * Perform the requested action on a list of one or more job(s). Based
+ * on the type of job and the current state of execution, the action may not be
  * successfully executed. The final result of the attempted actions for each
- * specified job is returned in the status array of the response. See <a
- * href="../../../admin/job_manager/" target="_top">Job Manager</a> for more
+ * specified job is returned in the status array of the response. See
+ * <a href="../../../admin/job_manager/" target="_top">Job Manager</a> for more
  * information.
  * 
  * @param jobIds  Jobs to be modified.
@@ -688,11 +712,11 @@ AdminAlterJobsResponse GPUdb::adminAlterJobs( const std::vector<int64_t>& jobIds
 
 
 /**
- * Perform the requested action on a list of one or more job(s). Based on the
- * type of job and the current state of execution, the action may not be
+ * Perform the requested action on a list of one or more job(s). Based
+ * on the type of job and the current state of execution, the action may not be
  * successfully executed. The final result of the attempted actions for each
- * specified job is returned in the status array of the response. See <a
- * href="../../../admin/job_manager/" target="_top">Job Manager</a> for more
+ * specified job is returned in the status array of the response. See
+ * <a href="../../../admin/job_manager/" target="_top">Job Manager</a> for more
  * information.
  * 
  * @param jobIds  Jobs to be modified.
@@ -723,6 +747,186 @@ AdminAlterJobsResponse& GPUdb::adminAlterJobs( const std::vector<int64_t>& jobId
     actualRequest_.action = action;
     actualRequest_.options = options;
     submitRequest("/admin/alter/jobs", actualRequest_, response_, false);
+    return response_;
+}
+
+
+/**
+ * Prepares the system for a backup by closing all open file handles after
+ * allowing current active jobs to complete. When the database is in backup
+ * mode, queries that result in a disk write operation will be blocked until
+ * backup mode has been completed by using {@link
+ * #adminBackupEnd(const AdminBackupEndRequest&) const}.
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+AdminBackupBeginResponse GPUdb::adminBackupBegin( const AdminBackupBeginRequest& request_ ) const
+{
+    AdminBackupBeginResponse actualResponse_;
+    submitRequest("/admin/backup/begin", request_, actualResponse_, false);
+    return actualResponse_;
+}
+
+
+/**
+ * Prepares the system for a backup by closing all open file handles after
+ * allowing current active jobs to complete. When the database is in backup
+ * mode, queries that result in a disk write operation will be blocked until
+ * backup mode has been completed by using {@link
+ * #adminBackupEnd(const AdminBackupEndRequest&,AdminBackupEndResponse&) const}.
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+AdminBackupBeginResponse& GPUdb::adminBackupBegin( const AdminBackupBeginRequest& request_,
+                                                   AdminBackupBeginResponse& response_ ) const
+{
+    submitRequest("/admin/backup/begin", request_, response_, false);
+    return response_;
+}
+
+
+/**
+ * Prepares the system for a backup by closing all open file handles after
+ * allowing current active jobs to complete. When the database is in backup
+ * mode, queries that result in a disk write operation will be blocked until
+ * backup mode has been completed by using {@link
+ * #adminBackupEnd(const std::map<std::string, std::string>&) const}.
+ * 
+ * @param options  Optional parameters.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+AdminBackupBeginResponse GPUdb::adminBackupBegin( const std::map<std::string, std::string>& options ) const
+{
+    AdminBackupBeginRequest actualRequest_;
+    actualRequest_.options = options;
+    AdminBackupBeginResponse actualResponse_;
+    submitRequest("/admin/backup/begin", actualRequest_, actualResponse_, false);
+    return actualResponse_;
+}
+
+
+/**
+ * Prepares the system for a backup by closing all open file handles after
+ * allowing current active jobs to complete. When the database is in backup
+ * mode, queries that result in a disk write operation will be blocked until
+ * backup mode has been completed by using {@link
+ * #adminBackupEnd(const std::map<std::string, std::string>&,AdminBackupEndResponse&) const}.
+ * 
+ * @param options  Optional parameters.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+AdminBackupBeginResponse& GPUdb::adminBackupBegin( const std::map<std::string, std::string>& options,
+                                                   AdminBackupBeginResponse& response_ ) const
+{
+    AdminBackupBeginRequest actualRequest_;
+    actualRequest_.options = options;
+    submitRequest("/admin/backup/begin", actualRequest_, response_, false);
+    return response_;
+}
+
+
+/**
+ * Restores the system to normal operating mode after a backup has completed,
+ * allowing any queries that were blocked to complete.
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+AdminBackupEndResponse GPUdb::adminBackupEnd( const AdminBackupEndRequest& request_ ) const
+{
+    AdminBackupEndResponse actualResponse_;
+    submitRequest("/admin/backup/end", request_, actualResponse_, false);
+    return actualResponse_;
+}
+
+
+/**
+ * Restores the system to normal operating mode after a backup has completed,
+ * allowing any queries that were blocked to complete.
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+AdminBackupEndResponse& GPUdb::adminBackupEnd( const AdminBackupEndRequest& request_,
+                                               AdminBackupEndResponse& response_ ) const
+{
+    submitRequest("/admin/backup/end", request_, response_, false);
+    return response_;
+}
+
+
+/**
+ * Restores the system to normal operating mode after a backup has completed,
+ * allowing any queries that were blocked to complete.
+ * 
+ * @param options  Optional parameters.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+AdminBackupEndResponse GPUdb::adminBackupEnd( const std::map<std::string, std::string>& options ) const
+{
+    AdminBackupEndRequest actualRequest_;
+    actualRequest_.options = options;
+    AdminBackupEndResponse actualResponse_;
+    submitRequest("/admin/backup/end", actualRequest_, actualResponse_, false);
+    return actualResponse_;
+}
+
+
+/**
+ * Restores the system to normal operating mode after a backup has completed,
+ * allowing any queries that were blocked to complete.
+ * 
+ * @param options  Optional parameters.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+AdminBackupEndResponse& GPUdb::adminBackupEnd( const std::map<std::string, std::string>& options,
+                                               AdminBackupEndResponse& response_ ) const
+{
+    AdminBackupEndRequest actualRequest_;
+    actualRequest_.options = options;
+    submitRequest("/admin/backup/end", actualRequest_, response_, false);
     return response_;
 }
 
@@ -842,8 +1046,8 @@ AdminOfflineResponse& GPUdb::adminOffline( const bool offline,
 
 
 /**
- * Rebalance the data in the cluster so that all nodes contain an equal number
- * of records approximately and/or rebalance the shards to be equally
+ * Rebalance the data in the cluster so that all nodes contain an equal
+ * number of records approximately and/or rebalance the shards to be equally
  * distributed (as much as possible) across all the ranks.
  * <p>
  * The database must be offline for this operation, see {@link
@@ -870,7 +1074,8 @@ AdminOfflineResponse& GPUdb::adminOffline( const bool offline,
  * <p>
  * This endpoint's processing time depends on the amount of data in the system,
  * thus the API call may time out if run directly.  It is recommended to run
- * this endpoint asynchronously via {@link
+ * this
+ * endpoint asynchronously via {@link
  * #createJob(const CreateJobRequest&) const}.
  * 
  * @param[in] request_  Request object containing the parameters for the
@@ -889,8 +1094,8 @@ AdminRebalanceResponse GPUdb::adminRebalance( const AdminRebalanceRequest& reque
 
 
 /**
- * Rebalance the data in the cluster so that all nodes contain an equal number
- * of records approximately and/or rebalance the shards to be equally
+ * Rebalance the data in the cluster so that all nodes contain an equal
+ * number of records approximately and/or rebalance the shards to be equally
  * distributed (as much as possible) across all the ranks.
  * <p>
  * The database must be offline for this operation, see {@link
@@ -919,7 +1124,8 @@ AdminRebalanceResponse GPUdb::adminRebalance( const AdminRebalanceRequest& reque
  * <p>
  * This endpoint's processing time depends on the amount of data in the system,
  * thus the API call may time out if run directly.  It is recommended to run
- * this endpoint asynchronously via {@link
+ * this
+ * endpoint asynchronously via {@link
  * #createJob(const CreateJobRequest&,CreateJobResponse&) const}.
  * 
  * @param[in] request_  Request object containing the parameters for the
@@ -941,8 +1147,8 @@ AdminRebalanceResponse& GPUdb::adminRebalance( const AdminRebalanceRequest& requ
 
 
 /**
- * Rebalance the data in the cluster so that all nodes contain an equal number
- * of records approximately and/or rebalance the shards to be equally
+ * Rebalance the data in the cluster so that all nodes contain an equal
+ * number of records approximately and/or rebalance the shards to be equally
  * distributed (as much as possible) across all the ranks.
  * <p>
  * The database must be offline for this operation, see {@link
@@ -971,7 +1177,8 @@ AdminRebalanceResponse& GPUdb::adminRebalance( const AdminRebalanceRequest& requ
  * <p>
  * This endpoint's processing time depends on the amount of data in the system,
  * thus the API call may time out if run directly.  It is recommended to run
- * this endpoint asynchronously via {@link
+ * this
+ * endpoint asynchronously via {@link
  * #createJob(const std::string&,const std::string&,const std::vector<uint8_t>&,const std::string&,const std::map<std::string, std::string>&) const}.
  * 
  * @param options  Optional parameters.
@@ -1074,8 +1281,8 @@ AdminRebalanceResponse GPUdb::adminRebalance( const std::map<std::string, std::s
 
 
 /**
- * Rebalance the data in the cluster so that all nodes contain an equal number
- * of records approximately and/or rebalance the shards to be equally
+ * Rebalance the data in the cluster so that all nodes contain an equal
+ * number of records approximately and/or rebalance the shards to be equally
  * distributed (as much as possible) across all the ranks.
  * <p>
  * The database must be offline for this operation, see {@link
@@ -1104,7 +1311,8 @@ AdminRebalanceResponse GPUdb::adminRebalance( const std::map<std::string, std::s
  * <p>
  * This endpoint's processing time depends on the amount of data in the system,
  * thus the API call may time out if run directly.  It is recommended to run
- * this endpoint asynchronously via {@link
+ * this
+ * endpoint asynchronously via {@link
  * #createJob(const std::string&,const std::string&,const std::vector<uint8_t>&,const std::string&,const std::map<std::string, std::string>&,CreateJobResponse&) const}.
  * 
  * @param options  Optional parameters.
@@ -1218,6 +1426,9 @@ AdminRebalanceResponse& GPUdb::adminRebalance( const std::map<std::string, std::
  * removal. If the host to be removed has the graph server or SQL planner
  * running on it, these must be manually switched over to a new host using
  * {@link #adminSwitchover(const AdminSwitchoverRequest&) const}.
+ * <p>
+ * @attention This method should be used for on-premise deployments only.
+ * <p>
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -1244,6 +1455,9 @@ AdminRemoveHostResponse GPUdb::adminRemoveHost( const AdminRemoveHostRequest& re
  * planner running on it, these must be manually switched over to a new host
  * using {@link
  * #adminSwitchover(const AdminSwitchoverRequest&,AdminSwitchoverResponse&) const}.
+ * <p>
+ * @attention This method should be used for on-premise deployments only.
+ * <p>
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -1273,6 +1487,9 @@ AdminRemoveHostResponse& GPUdb::adminRemoveHost( const AdminRemoveHostRequest& r
  * planner running on it, these must be manually switched over to a new host
  * using {@link
  * #adminSwitchover(const std::vector<std::string>&,const std::vector<std::string>&,const std::map<std::string, std::string>&) const}.
+ * <p>
+ * @attention This method should be used for on-premise deployments only.
+ * <p>
  * 
  * @param host  Identifies the host this applies to. Can be the host address,
  *              or formatted as 'hostN' where N is the host number as specified
@@ -1315,6 +1532,9 @@ AdminRemoveHostResponse GPUdb::adminRemoveHost( const std::string& host,
  * planner running on it, these must be manually switched over to a new host
  * using {@link
  * #adminSwitchover(const std::vector<std::string>&,const std::vector<std::string>&,const std::map<std::string, std::string>&,AdminSwitchoverResponse&) const}.
+ * <p>
+ * @attention This method should be used for on-premise deployments only.
+ * <p>
  * 
  * @param host  Identifies the host this applies to. Can be the host address,
  *              or formatted as 'hostN' where N is the host number as specified
@@ -1351,13 +1571,15 @@ AdminRemoveHostResponse& GPUdb::adminRemoveHost( const std::string& host,
 
 
 /**
- * Remove one or more ranks from an existing Kinetica cluster. All data will be
- * rebalanced to other ranks before the rank(s) is removed unless the @a
- * rebalance_sharded_data or @a rebalance_unsharded_data parameters are set to
- * @a false in the @a options, in which case the corresponding <a
- * href="../../../concepts/tables/#sharding" target="_top">sharded data</a>
- * and/or unsharded data (a.k.a. <a
- * href="../../../concepts/tables/#random-sharding"
+ * Remove one or more ranks from an existing Kinetica cluster. All data
+ * will be rebalanced to other ranks before the rank(s) is removed unless the
+ * @a rebalance_sharded_data or
+ * @a rebalance_unsharded_data parameters are set to
+ * @a false in the
+ * @a options, in which case the corresponding
+ * <a href="../../../concepts/tables/#sharding" target="_top">sharded data</a>
+ * and/or unsharded data (a.k.a.
+ * <a href="../../../concepts/tables/#random-sharding"
  * target="_top">randomly-sharded</a>) will be deleted.
  * <p>
  * The database must be offline for this operation, see {@link
@@ -1365,8 +1587,12 @@ AdminRemoveHostResponse& GPUdb::adminRemoveHost( const std::string& host,
  * <p>
  * This endpoint's processing time depends on the amount of data in the system,
  * thus the API call may time out if run directly.  It is recommended to run
- * this endpoint asynchronously via {@link
+ * this
+ * endpoint asynchronously via {@link
  * #createJob(const CreateJobRequest&) const}.
+ * <p>
+ * @attention This method should be used for on-premise deployments only.
+ * <p>
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -1384,13 +1610,15 @@ AdminRemoveRanksResponse GPUdb::adminRemoveRanks( const AdminRemoveRanksRequest&
 
 
 /**
- * Remove one or more ranks from an existing Kinetica cluster. All data will be
- * rebalanced to other ranks before the rank(s) is removed unless the @a
- * rebalance_sharded_data or @a rebalance_unsharded_data parameters are set to
- * @a false in the @a options, in which case the corresponding <a
- * href="../../../concepts/tables/#sharding" target="_top">sharded data</a>
- * and/or unsharded data (a.k.a. <a
- * href="../../../concepts/tables/#random-sharding"
+ * Remove one or more ranks from an existing Kinetica cluster. All data
+ * will be rebalanced to other ranks before the rank(s) is removed unless the
+ * @a rebalance_sharded_data or
+ * @a rebalance_unsharded_data parameters are set to
+ * @a false in the
+ * @a options, in which case the corresponding
+ * <a href="../../../concepts/tables/#sharding" target="_top">sharded data</a>
+ * and/or unsharded data (a.k.a.
+ * <a href="../../../concepts/tables/#random-sharding"
  * target="_top">randomly-sharded</a>) will be deleted.
  * <p>
  * The database must be offline for this operation, see {@link
@@ -1398,8 +1626,12 @@ AdminRemoveRanksResponse GPUdb::adminRemoveRanks( const AdminRemoveRanksRequest&
  * <p>
  * This endpoint's processing time depends on the amount of data in the system,
  * thus the API call may time out if run directly.  It is recommended to run
- * this endpoint asynchronously via {@link
+ * this
+ * endpoint asynchronously via {@link
  * #createJob(const CreateJobRequest&,CreateJobResponse&) const}.
+ * <p>
+ * @attention This method should be used for on-premise deployments only.
+ * <p>
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -1420,13 +1652,15 @@ AdminRemoveRanksResponse& GPUdb::adminRemoveRanks( const AdminRemoveRanksRequest
 
 
 /**
- * Remove one or more ranks from an existing Kinetica cluster. All data will be
- * rebalanced to other ranks before the rank(s) is removed unless the @a
- * rebalance_sharded_data or @a rebalance_unsharded_data parameters are set to
- * @a false in the @a options, in which case the corresponding <a
- * href="../../../concepts/tables/#sharding" target="_top">sharded data</a>
- * and/or unsharded data (a.k.a. <a
- * href="../../../concepts/tables/#random-sharding"
+ * Remove one or more ranks from an existing Kinetica cluster. All data
+ * will be rebalanced to other ranks before the rank(s) is removed unless the
+ * @a rebalance_sharded_data or
+ * @a rebalance_unsharded_data parameters are set to
+ * @a false in the
+ * @a options, in which case the corresponding
+ * <a href="../../../concepts/tables/#sharding" target="_top">sharded data</a>
+ * and/or unsharded data (a.k.a.
+ * <a href="../../../concepts/tables/#random-sharding"
  * target="_top">randomly-sharded</a>) will be deleted.
  * <p>
  * The database must be offline for this operation, see {@link
@@ -1434,8 +1668,12 @@ AdminRemoveRanksResponse& GPUdb::adminRemoveRanks( const AdminRemoveRanksRequest
  * <p>
  * This endpoint's processing time depends on the amount of data in the system,
  * thus the API call may time out if run directly.  It is recommended to run
- * this endpoint asynchronously via {@link
+ * this
+ * endpoint asynchronously via {@link
  * #createJob(const std::string&,const std::string&,const std::vector<uint8_t>&,const std::string&,const std::map<std::string, std::string>&) const}.
+ * <p>
+ * @attention This method should be used for on-premise deployments only.
+ * <p>
  * 
  * @param ranks  Each array value designates one or more ranks to remove from
  *               the cluster. Values can be formatted as 'rankN' for a specific
@@ -1500,13 +1738,15 @@ AdminRemoveRanksResponse GPUdb::adminRemoveRanks( const std::vector<std::string>
 
 
 /**
- * Remove one or more ranks from an existing Kinetica cluster. All data will be
- * rebalanced to other ranks before the rank(s) is removed unless the @a
- * rebalance_sharded_data or @a rebalance_unsharded_data parameters are set to
- * @a false in the @a options, in which case the corresponding <a
- * href="../../../concepts/tables/#sharding" target="_top">sharded data</a>
- * and/or unsharded data (a.k.a. <a
- * href="../../../concepts/tables/#random-sharding"
+ * Remove one or more ranks from an existing Kinetica cluster. All data
+ * will be rebalanced to other ranks before the rank(s) is removed unless the
+ * @a rebalance_sharded_data or
+ * @a rebalance_unsharded_data parameters are set to
+ * @a false in the
+ * @a options, in which case the corresponding
+ * <a href="../../../concepts/tables/#sharding" target="_top">sharded data</a>
+ * and/or unsharded data (a.k.a.
+ * <a href="../../../concepts/tables/#random-sharding"
  * target="_top">randomly-sharded</a>) will be deleted.
  * <p>
  * The database must be offline for this operation, see {@link
@@ -1514,8 +1754,12 @@ AdminRemoveRanksResponse GPUdb::adminRemoveRanks( const std::vector<std::string>
  * <p>
  * This endpoint's processing time depends on the amount of data in the system,
  * thus the API call may time out if run directly.  It is recommended to run
- * this endpoint asynchronously via {@link
+ * this
+ * endpoint asynchronously via {@link
  * #createJob(const std::string&,const std::string&,const std::vector<uint8_t>&,const std::string&,const std::map<std::string, std::string>&,CreateJobResponse&) const}.
+ * <p>
+ * @attention This method should be used for on-premise deployments only.
+ * <p>
  * 
  * @param ranks  Each array value designates one or more ranks to remove from
  *               the cluster. Values can be formatted as 'rankN' for a specific
@@ -2071,6 +2315,9 @@ AdminShutdownResponse& GPUdb::adminShutdown( const std::string& exitType,
 /**
  * Manually switchover one or more processes to another host. Individual ranks
  * or entire hosts may be moved to another host.
+ * <p>
+ * @attention This method should be used for on-premise deployments only.
+ * <p>
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -2090,6 +2337,9 @@ AdminSwitchoverResponse GPUdb::adminSwitchover( const AdminSwitchoverRequest& re
 /**
  * Manually switchover one or more processes to another host. Individual ranks
  * or entire hosts may be moved to another host.
+ * <p>
+ * @attention This method should be used for on-premise deployments only.
+ * <p>
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -2112,6 +2362,9 @@ AdminSwitchoverResponse& GPUdb::adminSwitchover( const AdminSwitchoverRequest& r
 /**
  * Manually switchover one or more processes to another host. Individual ranks
  * or entire hosts may be moved to another host.
+ * <p>
+ * @attention This method should be used for on-premise deployments only.
+ * <p>
  * 
  * @param processes  Indicates the process identifier to switchover to another
  *                   host. Options are 'hostN' and 'rankN' where 'N'
@@ -2165,6 +2418,9 @@ AdminSwitchoverResponse GPUdb::adminSwitchover( const std::vector<std::string>& 
 /**
  * Manually switchover one or more processes to another host. Individual ranks
  * or entire hosts may be moved to another host.
+ * <p>
+ * @attention This method should be used for on-premise deployments only.
+ * <p>
  * 
  * @param processes  Indicates the process identifier to switchover to another
  *                   host. Options are 'hostN' and 'rankN' where 'N'
@@ -3017,20 +3273,6 @@ AggregateGroupByResponse& GPUdb::aggregateGroupBy( const AggregateGroupByRequest
  *                         <li> gpudb::aggregate_group_by_view_id: ID of view
  *                 of which the result table will be a member.  The default
  *                 value is ''.
- *                         <li> gpudb::aggregate_group_by_materialize_on_gpu:
- *                 No longer used.  See <a href="../../../rm/concepts/"
- *                 target="_top">Resource Management Concepts</a> for
- *                 information about how resources are managed, <a
- *                 href="../../../rm/concepts/" target="_top">Tier Strategy
- *                 Concepts</a> for how resources are targeted for VRAM, and <a
- *                 href="../../../rm/usage/#tier-strategies" target="_top">Tier
- *                 Strategy Usage</a> for how to specify a table's priority in
- *                 VRAM.
- *                 <ul>
- *                         <li> gpudb::aggregate_group_by_true
- *                         <li> gpudb::aggregate_group_by_false
- *                 </ul>
- *                 The default value is gpudb::aggregate_group_by_false.
  *                         <li> gpudb::aggregate_group_by_pivot: pivot column
  *                         <li> gpudb::aggregate_group_by_pivot_values: The
  *                 value list provided will become the column headers in the
@@ -3257,20 +3499,6 @@ AggregateGroupByResponse GPUdb::aggregateGroupBy( const std::string& tableName,
  *                         <li> gpudb::aggregate_group_by_view_id: ID of view
  *                 of which the result table will be a member.  The default
  *                 value is ''.
- *                         <li> gpudb::aggregate_group_by_materialize_on_gpu:
- *                 No longer used.  See <a href="../../../rm/concepts/"
- *                 target="_top">Resource Management Concepts</a> for
- *                 information about how resources are managed, <a
- *                 href="../../../rm/concepts/" target="_top">Tier Strategy
- *                 Concepts</a> for how resources are targeted for VRAM, and <a
- *                 href="../../../rm/usage/#tier-strategies" target="_top">Tier
- *                 Strategy Usage</a> for how to specify a table's priority in
- *                 VRAM.
- *                 <ul>
- *                         <li> gpudb::aggregate_group_by_true
- *                         <li> gpudb::aggregate_group_by_false
- *                 </ul>
- *                 The default value is gpudb::aggregate_group_by_false.
  *                         <li> gpudb::aggregate_group_by_pivot: pivot column
  *                         <li> gpudb::aggregate_group_by_pivot_values: The
  *                 value list provided will become the column headers in the
@@ -5503,20 +5731,6 @@ AggregateUnpivotResponse& GPUdb::aggregateUnpivot( const AggregateUnpivotRequest
  *                 table specified in @a result_table.
  *                         <li> gpudb::aggregate_unpivot_view_id: view this
  *                 result table is part of.  The default value is ''.
- *                         <li> gpudb::aggregate_unpivot_materialize_on_gpu: No
- *                 longer used.  See <a href="../../../rm/concepts/"
- *                 target="_top">Resource Management Concepts</a> for
- *                 information about how resources are managed, <a
- *                 href="../../../rm/concepts/" target="_top">Tier Strategy
- *                 Concepts</a> for how resources are targeted for VRAM, and <a
- *                 href="../../../rm/usage/#tier-strategies" target="_top">Tier
- *                 Strategy Usage</a> for how to specify a table's priority in
- *                 VRAM.
- *                 <ul>
- *                         <li> gpudb::aggregate_unpivot_true
- *                         <li> gpudb::aggregate_unpivot_false
- *                 </ul>
- *                 The default value is gpudb::aggregate_unpivot_false.
  *                         <li> gpudb::aggregate_unpivot_create_indexes:
  *                 Comma-separated list of columns on which to create indexes
  *                 on the table specified in @a result_table. The columns
@@ -5649,20 +5863,6 @@ AggregateUnpivotResponse GPUdb::aggregateUnpivot( const std::string& tableName,
  *                 table specified in @a result_table.
  *                         <li> gpudb::aggregate_unpivot_view_id: view this
  *                 result table is part of.  The default value is ''.
- *                         <li> gpudb::aggregate_unpivot_materialize_on_gpu: No
- *                 longer used.  See <a href="../../../rm/concepts/"
- *                 target="_top">Resource Management Concepts</a> for
- *                 information about how resources are managed, <a
- *                 href="../../../rm/concepts/" target="_top">Tier Strategy
- *                 Concepts</a> for how resources are targeted for VRAM, and <a
- *                 href="../../../rm/usage/#tier-strategies" target="_top">Tier
- *                 Strategy Usage</a> for how to specify a table's priority in
- *                 VRAM.
- *                 <ul>
- *                         <li> gpudb::aggregate_unpivot_true
- *                         <li> gpudb::aggregate_unpivot_false
- *                 </ul>
- *                 The default value is gpudb::aggregate_unpivot_false.
  *                         <li> gpudb::aggregate_unpivot_create_indexes:
  *                 Comma-separated list of columns on which to create indexes
  *                 on the table specified in @a result_table. The columns
@@ -5950,6 +6150,10 @@ AlterDatasourceResponse& GPUdb::alterDatasource( const AlterDatasourceRequest& r
  *                              Name of the Amazon S3 region where the given
  *                              bucket is located
  *                                      <li>
+ *                              gpudb::alter_datasource_s3_aws_role_arn: Amazon
+ *                              IAM Role ARN which has required S3 permissions
+ *                              that can be assumed for the given S3 IAM user
+ *                                      <li>
  *                              gpudb::alter_datasource_hdfs_kerberos_keytab:
  *                              Kerberos keytab file location for the given
  *                              HDFS user
@@ -5985,6 +6189,13 @@ AlterDatasourceResponse& GPUdb::alterDatasource( const AlterDatasourceRequest& r
  *                                      <li>
  *                              gpudb::alter_datasource_azure_oauth_token:
  *                              Oauth token to access given storage container
+ *                                      <li> gpudb::alter_datasource_kafka_url:
+ *                              The publicly-accessible full path URL to the
+ *                              kafka broker, e.g.,
+ *                              'http://172.123.45.67:9300'.
+ *                                      <li>
+ *                              gpudb::alter_datasource_kafka_topic_name: Name
+ *                              of the Kafka topic to use as the data source
  *                              </ul>
  * @param options  Optional parameters.
  * 
@@ -6054,6 +6265,10 @@ AlterDatasourceResponse GPUdb::alterDatasource( const std::string& name,
  *                              Name of the Amazon S3 region where the given
  *                              bucket is located
  *                                      <li>
+ *                              gpudb::alter_datasource_s3_aws_role_arn: Amazon
+ *                              IAM Role ARN which has required S3 permissions
+ *                              that can be assumed for the given S3 IAM user
+ *                                      <li>
  *                              gpudb::alter_datasource_hdfs_kerberos_keytab:
  *                              Kerberos keytab file location for the given
  *                              HDFS user
@@ -6089,6 +6304,13 @@ AlterDatasourceResponse GPUdb::alterDatasource( const std::string& name,
  *                                      <li>
  *                              gpudb::alter_datasource_azure_oauth_token:
  *                              Oauth token to access given storage container
+ *                                      <li> gpudb::alter_datasource_kafka_url:
+ *                              The publicly-accessible full path URL to the
+ *                              kafka broker, e.g.,
+ *                              'http://172.123.45.67:9300'.
+ *                                      <li>
+ *                              gpudb::alter_datasource_kafka_topic_name: Name
+ *                              of the Kafka topic to use as the data source
  *                              </ul>
  * @param options  Optional parameters.
  * @param[out] response_  Response object containing the results of the
@@ -6855,6 +7077,21 @@ AlterSystemPropertiesResponse& GPUdb::alterSystemProperties( const AlterSystemPr
  *                            gpudb::alter_system_properties_enable_overlapped_equi_join:
  *                            Enable overlapped-equi-join filter.  The default
  *                            value is 'true'.
+ *                                    <li>
+ *                            gpudb::alter_system_properties_kafka_batch_size:
+ *                            Maximum number of records to be read in a single
+ *                            kafka batched request.  The default value is
+ *                            '1000'.
+ *                                    <li>
+ *                            gpudb::alter_system_properties_kafka_wait_time:
+ *                            Maximum number of seconds to wait in a single
+ *                            kafka batched request.  The default value is
+ *                            '30'.
+ *                                    <li>
+ *                            gpudb::alter_system_properties_kafka_timeout:
+ *                            Number of seconds after which kakfa poll will
+ *                            timeout if datasource has no records.  The
+ *                            default value is '5'.
  *                            </ul>
  * @param options  Optional parameters.
  * 
@@ -7023,6 +7260,21 @@ AlterSystemPropertiesResponse GPUdb::alterSystemProperties( const std::map<std::
  *                            gpudb::alter_system_properties_enable_overlapped_equi_join:
  *                            Enable overlapped-equi-join filter.  The default
  *                            value is 'true'.
+ *                                    <li>
+ *                            gpudb::alter_system_properties_kafka_batch_size:
+ *                            Maximum number of records to be read in a single
+ *                            kafka batched request.  The default value is
+ *                            '1000'.
+ *                                    <li>
+ *                            gpudb::alter_system_properties_kafka_wait_time:
+ *                            Maximum number of seconds to wait in a single
+ *                            kafka batched request.  The default value is
+ *                            '30'.
+ *                                    <li>
+ *                            gpudb::alter_system_properties_kafka_timeout:
+ *                            Number of seconds after which kakfa poll will
+ *                            timeout if datasource has no records.  The
+ *                            default value is '5'.
  *                            </ul>
  * @param options  Optional parameters.
  * @param[out] response_  Response object containing the results of the
@@ -7381,11 +7633,20 @@ AlterTableResponse& GPUdb::alterTable( const AlterTableRequest& request_,
  *                the <a href="../../../rm/concepts/#tier-strategies"
  *                target="_top">tier strategy</a> for the table and its columns
  *                to the one specified in @a value, replacing the existing tier
- *                strategy in its entirety. See <a
- *                href="../../../rm/concepts/#tier-strategies"
- *                target="_top">tier strategy usage</a> for format and <a
- *                href="../../../rm/usage/#tier-strategies" target="_top">tier
- *                strategy examples</a> for examples.
+ *                strategy in its entirety.
+ *                        <li>
+ *                gpudb::alter_table_cancel_datasource_subscription:
+ *                Permanently unsubscribe a data source that is loading
+ *                continuously as a stream. The data source can be kafka / S3 /
+ *                Azure.
+ *                        <li>
+ *                gpudb::alter_table_pause_datasource_subscription: Temporarily
+ *                unsubscribe a data source that is loading continuously as a
+ *                stream. The data source can be kafka / S3 / Azure.
+ *                        <li>
+ *                gpudb::alter_table_resume_datasource_subscription:
+ *                Resubscribe to a paused data source subscription. The data
+ *                source can be kafka / S3 / Azure.
  *                </ul>
  * @param value  The value of the modification, depending on @a action.  For
  *               example, if @a action is @a add_column, this would be the
@@ -7459,12 +7720,7 @@ AlterTableResponse& GPUdb::alterTable( const AlterTableRequest& request_,
  *                 href="../../../rm/concepts/#tier-strategies"
  *                 target="_top">tier strategy</a> for the table and its
  *                 columns when @a action is @a set_strategy_definition,
- *                 replacing the existing tier strategy in its entirety. See <a
- *                 href="../../../rm/concepts/#tier-strategies"
- *                 target="_top">tier strategy usage</a> for format and <a
- *                 href="../../../rm/usage/#tier-strategies" target="_top">tier
- *                 strategy examples</a> for examples.  This option will be
- *                 ignored if @a value is also specified.
+ *                 replacing the existing tier strategy in its entirety.
  *                         <li> gpudb::alter_table_index_type: Type of index to
  *                 create, when @a action is @a create_index, or to delete,
  *                 when @a action is @a delete_index.
@@ -7698,11 +7954,20 @@ AlterTableResponse GPUdb::alterTable( const std::string& tableName,
  *                the <a href="../../../rm/concepts/#tier-strategies"
  *                target="_top">tier strategy</a> for the table and its columns
  *                to the one specified in @a value, replacing the existing tier
- *                strategy in its entirety. See <a
- *                href="../../../rm/concepts/#tier-strategies"
- *                target="_top">tier strategy usage</a> for format and <a
- *                href="../../../rm/usage/#tier-strategies" target="_top">tier
- *                strategy examples</a> for examples.
+ *                strategy in its entirety.
+ *                        <li>
+ *                gpudb::alter_table_cancel_datasource_subscription:
+ *                Permanently unsubscribe a data source that is loading
+ *                continuously as a stream. The data source can be kafka / S3 /
+ *                Azure.
+ *                        <li>
+ *                gpudb::alter_table_pause_datasource_subscription: Temporarily
+ *                unsubscribe a data source that is loading continuously as a
+ *                stream. The data source can be kafka / S3 / Azure.
+ *                        <li>
+ *                gpudb::alter_table_resume_datasource_subscription:
+ *                Resubscribe to a paused data source subscription. The data
+ *                source can be kafka / S3 / Azure.
  *                </ul>
  * @param value  The value of the modification, depending on @a action.  For
  *               example, if @a action is @a add_column, this would be the
@@ -7776,12 +8041,7 @@ AlterTableResponse GPUdb::alterTable( const std::string& tableName,
  *                 href="../../../rm/concepts/#tier-strategies"
  *                 target="_top">tier strategy</a> for the table and its
  *                 columns when @a action is @a set_strategy_definition,
- *                 replacing the existing tier strategy in its entirety. See <a
- *                 href="../../../rm/concepts/#tier-strategies"
- *                 target="_top">tier strategy usage</a> for format and <a
- *                 href="../../../rm/usage/#tier-strategies" target="_top">tier
- *                 strategy examples</a> for examples.  This option will be
- *                 ignored if @a value is also specified.
+ *                 replacing the existing tier strategy in its entirety.
  *                         <li> gpudb::alter_table_index_type: Type of index to
  *                 create, when @a action is @a create_index, or to delete,
  *                 when @a action is @a delete_index.
@@ -8385,6 +8645,104 @@ AlterUserResponse& GPUdb::alterUser( const std::string& name,
     actualRequest_.value = value;
     actualRequest_.options = options;
     submitRequest("/alter/user", actualRequest_, response_, false);
+    return response_;
+}
+
+
+/**
+ * Alters a video.
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+AlterVideoResponse GPUdb::alterVideo( const AlterVideoRequest& request_ ) const
+{
+    AlterVideoResponse actualResponse_;
+    submitRequest("/alter/video", request_, actualResponse_, false);
+    return actualResponse_;
+}
+
+
+/**
+ * Alters a video.
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+AlterVideoResponse& GPUdb::alterVideo( const AlterVideoRequest& request_,
+                                       AlterVideoResponse& response_ ) const
+{
+    submitRequest("/alter/video", request_, response_, false);
+    return response_;
+}
+
+
+/**
+ * Alters a video.
+ * 
+ * @param path  Fully-qualified <a href="../../../tools/kifs/"
+ *              target="_top">KiFS</a> path to the video to be altered.
+ * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li> gpudb::alter_video_ttl: Sets the <a
+ *                 href="../../../concepts/ttl/" target="_top">TTL</a> of the
+ *                 video.
+ *                 </ul>
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+AlterVideoResponse GPUdb::alterVideo( const std::string& path,
+                                      const std::map<std::string, std::string>& options ) const
+{
+    AlterVideoRequest actualRequest_;
+    actualRequest_.path = path;
+    actualRequest_.options = options;
+    AlterVideoResponse actualResponse_;
+    submitRequest("/alter/video", actualRequest_, actualResponse_, false);
+    return actualResponse_;
+}
+
+
+/**
+ * Alters a video.
+ * 
+ * @param path  Fully-qualified <a href="../../../tools/kifs/"
+ *              target="_top">KiFS</a> path to the video to be altered.
+ * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li> gpudb::alter_video_ttl: Sets the <a
+ *                 href="../../../concepts/ttl/" target="_top">TTL</a> of the
+ *                 video.
+ *                 </ul>
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+AlterVideoResponse& GPUdb::alterVideo( const std::string& path,
+                                       const std::map<std::string, std::string>& options,
+                                       AlterVideoResponse& response_ ) const
+{
+    AlterVideoRequest actualRequest_;
+    actualRequest_.path = path;
+    actualRequest_.options = options;
+    submitRequest("/alter/video", actualRequest_, response_, false);
     return response_;
 }
 
@@ -9498,6 +9856,9 @@ CreateDatasourceResponse& GPUdb::createDatasource( const CreateDatasourceRequest
  *                 of the Amazon S3 bucket to use as the data source
  *                         <li> gpudb::create_datasource_s3_region: Name of the
  *                 Amazon S3 region where the given bucket is located
+ *                         <li> gpudb::create_datasource_s3_aws_role_arn:
+ *                 Amazon IAM Role ARN which has required S3 permissions that
+ *                 can be assumed for the given S3 IAM user
  *                         <li> gpudb::create_datasource_hdfs_kerberos_keytab:
  *                 Kerberos keytab file location for the given HDFS user
  *                         <li> gpudb::create_datasource_hdfs_delegation_token:
@@ -9523,6 +9884,15 @@ CreateDatasourceResponse& GPUdb::createDatasource( const CreateDatasourceRequest
  *                 use as the data source
  *                         <li> gpudb::create_datasource_azure_oauth_token:
  *                 Oauth token to access given storage container
+ *                         <li> gpudb::create_datasource_is_stream: To load
+ *                 from S3/Azure as a stream continuously.
+ *                 <ul>
+ *                         <li> gpudb::create_datasource_true
+ *                         <li> gpudb::create_datasource_false
+ *                 </ul>
+ *                 The default value is gpudb::create_datasource_false.
+ *                         <li> gpudb::create_datasource_kafka_topic_name: Name
+ *                 of the Kafka topic to use as the data source
  *                 </ul>
  * 
  * @return Response object containing the result of the operation.
@@ -9579,6 +9949,9 @@ CreateDatasourceResponse GPUdb::createDatasource( const std::string& name,
  *                 of the Amazon S3 bucket to use as the data source
  *                         <li> gpudb::create_datasource_s3_region: Name of the
  *                 Amazon S3 region where the given bucket is located
+ *                         <li> gpudb::create_datasource_s3_aws_role_arn:
+ *                 Amazon IAM Role ARN which has required S3 permissions that
+ *                 can be assumed for the given S3 IAM user
  *                         <li> gpudb::create_datasource_hdfs_kerberos_keytab:
  *                 Kerberos keytab file location for the given HDFS user
  *                         <li> gpudb::create_datasource_hdfs_delegation_token:
@@ -9604,6 +9977,15 @@ CreateDatasourceResponse GPUdb::createDatasource( const std::string& name,
  *                 use as the data source
  *                         <li> gpudb::create_datasource_azure_oauth_token:
  *                 Oauth token to access given storage container
+ *                         <li> gpudb::create_datasource_is_stream: To load
+ *                 from S3/Azure as a stream continuously.
+ *                 <ul>
+ *                         <li> gpudb::create_datasource_true
+ *                         <li> gpudb::create_datasource_false
+ *                 </ul>
+ *                 The default value is gpudb::create_datasource_false.
+ *                         <li> gpudb::create_datasource_kafka_topic_name: Name
+ *                 of the Kafka topic to use as the data source
  *                 </ul>
  * @param[out] response_  Response object containing the results of the
  *                        operation.
@@ -9632,6 +10014,127 @@ CreateDatasourceResponse& GPUdb::createDatasource( const std::string& name,
 
 
 /**
+ * Creates a new directory in <a href="../../../tools/kifs/"
+ * target="_top">KiFS</a>. The new
+ * directory serves as a location in which the user can upload files using
+ * {@link #uploadFiles(const UploadFilesRequest&) const}.
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+CreateDirectoryResponse GPUdb::createDirectory( const CreateDirectoryRequest& request_ ) const
+{
+    CreateDirectoryResponse actualResponse_;
+    submitRequest("/create/directory", request_, actualResponse_, false);
+    return actualResponse_;
+}
+
+
+/**
+ * Creates a new directory in <a href="../../../tools/kifs/"
+ * target="_top">KiFS</a>. The new
+ * directory serves as a location in which the user can upload files using
+ * {@link
+ * #uploadFiles(const UploadFilesRequest&,UploadFilesResponse&) const}.
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+CreateDirectoryResponse& GPUdb::createDirectory( const CreateDirectoryRequest& request_,
+                                                 CreateDirectoryResponse& response_ ) const
+{
+    submitRequest("/create/directory", request_, response_, false);
+    return response_;
+}
+
+
+/**
+ * Creates a new directory in <a href="../../../tools/kifs/"
+ * target="_top">KiFS</a>. The new
+ * directory serves as a location in which the user can upload files using
+ * {@link
+ * #uploadFiles(const std::vector<std::string>&,const std::vector<std::vector<uint8_t> >&,const std::map<std::string, std::string>&) const}.
+ * 
+ * @param directoryName  Name of the directory in KiFS to be created.
+ * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li> gpudb::create_directory_no_error_if_exists: If
+ *                 @a true, does not return an error if the directory already
+ *                 exists
+ *                 <ul>
+ *                         <li> gpudb::create_directory_true
+ *                         <li> gpudb::create_directory_false
+ *                 </ul>
+ *                 The default value is gpudb::create_directory_false.
+ *                 </ul>
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+CreateDirectoryResponse GPUdb::createDirectory( const std::string& directoryName,
+                                                const std::map<std::string, std::string>& options ) const
+{
+    CreateDirectoryRequest actualRequest_;
+    actualRequest_.directoryName = directoryName;
+    actualRequest_.options = options;
+    CreateDirectoryResponse actualResponse_;
+    submitRequest("/create/directory", actualRequest_, actualResponse_, false);
+    return actualResponse_;
+}
+
+
+/**
+ * Creates a new directory in <a href="../../../tools/kifs/"
+ * target="_top">KiFS</a>. The new
+ * directory serves as a location in which the user can upload files using
+ * {@link
+ * #uploadFiles(const std::vector<std::string>&,const std::vector<std::vector<uint8_t> >&,const std::map<std::string, std::string>&,UploadFilesResponse&) const}.
+ * 
+ * @param directoryName  Name of the directory in KiFS to be created.
+ * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li> gpudb::create_directory_no_error_if_exists: If
+ *                 @a true, does not return an error if the directory already
+ *                 exists
+ *                 <ul>
+ *                         <li> gpudb::create_directory_true
+ *                         <li> gpudb::create_directory_false
+ *                 </ul>
+ *                 The default value is gpudb::create_directory_false.
+ *                 </ul>
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+CreateDirectoryResponse& GPUdb::createDirectory( const std::string& directoryName,
+                                                 const std::map<std::string, std::string>& options,
+                                                 CreateDirectoryResponse& response_ ) const
+{
+    CreateDirectoryRequest actualRequest_;
+    actualRequest_.directoryName = directoryName;
+    actualRequest_.options = options;
+    submitRequest("/create/directory", actualRequest_, response_, false);
+    return response_;
+}
+
+
+/**
  * Creates a new graph network using given nodes, edges, weights, and
  * restrictions.
 
@@ -9639,9 +10142,9 @@ CreateDatasourceResponse& GPUdb::createDatasource( const std::string& name,
  * <a href="../../../graph_solver/network_graph_solver/" target="_top">Network
  * Graphs & Solvers</a>
  * concepts documentation, the
- * <a href="../../../graph_solver/examples/graph_rest_guide/"
- * target="_top">Graph REST Tutorial</a>,
- * and/or some <a href="../../../graph_solver/examples/" target="_top">graph
+ * <a href="../../../guides/graph_rest_guide/" target="_top">Graph REST
+ * Tutorial</a>,
+ * and/or some <a href="../../../guide-tags/graph/" target="_top">graph
  * examples</a> before
  * using this endpoint.
  * 
@@ -9668,9 +10171,9 @@ CreateGraphResponse GPUdb::createGraph( const CreateGraphRequest& request_ ) con
  * <a href="../../../graph_solver/network_graph_solver/" target="_top">Network
  * Graphs & Solvers</a>
  * concepts documentation, the
- * <a href="../../../graph_solver/examples/graph_rest_guide/"
- * target="_top">Graph REST Tutorial</a>,
- * and/or some <a href="../../../graph_solver/examples/" target="_top">graph
+ * <a href="../../../guides/graph_rest_guide/" target="_top">Graph REST
+ * Tutorial</a>,
+ * and/or some <a href="../../../guide-tags/graph/" target="_top">graph
  * examples</a> before
  * using this endpoint.
  * 
@@ -9700,9 +10203,9 @@ CreateGraphResponse& GPUdb::createGraph( const CreateGraphRequest& request_,
  * <a href="../../../graph_solver/network_graph_solver/" target="_top">Network
  * Graphs & Solvers</a>
  * concepts documentation, the
- * <a href="../../../graph_solver/examples/graph_rest_guide/"
- * target="_top">Graph REST Tutorial</a>,
- * and/or some <a href="../../../graph_solver/examples/" target="_top">graph
+ * <a href="../../../guides/graph_rest_guide/" target="_top">Graph REST
+ * Tutorial</a>,
+ * and/or some <a href="../../../guide-tags/graph/" target="_top">graph
  * examples</a> before
  * using this endpoint.
  * 
@@ -9857,9 +10360,10 @@ CreateGraphResponse& GPUdb::createGraph( const CreateGraphRequest& request_,
  *                 The default value is gpudb::create_graph_false.
  *                         <li> gpudb::create_graph_save_persist: If set to @a
  *                 true, the graph will be saved in the persist directory (see
- *                 the <a href="../../../config/" target="_top">config
- *                 reference</a> for more information). If set to @a false, the
- *                 graph will be removed when the graph server is shutdown.
+ *                 the <a href="../../../config/#config-main-persistence"
+ *                 target="_top">config reference</a> for more information). If
+ *                 set to @a false, the graph will be removed when the graph
+ *                 server is shutdown.
  *                 <ul>
  *                         <li> gpudb::create_graph_true
  *                         <li> gpudb::create_graph_false
@@ -9982,9 +10486,9 @@ CreateGraphResponse GPUdb::createGraph( const std::string& graphName,
  * <a href="../../../graph_solver/network_graph_solver/" target="_top">Network
  * Graphs & Solvers</a>
  * concepts documentation, the
- * <a href="../../../graph_solver/examples/graph_rest_guide/"
- * target="_top">Graph REST Tutorial</a>,
- * and/or some <a href="../../../graph_solver/examples/" target="_top">graph
+ * <a href="../../../guides/graph_rest_guide/" target="_top">Graph REST
+ * Tutorial</a>,
+ * and/or some <a href="../../../guide-tags/graph/" target="_top">graph
  * examples</a> before
  * using this endpoint.
  * 
@@ -10139,9 +10643,10 @@ CreateGraphResponse GPUdb::createGraph( const std::string& graphName,
  *                 The default value is gpudb::create_graph_false.
  *                         <li> gpudb::create_graph_save_persist: If set to @a
  *                 true, the graph will be saved in the persist directory (see
- *                 the <a href="../../../config/" target="_top">config
- *                 reference</a> for more information). If set to @a false, the
- *                 graph will be removed when the graph server is shutdown.
+ *                 the <a href="../../../config/#config-main-persistence"
+ *                 target="_top">config reference</a> for more information). If
+ *                 set to @a false, the graph will be removed when the graph
+ *                 server is shutdown.
  *                 <ul>
  *                         <li> gpudb::create_graph_true
  *                         <li> gpudb::create_graph_false
@@ -10904,6 +11409,98 @@ CreateMaterializedViewResponse& GPUdb::createMaterializedView( const std::string
 
 
 /**
+ * @private
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+CreateMonitorTableResponse GPUdb::createMonitorTable( const CreateMonitorTableRequest& request_ ) const
+{
+    CreateMonitorTableResponse actualResponse_;
+    submitRequest("/create/monitortable", request_, actualResponse_, false);
+    return actualResponse_;
+}
+
+
+/**
+ * @private
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+CreateMonitorTableResponse& GPUdb::createMonitorTable( const CreateMonitorTableRequest& request_,
+                                                       CreateMonitorTableResponse& response_ ) const
+{
+    submitRequest("/create/monitortable", request_, response_, false);
+    return response_;
+}
+
+
+/**
+ * @private
+ * 
+ * @param monitorTableName
+ * @param tableName
+ * @param options
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+CreateMonitorTableResponse GPUdb::createMonitorTable( const std::string& monitorTableName,
+                                                      const std::string& tableName,
+                                                      const std::map<std::string, std::string>& options ) const
+{
+    CreateMonitorTableRequest actualRequest_;
+    actualRequest_.monitorTableName = monitorTableName;
+    actualRequest_.tableName = tableName;
+    actualRequest_.options = options;
+    CreateMonitorTableResponse actualResponse_;
+    submitRequest("/create/monitortable", actualRequest_, actualResponse_, false);
+    return actualResponse_;
+}
+
+
+/**
+ * @private
+ * 
+ * @param monitorTableName
+ * @param tableName
+ * @param options
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+CreateMonitorTableResponse& GPUdb::createMonitorTable( const std::string& monitorTableName,
+                                                       const std::string& tableName,
+                                                       const std::map<std::string, std::string>& options,
+                                                       CreateMonitorTableResponse& response_ ) const
+{
+    CreateMonitorTableRequest actualRequest_;
+    actualRequest_.monitorTableName = monitorTableName;
+    actualRequest_.tableName = tableName;
+    actualRequest_.options = options;
+    submitRequest("/create/monitortable", actualRequest_, response_, false);
+    return response_;
+}
+
+
+/**
  * Creates an instance (proc) of the
  * <a href="../../../concepts/udf/" target="_top">user-defined functions</a>
  * (UDF) specified by the
@@ -10983,6 +11580,10 @@ CreateProcResponse& GPUdb::createProc( const CreateProcRequest& request_,
  *               file names may include subdirectory names (e.g. 'subdir/file')
  *               but must not
  *               resolve to a directory above the root for the proc.
+ *               Files may be loaded from existing files in KiFS. Those file
+ *               names should be
+ *               prefixed with the uri kifs:// and the values in the map should
+ *               be empty
  * @param command  The command (excluding arguments) that will be invoked when
  *                 the proc is executed. It will be invoked from the directory
  *                 containing the proc
@@ -11068,6 +11669,10 @@ CreateProcResponse GPUdb::createProc( const std::string& procName,
  *               file names may include subdirectory names (e.g. 'subdir/file')
  *               but must not
  *               resolve to a directory above the root for the proc.
+ *               Files may be loaded from existing files in KiFS. Those file
+ *               names should be
+ *               prefixed with the uri kifs:// and the values in the map should
+ *               be empty
  * @param command  The command (excluding arguments) that will be invoked when
  *                 the proc is executed. It will be invoked from the directory
  *                 containing the proc
@@ -11311,20 +11916,6 @@ CreateProjectionResponse& GPUdb::createProjection( const CreateProjectionRequest
  *                 present in @a columnNames.  If any alias is given for any
  *                 column name, the alias must be used, rather than the
  *                 original column name.  The default value is ''.
- *                         <li> gpudb::create_projection_materialize_on_gpu: No
- *                 longer used.  See <a href="../../../rm/concepts/"
- *                 target="_top">Resource Management Concepts</a> for
- *                 information about how resources are managed, <a
- *                 href="../../../rm/concepts/" target="_top">Tier Strategy
- *                 Concepts</a> for how resources are targeted for VRAM, and <a
- *                 href="../../../rm/usage/#tier-strategies" target="_top">Tier
- *                 Strategy Usage</a> for how to specify a table's priority in
- *                 VRAM.
- *                 <ul>
- *                         <li> gpudb::create_projection_true
- *                         <li> gpudb::create_projection_false
- *                 </ul>
- *                 The default value is gpudb::create_projection_false.
  *                         <li> gpudb::create_projection_chunk_size: Indicates
  *                 the number of records per chunk to be used for this
  *                 projection.
@@ -11478,20 +12069,6 @@ CreateProjectionResponse GPUdb::createProjection( const std::string& tableName,
  *                 present in @a columnNames.  If any alias is given for any
  *                 column name, the alias must be used, rather than the
  *                 original column name.  The default value is ''.
- *                         <li> gpudb::create_projection_materialize_on_gpu: No
- *                 longer used.  See <a href="../../../rm/concepts/"
- *                 target="_top">Resource Management Concepts</a> for
- *                 information about how resources are managed, <a
- *                 href="../../../rm/concepts/" target="_top">Tier Strategy
- *                 Concepts</a> for how resources are targeted for VRAM, and <a
- *                 href="../../../rm/usage/#tier-strategies" target="_top">Tier
- *                 Strategy Usage</a> for how to specify a table's priority in
- *                 VRAM.
- *                 <ul>
- *                         <li> gpudb::create_projection_true
- *                         <li> gpudb::create_projection_false
- *                 </ul>
- *                 The default value is gpudb::create_projection_false.
  *                         <li> gpudb::create_projection_chunk_size: Indicates
  *                 the number of records per chunk to be used for this
  *                 projection.
@@ -11746,6 +12323,9 @@ CreateResourceGroupResponse& GPUdb::createResourceGroup( const std::string& name
 
 /**
  * Creates a new role.
+ * <p>
+ * @attention This method should be used for on-premise deployments only.
+ * <p>
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -11764,6 +12344,9 @@ CreateRoleResponse GPUdb::createRole( const CreateRoleRequest& request_ ) const
 
 /**
  * Creates a new role.
+ * <p>
+ * @attention This method should be used for on-premise deployments only.
+ * <p>
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -11785,6 +12368,9 @@ CreateRoleResponse& GPUdb::createRole( const CreateRoleRequest& request_,
 
 /**
  * Creates a new role.
+ * <p>
+ * @attention This method should be used for on-premise deployments only.
+ * <p>
  * 
  * @param name  Name of the role to be created. Must contain only lowercase
  *              letters, digits, and underscores, and cannot begin with a
@@ -11813,6 +12399,9 @@ CreateRoleResponse GPUdb::createRole( const std::string& name,
 
 /**
  * Creates a new role.
+ * <p>
+ * @attention This method should be used for on-premise deployments only.
+ * <p>
  * 
  * @param name  Name of the role to be created. Must contain only lowercase
  *              letters, digits, and underscores, and cannot begin with a
@@ -11960,6 +12549,104 @@ CreateSchemaResponse& GPUdb::createSchema( const std::string& schemaName,
     actualRequest_.schemaName = schemaName;
     actualRequest_.options = options;
     submitRequest("/create/schema", actualRequest_, response_, false);
+    return response_;
+}
+
+
+/**
+ * @private
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+CreateStateTableResponse GPUdb::createStateTable( const CreateStateTableRequest& request_ ) const
+{
+    CreateStateTableResponse actualResponse_;
+    submitRequest("/create/statetable", request_, actualResponse_, false);
+    return actualResponse_;
+}
+
+
+/**
+ * @private
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+CreateStateTableResponse& GPUdb::createStateTable( const CreateStateTableRequest& request_,
+                                                   CreateStateTableResponse& response_ ) const
+{
+    submitRequest("/create/statetable", request_, response_, false);
+    return response_;
+}
+
+
+/**
+ * @private
+ * 
+ * @param tableName
+ * @param inputTableName
+ * @param initTableName
+ * @param options
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+CreateStateTableResponse GPUdb::createStateTable( const std::string& tableName,
+                                                  const std::string& inputTableName,
+                                                  const std::string& initTableName,
+                                                  const std::map<std::string, std::string>& options ) const
+{
+    CreateStateTableRequest actualRequest_;
+    actualRequest_.tableName = tableName;
+    actualRequest_.inputTableName = inputTableName;
+    actualRequest_.initTableName = initTableName;
+    actualRequest_.options = options;
+    CreateStateTableResponse actualResponse_;
+    submitRequest("/create/statetable", actualRequest_, actualResponse_, false);
+    return actualResponse_;
+}
+
+
+/**
+ * @private
+ * 
+ * @param tableName
+ * @param inputTableName
+ * @param initTableName
+ * @param options
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+CreateStateTableResponse& GPUdb::createStateTable( const std::string& tableName,
+                                                   const std::string& inputTableName,
+                                                   const std::string& initTableName,
+                                                   const std::map<std::string, std::string>& options,
+                                                   CreateStateTableResponse& response_ ) const
+{
+    CreateStateTableRequest actualRequest_;
+    actualRequest_.tableName = tableName;
+    actualRequest_.inputTableName = inputTableName;
+    actualRequest_.initTableName = initTableName;
+    actualRequest_.options = options;
+    submitRequest("/create/statetable", actualRequest_, response_, false);
     return response_;
 }
 
@@ -12152,9 +12839,11 @@ CreateTableResponse& GPUdb::createTable( const CreateTableRequest& request_,
  *                 href="../../../concepts/tables/#partitioning-by-interval"
  *                 target="_top">interval partitioning</a>, <a
  *                 href="../../../concepts/tables/#partitioning-by-list"
- *                 target="_top">list partitioning</a>, or <a
+ *                 target="_top">list partitioning</a>, <a
  *                 href="../../../concepts/tables/#partitioning-by-hash"
- *                 target="_top">hash partitioning</a> for example formats.
+ *                 target="_top">hash partitioning</a>, or <a
+ *                 href="../../../concepts/tables/#partitioning-by-series"
+ *                 target="_top">series partitioning</a> for example formats.
  *                         <li> gpudb::create_table_is_automatic_partition: If
  *                 @a true, a new partition will be created for values which
  *                 don't fall into an existing partition.  Currently only
@@ -12189,10 +12878,9 @@ CreateTableResponse& GPUdb::createTable( const CreateTableRequest& request_,
  *                         <li> gpudb::create_table_strategy_definition: The <a
  *                 href="../../../rm/concepts/#tier-strategies"
  *                 target="_top">tier strategy</a> for the table and its
- *                 columns. See <a href="../../../rm/concepts/#tier-strategies"
- *                 target="_top">tier strategy usage</a> for format and <a
- *                 href="../../../rm/usage/#tier-strategies" target="_top">tier
- *                 strategy examples</a> for examples.
+ *                 columns.
+ *                         <li> gpudb::create_table_is_virtual_union:
+ *                 <DEVELOPER>
  *                 </ul>
  * 
  * @return Response object containing the result of the operation.
@@ -12336,9 +13024,11 @@ CreateTableResponse GPUdb::createTable( const std::string& tableName,
  *                 href="../../../concepts/tables/#partitioning-by-interval"
  *                 target="_top">interval partitioning</a>, <a
  *                 href="../../../concepts/tables/#partitioning-by-list"
- *                 target="_top">list partitioning</a>, or <a
+ *                 target="_top">list partitioning</a>, <a
  *                 href="../../../concepts/tables/#partitioning-by-hash"
- *                 target="_top">hash partitioning</a> for example formats.
+ *                 target="_top">hash partitioning</a>, or <a
+ *                 href="../../../concepts/tables/#partitioning-by-series"
+ *                 target="_top">series partitioning</a> for example formats.
  *                         <li> gpudb::create_table_is_automatic_partition: If
  *                 @a true, a new partition will be created for values which
  *                 don't fall into an existing partition.  Currently only
@@ -12373,10 +13063,9 @@ CreateTableResponse GPUdb::createTable( const std::string& tableName,
  *                         <li> gpudb::create_table_strategy_definition: The <a
  *                 href="../../../rm/concepts/#tier-strategies"
  *                 target="_top">tier strategy</a> for the table and its
- *                 columns. See <a href="../../../rm/concepts/#tier-strategies"
- *                 target="_top">tier strategy usage</a> for format and <a
- *                 href="../../../rm/usage/#tier-strategies" target="_top">tier
- *                 strategy examples</a> for examples.
+ *                 columns.
+ *                         <li> gpudb::create_table_is_virtual_union:
+ *                 <DEVELOPER>
  *                 </ul>
  * @param[out] response_  Response object containing the results of the
  *                        operation.
@@ -12494,6 +13183,8 @@ CreateTableExternalResponse& GPUdb::createTableExternal( const CreateTableExtern
  * @param filepaths  A list of file paths from which data will be sourced;
  *                   wildcards (*) can be used
  *                   to specify a group of files.
+ *                   For paths in KiFS, use the uri prefix of kifs:// followed
+ *                   by the full path to a file or directory.
  *                   If an external data source is specified in @a
  *                   datasource_name, these file
  *                   paths must resolve to accessible files at that data source
@@ -12593,6 +13284,10 @@ CreateTableExternalResponse& GPUdb::createTableExternal( const CreateTableExtern
  *                            Use <a
  *                            href="../../../concepts/tables/#partitioning-by-hash"
  *                            target="_top">hash partitioning</a>.
+ *                                    <li> gpudb::create_table_external_SERIES:
+ *                            Use <a
+ *                            href="../../../concepts/tables/#partitioning-by-series"
+ *                            target="_top">series partitioning</a>.
  *                            </ul>
  *                                    <li>
  *                            gpudb::create_table_external_partition_keys:
@@ -12666,13 +13361,7 @@ CreateTableExternalResponse& GPUdb::createTableExternal( const CreateTableExtern
  *                            The <a
  *                            href="../../../rm/concepts/#tier-strategies"
  *                            target="_top">tier strategy</a>
- *                            for the table and its columns. See
- *                            <a href="../../../rm/concepts/#tier-strategies"
- *                            target="_top">tier strategy usage</a> for format
- *                            and
- *                            <a href="../../../rm/usage/#tier-strategies"
- *                            target="_top">tier strategy examples</a> for
- *                            examples.
+ *                            for the table and its columns.
  *                            </ul>
  * @param options  Optional parameters.
  *                 <ul>
@@ -12815,6 +13504,8 @@ CreateTableExternalResponse& GPUdb::createTableExternal( const CreateTableExtern
  *                 Parquet file format
  *                         <li> gpudb::create_table_external_json: Json file
  *                 format
+ *                         <li> gpudb::create_table_external_shapefile:
+ *                 ShapeFile file format
  *                 </ul>
  *                 The default value is
  *                 gpudb::create_table_external_delimited_text.
@@ -12900,6 +13591,18 @@ CreateTableExternalResponse& GPUdb::createTableExternal( const CreateTableExtern
  *                 invoking the refresh action of /alter/table on this table.
  *                 </ul>
  *                 The default value is gpudb::create_table_external_manual.
+ *                         <li> gpudb::create_table_external_subscribe:
+ *                 Continuously poll the data source to check for new data and
+ *                 load it into the table.
+ *                 <ul>
+ *                         <li> gpudb::create_table_external_true
+ *                         <li> gpudb::create_table_external_false
+ *                 </ul>
+ *                 The default value is gpudb::create_table_external_false.
+ *                         <li> gpudb::create_table_external_poll_interval: If
+ *                 @a true, the number of seconds between attempts to load
+ *                 external files into the table. If zero, polling will be
+ *                 continuous.
  *                         <li>
  *                 gpudb::create_table_external_text_comment_string: Specifies
  *                 the character string that should be interpreted as a comment
@@ -12981,7 +13684,30 @@ CreateTableExternalResponse& GPUdb::createTableExternal( const CreateTableExtern
  *                 widest possible column types so that 'all' values will fit
  *                 with minimum data scanned
  *                 </ul>
- *                 The default value is gpudb::create_table_external_accuracy.
+ *                 The default value is gpudb::create_table_external_speed.
+ *                         <li> gpudb::create_table_external_table_insert_mode:
+ *                 Optional: table_insert_mode. When inserting records from
+ *                 multiple files: if table_per_file then insert from each file
+ *                 into a new table. Currently supported only for shapefiles.
+ *                 <ul>
+ *                         <li> gpudb::create_table_external_single
+ *                         <li> gpudb::create_table_external_table_per_file
+ *                 </ul>
+ *                 The default value is gpudb::create_table_external_single.
+ *                         <li> gpudb::create_table_external_kafka_group_id:
+ *                 The group id to be used consuming data from a kakfa topic
+ *                 (valid only for kafka datasource subscriptions).
+ *                         <li>
+ *                 gpudb::create_table_external_text_search_columns: Add
+ *                 'text_search' property to internally inferenced string
+ *                 columns. Comma seperated list of column names or '*' for all
+ *                 columns. To add text_search property only to string columns
+ *                 of minimum size, set also the option
+ *                 'text_search_min_column_length'
+ *                         <li>
+ *                 gpudb::create_table_external_text_search_min_column_length:
+ *                 Set minimum column size. Used only when
+ *                 'text_search_columns' has a value.
  *                 </ul>
  * 
  * @return Response object containing the result of the operation.
@@ -13033,6 +13759,8 @@ CreateTableExternalResponse GPUdb::createTableExternal( const std::string& table
  * @param filepaths  A list of file paths from which data will be sourced;
  *                   wildcards (*) can be used
  *                   to specify a group of files.
+ *                   For paths in KiFS, use the uri prefix of kifs:// followed
+ *                   by the full path to a file or directory.
  *                   If an external data source is specified in @a
  *                   datasource_name, these file
  *                   paths must resolve to accessible files at that data source
@@ -13132,6 +13860,10 @@ CreateTableExternalResponse GPUdb::createTableExternal( const std::string& table
  *                            Use <a
  *                            href="../../../concepts/tables/#partitioning-by-hash"
  *                            target="_top">hash partitioning</a>.
+ *                                    <li> gpudb::create_table_external_SERIES:
+ *                            Use <a
+ *                            href="../../../concepts/tables/#partitioning-by-series"
+ *                            target="_top">series partitioning</a>.
  *                            </ul>
  *                                    <li>
  *                            gpudb::create_table_external_partition_keys:
@@ -13205,13 +13937,7 @@ CreateTableExternalResponse GPUdb::createTableExternal( const std::string& table
  *                            The <a
  *                            href="../../../rm/concepts/#tier-strategies"
  *                            target="_top">tier strategy</a>
- *                            for the table and its columns. See
- *                            <a href="../../../rm/concepts/#tier-strategies"
- *                            target="_top">tier strategy usage</a> for format
- *                            and
- *                            <a href="../../../rm/usage/#tier-strategies"
- *                            target="_top">tier strategy examples</a> for
- *                            examples.
+ *                            for the table and its columns.
  *                            </ul>
  * @param options  Optional parameters.
  *                 <ul>
@@ -13354,6 +14080,8 @@ CreateTableExternalResponse GPUdb::createTableExternal( const std::string& table
  *                 Parquet file format
  *                         <li> gpudb::create_table_external_json: Json file
  *                 format
+ *                         <li> gpudb::create_table_external_shapefile:
+ *                 ShapeFile file format
  *                 </ul>
  *                 The default value is
  *                 gpudb::create_table_external_delimited_text.
@@ -13439,6 +14167,18 @@ CreateTableExternalResponse GPUdb::createTableExternal( const std::string& table
  *                 invoking the refresh action of /alter/table on this table.
  *                 </ul>
  *                 The default value is gpudb::create_table_external_manual.
+ *                         <li> gpudb::create_table_external_subscribe:
+ *                 Continuously poll the data source to check for new data and
+ *                 load it into the table.
+ *                 <ul>
+ *                         <li> gpudb::create_table_external_true
+ *                         <li> gpudb::create_table_external_false
+ *                 </ul>
+ *                 The default value is gpudb::create_table_external_false.
+ *                         <li> gpudb::create_table_external_poll_interval: If
+ *                 @a true, the number of seconds between attempts to load
+ *                 external files into the table. If zero, polling will be
+ *                 continuous.
  *                         <li>
  *                 gpudb::create_table_external_text_comment_string: Specifies
  *                 the character string that should be interpreted as a comment
@@ -13520,7 +14260,30 @@ CreateTableExternalResponse GPUdb::createTableExternal( const std::string& table
  *                 widest possible column types so that 'all' values will fit
  *                 with minimum data scanned
  *                 </ul>
- *                 The default value is gpudb::create_table_external_accuracy.
+ *                 The default value is gpudb::create_table_external_speed.
+ *                         <li> gpudb::create_table_external_table_insert_mode:
+ *                 Optional: table_insert_mode. When inserting records from
+ *                 multiple files: if table_per_file then insert from each file
+ *                 into a new table. Currently supported only for shapefiles.
+ *                 <ul>
+ *                         <li> gpudb::create_table_external_single
+ *                         <li> gpudb::create_table_external_table_per_file
+ *                 </ul>
+ *                 The default value is gpudb::create_table_external_single.
+ *                         <li> gpudb::create_table_external_kafka_group_id:
+ *                 The group id to be used consuming data from a kakfa topic
+ *                 (valid only for kafka datasource subscriptions).
+ *                         <li>
+ *                 gpudb::create_table_external_text_search_columns: Add
+ *                 'text_search' property to internally inferenced string
+ *                 columns. Comma seperated list of column names or '*' for all
+ *                 columns. To add text_search property only to string columns
+ *                 of minimum size, set also the option
+ *                 'text_search_min_column_length'
+ *                         <li>
+ *                 gpudb::create_table_external_text_search_min_column_length:
+ *                 Set minimum column size. Used only when
+ *                 'text_search_columns' has a value.
  *                 </ul>
  * @param[out] response_  Response object containing the results of the
  *                        operation.
@@ -14341,9 +15104,11 @@ CreateTypeResponse& GPUdb::createType( const CreateTypeRequest& request_,
  *                    for all numeric and string type columns; makes the column
  *                    available for GPU queries.
  *                            <li> gpudb::create_type_text_search: Valid only
- *                    for 'string' columns. Enables full text search for string
- *                    columns. Can be set independently of @a data and @a
- *                    store_only.
+ *                    for select 'string' columns. Enables full text
+ *                    search--see <a href="../../../concepts/full_text_search/"
+ *                    target="_top">Full Text Search</a> for details and
+ *                    applicable string column types. Can be set independently
+ *                    of @a data and @a store_only.
  *                            <li> gpudb::create_type_store_only: Persist the
  *                    column value but do not make it available to queries
  *                    (e.g. /filter)-i.e. it is mutually exclusive to the @a
@@ -14576,9 +15341,11 @@ CreateTypeResponse GPUdb::createType( const std::string& typeDefinition,
  *                    for all numeric and string type columns; makes the column
  *                    available for GPU queries.
  *                            <li> gpudb::create_type_text_search: Valid only
- *                    for 'string' columns. Enables full text search for string
- *                    columns. Can be set independently of @a data and @a
- *                    store_only.
+ *                    for select 'string' columns. Enables full text
+ *                    search--see <a href="../../../concepts/full_text_search/"
+ *                    target="_top">Full Text Search</a> for details and
+ *                    applicable string column types. Can be set independently
+ *                    of @a data and @a store_only.
  *                            <li> gpudb::create_type_store_only: Persist the
  *                    column value but do not make it available to queries
  *                    (e.g. /filter)-i.e. it is mutually exclusive to the @a
@@ -14901,20 +15668,6 @@ CreateUnionResponse& GPUdb::createUnion( const CreateUnionRequest& request_,
  *                 create the schema if non-existent]  Name of the schema for
  *                 the output table. If the schema provided is non-existent, it
  *                 will be automatically created.  The default value is ''.
- *                         <li> gpudb::create_union_materialize_on_gpu: No
- *                 longer used.  See <a href="../../../rm/concepts/"
- *                 target="_top">Resource Management Concepts</a> for
- *                 information about how resources are managed, <a
- *                 href="../../../rm/concepts/" target="_top">Tier Strategy
- *                 Concepts</a> for how resources are targeted for VRAM, and <a
- *                 href="../../../rm/usage/#tier-strategies" target="_top">Tier
- *                 Strategy Usage</a> for how to specify a table's priority in
- *                 VRAM.
- *                 <ul>
- *                         <li> gpudb::create_union_true
- *                         <li> gpudb::create_union_false
- *                 </ul>
- *                 The default value is gpudb::create_union_false.
  *                         <li> gpudb::create_union_mode: If @a merge_views,
  *                 then this operation will merge the provided views. All @a
  *                 tableNames must be views from the same underlying base
@@ -15058,20 +15811,6 @@ CreateUnionResponse GPUdb::createUnion( const std::string& tableName,
  *                 create the schema if non-existent]  Name of the schema for
  *                 the output table. If the schema provided is non-existent, it
  *                 will be automatically created.  The default value is ''.
- *                         <li> gpudb::create_union_materialize_on_gpu: No
- *                 longer used.  See <a href="../../../rm/concepts/"
- *                 target="_top">Resource Management Concepts</a> for
- *                 information about how resources are managed, <a
- *                 href="../../../rm/concepts/" target="_top">Tier Strategy
- *                 Concepts</a> for how resources are targeted for VRAM, and <a
- *                 href="../../../rm/usage/#tier-strategies" target="_top">Tier
- *                 Strategy Usage</a> for how to specify a table's priority in
- *                 VRAM.
- *                 <ul>
- *                         <li> gpudb::create_union_true
- *                         <li> gpudb::create_union_false
- *                 </ul>
- *                 The default value is gpudb::create_union_false.
  *                         <li> gpudb::create_union_mode: If @a merge_views,
  *                 then this operation will merge the provided views. All @a
  *                 tableNames must be views from the same underlying base
@@ -15168,6 +15907,9 @@ CreateUnionResponse& GPUdb::createUnion( const std::string& tableName,
 /**
  * Creates a new external user (a user whose credentials are managed by an
  * external LDAP).
+ * <p>
+ * @attention This method should be used for on-premise deployments only.
+ * <p>
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -15187,6 +15929,9 @@ CreateUserExternalResponse GPUdb::createUserExternal( const CreateUserExternalRe
 /**
  * Creates a new external user (a user whose credentials are managed by an
  * external LDAP).
+ * <p>
+ * @attention This method should be used for on-premise deployments only.
+ * <p>
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -15209,6 +15954,9 @@ CreateUserExternalResponse& GPUdb::createUserExternal( const CreateUserExternalR
 /**
  * Creates a new external user (a user whose credentials are managed by an
  * external LDAP).
+ * <p>
+ * @attention This method should be used for on-premise deployments only.
+ * <p>
  * 
  * @param name  Name of the user to be created. Must exactly match the user's
  *              name in the external LDAP, prefixed with a @. Must not be the
@@ -15234,6 +15982,9 @@ CreateUserExternalResponse GPUdb::createUserExternal( const std::string& name,
 /**
  * Creates a new external user (a user whose credentials are managed by an
  * external LDAP).
+ * <p>
+ * @attention This method should be used for on-premise deployments only.
+ * <p>
  * 
  * @param name  Name of the user to be created. Must exactly match the user's
  *              name in the external LDAP, prefixed with a @. Must not be the
@@ -15371,6 +16122,480 @@ CreateUserInternalResponse& GPUdb::createUserInternal( const std::string& name,
     actualRequest_.password = password;
     actualRequest_.options = options;
     submitRequest("/create/user/internal", actualRequest_, response_, false);
+    return response_;
+}
+
+
+/**
+ * Creates a job to generate a sequence of raster images that visualize data
+ * over a specified time.
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+CreateVideoResponse GPUdb::createVideo( const CreateVideoRequest& request_ ) const
+{
+    CreateVideoResponse actualResponse_;
+    submitRequest("/create/video", request_, actualResponse_, false);
+    return actualResponse_;
+}
+
+
+/**
+ * Creates a job to generate a sequence of raster images that visualize data
+ * over a specified time.
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+CreateVideoResponse& GPUdb::createVideo( const CreateVideoRequest& request_,
+                                         CreateVideoResponse& response_ ) const
+{
+    submitRequest("/create/video", request_, response_, false);
+    return response_;
+}
+
+
+/**
+ * Creates a job to generate a sequence of raster images that visualize data
+ * over a specified time.
+ * 
+ * @param attribute  The animated attribute to map to the video's frames. Must
+ *                   be present in the LAYERS specified for the visualization.
+ *                   This is often a time-related field but may be any numeric
+ *                   type.
+ * @param begin  The start point for the video. Accepts an expression evaluable
+ *               over the @a attribute.
+ * @param durationSeconds  Seconds of video to produce
+ * @param end  The end point for the video. Accepts an expression evaluable
+ *             over the @a attribute.
+ * @param framesPerSecond  The presentation frame rate of the encoded video in
+ *                         frames per second.
+ * @param style  The name of the visualize mode; should correspond to the
+ *               schema used for the @a styleParameters field.
+ *               <ul>
+ *                       <li> gpudb::create_video_chart
+ *                       <li> gpudb::create_video_raster
+ *                       <li> gpudb::create_video_classbreak
+ *                       <li> gpudb::create_video_contour
+ *                       <li> gpudb::create_video_heatmap
+ *                       <li> gpudb::create_video_labels
+ *               </ul>
+ * @param path  Fully-qualified <a href="../../../tools/kifs/"
+ *              target="_top">KiFS</a> path.  Write access is required. A file
+ *              must not exist at that path, unless @a replace_if_exists is @a
+ *              true.
+ * @param styleParameters  A string containing the JSON-encoded visualize
+ *                         request.  Must correspond to the visualize mode
+ *                         specified in the @a style field.
+ * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li> gpudb::create_video_ttl: Sets the <a
+ *                 href="../../../concepts/ttl/" target="_top">TTL</a> of the
+ *                 video.
+ *                         <li> gpudb::create_video_window: Specified using the
+ *                 data-type corresponding to the @a attribute. For a window of
+ *                 size W, a video frame rendered for time t will visualize
+ *                 data in the interval [t-W,t]. The minimum window size is the
+ *                 interval between successive frames.  The minimum value is
+ *                 the default.  If a value less than the minimum value is
+ *                 specified, it is replaced with the minimum window size.
+ *                 Larger values will make changes throughout the video appear
+ *                 more smooth while smaller values will capture fast
+ *                 variations in the data.
+ *                         <li> gpudb::create_video_no_error_if_exists: If @a
+ *                 true, does not return an error if the video already exists.
+ *                 Ignored if @a replace_if_exists is @a true.
+ *                 <ul>
+ *                         <li> gpudb::create_video_false
+ *                         <li> gpudb::create_video_true
+ *                 </ul>
+ *                 The default value is gpudb::create_video_false.
+ *                         <li> gpudb::create_video_replace_if_exists: If @a
+ *                 true, deletes any existing video with the same path before
+ *                 creating a new video.
+ *                 <ul>
+ *                         <li> gpudb::create_video_false
+ *                         <li> gpudb::create_video_true
+ *                 </ul>
+ *                 The default value is gpudb::create_video_false.
+ *                 </ul>
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+CreateVideoResponse GPUdb::createVideo( const std::string& attribute,
+                                        const std::string& begin,
+                                        const double durationSeconds,
+                                        const std::string& end,
+                                        const double framesPerSecond,
+                                        const std::string& style,
+                                        const std::string& path,
+                                        const std::string& styleParameters,
+                                        const std::map<std::string, std::string>& options ) const
+{
+    CreateVideoRequest actualRequest_;
+    actualRequest_.attribute = attribute;
+    actualRequest_.begin = begin;
+    actualRequest_.durationSeconds = durationSeconds;
+    actualRequest_.end = end;
+    actualRequest_.framesPerSecond = framesPerSecond;
+    actualRequest_.style = style;
+    actualRequest_.path = path;
+    actualRequest_.styleParameters = styleParameters;
+    actualRequest_.options = options;
+    CreateVideoResponse actualResponse_;
+    submitRequest("/create/video", actualRequest_, actualResponse_, false);
+    return actualResponse_;
+}
+
+
+/**
+ * Creates a job to generate a sequence of raster images that visualize data
+ * over a specified time.
+ * 
+ * @param attribute  The animated attribute to map to the video's frames. Must
+ *                   be present in the LAYERS specified for the visualization.
+ *                   This is often a time-related field but may be any numeric
+ *                   type.
+ * @param begin  The start point for the video. Accepts an expression evaluable
+ *               over the @a attribute.
+ * @param durationSeconds  Seconds of video to produce
+ * @param end  The end point for the video. Accepts an expression evaluable
+ *             over the @a attribute.
+ * @param framesPerSecond  The presentation frame rate of the encoded video in
+ *                         frames per second.
+ * @param style  The name of the visualize mode; should correspond to the
+ *               schema used for the @a styleParameters field.
+ *               <ul>
+ *                       <li> gpudb::create_video_chart
+ *                       <li> gpudb::create_video_raster
+ *                       <li> gpudb::create_video_classbreak
+ *                       <li> gpudb::create_video_contour
+ *                       <li> gpudb::create_video_heatmap
+ *                       <li> gpudb::create_video_labels
+ *               </ul>
+ * @param path  Fully-qualified <a href="../../../tools/kifs/"
+ *              target="_top">KiFS</a> path.  Write access is required. A file
+ *              must not exist at that path, unless @a replace_if_exists is @a
+ *              true.
+ * @param styleParameters  A string containing the JSON-encoded visualize
+ *                         request.  Must correspond to the visualize mode
+ *                         specified in the @a style field.
+ * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li> gpudb::create_video_ttl: Sets the <a
+ *                 href="../../../concepts/ttl/" target="_top">TTL</a> of the
+ *                 video.
+ *                         <li> gpudb::create_video_window: Specified using the
+ *                 data-type corresponding to the @a attribute. For a window of
+ *                 size W, a video frame rendered for time t will visualize
+ *                 data in the interval [t-W,t]. The minimum window size is the
+ *                 interval between successive frames.  The minimum value is
+ *                 the default.  If a value less than the minimum value is
+ *                 specified, it is replaced with the minimum window size.
+ *                 Larger values will make changes throughout the video appear
+ *                 more smooth while smaller values will capture fast
+ *                 variations in the data.
+ *                         <li> gpudb::create_video_no_error_if_exists: If @a
+ *                 true, does not return an error if the video already exists.
+ *                 Ignored if @a replace_if_exists is @a true.
+ *                 <ul>
+ *                         <li> gpudb::create_video_false
+ *                         <li> gpudb::create_video_true
+ *                 </ul>
+ *                 The default value is gpudb::create_video_false.
+ *                         <li> gpudb::create_video_replace_if_exists: If @a
+ *                 true, deletes any existing video with the same path before
+ *                 creating a new video.
+ *                 <ul>
+ *                         <li> gpudb::create_video_false
+ *                         <li> gpudb::create_video_true
+ *                 </ul>
+ *                 The default value is gpudb::create_video_false.
+ *                 </ul>
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+CreateVideoResponse& GPUdb::createVideo( const std::string& attribute,
+                                         const std::string& begin,
+                                         const double durationSeconds,
+                                         const std::string& end,
+                                         const double framesPerSecond,
+                                         const std::string& style,
+                                         const std::string& path,
+                                         const std::string& styleParameters,
+                                         const std::map<std::string, std::string>& options,
+                                         CreateVideoResponse& response_ ) const
+{
+    CreateVideoRequest actualRequest_;
+    actualRequest_.attribute = attribute;
+    actualRequest_.begin = begin;
+    actualRequest_.durationSeconds = durationSeconds;
+    actualRequest_.end = end;
+    actualRequest_.framesPerSecond = framesPerSecond;
+    actualRequest_.style = style;
+    actualRequest_.path = path;
+    actualRequest_.styleParameters = styleParameters;
+    actualRequest_.options = options;
+    submitRequest("/create/video", actualRequest_, response_, false);
+    return response_;
+}
+
+
+/**
+ * Deletes a directory from <a href="../../../tools/kifs/"
+ * target="_top">KiFS</a>.
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+DeleteDirectoryResponse GPUdb::deleteDirectory( const DeleteDirectoryRequest& request_ ) const
+{
+    DeleteDirectoryResponse actualResponse_;
+    submitRequest("/delete/directory", request_, actualResponse_, false);
+    return actualResponse_;
+}
+
+
+/**
+ * Deletes a directory from <a href="../../../tools/kifs/"
+ * target="_top">KiFS</a>.
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+DeleteDirectoryResponse& GPUdb::deleteDirectory( const DeleteDirectoryRequest& request_,
+                                                 DeleteDirectoryResponse& response_ ) const
+{
+    submitRequest("/delete/directory", request_, response_, false);
+    return response_;
+}
+
+
+/**
+ * Deletes a directory from <a href="../../../tools/kifs/"
+ * target="_top">KiFS</a>.
+ * 
+ * @param directoryName  Name of the directory in KiFS to be deleted. The
+ *                       directory must contain no files, unless @a recursive
+ *                       is @a true
+ * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li> gpudb::delete_directory_recursive: If @a true,
+ *                 will delete directory and all files residing in it. If
+ *                 false, directory must be empty for deletion.
+ *                 <ul>
+ *                         <li> gpudb::delete_directory_true
+ *                         <li> gpudb::delete_directory_false
+ *                 </ul>
+ *                 The default value is gpudb::delete_directory_false.
+ *                         <li> gpudb::delete_directory_no_error_if_not_exists:
+ *                 If @a true, no error is returned if specified directory does
+ *                 not exist
+ *                 <ul>
+ *                         <li> gpudb::delete_directory_true
+ *                         <li> gpudb::delete_directory_false
+ *                 </ul>
+ *                 The default value is gpudb::delete_directory_false.
+ *                 </ul>
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+DeleteDirectoryResponse GPUdb::deleteDirectory( const std::string& directoryName,
+                                                const std::map<std::string, std::string>& options ) const
+{
+    DeleteDirectoryRequest actualRequest_;
+    actualRequest_.directoryName = directoryName;
+    actualRequest_.options = options;
+    DeleteDirectoryResponse actualResponse_;
+    submitRequest("/delete/directory", actualRequest_, actualResponse_, false);
+    return actualResponse_;
+}
+
+
+/**
+ * Deletes a directory from <a href="../../../tools/kifs/"
+ * target="_top">KiFS</a>.
+ * 
+ * @param directoryName  Name of the directory in KiFS to be deleted. The
+ *                       directory must contain no files, unless @a recursive
+ *                       is @a true
+ * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li> gpudb::delete_directory_recursive: If @a true,
+ *                 will delete directory and all files residing in it. If
+ *                 false, directory must be empty for deletion.
+ *                 <ul>
+ *                         <li> gpudb::delete_directory_true
+ *                         <li> gpudb::delete_directory_false
+ *                 </ul>
+ *                 The default value is gpudb::delete_directory_false.
+ *                         <li> gpudb::delete_directory_no_error_if_not_exists:
+ *                 If @a true, no error is returned if specified directory does
+ *                 not exist
+ *                 <ul>
+ *                         <li> gpudb::delete_directory_true
+ *                         <li> gpudb::delete_directory_false
+ *                 </ul>
+ *                 The default value is gpudb::delete_directory_false.
+ *                 </ul>
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+DeleteDirectoryResponse& GPUdb::deleteDirectory( const std::string& directoryName,
+                                                 const std::map<std::string, std::string>& options,
+                                                 DeleteDirectoryResponse& response_ ) const
+{
+    DeleteDirectoryRequest actualRequest_;
+    actualRequest_.directoryName = directoryName;
+    actualRequest_.options = options;
+    submitRequest("/delete/directory", actualRequest_, response_, false);
+    return response_;
+}
+
+
+/**
+ * Deletes one or more files from <a href="../../../tools/kifs/"
+ * target="_top">KiFS</a>.
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+DeleteFilesResponse GPUdb::deleteFiles( const DeleteFilesRequest& request_ ) const
+{
+    DeleteFilesResponse actualResponse_;
+    submitRequest("/delete/files", request_, actualResponse_, false);
+    return actualResponse_;
+}
+
+
+/**
+ * Deletes one or more files from <a href="../../../tools/kifs/"
+ * target="_top">KiFS</a>.
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+DeleteFilesResponse& GPUdb::deleteFiles( const DeleteFilesRequest& request_,
+                                         DeleteFilesResponse& response_ ) const
+{
+    submitRequest("/delete/files", request_, response_, false);
+    return response_;
+}
+
+
+/**
+ * Deletes one or more files from <a href="../../../tools/kifs/"
+ * target="_top">KiFS</a>.
+ * 
+ * @param fileNames  An array of names of files to be deleted.
+ * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li> gpudb::delete_files_no_error_if_not_exists: If
+ *                 @a true, no error is returned if a specified file does not
+ *                 exist
+ *                 <ul>
+ *                         <li> gpudb::delete_files_true
+ *                         <li> gpudb::delete_files_false
+ *                 </ul>
+ *                 The default value is gpudb::delete_files_false.
+ *                 </ul>
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+DeleteFilesResponse GPUdb::deleteFiles( const std::vector<std::string>& fileNames,
+                                        const std::map<std::string, std::string>& options ) const
+{
+    DeleteFilesRequest actualRequest_;
+    actualRequest_.fileNames = fileNames;
+    actualRequest_.options = options;
+    DeleteFilesResponse actualResponse_;
+    submitRequest("/delete/files", actualRequest_, actualResponse_, false);
+    return actualResponse_;
+}
+
+
+/**
+ * Deletes one or more files from <a href="../../../tools/kifs/"
+ * target="_top">KiFS</a>.
+ * 
+ * @param fileNames  An array of names of files to be deleted.
+ * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li> gpudb::delete_files_no_error_if_not_exists: If
+ *                 @a true, no error is returned if a specified file does not
+ *                 exist
+ *                 <ul>
+ *                         <li> gpudb::delete_files_true
+ *                         <li> gpudb::delete_files_false
+ *                 </ul>
+ *                 The default value is gpudb::delete_files_false.
+ *                 </ul>
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+DeleteFilesResponse& GPUdb::deleteFiles( const std::vector<std::string>& fileNames,
+                                         const std::map<std::string, std::string>& options,
+                                         DeleteFilesResponse& response_ ) const
+{
+    DeleteFilesRequest actualRequest_;
+    actualRequest_.fileNames = fileNames;
+    actualRequest_.options = options;
+    submitRequest("/delete/files", actualRequest_, response_, false);
     return response_;
 }
 
@@ -15845,6 +17070,9 @@ DeleteResourceGroupResponse& GPUdb::deleteResourceGroup( const std::string& name
 
 /**
  * Deletes an existing role.
+ * <p>
+ * @attention This method should be used for on-premise deployments only.
+ * <p>
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -15863,6 +17091,9 @@ DeleteRoleResponse GPUdb::deleteRole( const DeleteRoleRequest& request_ ) const
 
 /**
  * Deletes an existing role.
+ * <p>
+ * @attention This method should be used for on-premise deployments only.
+ * <p>
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -15884,6 +17115,9 @@ DeleteRoleResponse& GPUdb::deleteRole( const DeleteRoleRequest& request_,
 
 /**
  * Deletes an existing role.
+ * <p>
+ * @attention This method should be used for on-premise deployments only.
+ * <p>
  * 
  * @param name  Name of the role to be deleted. Must be an existing role.
  * @param options  Optional parameters.
@@ -15906,6 +17140,9 @@ DeleteRoleResponse GPUdb::deleteRole( const std::string& name,
 
 /**
  * Deletes an existing role.
+ * <p>
+ * @attention This method should be used for on-premise deployments only.
+ * <p>
  * 
  * @param name  Name of the role to be deleted. Must be an existing role.
  * @param options  Optional parameters.
@@ -15931,6 +17168,9 @@ DeleteRoleResponse& GPUdb::deleteRole( const std::string& name,
 
 /**
  * Deletes an existing user.
+ * <p>
+ * @attention This method should be used for on-premise deployments only.
+ * <p>
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -15949,6 +17189,9 @@ DeleteUserResponse GPUdb::deleteUser( const DeleteUserRequest& request_ ) const
 
 /**
  * Deletes an existing user.
+ * <p>
+ * @attention This method should be used for on-premise deployments only.
+ * <p>
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -15970,6 +17213,9 @@ DeleteUserResponse& GPUdb::deleteUser( const DeleteUserRequest& request_,
 
 /**
  * Deletes an existing user.
+ * <p>
+ * @attention This method should be used for on-premise deployments only.
+ * <p>
  * 
  * @param name  Name of the user to be deleted. Must be an existing user.
  * @param options  Optional parameters.
@@ -15992,6 +17238,9 @@ DeleteUserResponse GPUdb::deleteUser( const std::string& name,
 
 /**
  * Deletes an existing user.
+ * <p>
+ * @attention This method should be used for on-premise deployments only.
+ * <p>
  * 
  * @param name  Name of the user to be deleted. Must be an existing user.
  * @param options  Optional parameters.
@@ -16011,6 +17260,160 @@ DeleteUserResponse& GPUdb::deleteUser( const std::string& name,
     actualRequest_.name = name;
     actualRequest_.options = options;
     submitRequest("/delete/user", actualRequest_, response_, false);
+    return response_;
+}
+
+
+/**
+ * Downloads one or more files from <a href="../../../tools/kifs/"
+ * target="_top">KiFS</a>.
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+DownloadFilesResponse GPUdb::downloadFiles( const DownloadFilesRequest& request_ ) const
+{
+    DownloadFilesResponse actualResponse_;
+    submitRequest("/download/files", request_, actualResponse_, false);
+    return actualResponse_;
+}
+
+
+/**
+ * Downloads one or more files from <a href="../../../tools/kifs/"
+ * target="_top">KiFS</a>.
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+DownloadFilesResponse& GPUdb::downloadFiles( const DownloadFilesRequest& request_,
+                                             DownloadFilesResponse& response_ ) const
+{
+    submitRequest("/download/files", request_, response_, false);
+    return response_;
+}
+
+
+/**
+ * Downloads one or more files from <a href="../../../tools/kifs/"
+ * target="_top">KiFS</a>.
+ * 
+ * @param fileNames  An array of the file names to download from KiFS. The full
+ *                   path must be provided.
+ * @param readOffsets  An array of starting byte offsets from which to read
+ *                     each
+ *                     respective file in @a fileNames. Must either be empty or
+ *                     the same length
+ *                     as @a fileNames. If empty, files are downloaded in their
+ *                     entirety. If not
+ *                     empty, @a readLengths must also not be empty.
+ * @param readLengths  Array of number of bytes to read from each respective
+ *                     file
+ *                     in @a fileNames. Must either be empty or the same length
+ *                     as
+ *                     @a fileNames. If empty, files are downloaded in their
+ *                     entirety. If not
+ *                     empty, @a readOffsets must also not be empty.
+ * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li> gpudb::download_files_file_encoding: Encoding
+ *                 to be applied to the output file data. When using JSON
+ *                 serialization it is recommended to specify this as @a
+ *                 base64.
+ *                 <ul>
+ *                         <li> gpudb::download_files_base64: Apply base64
+ *                 encoding to the output file data.
+ *                         <li> gpudb::download_files_none: Do not apply any
+ *                 encoding to the output file data.
+ *                 </ul>
+ *                 The default value is gpudb::download_files_none.
+ *                 </ul>
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+DownloadFilesResponse GPUdb::downloadFiles( const std::vector<std::string>& fileNames,
+                                            const std::vector<int64_t>& readOffsets,
+                                            const std::vector<int64_t>& readLengths,
+                                            const std::map<std::string, std::string>& options ) const
+{
+    DownloadFilesRequest actualRequest_;
+    actualRequest_.fileNames = fileNames;
+    actualRequest_.readOffsets = readOffsets;
+    actualRequest_.readLengths = readLengths;
+    actualRequest_.options = options;
+    DownloadFilesResponse actualResponse_;
+    submitRequest("/download/files", actualRequest_, actualResponse_, false);
+    return actualResponse_;
+}
+
+
+/**
+ * Downloads one or more files from <a href="../../../tools/kifs/"
+ * target="_top">KiFS</a>.
+ * 
+ * @param fileNames  An array of the file names to download from KiFS. The full
+ *                   path must be provided.
+ * @param readOffsets  An array of starting byte offsets from which to read
+ *                     each
+ *                     respective file in @a fileNames. Must either be empty or
+ *                     the same length
+ *                     as @a fileNames. If empty, files are downloaded in their
+ *                     entirety. If not
+ *                     empty, @a readLengths must also not be empty.
+ * @param readLengths  Array of number of bytes to read from each respective
+ *                     file
+ *                     in @a fileNames. Must either be empty or the same length
+ *                     as
+ *                     @a fileNames. If empty, files are downloaded in their
+ *                     entirety. If not
+ *                     empty, @a readOffsets must also not be empty.
+ * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li> gpudb::download_files_file_encoding: Encoding
+ *                 to be applied to the output file data. When using JSON
+ *                 serialization it is recommended to specify this as @a
+ *                 base64.
+ *                 <ul>
+ *                         <li> gpudb::download_files_base64: Apply base64
+ *                 encoding to the output file data.
+ *                         <li> gpudb::download_files_none: Do not apply any
+ *                 encoding to the output file data.
+ *                 </ul>
+ *                 The default value is gpudb::download_files_none.
+ *                 </ul>
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+DownloadFilesResponse& GPUdb::downloadFiles( const std::vector<std::string>& fileNames,
+                                             const std::vector<int64_t>& readOffsets,
+                                             const std::vector<int64_t>& readLengths,
+                                             const std::map<std::string, std::string>& options,
+                                             DownloadFilesResponse& response_ ) const
+{
+    DownloadFilesRequest actualRequest_;
+    actualRequest_.fileNames = fileNames;
+    actualRequest_.readOffsets = readOffsets;
+    actualRequest_.readLengths = readLengths;
+    actualRequest_.options = options;
+    submitRequest("/download/files", actualRequest_, response_, false);
     return response_;
 }
 
@@ -16767,17 +18170,15 @@ ExecuteProcResponse& GPUdb::executeProc( const ExecuteProcRequest& request_,
  *                 multiple specified run IDs, the cached data from the first
  *                 run ID specified in the list that includes that table will
  *                 be used.  The default value is ''.
- *                         <li> gpudb::execute_proc_kifs_input_dirs: A
- *                 comma-delimited list of KiFS directories whose local files
- *                 will be made directly accessible to the proc through the
- *                 API. (All KiFS files, local or not, are also accessible
- *                 through the file system below the KiFS mount point.) Each
- *                 name specified must the name of an existing KiFS directory.
- *                 The default value is ''.
  *                         <li> gpudb::execute_proc_run_tag: A string that, if
  *                 not empty, can be used in subsequent calls to
  *                 /show/proc/status or /kill/proc to identify the proc
  *                 instance.  The default value is ''.
+ *                         <li> gpudb::execute_proc_max_output_lines: The
+ *                 maximum number of lines of output from stdout and stderr to
+ *                 return via /show/proc/status. If the number of lines output
+ *                 exceeds the maximum, earlier lines are discarded.  The
+ *                 default value is '100'.
  *                 </ul>
  * 
  * @return Response object containing the result of the operation.
@@ -16893,17 +18294,15 @@ ExecuteProcResponse GPUdb::executeProc( const std::string& procName,
  *                 multiple specified run IDs, the cached data from the first
  *                 run ID specified in the list that includes that table will
  *                 be used.  The default value is ''.
- *                         <li> gpudb::execute_proc_kifs_input_dirs: A
- *                 comma-delimited list of KiFS directories whose local files
- *                 will be made directly accessible to the proc through the
- *                 API. (All KiFS files, local or not, are also accessible
- *                 through the file system below the KiFS mount point.) Each
- *                 name specified must the name of an existing KiFS directory.
- *                 The default value is ''.
  *                         <li> gpudb::execute_proc_run_tag: A string that, if
  *                 not empty, can be used in subsequent calls to
  *                 /show/proc/status or /kill/proc to identify the proc
  *                 instance.  The default value is ''.
+ *                         <li> gpudb::execute_proc_max_output_lines: The
+ *                 maximum number of lines of output from stdout and stderr to
+ *                 return via /show/proc/status. If the number of lines output
+ *                 exceeds the maximum, earlier lines are discarded.  The
+ *                 default value is '100'.
  *                 </ul>
  * @param[out] response_  Response object containing the results of the
  *                        operation.
@@ -22446,6 +23845,136 @@ GrantPermissionDatasourceResponse& GPUdb::grantPermissionDatasource( const std::
 
 
 /**
+ * Grants a <a href="../../../tools/kifs/" target="_top">KiFS</a>
+ * directory-level permission to a user or role.
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+GrantPermissionDirectoryResponse GPUdb::grantPermissionDirectory( const GrantPermissionDirectoryRequest& request_ ) const
+{
+    GrantPermissionDirectoryResponse actualResponse_;
+    submitRequest("/grant/permission/directory", request_, actualResponse_, false);
+    return actualResponse_;
+}
+
+
+/**
+ * Grants a <a href="../../../tools/kifs/" target="_top">KiFS</a>
+ * directory-level permission to a user or role.
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+GrantPermissionDirectoryResponse& GPUdb::grantPermissionDirectory( const GrantPermissionDirectoryRequest& request_,
+                                                                   GrantPermissionDirectoryResponse& response_ ) const
+{
+    submitRequest("/grant/permission/directory", request_, response_, false);
+    return response_;
+}
+
+
+/**
+ * Grants a <a href="../../../tools/kifs/" target="_top">KiFS</a>
+ * directory-level permission to a user or role.
+ * 
+ * @param name  Name of the user or role to which the permission will be
+ *              granted. Must be an existing user or role.
+ * @param permission  Permission to grant to the user or role.
+ *                    <ul>
+ *                            <li>
+ *                    gpudb::grant_permission_directory_directory_read: For
+ *                    files in the directory, access to list files, download
+ *                    files, or use files in server side functions
+ *                            <li>
+ *                    gpudb::grant_permission_directory_directory_write: Access
+ *                    to upload files to, or delete files from, the directory.
+ *                    A user or role with write access automatically has read
+ *                    access
+ *                    </ul>
+ * @param directoryName  Name of the KiFS directory to which the permission
+ *                       grants access. An empty directory name grants access
+ *                       to all KiFS directories
+ * @param options  Optional parameters.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+GrantPermissionDirectoryResponse GPUdb::grantPermissionDirectory( const std::string& name,
+                                                                  const std::string& permission,
+                                                                  const std::string& directoryName,
+                                                                  const std::map<std::string, std::string>& options ) const
+{
+    GrantPermissionDirectoryRequest actualRequest_;
+    actualRequest_.name = name;
+    actualRequest_.permission = permission;
+    actualRequest_.directoryName = directoryName;
+    actualRequest_.options = options;
+    GrantPermissionDirectoryResponse actualResponse_;
+    submitRequest("/grant/permission/directory", actualRequest_, actualResponse_, false);
+    return actualResponse_;
+}
+
+
+/**
+ * Grants a <a href="../../../tools/kifs/" target="_top">KiFS</a>
+ * directory-level permission to a user or role.
+ * 
+ * @param name  Name of the user or role to which the permission will be
+ *              granted. Must be an existing user or role.
+ * @param permission  Permission to grant to the user or role.
+ *                    <ul>
+ *                            <li>
+ *                    gpudb::grant_permission_directory_directory_read: For
+ *                    files in the directory, access to list files, download
+ *                    files, or use files in server side functions
+ *                            <li>
+ *                    gpudb::grant_permission_directory_directory_write: Access
+ *                    to upload files to, or delete files from, the directory.
+ *                    A user or role with write access automatically has read
+ *                    access
+ *                    </ul>
+ * @param directoryName  Name of the KiFS directory to which the permission
+ *                       grants access. An empty directory name grants access
+ *                       to all KiFS directories
+ * @param options  Optional parameters.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+GrantPermissionDirectoryResponse& GPUdb::grantPermissionDirectory( const std::string& name,
+                                                                   const std::string& permission,
+                                                                   const std::string& directoryName,
+                                                                   const std::map<std::string, std::string>& options,
+                                                                   GrantPermissionDirectoryResponse& response_ ) const
+{
+    GrantPermissionDirectoryRequest actualRequest_;
+    actualRequest_.name = name;
+    actualRequest_.permission = permission;
+    actualRequest_.directoryName = directoryName;
+    actualRequest_.options = options;
+    submitRequest("/grant/permission/directory", actualRequest_, response_, false);
+    return response_;
+}
+
+
+/**
  * Grants a proc-level permission to a user or role.
  * 
  * @param[in] request_  Request object containing the parameters for the
@@ -22919,6 +24448,214 @@ GrantRoleResponse& GPUdb::grantRole( const std::string& role,
     actualRequest_.member = member;
     actualRequest_.options = options;
     submitRequest("/grant/role", actualRequest_, response_, false);
+    return response_;
+}
+
+
+/**
+ * Checks if the specified user has the specified permission on the specified
+ * object.
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+HasPermissionResponse GPUdb::hasPermission( const HasPermissionRequest& request_ ) const
+{
+    HasPermissionResponse actualResponse_;
+    submitRequest("/has/permission", request_, actualResponse_, false);
+    return actualResponse_;
+}
+
+
+/**
+ * Checks if the specified user has the specified permission on the specified
+ * object.
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+HasPermissionResponse& GPUdb::hasPermission( const HasPermissionRequest& request_,
+                                             HasPermissionResponse& response_ ) const
+{
+    submitRequest("/has/permission", request_, response_, false);
+    return response_;
+}
+
+
+/**
+ * Checks if the specified user has the specified permission on the specified
+ * object.
+ * 
+ * @param name  Name of the user for which the permission is being checked.
+ *              Must be an existing user. If blank, will use the current user.
+ * @param target  Name of object to check for the requested permission.  It is
+ *                recommended to use a fully-qualified name when possible.
+ * @param permission  Permission to check for.
+ *                    <ul>
+ *                            <li> gpudb::has_permission_connect: Connect
+ *                    access on the given data source
+ *                            <li> gpudb::has_permission_credential_admin: Full
+ *                    read/write and administrative access on the credential.
+ *                            <li> gpudb::has_permission_credential_read:
+ *                    Ability to read and use the credential.
+ *                            <li> gpudb::has_permission_directory_read: For
+ *                    files in the directory, access to list files, download
+ *                    files, or use files in server side functions
+ *                            <li> gpudb::has_permission_directory_write:
+ *                    Access to upload files to, or delete files from, the
+ *                    directory. A user with write access automatically has
+ *                    read access
+ *                            <li> gpudb::has_permission_proc_execute: Execute
+ *                    access to the UDF.
+ *                            <li> gpudb::has_permission_role: User is a member
+ *                    of this role (including indirectly).
+ *                            <li> gpudb::has_permission_sql_proc_execute:
+ *                    Execute access to the SQL proc.
+ *                            <li> gpudb::has_permission_system_admin: Full
+ *                    access to all data and system functions.
+ *                            <li> gpudb::has_permission_system_read: Read-only
+ *                    access to all tables.
+ *                            <li> gpudb::has_permission_system_user_admin:
+ *                    Access to administer users and roles that do not have
+ *                    system_admin permission.
+ *                            <li> gpudb::has_permission_system_write: Read and
+ *                    write access to all tables.
+ *                            <li> gpudb::has_permission_table_admin: Full
+ *                    read/write and administrative access to the table.
+ *                            <li> gpudb::has_permission_table_delete: Delete
+ *                    access to the table.
+ *                            <li> gpudb::has_permission_table_insert: Insert
+ *                    access to the table.
+ *                            <li> gpudb::has_permission_table_read: Read
+ *                    access to the table.
+ *                            <li> gpudb::has_permission_table_update: Update
+ *                    access to the table.
+ *                    </ul>
+ * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li> gpudb::has_permission_no_error_if_not_exists:
+ *                 If @a false will return an error if the provided @a target
+ *                 does not exist or is blank. If @a true then it will return
+ *                 @a false for @a hasPermission.
+ *                 <ul>
+ *                         <li> gpudb::has_permission_true
+ *                         <li> gpudb::has_permission_false
+ *                 </ul>
+ *                 The default value is gpudb::has_permission_false.
+ *                 </ul>
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+HasPermissionResponse GPUdb::hasPermission( const std::string& name,
+                                            const std::string& target,
+                                            const std::string& permission,
+                                            const std::map<std::string, std::string>& options ) const
+{
+    HasPermissionRequest actualRequest_;
+    actualRequest_.name = name;
+    actualRequest_.target = target;
+    actualRequest_.permission = permission;
+    actualRequest_.options = options;
+    HasPermissionResponse actualResponse_;
+    submitRequest("/has/permission", actualRequest_, actualResponse_, false);
+    return actualResponse_;
+}
+
+
+/**
+ * Checks if the specified user has the specified permission on the specified
+ * object.
+ * 
+ * @param name  Name of the user for which the permission is being checked.
+ *              Must be an existing user. If blank, will use the current user.
+ * @param target  Name of object to check for the requested permission.  It is
+ *                recommended to use a fully-qualified name when possible.
+ * @param permission  Permission to check for.
+ *                    <ul>
+ *                            <li> gpudb::has_permission_connect: Connect
+ *                    access on the given data source
+ *                            <li> gpudb::has_permission_credential_admin: Full
+ *                    read/write and administrative access on the credential.
+ *                            <li> gpudb::has_permission_credential_read:
+ *                    Ability to read and use the credential.
+ *                            <li> gpudb::has_permission_directory_read: For
+ *                    files in the directory, access to list files, download
+ *                    files, or use files in server side functions
+ *                            <li> gpudb::has_permission_directory_write:
+ *                    Access to upload files to, or delete files from, the
+ *                    directory. A user with write access automatically has
+ *                    read access
+ *                            <li> gpudb::has_permission_proc_execute: Execute
+ *                    access to the UDF.
+ *                            <li> gpudb::has_permission_role: User is a member
+ *                    of this role (including indirectly).
+ *                            <li> gpudb::has_permission_sql_proc_execute:
+ *                    Execute access to the SQL proc.
+ *                            <li> gpudb::has_permission_system_admin: Full
+ *                    access to all data and system functions.
+ *                            <li> gpudb::has_permission_system_read: Read-only
+ *                    access to all tables.
+ *                            <li> gpudb::has_permission_system_user_admin:
+ *                    Access to administer users and roles that do not have
+ *                    system_admin permission.
+ *                            <li> gpudb::has_permission_system_write: Read and
+ *                    write access to all tables.
+ *                            <li> gpudb::has_permission_table_admin: Full
+ *                    read/write and administrative access to the table.
+ *                            <li> gpudb::has_permission_table_delete: Delete
+ *                    access to the table.
+ *                            <li> gpudb::has_permission_table_insert: Insert
+ *                    access to the table.
+ *                            <li> gpudb::has_permission_table_read: Read
+ *                    access to the table.
+ *                            <li> gpudb::has_permission_table_update: Update
+ *                    access to the table.
+ *                    </ul>
+ * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li> gpudb::has_permission_no_error_if_not_exists:
+ *                 If @a false will return an error if the provided @a target
+ *                 does not exist or is blank. If @a true then it will return
+ *                 @a false for @a hasPermission.
+ *                 <ul>
+ *                         <li> gpudb::has_permission_true
+ *                         <li> gpudb::has_permission_false
+ *                 </ul>
+ *                 The default value is gpudb::has_permission_false.
+ *                 </ul>
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+HasPermissionResponse& GPUdb::hasPermission( const std::string& name,
+                                             const std::string& target,
+                                             const std::string& permission,
+                                             const std::map<std::string, std::string>& options,
+                                             HasPermissionResponse& response_ ) const
+{
+    HasPermissionRequest actualRequest_;
+    actualRequest_.name = name;
+    actualRequest_.target = target;
+    actualRequest_.permission = permission;
+    actualRequest_.options = options;
+    submitRequest("/has/permission", actualRequest_, response_, false);
     return response_;
 }
 
@@ -23490,7 +25227,7 @@ InsertRecordsResponse& GPUdb::insertRecordsRaw( const RawInsertRecordsRequest& r
  * used, names matching
  * the file header's names may be provided to @a columns_to_load instead of
  * numbers, but ranges are not supported.
-
+ * <p>
  * Returns once all files are processed.
  * 
  * @param[in] request_  Request object containing the parameters for the
@@ -23526,7 +25263,7 @@ InsertRecordsFromFilesResponse GPUdb::insertRecordsFromFiles( const InsertRecord
  * used, names matching
  * the file header's names may be provided to @a columns_to_load instead of
  * numbers, but ranges are not supported.
-
+ * <p>
  * Returns once all files are processed.
  * 
  * @param[in] request_  Request object containing the parameters for the
@@ -23565,7 +25302,7 @@ InsertRecordsFromFilesResponse& GPUdb::insertRecordsFromFiles( const InsertRecor
  * used, names matching
  * the file header's names may be provided to @a columns_to_load instead of
  * numbers, but ranges are not supported.
-
+ * <p>
  * Returns once all files are processed.
  * 
  * @param tableName  Name of the table into which the data will be inserted, in
@@ -23587,6 +25324,9 @@ InsertRecordsFromFilesResponse& GPUdb::insertRecordsFromFiles( const InsertRecor
  *                   delimiter will be defaulted to a tab character. If the
  *                   first path ends in .psv, the text delimiter will be
  *                   defaulted to a pipe character (|).
+ *                   For paths in <a href="../../../tools/kifs/"
+ *                   target="_top">KiFS</a>, use the uri prefix of kifs://
+ *                   followed by the full path to a file or directory
  * @param modifyColumns  Not implemented yet
  * @param createTableOptions  Options used when creating the target table.
  *                            <ul>
@@ -23672,6 +25412,10 @@ InsertRecordsFromFilesResponse& GPUdb::insertRecordsFromFiles( const InsertRecor
  *                            gpudb::insert_records_from_files_HASH: Use <a
  *                            href="../../../concepts/tables/#partitioning-by-hash"
  *                            target="_top">hash partitioning</a>.
+ *                                    <li>
+ *                            gpudb::insert_records_from_files_SERIES: Use <a
+ *                            href="../../../concepts/tables/#partitioning-by-series"
+ *                            target="_top">series partitioning</a>.
  *                            </ul>
  *                                    <li>
  *                            gpudb::insert_records_from_files_partition_keys:
@@ -23689,9 +25433,11 @@ InsertRecordsFromFilesResponse& GPUdb::insertRecordsFromFiles( const InsertRecor
  *                            href="../../../concepts/tables/#partitioning-by-interval"
  *                            target="_top">interval partitioning</a>, <a
  *                            href="../../../concepts/tables/#partitioning-by-list"
- *                            target="_top">list partitioning</a>, or <a
+ *                            target="_top">list partitioning</a>, <a
  *                            href="../../../concepts/tables/#partitioning-by-hash"
- *                            target="_top">hash partitioning</a> for example
+ *                            target="_top">hash partitioning</a>, or <a
+ *                            href="../../../concepts/tables/#partitioning-by-series"
+ *                            target="_top">series partitioning</a> for example
  *                            formats.
  *                                    <li>
  *                            gpudb::insert_records_from_files_is_automatic_partition:
@@ -23742,12 +25488,7 @@ InsertRecordsFromFilesResponse& GPUdb::insertRecordsFromFiles( const InsertRecor
  *                            The <a
  *                            href="../../../rm/concepts/#tier-strategies"
  *                            target="_top">tier strategy</a> for the table and
- *                            its columns. See <a
- *                            href="../../../rm/concepts/#tier-strategies"
- *                            target="_top">tier strategy usage</a> for format
- *                            and <a href="../../../rm/usage/#tier-strategies"
- *                            target="_top">tier strategy examples</a> for
- *                            examples.
+ *                            its columns.
  *                            </ul>
  * @param options  Optional parameters.
  *                 <ul>
@@ -23878,6 +25619,8 @@ InsertRecordsFromFilesResponse& GPUdb::insertRecordsFromFiles( const InsertRecor
  *                 Apache Parquet file format
  *                         <li> gpudb::insert_records_from_files_json: Json
  *                 file format
+ *                         <li> gpudb::insert_records_from_files_shapefile:
+ *                 ShapeFile file format
  *                 </ul>
  *                 The default value is
  *                 gpudb::insert_records_from_files_delimited_text.
@@ -23951,6 +25694,20 @@ InsertRecordsFromFilesResponse& GPUdb::insertRecordsFromFiles( const InsertRecor
  *                 Optional: comma separated list of column names, to set as
  *                 primary keys, when not specified in the type.  The default
  *                 value is ''.
+ *                         <li> gpudb::insert_records_from_files_subscribe:
+ *                 Continuously poll the data source to check for new data and
+ *                 load it into the table.
+ *                 <ul>
+ *                         <li> gpudb::insert_records_from_files_true
+ *                         <li> gpudb::insert_records_from_files_false
+ *                 </ul>
+ *                 The default value is gpudb::insert_records_from_files_false.
+ *                         <li> gpudb::insert_records_from_files_poll_interval:
+ *                 If @a true, the number of seconds between attempts to load
+ *                 external files into the table.  If zero, polling will be
+ *                 continuous as long as data is found.  If no data is found,
+ *                 the interval will steadily increase to a maximum of 60
+ *                 seconds.
  *                         <li>
  *                 gpudb::insert_records_from_files_text_comment_string:
  *                 Specifies the character string that should be interpreted as
@@ -24043,8 +25800,33 @@ InsertRecordsFromFilesResponse& GPUdb::insertRecordsFromFiles( const InsertRecor
  *                 the widest possible column types so that 'all' values will
  *                 fit with minimum data scanned
  *                 </ul>
+ *                 The default value is gpudb::insert_records_from_files_speed.
+ *                         <li>
+ *                 gpudb::insert_records_from_files_table_insert_mode:
+ *                 Optional: table_insert_mode. When inserting records from
+ *                 multiple files: if table_per_file then insert from each file
+ *                 into a new table. Currently supported only for shapefiles.
+ *                 <ul>
+ *                         <li> gpudb::insert_records_from_files_single
+ *                         <li> gpudb::insert_records_from_files_table_per_file
+ *                 </ul>
  *                 The default value is
- *                 gpudb::insert_records_from_files_accuracy.
+ *                 gpudb::insert_records_from_files_single.
+ *                         <li>
+ *                 gpudb::insert_records_from_files_kafka_group_id: The group
+ *                 id to be used consuming data from a kakfa topic (valid only
+ *                 for kafka datasource subscriptions).
+ *                         <li>
+ *                 gpudb::insert_records_from_files_text_search_columns: Add
+ *                 'text_search' property to internally inferenced string
+ *                 columns. Comma seperated list of column names or '*' for all
+ *                 columns. To add text_search property only to string columns
+ *                 of minimum size, set also the option
+ *                 'text_search_min_column_length'
+ *                         <li>
+ *                 gpudb::insert_records_from_files_text_search_min_column_length:
+ *                 Set minimum column size. Used only when
+ *                 'text_search_columns' has a value.
  *                 </ul>
  * 
  * @return Response object containing the result of the operation.
@@ -24087,7 +25869,7 @@ InsertRecordsFromFilesResponse GPUdb::insertRecordsFromFiles( const std::string&
  * used, names matching
  * the file header's names may be provided to @a columns_to_load instead of
  * numbers, but ranges are not supported.
-
+ * <p>
  * Returns once all files are processed.
  * 
  * @param tableName  Name of the table into which the data will be inserted, in
@@ -24109,6 +25891,9 @@ InsertRecordsFromFilesResponse GPUdb::insertRecordsFromFiles( const std::string&
  *                   delimiter will be defaulted to a tab character. If the
  *                   first path ends in .psv, the text delimiter will be
  *                   defaulted to a pipe character (|).
+ *                   For paths in <a href="../../../tools/kifs/"
+ *                   target="_top">KiFS</a>, use the uri prefix of kifs://
+ *                   followed by the full path to a file or directory
  * @param modifyColumns  Not implemented yet
  * @param createTableOptions  Options used when creating the target table.
  *                            <ul>
@@ -24194,6 +25979,10 @@ InsertRecordsFromFilesResponse GPUdb::insertRecordsFromFiles( const std::string&
  *                            gpudb::insert_records_from_files_HASH: Use <a
  *                            href="../../../concepts/tables/#partitioning-by-hash"
  *                            target="_top">hash partitioning</a>.
+ *                                    <li>
+ *                            gpudb::insert_records_from_files_SERIES: Use <a
+ *                            href="../../../concepts/tables/#partitioning-by-series"
+ *                            target="_top">series partitioning</a>.
  *                            </ul>
  *                                    <li>
  *                            gpudb::insert_records_from_files_partition_keys:
@@ -24211,9 +26000,11 @@ InsertRecordsFromFilesResponse GPUdb::insertRecordsFromFiles( const std::string&
  *                            href="../../../concepts/tables/#partitioning-by-interval"
  *                            target="_top">interval partitioning</a>, <a
  *                            href="../../../concepts/tables/#partitioning-by-list"
- *                            target="_top">list partitioning</a>, or <a
+ *                            target="_top">list partitioning</a>, <a
  *                            href="../../../concepts/tables/#partitioning-by-hash"
- *                            target="_top">hash partitioning</a> for example
+ *                            target="_top">hash partitioning</a>, or <a
+ *                            href="../../../concepts/tables/#partitioning-by-series"
+ *                            target="_top">series partitioning</a> for example
  *                            formats.
  *                                    <li>
  *                            gpudb::insert_records_from_files_is_automatic_partition:
@@ -24264,12 +26055,7 @@ InsertRecordsFromFilesResponse GPUdb::insertRecordsFromFiles( const std::string&
  *                            The <a
  *                            href="../../../rm/concepts/#tier-strategies"
  *                            target="_top">tier strategy</a> for the table and
- *                            its columns. See <a
- *                            href="../../../rm/concepts/#tier-strategies"
- *                            target="_top">tier strategy usage</a> for format
- *                            and <a href="../../../rm/usage/#tier-strategies"
- *                            target="_top">tier strategy examples</a> for
- *                            examples.
+ *                            its columns.
  *                            </ul>
  * @param options  Optional parameters.
  *                 <ul>
@@ -24400,6 +26186,8 @@ InsertRecordsFromFilesResponse GPUdb::insertRecordsFromFiles( const std::string&
  *                 Apache Parquet file format
  *                         <li> gpudb::insert_records_from_files_json: Json
  *                 file format
+ *                         <li> gpudb::insert_records_from_files_shapefile:
+ *                 ShapeFile file format
  *                 </ul>
  *                 The default value is
  *                 gpudb::insert_records_from_files_delimited_text.
@@ -24473,6 +26261,20 @@ InsertRecordsFromFilesResponse GPUdb::insertRecordsFromFiles( const std::string&
  *                 Optional: comma separated list of column names, to set as
  *                 primary keys, when not specified in the type.  The default
  *                 value is ''.
+ *                         <li> gpudb::insert_records_from_files_subscribe:
+ *                 Continuously poll the data source to check for new data and
+ *                 load it into the table.
+ *                 <ul>
+ *                         <li> gpudb::insert_records_from_files_true
+ *                         <li> gpudb::insert_records_from_files_false
+ *                 </ul>
+ *                 The default value is gpudb::insert_records_from_files_false.
+ *                         <li> gpudb::insert_records_from_files_poll_interval:
+ *                 If @a true, the number of seconds between attempts to load
+ *                 external files into the table.  If zero, polling will be
+ *                 continuous as long as data is found.  If no data is found,
+ *                 the interval will steadily increase to a maximum of 60
+ *                 seconds.
  *                         <li>
  *                 gpudb::insert_records_from_files_text_comment_string:
  *                 Specifies the character string that should be interpreted as
@@ -24565,8 +26367,33 @@ InsertRecordsFromFilesResponse GPUdb::insertRecordsFromFiles( const std::string&
  *                 the widest possible column types so that 'all' values will
  *                 fit with minimum data scanned
  *                 </ul>
+ *                 The default value is gpudb::insert_records_from_files_speed.
+ *                         <li>
+ *                 gpudb::insert_records_from_files_table_insert_mode:
+ *                 Optional: table_insert_mode. When inserting records from
+ *                 multiple files: if table_per_file then insert from each file
+ *                 into a new table. Currently supported only for shapefiles.
+ *                 <ul>
+ *                         <li> gpudb::insert_records_from_files_single
+ *                         <li> gpudb::insert_records_from_files_table_per_file
+ *                 </ul>
  *                 The default value is
- *                 gpudb::insert_records_from_files_accuracy.
+ *                 gpudb::insert_records_from_files_single.
+ *                         <li>
+ *                 gpudb::insert_records_from_files_kafka_group_id: The group
+ *                 id to be used consuming data from a kakfa topic (valid only
+ *                 for kafka datasource subscriptions).
+ *                         <li>
+ *                 gpudb::insert_records_from_files_text_search_columns: Add
+ *                 'text_search' property to internally inferenced string
+ *                 columns. Comma seperated list of column names or '*' for all
+ *                 columns. To add text_search property only to string columns
+ *                 of minimum size, set also the option
+ *                 'text_search_min_column_length'
+ *                         <li>
+ *                 gpudb::insert_records_from_files_text_search_min_column_length:
+ *                 Set minimum column size. Used only when
+ *                 'text_search_columns' has a value.
  *                 </ul>
  * @param[out] response_  Response object containing the results of the
  *                        operation.
@@ -24748,6 +26575,10 @@ InsertRecordsFromPayloadResponse& GPUdb::insertRecordsFromPayload( const InsertR
  *                            gpudb::insert_records_from_payload_HASH: Use <a
  *                            href="../../../concepts/tables/#partitioning-by-hash"
  *                            target="_top">hash partitioning</a>.
+ *                                    <li>
+ *                            gpudb::insert_records_from_payload_SERIES: Use <a
+ *                            href="../../../concepts/tables/#partitioning-by-series"
+ *                            target="_top">series partitioning</a>.
  *                            </ul>
  *                                    <li>
  *                            gpudb::insert_records_from_payload_partition_keys:
@@ -24765,9 +26596,11 @@ InsertRecordsFromPayloadResponse& GPUdb::insertRecordsFromPayload( const InsertR
  *                            href="../../../concepts/tables/#partitioning-by-interval"
  *                            target="_top">interval partitioning</a>, <a
  *                            href="../../../concepts/tables/#partitioning-by-list"
- *                            target="_top">list partitioning</a>, or <a
+ *                            target="_top">list partitioning</a>, <a
  *                            href="../../../concepts/tables/#partitioning-by-hash"
- *                            target="_top">hash partitioning</a> for example
+ *                            target="_top">hash partitioning</a>, or <a
+ *                            href="../../../concepts/tables/#partitioning-by-series"
+ *                            target="_top">series partitioning</a> for example
  *                            formats.
  *                                    <li>
  *                            gpudb::insert_records_from_payload_is_automatic_partition:
@@ -24818,12 +26651,7 @@ InsertRecordsFromPayloadResponse& GPUdb::insertRecordsFromPayload( const InsertR
  *                            The <a
  *                            href="../../../rm/concepts/#tier-strategies"
  *                            target="_top">tier strategy</a> for the table and
- *                            its columns. See <a
- *                            href="../../../rm/concepts/#tier-strategies"
- *                            target="_top">tier strategy usage</a> for format
- *                            and <a href="../../../rm/usage/#tier-strategies"
- *                            target="_top">tier strategy examples</a> for
- *                            examples.
+ *                            its columns.
  *                            </ul>
  * @param options  Optional parameters.
  *                 <ul>
@@ -24952,6 +26780,8 @@ InsertRecordsFromPayloadResponse& GPUdb::insertRecordsFromPayload( const InsertR
  *                 Apache Parquet file format
  *                         <li> gpudb::insert_records_from_payload_json: Json
  *                 file format
+ *                         <li> gpudb::insert_records_from_payload_shapefile:
+ *                 ShapeFile file format
  *                 </ul>
  *                 The default value is
  *                 gpudb::insert_records_from_payload_delimited_text.
@@ -25069,7 +26899,18 @@ InsertRecordsFromPayloadResponse& GPUdb::insertRecordsFromPayload( const InsertR
  *                 fit with minimum data scanned
  *                 </ul>
  *                 The default value is
- *                 gpudb::insert_records_from_payload_accuracy.
+ *                 gpudb::insert_records_from_payload_speed.
+ *                         <li>
+ *                 gpudb::insert_records_from_payload_text_search_columns: Add
+ *                 'text_search' property to internally inferenced string
+ *                 columns. Comma seperated list of column names or '*' for all
+ *                 columns. To add text_search property only to string columns
+ *                 of minimum size, set also the option
+ *                 'text_search_min_column_length'
+ *                         <li>
+ *                 gpudb::insert_records_from_payload_text_search_min_column_length:
+ *                 Set minimum column size. Used only when
+ *                 'text_search_columns' has a value.
  *                 </ul>
  * 
  * @return Response object containing the result of the operation.
@@ -25203,6 +27044,10 @@ InsertRecordsFromPayloadResponse GPUdb::insertRecordsFromPayload( const std::str
  *                            gpudb::insert_records_from_payload_HASH: Use <a
  *                            href="../../../concepts/tables/#partitioning-by-hash"
  *                            target="_top">hash partitioning</a>.
+ *                                    <li>
+ *                            gpudb::insert_records_from_payload_SERIES: Use <a
+ *                            href="../../../concepts/tables/#partitioning-by-series"
+ *                            target="_top">series partitioning</a>.
  *                            </ul>
  *                                    <li>
  *                            gpudb::insert_records_from_payload_partition_keys:
@@ -25220,9 +27065,11 @@ InsertRecordsFromPayloadResponse GPUdb::insertRecordsFromPayload( const std::str
  *                            href="../../../concepts/tables/#partitioning-by-interval"
  *                            target="_top">interval partitioning</a>, <a
  *                            href="../../../concepts/tables/#partitioning-by-list"
- *                            target="_top">list partitioning</a>, or <a
+ *                            target="_top">list partitioning</a>, <a
  *                            href="../../../concepts/tables/#partitioning-by-hash"
- *                            target="_top">hash partitioning</a> for example
+ *                            target="_top">hash partitioning</a>, or <a
+ *                            href="../../../concepts/tables/#partitioning-by-series"
+ *                            target="_top">series partitioning</a> for example
  *                            formats.
  *                                    <li>
  *                            gpudb::insert_records_from_payload_is_automatic_partition:
@@ -25273,12 +27120,7 @@ InsertRecordsFromPayloadResponse GPUdb::insertRecordsFromPayload( const std::str
  *                            The <a
  *                            href="../../../rm/concepts/#tier-strategies"
  *                            target="_top">tier strategy</a> for the table and
- *                            its columns. See <a
- *                            href="../../../rm/concepts/#tier-strategies"
- *                            target="_top">tier strategy usage</a> for format
- *                            and <a href="../../../rm/usage/#tier-strategies"
- *                            target="_top">tier strategy examples</a> for
- *                            examples.
+ *                            its columns.
  *                            </ul>
  * @param options  Optional parameters.
  *                 <ul>
@@ -25407,6 +27249,8 @@ InsertRecordsFromPayloadResponse GPUdb::insertRecordsFromPayload( const std::str
  *                 Apache Parquet file format
  *                         <li> gpudb::insert_records_from_payload_json: Json
  *                 file format
+ *                         <li> gpudb::insert_records_from_payload_shapefile:
+ *                 ShapeFile file format
  *                 </ul>
  *                 The default value is
  *                 gpudb::insert_records_from_payload_delimited_text.
@@ -25524,7 +27368,18 @@ InsertRecordsFromPayloadResponse GPUdb::insertRecordsFromPayload( const std::str
  *                 fit with minimum data scanned
  *                 </ul>
  *                 The default value is
- *                 gpudb::insert_records_from_payload_accuracy.
+ *                 gpudb::insert_records_from_payload_speed.
+ *                         <li>
+ *                 gpudb::insert_records_from_payload_text_search_columns: Add
+ *                 'text_search' property to internally inferenced string
+ *                 columns. Comma seperated list of column names or '*' for all
+ *                 columns. To add text_search property only to string columns
+ *                 of minimum size, set also the option
+ *                 'text_search_min_column_length'
+ *                         <li>
+ *                 gpudb::insert_records_from_payload_text_search_min_column_length:
+ *                 Set minimum column size. Used only when
+ *                 'text_search_columns' has a value.
  *                 </ul>
  * @param[out] response_  Response object containing the results of the
  *                        operation.
@@ -26552,11 +28407,11 @@ LockTableResponse& GPUdb::lockTable( const std::string& tableName,
  * <a href="../../../graph_solver/network_graph_solver/" target="_top">Network
  * Graphs & Solvers</a>
  * concepts documentation, the
- * <a href="../../../graph_solver/examples/graph_rest_guide/"
- * target="_top">Graph REST Tutorial</a>,
+ * <a href="../../../guides/graph_rest_guide/" target="_top">Graph REST
+ * Tutorial</a>,
  * and/or some
- * <a href="../../../graph_solver/examples/#match-graph"
- * target="_top">/match/graph examples</a>
+ * <a href="../../../guide-tags/graph-match/" target="_top">/match/graph
+ * examples</a>
  * before using this endpoint.
  * 
  * @param[in] request_  Request object containing the parameters for the
@@ -26584,11 +28439,11 @@ MatchGraphResponse GPUdb::matchGraph( const MatchGraphRequest& request_ ) const
  * <a href="../../../graph_solver/network_graph_solver/" target="_top">Network
  * Graphs & Solvers</a>
  * concepts documentation, the
- * <a href="../../../graph_solver/examples/graph_rest_guide/"
- * target="_top">Graph REST Tutorial</a>,
+ * <a href="../../../guides/graph_rest_guide/" target="_top">Graph REST
+ * Tutorial</a>,
  * and/or some
- * <a href="../../../graph_solver/examples/#match-graph"
- * target="_top">/match/graph examples</a>
+ * <a href="../../../guide-tags/graph-match/" target="_top">/match/graph
+ * examples</a>
  * before using this endpoint.
  * 
  * @param[in] request_  Request object containing the parameters for the
@@ -26619,11 +28474,11 @@ MatchGraphResponse& GPUdb::matchGraph( const MatchGraphRequest& request_,
  * <a href="../../../graph_solver/network_graph_solver/" target="_top">Network
  * Graphs & Solvers</a>
  * concepts documentation, the
- * <a href="../../../graph_solver/examples/graph_rest_guide/"
- * target="_top">Graph REST Tutorial</a>,
+ * <a href="../../../guides/graph_rest_guide/" target="_top">Graph REST
+ * Tutorial</a>,
  * and/or some
- * <a href="../../../graph_solver/examples/#match-graph"
- * target="_top">/match/graph examples</a>
+ * <a href="../../../guide-tags/graph-match/" target="_top">/match/graph
+ * examples</a>
  * before using this endpoint.
  * 
  * @param graphName  Name of the underlying geospatial graph resource to match
@@ -26667,6 +28522,9 @@ MatchGraphResponse& GPUdb::matchGraph( const MatchGraphRequest& request_,
  *                             <li> gpudb::match_graph_match_batch_solves:
  *                     Matches @a samplePoints source and destination pairs for
  *                     the shortest path solves in batch mode.
+ *                             <li> gpudb::match_graph_match_loops: Matches
+ *                     closed loops (Eulerian paths) originating and ending at
+ *                     each graph node within min and max hops (levels).
  *                     </ul>
  *                     The default value is gpudb::match_graph_markov_chain.
  * @param solutionTable  The name of the table used to store the results, in
@@ -26816,11 +28674,44 @@ MatchGraphResponse& GPUdb::matchGraph( const MatchGraphRequest& request_,
  *                 only once from their depots.
  *                 </ul>
  *                 The default value is gpudb::match_graph_false.
+ *                         <li> gpudb::match_graph_max_truck_stops: For the @a
+ *                 match_supply_demand solver only. If specified (greater than
+ *                 zero), a truck can at most have this many stops (demand
+ *                 locations) in one round trip. Otherwise, it is unlimited. If
+ *                 'enable_truck_reuse' is on, this condition will be applied
+ *                 separately at each round trip use of the same truck.  The
+ *                 default value is '0'.
  *                         <li> gpudb::match_graph_server_id: Indicates which
  *                 graph server(s) to send the request to. Default is to send
  *                 to the server, amongst those containing the corresponding
  *                 graph, that has the most computational bandwidth.  The
  *                 default value is ''.
+ *                         <li> gpudb::match_graph_inverse_solve: For the @a
+ *                 match_batch_solves solver only. Solves source-destination
+ *                 pairs using inverse shortest path solver.
+ *                 <ul>
+ *                         <li> gpudb::match_graph_true: Solves using inverse
+ *                 shortest path solver.
+ *                         <li> gpudb::match_graph_false: Solves using direct
+ *                 shortest path solver.
+ *                 </ul>
+ *                 The default value is gpudb::match_graph_false.
+ *                         <li> gpudb::match_graph_min_loop_level: For the @a
+ *                 match_loops solver only. Finds closed loops around each node
+ *                 deducible not less than this minimal hop (level) deep.  The
+ *                 default value is '0'.
+ *                         <li> gpudb::match_graph_max_loop_level: For the @a
+ *                 match_loops solver only. Finds closed loops around each node
+ *                 deducible not more than this maximal hop (level) deep.  The
+ *                 default value is '5'.
+ *                         <li> gpudb::match_graph_search_limit: For the @a
+ *                 match_loops solver only. Searches within this limit of nodes
+ *                 per vertex to detect loops. The value zero means there is no
+ *                 limit.  The default value is '10000'.
+ *                         <li> gpudb::match_graph_output_batch_size: For the
+ *                 @a match_loops solver only. Uses this value as the batch
+ *                 size of the number of loops in flushing(inserting) to the
+ *                 output table.  The default value is '1000'.
  *                 </ul>
  * 
  * @return Response object containing the result of the operation.
@@ -26855,11 +28746,11 @@ MatchGraphResponse GPUdb::matchGraph( const std::string& graphName,
  * <a href="../../../graph_solver/network_graph_solver/" target="_top">Network
  * Graphs & Solvers</a>
  * concepts documentation, the
- * <a href="../../../graph_solver/examples/graph_rest_guide/"
- * target="_top">Graph REST Tutorial</a>,
+ * <a href="../../../guides/graph_rest_guide/" target="_top">Graph REST
+ * Tutorial</a>,
  * and/or some
- * <a href="../../../graph_solver/examples/#match-graph"
- * target="_top">/match/graph examples</a>
+ * <a href="../../../guide-tags/graph-match/" target="_top">/match/graph
+ * examples</a>
  * before using this endpoint.
  * 
  * @param graphName  Name of the underlying geospatial graph resource to match
@@ -26903,6 +28794,9 @@ MatchGraphResponse GPUdb::matchGraph( const std::string& graphName,
  *                             <li> gpudb::match_graph_match_batch_solves:
  *                     Matches @a samplePoints source and destination pairs for
  *                     the shortest path solves in batch mode.
+ *                             <li> gpudb::match_graph_match_loops: Matches
+ *                     closed loops (Eulerian paths) originating and ending at
+ *                     each graph node within min and max hops (levels).
  *                     </ul>
  *                     The default value is gpudb::match_graph_markov_chain.
  * @param solutionTable  The name of the table used to store the results, in
@@ -27052,11 +28946,44 @@ MatchGraphResponse GPUdb::matchGraph( const std::string& graphName,
  *                 only once from their depots.
  *                 </ul>
  *                 The default value is gpudb::match_graph_false.
+ *                         <li> gpudb::match_graph_max_truck_stops: For the @a
+ *                 match_supply_demand solver only. If specified (greater than
+ *                 zero), a truck can at most have this many stops (demand
+ *                 locations) in one round trip. Otherwise, it is unlimited. If
+ *                 'enable_truck_reuse' is on, this condition will be applied
+ *                 separately at each round trip use of the same truck.  The
+ *                 default value is '0'.
  *                         <li> gpudb::match_graph_server_id: Indicates which
  *                 graph server(s) to send the request to. Default is to send
  *                 to the server, amongst those containing the corresponding
  *                 graph, that has the most computational bandwidth.  The
  *                 default value is ''.
+ *                         <li> gpudb::match_graph_inverse_solve: For the @a
+ *                 match_batch_solves solver only. Solves source-destination
+ *                 pairs using inverse shortest path solver.
+ *                 <ul>
+ *                         <li> gpudb::match_graph_true: Solves using inverse
+ *                 shortest path solver.
+ *                         <li> gpudb::match_graph_false: Solves using direct
+ *                 shortest path solver.
+ *                 </ul>
+ *                 The default value is gpudb::match_graph_false.
+ *                         <li> gpudb::match_graph_min_loop_level: For the @a
+ *                 match_loops solver only. Finds closed loops around each node
+ *                 deducible not less than this minimal hop (level) deep.  The
+ *                 default value is '0'.
+ *                         <li> gpudb::match_graph_max_loop_level: For the @a
+ *                 match_loops solver only. Finds closed loops around each node
+ *                 deducible not more than this maximal hop (level) deep.  The
+ *                 default value is '5'.
+ *                         <li> gpudb::match_graph_search_limit: For the @a
+ *                 match_loops solver only. Searches within this limit of nodes
+ *                 per vertex to detect loops. The value zero means there is no
+ *                 limit.  The default value is '10000'.
+ *                         <li> gpudb::match_graph_output_batch_size: For the
+ *                 @a match_loops solver only. Uses this value as the batch
+ *                 size of the number of loops in flushing(inserting) to the
+ *                 output table.  The default value is '1000'.
  *                 </ul>
  * @param[out] response_  Response object containing the results of the
  *                        operation.
@@ -27365,16 +29292,13 @@ MergeRecordsResponse& GPUdb::mergeRecords( const std::string& tableName,
 /**
  * Update an existing graph network using given nodes, edges, weights,
  * restrictions, and options.
-
+ * <p>
  * IMPORTANT: It's highly recommended that you review the
  * <a href="../../../graph_solver/network_graph_solver/" target="_top">Network
  * Graphs & Solvers</a>
- * concepts documentation, the
- * <a href="../../../graph_solver/examples/graph_rest_guide/"
- * target="_top">Graph REST Tutorial</a>,
- * and/or some
- * <a href="../../../graph_solver/examples/#match-graph"
- * target="_top">/match/graph examples</a>
+ * concepts documentation and
+ * <a href="../../../guides/graph_rest_guide/" target="_top">Graph REST
+ * Tutorial</a>
  * before using this endpoint.
  * 
  * @param[in] request_  Request object containing the parameters for the
@@ -27395,16 +29319,13 @@ ModifyGraphResponse GPUdb::modifyGraph( const ModifyGraphRequest& request_ ) con
 /**
  * Update an existing graph network using given nodes, edges, weights,
  * restrictions, and options.
-
+ * <p>
  * IMPORTANT: It's highly recommended that you review the
  * <a href="../../../graph_solver/network_graph_solver/" target="_top">Network
  * Graphs & Solvers</a>
- * concepts documentation, the
- * <a href="../../../graph_solver/examples/graph_rest_guide/"
- * target="_top">Graph REST Tutorial</a>,
- * and/or some
- * <a href="../../../graph_solver/examples/#match-graph"
- * target="_top">/match/graph examples</a>
+ * concepts documentation and
+ * <a href="../../../guides/graph_rest_guide/" target="_top">Graph REST
+ * Tutorial</a>
  * before using this endpoint.
  * 
  * @param[in] request_  Request object containing the parameters for the
@@ -27428,16 +29349,13 @@ ModifyGraphResponse& GPUdb::modifyGraph( const ModifyGraphRequest& request_,
 /**
  * Update an existing graph network using given nodes, edges, weights,
  * restrictions, and options.
-
+ * <p>
  * IMPORTANT: It's highly recommended that you review the
  * <a href="../../../graph_solver/network_graph_solver/" target="_top">Network
  * Graphs & Solvers</a>
- * concepts documentation, the
- * <a href="../../../graph_solver/examples/graph_rest_guide/"
- * target="_top">Graph REST Tutorial</a>,
- * and/or some
- * <a href="../../../graph_solver/examples/#match-graph"
- * target="_top">/match/graph examples</a>
+ * concepts documentation and
+ * <a href="../../../guides/graph_rest_guide/" target="_top">Graph REST
+ * Tutorial</a>
  * before using this endpoint.
  * 
  * @param graphName  Name of the graph resource to modify.
@@ -27635,16 +29553,13 @@ ModifyGraphResponse GPUdb::modifyGraph( const std::string& graphName,
 /**
  * Update an existing graph network using given nodes, edges, weights,
  * restrictions, and options.
-
+ * <p>
  * IMPORTANT: It's highly recommended that you review the
  * <a href="../../../graph_solver/network_graph_solver/" target="_top">Network
  * Graphs & Solvers</a>
- * concepts documentation, the
- * <a href="../../../graph_solver/examples/graph_rest_guide/"
- * target="_top">Graph REST Tutorial</a>,
- * and/or some
- * <a href="../../../graph_solver/examples/#match-graph"
- * target="_top">/match/graph examples</a>
+ * concepts documentation and
+ * <a href="../../../guides/graph_rest_guide/" target="_top">Graph REST
+ * Tutorial</a>
  * before using this endpoint.
  * 
  * @param graphName  Name of the graph resource to modify.
@@ -27872,11 +29787,11 @@ ModifyGraphResponse& GPUdb::modifyGraph( const std::string& graphName,
  * <a href="../../../graph_solver/network_graph_solver/" target="_top">Network
  * Graphs & Solvers</a>
  * concepts documentation, the
- * <a href="../../../graph_solver/examples/graph_rest_guide/"
- * target="_top">Graph REST Tutorial</a>,
+ * <a href="../../../guides/graph_rest_guide/" target="_top">Graph REST
+ * Tutorial</a>,
  * and/or some
- * <a href="../../../graph_solver/examples/#match-graph"
- * target="_top">/match/graph examples</a>
+ * <a href="../../../guide-tags/graph-query" target="_top">/match/graph
+ * examples</a>
  * before using this endpoint.
  * 
  * @param[in] request_  Request object containing the parameters for the
@@ -27925,11 +29840,11 @@ QueryGraphResponse GPUdb::queryGraph( const QueryGraphRequest& request_ ) const
  * <a href="../../../graph_solver/network_graph_solver/" target="_top">Network
  * Graphs & Solvers</a>
  * concepts documentation, the
- * <a href="../../../graph_solver/examples/graph_rest_guide/"
- * target="_top">Graph REST Tutorial</a>,
+ * <a href="../../../guides/graph_rest_guide/" target="_top">Graph REST
+ * Tutorial</a>,
  * and/or some
- * <a href="../../../graph_solver/examples/#match-graph"
- * target="_top">/match/graph examples</a>
+ * <a href="../../../guide-tags/graph-query" target="_top">/match/graph
+ * examples</a>
  * before using this endpoint.
  * 
  * @param[in] request_  Request object containing the parameters for the
@@ -27981,11 +29896,11 @@ QueryGraphResponse& GPUdb::queryGraph( const QueryGraphRequest& request_,
  * <a href="../../../graph_solver/network_graph_solver/" target="_top">Network
  * Graphs & Solvers</a>
  * concepts documentation, the
- * <a href="../../../graph_solver/examples/graph_rest_guide/"
- * target="_top">Graph REST Tutorial</a>,
+ * <a href="../../../guides/graph_rest_guide/" target="_top">Graph REST
+ * Tutorial</a>,
  * and/or some
- * <a href="../../../graph_solver/examples/#match-graph"
- * target="_top">/match/graph examples</a>
+ * <a href="../../../guide-tags/graph-query" target="_top">/match/graph
+ * examples</a>
  * before using this endpoint.
  * 
  * @param graphName  Name of the graph resource to query.
@@ -28103,14 +30018,6 @@ QueryGraphResponse& GPUdb::queryGraph( const QueryGraphRequest& request_,
  *                         <li> gpudb::query_graph_and_labels: If set to @a
  *                 true, the result of the query has entities that satisfy all
  *                 of the target labels, instead of any.
- *                 <ul>
- *                         <li> gpudb::query_graph_true
- *                         <li> gpudb::query_graph_false
- *                 </ul>
- *                 The default value is gpudb::query_graph_false.
- *                         <li> gpudb::query_graph_export_solve_results:
- *                 Returns solution results inside the @a adjacencyListIntArray
- *                 array in the response if set to @a true.
  *                 <ul>
  *                         <li> gpudb::query_graph_true
  *                         <li> gpudb::query_graph_false
@@ -28177,11 +30084,11 @@ QueryGraphResponse GPUdb::queryGraph( const std::string& graphName,
  * <a href="../../../graph_solver/network_graph_solver/" target="_top">Network
  * Graphs & Solvers</a>
  * concepts documentation, the
- * <a href="../../../graph_solver/examples/graph_rest_guide/"
- * target="_top">Graph REST Tutorial</a>,
+ * <a href="../../../guides/graph_rest_guide/" target="_top">Graph REST
+ * Tutorial</a>,
  * and/or some
- * <a href="../../../graph_solver/examples/#match-graph"
- * target="_top">/match/graph examples</a>
+ * <a href="../../../guide-tags/graph-query" target="_top">/match/graph
+ * examples</a>
  * before using this endpoint.
  * 
  * @param graphName  Name of the graph resource to query.
@@ -28304,14 +30211,6 @@ QueryGraphResponse GPUdb::queryGraph( const std::string& graphName,
  *                         <li> gpudb::query_graph_false
  *                 </ul>
  *                 The default value is gpudb::query_graph_false.
- *                         <li> gpudb::query_graph_export_solve_results:
- *                 Returns solution results inside the @a adjacencyListIntArray
- *                 array in the response if set to @a true.
- *                 <ul>
- *                         <li> gpudb::query_graph_true
- *                         <li> gpudb::query_graph_false
- *                 </ul>
- *                 The default value is gpudb::query_graph_false.
  *                         <li> gpudb::query_graph_server_id: Indicates which
  *                 graph server(s) to send the request to. Default is to send
  *                 to the server, amongst those containing the corresponding
@@ -28341,6 +30240,102 @@ QueryGraphResponse& GPUdb::queryGraph( const std::string& graphName,
     actualRequest_.rings = rings;
     actualRequest_.options = options;
     submitRequest("/query/graph", actualRequest_, response_, false);
+    return response_;
+}
+
+
+/**
+ * @private
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+ReserveResourceResponse GPUdb::reserveResource( const ReserveResourceRequest& request_ ) const
+{
+    ReserveResourceResponse actualResponse_;
+    submitRequest("/reserve/resource", request_, actualResponse_, false);
+    return actualResponse_;
+}
+
+
+/**
+ * @private
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+ReserveResourceResponse& GPUdb::reserveResource( const ReserveResourceRequest& request_,
+                                                 ReserveResourceResponse& response_ ) const
+{
+    submitRequest("/reserve/resource", request_, response_, false);
+    return response_;
+}
+
+
+/**
+ * @private
+ * 
+ * @param component
+ * @param bytesRequested
+ * @param options
+ *                 <ul>
+ *                 </ul>
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+ReserveResourceResponse GPUdb::reserveResource( const std::string& component,
+                                                const int64_t bytesRequested,
+                                                const std::map<std::string, std::string>& options ) const
+{
+    ReserveResourceRequest actualRequest_;
+    actualRequest_.component = component;
+    actualRequest_.bytesRequested = bytesRequested;
+    actualRequest_.options = options;
+    ReserveResourceResponse actualResponse_;
+    submitRequest("/reserve/resource", actualRequest_, actualResponse_, false);
+    return actualResponse_;
+}
+
+
+/**
+ * @private
+ * 
+ * @param component
+ * @param bytesRequested
+ * @param options
+ *                 <ul>
+ *                 </ul>
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+ReserveResourceResponse& GPUdb::reserveResource( const std::string& component,
+                                                 const int64_t bytesRequested,
+                                                 const std::map<std::string, std::string>& options,
+                                                 ReserveResourceResponse& response_ ) const
+{
+    ReserveResourceRequest actualRequest_;
+    actualRequest_.component = component;
+    actualRequest_.bytesRequested = bytesRequested;
+    actualRequest_.options = options;
+    submitRequest("/reserve/resource", actualRequest_, response_, false);
     return response_;
 }
 
@@ -28589,6 +30584,134 @@ RevokePermissionDatasourceResponse& GPUdb::revokePermissionDatasource( const std
     actualRequest_.datasourceName = datasourceName;
     actualRequest_.options = options;
     submitRequest("/revoke/permission/datasource", actualRequest_, response_, false);
+    return response_;
+}
+
+
+/**
+ * Revokes a <a href="../../../tools/kifs/" target="_top">KiFS</a>
+ * directory-level permission from a user or role.
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+RevokePermissionDirectoryResponse GPUdb::revokePermissionDirectory( const RevokePermissionDirectoryRequest& request_ ) const
+{
+    RevokePermissionDirectoryResponse actualResponse_;
+    submitRequest("/revoke/permission/directory", request_, actualResponse_, false);
+    return actualResponse_;
+}
+
+
+/**
+ * Revokes a <a href="../../../tools/kifs/" target="_top">KiFS</a>
+ * directory-level permission from a user or role.
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+RevokePermissionDirectoryResponse& GPUdb::revokePermissionDirectory( const RevokePermissionDirectoryRequest& request_,
+                                                                     RevokePermissionDirectoryResponse& response_ ) const
+{
+    submitRequest("/revoke/permission/directory", request_, response_, false);
+    return response_;
+}
+
+
+/**
+ * Revokes a <a href="../../../tools/kifs/" target="_top">KiFS</a>
+ * directory-level permission from a user or role.
+ * 
+ * @param name  Name of the user or role from which the permission will be
+ *              revoked. Must be an existing user or role.
+ * @param permission  Permission to revoke from the user or role.
+ *                    <ul>
+ *                            <li>
+ *                    gpudb::revoke_permission_directory_directory_read: For
+ *                    files in the directory, access to list files, download
+ *                    files, or use files in server side functions
+ *                            <li>
+ *                    gpudb::revoke_permission_directory_directory_write:
+ *                    Access to upload files to, or delete files from, the
+ *                    directory. A user or role with write access automatically
+ *                    has read acceess
+ *                    </ul>
+ * @param directoryName  Name of the KiFS directory to which the permission
+ *                       revokes access
+ * @param options  Optional parameters.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+RevokePermissionDirectoryResponse GPUdb::revokePermissionDirectory( const std::string& name,
+                                                                    const std::string& permission,
+                                                                    const std::string& directoryName,
+                                                                    const std::map<std::string, std::string>& options ) const
+{
+    RevokePermissionDirectoryRequest actualRequest_;
+    actualRequest_.name = name;
+    actualRequest_.permission = permission;
+    actualRequest_.directoryName = directoryName;
+    actualRequest_.options = options;
+    RevokePermissionDirectoryResponse actualResponse_;
+    submitRequest("/revoke/permission/directory", actualRequest_, actualResponse_, false);
+    return actualResponse_;
+}
+
+
+/**
+ * Revokes a <a href="../../../tools/kifs/" target="_top">KiFS</a>
+ * directory-level permission from a user or role.
+ * 
+ * @param name  Name of the user or role from which the permission will be
+ *              revoked. Must be an existing user or role.
+ * @param permission  Permission to revoke from the user or role.
+ *                    <ul>
+ *                            <li>
+ *                    gpudb::revoke_permission_directory_directory_read: For
+ *                    files in the directory, access to list files, download
+ *                    files, or use files in server side functions
+ *                            <li>
+ *                    gpudb::revoke_permission_directory_directory_write:
+ *                    Access to upload files to, or delete files from, the
+ *                    directory. A user or role with write access automatically
+ *                    has read acceess
+ *                    </ul>
+ * @param directoryName  Name of the KiFS directory to which the permission
+ *                       revokes access
+ * @param options  Optional parameters.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+RevokePermissionDirectoryResponse& GPUdb::revokePermissionDirectory( const std::string& name,
+                                                                     const std::string& permission,
+                                                                     const std::string& directoryName,
+                                                                     const std::map<std::string, std::string>& options,
+                                                                     RevokePermissionDirectoryResponse& response_ ) const
+{
+    RevokePermissionDirectoryRequest actualRequest_;
+    actualRequest_.name = name;
+    actualRequest_.permission = permission;
+    actualRequest_.directoryName = directoryName;
+    actualRequest_.options = options;
+    submitRequest("/revoke/permission/directory", actualRequest_, response_, false);
     return response_;
 }
 
@@ -29341,6 +31464,198 @@ ShowDatasourceResponse& GPUdb::showDatasource( const std::string& name,
     actualRequest_.name = name;
     actualRequest_.options = options;
     submitRequest("/show/datasource", actualRequest_, response_, false);
+    return response_;
+}
+
+
+/**
+ * Shows information about directories in <a href="../../../tools/kifs/"
+ * target="_top">KiFS</a>. Can be used to show a single directory, or all
+ * directories.
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+ShowDirectoriesResponse GPUdb::showDirectories( const ShowDirectoriesRequest& request_ ) const
+{
+    ShowDirectoriesResponse actualResponse_;
+    submitRequest("/show/directories", request_, actualResponse_, false);
+    return actualResponse_;
+}
+
+
+/**
+ * Shows information about directories in <a href="../../../tools/kifs/"
+ * target="_top">KiFS</a>. Can be used to show a single directory, or all
+ * directories.
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+ShowDirectoriesResponse& GPUdb::showDirectories( const ShowDirectoriesRequest& request_,
+                                                 ShowDirectoriesResponse& response_ ) const
+{
+    submitRequest("/show/directories", request_, response_, false);
+    return response_;
+}
+
+
+/**
+ * Shows information about directories in <a href="../../../tools/kifs/"
+ * target="_top">KiFS</a>. Can be used to show a single directory, or all
+ * directories.
+ * 
+ * @param directoryName  The KiFS directory name to show. If empty, shows all
+ *                       directories.
+ * @param options  Optional parameters.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+ShowDirectoriesResponse GPUdb::showDirectories( const std::string& directoryName,
+                                                const std::map<std::string, std::string>& options ) const
+{
+    ShowDirectoriesRequest actualRequest_;
+    actualRequest_.directoryName = directoryName;
+    actualRequest_.options = options;
+    ShowDirectoriesResponse actualResponse_;
+    submitRequest("/show/directories", actualRequest_, actualResponse_, false);
+    return actualResponse_;
+}
+
+
+/**
+ * Shows information about directories in <a href="../../../tools/kifs/"
+ * target="_top">KiFS</a>. Can be used to show a single directory, or all
+ * directories.
+ * 
+ * @param directoryName  The KiFS directory name to show. If empty, shows all
+ *                       directories.
+ * @param options  Optional parameters.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+ShowDirectoriesResponse& GPUdb::showDirectories( const std::string& directoryName,
+                                                 const std::map<std::string, std::string>& options,
+                                                 ShowDirectoriesResponse& response_ ) const
+{
+    ShowDirectoriesRequest actualRequest_;
+    actualRequest_.directoryName = directoryName;
+    actualRequest_.options = options;
+    submitRequest("/show/directories", actualRequest_, response_, false);
+    return response_;
+}
+
+
+/**
+ * Shows information about files in <a href="../../../tools/kifs/"
+ * target="_top">KiFS</a>. Can be used for individual files, or to show all
+ * files in a given directory.
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+ShowFilesResponse GPUdb::showFiles( const ShowFilesRequest& request_ ) const
+{
+    ShowFilesResponse actualResponse_;
+    submitRequest("/show/files", request_, actualResponse_, false);
+    return actualResponse_;
+}
+
+
+/**
+ * Shows information about files in <a href="../../../tools/kifs/"
+ * target="_top">KiFS</a>. Can be used for individual files, or to show all
+ * files in a given directory.
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+ShowFilesResponse& GPUdb::showFiles( const ShowFilesRequest& request_,
+                                     ShowFilesResponse& response_ ) const
+{
+    submitRequest("/show/files", request_, response_, false);
+    return response_;
+}
+
+
+/**
+ * Shows information about files in <a href="../../../tools/kifs/"
+ * target="_top">KiFS</a>. Can be used for individual files, or to show all
+ * files in a given directory.
+ * 
+ * @param paths  File paths to show. Each path can be a KiFS directory name, or
+ *               a full path to a KiFS file.
+ * @param options  Optional parameters.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+ShowFilesResponse GPUdb::showFiles( const std::vector<std::string>& paths,
+                                    const std::map<std::string, std::string>& options ) const
+{
+    ShowFilesRequest actualRequest_;
+    actualRequest_.paths = paths;
+    actualRequest_.options = options;
+    ShowFilesResponse actualResponse_;
+    submitRequest("/show/files", actualRequest_, actualResponse_, false);
+    return actualResponse_;
+}
+
+
+/**
+ * Shows information about files in <a href="../../../tools/kifs/"
+ * target="_top">KiFS</a>. Can be used for individual files, or to show all
+ * files in a given directory.
+ * 
+ * @param paths  File paths to show. Each path can be a KiFS directory name, or
+ *               a full path to a KiFS file.
+ * @param options  Optional parameters.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+ShowFilesResponse& GPUdb::showFiles( const std::vector<std::string>& paths,
+                                     const std::map<std::string, std::string>& options,
+                                     ShowFilesResponse& response_ ) const
+{
+    ShowFilesRequest actualRequest_;
+    actualRequest_.paths = paths;
+    actualRequest_.options = options;
+    submitRequest("/show/files", actualRequest_, response_, false);
     return response_;
 }
 
@@ -31748,6 +34063,96 @@ ShowTypesResponse& GPUdb::showTypes( const std::string& typeId,
 
 
 /**
+ * Retrieves information about rendered videos.
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+ShowVideoResponse GPUdb::showVideo( const ShowVideoRequest& request_ ) const
+{
+    ShowVideoResponse actualResponse_;
+    submitRequest("/show/video", request_, actualResponse_, false);
+    return actualResponse_;
+}
+
+
+/**
+ * Retrieves information about rendered videos.
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+ShowVideoResponse& GPUdb::showVideo( const ShowVideoRequest& request_,
+                                     ShowVideoResponse& response_ ) const
+{
+    submitRequest("/show/video", request_, response_, false);
+    return response_;
+}
+
+
+/**
+ * Retrieves information about rendered videos.
+ * 
+ * @param paths  The fully-qualified <a href="../../../tools/kifs/"
+ *               target="_top">KiFS</a> paths for the videos to show. If empty,
+ *               shows all videos.
+ * @param options  Optional parameters.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+ShowVideoResponse GPUdb::showVideo( const std::vector<std::string>& paths,
+                                    const std::map<std::string, std::string>& options ) const
+{
+    ShowVideoRequest actualRequest_;
+    actualRequest_.paths = paths;
+    actualRequest_.options = options;
+    ShowVideoResponse actualResponse_;
+    submitRequest("/show/video", actualRequest_, actualResponse_, false);
+    return actualResponse_;
+}
+
+
+/**
+ * Retrieves information about rendered videos.
+ * 
+ * @param paths  The fully-qualified <a href="../../../tools/kifs/"
+ *               target="_top">KiFS</a> paths for the videos to show. If empty,
+ *               shows all videos.
+ * @param options  Optional parameters.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+ShowVideoResponse& GPUdb::showVideo( const std::vector<std::string>& paths,
+                                     const std::map<std::string, std::string>& options,
+                                     ShowVideoResponse& response_ ) const
+{
+    ShowVideoRequest actualRequest_;
+    actualRequest_.paths = paths;
+    actualRequest_.options = options;
+    submitRequest("/show/video", actualRequest_, response_, false);
+    return response_;
+}
+
+
+/**
  * Solves an existing graph for a type of problem (e.g., shortest path,
  * page rank, travelling salesman, etc.) using source nodes, destination nodes,
  * and
@@ -31757,11 +34162,11 @@ ShowTypesResponse& GPUdb::showTypes( const std::string& typeId,
  * <a href="../../../graph_solver/network_graph_solver/" target="_top">Network
  * Graphs & Solvers</a>
  * concepts documentation, the
- * <a href="../../../graph_solver/examples/graph_rest_guide/"
- * target="_top">Graph REST Tutorial</a>,
+ * <a href="../../../guides/graph_rest_guide/" target="_top">Graph REST
+ * Tutorial</a>,
  * and/or some
- * <a href="../../../graph_solver/examples/#match-graph"
- * target="_top">/match/graph examples</a>
+ * <a href="../../../guide-tags/graph-solve" target="_top">/solve/graph
+ * examples</a>
  * before using this endpoint.
  * 
  * @param[in] request_  Request object containing the parameters for the
@@ -31789,11 +34194,11 @@ SolveGraphResponse GPUdb::solveGraph( const SolveGraphRequest& request_ ) const
  * <a href="../../../graph_solver/network_graph_solver/" target="_top">Network
  * Graphs & Solvers</a>
  * concepts documentation, the
- * <a href="../../../graph_solver/examples/graph_rest_guide/"
- * target="_top">Graph REST Tutorial</a>,
+ * <a href="../../../guides/graph_rest_guide/" target="_top">Graph REST
+ * Tutorial</a>,
  * and/or some
- * <a href="../../../graph_solver/examples/#match-graph"
- * target="_top">/match/graph examples</a>
+ * <a href="../../../guide-tags/graph-solve" target="_top">/solve/graph
+ * examples</a>
  * before using this endpoint.
  * 
  * @param[in] request_  Request object containing the parameters for the
@@ -31824,11 +34229,11 @@ SolveGraphResponse& GPUdb::solveGraph( const SolveGraphRequest& request_,
  * <a href="../../../graph_solver/network_graph_solver/" target="_top">Network
  * Graphs & Solvers</a>
  * concepts documentation, the
- * <a href="../../../graph_solver/examples/graph_rest_guide/"
- * target="_top">Graph REST Tutorial</a>,
+ * <a href="../../../guides/graph_rest_guide/" target="_top">Graph REST
+ * Tutorial</a>,
  * and/or some
- * <a href="../../../graph_solver/examples/#match-graph"
- * target="_top">/match/graph examples</a>
+ * <a href="../../../guide-tags/graph-solve" target="_top">/solve/graph
+ * examples</a>
  * before using this endpoint.
  * 
  * @param graphName  Name of the graph resource to solve.
@@ -31920,6 +34325,13 @@ SolveGraphResponse& GPUdb::solveGraph( const SolveGraphRequest& request_,
  *                    paths that would give costs between max and min solution
  *                    radia - Make sure to limit by the 'max_solution_targets'
  *                    option. Min cost shoudl be >= shortest_path cost.
+ *                            <li> gpudb::solve_graph_STATS_ALL: Solves for
+ *                    graph statistics such as graph diameter, longest pairs,
+ *                    vertex valences, topology numbers, average and max
+ *                    cluster sizes, etc.
+ *                            <li> gpudb::solve_graph_CLOSENESS: Solves for the
+ *                    centrality closeness score per node as the sum of the
+ *                    inverse shortest path costs to all nodes in the graph.
  *                    </ul>
  *                    The default value is gpudb::solve_graph_SHORTEST_PATH.
  * @param sourceNodes  It can be one of the nodal identifiers - e.g:
@@ -31936,25 +34348,25 @@ SolveGraphResponse& GPUdb::solveGraph( const SolveGraphRequest& request_,
  * @param options  Additional parameters
  *                 <ul>
  *                         <li> gpudb::solve_graph_max_solution_radius: For @a
- *                 SHORTEST_PATH and @a INVERSE_SHORTEST_PATH solvers only.
- *                 Sets the maximum solution cost radius, which ignores the @a
- *                 destinationNodes list and instead outputs the nodes within
- *                 the radius sorted by ascending cost. If set to '0.0', the
- *                 setting is ignored.  The default value is '0.0'.
+ *                 ALLPATHS, @a SHORTEST_PATH and @a INVERSE_SHORTEST_PATH
+ *                 solvers only. Sets the maximum solution cost radius, which
+ *                 ignores the @a destinationNodes list and instead outputs the
+ *                 nodes within the radius sorted by ascending cost. If set to
+ *                 '0.0', the setting is ignored.  The default value is '0.0'.
  *                         <li> gpudb::solve_graph_min_solution_radius: For @a
- *                 SHORTEST_PATH and @a INVERSE_SHORTEST_PATH solvers only.
- *                 Applicable only when @a max_solution_radius is set. Sets the
- *                 minimum solution cost radius, which ignores the @a
- *                 destinationNodes list and instead outputs the nodes within
- *                 the radius sorted by ascending cost. If set to '0.0', the
- *                 setting is ignored.  The default value is '0.0'.
+ *                 ALLPATHS, @a SHORTEST_PATH and @a INVERSE_SHORTEST_PATH
+ *                 solvers only. Applicable only when @a max_solution_radius is
+ *                 set. Sets the minimum solution cost radius, which ignores
+ *                 the @a destinationNodes list and instead outputs the nodes
+ *                 within the radius sorted by ascending cost. If set to '0.0',
+ *                 the setting is ignored.  The default value is '0.0'.
  *                         <li> gpudb::solve_graph_max_solution_targets: For @a
- *                 SHORTEST_PATH and @a INVERSE_SHORTEST_PATH solvers only.
- *                 Sets the maximum number of solution targets, which ignores
- *                 the @a destinationNodes list and instead outputs no more
- *                 than n number of nodes sorted by ascending cost where n is
- *                 equal to the setting value. If set to 0, the setting is
- *                 ignored.  The default value is '0'.
+ *                 ALLPATHS, @a SHORTEST_PATH and @a INVERSE_SHORTEST_PATH
+ *                 solvers only. Sets the maximum number of solution targets,
+ *                 which ignores the @a destinationNodes list and instead
+ *                 outputs no more than n number of nodes sorted by ascending
+ *                 cost where n is equal to the setting value. If set to 0, the
+ *                 setting is ignored.  The default value is '1000'.
  *                         <li> gpudb::solve_graph_export_solve_results:
  *                 Returns solution results inside the @a
  *                 resultPerDestinationNode array in the response if set to @a
@@ -32057,6 +34469,30 @@ SolveGraphResponse& GPUdb::solveGraph( const SolveGraphRequest& request_,
  *                 graph, that has the most computational bandwidth. For
  *                 SHORTEST_PATH solver type, the input is split amongst the
  *                 server containing the corresponding graph.
+ *                         <li> gpudb::solve_graph_convergence_limit: For @a
+ *                 PAGE_RANK solvers only; Maximum percent relative threshold
+ *                 on the pagerank scores of each node between consecutive
+ *                 iterations to satisfy convergence. Default value is 1 (one)
+ *                 percent.  The default value is '1.0'.
+ *                         <li> gpudb::solve_graph_max_iterations: For @a
+ *                 PAGE_RANK solvers only; Maximum number of pagerank
+ *                 iterations for satisfying convergence. Default value is 100.
+ *                 The default value is '100'.
+ *                         <li> gpudb::solve_graph_max_runs: For all @a
+ *                 CENTRALITY solvers only; Sets the maximum number of shortest
+ *                 path runs; maximum possible value is the number of nodes in
+ *                 the graph. Default value of 0 enables this value to be auto
+ *                 computed by the solver.  The default value is '0'.
+ *                         <li> gpudb::solve_graph_output_clusters: For @a
+ *                 STATS_ALL solvers only; the cluster index for each node will
+ *                 be inserted as an additional column in the output.
+ *                 <ul>
+ *                         <li> gpudb::solve_graph_true: An additional column
+ *                 'CLUSTER' will be added for each node
+ *                         <li> gpudb::solve_graph_false: No extra cluster info
+ *                 per node will be available in the output
+ *                 </ul>
+ *                 The default value is gpudb::solve_graph_false.
  *                 </ul>
  * 
  * @return Response object containing the result of the operation.
@@ -32097,11 +34533,11 @@ SolveGraphResponse GPUdb::solveGraph( const std::string& graphName,
  * <a href="../../../graph_solver/network_graph_solver/" target="_top">Network
  * Graphs & Solvers</a>
  * concepts documentation, the
- * <a href="../../../graph_solver/examples/graph_rest_guide/"
- * target="_top">Graph REST Tutorial</a>,
+ * <a href="../../../guides/graph_rest_guide/" target="_top">Graph REST
+ * Tutorial</a>,
  * and/or some
- * <a href="../../../graph_solver/examples/#match-graph"
- * target="_top">/match/graph examples</a>
+ * <a href="../../../guide-tags/graph-solve" target="_top">/solve/graph
+ * examples</a>
  * before using this endpoint.
  * 
  * @param graphName  Name of the graph resource to solve.
@@ -32193,6 +34629,13 @@ SolveGraphResponse GPUdb::solveGraph( const std::string& graphName,
  *                    paths that would give costs between max and min solution
  *                    radia - Make sure to limit by the 'max_solution_targets'
  *                    option. Min cost shoudl be >= shortest_path cost.
+ *                            <li> gpudb::solve_graph_STATS_ALL: Solves for
+ *                    graph statistics such as graph diameter, longest pairs,
+ *                    vertex valences, topology numbers, average and max
+ *                    cluster sizes, etc.
+ *                            <li> gpudb::solve_graph_CLOSENESS: Solves for the
+ *                    centrality closeness score per node as the sum of the
+ *                    inverse shortest path costs to all nodes in the graph.
  *                    </ul>
  *                    The default value is gpudb::solve_graph_SHORTEST_PATH.
  * @param sourceNodes  It can be one of the nodal identifiers - e.g:
@@ -32209,25 +34652,25 @@ SolveGraphResponse GPUdb::solveGraph( const std::string& graphName,
  * @param options  Additional parameters
  *                 <ul>
  *                         <li> gpudb::solve_graph_max_solution_radius: For @a
- *                 SHORTEST_PATH and @a INVERSE_SHORTEST_PATH solvers only.
- *                 Sets the maximum solution cost radius, which ignores the @a
- *                 destinationNodes list and instead outputs the nodes within
- *                 the radius sorted by ascending cost. If set to '0.0', the
- *                 setting is ignored.  The default value is '0.0'.
+ *                 ALLPATHS, @a SHORTEST_PATH and @a INVERSE_SHORTEST_PATH
+ *                 solvers only. Sets the maximum solution cost radius, which
+ *                 ignores the @a destinationNodes list and instead outputs the
+ *                 nodes within the radius sorted by ascending cost. If set to
+ *                 '0.0', the setting is ignored.  The default value is '0.0'.
  *                         <li> gpudb::solve_graph_min_solution_radius: For @a
- *                 SHORTEST_PATH and @a INVERSE_SHORTEST_PATH solvers only.
- *                 Applicable only when @a max_solution_radius is set. Sets the
- *                 minimum solution cost radius, which ignores the @a
- *                 destinationNodes list and instead outputs the nodes within
- *                 the radius sorted by ascending cost. If set to '0.0', the
- *                 setting is ignored.  The default value is '0.0'.
+ *                 ALLPATHS, @a SHORTEST_PATH and @a INVERSE_SHORTEST_PATH
+ *                 solvers only. Applicable only when @a max_solution_radius is
+ *                 set. Sets the minimum solution cost radius, which ignores
+ *                 the @a destinationNodes list and instead outputs the nodes
+ *                 within the radius sorted by ascending cost. If set to '0.0',
+ *                 the setting is ignored.  The default value is '0.0'.
  *                         <li> gpudb::solve_graph_max_solution_targets: For @a
- *                 SHORTEST_PATH and @a INVERSE_SHORTEST_PATH solvers only.
- *                 Sets the maximum number of solution targets, which ignores
- *                 the @a destinationNodes list and instead outputs no more
- *                 than n number of nodes sorted by ascending cost where n is
- *                 equal to the setting value. If set to 0, the setting is
- *                 ignored.  The default value is '0'.
+ *                 ALLPATHS, @a SHORTEST_PATH and @a INVERSE_SHORTEST_PATH
+ *                 solvers only. Sets the maximum number of solution targets,
+ *                 which ignores the @a destinationNodes list and instead
+ *                 outputs no more than n number of nodes sorted by ascending
+ *                 cost where n is equal to the setting value. If set to 0, the
+ *                 setting is ignored.  The default value is '1000'.
  *                         <li> gpudb::solve_graph_export_solve_results:
  *                 Returns solution results inside the @a
  *                 resultPerDestinationNode array in the response if set to @a
@@ -32330,6 +34773,30 @@ SolveGraphResponse GPUdb::solveGraph( const std::string& graphName,
  *                 graph, that has the most computational bandwidth. For
  *                 SHORTEST_PATH solver type, the input is split amongst the
  *                 server containing the corresponding graph.
+ *                         <li> gpudb::solve_graph_convergence_limit: For @a
+ *                 PAGE_RANK solvers only; Maximum percent relative threshold
+ *                 on the pagerank scores of each node between consecutive
+ *                 iterations to satisfy convergence. Default value is 1 (one)
+ *                 percent.  The default value is '1.0'.
+ *                         <li> gpudb::solve_graph_max_iterations: For @a
+ *                 PAGE_RANK solvers only; Maximum number of pagerank
+ *                 iterations for satisfying convergence. Default value is 100.
+ *                 The default value is '100'.
+ *                         <li> gpudb::solve_graph_max_runs: For all @a
+ *                 CENTRALITY solvers only; Sets the maximum number of shortest
+ *                 path runs; maximum possible value is the number of nodes in
+ *                 the graph. Default value of 0 enables this value to be auto
+ *                 computed by the solver.  The default value is '0'.
+ *                         <li> gpudb::solve_graph_output_clusters: For @a
+ *                 STATS_ALL solvers only; the cluster index for each node will
+ *                 be inserted as an additional column in the output.
+ *                 <ul>
+ *                         <li> gpudb::solve_graph_true: An additional column
+ *                 'CLUSTER' will be added for each node
+ *                         <li> gpudb::solve_graph_false: No extra cluster info
+ *                 per node will be available in the output
+ *                 </ul>
+ *                 The default value is gpudb::solve_graph_false.
  *                 </ul>
  * @param[out] response_  Response object containing the results of the
  *                        operation.
@@ -32596,6 +35063,418 @@ UpdateRecordsBySeriesResponse& GPUdb::updateRecordsBySeries( const std::string& 
     actualRequest_.reserved = reserved;
     actualRequest_.options = options;
     submitRequest("/update/records/byseries", actualRequest_, response_, false);
+    return response_;
+}
+
+
+/**
+ * Uploads one or more files to <a href="../../../tools/kifs/"
+ * target="_top">KiFS</a>. There are
+ * two methods for uploading files: load files in their entirety, or load files
+ * in
+ * parts. The latter is recommeded for files of approximately 60 MB or larger.
+ * <p>
+ * To upload files in their entirety, populate @a fileNames with the file
+ * names to upload into on KiFS, and their respective byte content in
+ * @a fileData.
+ * <p>
+ * Multiple steps are involved when uploading in multiple parts. Only one file
+ * at a
+ * time can be uploaded in this manner. A user-provided UUID is utilized to tie
+ * all
+ * the upload steps together for a given file.  To upload a file in multiple
+ * parts:
+ * <p>
+ * 1. Provide the file name in @a fileNames, the UUID in
+ *    the @a multipart_upload_uuid key in @a options, and
+ *    a @a multipart_operation value of
+ *    @a init.
+ * 2. Upload one or more parts by providing the file name, the part data
+ *    in @a fileData, the UUID, a @a multipart_operation
+ *    value of @a upload_part, and
+ *    the part number in the @a multipart_upload_part_number.
+ *    The part numbers must start at 1 and increase incrementally.
+ *    Parts may not be uploaded out of order.
+ * 3. Complete the upload by providing the file name, the UUID, and a
+ *    @a multipart_operation value of
+ *    @a complete.
+ * <p>
+ * Multipart uploads in progress may be canceled by providing the file name,
+ * the
+ * UUID, and a @a multipart_operation value of
+ * @a cancel.  If an new upload is
+ * initialized with a different UUID for an existing upload in progress, the
+ * pre-existing upload is automatically canceled in favor of the new upload.
+ * <p>
+ * The multipart upload must be completed for the file to be usable in KiFS.
+ * Information about multipart uploads in progress is available in
+ * {@link #showFiles(const ShowFilesRequest&) const}.
+ * <p>
+ * File data may be pre-encoded using base64 encoding. This should be indicated
+ * using the @a file_encoding option, and is recommended when
+ * using JSON serialization.
+ * <p>
+ * Each file path must reside in a top-level KiFS directory, i.e. one of the
+ * directories listed in {@link
+ * #showDirectories(const ShowDirectoriesRequest&) const}. The user must
+ * have write
+ * permission on the directory. Nested directories are permitted in file name
+ * paths. Directories are deliniated with the directory separator of '/'.  For
+ * example, given the file path '/a/b/c/d.txt', 'a' must be a KiFS directory.
+ * <p>
+ * These characters are allowed in file name paths: letters, numbers, spaces,
+ * the
+ * path delimiter of '/', and the characters: '.' '-' ':' '[' ']' '(' ')' '#'
+ * '='.
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+UploadFilesResponse GPUdb::uploadFiles( const UploadFilesRequest& request_ ) const
+{
+    UploadFilesResponse actualResponse_;
+    submitRequest("/upload/files", request_, actualResponse_, false);
+    return actualResponse_;
+}
+
+
+/**
+ * Uploads one or more files to <a href="../../../tools/kifs/"
+ * target="_top">KiFS</a>. There are
+ * two methods for uploading files: load files in their entirety, or load files
+ * in
+ * parts. The latter is recommeded for files of approximately 60 MB or larger.
+ * <p>
+ * To upload files in their entirety, populate @a fileNames with the file
+ * names to upload into on KiFS, and their respective byte content in
+ * @a fileData.
+ * <p>
+ * Multiple steps are involved when uploading in multiple parts. Only one file
+ * at a
+ * time can be uploaded in this manner. A user-provided UUID is utilized to tie
+ * all
+ * the upload steps together for a given file.  To upload a file in multiple
+ * parts:
+ * <p>
+ * 1. Provide the file name in @a fileNames, the UUID in
+ *    the @a multipart_upload_uuid key in @a options, and
+ *    a @a multipart_operation value of
+ *    @a init.
+ * 2. Upload one or more parts by providing the file name, the part data
+ *    in @a fileData, the UUID, a @a multipart_operation
+ *    value of @a upload_part, and
+ *    the part number in the @a multipart_upload_part_number.
+ *    The part numbers must start at 1 and increase incrementally.
+ *    Parts may not be uploaded out of order.
+ * 3. Complete the upload by providing the file name, the UUID, and a
+ *    @a multipart_operation value of
+ *    @a complete.
+ * <p>
+ * Multipart uploads in progress may be canceled by providing the file name,
+ * the
+ * UUID, and a @a multipart_operation value of
+ * @a cancel.  If an new upload is
+ * initialized with a different UUID for an existing upload in progress, the
+ * pre-existing upload is automatically canceled in favor of the new upload.
+ * <p>
+ * The multipart upload must be completed for the file to be usable in KiFS.
+ * Information about multipart uploads in progress is available in
+ * {@link #showFiles(const ShowFilesRequest&,ShowFilesResponse&) const}.
+ * <p>
+ * File data may be pre-encoded using base64 encoding. This should be indicated
+ * using the @a file_encoding option, and is recommended when
+ * using JSON serialization.
+ * <p>
+ * Each file path must reside in a top-level KiFS directory, i.e. one of the
+ * directories listed in {@link
+ * #showDirectories(const ShowDirectoriesRequest&,ShowDirectoriesResponse&) const}.
+ * The user must have write
+ * permission on the directory. Nested directories are permitted in file name
+ * paths. Directories are deliniated with the directory separator of '/'.  For
+ * example, given the file path '/a/b/c/d.txt', 'a' must be a KiFS directory.
+ * <p>
+ * These characters are allowed in file name paths: letters, numbers, spaces,
+ * the
+ * path delimiter of '/', and the characters: '.' '-' ':' '[' ']' '(' ')' '#'
+ * '='.
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+UploadFilesResponse& GPUdb::uploadFiles( const UploadFilesRequest& request_,
+                                         UploadFilesResponse& response_ ) const
+{
+    submitRequest("/upload/files", request_, response_, false);
+    return response_;
+}
+
+
+/**
+ * Uploads one or more files to <a href="../../../tools/kifs/"
+ * target="_top">KiFS</a>. There are
+ * two methods for uploading files: load files in their entirety, or load files
+ * in
+ * parts. The latter is recommeded for files of approximately 60 MB or larger.
+ * <p>
+ * To upload files in their entirety, populate @a fileNames with the file
+ * names to upload into on KiFS, and their respective byte content in
+ * @a fileData.
+ * <p>
+ * Multiple steps are involved when uploading in multiple parts. Only one file
+ * at a
+ * time can be uploaded in this manner. A user-provided UUID is utilized to tie
+ * all
+ * the upload steps together for a given file.  To upload a file in multiple
+ * parts:
+ * <p>
+ * 1. Provide the file name in @a fileNames, the UUID in
+ *    the @a multipart_upload_uuid key in @a options, and
+ *    a @a multipart_operation value of
+ *    @a init.
+ * 2. Upload one or more parts by providing the file name, the part data
+ *    in @a fileData, the UUID, a @a multipart_operation
+ *    value of @a upload_part, and
+ *    the part number in the @a multipart_upload_part_number.
+ *    The part numbers must start at 1 and increase incrementally.
+ *    Parts may not be uploaded out of order.
+ * 3. Complete the upload by providing the file name, the UUID, and a
+ *    @a multipart_operation value of
+ *    @a complete.
+ * <p>
+ * Multipart uploads in progress may be canceled by providing the file name,
+ * the
+ * UUID, and a @a multipart_operation value of
+ * @a cancel.  If an new upload is
+ * initialized with a different UUID for an existing upload in progress, the
+ * pre-existing upload is automatically canceled in favor of the new upload.
+ * <p>
+ * The multipart upload must be completed for the file to be usable in KiFS.
+ * Information about multipart uploads in progress is available in
+ * {@link
+ * #showFiles(const std::vector<std::string>&,const std::map<std::string, std::string>&) const}.
+ * <p>
+ * File data may be pre-encoded using base64 encoding. This should be indicated
+ * using the @a file_encoding option, and is recommended when
+ * using JSON serialization.
+ * <p>
+ * Each file path must reside in a top-level KiFS directory, i.e. one of the
+ * directories listed in {@link
+ * #showDirectories(const std::string&,const std::map<std::string, std::string>&) const}.
+ * The user must have write
+ * permission on the directory. Nested directories are permitted in file name
+ * paths. Directories are deliniated with the directory separator of '/'.  For
+ * example, given the file path '/a/b/c/d.txt', 'a' must be a KiFS directory.
+ * <p>
+ * These characters are allowed in file name paths: letters, numbers, spaces,
+ * the
+ * path delimiter of '/', and the characters: '.' '-' ':' '[' ']' '(' ')' '#'
+ * '='.
+ * 
+ * @param fileNames  An array of full file name paths to be used for the files
+ *                   uploaded to KiFS. File names may have any number of nested
+ *                   directories in their
+ *                   paths, but the top-level directory must be an existing
+ *                   KiFS directory. Each file
+ *                   must reside in or under a top-level directory. A full file
+ *                   name path cannot be
+ *                   larger than 1024 characters.
+ * @param fileData  File data for the files being uploaded, for the respective
+ *                  files in @a fileNames.
+ * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li> gpudb::upload_files_file_encoding: Encoding
+ *                 that has been applied to the uploaded
+ *                 file data. When using JSON serialization it is recommended
+ *                 to utilize
+ *                 @a base64. The caller is responsible
+ *                 for encoding the data provided in this payload
+ *                 <ul>
+ *                         <li> gpudb::upload_files_base64: Specifies that the
+ *                 file data being uploaded has been base64 encoded.
+ *                         <li> gpudb::upload_files_none: The uploaded file
+ *                 data has not been encoded.
+ *                 </ul>
+ *                 The default value is gpudb::upload_files_none.
+ *                         <li> gpudb::upload_files_multipart_operation:
+ *                 Multipart upload operation to perform
+ *                 <ul>
+ *                         <li> gpudb::upload_files_none
+ *                         <li> gpudb::upload_files_init: Initialize a
+ *                 multipart file upload
+ *                         <li> gpudb::upload_files_upload_part: Upload one or
+ *                 more parts of the specified multipart file upload
+ *                         <li> gpudb::upload_files_complete: Complete the
+ *                 specified multipart file upload
+ *                         <li> gpudb::upload_files_cancel: Cancel the
+ *                 specified multipart file upload
+ *                 </ul>
+ *                 The default value is gpudb::upload_files_none.
+ *                         <li> gpudb::upload_files_multipart_upload_uuid: UUID
+ *                 to uniquely identify a multipart upload
+ *                         <li>
+ *                 gpudb::upload_files_multipart_upload_part_number:
+ *                 Incremental part number for each part in a
+ *                 multipart upload. Part numbers start at 1, increment by 1,
+ *                 and must be uploaded
+ *                 sequentially
+ *                 </ul>
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+UploadFilesResponse GPUdb::uploadFiles( const std::vector<std::string>& fileNames,
+                                        const std::vector<std::vector<uint8_t> >& fileData,
+                                        const std::map<std::string, std::string>& options ) const
+{
+    UploadFilesRequest actualRequest_;
+    actualRequest_.fileNames = fileNames;
+    actualRequest_.fileData = fileData;
+    actualRequest_.options = options;
+    UploadFilesResponse actualResponse_;
+    submitRequest("/upload/files", actualRequest_, actualResponse_, false);
+    return actualResponse_;
+}
+
+
+/**
+ * Uploads one or more files to <a href="../../../tools/kifs/"
+ * target="_top">KiFS</a>. There are
+ * two methods for uploading files: load files in their entirety, or load files
+ * in
+ * parts. The latter is recommeded for files of approximately 60 MB or larger.
+ * <p>
+ * To upload files in their entirety, populate @a fileNames with the file
+ * names to upload into on KiFS, and their respective byte content in
+ * @a fileData.
+ * <p>
+ * Multiple steps are involved when uploading in multiple parts. Only one file
+ * at a
+ * time can be uploaded in this manner. A user-provided UUID is utilized to tie
+ * all
+ * the upload steps together for a given file.  To upload a file in multiple
+ * parts:
+ * <p>
+ * 1. Provide the file name in @a fileNames, the UUID in
+ *    the @a multipart_upload_uuid key in @a options, and
+ *    a @a multipart_operation value of
+ *    @a init.
+ * 2. Upload one or more parts by providing the file name, the part data
+ *    in @a fileData, the UUID, a @a multipart_operation
+ *    value of @a upload_part, and
+ *    the part number in the @a multipart_upload_part_number.
+ *    The part numbers must start at 1 and increase incrementally.
+ *    Parts may not be uploaded out of order.
+ * 3. Complete the upload by providing the file name, the UUID, and a
+ *    @a multipart_operation value of
+ *    @a complete.
+ * <p>
+ * Multipart uploads in progress may be canceled by providing the file name,
+ * the
+ * UUID, and a @a multipart_operation value of
+ * @a cancel.  If an new upload is
+ * initialized with a different UUID for an existing upload in progress, the
+ * pre-existing upload is automatically canceled in favor of the new upload.
+ * <p>
+ * The multipart upload must be completed for the file to be usable in KiFS.
+ * Information about multipart uploads in progress is available in
+ * {@link
+ * #showFiles(const std::vector<std::string>&,const std::map<std::string, std::string>&,ShowFilesResponse&) const}.
+ * <p>
+ * File data may be pre-encoded using base64 encoding. This should be indicated
+ * using the @a file_encoding option, and is recommended when
+ * using JSON serialization.
+ * <p>
+ * Each file path must reside in a top-level KiFS directory, i.e. one of the
+ * directories listed in {@link
+ * #showDirectories(const std::string&,const std::map<std::string, std::string>&,ShowDirectoriesResponse&) const}.
+ * The user must have write
+ * permission on the directory. Nested directories are permitted in file name
+ * paths. Directories are deliniated with the directory separator of '/'.  For
+ * example, given the file path '/a/b/c/d.txt', 'a' must be a KiFS directory.
+ * <p>
+ * These characters are allowed in file name paths: letters, numbers, spaces,
+ * the
+ * path delimiter of '/', and the characters: '.' '-' ':' '[' ']' '(' ')' '#'
+ * '='.
+ * 
+ * @param fileNames  An array of full file name paths to be used for the files
+ *                   uploaded to KiFS. File names may have any number of nested
+ *                   directories in their
+ *                   paths, but the top-level directory must be an existing
+ *                   KiFS directory. Each file
+ *                   must reside in or under a top-level directory. A full file
+ *                   name path cannot be
+ *                   larger than 1024 characters.
+ * @param fileData  File data for the files being uploaded, for the respective
+ *                  files in @a fileNames.
+ * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li> gpudb::upload_files_file_encoding: Encoding
+ *                 that has been applied to the uploaded
+ *                 file data. When using JSON serialization it is recommended
+ *                 to utilize
+ *                 @a base64. The caller is responsible
+ *                 for encoding the data provided in this payload
+ *                 <ul>
+ *                         <li> gpudb::upload_files_base64: Specifies that the
+ *                 file data being uploaded has been base64 encoded.
+ *                         <li> gpudb::upload_files_none: The uploaded file
+ *                 data has not been encoded.
+ *                 </ul>
+ *                 The default value is gpudb::upload_files_none.
+ *                         <li> gpudb::upload_files_multipart_operation:
+ *                 Multipart upload operation to perform
+ *                 <ul>
+ *                         <li> gpudb::upload_files_none
+ *                         <li> gpudb::upload_files_init: Initialize a
+ *                 multipart file upload
+ *                         <li> gpudb::upload_files_upload_part: Upload one or
+ *                 more parts of the specified multipart file upload
+ *                         <li> gpudb::upload_files_complete: Complete the
+ *                 specified multipart file upload
+ *                         <li> gpudb::upload_files_cancel: Cancel the
+ *                 specified multipart file upload
+ *                 </ul>
+ *                 The default value is gpudb::upload_files_none.
+ *                         <li> gpudb::upload_files_multipart_upload_uuid: UUID
+ *                 to uniquely identify a multipart upload
+ *                         <li>
+ *                 gpudb::upload_files_multipart_upload_part_number:
+ *                 Incremental part number for each part in a
+ *                 multipart upload. Part numbers start at 1, increment by 1,
+ *                 and must be uploaded
+ *                 sequentially
+ *                 </ul>
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+UploadFilesResponse& GPUdb::uploadFiles( const std::vector<std::string>& fileNames,
+                                         const std::vector<std::vector<uint8_t> >& fileData,
+                                         const std::map<std::string, std::string>& options,
+                                         UploadFilesResponse& response_ ) const
+{
+    UploadFilesRequest actualRequest_;
+    actualRequest_.fileNames = fileNames;
+    actualRequest_.fileData = fileData;
+    actualRequest_.options = options;
+    submitRequest("/upload/files", actualRequest_, response_, false);
     return response_;
 }
 
@@ -35964,618 +38843,6 @@ VisualizeIsochroneResponse& GPUdb::visualizeIsochrone( const std::string& graphN
     actualRequest_.contourOptions = contourOptions;
     actualRequest_.options = options;
     submitRequest("/visualize/isochrone", actualRequest_, response_, false);
-    return response_;
-}
-
-
-/**
- * @private
- * 
- * @param[in] request_  Request object containing the parameters for the
- *                      operation.
- * 
- * @return Response object containing the result of the operation.
- * 
- */
-
-VisualizeVideoResponse GPUdb::visualizeVideo( const VisualizeVideoRequest& request_ ) const
-{
-    VisualizeVideoResponse actualResponse_;
-    submitRequest("/visualize/video", request_, actualResponse_, false);
-    return actualResponse_;
-}
-
-
-/**
- * @private
- * 
- * @param[in] request_  Request object containing the parameters for the
- *                      operation.
- * @param[out] response_  Response object containing the results of the
- *                        operation.
- * 
- * @return Response object containing the result of the operation (initially
- *         passed in by reference).
- * 
- */
-
-VisualizeVideoResponse& GPUdb::visualizeVideo( const VisualizeVideoRequest& request_,
-                                               VisualizeVideoResponse& response_ ) const
-{
-    submitRequest("/visualize/video", request_, response_, false);
-    return response_;
-}
-
-
-/**
- * @private
- * 
- * @param tableNames
- * @param worldTableNames
- * @param trackIds
- * @param xColumnName
- * @param yColumnName
- * @param geometryColumnName
- * @param minX
- * @param maxX
- * @param minY
- * @param maxY
- * @param width
- * @param height
- * @param projection
- *                    <ul>
- *                            <li> gpudb::visualize_video_EPSG_4326
- *                            <li> gpudb::visualize_video_PLATE_CARREE
- *                            <li> gpudb::visualize_video_900913
- *                            <li> gpudb::visualize_video_EPSG_900913
- *                            <li> gpudb::visualize_video_102100
- *                            <li> gpudb::visualize_video_EPSG_102100
- *                            <li> gpudb::visualize_video_3857
- *                            <li> gpudb::visualize_video_EPSG_3857
- *                            <li> gpudb::visualize_video_WEB_MERCATOR
- *                    </ul>
- *                    The default value is gpudb::visualize_video_PLATE_CARREE.
- * @param bgColor
- * @param timeIntervals
- * @param videoStyle
- * @param sessionKey
- * @param styleOptions
- *                      <ul>
- *                              <li> gpudb::visualize_video_do_points:
- *                      <ul>
- *                              <li> gpudb::visualize_video_true
- *                              <li> gpudb::visualize_video_false
- *                      </ul>
- *                      The default value is gpudb::visualize_video_true.
- *                              <li> gpudb::visualize_video_do_shapes:
- *                      <ul>
- *                              <li> gpudb::visualize_video_true
- *                              <li> gpudb::visualize_video_false
- *                      </ul>
- *                      The default value is gpudb::visualize_video_true.
- *                              <li> gpudb::visualize_video_do_tracks:
- *                      <ul>
- *                              <li> gpudb::visualize_video_true
- *                              <li> gpudb::visualize_video_false
- *                      </ul>
- *                      The default value is gpudb::visualize_video_true.
- *                              <li> gpudb::visualize_video_pointcolors:   The
- *                      default value is 'FF0000'.
- *                              <li> gpudb::visualize_video_pointsizes:   The
- *                      default value is '3'.
- *                              <li> gpudb::visualize_video_pointshapes:
- *                      <ul>
- *                              <li> gpudb::visualize_video_none
- *                              <li> gpudb::visualize_video_circle
- *                              <li> gpudb::visualize_video_square
- *                              <li> gpudb::visualize_video_diamond
- *                              <li> gpudb::visualize_video_hollowcircle
- *                              <li> gpudb::visualize_video_hollowsquare
- *                              <li> gpudb::visualize_video_hollowdiamond
- *                              <li> gpudb::visualize_video_symbolcode
- *                      </ul>
- *                              <li> gpudb::visualize_video_shapelinewidths:
- *                      The default value is '3'.
- *                              <li> gpudb::visualize_video_shapelinecolors:
- *                      The default value is 'FFFF00 '.
- *                              <li> gpudb::visualize_video_shapefillcolors:
- *                      The default value is '-1'.
- *                              <li> gpudb::visualize_video_tracklinewidths:
- *                      The default value is '3'.
- *                              <li> gpudb::visualize_video_tracklinecolors:
- *                      The default value is '00FF00'.
- *                              <li> gpudb::visualize_video_trackmarkersizes:
- *                      The default value is '3'.
- *                              <li> gpudb::visualize_video_trackmarkercolors:
- *                      The default value is '0000FF'.
- *                              <li> gpudb::visualize_video_trackmarkershapes:
- *                      <ul>
- *                              <li> gpudb::visualize_video_none
- *                              <li> gpudb::visualize_video_circle
- *                              <li> gpudb::visualize_video_square
- *                              <li> gpudb::visualize_video_diamond
- *                              <li> gpudb::visualize_video_hollowcircle
- *                              <li> gpudb::visualize_video_hollowsquare
- *                              <li> gpudb::visualize_video_hollowdiamond
- *                              <li> gpudb::visualize_video_symbolcode
- *                      </ul>
- *                      The default value is gpudb::visualize_video_none.
- *                              <li> gpudb::visualize_video_trackheadcolors:
- *                      The default value is 'FFFFFF'.
- *                              <li> gpudb::visualize_video_trackheadsizes:
- *                      The default value is '10'.
- *                              <li> gpudb::visualize_video_trackheadshapes:
- *                      <ul>
- *                              <li> gpudb::visualize_video_none
- *                              <li> gpudb::visualize_video_circle
- *                              <li> gpudb::visualize_video_square
- *                              <li> gpudb::visualize_video_diamond
- *                              <li> gpudb::visualize_video_hollowcircle
- *                              <li> gpudb::visualize_video_hollowsquare
- *                              <li> gpudb::visualize_video_hollowdiamond
- *                              <li> gpudb::visualize_video_symbolcode
- *                      </ul>
- *                      The default value is gpudb::visualize_video_circle.
- *                      </ul>
- * @param options
- * 
- * @return Response object containing the result of the operation.
- * 
- */
-
-VisualizeVideoResponse GPUdb::visualizeVideo( const std::vector<std::string>& tableNames,
-                                              const std::vector<std::string>& worldTableNames,
-                                              const std::vector<std::vector<std::string> >& trackIds,
-                                              const std::string& xColumnName,
-                                              const std::string& yColumnName,
-                                              const std::string& geometryColumnName,
-                                              const double minX,
-                                              const double maxX,
-                                              const double minY,
-                                              const double maxY,
-                                              const int32_t width,
-                                              const int32_t height,
-                                              const std::string& projection,
-                                              const int64_t bgColor,
-                                              const std::vector<std::vector<double> >& timeIntervals,
-                                              const std::string& videoStyle,
-                                              const std::string& sessionKey,
-                                              const std::map<std::string, std::vector<std::string> >& styleOptions,
-                                              const std::map<std::string, std::string>& options ) const
-{
-    VisualizeVideoRequest actualRequest_;
-    actualRequest_.tableNames = tableNames;
-    actualRequest_.worldTableNames = worldTableNames;
-    actualRequest_.trackIds = trackIds;
-    actualRequest_.xColumnName = xColumnName;
-    actualRequest_.yColumnName = yColumnName;
-    actualRequest_.geometryColumnName = geometryColumnName;
-    actualRequest_.minX = minX;
-    actualRequest_.maxX = maxX;
-    actualRequest_.minY = minY;
-    actualRequest_.maxY = maxY;
-    actualRequest_.width = width;
-    actualRequest_.height = height;
-    actualRequest_.projection = projection;
-    actualRequest_.bgColor = bgColor;
-    actualRequest_.timeIntervals = timeIntervals;
-    actualRequest_.videoStyle = videoStyle;
-    actualRequest_.sessionKey = sessionKey;
-    actualRequest_.styleOptions = styleOptions;
-    actualRequest_.options = options;
-    VisualizeVideoResponse actualResponse_;
-    submitRequest("/visualize/video", actualRequest_, actualResponse_, false);
-    return actualResponse_;
-}
-
-
-/**
- * @private
- * 
- * @param tableNames
- * @param worldTableNames
- * @param trackIds
- * @param xColumnName
- * @param yColumnName
- * @param geometryColumnName
- * @param minX
- * @param maxX
- * @param minY
- * @param maxY
- * @param width
- * @param height
- * @param projection
- *                    <ul>
- *                            <li> gpudb::visualize_video_EPSG_4326
- *                            <li> gpudb::visualize_video_PLATE_CARREE
- *                            <li> gpudb::visualize_video_900913
- *                            <li> gpudb::visualize_video_EPSG_900913
- *                            <li> gpudb::visualize_video_102100
- *                            <li> gpudb::visualize_video_EPSG_102100
- *                            <li> gpudb::visualize_video_3857
- *                            <li> gpudb::visualize_video_EPSG_3857
- *                            <li> gpudb::visualize_video_WEB_MERCATOR
- *                    </ul>
- *                    The default value is gpudb::visualize_video_PLATE_CARREE.
- * @param bgColor
- * @param timeIntervals
- * @param videoStyle
- * @param sessionKey
- * @param styleOptions
- *                      <ul>
- *                              <li> gpudb::visualize_video_do_points:
- *                      <ul>
- *                              <li> gpudb::visualize_video_true
- *                              <li> gpudb::visualize_video_false
- *                      </ul>
- *                      The default value is gpudb::visualize_video_true.
- *                              <li> gpudb::visualize_video_do_shapes:
- *                      <ul>
- *                              <li> gpudb::visualize_video_true
- *                              <li> gpudb::visualize_video_false
- *                      </ul>
- *                      The default value is gpudb::visualize_video_true.
- *                              <li> gpudb::visualize_video_do_tracks:
- *                      <ul>
- *                              <li> gpudb::visualize_video_true
- *                              <li> gpudb::visualize_video_false
- *                      </ul>
- *                      The default value is gpudb::visualize_video_true.
- *                              <li> gpudb::visualize_video_pointcolors:   The
- *                      default value is 'FF0000'.
- *                              <li> gpudb::visualize_video_pointsizes:   The
- *                      default value is '3'.
- *                              <li> gpudb::visualize_video_pointshapes:
- *                      <ul>
- *                              <li> gpudb::visualize_video_none
- *                              <li> gpudb::visualize_video_circle
- *                              <li> gpudb::visualize_video_square
- *                              <li> gpudb::visualize_video_diamond
- *                              <li> gpudb::visualize_video_hollowcircle
- *                              <li> gpudb::visualize_video_hollowsquare
- *                              <li> gpudb::visualize_video_hollowdiamond
- *                              <li> gpudb::visualize_video_symbolcode
- *                      </ul>
- *                              <li> gpudb::visualize_video_shapelinewidths:
- *                      The default value is '3'.
- *                              <li> gpudb::visualize_video_shapelinecolors:
- *                      The default value is 'FFFF00 '.
- *                              <li> gpudb::visualize_video_shapefillcolors:
- *                      The default value is '-1'.
- *                              <li> gpudb::visualize_video_tracklinewidths:
- *                      The default value is '3'.
- *                              <li> gpudb::visualize_video_tracklinecolors:
- *                      The default value is '00FF00'.
- *                              <li> gpudb::visualize_video_trackmarkersizes:
- *                      The default value is '3'.
- *                              <li> gpudb::visualize_video_trackmarkercolors:
- *                      The default value is '0000FF'.
- *                              <li> gpudb::visualize_video_trackmarkershapes:
- *                      <ul>
- *                              <li> gpudb::visualize_video_none
- *                              <li> gpudb::visualize_video_circle
- *                              <li> gpudb::visualize_video_square
- *                              <li> gpudb::visualize_video_diamond
- *                              <li> gpudb::visualize_video_hollowcircle
- *                              <li> gpudb::visualize_video_hollowsquare
- *                              <li> gpudb::visualize_video_hollowdiamond
- *                              <li> gpudb::visualize_video_symbolcode
- *                      </ul>
- *                      The default value is gpudb::visualize_video_none.
- *                              <li> gpudb::visualize_video_trackheadcolors:
- *                      The default value is 'FFFFFF'.
- *                              <li> gpudb::visualize_video_trackheadsizes:
- *                      The default value is '10'.
- *                              <li> gpudb::visualize_video_trackheadshapes:
- *                      <ul>
- *                              <li> gpudb::visualize_video_none
- *                              <li> gpudb::visualize_video_circle
- *                              <li> gpudb::visualize_video_square
- *                              <li> gpudb::visualize_video_diamond
- *                              <li> gpudb::visualize_video_hollowcircle
- *                              <li> gpudb::visualize_video_hollowsquare
- *                              <li> gpudb::visualize_video_hollowdiamond
- *                              <li> gpudb::visualize_video_symbolcode
- *                      </ul>
- *                      The default value is gpudb::visualize_video_circle.
- *                      </ul>
- * @param options
- * @param[out] response_  Response object containing the results of the
- *                        operation.
- * 
- * @return Response object containing the result of the operation (initially
- *         passed in by reference).
- * 
- */
-
-VisualizeVideoResponse& GPUdb::visualizeVideo( const std::vector<std::string>& tableNames,
-                                               const std::vector<std::string>& worldTableNames,
-                                               const std::vector<std::vector<std::string> >& trackIds,
-                                               const std::string& xColumnName,
-                                               const std::string& yColumnName,
-                                               const std::string& geometryColumnName,
-                                               const double minX,
-                                               const double maxX,
-                                               const double minY,
-                                               const double maxY,
-                                               const int32_t width,
-                                               const int32_t height,
-                                               const std::string& projection,
-                                               const int64_t bgColor,
-                                               const std::vector<std::vector<double> >& timeIntervals,
-                                               const std::string& videoStyle,
-                                               const std::string& sessionKey,
-                                               const std::map<std::string, std::vector<std::string> >& styleOptions,
-                                               const std::map<std::string, std::string>& options,
-                                               VisualizeVideoResponse& response_ ) const
-{
-    VisualizeVideoRequest actualRequest_;
-    actualRequest_.tableNames = tableNames;
-    actualRequest_.worldTableNames = worldTableNames;
-    actualRequest_.trackIds = trackIds;
-    actualRequest_.xColumnName = xColumnName;
-    actualRequest_.yColumnName = yColumnName;
-    actualRequest_.geometryColumnName = geometryColumnName;
-    actualRequest_.minX = minX;
-    actualRequest_.maxX = maxX;
-    actualRequest_.minY = minY;
-    actualRequest_.maxY = maxY;
-    actualRequest_.width = width;
-    actualRequest_.height = height;
-    actualRequest_.projection = projection;
-    actualRequest_.bgColor = bgColor;
-    actualRequest_.timeIntervals = timeIntervals;
-    actualRequest_.videoStyle = videoStyle;
-    actualRequest_.sessionKey = sessionKey;
-    actualRequest_.styleOptions = styleOptions;
-    actualRequest_.options = options;
-    submitRequest("/visualize/video", actualRequest_, response_, false);
-    return response_;
-}
-
-
-/**
- * @private
- * 
- * @param[in] request_  Request object containing the parameters for the
- *                      operation.
- * 
- * @return Response object containing the result of the operation.
- * 
- */
-
-VisualizeVideoHeatmapResponse GPUdb::visualizeVideoHeatmap( const VisualizeVideoHeatmapRequest& request_ ) const
-{
-    VisualizeVideoHeatmapResponse actualResponse_;
-    submitRequest("/visualize/video/heatmap", request_, actualResponse_, false);
-    return actualResponse_;
-}
-
-
-/**
- * @private
- * 
- * @param[in] request_  Request object containing the parameters for the
- *                      operation.
- * @param[out] response_  Response object containing the results of the
- *                        operation.
- * 
- * @return Response object containing the result of the operation (initially
- *         passed in by reference).
- * 
- */
-
-VisualizeVideoHeatmapResponse& GPUdb::visualizeVideoHeatmap( const VisualizeVideoHeatmapRequest& request_,
-                                                             VisualizeVideoHeatmapResponse& response_ ) const
-{
-    submitRequest("/visualize/video/heatmap", request_, response_, false);
-    return response_;
-}
-
-
-/**
- * @private
- * 
- * @param tableNames
- * @param xColumnName
- * @param yColumnName
- * @param minX
- * @param maxX
- * @param minY
- * @param maxY
- * @param timeIntervals
- * @param width
- * @param height
- * @param projection
- *                    <ul>
- *                            <li> gpudb::visualize_video_heatmap_EPSG_4326
- *                            <li> gpudb::visualize_video_heatmap_PLATE_CARREE
- *                            <li> gpudb::visualize_video_heatmap_900913
- *                            <li> gpudb::visualize_video_heatmap_EPSG_900913
- *                            <li> gpudb::visualize_video_heatmap_102100
- *                            <li> gpudb::visualize_video_heatmap_EPSG_102100
- *                            <li> gpudb::visualize_video_heatmap_3857
- *                            <li> gpudb::visualize_video_heatmap_EPSG_3857
- *                            <li> gpudb::visualize_video_heatmap_WEB_MERCATOR
- *                    </ul>
- *                    The default value is
- *                    gpudb::visualize_video_heatmap_PLATE_CARREE.
- * @param videoStyle
- * @param sessionKey
- * @param styleOptions
- *                      <ul>
- *                              <li> gpudb::visualize_video_heatmap_colormap:
- *                      <ul>
- *                              <li> gpudb::visualize_video_heatmap_jet
- *                              <li> gpudb::visualize_video_heatmap_hot
- *                              <li> gpudb::visualize_video_heatmap_hsv
- *                              <li> gpudb::visualize_video_heatmap_gray
- *                              <li> gpudb::visualize_video_heatmap_blues
- *                              <li> gpudb::visualize_video_heatmap_greens
- *                              <li> gpudb::visualize_video_heatmap_greys
- *                              <li> gpudb::visualize_video_heatmap_oranges
- *                              <li> gpudb::visualize_video_heatmap_purples
- *                              <li> gpudb::visualize_video_heatmap_reds
- *                      </ul>
- *                      The default value is
- *                      gpudb::visualize_video_heatmap_reds.
- *                              <li>
- *                      gpudb::visualize_video_heatmap_blur_radius:   The
- *                      default value is '5'.
- *                              <li> gpudb::visualize_video_heatmap_bg_color:
- *                      The default value is 'FF000000'.
- *                              <li>
- *                      gpudb::visualize_video_heatmap_gradient_start_color:
- *                      The default value is 'FFFFFF'.
- *                              <li>
- *                      gpudb::visualize_video_heatmap_gradient_end_color:
- *                      The default value is 'FF0000'.
- *                      </ul>
- * @param options
- * 
- * @return Response object containing the result of the operation.
- * 
- */
-
-VisualizeVideoHeatmapResponse GPUdb::visualizeVideoHeatmap( const std::vector<std::string>& tableNames,
-                                                            const std::string& xColumnName,
-                                                            const std::string& yColumnName,
-                                                            const double minX,
-                                                            const double maxX,
-                                                            const double minY,
-                                                            const double maxY,
-                                                            const std::vector<std::vector<double> >& timeIntervals,
-                                                            const int32_t width,
-                                                            const int32_t height,
-                                                            const std::string& projection,
-                                                            const std::string& videoStyle,
-                                                            const std::string& sessionKey,
-                                                            const std::map<std::string, std::string>& styleOptions,
-                                                            const std::map<std::string, std::string>& options ) const
-{
-    VisualizeVideoHeatmapRequest actualRequest_;
-    actualRequest_.tableNames = tableNames;
-    actualRequest_.xColumnName = xColumnName;
-    actualRequest_.yColumnName = yColumnName;
-    actualRequest_.minX = minX;
-    actualRequest_.maxX = maxX;
-    actualRequest_.minY = minY;
-    actualRequest_.maxY = maxY;
-    actualRequest_.timeIntervals = timeIntervals;
-    actualRequest_.width = width;
-    actualRequest_.height = height;
-    actualRequest_.projection = projection;
-    actualRequest_.videoStyle = videoStyle;
-    actualRequest_.sessionKey = sessionKey;
-    actualRequest_.styleOptions = styleOptions;
-    actualRequest_.options = options;
-    VisualizeVideoHeatmapResponse actualResponse_;
-    submitRequest("/visualize/video/heatmap", actualRequest_, actualResponse_, false);
-    return actualResponse_;
-}
-
-
-/**
- * @private
- * 
- * @param tableNames
- * @param xColumnName
- * @param yColumnName
- * @param minX
- * @param maxX
- * @param minY
- * @param maxY
- * @param timeIntervals
- * @param width
- * @param height
- * @param projection
- *                    <ul>
- *                            <li> gpudb::visualize_video_heatmap_EPSG_4326
- *                            <li> gpudb::visualize_video_heatmap_PLATE_CARREE
- *                            <li> gpudb::visualize_video_heatmap_900913
- *                            <li> gpudb::visualize_video_heatmap_EPSG_900913
- *                            <li> gpudb::visualize_video_heatmap_102100
- *                            <li> gpudb::visualize_video_heatmap_EPSG_102100
- *                            <li> gpudb::visualize_video_heatmap_3857
- *                            <li> gpudb::visualize_video_heatmap_EPSG_3857
- *                            <li> gpudb::visualize_video_heatmap_WEB_MERCATOR
- *                    </ul>
- *                    The default value is
- *                    gpudb::visualize_video_heatmap_PLATE_CARREE.
- * @param videoStyle
- * @param sessionKey
- * @param styleOptions
- *                      <ul>
- *                              <li> gpudb::visualize_video_heatmap_colormap:
- *                      <ul>
- *                              <li> gpudb::visualize_video_heatmap_jet
- *                              <li> gpudb::visualize_video_heatmap_hot
- *                              <li> gpudb::visualize_video_heatmap_hsv
- *                              <li> gpudb::visualize_video_heatmap_gray
- *                              <li> gpudb::visualize_video_heatmap_blues
- *                              <li> gpudb::visualize_video_heatmap_greens
- *                              <li> gpudb::visualize_video_heatmap_greys
- *                              <li> gpudb::visualize_video_heatmap_oranges
- *                              <li> gpudb::visualize_video_heatmap_purples
- *                              <li> gpudb::visualize_video_heatmap_reds
- *                      </ul>
- *                      The default value is
- *                      gpudb::visualize_video_heatmap_reds.
- *                              <li>
- *                      gpudb::visualize_video_heatmap_blur_radius:   The
- *                      default value is '5'.
- *                              <li> gpudb::visualize_video_heatmap_bg_color:
- *                      The default value is 'FF000000'.
- *                              <li>
- *                      gpudb::visualize_video_heatmap_gradient_start_color:
- *                      The default value is 'FFFFFF'.
- *                              <li>
- *                      gpudb::visualize_video_heatmap_gradient_end_color:
- *                      The default value is 'FF0000'.
- *                      </ul>
- * @param options
- * @param[out] response_  Response object containing the results of the
- *                        operation.
- * 
- * @return Response object containing the result of the operation (initially
- *         passed in by reference).
- * 
- */
-
-VisualizeVideoHeatmapResponse& GPUdb::visualizeVideoHeatmap( const std::vector<std::string>& tableNames,
-                                                             const std::string& xColumnName,
-                                                             const std::string& yColumnName,
-                                                             const double minX,
-                                                             const double maxX,
-                                                             const double minY,
-                                                             const double maxY,
-                                                             const std::vector<std::vector<double> >& timeIntervals,
-                                                             const int32_t width,
-                                                             const int32_t height,
-                                                             const std::string& projection,
-                                                             const std::string& videoStyle,
-                                                             const std::string& sessionKey,
-                                                             const std::map<std::string, std::string>& styleOptions,
-                                                             const std::map<std::string, std::string>& options,
-                                                             VisualizeVideoHeatmapResponse& response_ ) const
-{
-    VisualizeVideoHeatmapRequest actualRequest_;
-    actualRequest_.tableNames = tableNames;
-    actualRequest_.xColumnName = xColumnName;
-    actualRequest_.yColumnName = yColumnName;
-    actualRequest_.minX = minX;
-    actualRequest_.maxX = maxX;
-    actualRequest_.minY = minY;
-    actualRequest_.maxY = maxY;
-    actualRequest_.timeIntervals = timeIntervals;
-    actualRequest_.width = width;
-    actualRequest_.height = height;
-    actualRequest_.projection = projection;
-    actualRequest_.videoStyle = videoStyle;
-    actualRequest_.sessionKey = sessionKey;
-    actualRequest_.styleOptions = styleOptions;
-    actualRequest_.options = options;
-    submitRequest("/visualize/video/heatmap", actualRequest_, response_, false);
     return response_;
 }
 

@@ -72,6 +72,10 @@ namespace gpudb
          *                    'subdir/file') but must not
          *                    resolve to a directory above the root for the
          *                    proc.
+         *                    Files may be loaded from existing files in KiFS.
+         *                    Those file names should be
+         *                    prefixed with the uri kifs:// and the values in
+         *                    the map should be empty
          * @param[in] command_  The command (excluding arguments) that will be
          *                      invoked when
          *                      the proc is executed. It will be invoked from

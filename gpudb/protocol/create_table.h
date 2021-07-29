@@ -175,10 +175,12 @@ namespace gpudb
          *                      href="../../../concepts/tables/#partitioning-by-interval"
          *                      target="_top">interval partitioning</a>, <a
          *                      href="../../../concepts/tables/#partitioning-by-list"
-         *                      target="_top">list partitioning</a>, or <a
+         *                      target="_top">list partitioning</a>, <a
          *                      href="../../../concepts/tables/#partitioning-by-hash"
-         *                      target="_top">hash partitioning</a> for example
-         *                      formats.
+         *                      target="_top">hash partitioning</a>, or <a
+         *                      href="../../../concepts/tables/#partitioning-by-series"
+         *                      target="_top">series partitioning</a> for
+         *                      example formats.
          *                              <li>
          *                      gpudb::create_table_is_automatic_partition: If
          *                      @a true, a new partition will be created for
@@ -220,13 +222,10 @@ namespace gpudb
          *                      gpudb::create_table_strategy_definition: The <a
          *                      href="../../../rm/concepts/#tier-strategies"
          *                      target="_top">tier strategy</a> for the table
-         *                      and its columns. See <a
-         *                      href="../../../rm/concepts/#tier-strategies"
-         *                      target="_top">tier strategy usage</a> for
-         *                      format and <a
-         *                      href="../../../rm/usage/#tier-strategies"
-         *                      target="_top">tier strategy examples</a> for
-         *                      examples.
+         *                      and its columns.
+         *                              <li>
+         *                      gpudb::create_table_is_virtual_union:
+         *                      <DEVELOPER>
          *                      </ul>
          * 
          */
