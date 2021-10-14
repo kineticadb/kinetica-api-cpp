@@ -3,27 +3,26 @@
  *
  *  DO NOT EDIT DIRECTLY.
  */
-#ifndef __HAS_PERMISSION_H__
-#define __HAS_PERMISSION_H__
+#ifndef __GRANT_PERMISSION_H__
+#define __GRANT_PERMISSION_H__
 
 namespace gpudb
 {
 
     /**
      * A set of input parameters for {@link
-     * #hasPermission(const HasPermissionRequest&) const}.
+     * #grantPermission(const GrantPermissionRequest&) const}.
      * <p>
-     * Checks if the specified user has the specified permission on the
-     * specified object.
+     * Grant user or role the specified permission on the specified object.
      */
-    struct HasPermissionRequest
+    struct GrantPermissionRequest
     {
 
         /**
-         * Constructs a HasPermissionRequest object with default parameter
+         * Constructs a GrantPermissionRequest object with default parameter
          * values.
          */
-        HasPermissionRequest() :
+        GrantPermissionRequest() :
             principal(std::string()),
             object(std::string()),
             objectType(std::string()),
@@ -33,83 +32,83 @@ namespace gpudb
         }
 
         /**
-         * Constructs a HasPermissionRequest object with the specified
+         * Constructs a GrantPermissionRequest object with the specified
          * parameters.
          * 
-         * @param[in] principal_  Name of the user for which the permission is
-         *                        being checked. Must be an existing user. If
-         *                        blank, will use the current user.
-         * @param[in] object_  Name of object to check for the requested
-         *                     permission.  It is recommended to use a
-         *                     fully-qualified name when possible.
-         * @param[in] objectType_  The type of object being checked
+         * @param[in] principal_  Name of the user or role for which the
+         *                        permission is being granted.  Must be an
+         *                        existing user or role.
+         * @param[in] object_  Name of object permission is being granted to.
+         *                     It is recommended to use a fully-qualified name
+         *                     when possible.
+         * @param[in] objectType_  The type of object being granted to
          *                         <ul>
          *                                 <li>
-         *                         gpudb::has_permission_credential: Credential
-         *                                 <li> gpudb::has_permission_datasink:
-         *                         Data Sink
+         *                         gpudb::grant_permission_credential:
+         *                         Credential
          *                                 <li>
-         *                         gpudb::has_permission_datasource: Data
+         *                         gpudb::grant_permission_datasink: Data Sink
+         *                                 <li>
+         *                         gpudb::grant_permission_datasource: Data
          *                         Source
          *                                 <li>
-         *                         gpudb::has_permission_directory: KiFS File
+         *                         gpudb::grant_permission_directory: KIFS File
          *                         Directory
-         *                                 <li> gpudb::has_permission_graph: A
-         *                         Graph object
-         *                                 <li> gpudb::has_permission_proc: UDF
-         *                         Procedure
-         *                                 <li> gpudb::has_permission_schema:
+         *                                 <li> gpudb::grant_permission_graph:
+         *                         A Graph object
+         *                                 <li> gpudb::grant_permission_proc:
+         *                         UDF Procedure
+         *                                 <li> gpudb::grant_permission_schema:
          *                         Schema
-         *                                 <li> gpudb::has_permission_sql_proc:
-         *                         SQL Procedure
-         *                                 <li> gpudb::has_permission_system:
+         *                                 <li>
+         *                         gpudb::grant_permission_sql_proc: SQL
+         *                         Procedure
+         *                                 <li> gpudb::grant_permission_system:
          *                         System-level access
-         *                                 <li> gpudb::has_permission_table:
+         *                                 <li> gpudb::grant_permission_table:
          *                         Database Table
          *                         </ul>
-         * @param[in] permission_  Permission to check for.
+         * @param[in] permission_  Permission being granted.
          *                         <ul>
-         *                                 <li> gpudb::has_permission_admin:
+         *                                 <li> gpudb::grant_permission_admin:
          *                         Full read/write and administrative access on
          *                         the object.
-         *                                 <li> gpudb::has_permission_connect:
-         *                         Connect access on the given data source or
-         *                         data sink.
-         *                                 <li> gpudb::has_permission_delete:
+         *                                 <li>
+         *                         gpudb::grant_permission_connect: Connect
+         *                         access on the given data source or data
+         *                         sink.
+         *                                 <li> gpudb::grant_permission_delete:
          *                         Delete rows from tables.
-         *                                 <li> gpudb::has_permission_execute:
-         *                         Ability to Execute the Procedure object.
-         *                                 <li> gpudb::has_permission_insert:
+         *                                 <li>
+         *                         gpudb::grant_permission_execute: Ability to
+         *                         Execute the Procedure object.
+         *                                 <li> gpudb::grant_permission_insert:
          *                         Insert access to tables.
-         *                                 <li> gpudb::has_permission_read:
+         *                                 <li> gpudb::grant_permission_read:
          *                         Ability to read, list and use the object.
-         *                                 <li> gpudb::has_permission_update:
+         *                                 <li> gpudb::grant_permission_update:
          *                         Update access to the table.
          *                                 <li>
-         *                         gpudb::has_permission_user_admin: Access to
-         *                         administer users and roles that do not have
-         *                         system_admin permission.
-         *                                 <li> gpudb::has_permission_write:
+         *                         gpudb::grant_permission_user_admin: Access
+         *                         to administer users and roles that do not
+         *                         have system_admin permission.
+         *                                 <li> gpudb::grant_permission_write:
          *                         Access to write, change and delete objects.
          *                         </ul>
          * @param[in] options_  Optional parameters.
          *                      <ul>
+         *                              <li> gpudb::grant_permission_columns:
+         *                      Apply table security to these columns,
+         *                      comma-separated.  The default value is ''.
          *                              <li>
-         *                      gpudb::has_permission_no_error_if_not_exists:
-         *                      If @a false will return an error if the
-         *                      provided @a object does not exist or is blank.
-         *                      If @a true then it will return @a false for @a
-         *                      hasPermission.
-         *                      <ul>
-         *                              <li> gpudb::has_permission_true
-         *                              <li> gpudb::has_permission_false
-         *                      </ul>
-         *                      The default value is
-         *                      gpudb::has_permission_false.
+         *                      gpudb::grant_permission_filter_expression:
+         *                      Optional filter expression to apply to this
+         *                      grant.  Only rows that match the filter will be
+         *                      affected.  The default value is ''.
          *                      </ul>
          * 
          */
-        HasPermissionRequest(const std::string& principal_, const std::string& object_, const std::string& objectType_, const std::string& permission_, const std::map<std::string, std::string>& options_):
+        GrantPermissionRequest(const std::string& principal_, const std::string& object_, const std::string& objectType_, const std::string& permission_, const std::map<std::string, std::string>& options_):
             principal( principal_ ),
             object( object_ ),
             objectType( objectType_ ),
@@ -128,9 +127,9 @@ namespace gpudb
 
 namespace avro
 {
-    template<> struct codec_traits<gpudb::HasPermissionRequest>
+    template<> struct codec_traits<gpudb::GrantPermissionRequest>
     {
-        static void encode(Encoder& e, const gpudb::HasPermissionRequest& v)
+        static void encode(Encoder& e, const gpudb::GrantPermissionRequest& v)
         {
             ::avro::encode(e, v.principal);
             ::avro::encode(e, v.object);
@@ -139,7 +138,7 @@ namespace avro
             ::avro::encode(e, v.options);
         }
 
-        static void decode(Decoder& d, gpudb::HasPermissionRequest& v)
+        static void decode(Decoder& d, gpudb::GrantPermissionRequest& v)
         {
             if (::avro::ResolvingDecoder *rd = dynamic_cast< ::avro::ResolvingDecoder*>(&d))
             {
@@ -191,25 +190,22 @@ namespace gpudb
 
     /**
      * A set of output parameters for {@link
-     * #hasPermission(const HasPermissionRequest&) const}.
+     * #grantPermission(const GrantPermissionRequest&) const}.
      * <p>
-     * Checks if the specified user has the specified permission on the
-     * specified object.
+     * Grant user or role the specified permission on the specified object.
      */
-    struct HasPermissionResponse
+    struct GrantPermissionResponse
     {
 
         /**
-         * Constructs a HasPermissionResponse object with default parameter
+         * Constructs a GrantPermissionResponse object with default parameter
          * values.
          */
-        HasPermissionResponse() :
+        GrantPermissionResponse() :
             principal(std::string()),
             object(std::string()),
             objectType(std::string()),
             permission(std::string()),
-            hasPermission(bool()),
-            filters(std::map<std::string, std::string>()),
             info(std::map<std::string, std::string>())
         {
         }
@@ -218,28 +214,24 @@ namespace gpudb
         std::string object;
         std::string objectType;
         std::string permission;
-        bool hasPermission;
-        std::map<std::string, std::string> filters;
         std::map<std::string, std::string> info;
     };
 }
 
 namespace avro
 {
-    template<> struct codec_traits<gpudb::HasPermissionResponse>
+    template<> struct codec_traits<gpudb::GrantPermissionResponse>
     {
-        static void encode(Encoder& e, const gpudb::HasPermissionResponse& v)
+        static void encode(Encoder& e, const gpudb::GrantPermissionResponse& v)
         {
             ::avro::encode(e, v.principal);
             ::avro::encode(e, v.object);
             ::avro::encode(e, v.objectType);
             ::avro::encode(e, v.permission);
-            ::avro::encode(e, v.hasPermission);
-            ::avro::encode(e, v.filters);
             ::avro::encode(e, v.info);
         }
 
-        static void decode(Decoder& d, gpudb::HasPermissionResponse& v)
+        static void decode(Decoder& d, gpudb::GrantPermissionResponse& v)
         {
             if (::avro::ResolvingDecoder *rd = dynamic_cast< ::avro::ResolvingDecoder*>(&d))
             {
@@ -266,14 +258,6 @@ namespace avro
                             break;
 
                         case 4:
-                            ::avro::decode(d, v.hasPermission);
-                            break;
-
-                        case 5:
-                            ::avro::decode(d, v.filters);
-                            break;
-
-                        case 6:
                             ::avro::decode(d, v.info);
                             break;
 
@@ -288,8 +272,6 @@ namespace avro
                 ::avro::decode(d, v.object);
                 ::avro::decode(d, v.objectType);
                 ::avro::decode(d, v.permission);
-                ::avro::decode(d, v.hasPermission);
-                ::avro::decode(d, v.filters);
                 ::avro::decode(d, v.info);
             }
         }

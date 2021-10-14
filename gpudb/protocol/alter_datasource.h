@@ -146,6 +146,30 @@ namespace gpudb
          *                                   gpudb::alter_datasource_kafka_topic_name:
          *                                   Name of the Kafka topic to use as
          *                                   the data source
+         *                                           <li>
+         *                                   gpudb::alter_datasource_anonymous:
+         *                                   Create an anonymous connection to
+         *                                   the storage provider
+         *                                   <ul>
+         *                                           <li>
+         *                                   gpudb::alter_datasource_true
+         *                                           <li>
+         *                                   gpudb::alter_datasource_false
+         *                                   </ul>
+         *                                   The default value is
+         *                                   gpudb::alter_datasource_false.
+         *                                           <li>
+         *                                   gpudb::alter_datasource_use_https:
+         *                                   Use https to connect to datasource
+         *                                   if true, otherwise use http
+         *                                   <ul>
+         *                                           <li>
+         *                                   gpudb::alter_datasource_true
+         *                                           <li>
+         *                                   gpudb::alter_datasource_false
+         *                                   </ul>
+         *                                   The default value is
+         *                                   gpudb::alter_datasource_true.
          *                                   </ul>
          * @param[in] options_  Optional parameters.
          * 

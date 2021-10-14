@@ -3,28 +3,28 @@
  *
  *  DO NOT EDIT DIRECTLY.
  */
-#ifndef __CREATE_MONITOR_TABLE_H__
-#define __CREATE_MONITOR_TABLE_H__
+#ifndef __CREATE_DELTA_TABLE_H__
+#define __CREATE_DELTA_TABLE_H__
 
 namespace gpudb
 {
 
     /**
      * A set of input parameters for {@link
-     * #createMonitorTable(const CreateMonitorTableRequest&) const}.
+     * #createDeltaTable(const CreateDeltaTableRequest&) const}.
      * <p>
      * @private
      */
-    struct CreateMonitorTableRequest
+    struct CreateDeltaTableRequest
     {
 
         /**
          * @private
-         * Constructs a CreateMonitorTableRequest object with default parameter
+         * Constructs a CreateDeltaTableRequest object with default parameter
          * values.
          */
-        CreateMonitorTableRequest() :
-            monitorTableName(std::string()),
+        CreateDeltaTableRequest() :
+            deltaTableName(std::string()),
             tableName(std::string()),
             options(std::map<std::string, std::string>())
         {
@@ -32,22 +32,22 @@ namespace gpudb
 
         /**
          * @private
-         * Constructs a CreateMonitorTableRequest object with the specified
+         * Constructs a CreateDeltaTableRequest object with the specified
          * parameters.
          * 
-         * @param[in] monitorTableName_
+         * @param[in] deltaTableName_
          * @param[in] tableName_
          * @param[in] options_
          * 
          */
-        CreateMonitorTableRequest(const std::string& monitorTableName_, const std::string& tableName_, const std::map<std::string, std::string>& options_):
-            monitorTableName( monitorTableName_ ),
+        CreateDeltaTableRequest(const std::string& deltaTableName_, const std::string& tableName_, const std::map<std::string, std::string>& options_):
+            deltaTableName( deltaTableName_ ),
             tableName( tableName_ ),
             options( options_ )
         {
         }
 
-        std::string monitorTableName;
+        std::string deltaTableName;
         std::string tableName;
         std::map<std::string, std::string> options;
     };
@@ -59,16 +59,16 @@ namespace gpudb
 
 namespace avro
 {
-    template<> struct codec_traits<gpudb::CreateMonitorTableRequest>
+    template<> struct codec_traits<gpudb::CreateDeltaTableRequest>
     {
-        static void encode(Encoder& e, const gpudb::CreateMonitorTableRequest& v)
+        static void encode(Encoder& e, const gpudb::CreateDeltaTableRequest& v)
         {
-            ::avro::encode(e, v.monitorTableName);
+            ::avro::encode(e, v.deltaTableName);
             ::avro::encode(e, v.tableName);
             ::avro::encode(e, v.options);
         }
 
-        static void decode(Decoder& d, gpudb::CreateMonitorTableRequest& v)
+        static void decode(Decoder& d, gpudb::CreateDeltaTableRequest& v)
         {
             if (::avro::ResolvingDecoder *rd = dynamic_cast< ::avro::ResolvingDecoder*>(&d))
             {
@@ -79,7 +79,7 @@ namespace avro
                     switch (*it)
                     {
                         case 0:
-                            ::avro::decode(d, v.monitorTableName);
+                            ::avro::decode(d, v.deltaTableName);
                             break;
 
                         case 1:
@@ -97,7 +97,7 @@ namespace avro
             }
             else
             {
-                ::avro::decode(d, v.monitorTableName);
+                ::avro::decode(d, v.deltaTableName);
                 ::avro::decode(d, v.tableName);
                 ::avro::decode(d, v.options);
             }
@@ -110,25 +110,25 @@ namespace gpudb
 
     /**
      * A set of output parameters for {@link
-     * #createMonitorTable(const CreateMonitorTableRequest&) const}.
+     * #createDeltaTable(const CreateDeltaTableRequest&) const}.
      * <p>
      * @private
      */
-    struct CreateMonitorTableResponse
+    struct CreateDeltaTableResponse
     {
 
         /**
          * @private
-         * Constructs a CreateMonitorTableResponse object with default
-         * parameter values.
+         * Constructs a CreateDeltaTableResponse object with default parameter
+         * values.
          */
-        CreateMonitorTableResponse() :
-            monitorTableName(std::string()),
+        CreateDeltaTableResponse() :
+            deltaTableName(std::string()),
             info(std::map<std::string, std::string>())
         {
         }
 
-        std::string monitorTableName;
+        std::string deltaTableName;
         std::map<std::string, std::string> info;
     };
 }
@@ -139,15 +139,15 @@ namespace gpudb
 
 namespace avro
 {
-    template<> struct codec_traits<gpudb::CreateMonitorTableResponse>
+    template<> struct codec_traits<gpudb::CreateDeltaTableResponse>
     {
-        static void encode(Encoder& e, const gpudb::CreateMonitorTableResponse& v)
+        static void encode(Encoder& e, const gpudb::CreateDeltaTableResponse& v)
         {
-            ::avro::encode(e, v.monitorTableName);
+            ::avro::encode(e, v.deltaTableName);
             ::avro::encode(e, v.info);
         }
 
-        static void decode(Decoder& d, gpudb::CreateMonitorTableResponse& v)
+        static void decode(Decoder& d, gpudb::CreateDeltaTableResponse& v)
         {
             if (::avro::ResolvingDecoder *rd = dynamic_cast< ::avro::ResolvingDecoder*>(&d))
             {
@@ -158,7 +158,7 @@ namespace avro
                     switch (*it)
                     {
                         case 0:
-                            ::avro::decode(d, v.monitorTableName);
+                            ::avro::decode(d, v.deltaTableName);
                             break;
 
                         case 1:
@@ -172,7 +172,7 @@ namespace avro
             }
             else
             {
-                ::avro::decode(d, v.monitorTableName);
+                ::avro::decode(d, v.deltaTableName);
                 ::avro::decode(d, v.info);
             }
         }

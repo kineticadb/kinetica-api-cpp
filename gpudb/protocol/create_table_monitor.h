@@ -78,6 +78,60 @@ namespace gpudb
          *                      </ul>
          *                      The default value is
          *                      gpudb::create_table_monitor_insert.
+         *                              <li>
+         *                      gpudb::create_table_monitor_monitor_id: ID to
+         *                      to use for this monitor instead of a randomly
+         *                      generated one
+         *                              <li>
+         *                      gpudb::create_table_monitor_datasink_name: Name
+         *                      of an existing <a
+         *                      href="../../../concepts/data_sinks/"
+         *                      target="_top">data sink</a> to send change data
+         *                      notifications to
+         *                              <li>
+         *                      gpudb::create_table_monitor_destination:
+         *                      Destination for the output data in format
+         *                      'destination_type://path[:port]'. Supported
+         *                      destination types are 'http', 'https' and
+         *                      'kafka'.
+         *                              <li>
+         *                      gpudb::create_table_monitor_kafka_topic_name:
+         *                      Name of the Kafka topic to publish to if @a
+         *                      destination in @a options is specified and is a
+         *                      Kafka broker
+         *                              <li>
+         *                      gpudb::create_table_monitor_increasing_column:
+         *                      Column on subscribed table that will increase
+         *                      for new records (e.g., TIMESTAMP).
+         *                              <li>
+         *                      gpudb::create_table_monitor_expression: Filter
+         *                      expression to limit records for notification
+         *                              <li>
+         *                      gpudb::create_table_monitor_refresh_method:
+         *                      Method controlling when the table monitor
+         *                      reports changes to the @a tableName.
+         *                      <ul>
+         *                              <li>
+         *                      gpudb::create_table_monitor_on_change: Report
+         *                      changes as they occur.
+         *                              <li>
+         *                      gpudb::create_table_monitor_periodic: Report
+         *                      changes periodically at rate specified by @a
+         *                      refresh_period.
+         *                      </ul>
+         *                      The default value is
+         *                      gpudb::create_table_monitor_on_change.
+         *                              <li>
+         *                      gpudb::create_table_monitor_refresh_period:
+         *                      When @a refresh_method is @a periodic,
+         *                      specifies the period in seconds at which
+         *                      changes are reported.
+         *                              <li>
+         *                      gpudb::create_table_monitor_refresh_start_time:
+         *                      When @a refresh_method is @a periodic,
+         *                      specifies the first time at which changes are
+         *                      reported.  Value is a datetime string with
+         *                      format 'YYYY-MM-DD HH:MM:SS'.
          *                      </ul>
          * 
          */

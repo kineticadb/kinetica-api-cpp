@@ -130,12 +130,13 @@ namespace gpudb
          *                      gpudb::upload_files_multipart_operation:
          *                      Multipart upload operation to perform
          *                      <ul>
-         *                              <li> gpudb::upload_files_none
+         *                              <li> gpudb::upload_files_none: Default,
+         *                      indicates this is not a multipart upload
          *                              <li> gpudb::upload_files_init:
          *                      Initialize a multipart file upload
          *                              <li> gpudb::upload_files_upload_part:
-         *                      Upload one or more parts of the specified
-         *                      multipart file upload
+         *                      Uploads a part of the specified multipart file
+         *                      upload
          *                              <li> gpudb::upload_files_complete:
          *                      Complete the specified multipart file upload
          *                              <li> gpudb::upload_files_cancel: Cancel

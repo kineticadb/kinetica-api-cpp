@@ -6062,6 +6062,184 @@ AlterCredentialResponse& GPUdb::alterCredential( const std::string& credentialNa
 
 
 /**
+ * Alters the properties of an existing <a href="../../../concepts/data_sinks/"
+ * target="_top">data sink</a>
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+AlterDatasinkResponse GPUdb::alterDatasink( const AlterDatasinkRequest& request_ ) const
+{
+    AlterDatasinkResponse actualResponse_;
+    submitRequest("/alter/datasink", request_, actualResponse_, false);
+    return actualResponse_;
+}
+
+
+/**
+ * Alters the properties of an existing <a href="../../../concepts/data_sinks/"
+ * target="_top">data sink</a>
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+AlterDatasinkResponse& GPUdb::alterDatasink( const AlterDatasinkRequest& request_,
+                                             AlterDatasinkResponse& response_ ) const
+{
+    submitRequest("/alter/datasink", request_, response_, false);
+    return response_;
+}
+
+
+/**
+ * Alters the properties of an existing <a href="../../../concepts/data_sinks/"
+ * target="_top">data sink</a>
+ * 
+ * @param name  Name of the data sink to be altered. Must be an existing data
+ *              sink.
+ * @param datasinkUpdatesMap  Map containing the properties of the data sink to
+ *                            be updated. Error if empty.
+ *                            <ul>
+ *                                    <li> gpudb::alter_datasink_destination:
+ *                            Destination for the output data in format
+ *                            'destination_type://path[:port]'.
+ *                            Supported destination types are 'http', 'https'
+ *                            and 'kafka'.
+ *                                    <li>
+ *                            gpudb::alter_datasink_destination_type:
+ *                            Destination type for the output data
+ *                                    <li> gpudb::alter_datasink_user_name:
+ *                            Name of the remote system user; may be an empty
+ *                            string
+ *                                    <li> gpudb::alter_datasink_password:
+ *                            Password for the remote system user; may be an
+ *                            empty string
+ *                                    <li>
+ *                            gpudb::alter_datasink_connection_timeout: Timeout
+ *                            in seconds for connecting to this sink
+ *                                    <li> gpudb::alter_datasink_wait_timeout:
+ *                            Timeout in seconds for waiting for a response
+ *                            from this sink
+ *                                    <li> gpudb::alter_datasink_credential:
+ *                            Name of the <a
+ *                            href="../../../concepts/credentials/"
+ *                            target="_top">credential</a> object to be used in
+ *                            this data sink
+ *                                    <li>
+ *                            gpudb::alter_datasink_kafka_topic_name: Name of
+ *                            the Kafka topic to use for this data sink, if it
+ *                            references a Kafka broker
+ *                                    <li>
+ *                            gpudb::alter_datasink_skip_validation: Bypass
+ *                            validation of connection to this data sink.
+ *                            <ul>
+ *                                    <li> gpudb::alter_datasink_true
+ *                                    <li> gpudb::alter_datasink_false
+ *                            </ul>
+ *                            The default value is gpudb::alter_datasink_false.
+ *                            </ul>
+ * @param options  Optional parameters.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+AlterDatasinkResponse GPUdb::alterDatasink( const std::string& name,
+                                            const std::map<std::string, std::string>& datasinkUpdatesMap,
+                                            const std::map<std::string, std::string>& options ) const
+{
+    AlterDatasinkRequest actualRequest_;
+    actualRequest_.name = name;
+    actualRequest_.datasinkUpdatesMap = datasinkUpdatesMap;
+    actualRequest_.options = options;
+    AlterDatasinkResponse actualResponse_;
+    submitRequest("/alter/datasink", actualRequest_, actualResponse_, false);
+    return actualResponse_;
+}
+
+
+/**
+ * Alters the properties of an existing <a href="../../../concepts/data_sinks/"
+ * target="_top">data sink</a>
+ * 
+ * @param name  Name of the data sink to be altered. Must be an existing data
+ *              sink.
+ * @param datasinkUpdatesMap  Map containing the properties of the data sink to
+ *                            be updated. Error if empty.
+ *                            <ul>
+ *                                    <li> gpudb::alter_datasink_destination:
+ *                            Destination for the output data in format
+ *                            'destination_type://path[:port]'.
+ *                            Supported destination types are 'http', 'https'
+ *                            and 'kafka'.
+ *                                    <li>
+ *                            gpudb::alter_datasink_destination_type:
+ *                            Destination type for the output data
+ *                                    <li> gpudb::alter_datasink_user_name:
+ *                            Name of the remote system user; may be an empty
+ *                            string
+ *                                    <li> gpudb::alter_datasink_password:
+ *                            Password for the remote system user; may be an
+ *                            empty string
+ *                                    <li>
+ *                            gpudb::alter_datasink_connection_timeout: Timeout
+ *                            in seconds for connecting to this sink
+ *                                    <li> gpudb::alter_datasink_wait_timeout:
+ *                            Timeout in seconds for waiting for a response
+ *                            from this sink
+ *                                    <li> gpudb::alter_datasink_credential:
+ *                            Name of the <a
+ *                            href="../../../concepts/credentials/"
+ *                            target="_top">credential</a> object to be used in
+ *                            this data sink
+ *                                    <li>
+ *                            gpudb::alter_datasink_kafka_topic_name: Name of
+ *                            the Kafka topic to use for this data sink, if it
+ *                            references a Kafka broker
+ *                                    <li>
+ *                            gpudb::alter_datasink_skip_validation: Bypass
+ *                            validation of connection to this data sink.
+ *                            <ul>
+ *                                    <li> gpudb::alter_datasink_true
+ *                                    <li> gpudb::alter_datasink_false
+ *                            </ul>
+ *                            The default value is gpudb::alter_datasink_false.
+ *                            </ul>
+ * @param options  Optional parameters.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+AlterDatasinkResponse& GPUdb::alterDatasink( const std::string& name,
+                                             const std::map<std::string, std::string>& datasinkUpdatesMap,
+                                             const std::map<std::string, std::string>& options,
+                                             AlterDatasinkResponse& response_ ) const
+{
+    AlterDatasinkRequest actualRequest_;
+    actualRequest_.name = name;
+    actualRequest_.datasinkUpdatesMap = datasinkUpdatesMap;
+    actualRequest_.options = options;
+    submitRequest("/alter/datasink", actualRequest_, response_, false);
+    return response_;
+}
+
+
+/**
  * Alters the properties of an existing <a
  * href="../../../concepts/data_sources/" target="_top">data source</a>
  * 
@@ -6196,6 +6374,24 @@ AlterDatasourceResponse& GPUdb::alterDatasource( const AlterDatasourceRequest& r
  *                                      <li>
  *                              gpudb::alter_datasource_kafka_topic_name: Name
  *                              of the Kafka topic to use as the data source
+ *                                      <li> gpudb::alter_datasource_anonymous:
+ *                              Create an anonymous connection to the storage
+ *                              provider
+ *                              <ul>
+ *                                      <li> gpudb::alter_datasource_true
+ *                                      <li> gpudb::alter_datasource_false
+ *                              </ul>
+ *                              The default value is
+ *                              gpudb::alter_datasource_false.
+ *                                      <li> gpudb::alter_datasource_use_https:
+ *                              Use https to connect to datasource if true,
+ *                              otherwise use http
+ *                              <ul>
+ *                                      <li> gpudb::alter_datasource_true
+ *                                      <li> gpudb::alter_datasource_false
+ *                              </ul>
+ *                              The default value is
+ *                              gpudb::alter_datasource_true.
  *                              </ul>
  * @param options  Optional parameters.
  * 
@@ -6311,6 +6507,24 @@ AlterDatasourceResponse GPUdb::alterDatasource( const std::string& name,
  *                                      <li>
  *                              gpudb::alter_datasource_kafka_topic_name: Name
  *                              of the Kafka topic to use as the data source
+ *                                      <li> gpudb::alter_datasource_anonymous:
+ *                              Create an anonymous connection to the storage
+ *                              provider
+ *                              <ul>
+ *                                      <li> gpudb::alter_datasource_true
+ *                                      <li> gpudb::alter_datasource_false
+ *                              </ul>
+ *                              The default value is
+ *                              gpudb::alter_datasource_false.
+ *                                      <li> gpudb::alter_datasource_use_https:
+ *                              Use https to connect to datasource if true,
+ *                              otherwise use http
+ *                              <ul>
+ *                                      <li> gpudb::alter_datasource_true
+ *                                      <li> gpudb::alter_datasource_false
+ *                              </ul>
+ *                              The default value is
+ *                              gpudb::alter_datasource_true.
  *                              </ul>
  * @param options  Optional parameters.
  * @param[out] response_  Response object containing the results of the
@@ -6331,6 +6545,172 @@ AlterDatasourceResponse& GPUdb::alterDatasource( const std::string& name,
     actualRequest_.datasourceUpdatesMap = datasourceUpdatesMap;
     actualRequest_.options = options;
     submitRequest("/alter/datasource", actualRequest_, response_, false);
+    return response_;
+}
+
+
+/**
+ * For internal use only: Graph server admin command.
+ * For internal use only: Graph server admin command.
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+AlterGraphResponse GPUdb::alterGraph( const AlterGraphRequest& request_ ) const
+{
+    AlterGraphResponse actualResponse_;
+    submitRequest("/alter/graph", request_, actualResponse_, false);
+    return actualResponse_;
+}
+
+
+/**
+ * For internal use only: Graph server admin command.
+ * For internal use only: Graph server admin command.
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+AlterGraphResponse& GPUdb::alterGraph( const AlterGraphRequest& request_,
+                                       AlterGraphResponse& response_ ) const
+{
+    submitRequest("/alter/graph", request_, response_, false);
+    return response_;
+}
+
+
+/**
+ * For internal use only: Graph server admin command.
+ * For internal use only: Graph server admin command.
+ * 
+ * @param graphName  Graph on which the operation should be applied.
+ *                   If empty then it will apply to all graphs.
+ *                   This request can be sent from the graph server to the
+ *                   graph client, or from the client to the server depending
+ *                   on the type of operation.
+ * @param action  Operation to be applied
+ *                <ul>
+ *                        <li> gpudb::alter_graph_add_table_monitor: Add a
+ *                table monitor to a graph. The table name is specified as the
+ *                action argment.
+ *                        <li> gpudb::alter_graph_reset_client: Reset all
+ *                current operations on the client side. Used when the graph
+ *                server is restarted to recover from a failure.
+ *                        <li> gpudb::alter_graph_reset_server: Reset all
+ *                current operations on the server side. This is also sent on
+ *                (re)start.
+ *                        <li> gpudb::alter_graph_cancel_task: Cancel a
+ *                specific task on the graph server.
+ *                        <li> gpudb::alter_graph_alter_logger: Change the
+ *                server side log level; e.g., 'GraphServer.GraphSolver=DEBUG'
+ *                        <li> gpudb::alter_graph_delete_all: Delete all
+ *                graphs, and remove any persistence info.
+ *                        <li> gpudb::alter_graph_status: Current status of the
+ *                graph client (db side).
+ *                        <li> gpudb::alter_graph_collect_graphs: Get the
+ *                create command for all persisted graphs.
+ *                        <li> gpudb::alter_graph_restore_graphs: Re-creates
+ *                all graphs from persist info on rank0.
+ *                </ul>
+ * @param actionArg  Action specific argument.
+ * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li> gpudb::alter_graph_server_id: Indicates which
+ *                 graph server(s) to send the request to. Default is to send
+ *                 to get information about all the servers.
+ *                 </ul>
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+AlterGraphResponse GPUdb::alterGraph( const std::string& graphName,
+                                      const std::string& action,
+                                      const std::string& actionArg,
+                                      const std::map<std::string, std::string>& options ) const
+{
+    AlterGraphRequest actualRequest_;
+    actualRequest_.graphName = graphName;
+    actualRequest_.action = action;
+    actualRequest_.actionArg = actionArg;
+    actualRequest_.options = options;
+    AlterGraphResponse actualResponse_;
+    submitRequest("/alter/graph", actualRequest_, actualResponse_, false);
+    return actualResponse_;
+}
+
+
+/**
+ * For internal use only: Graph server admin command.
+ * For internal use only: Graph server admin command.
+ * 
+ * @param graphName  Graph on which the operation should be applied.
+ *                   If empty then it will apply to all graphs.
+ *                   This request can be sent from the graph server to the
+ *                   graph client, or from the client to the server depending
+ *                   on the type of operation.
+ * @param action  Operation to be applied
+ *                <ul>
+ *                        <li> gpudb::alter_graph_add_table_monitor: Add a
+ *                table monitor to a graph. The table name is specified as the
+ *                action argment.
+ *                        <li> gpudb::alter_graph_reset_client: Reset all
+ *                current operations on the client side. Used when the graph
+ *                server is restarted to recover from a failure.
+ *                        <li> gpudb::alter_graph_reset_server: Reset all
+ *                current operations on the server side. This is also sent on
+ *                (re)start.
+ *                        <li> gpudb::alter_graph_cancel_task: Cancel a
+ *                specific task on the graph server.
+ *                        <li> gpudb::alter_graph_alter_logger: Change the
+ *                server side log level; e.g., 'GraphServer.GraphSolver=DEBUG'
+ *                        <li> gpudb::alter_graph_delete_all: Delete all
+ *                graphs, and remove any persistence info.
+ *                        <li> gpudb::alter_graph_status: Current status of the
+ *                graph client (db side).
+ *                        <li> gpudb::alter_graph_collect_graphs: Get the
+ *                create command for all persisted graphs.
+ *                        <li> gpudb::alter_graph_restore_graphs: Re-creates
+ *                all graphs from persist info on rank0.
+ *                </ul>
+ * @param actionArg  Action specific argument.
+ * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li> gpudb::alter_graph_server_id: Indicates which
+ *                 graph server(s) to send the request to. Default is to send
+ *                 to get information about all the servers.
+ *                 </ul>
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+AlterGraphResponse& GPUdb::alterGraph( const std::string& graphName,
+                                       const std::string& action,
+                                       const std::string& actionArg,
+                                       const std::map<std::string, std::string>& options,
+                                       AlterGraphResponse& response_ ) const
+{
+    AlterGraphRequest actualRequest_;
+    actualRequest_.graphName = graphName;
+    actualRequest_.action = action;
+    actualRequest_.actionArg = actionArg;
+    actualRequest_.options = options;
+    submitRequest("/alter/graph", actualRequest_, response_, false);
     return response_;
 }
 
@@ -9288,6 +9668,30 @@ ClearTableMonitorResponse& GPUdb::clearTableMonitor( const ClearTableMonitorRequ
  * 
  * @param topicId  The topic ID returned by /create/tablemonitor.
  * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li>
+ *                 gpudb::clear_table_monitor_keep_autogenerated_sink: If @a
+ *                 true, the auto-generated <a
+ *                 href="../../../concepts/data_sinks/"
+ *                 target="_top">datasink</a> associated with this monitor, if
+ *                 there is one, will be retained for further use. If @a false,
+ *                 then the auto-generated sink will be dropped if there are no
+ *                 other monitors referencing it.
+ *                 <ul>
+ *                         <li> gpudb::clear_table_monitor_true
+ *                         <li> gpudb::clear_table_monitor_false
+ *                 </ul>
+ *                 The default value is gpudb::clear_table_monitor_false.
+ *                         <li>
+ *                 gpudb::clear_table_monitor_clear_all_references: If @a true,
+ *                 all references that share the same {@input topic_id} will be
+ *                 cleared.
+ *                 <ul>
+ *                         <li> gpudb::clear_table_monitor_true
+ *                         <li> gpudb::clear_table_monitor_false
+ *                 </ul>
+ *                 The default value is gpudb::clear_table_monitor_false.
+ *                 </ul>
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -9311,6 +9715,30 @@ ClearTableMonitorResponse GPUdb::clearTableMonitor( const std::string& topicId,
  * 
  * @param topicId  The topic ID returned by /create/tablemonitor.
  * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li>
+ *                 gpudb::clear_table_monitor_keep_autogenerated_sink: If @a
+ *                 true, the auto-generated <a
+ *                 href="../../../concepts/data_sinks/"
+ *                 target="_top">datasink</a> associated with this monitor, if
+ *                 there is one, will be retained for further use. If @a false,
+ *                 then the auto-generated sink will be dropped if there are no
+ *                 other monitors referencing it.
+ *                 <ul>
+ *                         <li> gpudb::clear_table_monitor_true
+ *                         <li> gpudb::clear_table_monitor_false
+ *                 </ul>
+ *                 The default value is gpudb::clear_table_monitor_false.
+ *                         <li>
+ *                 gpudb::clear_table_monitor_clear_all_references: If @a true,
+ *                 all references that share the same {@input topic_id} will be
+ *                 cleared.
+ *                 <ul>
+ *                         <li> gpudb::clear_table_monitor_true
+ *                         <li> gpudb::clear_table_monitor_false
+ *                 </ul>
+ *                 The default value is gpudb::clear_table_monitor_false.
+ *                 </ul>
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -9780,6 +10208,152 @@ CreateCredentialResponse& GPUdb::createCredential( const std::string& credential
 
 
 /**
+ * Creates a <a href="../../../concepts/data_sinks/" target="_top">data
+ * sink</a>, which contains the
+ * destination information for a data sink that is external to the database.
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+CreateDatasinkResponse GPUdb::createDatasink( const CreateDatasinkRequest& request_ ) const
+{
+    CreateDatasinkResponse actualResponse_;
+    submitRequest("/create/datasink", request_, actualResponse_, false);
+    return actualResponse_;
+}
+
+
+/**
+ * Creates a <a href="../../../concepts/data_sinks/" target="_top">data
+ * sink</a>, which contains the
+ * destination information for a data sink that is external to the database.
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+CreateDatasinkResponse& GPUdb::createDatasink( const CreateDatasinkRequest& request_,
+                                               CreateDatasinkResponse& response_ ) const
+{
+    submitRequest("/create/datasink", request_, response_, false);
+    return response_;
+}
+
+
+/**
+ * Creates a <a href="../../../concepts/data_sinks/" target="_top">data
+ * sink</a>, which contains the
+ * destination information for a data sink that is external to the database.
+ * 
+ * @param name  Name of the data sink to be created.
+ * @param destination  Destination for the output data in format
+ *                     'destination_type://path[:port]'.
+ *                     Supported destination types are 'http', 'https' and
+ *                     'kafka'.
+ * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li> gpudb::create_datasink_connection_timeout:
+ *                 Timeout in seconds for connecting to this data sink
+ *                         <li> gpudb::create_datasink_wait_timeout: Timeout in
+ *                 seconds for waiting for a response from this data sink
+ *                         <li> gpudb::create_datasink_credential: Name of the
+ *                 <a href="../../../concepts/credentials/"
+ *                 target="_top">credential</a> object to be used in this data
+ *                 sink
+ *                         <li> gpudb::create_datasink_kafka_topic_name: Name
+ *                 of the Kafka topic to publish to if @a destination is a
+ *                 Kafka broker
+ *                         <li> gpudb::create_datasink_skip_validation: Bypass
+ *                 validation of connection to this data sink.
+ *                 <ul>
+ *                         <li> gpudb::create_datasink_true
+ *                         <li> gpudb::create_datasink_false
+ *                 </ul>
+ *                 The default value is gpudb::create_datasink_false.
+ *                 </ul>
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+CreateDatasinkResponse GPUdb::createDatasink( const std::string& name,
+                                              const std::string& destination,
+                                              const std::map<std::string, std::string>& options ) const
+{
+    CreateDatasinkRequest actualRequest_;
+    actualRequest_.name = name;
+    actualRequest_.destination = destination;
+    actualRequest_.options = options;
+    CreateDatasinkResponse actualResponse_;
+    submitRequest("/create/datasink", actualRequest_, actualResponse_, false);
+    return actualResponse_;
+}
+
+
+/**
+ * Creates a <a href="../../../concepts/data_sinks/" target="_top">data
+ * sink</a>, which contains the
+ * destination information for a data sink that is external to the database.
+ * 
+ * @param name  Name of the data sink to be created.
+ * @param destination  Destination for the output data in format
+ *                     'destination_type://path[:port]'.
+ *                     Supported destination types are 'http', 'https' and
+ *                     'kafka'.
+ * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li> gpudb::create_datasink_connection_timeout:
+ *                 Timeout in seconds for connecting to this data sink
+ *                         <li> gpudb::create_datasink_wait_timeout: Timeout in
+ *                 seconds for waiting for a response from this data sink
+ *                         <li> gpudb::create_datasink_credential: Name of the
+ *                 <a href="../../../concepts/credentials/"
+ *                 target="_top">credential</a> object to be used in this data
+ *                 sink
+ *                         <li> gpudb::create_datasink_kafka_topic_name: Name
+ *                 of the Kafka topic to publish to if @a destination is a
+ *                 Kafka broker
+ *                         <li> gpudb::create_datasink_skip_validation: Bypass
+ *                 validation of connection to this data sink.
+ *                 <ul>
+ *                         <li> gpudb::create_datasink_true
+ *                         <li> gpudb::create_datasink_false
+ *                 </ul>
+ *                 The default value is gpudb::create_datasink_false.
+ *                 </ul>
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+CreateDatasinkResponse& GPUdb::createDatasink( const std::string& name,
+                                               const std::string& destination,
+                                               const std::map<std::string, std::string>& options,
+                                               CreateDatasinkResponse& response_ ) const
+{
+    CreateDatasinkRequest actualRequest_;
+    actualRequest_.name = name;
+    actualRequest_.destination = destination;
+    actualRequest_.options = options;
+    submitRequest("/create/datasink", actualRequest_, response_, false);
+    return response_;
+}
+
+
+/**
  * Creates a <a href="../../../concepts/data_sources/" target="_top">data
  * source</a>, which contains the
  * location and connection information for a data store that is external to the
@@ -9893,6 +10467,20 @@ CreateDatasourceResponse& GPUdb::createDatasource( const CreateDatasourceRequest
  *                 The default value is gpudb::create_datasource_false.
  *                         <li> gpudb::create_datasource_kafka_topic_name: Name
  *                 of the Kafka topic to use as the data source
+ *                         <li> gpudb::create_datasource_anonymous: Use
+ *                 anonymous connection to storage provider
+ *                 <ul>
+ *                         <li> gpudb::create_datasource_true
+ *                         <li> gpudb::create_datasource_false
+ *                 </ul>
+ *                 The default value is gpudb::create_datasource_false.
+ *                         <li> gpudb::create_datasource_use_https: Use https
+ *                 to connect to datasource if true, otherwise use http
+ *                 <ul>
+ *                         <li> gpudb::create_datasource_true
+ *                         <li> gpudb::create_datasource_false
+ *                 </ul>
+ *                 The default value is gpudb::create_datasource_true.
  *                 </ul>
  * 
  * @return Response object containing the result of the operation.
@@ -9986,6 +10574,20 @@ CreateDatasourceResponse GPUdb::createDatasource( const std::string& name,
  *                 The default value is gpudb::create_datasource_false.
  *                         <li> gpudb::create_datasource_kafka_topic_name: Name
  *                 of the Kafka topic to use as the data source
+ *                         <li> gpudb::create_datasource_anonymous: Use
+ *                 anonymous connection to storage provider
+ *                 <ul>
+ *                         <li> gpudb::create_datasource_true
+ *                         <li> gpudb::create_datasource_false
+ *                 </ul>
+ *                 The default value is gpudb::create_datasource_false.
+ *                         <li> gpudb::create_datasource_use_https: Use https
+ *                 to connect to datasource if true, otherwise use http
+ *                 <ul>
+ *                         <li> gpudb::create_datasource_true
+ *                         <li> gpudb::create_datasource_false
+ *                 </ul>
+ *                 The default value is gpudb::create_datasource_true.
  *                 </ul>
  * @param[out] response_  Response object containing the results of the
  *                        operation.
@@ -10009,6 +10611,98 @@ CreateDatasourceResponse& GPUdb::createDatasource( const std::string& name,
     actualRequest_.password = password;
     actualRequest_.options = options;
     submitRequest("/create/datasource", actualRequest_, response_, false);
+    return response_;
+}
+
+
+/**
+ * @private
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+CreateDeltaTableResponse GPUdb::createDeltaTable( const CreateDeltaTableRequest& request_ ) const
+{
+    CreateDeltaTableResponse actualResponse_;
+    submitRequest("/create/deltatable", request_, actualResponse_, false);
+    return actualResponse_;
+}
+
+
+/**
+ * @private
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+CreateDeltaTableResponse& GPUdb::createDeltaTable( const CreateDeltaTableRequest& request_,
+                                                   CreateDeltaTableResponse& response_ ) const
+{
+    submitRequest("/create/deltatable", request_, response_, false);
+    return response_;
+}
+
+
+/**
+ * @private
+ * 
+ * @param deltaTableName
+ * @param tableName
+ * @param options
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+CreateDeltaTableResponse GPUdb::createDeltaTable( const std::string& deltaTableName,
+                                                  const std::string& tableName,
+                                                  const std::map<std::string, std::string>& options ) const
+{
+    CreateDeltaTableRequest actualRequest_;
+    actualRequest_.deltaTableName = deltaTableName;
+    actualRequest_.tableName = tableName;
+    actualRequest_.options = options;
+    CreateDeltaTableResponse actualResponse_;
+    submitRequest("/create/deltatable", actualRequest_, actualResponse_, false);
+    return actualResponse_;
+}
+
+
+/**
+ * @private
+ * 
+ * @param deltaTableName
+ * @param tableName
+ * @param options
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+CreateDeltaTableResponse& GPUdb::createDeltaTable( const std::string& deltaTableName,
+                                                   const std::string& tableName,
+                                                   const std::map<std::string, std::string>& options,
+                                                   CreateDeltaTableResponse& response_ ) const
+{
+    CreateDeltaTableRequest actualRequest_;
+    actualRequest_.deltaTableName = deltaTableName;
+    actualRequest_.tableName = tableName;
+    actualRequest_.options = options;
+    submitRequest("/create/deltatable", actualRequest_, response_, false);
     return response_;
 }
 
@@ -11404,98 +12098,6 @@ CreateMaterializedViewResponse& GPUdb::createMaterializedView( const std::string
     actualRequest_.tableName = tableName;
     actualRequest_.options = options;
     submitRequest("/create/materializedview", actualRequest_, response_, false);
-    return response_;
-}
-
-
-/**
- * @private
- * 
- * @param[in] request_  Request object containing the parameters for the
- *                      operation.
- * 
- * @return Response object containing the result of the operation.
- * 
- */
-
-CreateMonitorTableResponse GPUdb::createMonitorTable( const CreateMonitorTableRequest& request_ ) const
-{
-    CreateMonitorTableResponse actualResponse_;
-    submitRequest("/create/monitortable", request_, actualResponse_, false);
-    return actualResponse_;
-}
-
-
-/**
- * @private
- * 
- * @param[in] request_  Request object containing the parameters for the
- *                      operation.
- * @param[out] response_  Response object containing the results of the
- *                        operation.
- * 
- * @return Response object containing the result of the operation (initially
- *         passed in by reference).
- * 
- */
-
-CreateMonitorTableResponse& GPUdb::createMonitorTable( const CreateMonitorTableRequest& request_,
-                                                       CreateMonitorTableResponse& response_ ) const
-{
-    submitRequest("/create/monitortable", request_, response_, false);
-    return response_;
-}
-
-
-/**
- * @private
- * 
- * @param monitorTableName
- * @param tableName
- * @param options
- * 
- * @return Response object containing the result of the operation.
- * 
- */
-
-CreateMonitorTableResponse GPUdb::createMonitorTable( const std::string& monitorTableName,
-                                                      const std::string& tableName,
-                                                      const std::map<std::string, std::string>& options ) const
-{
-    CreateMonitorTableRequest actualRequest_;
-    actualRequest_.monitorTableName = monitorTableName;
-    actualRequest_.tableName = tableName;
-    actualRequest_.options = options;
-    CreateMonitorTableResponse actualResponse_;
-    submitRequest("/create/monitortable", actualRequest_, actualResponse_, false);
-    return actualResponse_;
-}
-
-
-/**
- * @private
- * 
- * @param monitorTableName
- * @param tableName
- * @param options
- * @param[out] response_  Response object containing the results of the
- *                        operation.
- * 
- * @return Response object containing the result of the operation (initially
- *         passed in by reference).
- * 
- */
-
-CreateMonitorTableResponse& GPUdb::createMonitorTable( const std::string& monitorTableName,
-                                                       const std::string& tableName,
-                                                       const std::map<std::string, std::string>& options,
-                                                       CreateMonitorTableResponse& response_ ) const
-{
-    CreateMonitorTableRequest actualRequest_;
-    actualRequest_.monitorTableName = monitorTableName;
-    actualRequest_.tableName = tableName;
-    actualRequest_.options = options;
-    submitRequest("/create/monitortable", actualRequest_, response_, false);
     return response_;
 }
 
@@ -14421,6 +15023,41 @@ CreateTableMonitorResponse& GPUdb::createTableMonitor( const CreateTableMonitorR
  *                 information is forwarded to the subscribers.
  *                 </ul>
  *                 The default value is gpudb::create_table_monitor_insert.
+ *                         <li> gpudb::create_table_monitor_monitor_id: ID to
+ *                 to use for this monitor instead of a randomly generated one
+ *                         <li> gpudb::create_table_monitor_datasink_name: Name
+ *                 of an existing <a href="../../../concepts/data_sinks/"
+ *                 target="_top">data sink</a> to send change data
+ *                 notifications to
+ *                         <li> gpudb::create_table_monitor_destination:
+ *                 Destination for the output data in format
+ *                 'destination_type://path[:port]'. Supported destination
+ *                 types are 'http', 'https' and 'kafka'.
+ *                         <li> gpudb::create_table_monitor_kafka_topic_name:
+ *                 Name of the Kafka topic to publish to if @a destination in
+ *                 @a options is specified and is a Kafka broker
+ *                         <li> gpudb::create_table_monitor_increasing_column:
+ *                 Column on subscribed table that will increase for new
+ *                 records (e.g., TIMESTAMP).
+ *                         <li> gpudb::create_table_monitor_expression: Filter
+ *                 expression to limit records for notification
+ *                         <li> gpudb::create_table_monitor_refresh_method:
+ *                 Method controlling when the table monitor reports changes to
+ *                 the @a tableName.
+ *                 <ul>
+ *                         <li> gpudb::create_table_monitor_on_change: Report
+ *                 changes as they occur.
+ *                         <li> gpudb::create_table_monitor_periodic: Report
+ *                 changes periodically at rate specified by @a refresh_period.
+ *                 </ul>
+ *                 The default value is gpudb::create_table_monitor_on_change.
+ *                         <li> gpudb::create_table_monitor_refresh_period:
+ *                 When @a refresh_method is @a periodic, specifies the period
+ *                 in seconds at which changes are reported.
+ *                         <li> gpudb::create_table_monitor_refresh_start_time:
+ *                 When @a refresh_method is @a periodic, specifies the first
+ *                 time at which changes are reported.  Value is a datetime
+ *                 string with format 'YYYY-MM-DD HH:MM:SS'.
  *                 </ul>
  * 
  * @return Response object containing the result of the operation.
@@ -14479,6 +15116,41 @@ CreateTableMonitorResponse GPUdb::createTableMonitor( const std::string& tableNa
  *                 information is forwarded to the subscribers.
  *                 </ul>
  *                 The default value is gpudb::create_table_monitor_insert.
+ *                         <li> gpudb::create_table_monitor_monitor_id: ID to
+ *                 to use for this monitor instead of a randomly generated one
+ *                         <li> gpudb::create_table_monitor_datasink_name: Name
+ *                 of an existing <a href="../../../concepts/data_sinks/"
+ *                 target="_top">data sink</a> to send change data
+ *                 notifications to
+ *                         <li> gpudb::create_table_monitor_destination:
+ *                 Destination for the output data in format
+ *                 'destination_type://path[:port]'. Supported destination
+ *                 types are 'http', 'https' and 'kafka'.
+ *                         <li> gpudb::create_table_monitor_kafka_topic_name:
+ *                 Name of the Kafka topic to publish to if @a destination in
+ *                 @a options is specified and is a Kafka broker
+ *                         <li> gpudb::create_table_monitor_increasing_column:
+ *                 Column on subscribed table that will increase for new
+ *                 records (e.g., TIMESTAMP).
+ *                         <li> gpudb::create_table_monitor_expression: Filter
+ *                 expression to limit records for notification
+ *                         <li> gpudb::create_table_monitor_refresh_method:
+ *                 Method controlling when the table monitor reports changes to
+ *                 the @a tableName.
+ *                 <ul>
+ *                         <li> gpudb::create_table_monitor_on_change: Report
+ *                 changes as they occur.
+ *                         <li> gpudb::create_table_monitor_periodic: Report
+ *                 changes periodically at rate specified by @a refresh_period.
+ *                 </ul>
+ *                 The default value is gpudb::create_table_monitor_on_change.
+ *                         <li> gpudb::create_table_monitor_refresh_period:
+ *                 When @a refresh_method is @a periodic, specifies the period
+ *                 in seconds at which changes are reported.
+ *                         <li> gpudb::create_table_monitor_refresh_start_time:
+ *                 When @a refresh_method is @a periodic, specifies the first
+ *                 time at which changes are reported.  Value is a datetime
+ *                 string with format 'YYYY-MM-DD HH:MM:SS'.
  *                 </ul>
  * @param[out] response_  Response object containing the results of the
  *                        operation.
@@ -17592,6 +18264,144 @@ DropCredentialResponse& GPUdb::dropCredential( const std::string& credentialName
     actualRequest_.credentialName = credentialName;
     actualRequest_.options = options;
     submitRequest("/drop/credential", actualRequest_, response_, false);
+    return response_;
+}
+
+
+/**
+ * Drops an existing <a href="../../../concepts/data_sinks/" target="_top">data
+ * sink</a>.
+ * <p>
+ * By default, if any <a href="../../../concepts/table_monitors"
+ * target="_top">table monitors</a> use this
+ * sink as a destination, the request will be blocked unless option
+ * @a clear_table_monitors is
+ * @a true.
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+DropDatasinkResponse GPUdb::dropDatasink( const DropDatasinkRequest& request_ ) const
+{
+    DropDatasinkResponse actualResponse_;
+    submitRequest("/drop/datasink", request_, actualResponse_, false);
+    return actualResponse_;
+}
+
+
+/**
+ * Drops an existing <a href="../../../concepts/data_sinks/" target="_top">data
+ * sink</a>.
+ * <p>
+ * By default, if any <a href="../../../concepts/table_monitors"
+ * target="_top">table monitors</a> use this
+ * sink as a destination, the request will be blocked unless option
+ * @a clear_table_monitors is
+ * @a true.
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+DropDatasinkResponse& GPUdb::dropDatasink( const DropDatasinkRequest& request_,
+                                           DropDatasinkResponse& response_ ) const
+{
+    submitRequest("/drop/datasink", request_, response_, false);
+    return response_;
+}
+
+
+/**
+ * Drops an existing <a href="../../../concepts/data_sinks/" target="_top">data
+ * sink</a>.
+ * <p>
+ * By default, if any <a href="../../../concepts/table_monitors"
+ * target="_top">table monitors</a> use this
+ * sink as a destination, the request will be blocked unless option
+ * @a clear_table_monitors is
+ * @a true.
+ * 
+ * @param name  Name of the data sink to be dropped. Must be an existing data
+ *              sink.
+ * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li> gpudb::drop_datasink_clear_table_monitors: If
+ *                 @a true, any <a href="../../../concepts/table_monitors/"
+ *                 target="_top">table monitors</a> that use this data sink
+ *                 will be cleared.
+ *                 <ul>
+ *                         <li> gpudb::drop_datasink_true
+ *                         <li> gpudb::drop_datasink_false
+ *                 </ul>
+ *                 The default value is gpudb::drop_datasink_false.
+ *                 </ul>
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+DropDatasinkResponse GPUdb::dropDatasink( const std::string& name,
+                                          const std::map<std::string, std::string>& options ) const
+{
+    DropDatasinkRequest actualRequest_;
+    actualRequest_.name = name;
+    actualRequest_.options = options;
+    DropDatasinkResponse actualResponse_;
+    submitRequest("/drop/datasink", actualRequest_, actualResponse_, false);
+    return actualResponse_;
+}
+
+
+/**
+ * Drops an existing <a href="../../../concepts/data_sinks/" target="_top">data
+ * sink</a>.
+ * <p>
+ * By default, if any <a href="../../../concepts/table_monitors"
+ * target="_top">table monitors</a> use this
+ * sink as a destination, the request will be blocked unless option
+ * @a clear_table_monitors is
+ * @a true.
+ * 
+ * @param name  Name of the data sink to be dropped. Must be an existing data
+ *              sink.
+ * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li> gpudb::drop_datasink_clear_table_monitors: If
+ *                 @a true, any <a href="../../../concepts/table_monitors/"
+ *                 target="_top">table monitors</a> that use this data sink
+ *                 will be cleared.
+ *                 <ul>
+ *                         <li> gpudb::drop_datasink_true
+ *                         <li> gpudb::drop_datasink_false
+ *                 </ul>
+ *                 The default value is gpudb::drop_datasink_false.
+ *                 </ul>
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+DropDatasinkResponse& GPUdb::dropDatasink( const std::string& name,
+                                           const std::map<std::string, std::string>& options,
+                                           DropDatasinkResponse& response_ ) const
+{
+    DropDatasinkRequest actualRequest_;
+    actualRequest_.name = name;
+    actualRequest_.options = options;
+    submitRequest("/drop/datasink", actualRequest_, response_, false);
     return response_;
 }
 
@@ -23601,6 +24411,212 @@ GetVectortileResponse& GPUdb::getVectortile( const std::vector<std::string>& tab
 
 
 /**
+ * Grant user or role the specified permission on the specified object.
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+GrantPermissionResponse GPUdb::grantPermission( const GrantPermissionRequest& request_ ) const
+{
+    GrantPermissionResponse actualResponse_;
+    submitRequest("/grant/permission", request_, actualResponse_, false);
+    return actualResponse_;
+}
+
+
+/**
+ * Grant user or role the specified permission on the specified object.
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+GrantPermissionResponse& GPUdb::grantPermission( const GrantPermissionRequest& request_,
+                                                 GrantPermissionResponse& response_ ) const
+{
+    submitRequest("/grant/permission", request_, response_, false);
+    return response_;
+}
+
+
+/**
+ * Grant user or role the specified permission on the specified object.
+ * 
+ * @param principal  Name of the user or role for which the permission is being
+ *                   granted.  Must be an existing user or role.
+ * @param object  Name of object permission is being granted to.  It is
+ *                recommended to use a fully-qualified name when possible.
+ * @param objectType  The type of object being granted to
+ *                    <ul>
+ *                            <li> gpudb::grant_permission_credential:
+ *                    Credential
+ *                            <li> gpudb::grant_permission_datasink: Data Sink
+ *                            <li> gpudb::grant_permission_datasource: Data
+ *                    Source
+ *                            <li> gpudb::grant_permission_directory: KIFS File
+ *                    Directory
+ *                            <li> gpudb::grant_permission_graph: A Graph
+ *                    object
+ *                            <li> gpudb::grant_permission_proc: UDF Procedure
+ *                            <li> gpudb::grant_permission_schema: Schema
+ *                            <li> gpudb::grant_permission_sql_proc: SQL
+ *                    Procedure
+ *                            <li> gpudb::grant_permission_system: System-level
+ *                    access
+ *                            <li> gpudb::grant_permission_table: Database
+ *                    Table
+ *                    </ul>
+ * @param permission  Permission being granted.
+ *                    <ul>
+ *                            <li> gpudb::grant_permission_admin: Full
+ *                    read/write and administrative access on the object.
+ *                            <li> gpudb::grant_permission_connect: Connect
+ *                    access on the given data source or data sink.
+ *                            <li> gpudb::grant_permission_delete: Delete rows
+ *                    from tables.
+ *                            <li> gpudb::grant_permission_execute: Ability to
+ *                    Execute the Procedure object.
+ *                            <li> gpudb::grant_permission_insert: Insert
+ *                    access to tables.
+ *                            <li> gpudb::grant_permission_read: Ability to
+ *                    read, list and use the object.
+ *                            <li> gpudb::grant_permission_update: Update
+ *                    access to the table.
+ *                            <li> gpudb::grant_permission_user_admin: Access
+ *                    to administer users and roles that do not have
+ *                    system_admin permission.
+ *                            <li> gpudb::grant_permission_write: Access to
+ *                    write, change and delete objects.
+ *                    </ul>
+ * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li> gpudb::grant_permission_columns: Apply table
+ *                 security to these columns, comma-separated.  The default
+ *                 value is ''.
+ *                         <li> gpudb::grant_permission_filter_expression:
+ *                 Optional filter expression to apply to this grant.  Only
+ *                 rows that match the filter will be affected.  The default
+ *                 value is ''.
+ *                 </ul>
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+GrantPermissionResponse GPUdb::grantPermission( const std::string& principal,
+                                                const std::string& object,
+                                                const std::string& objectType,
+                                                const std::string& permission,
+                                                const std::map<std::string, std::string>& options ) const
+{
+    GrantPermissionRequest actualRequest_;
+    actualRequest_.principal = principal;
+    actualRequest_.object = object;
+    actualRequest_.objectType = objectType;
+    actualRequest_.permission = permission;
+    actualRequest_.options = options;
+    GrantPermissionResponse actualResponse_;
+    submitRequest("/grant/permission", actualRequest_, actualResponse_, false);
+    return actualResponse_;
+}
+
+
+/**
+ * Grant user or role the specified permission on the specified object.
+ * 
+ * @param principal  Name of the user or role for which the permission is being
+ *                   granted.  Must be an existing user or role.
+ * @param object  Name of object permission is being granted to.  It is
+ *                recommended to use a fully-qualified name when possible.
+ * @param objectType  The type of object being granted to
+ *                    <ul>
+ *                            <li> gpudb::grant_permission_credential:
+ *                    Credential
+ *                            <li> gpudb::grant_permission_datasink: Data Sink
+ *                            <li> gpudb::grant_permission_datasource: Data
+ *                    Source
+ *                            <li> gpudb::grant_permission_directory: KIFS File
+ *                    Directory
+ *                            <li> gpudb::grant_permission_graph: A Graph
+ *                    object
+ *                            <li> gpudb::grant_permission_proc: UDF Procedure
+ *                            <li> gpudb::grant_permission_schema: Schema
+ *                            <li> gpudb::grant_permission_sql_proc: SQL
+ *                    Procedure
+ *                            <li> gpudb::grant_permission_system: System-level
+ *                    access
+ *                            <li> gpudb::grant_permission_table: Database
+ *                    Table
+ *                    </ul>
+ * @param permission  Permission being granted.
+ *                    <ul>
+ *                            <li> gpudb::grant_permission_admin: Full
+ *                    read/write and administrative access on the object.
+ *                            <li> gpudb::grant_permission_connect: Connect
+ *                    access on the given data source or data sink.
+ *                            <li> gpudb::grant_permission_delete: Delete rows
+ *                    from tables.
+ *                            <li> gpudb::grant_permission_execute: Ability to
+ *                    Execute the Procedure object.
+ *                            <li> gpudb::grant_permission_insert: Insert
+ *                    access to tables.
+ *                            <li> gpudb::grant_permission_read: Ability to
+ *                    read, list and use the object.
+ *                            <li> gpudb::grant_permission_update: Update
+ *                    access to the table.
+ *                            <li> gpudb::grant_permission_user_admin: Access
+ *                    to administer users and roles that do not have
+ *                    system_admin permission.
+ *                            <li> gpudb::grant_permission_write: Access to
+ *                    write, change and delete objects.
+ *                    </ul>
+ * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li> gpudb::grant_permission_columns: Apply table
+ *                 security to these columns, comma-separated.  The default
+ *                 value is ''.
+ *                         <li> gpudb::grant_permission_filter_expression:
+ *                 Optional filter expression to apply to this grant.  Only
+ *                 rows that match the filter will be affected.  The default
+ *                 value is ''.
+ *                 </ul>
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+GrantPermissionResponse& GPUdb::grantPermission( const std::string& principal,
+                                                 const std::string& object,
+                                                 const std::string& objectType,
+                                                 const std::string& permission,
+                                                 const std::map<std::string, std::string>& options,
+                                                 GrantPermissionResponse& response_ ) const
+{
+    GrantPermissionRequest actualRequest_;
+    actualRequest_.principal = principal;
+    actualRequest_.object = object;
+    actualRequest_.objectType = objectType;
+    actualRequest_.permission = permission;
+    actualRequest_.options = options;
+    submitRequest("/grant/permission", actualRequest_, response_, false);
+    return response_;
+}
+
+
+/**
  * Grants a <a
  * href="../../../security/sec_concepts/#security-concepts-permissions-credential"
  * target="_top">credential-level permission</a> to a user or role.
@@ -24497,55 +25513,54 @@ HasPermissionResponse& GPUdb::hasPermission( const HasPermissionRequest& request
  * Checks if the specified user has the specified permission on the specified
  * object.
  * 
- * @param name  Name of the user for which the permission is being checked.
- *              Must be an existing user. If blank, will use the current user.
- * @param target  Name of object to check for the requested permission.  It is
+ * @param principal  Name of the user for which the permission is being
+ *                   checked. Must be an existing user. If blank, will use the
+ *                   current user.
+ * @param object  Name of object to check for the requested permission.  It is
  *                recommended to use a fully-qualified name when possible.
+ * @param objectType  The type of object being checked
+ *                    <ul>
+ *                            <li> gpudb::has_permission_credential: Credential
+ *                            <li> gpudb::has_permission_datasink: Data Sink
+ *                            <li> gpudb::has_permission_datasource: Data
+ *                    Source
+ *                            <li> gpudb::has_permission_directory: KiFS File
+ *                    Directory
+ *                            <li> gpudb::has_permission_graph: A Graph object
+ *                            <li> gpudb::has_permission_proc: UDF Procedure
+ *                            <li> gpudb::has_permission_schema: Schema
+ *                            <li> gpudb::has_permission_sql_proc: SQL
+ *                    Procedure
+ *                            <li> gpudb::has_permission_system: System-level
+ *                    access
+ *                            <li> gpudb::has_permission_table: Database Table
+ *                    </ul>
  * @param permission  Permission to check for.
  *                    <ul>
+ *                            <li> gpudb::has_permission_admin: Full read/write
+ *                    and administrative access on the object.
  *                            <li> gpudb::has_permission_connect: Connect
- *                    access on the given data source
- *                            <li> gpudb::has_permission_credential_admin: Full
- *                    read/write and administrative access on the credential.
- *                            <li> gpudb::has_permission_credential_read:
- *                    Ability to read and use the credential.
- *                            <li> gpudb::has_permission_directory_read: For
- *                    files in the directory, access to list files, download
- *                    files, or use files in server side functions
- *                            <li> gpudb::has_permission_directory_write:
- *                    Access to upload files to, or delete files from, the
- *                    directory. A user with write access automatically has
- *                    read access
- *                            <li> gpudb::has_permission_proc_execute: Execute
- *                    access to the UDF.
- *                            <li> gpudb::has_permission_role: User is a member
- *                    of this role (including indirectly).
- *                            <li> gpudb::has_permission_sql_proc_execute:
- *                    Execute access to the SQL proc.
- *                            <li> gpudb::has_permission_system_admin: Full
- *                    access to all data and system functions.
- *                            <li> gpudb::has_permission_system_read: Read-only
- *                    access to all tables.
- *                            <li> gpudb::has_permission_system_user_admin:
- *                    Access to administer users and roles that do not have
- *                    system_admin permission.
- *                            <li> gpudb::has_permission_system_write: Read and
- *                    write access to all tables.
- *                            <li> gpudb::has_permission_table_admin: Full
- *                    read/write and administrative access to the table.
- *                            <li> gpudb::has_permission_table_delete: Delete
- *                    access to the table.
- *                            <li> gpudb::has_permission_table_insert: Insert
- *                    access to the table.
- *                            <li> gpudb::has_permission_table_read: Read
- *                    access to the table.
- *                            <li> gpudb::has_permission_table_update: Update
- *                    access to the table.
+ *                    access on the given data source or data sink.
+ *                            <li> gpudb::has_permission_delete: Delete rows
+ *                    from tables.
+ *                            <li> gpudb::has_permission_execute: Ability to
+ *                    Execute the Procedure object.
+ *                            <li> gpudb::has_permission_insert: Insert access
+ *                    to tables.
+ *                            <li> gpudb::has_permission_read: Ability to read,
+ *                    list and use the object.
+ *                            <li> gpudb::has_permission_update: Update access
+ *                    to the table.
+ *                            <li> gpudb::has_permission_user_admin: Access to
+ *                    administer users and roles that do not have system_admin
+ *                    permission.
+ *                            <li> gpudb::has_permission_write: Access to
+ *                    write, change and delete objects.
  *                    </ul>
  * @param options  Optional parameters.
  *                 <ul>
  *                         <li> gpudb::has_permission_no_error_if_not_exists:
- *                 If @a false will return an error if the provided @a target
+ *                 If @a false will return an error if the provided @a object
  *                 does not exist or is blank. If @a true then it will return
  *                 @a false for @a hasPermission.
  *                 <ul>
@@ -24559,14 +25574,16 @@ HasPermissionResponse& GPUdb::hasPermission( const HasPermissionRequest& request
  * 
  */
 
-HasPermissionResponse GPUdb::hasPermission( const std::string& name,
-                                            const std::string& target,
+HasPermissionResponse GPUdb::hasPermission( const std::string& principal,
+                                            const std::string& object,
+                                            const std::string& objectType,
                                             const std::string& permission,
                                             const std::map<std::string, std::string>& options ) const
 {
     HasPermissionRequest actualRequest_;
-    actualRequest_.name = name;
-    actualRequest_.target = target;
+    actualRequest_.principal = principal;
+    actualRequest_.object = object;
+    actualRequest_.objectType = objectType;
     actualRequest_.permission = permission;
     actualRequest_.options = options;
     HasPermissionResponse actualResponse_;
@@ -24579,55 +25596,54 @@ HasPermissionResponse GPUdb::hasPermission( const std::string& name,
  * Checks if the specified user has the specified permission on the specified
  * object.
  * 
- * @param name  Name of the user for which the permission is being checked.
- *              Must be an existing user. If blank, will use the current user.
- * @param target  Name of object to check for the requested permission.  It is
+ * @param principal  Name of the user for which the permission is being
+ *                   checked. Must be an existing user. If blank, will use the
+ *                   current user.
+ * @param object  Name of object to check for the requested permission.  It is
  *                recommended to use a fully-qualified name when possible.
+ * @param objectType  The type of object being checked
+ *                    <ul>
+ *                            <li> gpudb::has_permission_credential: Credential
+ *                            <li> gpudb::has_permission_datasink: Data Sink
+ *                            <li> gpudb::has_permission_datasource: Data
+ *                    Source
+ *                            <li> gpudb::has_permission_directory: KiFS File
+ *                    Directory
+ *                            <li> gpudb::has_permission_graph: A Graph object
+ *                            <li> gpudb::has_permission_proc: UDF Procedure
+ *                            <li> gpudb::has_permission_schema: Schema
+ *                            <li> gpudb::has_permission_sql_proc: SQL
+ *                    Procedure
+ *                            <li> gpudb::has_permission_system: System-level
+ *                    access
+ *                            <li> gpudb::has_permission_table: Database Table
+ *                    </ul>
  * @param permission  Permission to check for.
  *                    <ul>
+ *                            <li> gpudb::has_permission_admin: Full read/write
+ *                    and administrative access on the object.
  *                            <li> gpudb::has_permission_connect: Connect
- *                    access on the given data source
- *                            <li> gpudb::has_permission_credential_admin: Full
- *                    read/write and administrative access on the credential.
- *                            <li> gpudb::has_permission_credential_read:
- *                    Ability to read and use the credential.
- *                            <li> gpudb::has_permission_directory_read: For
- *                    files in the directory, access to list files, download
- *                    files, or use files in server side functions
- *                            <li> gpudb::has_permission_directory_write:
- *                    Access to upload files to, or delete files from, the
- *                    directory. A user with write access automatically has
- *                    read access
- *                            <li> gpudb::has_permission_proc_execute: Execute
- *                    access to the UDF.
- *                            <li> gpudb::has_permission_role: User is a member
- *                    of this role (including indirectly).
- *                            <li> gpudb::has_permission_sql_proc_execute:
- *                    Execute access to the SQL proc.
- *                            <li> gpudb::has_permission_system_admin: Full
- *                    access to all data and system functions.
- *                            <li> gpudb::has_permission_system_read: Read-only
- *                    access to all tables.
- *                            <li> gpudb::has_permission_system_user_admin:
- *                    Access to administer users and roles that do not have
- *                    system_admin permission.
- *                            <li> gpudb::has_permission_system_write: Read and
- *                    write access to all tables.
- *                            <li> gpudb::has_permission_table_admin: Full
- *                    read/write and administrative access to the table.
- *                            <li> gpudb::has_permission_table_delete: Delete
- *                    access to the table.
- *                            <li> gpudb::has_permission_table_insert: Insert
- *                    access to the table.
- *                            <li> gpudb::has_permission_table_read: Read
- *                    access to the table.
- *                            <li> gpudb::has_permission_table_update: Update
- *                    access to the table.
+ *                    access on the given data source or data sink.
+ *                            <li> gpudb::has_permission_delete: Delete rows
+ *                    from tables.
+ *                            <li> gpudb::has_permission_execute: Ability to
+ *                    Execute the Procedure object.
+ *                            <li> gpudb::has_permission_insert: Insert access
+ *                    to tables.
+ *                            <li> gpudb::has_permission_read: Ability to read,
+ *                    list and use the object.
+ *                            <li> gpudb::has_permission_update: Update access
+ *                    to the table.
+ *                            <li> gpudb::has_permission_user_admin: Access to
+ *                    administer users and roles that do not have system_admin
+ *                    permission.
+ *                            <li> gpudb::has_permission_write: Access to
+ *                    write, change and delete objects.
  *                    </ul>
  * @param options  Optional parameters.
  *                 <ul>
  *                         <li> gpudb::has_permission_no_error_if_not_exists:
- *                 If @a false will return an error if the provided @a target
+ *                 If @a false will return an error if the provided @a object
  *                 does not exist or is blank. If @a true then it will return
  *                 @a false for @a hasPermission.
  *                 <ul>
@@ -24644,15 +25660,17 @@ HasPermissionResponse GPUdb::hasPermission( const std::string& name,
  * 
  */
 
-HasPermissionResponse& GPUdb::hasPermission( const std::string& name,
-                                             const std::string& target,
+HasPermissionResponse& GPUdb::hasPermission( const std::string& principal,
+                                             const std::string& object,
+                                             const std::string& objectType,
                                              const std::string& permission,
                                              const std::map<std::string, std::string>& options,
                                              HasPermissionResponse& response_ ) const
 {
     HasPermissionRequest actualRequest_;
-    actualRequest_.name = name;
-    actualRequest_.target = target;
+    actualRequest_.principal = principal;
+    actualRequest_.object = object;
+    actualRequest_.objectType = objectType;
     actualRequest_.permission = permission;
     actualRequest_.options = options;
     submitRequest("/has/permission", actualRequest_, response_, false);
@@ -24742,6 +25760,142 @@ HasProcResponse& GPUdb::hasProc( const std::string& procName,
     actualRequest_.procName = procName;
     actualRequest_.options = options;
     submitRequest("/has/proc", actualRequest_, response_, false);
+    return response_;
+}
+
+
+/**
+ * Checks if the specified user has the specified role.
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+HasRoleResponse GPUdb::hasRole( const HasRoleRequest& request_ ) const
+{
+    HasRoleResponse actualResponse_;
+    submitRequest("/has/role", request_, actualResponse_, false);
+    return actualResponse_;
+}
+
+
+/**
+ * Checks if the specified user has the specified role.
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+HasRoleResponse& GPUdb::hasRole( const HasRoleRequest& request_,
+                                 HasRoleResponse& response_ ) const
+{
+    submitRequest("/has/role", request_, response_, false);
+    return response_;
+}
+
+
+/**
+ * Checks if the specified user has the specified role.
+ * 
+ * @param principal  Name of the user for which role membersih is being
+ *                   checked. Must be an existing user. If blank, will use the
+ *                   current user.
+ * @param role  Name of role to check for membership.
+ * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li> gpudb::has_role_no_error_if_not_exists: If @a
+ *                 false will return an error if the provided @a role does not
+ *                 exist or is blank. If @a true then it will return @a false
+ *                 for @a hasRole.
+ *                 <ul>
+ *                         <li> gpudb::has_role_true
+ *                         <li> gpudb::has_role_false
+ *                 </ul>
+ *                 The default value is gpudb::has_role_false.
+ *                         <li> gpudb::has_role_only_direct: If @a false will
+ *                 search recursively if the @a principal is a member of @a
+ *                 role.  If @a true then @a principal must directly be a
+ *                 member of @a role.
+ *                 <ul>
+ *                         <li> gpudb::has_role_true
+ *                         <li> gpudb::has_role_false
+ *                 </ul>
+ *                 The default value is gpudb::has_role_false.
+ *                 </ul>
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+HasRoleResponse GPUdb::hasRole( const std::string& principal,
+                                const std::string& role,
+                                const std::map<std::string, std::string>& options ) const
+{
+    HasRoleRequest actualRequest_;
+    actualRequest_.principal = principal;
+    actualRequest_.role = role;
+    actualRequest_.options = options;
+    HasRoleResponse actualResponse_;
+    submitRequest("/has/role", actualRequest_, actualResponse_, false);
+    return actualResponse_;
+}
+
+
+/**
+ * Checks if the specified user has the specified role.
+ * 
+ * @param principal  Name of the user for which role membersih is being
+ *                   checked. Must be an existing user. If blank, will use the
+ *                   current user.
+ * @param role  Name of role to check for membership.
+ * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li> gpudb::has_role_no_error_if_not_exists: If @a
+ *                 false will return an error if the provided @a role does not
+ *                 exist or is blank. If @a true then it will return @a false
+ *                 for @a hasRole.
+ *                 <ul>
+ *                         <li> gpudb::has_role_true
+ *                         <li> gpudb::has_role_false
+ *                 </ul>
+ *                 The default value is gpudb::has_role_false.
+ *                         <li> gpudb::has_role_only_direct: If @a false will
+ *                 search recursively if the @a principal is a member of @a
+ *                 role.  If @a true then @a principal must directly be a
+ *                 member of @a role.
+ *                 <ul>
+ *                         <li> gpudb::has_role_true
+ *                         <li> gpudb::has_role_false
+ *                 </ul>
+ *                 The default value is gpudb::has_role_false.
+ *                 </ul>
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+HasRoleResponse& GPUdb::hasRole( const std::string& principal,
+                                 const std::string& role,
+                                 const std::map<std::string, std::string>& options,
+                                 HasRoleResponse& response_ ) const
+{
+    HasRoleRequest actualRequest_;
+    actualRequest_.principal = principal;
+    actualRequest_.role = role;
+    actualRequest_.options = options;
+    submitRequest("/has/role", actualRequest_, response_, false);
     return response_;
 }
 
@@ -30341,6 +31495,204 @@ ReserveResourceResponse& GPUdb::reserveResource( const std::string& component,
 
 
 /**
+ * Revoke user or role the specified permission on the specified object.
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+RevokePermissionResponse GPUdb::revokePermission( const RevokePermissionRequest& request_ ) const
+{
+    RevokePermissionResponse actualResponse_;
+    submitRequest("/revoke/permission", request_, actualResponse_, false);
+    return actualResponse_;
+}
+
+
+/**
+ * Revoke user or role the specified permission on the specified object.
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+RevokePermissionResponse& GPUdb::revokePermission( const RevokePermissionRequest& request_,
+                                                   RevokePermissionResponse& response_ ) const
+{
+    submitRequest("/revoke/permission", request_, response_, false);
+    return response_;
+}
+
+
+/**
+ * Revoke user or role the specified permission on the specified object.
+ * 
+ * @param principal  Name of the user or role for which the permission is being
+ *                   revoked.  Must be an existing user or role.
+ * @param object  Name of object permission is being revoked from.  It is
+ *                recommended to use a fully-qualified name when possible.
+ * @param objectType  The type of object being revoked
+ *                    <ul>
+ *                            <li> gpudb::revoke_permission_credential:
+ *                    Credential
+ *                            <li> gpudb::revoke_permission_datasink: Data Sink
+ *                            <li> gpudb::revoke_permission_datasource: Data
+ *                    Source
+ *                            <li> gpudb::revoke_permission_directory: KIFS
+ *                    File Directory
+ *                            <li> gpudb::revoke_permission_graph: A Graph
+ *                    object
+ *                            <li> gpudb::revoke_permission_proc: UDF Procedure
+ *                            <li> gpudb::revoke_permission_schema: Schema
+ *                            <li> gpudb::revoke_permission_sql_proc: SQL
+ *                    Procedure
+ *                            <li> gpudb::revoke_permission_system:
+ *                    System-level access
+ *                            <li> gpudb::revoke_permission_table: Database
+ *                    Table
+ *                    </ul>
+ * @param permission  Permission being revoked.
+ *                    <ul>
+ *                            <li> gpudb::revoke_permission_admin: Full
+ *                    read/write and administrative access on the object.
+ *                            <li> gpudb::revoke_permission_connect: Connect
+ *                    access on the given data source or data sink.
+ *                            <li> gpudb::revoke_permission_delete: Delete rows
+ *                    from tables.
+ *                            <li> gpudb::revoke_permission_execute: Ability to
+ *                    Execute the Procedure object.
+ *                            <li> gpudb::revoke_permission_insert: Insert
+ *                    access to tables.
+ *                            <li> gpudb::revoke_permission_read: Ability to
+ *                    read, list and use the object.
+ *                            <li> gpudb::revoke_permission_update: Update
+ *                    access to the table.
+ *                            <li> gpudb::revoke_permission_user_admin: Access
+ *                    to administer users and roles that do not have
+ *                    system_admin permission.
+ *                            <li> gpudb::revoke_permission_write: Access to
+ *                    write, change and delete objects.
+ *                    </ul>
+ * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li> gpudb::revoke_permission_columns: Revoke table
+ *                 security from these columns, comma-separated.  The default
+ *                 value is ''.
+ *                 </ul>
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+RevokePermissionResponse GPUdb::revokePermission( const std::string& principal,
+                                                  const std::string& object,
+                                                  const std::string& objectType,
+                                                  const std::string& permission,
+                                                  const std::map<std::string, std::string>& options ) const
+{
+    RevokePermissionRequest actualRequest_;
+    actualRequest_.principal = principal;
+    actualRequest_.object = object;
+    actualRequest_.objectType = objectType;
+    actualRequest_.permission = permission;
+    actualRequest_.options = options;
+    RevokePermissionResponse actualResponse_;
+    submitRequest("/revoke/permission", actualRequest_, actualResponse_, false);
+    return actualResponse_;
+}
+
+
+/**
+ * Revoke user or role the specified permission on the specified object.
+ * 
+ * @param principal  Name of the user or role for which the permission is being
+ *                   revoked.  Must be an existing user or role.
+ * @param object  Name of object permission is being revoked from.  It is
+ *                recommended to use a fully-qualified name when possible.
+ * @param objectType  The type of object being revoked
+ *                    <ul>
+ *                            <li> gpudb::revoke_permission_credential:
+ *                    Credential
+ *                            <li> gpudb::revoke_permission_datasink: Data Sink
+ *                            <li> gpudb::revoke_permission_datasource: Data
+ *                    Source
+ *                            <li> gpudb::revoke_permission_directory: KIFS
+ *                    File Directory
+ *                            <li> gpudb::revoke_permission_graph: A Graph
+ *                    object
+ *                            <li> gpudb::revoke_permission_proc: UDF Procedure
+ *                            <li> gpudb::revoke_permission_schema: Schema
+ *                            <li> gpudb::revoke_permission_sql_proc: SQL
+ *                    Procedure
+ *                            <li> gpudb::revoke_permission_system:
+ *                    System-level access
+ *                            <li> gpudb::revoke_permission_table: Database
+ *                    Table
+ *                    </ul>
+ * @param permission  Permission being revoked.
+ *                    <ul>
+ *                            <li> gpudb::revoke_permission_admin: Full
+ *                    read/write and administrative access on the object.
+ *                            <li> gpudb::revoke_permission_connect: Connect
+ *                    access on the given data source or data sink.
+ *                            <li> gpudb::revoke_permission_delete: Delete rows
+ *                    from tables.
+ *                            <li> gpudb::revoke_permission_execute: Ability to
+ *                    Execute the Procedure object.
+ *                            <li> gpudb::revoke_permission_insert: Insert
+ *                    access to tables.
+ *                            <li> gpudb::revoke_permission_read: Ability to
+ *                    read, list and use the object.
+ *                            <li> gpudb::revoke_permission_update: Update
+ *                    access to the table.
+ *                            <li> gpudb::revoke_permission_user_admin: Access
+ *                    to administer users and roles that do not have
+ *                    system_admin permission.
+ *                            <li> gpudb::revoke_permission_write: Access to
+ *                    write, change and delete objects.
+ *                    </ul>
+ * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li> gpudb::revoke_permission_columns: Revoke table
+ *                 security from these columns, comma-separated.  The default
+ *                 value is ''.
+ *                 </ul>
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+RevokePermissionResponse& GPUdb::revokePermission( const std::string& principal,
+                                                   const std::string& object,
+                                                   const std::string& objectType,
+                                                   const std::string& permission,
+                                                   const std::map<std::string, std::string>& options,
+                                                   RevokePermissionResponse& response_ ) const
+{
+    RevokePermissionRequest actualRequest_;
+    actualRequest_.principal = principal;
+    actualRequest_.object = object;
+    actualRequest_.objectType = objectType;
+    actualRequest_.permission = permission;
+    actualRequest_.options = options;
+    submitRequest("/revoke/permission", actualRequest_, response_, false);
+    return response_;
+}
+
+
+/**
  * Revokes a <a
  * href="../../../security/sec_concepts/#security-concepts-permissions-credential"
  * target="_top">credential-level permission</a> from a user or role.
@@ -31366,6 +32718,100 @@ ShowCredentialResponse& GPUdb::showCredential( const std::string& credentialName
     actualRequest_.credentialName = credentialName;
     actualRequest_.options = options;
     submitRequest("/show/credential", actualRequest_, response_, false);
+    return response_;
+}
+
+
+/**
+ * Shows information about a specified <a href="../../../concepts/data_sinks/"
+ * target="_top">data sink</a> or all data sinks.
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+ShowDatasinkResponse GPUdb::showDatasink( const ShowDatasinkRequest& request_ ) const
+{
+    ShowDatasinkResponse actualResponse_;
+    submitRequest("/show/datasink", request_, actualResponse_, false);
+    return actualResponse_;
+}
+
+
+/**
+ * Shows information about a specified <a href="../../../concepts/data_sinks/"
+ * target="_top">data sink</a> or all data sinks.
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+ShowDatasinkResponse& GPUdb::showDatasink( const ShowDatasinkRequest& request_,
+                                           ShowDatasinkResponse& response_ ) const
+{
+    submitRequest("/show/datasink", request_, response_, false);
+    return response_;
+}
+
+
+/**
+ * Shows information about a specified <a href="../../../concepts/data_sinks/"
+ * target="_top">data sink</a> or all data sinks.
+ * 
+ * @param name  Name of the data sink for which to retrieve information. The
+ *              name must refer to a currently existing data sink. If '*' is
+ *              specified, information about all data sinks will be returned.
+ * @param options  Optional parameters.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+ShowDatasinkResponse GPUdb::showDatasink( const std::string& name,
+                                          const std::map<std::string, std::string>& options ) const
+{
+    ShowDatasinkRequest actualRequest_;
+    actualRequest_.name = name;
+    actualRequest_.options = options;
+    ShowDatasinkResponse actualResponse_;
+    submitRequest("/show/datasink", actualRequest_, actualResponse_, false);
+    return actualResponse_;
+}
+
+
+/**
+ * Shows information about a specified <a href="../../../concepts/data_sinks/"
+ * target="_top">data sink</a> or all data sinks.
+ * 
+ * @param name  Name of the data sink for which to retrieve information. The
+ *              name must refer to a currently existing data sink. If '*' is
+ *              specified, information about all data sinks will be returned.
+ * @param options  Optional parameters.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+ShowDatasinkResponse& GPUdb::showDatasink( const std::string& name,
+                                           const std::map<std::string, std::string>& options,
+                                           ShowDatasinkResponse& response_ ) const
+{
+    ShowDatasinkRequest actualRequest_;
+    actualRequest_.name = name;
+    actualRequest_.options = options;
+    submitRequest("/show/datasink", actualRequest_, response_, false);
     return response_;
 }
 
@@ -33679,6 +35125,105 @@ ShowTableMetadataResponse& GPUdb::showTableMetadata( const std::vector<std::stri
 
 
 /**
+ * Show table monitors and their properties. Table monitors are created using
+ * {@link #createTableMonitor(const CreateTableMonitorRequest&) const}.
+ * Returns detailed information about existing table monitors.
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+ShowTableMonitorsResponse GPUdb::showTableMonitors( const ShowTableMonitorsRequest& request_ ) const
+{
+    ShowTableMonitorsResponse actualResponse_;
+    submitRequest("/show/tablemonitors", request_, actualResponse_, false);
+    return actualResponse_;
+}
+
+
+/**
+ * Show table monitors and their properties. Table monitors are created using
+ * {@link
+ * #createTableMonitor(const CreateTableMonitorRequest&,CreateTableMonitorResponse&) const}.
+ * Returns detailed information about existing table monitors.
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+ShowTableMonitorsResponse& GPUdb::showTableMonitors( const ShowTableMonitorsRequest& request_,
+                                                     ShowTableMonitorsResponse& response_ ) const
+{
+    submitRequest("/show/tablemonitors", request_, response_, false);
+    return response_;
+}
+
+
+/**
+ * Show table monitors and their properties. Table monitors are created using
+ * {@link
+ * #createTableMonitor(const std::string&,const std::map<std::string, std::string>&) const}.
+ * Returns detailed information about existing table monitors.
+ * 
+ * @param monitorIds  List of monitors to be shown. An empty list or a single
+ *                    entry with an empty string returns all table monitors.
+ * @param options  Optional parameters.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+ShowTableMonitorsResponse GPUdb::showTableMonitors( const std::vector<std::string>& monitorIds,
+                                                    const std::map<std::string, std::string>& options ) const
+{
+    ShowTableMonitorsRequest actualRequest_;
+    actualRequest_.monitorIds = monitorIds;
+    actualRequest_.options = options;
+    ShowTableMonitorsResponse actualResponse_;
+    submitRequest("/show/tablemonitors", actualRequest_, actualResponse_, false);
+    return actualResponse_;
+}
+
+
+/**
+ * Show table monitors and their properties. Table monitors are created using
+ * {@link
+ * #createTableMonitor(const std::string&,const std::map<std::string, std::string>&,CreateTableMonitorResponse&) const}.
+ * Returns detailed information about existing table monitors.
+ * 
+ * @param monitorIds  List of monitors to be shown. An empty list or a single
+ *                    entry with an empty string returns all table monitors.
+ * @param options  Optional parameters.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+ShowTableMonitorsResponse& GPUdb::showTableMonitors( const std::vector<std::string>& monitorIds,
+                                                     const std::map<std::string, std::string>& options,
+                                                     ShowTableMonitorsResponse& response_ ) const
+{
+    ShowTableMonitorsRequest actualRequest_;
+    actualRequest_.monitorIds = monitorIds;
+    actualRequest_.options = options;
+    submitRequest("/show/tablemonitors", actualRequest_, response_, false);
+    return response_;
+}
+
+
+/**
  * Gets names of the tables whose type matches the given criteria. Each table
  * has a particular type. This type comprises the schema and properties of the
  * table and sometimes a type label. This function allows a look up of the
@@ -35309,11 +36854,12 @@ UploadFilesResponse& GPUdb::uploadFiles( const UploadFilesRequest& request_,
  *                         <li> gpudb::upload_files_multipart_operation:
  *                 Multipart upload operation to perform
  *                 <ul>
- *                         <li> gpudb::upload_files_none
+ *                         <li> gpudb::upload_files_none: Default, indicates
+ *                 this is not a multipart upload
  *                         <li> gpudb::upload_files_init: Initialize a
  *                 multipart file upload
- *                         <li> gpudb::upload_files_upload_part: Upload one or
- *                 more parts of the specified multipart file upload
+ *                         <li> gpudb::upload_files_upload_part: Uploads a part
+ *                 of the specified multipart file upload
  *                         <li> gpudb::upload_files_complete: Complete the
  *                 specified multipart file upload
  *                         <li> gpudb::upload_files_cancel: Cancel the
@@ -35437,11 +36983,12 @@ UploadFilesResponse GPUdb::uploadFiles( const std::vector<std::string>& fileName
  *                         <li> gpudb::upload_files_multipart_operation:
  *                 Multipart upload operation to perform
  *                 <ul>
- *                         <li> gpudb::upload_files_none
+ *                         <li> gpudb::upload_files_none: Default, indicates
+ *                 this is not a multipart upload
  *                         <li> gpudb::upload_files_init: Initialize a
  *                 multipart file upload
- *                         <li> gpudb::upload_files_upload_part: Upload one or
- *                 more parts of the specified multipart file upload
+ *                         <li> gpudb::upload_files_upload_part: Uploads a part
+ *                 of the specified multipart file upload
  *                         <li> gpudb::upload_files_complete: Complete the
  *                 specified multipart file upload
  *                         <li> gpudb::upload_files_cancel: Cancel the

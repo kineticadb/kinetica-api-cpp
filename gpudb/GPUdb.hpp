@@ -32,7 +32,7 @@ namespace gpudb
 
  </br>
 
- The source code can be found <a href="https://github.com/kineticadb/kinetica-api-cpp">here</a>.
+ The source code can be found <a href="https://github.com/kineticadb/kinetica-api-cpp" target="_top">here</a>.
 
  </br>
 
