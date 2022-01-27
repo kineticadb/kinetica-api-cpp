@@ -128,10 +128,13 @@ namespace gpudb
             memory(std::vector<int64_t>()),
             graphNames(std::vector<std::string>()),
             graphServerIds(std::vector<int32_t>()),
+            graphOwnerUserNames(std::vector<std::string>()),
+            graphOwnerResourceGroups(std::vector<std::string>()),
             directed(std::vector<bool>()),
             numNodes(std::vector<int64_t>()),
             numEdges(std::vector<int64_t>()),
             numBytes(std::vector<int64_t>()),
+            resourceCapacity(std::vector<int64_t>()),
             isPersisted(std::vector<bool>()),
             isPartitioned(std::vector<bool>()),
             isSyncDb(std::vector<bool>()),
@@ -146,10 +149,13 @@ namespace gpudb
         std::vector<int64_t> memory;
         std::vector<std::string> graphNames;
         std::vector<int32_t> graphServerIds;
+        std::vector<std::string> graphOwnerUserNames;
+        std::vector<std::string> graphOwnerResourceGroups;
         std::vector<bool> directed;
         std::vector<int64_t> numNodes;
         std::vector<int64_t> numEdges;
         std::vector<int64_t> numBytes;
+        std::vector<int64_t> resourceCapacity;
         std::vector<bool> isPersisted;
         std::vector<bool> isPartitioned;
         std::vector<bool> isSyncDb;
@@ -170,10 +176,13 @@ namespace avro
             ::avro::encode(e, v.memory);
             ::avro::encode(e, v.graphNames);
             ::avro::encode(e, v.graphServerIds);
+            ::avro::encode(e, v.graphOwnerUserNames);
+            ::avro::encode(e, v.graphOwnerResourceGroups);
             ::avro::encode(e, v.directed);
             ::avro::encode(e, v.numNodes);
             ::avro::encode(e, v.numEdges);
             ::avro::encode(e, v.numBytes);
+            ::avro::encode(e, v.resourceCapacity);
             ::avro::encode(e, v.isPersisted);
             ::avro::encode(e, v.isPartitioned);
             ::avro::encode(e, v.isSyncDb);
@@ -213,42 +222,54 @@ namespace avro
                             break;
 
                         case 5:
-                            ::avro::decode(d, v.directed);
+                            ::avro::decode(d, v.graphOwnerUserNames);
                             break;
 
                         case 6:
-                            ::avro::decode(d, v.numNodes);
+                            ::avro::decode(d, v.graphOwnerResourceGroups);
                             break;
 
                         case 7:
-                            ::avro::decode(d, v.numEdges);
+                            ::avro::decode(d, v.directed);
                             break;
 
                         case 8:
-                            ::avro::decode(d, v.numBytes);
+                            ::avro::decode(d, v.numNodes);
                             break;
 
                         case 9:
-                            ::avro::decode(d, v.isPersisted);
+                            ::avro::decode(d, v.numEdges);
                             break;
 
                         case 10:
-                            ::avro::decode(d, v.isPartitioned);
+                            ::avro::decode(d, v.numBytes);
                             break;
 
                         case 11:
-                            ::avro::decode(d, v.isSyncDb);
+                            ::avro::decode(d, v.resourceCapacity);
                             break;
 
                         case 12:
-                            ::avro::decode(d, v.hasInsertTableMonitor);
+                            ::avro::decode(d, v.isPersisted);
                             break;
 
                         case 13:
-                            ::avro::decode(d, v.originalRequest);
+                            ::avro::decode(d, v.isPartitioned);
                             break;
 
                         case 14:
+                            ::avro::decode(d, v.isSyncDb);
+                            break;
+
+                        case 15:
+                            ::avro::decode(d, v.hasInsertTableMonitor);
+                            break;
+
+                        case 16:
+                            ::avro::decode(d, v.originalRequest);
+                            break;
+
+                        case 17:
                             ::avro::decode(d, v.info);
                             break;
 
@@ -264,10 +285,13 @@ namespace avro
                 ::avro::decode(d, v.memory);
                 ::avro::decode(d, v.graphNames);
                 ::avro::decode(d, v.graphServerIds);
+                ::avro::decode(d, v.graphOwnerUserNames);
+                ::avro::decode(d, v.graphOwnerResourceGroups);
                 ::avro::decode(d, v.directed);
                 ::avro::decode(d, v.numNodes);
                 ::avro::decode(d, v.numEdges);
                 ::avro::decode(d, v.numBytes);
+                ::avro::decode(d, v.resourceCapacity);
                 ::avro::decode(d, v.isPersisted);
                 ::avro::decode(d, v.isPartitioned);
                 ::avro::decode(d, v.isSyncDb);

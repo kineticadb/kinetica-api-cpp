@@ -40,6 +40,12 @@ namespace gpudb
          * @param[in] options_  Optional parameters.
          *                      <ul>
          *                              <li>
+         *                      gpudb::create_directory_create_home_directory:
+         *                      When set, a home directory is created for the
+         *                      user name provided in the value. The @a
+         *                      directoryName must be an empty string in this
+         *                      case. The user must exist.
+         *                              <li>
          *                      gpudb::create_directory_no_error_if_exists: If
          *                      @a true, does not return an error if the
          *                      directory already exists

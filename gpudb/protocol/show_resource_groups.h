@@ -49,14 +49,26 @@ namespace gpudb
          *                      gpudb::show_resource_groups_true.
          *                              <li>
          *                      gpudb::show_resource_groups_show_default_group:
-         *                      If @a true include the default resource group
-         *                      in the response.
+         *                      If @a true include the default and system
+         *                      resource groups in the response. This value
+         *                      defaults to false if an explicit list of group
+         *                      names is provided, and true otherwise.
          *                      <ul>
          *                              <li> gpudb::show_resource_groups_true
          *                              <li> gpudb::show_resource_groups_false
          *                      </ul>
          *                      The default value is
          *                      gpudb::show_resource_groups_true.
+         *                              <li>
+         *                      gpudb::show_resource_groups_show_tier_usage: If
+         *                      @a true include the resource group usage on the
+         *                      worker ranks in the response.
+         *                      <ul>
+         *                              <li> gpudb::show_resource_groups_true
+         *                              <li> gpudb::show_resource_groups_false
+         *                      </ul>
+         *                      The default value is
+         *                      gpudb::show_resource_groups_false.
          *                      </ul>
          * 
          */
@@ -132,11 +144,13 @@ namespace gpudb
          */
         ShowResourceGroupsResponse() :
             groups(std::vector<std::map<std::string, std::string> >()),
+            rankUsage(std::map<std::string, std::string>()),
             info(std::map<std::string, std::string>())
         {
         }
 
         std::vector<std::map<std::string, std::string> > groups;
+        std::map<std::string, std::string> rankUsage;
         std::map<std::string, std::string> info;
     };
 }
@@ -148,6 +162,7 @@ namespace avro
         static void encode(Encoder& e, const gpudb::ShowResourceGroupsResponse& v)
         {
             ::avro::encode(e, v.groups);
+            ::avro::encode(e, v.rankUsage);
             ::avro::encode(e, v.info);
         }
 
@@ -166,6 +181,10 @@ namespace avro
                             break;
 
                         case 1:
+                            ::avro::decode(d, v.rankUsage);
+                            break;
+
+                        case 2:
                             ::avro::decode(d, v.info);
                             break;
 
@@ -177,6 +196,7 @@ namespace avro
             else
             {
                 ::avro::decode(d, v.groups);
+                ::avro::decode(d, v.rankUsage);
                 ::avro::decode(d, v.info);
             }
         }

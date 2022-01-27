@@ -272,8 +272,8 @@ namespace gpudb
 
 
         /**
-         * For 'uuid' type,  repalce empty strings and invalid uuid values with
-         * new_uuid()' upon insert.
+         * For 'uuid' type, replace empty strings and invalid UUID values with
+         * randomly-generated UUIDs upon insert.
          */
         extern const std::string INIT_WITH_UUID;
 

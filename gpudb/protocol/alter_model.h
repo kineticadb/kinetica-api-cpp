@@ -42,6 +42,7 @@ namespace gpudb
          *                             <li> gpudb::alter_model_container
          *                             <li> gpudb::alter_model_registry
          *                             <li> gpudb::alter_model_refresh
+         *                             <li> gpudb::alter_model_stop_deployment
          *                     </ul>
          * @param[in] value_
          * @param[in] options_

@@ -61,6 +61,26 @@ namespace gpudb
          *                      of the Kafka topic to publish to if @a
          *                      destination is a Kafka broker
          *                              <li>
+         *                      gpudb::create_datasink_max_batch_size: Maximum
+         *                      number of records per notification message.
+         *                      The default value is '1'.
+         *                              <li>
+         *                      gpudb::create_datasink_max_message_size:
+         *                      Maximum size in bytes of each notification
+         *                      message.  The default value is '1000000'.
+         *                              <li>
+         *                      gpudb::create_datasink_json_format: The desired
+         *                      format of JSON encoded notifications message.
+         *                      If @a nested, records are returned as an array.
+         *                      Otherwise, only a single record per messages is
+         *                      returned.
+         *                      <ul>
+         *                              <li> gpudb::create_datasink_flat
+         *                              <li> gpudb::create_datasink_nested
+         *                      </ul>
+         *                      The default value is
+         *                      gpudb::create_datasink_flat.
+         *                              <li>
          *                      gpudb::create_datasink_skip_validation: Bypass
          *                      validation of connection to this data sink.
          *                      <ul>

@@ -54,7 +54,7 @@ namespace gpudb
          *                              <li>
          *                      gpudb::clear_table_monitor_clear_all_references:
          *                      If @a true, all references that share the same
-         *                      {@input topic_id} will be cleared.
+         *                      @a topicId will be cleared.
          *                      <ul>
          *                              <li> gpudb::clear_table_monitor_true
          *                              <li> gpudb::clear_table_monitor_false

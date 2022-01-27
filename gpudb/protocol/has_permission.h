@@ -66,6 +66,9 @@ namespace gpudb
          *                         System-level access
          *                                 <li> gpudb::has_permission_table:
          *                         Database Table
+         *                                 <li>
+         *                         gpudb::has_permission_table_monitor: Table
+         *                         monitor
          *                         </ul>
          * @param[in] permission_  Permission to check for.
          *                         <ul>

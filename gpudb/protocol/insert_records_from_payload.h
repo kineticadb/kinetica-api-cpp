@@ -389,8 +389,8 @@ namespace gpudb
          *                              <li>
          *                      gpudb::insert_records_from_payload_permissive:
          *                      Records with missing columns are populated with
-         *                      nulls if possible; otherwise, malformed records
-         *                      are skipped.
+         *                      nulls if possible; otherwise, the malformed
+         *                      records are skipped.
          *                              <li>
          *                      gpudb::insert_records_from_payload_ignore_bad_records:
          *                      Malformed records are skipped.
@@ -402,22 +402,25 @@ namespace gpudb
          *                      this mode.
          *                      </ul>
          *                      The default value is
-         *                      gpudb::insert_records_from_payload_permissive.
+         *                      gpudb::insert_records_from_payload_abort.
          *                              <li>
          *                      gpudb::insert_records_from_payload_file_type:
          *                      Specifies the type of the file(s) whose records
          *                      will be inserted.
          *                      <ul>
          *                              <li>
+         *                      gpudb::insert_records_from_payload_avro: Avro
+         *                      file format
+         *                              <li>
          *                      gpudb::insert_records_from_payload_delimited_text:
          *                      Delimited text file format; e.g., CSV, TSV,
          *                      PSV, etc.
          *                              <li>
-         *                      gpudb::insert_records_from_payload_parquet:
-         *                      Apache Parquet file format
-         *                              <li>
          *                      gpudb::insert_records_from_payload_json: Json
          *                      file format
+         *                              <li>
+         *                      gpudb::insert_records_from_payload_parquet:
+         *                      Apache Parquet file format
          *                              <li>
          *                      gpudb::insert_records_from_payload_shapefile:
          *                      ShapeFile file format
@@ -448,6 +451,78 @@ namespace gpudb
          *                      The default value is
          *                      gpudb::insert_records_from_payload_full.
          *                              <li>
+         *                      gpudb::insert_records_from_payload_loading_mode:
+         *                      Scheme for distributing the extraction and
+         *                      loading of data from the source data file(s).
+         *                      This option applies only when loading files
+         *                      that are local to the database
+         *                      <ul>
+         *                              <li>
+         *                      gpudb::insert_records_from_payload_head: The
+         *                      head node loads all data. All files must be
+         *                      available to the head node.
+         *                              <li>
+         *                      gpudb::insert_records_from_payload_distributed_shared:
+         *                      The head node coordinates loading data by
+         *                      worker
+         *                      processes across all nodes from shared files
+         *                      available to all workers.
+         *                      NOTE:
+         *                      Instead of existing on a shared source, the
+         *                      files can be duplicated on a source local to
+         *                      each host
+         *                      to improve performance, though the files must
+         *                      appear as the same data set from the
+         *                      perspective of
+         *                      all hosts performing the load.
+         *                              <li>
+         *                      gpudb::insert_records_from_payload_distributed_local:
+         *                      A single worker process on each node loads all
+         *                      files
+         *                      that are available to it. This option works
+         *                      best when each worker loads files from its own
+         *                      file
+         *                      system, to maximize performance. In order to
+         *                      avoid data duplication, either each worker
+         *                      performing
+         *                      the load needs to have visibility to a set of
+         *                      files unique to it (no file is visible to more
+         *                      than
+         *                      one node) or the target table needs to have a
+         *                      primary key (which will allow the worker to
+         *                      automatically deduplicate data).
+         *                      NOTE:
+         *                      If the target table doesn't exist, the table
+         *                      structure will be determined by the head node.
+         *                      If the
+         *                      head node has no files local to it, it will be
+         *                      unable to determine the structure and the
+         *                      request
+         *                      will fail.
+         *                      If the head node is configured to have no
+         *                      worker processes, no data strictly accessible
+         *                      to the head
+         *                      node will be loaded.
+         *                      </ul>
+         *                      The default value is
+         *                      gpudb::insert_records_from_payload_head.
+         *                              <li>
+         *                      gpudb::insert_records_from_payload_local_time_offset:
+         *                      For Avro local timestamp columns
+         *                              <li>
+         *                      gpudb::insert_records_from_payload_num_tasks_per_rank:
+         *                      Optional: number of tasks for reading file per
+         *                      rank. Default will be
+         *                      external_file_reader_num_tasks
+         *                              <li>
+         *                      gpudb::insert_records_from_payload_poll_interval:
+         *                      If @a true, the number of seconds between
+         *                      attempts to load external files into the table.
+         *                      If zero, polling will be continuous as long as
+         *                      data is found.  If no data is found, the
+         *                      interval will steadily increase to a maximum of
+         *                      60 seconds.
+         *                              <li>
          *                      gpudb::insert_records_from_payload_primary_keys:
          *                      Optional: comma separated list of column names,
          *                      to set as primary keys, when not specified in
@@ -457,6 +532,35 @@ namespace gpudb
          *                      Optional: comma separated list of column names,
          *                      to set as primary keys, when not specified in
          *                      the type.  The default value is ''.
+         *                              <li>
+         *                      gpudb::insert_records_from_payload_skip_lines:
+         *                      Skip number of lines from begining of file.
+         *                              <li>
+         *                      gpudb::insert_records_from_payload_subscribe:
+         *                      Continuously poll the data source to check for
+         *                      new data and load it into the table.
+         *                      <ul>
+         *                              <li>
+         *                      gpudb::insert_records_from_payload_true
+         *                              <li>
+         *                      gpudb::insert_records_from_payload_false
+         *                      </ul>
+         *                      The default value is
+         *                      gpudb::insert_records_from_payload_false.
+         *                              <li>
+         *                      gpudb::insert_records_from_payload_table_insert_mode:
+         *                      Optional: table_insert_mode. When inserting
+         *                      records from multiple files: if table_per_file
+         *                      then insert from each file into a new table.
+         *                      Currently supported only for shapefiles.
+         *                      <ul>
+         *                              <li>
+         *                      gpudb::insert_records_from_payload_single
+         *                              <li>
+         *                      gpudb::insert_records_from_payload_table_per_file
+         *                      </ul>
+         *                      The default value is
+         *                      gpudb::insert_records_from_payload_single.
          *                              <li>
          *                      gpudb::insert_records_from_payload_text_comment_string:
          *                      Specifies the character string that should be
@@ -524,7 +628,7 @@ namespace gpudb
          *                      interpreted as a null
          *                      value in the source data.
          *                      For @a delimited_text @a file_type only.  The
-         *                      default value is ''.
+         *                      default value is '\\N'.
          *                              <li>
          *                      gpudb::insert_records_from_payload_text_quote_character:
          *                      Specifies the character that should be
@@ -544,10 +648,30 @@ namespace gpudb
          *                      For @a delimited_text @a file_type only.  The
          *                      default value is '"'.
          *                              <li>
-         *                      gpudb::insert_records_from_payload_num_tasks_per_rank:
-         *                      Optional: number of tasks for reading file per
-         *                      rank. Default will be
-         *                      external_file_reader_num_tasks
+         *                      gpudb::insert_records_from_payload_text_search_columns:
+         *                      Add 'text_search' property to internally
+         *                      inferenced string columns. Comma seperated list
+         *                      of column names or '*' for all columns. To add
+         *                      text_search property only to string columns of
+         *                      minimum size, set also the option
+         *                      'text_search_min_column_length'
+         *                              <li>
+         *                      gpudb::insert_records_from_payload_text_search_min_column_length:
+         *                      Set minimum column size. Used only when
+         *                      'text_search_columns' has a value.
+         *                              <li>
+         *                      gpudb::insert_records_from_payload_truncate_table:
+         *                      If set to @a true, truncates the table
+         *                      specified by @a tableName prior to loading the
+         *                      file(s).
+         *                      <ul>
+         *                              <li>
+         *                      gpudb::insert_records_from_payload_true
+         *                              <li>
+         *                      gpudb::insert_records_from_payload_false
+         *                      </ul>
+         *                      The default value is
+         *                      gpudb::insert_records_from_payload_false.
          *                              <li>
          *                      gpudb::insert_records_from_payload_type_inference_mode:
          *                      optimize type inference for:
@@ -563,18 +687,6 @@ namespace gpudb
          *                      </ul>
          *                      The default value is
          *                      gpudb::insert_records_from_payload_speed.
-         *                              <li>
-         *                      gpudb::insert_records_from_payload_text_search_columns:
-         *                      Add 'text_search' property to internally
-         *                      inferenced string columns. Comma seperated list
-         *                      of column names or '*' for all columns. To add
-         *                      text_search property only to string columns of
-         *                      minimum size, set also the option
-         *                      'text_search_min_column_length'
-         *                              <li>
-         *                      gpudb::insert_records_from_payload_text_search_min_column_length:
-         *                      Set minimum column size. Used only when
-         *                      'text_search_columns' has a value.
          *                      </ul>
          * 
          */

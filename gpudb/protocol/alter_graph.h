@@ -13,13 +13,13 @@ namespace gpudb
      * A set of input parameters for {@link
      * #alterGraph(const AlterGraphRequest&) const}.
      * <p>
-     * For internal use only: Graph server admin command.
-     * For internal use only: Graph server admin command.
+     * @private
      */
     struct AlterGraphRequest
     {
 
         /**
+         * @private
          * Constructs an AlterGraphRequest object with default parameter
          * values.
          */
@@ -32,52 +32,28 @@ namespace gpudb
         }
 
         /**
+         * @private
          * Constructs an AlterGraphRequest object with the specified
          * parameters.
          * 
-         * @param[in] graphName_  Graph on which the operation should be
-         *                        applied.
-         *                        If empty then it will apply to all graphs.
-         *                        This request can be sent from the graph
-         *                        server to the graph client, or from the
-         *                        client to the server depending on the type of
-         *                        operation.
-         * @param[in] action_  Operation to be applied
+         * @param[in] graphName_
+         * @param[in] action_
          *                     <ul>
          *                             <li>
-         *                     gpudb::alter_graph_add_table_monitor: Add a
-         *                     table monitor to a graph. The table name is
-         *                     specified as the action argment.
-         *                             <li> gpudb::alter_graph_reset_client:
-         *                     Reset all current operations on the client side.
-         *                     Used when the graph server is restarted to
-         *                     recover from a failure.
-         *                             <li> gpudb::alter_graph_reset_server:
-         *                     Reset all current operations on the server side.
-         *                     This is also sent on (re)start.
-         *                             <li> gpudb::alter_graph_cancel_task:
-         *                     Cancel a specific task on the graph server.
-         *                             <li> gpudb::alter_graph_alter_logger:
-         *                     Change the server side log level; e.g.,
-         *                     'GraphServer.GraphSolver=DEBUG'
-         *                             <li> gpudb::alter_graph_delete_all:
-         *                     Delete all graphs, and remove any persistence
-         *                     info.
-         *                             <li> gpudb::alter_graph_status: Current
-         *                     status of the graph client (db side).
-         *                             <li> gpudb::alter_graph_collect_graphs:
-         *                     Get the create command for all persisted graphs.
-         *                             <li> gpudb::alter_graph_restore_graphs:
-         *                     Re-creates all graphs from persist info on
-         *                     rank0.
+         *                     gpudb::alter_graph_add_table_monitor
+         *                             <li> gpudb::alter_graph_reset_client
+         *                             <li> gpudb::alter_graph_reset_server
+         *                             <li> gpudb::alter_graph_cancel_task
+         *                             <li> gpudb::alter_graph_alter_logger
+         *                             <li> gpudb::alter_graph_delete_all
+         *                             <li> gpudb::alter_graph_status
+         *                             <li> gpudb::alter_graph_collect_graphs
+         *                             <li> gpudb::alter_graph_restore_graphs
          *                     </ul>
-         * @param[in] actionArg_  Action specific argument.
-         * @param[in] options_  Optional parameters.
+         * @param[in] actionArg_
+         * @param[in] options_
          *                      <ul>
-         *                              <li> gpudb::alter_graph_server_id:
-         *                      Indicates which graph server(s) to send the
-         *                      request to. Default is to send to get
-         *                      information about all the servers.
+         *                              <li> gpudb::alter_graph_server_id
          *                      </ul>
          * 
          */
@@ -95,6 +71,10 @@ namespace gpudb
         std::map<std::string, std::string> options;
     };
 }
+
+    /**
+     * @private
+     */
 
 namespace avro
 {
@@ -157,13 +137,13 @@ namespace gpudb
      * A set of output parameters for {@link
      * #alterGraph(const AlterGraphRequest&) const}.
      * <p>
-     * For internal use only: Graph server admin command.
-     * For internal use only: Graph server admin command.
+     * @private
      */
     struct AlterGraphResponse
     {
 
         /**
+         * @private
          * Constructs an AlterGraphResponse object with default parameter
          * values.
          */
@@ -179,6 +159,10 @@ namespace gpudb
         std::map<std::string, std::string> info;
     };
 }
+
+    /**
+     * @private
+     */
 
 namespace avro
 {

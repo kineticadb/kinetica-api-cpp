@@ -68,6 +68,9 @@ namespace gpudb
          *                         System-level access
          *                                 <li> gpudb::revoke_permission_table:
          *                         Database Table
+         *                                 <li>
+         *                         gpudb::revoke_permission_table_monitor:
+         *                         Table monitor
          *                         </ul>
          * @param[in] permission_  Permission being revoked.
          *                         <ul>

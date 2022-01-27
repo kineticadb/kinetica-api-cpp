@@ -117,6 +117,7 @@ namespace gpudb
             registryList(std::vector<std::string>()),
             containerList(std::vector<std::string>()),
             runFunctionList(std::vector<std::string>()),
+            deployments(std::vector<std::string>()),
             info(std::map<std::string, std::string>())
         {
         }
@@ -128,6 +129,7 @@ namespace gpudb
         std::vector<std::string> registryList;
         std::vector<std::string> containerList;
         std::vector<std::string> runFunctionList;
+        std::vector<std::string> deployments;
         std::map<std::string, std::string> info;
     };
 }
@@ -149,6 +151,7 @@ namespace avro
             ::avro::encode(e, v.registryList);
             ::avro::encode(e, v.containerList);
             ::avro::encode(e, v.runFunctionList);
+            ::avro::encode(e, v.deployments);
             ::avro::encode(e, v.info);
         }
 
@@ -191,6 +194,10 @@ namespace avro
                             break;
 
                         case 7:
+                            ::avro::decode(d, v.deployments);
+                            break;
+
+                        case 8:
                             ::avro::decode(d, v.info);
                             break;
 
@@ -208,6 +215,7 @@ namespace avro
                 ::avro::decode(d, v.registryList);
                 ::avro::decode(d, v.containerList);
                 ::avro::decode(d, v.runFunctionList);
+                ::avro::decode(d, v.deployments);
                 ::avro::decode(d, v.info);
             }
         }

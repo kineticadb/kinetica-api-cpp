@@ -276,9 +276,9 @@ namespace gpudb
          *                         invalid timestamps with 'NOW()' upon insert.
          *                                 <li>
          *                         gpudb::create_type_init_with_uuid: For
-         *                         'uuid' type,  repalce empty strings and
-         *                         invalid uuid values with new_uuid()' upon
-         *                         insert.
+         *                         'uuid' type, replace empty strings and
+         *                         invalid UUID values with randomly-generated
+         *                         UUIDs upon insert.
          *                         </ul>
          * @param[in] options_  Optional parameters.
          * 

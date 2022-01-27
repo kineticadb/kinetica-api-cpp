@@ -86,6 +86,20 @@ namespace gpudb
          * @param[in] options_  Optional parameters.
          *                      <ul>
          *                              <li>
+         *                      gpudb::create_union_create_temp_table: If @a
+         *                      true, a unique temporary table name will be
+         *                      generated in the sys_temp schema and used in
+         *                      place of @a tableName. If @a persist is @a
+         *                      false (or unspecified), then this is always
+         *                      allowed even if the caller does not have
+         *                      permission to create tables. The generated name
+         *                      is returned in @a qualified_table_name.
+         *                      <ul>
+         *                              <li> gpudb::create_union_true
+         *                              <li> gpudb::create_union_false
+         *                      </ul>
+         *                      The default value is gpudb::create_union_false.
+         *                              <li>
          *                      gpudb::create_union_collection_name:
          *                      [DEPRECATED--please specify the containing
          *                      schema for the projection as part of @a

@@ -17,7 +17,8 @@ namespace gpudb
      * target="_top">external table</a>, which is a
      * local database object whose source data is located externally to the
      * database.  The source data can
-     * be located either on the cluster, accessible to the database; or
+     * be located either in <a href="../../../tools/kifs/"
+     * target="_top">KiFS</a>; on the cluster, accessible to the database; or
      * remotely, accessible via a
      * pre-defined external <a href="../../../concepts/data_sources/"
      * target="_top">data source</a>.
@@ -59,17 +60,24 @@ namespace gpudb
          *                        href="../../../concepts/tables/#table-naming-criteria"
          *                        target="_top">table naming criteria</a>.
          * @param[in] filepaths_  A list of file paths from which data will be
-         *                        sourced; wildcards (*) can be used
-         *                        to specify a group of files.
-         *                        For paths in KiFS, use the uri prefix of
-         *                        kifs:// followed by the full path to a file
-         *                        or directory.
+         *                        sourced;
+         *                        For paths in <a href="../../../tools/kifs/"
+         *                        target="_top">KiFS</a>, use the uri prefix of
+         *                        kifs:// followed by the path to
+         *                        a file or directory. File matching by prefix
+         *                        is supported, e.g. kifs://dir/file would
+         *                        match dir/file_1
+         *                        and dir/file_2. When prefix matching is used,
+         *                        the path must start with a full, valid KiFS
+         *                        directory name.
          *                        If an external data source is specified in @a
          *                        datasource_name, these file
          *                        paths must resolve to accessible files at
-         *                        that data source location. Also, wildcards
-         *                        will only work
-         *                        when used within the file name, not the path.
+         *                        that data source location. Prefix matching is
+         *                        supported.
+         *                        If the data source is hdfs, prefixes must be
+         *                        aligned with directories, i.e. partial file
+         *                        names will not match.
          *                        If no data source is specified, the files are
          *                        assumed to be local to the database and must
          *                        all be
@@ -79,6 +87,16 @@ namespace gpudb
          *                        external files directory in the Kinetica
          *                        <a href="../../../config/#external-files"
          *                        target="_top">configuration file</a>.
+         *                        Wildcards (*) can be used to specify a group
+         *                        of files
+         *                        Prefix matching is supported, the prefixes
+         *                        must be aligned with directories.
+         *                        If the first path ends in .tsv, the text
+         *                        delimiter will be defaulted to a tab
+         *                        character.
+         *                        If the first path ends in .psv, the text
+         *                        delimiter will be defaulted to a pipe
+         *                        character (|).
          * @param[in] modifyColumns_  Not implemented yet
          * @param[in] createTableOptions_  Options from /create/table, allowing
          *                                 the structure of the table to
@@ -303,24 +321,22 @@ namespace gpudb
          *                              <li>
          *                      gpudb::create_table_external_batch_size:
          *                      Internal tuning parameter--number of records
-         *                      per batch when inserting data
+         *                      per batch when inserting data.
          *                              <li>
          *                      gpudb::create_table_external_column_formats:
          *                      For each target column specified, applies the
-         *                      column-property-bound
-         *                      format to the source data loaded into that
-         *                      column.  Each column format will contain a
-         *                      mapping of one
-         *                      or more of its column properties to an
-         *                      appropriate format for each property.
-         *                      Currently supported
-         *                      column properties include date, time, &
-         *                      datetime. The parameter value must be formatted
-         *                      as a JSON
-         *                      string of maps of column names to maps of
-         *                      column properties to their corresponding column
-         *                      formats,
-         *                      e.g.,
+         *                      column-property-bound format to the source data
+         *                      loaded into that column.  Each column format
+         *                      will contain a mapping of one or more of its
+         *                      column
+         *                      properties to an appropriate format for each
+         *                      property.  Currently supported column
+         *                      properties
+         *                      include date, time, & datetime. The parameter
+         *                      value must be formatted as a JSON string of
+         *                      maps of
+         *                      column names to maps of column properties to
+         *                      their corresponding column formats, e.g.,
          *                      '{ "order_date" : { "date" : "%Y.%m.%d" },
          *                      "order_time" : { "time" : "%H:%M:%S" } }'.
          *                      See @a default_column_formats for valid format
@@ -428,20 +444,20 @@ namespace gpudb
          *                              <li>
          *                      gpudb::create_table_external_permissive:
          *                      Records with missing columns are populated with
-         *                      nulls if possible; otherwise, malformed records
-         *                      are skipped.
+         *                      nulls if possible; otherwise, the malformed
+         *                      records are skipped.
          *                              <li>
          *                      gpudb::create_table_external_ignore_bad_records:
          *                      Malformed records are skipped.
          *                              <li>
-         *                      gpudb::create_table_external_abort: Current
-         *                      insertion is stopped and entire operation is
-         *                      aborted when an error is encountered.  Primary
-         *                      key collisions are considered abortable errors
-         *                      in this mode.
+         *                      gpudb::create_table_external_abort: Stops
+         *                      current insertion and aborts entire operation
+         *                      when an error is encountered.  Primary key
+         *                      collisions are considered abortable errors in
+         *                      this mode.
          *                      </ul>
          *                      The default value is
-         *                      gpudb::create_table_external_permissive.
+         *                      gpudb::create_table_external_abort.
          *                              <li>
          *                      gpudb::create_table_external_external_table_type:
          *                      Specifies whether the external table holds a
@@ -461,18 +477,20 @@ namespace gpudb
          *                      gpudb::create_table_external_materialized.
          *                              <li>
          *                      gpudb::create_table_external_file_type:
-         *                      Specifies the type of the external data file(s)
-         *                      used as the source of data for this table.
+         *                      Specifies the type of the file(s) whose records
+         *                      will be inserted.
          *                      <ul>
+         *                              <li> gpudb::create_table_external_avro:
+         *                      Avro file format
          *                              <li>
          *                      gpudb::create_table_external_delimited_text:
          *                      Delimited text file format; e.g., CSV, TSV,
          *                      PSV, etc.
+         *                              <li> gpudb::create_table_external_json:
+         *                      Json file format
          *                              <li>
          *                      gpudb::create_table_external_parquet: Apache
          *                      Parquet file format
-         *                              <li> gpudb::create_table_external_json:
-         *                      Json file format
          *                              <li>
          *                      gpudb::create_table_external_shapefile:
          *                      ShapeFile file format
@@ -481,9 +499,8 @@ namespace gpudb
          *                      gpudb::create_table_external_delimited_text.
          *                              <li>
          *                      gpudb::create_table_external_ingestion_mode:
-         *                      For @a materialized external tables, whether to
-         *                      do a full load, dry run, or perform a type
-         *                      inference on the source data.
+         *                      Whether to do a full load, dry run, or perform
+         *                      a type inference on the source data.
          *                      <ul>
          *                              <li> gpudb::create_table_external_full:
          *                      Run a type inference on the source data (if
@@ -497,15 +514,22 @@ namespace gpudb
          *                              <li>
          *                      gpudb::create_table_external_type_inference_only:
          *                      Infer the type of the source data and return,
-         *                      without creating the table and ingesting data.
-         *                      The inferred type is returned in the response.
+         *                      without ingesting any data.  The inferred type
+         *                      is returned in the response.
          *                      </ul>
          *                      The default value is
          *                      gpudb::create_table_external_full.
          *                              <li>
+         *                      gpudb::create_table_external_kafka_group_id:
+         *                      The group id to be used consuming data from a
+         *                      kakfa topic (valid only for kafka datasource
+         *                      subscriptions).
+         *                              <li>
          *                      gpudb::create_table_external_loading_mode:
          *                      Scheme for distributing the extraction and
          *                      loading of data from the source data file(s).
+         *                      This option applies only when loading files
+         *                      that are local to the database
          *                      <ul>
          *                              <li> gpudb::create_table_external_head:
          *                      The head node loads all data. All files must be
@@ -541,18 +565,13 @@ namespace gpudb
          *                      primary key (which will allow the worker to
          *                      automatically deduplicate data).
          *                      NOTE:
-         *                      If the table's columns aren't defined, table
+         *                      If the target table doesn't exist, the table
          *                      structure will be determined by the head node.
          *                      If the
          *                      head node has no files local to it, it will be
          *                      unable to determine the structure and the
          *                      request
          *                      will fail.
-         *                      This mode should not be used in conjunction
-         *                      with a data source, as data sources are seen by
-         *                      all
-         *                      worker processes as shared resources with no
-         *                      'local' component.
          *                      If the head node is configured to have no
          *                      worker processes, no data strictly accessible
          *                      to the head
@@ -561,12 +580,23 @@ namespace gpudb
          *                      The default value is
          *                      gpudb::create_table_external_head.
          *                              <li>
-         *                      gpudb::create_table_external_primary_keys:
-         *                      Optional: comma separated list of column names,
-         *                      to set as primary keys, when not specified in
-         *                      the type.  The default value is ''.
+         *                      gpudb::create_table_external_local_time_offset:
+         *                      For Avro local timestamp columns
          *                              <li>
-         *                      gpudb::create_table_external_shard_keys:
+         *                      gpudb::create_table_external_num_tasks_per_rank:
+         *                      Optional: number of tasks for reading file per
+         *                      rank. Default will be
+         *                      external_file_reader_num_tasks
+         *                              <li>
+         *                      gpudb::create_table_external_poll_interval: If
+         *                      @a true, the number of seconds between attempts
+         *                      to load external files into the table.  If
+         *                      zero, polling will be continuous as long as
+         *                      data is found.  If no data is found, the
+         *                      interval will steadily increase to a maximum of
+         *                      60 seconds.
+         *                              <li>
+         *                      gpudb::create_table_external_primary_keys:
          *                      Optional: comma separated list of column names,
          *                      to set as primary keys, when not specified in
          *                      the type.  The default value is ''.
@@ -589,6 +619,14 @@ namespace gpudb
          *                      The default value is
          *                      gpudb::create_table_external_manual.
          *                              <li>
+         *                      gpudb::create_table_external_shard_keys:
+         *                      Optional: comma separated list of column names,
+         *                      to set as primary keys, when not specified in
+         *                      the type.  The default value is ''.
+         *                              <li>
+         *                      gpudb::create_table_external_skip_lines: Skip
+         *                      number of lines from begining of file.
+         *                              <li>
          *                      gpudb::create_table_external_subscribe:
          *                      Continuously poll the data source to check for
          *                      new data and load it into the table.
@@ -599,10 +637,19 @@ namespace gpudb
          *                      The default value is
          *                      gpudb::create_table_external_false.
          *                              <li>
-         *                      gpudb::create_table_external_poll_interval: If
-         *                      @a true, the number of seconds between attempts
-         *                      to load external files into the table. If zero,
-         *                      polling will be continuous.
+         *                      gpudb::create_table_external_table_insert_mode:
+         *                      Optional: table_insert_mode. When inserting
+         *                      records from multiple files: if table_per_file
+         *                      then insert from each file into a new table.
+         *                      Currently supported only for shapefiles.
+         *                      <ul>
+         *                              <li>
+         *                      gpudb::create_table_external_single
+         *                              <li>
+         *                      gpudb::create_table_external_table_per_file
+         *                      </ul>
+         *                      The default value is
+         *                      gpudb::create_table_external_single.
          *                              <li>
          *                      gpudb::create_table_external_text_comment_string:
          *                      Specifies the character string that should be
@@ -668,7 +715,7 @@ namespace gpudb
          *                      interpreted as a null
          *                      value in the source data.
          *                      For @a delimited_text @a file_type only.  The
-         *                      default value is ''.
+         *                      default value is '\\N'.
          *                              <li>
          *                      gpudb::create_table_external_text_quote_character:
          *                      Specifies the character that should be
@@ -688,10 +735,27 @@ namespace gpudb
          *                      For @a delimited_text @a file_type only.  The
          *                      default value is '"'.
          *                              <li>
-         *                      gpudb::create_table_external_num_tasks_per_rank:
-         *                      Optional: number of tasks for reading file per
-         *                      rank. Default will be
-         *                      external_file_reader_num_tasks
+         *                      gpudb::create_table_external_text_search_columns:
+         *                      Add 'text_search' property to internally
+         *                      inferenced string columns. Comma seperated list
+         *                      of column names or '*' for all columns. To add
+         *                      text_search property only to string columns of
+         *                      minimum size, set also the option
+         *                      'text_search_min_column_length'
+         *                              <li>
+         *                      gpudb::create_table_external_text_search_min_column_length:
+         *                      Set minimum column size. Used only when
+         *                      'text_search_columns' has a value.
+         *                              <li>
+         *                      gpudb::create_table_external_truncate_table: If
+         *                      set to @a true, truncates the table specified
+         *                      by @a tableName prior to loading the file(s).
+         *                      <ul>
+         *                              <li> gpudb::create_table_external_true
+         *                              <li> gpudb::create_table_external_false
+         *                      </ul>
+         *                      The default value is
+         *                      gpudb::create_table_external_false.
          *                              <li>
          *                      gpudb::create_table_external_type_inference_mode:
          *                      optimize type inference for:
@@ -707,37 +771,6 @@ namespace gpudb
          *                      </ul>
          *                      The default value is
          *                      gpudb::create_table_external_speed.
-         *                              <li>
-         *                      gpudb::create_table_external_table_insert_mode:
-         *                      Optional: table_insert_mode. When inserting
-         *                      records from multiple files: if table_per_file
-         *                      then insert from each file into a new table.
-         *                      Currently supported only for shapefiles.
-         *                      <ul>
-         *                              <li>
-         *                      gpudb::create_table_external_single
-         *                              <li>
-         *                      gpudb::create_table_external_table_per_file
-         *                      </ul>
-         *                      The default value is
-         *                      gpudb::create_table_external_single.
-         *                              <li>
-         *                      gpudb::create_table_external_kafka_group_id:
-         *                      The group id to be used consuming data from a
-         *                      kakfa topic (valid only for kafka datasource
-         *                      subscriptions).
-         *                              <li>
-         *                      gpudb::create_table_external_text_search_columns:
-         *                      Add 'text_search' property to internally
-         *                      inferenced string columns. Comma seperated list
-         *                      of column names or '*' for all columns. To add
-         *                      text_search property only to string columns of
-         *                      minimum size, set also the option
-         *                      'text_search_min_column_length'
-         *                              <li>
-         *                      gpudb::create_table_external_text_search_min_column_length:
-         *                      Set minimum column size. Used only when
-         *                      'text_search_columns' has a value.
          *                      </ul>
          * 
          */
@@ -829,7 +862,8 @@ namespace gpudb
      * target="_top">external table</a>, which is a
      * local database object whose source data is located externally to the
      * database.  The source data can
-     * be located either on the cluster, accessible to the database; or
+     * be located either in <a href="../../../tools/kifs/"
+     * target="_top">KiFS</a>; on the cluster, accessible to the database; or
      * remotely, accessible via a
      * pre-defined external <a href="../../../concepts/data_sources/"
      * target="_top">data source</a>.

@@ -192,15 +192,19 @@ namespace gpudb
          *                                 Enable or disable auditing of
          *                                 request data.
          *                                         <li>
+         *                                 gpudb::alter_system_properties_audit_response:
+         *                                 Enable or disable auditing of
+         *                                 response information.
+         *                                         <li>
          *                                 gpudb::alter_system_properties_shadow_agg_size:
          *                                 Size of the shadow aggregate chunk
          *                                 cache in bytes.  The default value
          *                                 is '10000000'.
          *                                         <li>
          *                                 gpudb::alter_system_properties_shadow_filter_size:
-         *                                 Size of the shdow filter chunk cache
-         *                                 in bytes.  The default value is
-         *                                 '10000000'.
+         *                                 Size of the shadow filter chunk
+         *                                 cache in bytes.  The default value
+         *                                 is '10000000'.
          *                                         <li>
          *                                 gpudb::alter_system_properties_synchronous_compression:
          *                                 compress vector on set_compression

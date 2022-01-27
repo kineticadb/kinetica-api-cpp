@@ -48,17 +48,6 @@ namespace gpudb
          *                                 Supported destination types are
          *                                 'http', 'https' and 'kafka'.
          *                                         <li>
-         *                                 gpudb::alter_datasink_destination_type:
-         *                                 Destination type for the output data
-         *                                         <li>
-         *                                 gpudb::alter_datasink_user_name:
-         *                                 Name of the remote system user; may
-         *                                 be an empty string
-         *                                         <li>
-         *                                 gpudb::alter_datasink_password:
-         *                                 Password for the remote system user;
-         *                                 may be an empty string
-         *                                         <li>
          *                                 gpudb::alter_datasink_connection_timeout:
          *                                 Timeout in seconds for connecting to
          *                                 this sink
@@ -77,6 +66,32 @@ namespace gpudb
          *                                 Name of the Kafka topic to use for
          *                                 this data sink, if it references a
          *                                 Kafka broker
+         *                                         <li>
+         *                                 gpudb::alter_datasink_max_batch_size:
+         *                                 Maximum number of records per
+         *                                 notification message.  The default
+         *                                 value is '1'.
+         *                                         <li>
+         *                                 gpudb::alter_datasink_max_message_size:
+         *                                 Maximum size in bytes of each
+         *                                 notification message.  The default
+         *                                 value is '1000000'.
+         *                                         <li>
+         *                                 gpudb::alter_datasink_json_format:
+         *                                 The desired format of JSON encoded
+         *                                 notifications message.
+         *                                 If @a nested, records are returned
+         *                                 as an array.
+         *                                 Otherwise, only a single record per
+         *                                 messages is returned.
+         *                                 <ul>
+         *                                         <li>
+         *                                 gpudb::alter_datasink_flat
+         *                                         <li>
+         *                                 gpudb::alter_datasink_nested
+         *                                 </ul>
+         *                                 The default value is
+         *                                 gpudb::alter_datasink_flat.
          *                                         <li>
          *                                 gpudb::alter_datasink_skip_validation:
          *                                 Bypass validation of connection to

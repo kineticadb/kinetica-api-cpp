@@ -81,6 +81,10 @@ namespace gpudb
          *                      will be used to execute a request for this
          *                      group.
          *                              <li>
+         *                      gpudb::create_resource_group_max_data: Maximum
+         *                      amount of cumulative ram usage regardless of
+         *                      tier status for this group.
+         *                              <li>
          *                      gpudb::create_resource_group_max_scheduling_priority:
          *                      Maximum priority of a scheduled task for this
          *                      group.

@@ -46,6 +46,8 @@ public:
     void append_records( std::vector<gpudb::GenericRecord>::iterator begin,
                          std::vector<gpudb::GenericRecord>::iterator end );
 
+    std::vector<gpudb::GenericRecord> getRecords() const { return records; }
+
 private:
     std::string url;
     std::vector<gpudb::GenericRecord> records;

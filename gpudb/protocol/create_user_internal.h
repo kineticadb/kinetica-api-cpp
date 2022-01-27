@@ -49,6 +49,16 @@ namespace gpudb
          *                              <li>
          *                      gpudb::create_user_internal_default_schema:
          *                      default schema associate with this user
+         *                              <li>
+         *                      gpudb::create_user_internal_create_home_directory:
+         *                      when true, a home directory in KiFS is created
+         *                      for this user
+         *                      <ul>
+         *                              <li> gpudb::create_user_internal_true
+         *                              <li> gpudb::create_user_internal_false
+         *                      </ul>
+         *                      The default value is
+         *                      gpudb::create_user_internal_true.
          *                      </ul>
          * 
          */

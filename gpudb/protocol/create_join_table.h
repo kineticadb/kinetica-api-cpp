@@ -77,6 +77,20 @@ namespace gpudb
          * @param[in] options_  Optional parameters.
          *                      <ul>
          *                              <li>
+         *                      gpudb::create_join_table_create_temp_table: If
+         *                      @a true, a unique temporary table name will be
+         *                      generated in the sys_temp schema and used in
+         *                      place of @a joinTableName. This is always
+         *                      allowed even if the caller does not have
+         *                      permission to create tables. The generated name
+         *                      is returned in @a qualified_join_table_name.
+         *                      <ul>
+         *                              <li> gpudb::create_join_table_true
+         *                              <li> gpudb::create_join_table_false
+         *                      </ul>
+         *                      The default value is
+         *                      gpudb::create_join_table_false.
+         *                              <li>
          *                      gpudb::create_join_table_collection_name:
          *                      [DEPRECATED--please specify the containing
          *                      schema for the join as part of @a joinTableName

@@ -36,8 +36,8 @@ namespace gpudb
      * and values respectively.
      * <p>
      * The response is returned as a dynamic schema. For details see:
-     * <a href="../../../api/#dynamic-schemas" target="_top">dynamic schemas
-     * documentation</a>.
+     * <a href="../../../api/concepts/#dynamic-schemas" target="_top">dynamic
+     * schemas documentation</a>.
      */
     struct AggregateUnpivotRequest
     {
@@ -79,6 +79,22 @@ namespace gpudb
          *                             the same data type.
          * @param[in] options_  Optional parameters.
          *                      <ul>
+         *                              <li>
+         *                      gpudb::aggregate_unpivot_create_temp_table: If
+         *                      @a true, a unique temporary table name will be
+         *                      generated in the sys_temp schema and used in
+         *                      place of @a result_table. If @a
+         *                      result_table_persist is @a false (or
+         *                      unspecified), then this is always allowed even
+         *                      if the caller does not have permission to
+         *                      create tables. The generated name is returned
+         *                      in @a qualified_result_table_name.
+         *                      <ul>
+         *                              <li> gpudb::aggregate_unpivot_true
+         *                              <li> gpudb::aggregate_unpivot_false
+         *                      </ul>
+         *                      The default value is
+         *                      gpudb::aggregate_unpivot_false.
          *                              <li>
          *                      gpudb::aggregate_unpivot_collection_name:
          *                      [DEPRECATED--please specify the containing
@@ -206,6 +222,22 @@ namespace gpudb
          *                       gpudb::aggregate_unpivot_binary.
          * @param[in] options_  Optional parameters.
          *                      <ul>
+         *                              <li>
+         *                      gpudb::aggregate_unpivot_create_temp_table: If
+         *                      @a true, a unique temporary table name will be
+         *                      generated in the sys_temp schema and used in
+         *                      place of @a result_table. If @a
+         *                      result_table_persist is @a false (or
+         *                      unspecified), then this is always allowed even
+         *                      if the caller does not have permission to
+         *                      create tables. The generated name is returned
+         *                      in @a qualified_result_table_name.
+         *                      <ul>
+         *                              <li> gpudb::aggregate_unpivot_true
+         *                              <li> gpudb::aggregate_unpivot_false
+         *                      </ul>
+         *                      The default value is
+         *                      gpudb::aggregate_unpivot_false.
          *                              <li>
          *                      gpudb::aggregate_unpivot_collection_name:
          *                      [DEPRECATED--please specify the containing
@@ -410,8 +442,8 @@ namespace gpudb
      * and values respectively.
      * <p>
      * The response is returned as a dynamic schema. For details see:
-     * <a href="../../../api/#dynamic-schemas" target="_top">dynamic schemas
-     * documentation</a>.
+     * <a href="../../../api/concepts/#dynamic-schemas" target="_top">dynamic
+     * schemas documentation</a>.
      */
     struct RawAggregateUnpivotResponse
     {
@@ -541,8 +573,8 @@ namespace gpudb
      * and values respectively.
      * <p>
      * The response is returned as a dynamic schema. For details see:
-     * <a href="../../../api/#dynamic-schemas" target="_top">dynamic schemas
-     * documentation</a>.
+     * <a href="../../../api/concepts/#dynamic-schemas" target="_top">dynamic
+     * schemas documentation</a>.
      */
     struct AggregateUnpivotResponse
     {

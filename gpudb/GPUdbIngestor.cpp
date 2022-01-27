@@ -3,7 +3,7 @@
 #include "gpudb/utils/GPUdbMultiHeadIOUtils.h"
 #include "gpudb/utils/Utils.h"
 
-
+#include <boost/algorithm/string.hpp>
 
 namespace gpudb
 {
@@ -207,6 +207,14 @@ GPUdbIngestor::~GPUdbIngestor()
     }
 }  // end destructor
 
+std::vector<GPUdbInsertionException> GPUdbIngestor::getErrors()
+{
+    std::unique_lock<std::mutex> lock(m_error_list_lock);
+    std::vector<GPUdbInsertionException> copy;
+    copy.swap(m_error_list);
+    return copy;
+}
+
 /*
  * Ensures that all queued records are inserted into the database.  If an error
  * occurs while inserting the records from any queue, the recoreds will no
@@ -262,6 +270,23 @@ void GPUdbIngestor::flush( const std::vector<gpudb::GenericRecord>& queue,
         m_count_inserted += response.countInserted;
         m_count_updated  += response.countUpdated;
 
+        for (const auto& entry : response.info)
+        {
+            std::vector<gpudb::GenericRecord> record;
+            if (boost::istarts_with(entry.first, "error_"))
+            {
+                size_t index = (size_t)atoi(entry.first.substr(6).c_str());
+                if (queue.size() > index)
+                    record.push_back(queue.at(index));
+                std::unique_lock<std::mutex> lock(m_error_list_lock);
+                m_error_list.push_back(GPUdbInsertionException(url, record, entry.second));
+            }
+            else if (boost::istarts_with(entry.first, "WARN"))
+            {
+                std::unique_lock<std::mutex> lock(m_error_list_lock);
+                m_error_list.push_back(GPUdbInsertionException(url, record, entry.second));
+            }
+        }
     } catch (gpudb::GPUdbException e)
     {  // throw the records to the caller since they weren't inserted into the db
         throw GPUdbInsertionException( url, queue, e.what() );

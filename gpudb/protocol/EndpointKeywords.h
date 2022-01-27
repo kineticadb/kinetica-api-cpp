@@ -107,6 +107,7 @@ namespace gpudb
     extern const std::string aggregate_group_by_chunk_size;
     extern const std::string aggregate_group_by_collection_name;
     extern const std::string aggregate_group_by_create_indexes;
+    extern const std::string aggregate_group_by_create_temp_table;
     extern const std::string aggregate_group_by_cube;
     extern const std::string aggregate_group_by_descending;
     extern const std::string aggregate_group_by_expression;
@@ -180,6 +181,7 @@ namespace gpudb
     extern const std::string aggregate_unique_binary;
     extern const std::string aggregate_unique_chunk_size;
     extern const std::string aggregate_unique_collection_name;
+    extern const std::string aggregate_unique_create_temp_table;
     extern const std::string aggregate_unique_descending;
     extern const std::string aggregate_unique_expression;
     extern const std::string aggregate_unique_false;
@@ -201,6 +203,7 @@ namespace gpudb
     extern const std::string aggregate_unpivot_chunk_size;
     extern const std::string aggregate_unpivot_collection_name;
     extern const std::string aggregate_unpivot_create_indexes;
+    extern const std::string aggregate_unpivot_create_temp_table;
     extern const std::string aggregate_unpivot_expression;
     extern const std::string aggregate_unpivot_false;
     extern const std::string aggregate_unpivot_json;
@@ -234,13 +237,15 @@ namespace gpudb
     extern const std::string alter_datasink_connection_timeout;
     extern const std::string alter_datasink_credential;
     extern const std::string alter_datasink_destination;
-    extern const std::string alter_datasink_destination_type;
     extern const std::string alter_datasink_false;
+    extern const std::string alter_datasink_flat;
+    extern const std::string alter_datasink_json_format;
     extern const std::string alter_datasink_kafka_topic_name;
-    extern const std::string alter_datasink_password;
+    extern const std::string alter_datasink_max_batch_size;
+    extern const std::string alter_datasink_max_message_size;
+    extern const std::string alter_datasink_nested;
     extern const std::string alter_datasink_skip_validation;
     extern const std::string alter_datasink_true;
-    extern const std::string alter_datasink_user_name;
     extern const std::string alter_datasink_wait_timeout;
 
     // Keywords for /alter/datasource request
@@ -266,6 +271,7 @@ namespace gpudb
     extern const std::string alter_datasource_skip_validation;
     extern const std::string alter_datasource_true;
     extern const std::string alter_datasource_use_https;
+    extern const std::string alter_datasource_use_managed_credentials;
     extern const std::string alter_datasource_user_name;
     extern const std::string alter_datasource_wait_timeout;
 
@@ -287,6 +293,7 @@ namespace gpudb
     extern const std::string alter_model_container;
     extern const std::string alter_model_refresh;
     extern const std::string alter_model_registry;
+    extern const std::string alter_model_stop_deployment;
 
     // Keywords for /alter/resourcegroup request
     extern const std::string alter_resource_group_empty_string;
@@ -297,6 +304,7 @@ namespace gpudb
     extern const std::string alter_resource_group_is_default_group;
     extern const std::string alter_resource_group_last;
     extern const std::string alter_resource_group_max_cpu_concurrency;
+    extern const std::string alter_resource_group_max_data;
     extern const std::string alter_resource_group_max_memory;
     extern const std::string alter_resource_group_max_scheduling_priority;
     extern const std::string alter_resource_group_max_tier_priority;
@@ -312,6 +320,7 @@ namespace gpudb
     extern const std::string alter_system_properties_audit_body;
     extern const std::string alter_system_properties_audit_data;
     extern const std::string alter_system_properties_audit_headers;
+    extern const std::string alter_system_properties_audit_response;
     extern const std::string alter_system_properties_chunk_size;
     extern const std::string alter_system_properties_clear_cache;
     extern const std::string alter_system_properties_communicator_test;
@@ -346,6 +355,7 @@ namespace gpudb
     extern const std::string alter_table_allow_homogeneous_tables;
     extern const std::string alter_table_cancel_datasource_subscription;
     extern const std::string alter_table_change_column;
+    extern const std::string alter_table_change_owner;
     extern const std::string alter_table_chunk_skip;
     extern const std::string alter_table_column;
     extern const std::string alter_table_column_default_value;
@@ -449,7 +459,12 @@ namespace gpudb
     extern const std::string create_datasink_connection_timeout;
     extern const std::string create_datasink_credential;
     extern const std::string create_datasink_false;
+    extern const std::string create_datasink_flat;
+    extern const std::string create_datasink_json_format;
     extern const std::string create_datasink_kafka_topic_name;
+    extern const std::string create_datasink_max_batch_size;
+    extern const std::string create_datasink_max_message_size;
+    extern const std::string create_datasink_nested;
     extern const std::string create_datasink_skip_validation;
     extern const std::string create_datasink_true;
     extern const std::string create_datasink_wait_timeout;
@@ -475,9 +490,11 @@ namespace gpudb
     extern const std::string create_datasource_skip_validation;
     extern const std::string create_datasource_true;
     extern const std::string create_datasource_use_https;
+    extern const std::string create_datasource_use_managed_credentials;
     extern const std::string create_datasource_wait_timeout;
 
     // Keywords for /create/directory request
+    extern const std::string create_directory_create_home_directory;
     extern const std::string create_directory_false;
     extern const std::string create_directory_no_error_if_exists;
     extern const std::string create_directory_true;
@@ -490,6 +507,7 @@ namespace gpudb
     extern const std::string create_graph_false;
     extern const std::string create_graph_graph_table;
     extern const std::string create_graph_is_partitioned;
+    extern const std::string create_graph_label_delimiter;
     extern const std::string create_graph_max_x;
     extern const std::string create_graph_max_y;
     extern const std::string create_graph_merge_tolerance;
@@ -521,6 +539,7 @@ namespace gpudb
     // Keywords for /create/jointable request
     extern const std::string create_join_table_chunk_size;
     extern const std::string create_join_table_collection_name;
+    extern const std::string create_join_table_create_temp_table;
     extern const std::string create_join_table_false;
     extern const std::string create_join_table_full_refresh;
     extern const std::string create_join_table_manual;
@@ -571,6 +590,7 @@ namespace gpudb
     extern const std::string create_projection_chunk_size;
     extern const std::string create_projection_collection_name;
     extern const std::string create_projection_create_indexes;
+    extern const std::string create_projection_create_temp_table;
     extern const std::string create_projection_expression;
     extern const std::string create_projection_false;
     extern const std::string create_projection_is_replicated;
@@ -600,6 +620,7 @@ namespace gpudb
     extern const std::string create_resource_group_first;
     extern const std::string create_resource_group_last;
     extern const std::string create_resource_group_max_cpu_concurrency;
+    extern const std::string create_resource_group_max_data;
     extern const std::string create_resource_group_max_memory;
     extern const std::string create_resource_group_max_scheduling_priority;
     extern const std::string create_resource_group_max_tier_priority;
@@ -620,6 +641,7 @@ namespace gpudb
     extern const std::string create_table_SERIES;
     extern const std::string create_table_chunk_size;
     extern const std::string create_table_collection_name;
+    extern const std::string create_table_create_temp_table;
     extern const std::string create_table_disallow_homogeneous_tables;
     extern const std::string create_table_false;
     extern const std::string create_table_foreign_keys;
@@ -658,7 +680,6 @@ namespace gpudb
     extern const std::string create_table_is_unique;
     extern const std::string create_table_is_unpivot;
     extern const std::string create_table_is_update_records_by_series;
-    extern const std::string create_table_is_virtual_union;
     extern const std::string create_table_no_error_if_exists;
     extern const std::string create_table_partition_definitions;
     extern const std::string create_table_partition_keys;
@@ -678,6 +699,7 @@ namespace gpudb
     extern const std::string create_table_external_SERIES;
     extern const std::string create_table_external_abort;
     extern const std::string create_table_external_accuracy;
+    extern const std::string create_table_external_avro;
     extern const std::string create_table_external_bad_record_table_limit;
     extern const std::string create_table_external_bad_record_table_name;
     extern const std::string create_table_external_batch_size;
@@ -736,6 +758,7 @@ namespace gpudb
     extern const std::string create_table_external_json;
     extern const std::string create_table_external_kafka_group_id;
     extern const std::string create_table_external_loading_mode;
+    extern const std::string create_table_external_local_time_offset;
     extern const std::string create_table_external_logical;
     extern const std::string create_table_external_manual;
     extern const std::string create_table_external_materialized;
@@ -754,6 +777,7 @@ namespace gpudb
     extern const std::string create_table_external_shapefile;
     extern const std::string create_table_external_shard_keys;
     extern const std::string create_table_external_single;
+    extern const std::string create_table_external_skip_lines;
     extern const std::string create_table_external_speed;
     extern const std::string create_table_external_strategy_definition;
     extern const std::string create_table_external_subscribe;
@@ -769,6 +793,7 @@ namespace gpudb
     extern const std::string create_table_external_text_search_columns;
     extern const std::string create_table_external_text_search_min_column_length;
     extern const std::string create_table_external_true;
+    extern const std::string create_table_external_truncate_table;
     extern const std::string create_table_external_ttl;
     extern const std::string create_table_external_type_id;
     extern const std::string create_table_external_type_inference_mode;
@@ -835,6 +860,7 @@ namespace gpudb
     extern const std::string create_union_chunk_size;
     extern const std::string create_union_collection_name;
     extern const std::string create_union_create_indexes;
+    extern const std::string create_union_create_temp_table;
     extern const std::string create_union_except;
     extern const std::string create_union_except_all;
     extern const std::string create_union_false;
@@ -861,9 +887,17 @@ namespace gpudb
     extern const std::string create_union_count;
     extern const std::string create_union_qualified_table_name;
 
+    // Keywords for /create/user/external request
+    extern const std::string create_user_external_create_home_directory;
+    extern const std::string create_user_external_false;
+    extern const std::string create_user_external_true;
+
     // Keywords for /create/user/internal request
+    extern const std::string create_user_internal_create_home_directory;
     extern const std::string create_user_internal_default_schema;
+    extern const std::string create_user_internal_false;
     extern const std::string create_user_internal_resource_group;
+    extern const std::string create_user_internal_true;
 
     // Keywords for /create/video request
     extern const std::string create_video_chart;
@@ -902,6 +936,11 @@ namespace gpudb
     extern const std::string delete_records_global_expression;
     extern const std::string delete_records_record_id;
     extern const std::string delete_records_true;
+
+    // Keywords for /delete/resourcegroup request
+    extern const std::string delete_resource_group_cascade_delete;
+    extern const std::string delete_resource_group_false;
+    extern const std::string delete_resource_group_true;
 
     // Keywords for /download/files request
     extern const std::string download_files_base64;
@@ -960,12 +999,15 @@ namespace gpudb
 
     // Keywords for /filter request
     extern const std::string filter_collection_name;
+    extern const std::string filter_create_temp_table;
+    extern const std::string filter_false;
     extern const std::string filter_on_head_node_creation;
     extern const std::string filter_on_head_node_refresh;
     extern const std::string filter_on_head_node_restart;
     extern const std::string filter_on_worker_creation;
     extern const std::string filter_on_worker_refresh;
     extern const std::string filter_on_worker_restart;
+    extern const std::string filter_true;
     extern const std::string filter_ttl;
     extern const std::string filter_view_id;
 
@@ -974,24 +1016,36 @@ namespace gpudb
 
     // Keywords for /filter/byarea request
     extern const std::string filter_by_area_collection_name;
+    extern const std::string filter_by_area_create_temp_table;
+    extern const std::string filter_by_area_false;
+    extern const std::string filter_by_area_true;
 
     // Keywords for /filter/byarea response
     extern const std::string filter_by_area_qualified_view_name;
 
     // Keywords for /filter/byarea/geometry request
     extern const std::string filter_by_area_geometry_collection_name;
+    extern const std::string filter_by_area_geometry_create_temp_table;
+    extern const std::string filter_by_area_geometry_false;
+    extern const std::string filter_by_area_geometry_true;
 
     // Keywords for /filter/byarea/geometry response
     extern const std::string filter_by_area_geometry_qualified_view_name;
 
     // Keywords for /filter/bybox request
     extern const std::string filter_by_box_collection_name;
+    extern const std::string filter_by_box_create_temp_table;
+    extern const std::string filter_by_box_false;
+    extern const std::string filter_by_box_true;
 
     // Keywords for /filter/bybox response
     extern const std::string filter_by_box_qualified_view_name;
 
     // Keywords for /filter/bybox/geometry request
     extern const std::string filter_by_box_geometry_collection_name;
+    extern const std::string filter_by_box_geometry_create_temp_table;
+    extern const std::string filter_by_box_geometry_false;
+    extern const std::string filter_by_box_geometry_true;
 
     // Keywords for /filter/bybox/geometry response
     extern const std::string filter_by_box_geometry_qualified_view_name;
@@ -999,12 +1053,15 @@ namespace gpudb
     // Keywords for /filter/bygeometry request
     extern const std::string filter_by_geometry_collection_name;
     extern const std::string filter_by_geometry_contains;
+    extern const std::string filter_by_geometry_create_temp_table;
     extern const std::string filter_by_geometry_crosses;
     extern const std::string filter_by_geometry_disjoint;
     extern const std::string filter_by_geometry_equals;
+    extern const std::string filter_by_geometry_false;
     extern const std::string filter_by_geometry_intersects;
     extern const std::string filter_by_geometry_overlaps;
     extern const std::string filter_by_geometry_touches;
+    extern const std::string filter_by_geometry_true;
     extern const std::string filter_by_geometry_within;
 
     // Keywords for /filter/bygeometry response
@@ -1012,38 +1069,53 @@ namespace gpudb
 
     // Keywords for /filter/bylist request
     extern const std::string filter_by_list_collection_name;
+    extern const std::string filter_by_list_create_temp_table;
+    extern const std::string filter_by_list_false;
     extern const std::string filter_by_list_filter_mode;
     extern const std::string filter_by_list_in_list;
     extern const std::string filter_by_list_not_in_list;
+    extern const std::string filter_by_list_true;
 
     // Keywords for /filter/bylist response
     extern const std::string filter_by_list_qualified_view_name;
 
     // Keywords for /filter/byradius request
     extern const std::string filter_by_radius_collection_name;
+    extern const std::string filter_by_radius_create_temp_table;
+    extern const std::string filter_by_radius_false;
+    extern const std::string filter_by_radius_true;
 
     // Keywords for /filter/byradius response
     extern const std::string filter_by_radius_qualified_view_name;
 
     // Keywords for /filter/byradius/geometry request
     extern const std::string filter_by_radius_geometry_collection_name;
+    extern const std::string filter_by_radius_geometry_create_temp_table;
+    extern const std::string filter_by_radius_geometry_false;
+    extern const std::string filter_by_radius_geometry_true;
 
     // Keywords for /filter/byradius/geometry response
     extern const std::string filter_by_radius_geometry_qualified_view_name;
 
     // Keywords for /filter/byrange request
     extern const std::string filter_by_range_collection_name;
+    extern const std::string filter_by_range_create_temp_table;
+    extern const std::string filter_by_range_false;
+    extern const std::string filter_by_range_true;
 
     // Keywords for /filter/byrange response
     extern const std::string filter_by_range_qualified_view_name;
 
     // Keywords for /filter/byseries request
     extern const std::string filter_by_series_collection_name;
+    extern const std::string filter_by_series_create_temp_table;
     extern const std::string filter_by_series_euclidean;
+    extern const std::string filter_by_series_false;
     extern const std::string filter_by_series_great_circle;
     extern const std::string filter_by_series_spatial_distance_metric;
     extern const std::string filter_by_series_spatial_radius;
     extern const std::string filter_by_series_time_radius;
+    extern const std::string filter_by_series_true;
 
     // Keywords for /filter/byseries response
     extern const std::string filter_by_series_qualified_view_name;
@@ -1052,6 +1124,7 @@ namespace gpudb
     extern const std::string filter_by_string_case_sensitive;
     extern const std::string filter_by_string_collection_name;
     extern const std::string filter_by_string_contains;
+    extern const std::string filter_by_string_create_temp_table;
     extern const std::string filter_by_string_equals;
     extern const std::string filter_by_string_false;
     extern const std::string filter_by_string_regex;
@@ -1066,6 +1139,8 @@ namespace gpudb
     extern const std::string filter_by_table_buffer;
     extern const std::string filter_by_table_buffer_method;
     extern const std::string filter_by_table_collection_name;
+    extern const std::string filter_by_table_create_temp_table;
+    extern const std::string filter_by_table_false;
     extern const std::string filter_by_table_filter_mode;
     extern const std::string filter_by_table_geos;
     extern const std::string filter_by_table_in_table;
@@ -1075,6 +1150,7 @@ namespace gpudb
     extern const std::string filter_by_table_normal;
     extern const std::string filter_by_table_not_in_table;
     extern const std::string filter_by_table_spatial;
+    extern const std::string filter_by_table_true;
     extern const std::string filter_by_table_x_column_name;
     extern const std::string filter_by_table_y_column_name;
 
@@ -1083,6 +1159,9 @@ namespace gpudb
 
     // Keywords for /filter/byvalue request
     extern const std::string filter_by_value_collection_name;
+    extern const std::string filter_by_value_create_temp_table;
+    extern const std::string filter_by_value_false;
+    extern const std::string filter_by_value_true;
 
     // Keywords for /filter/byvalue response
     extern const std::string filter_by_value_qualified_view_name;
@@ -1161,6 +1240,7 @@ namespace gpudb
     extern const std::string grant_permission_sql_proc;
     extern const std::string grant_permission_system;
     extern const std::string grant_permission_table;
+    extern const std::string grant_permission_table_monitor;
     extern const std::string grant_permission_update;
     extern const std::string grant_permission_user_admin;
     extern const std::string grant_permission_write;
@@ -1211,6 +1291,7 @@ namespace gpudb
     extern const std::string has_permission_sql_proc;
     extern const std::string has_permission_system;
     extern const std::string has_permission_table;
+    extern const std::string has_permission_table_monitor;
     extern const std::string has_permission_update;
     extern const std::string has_permission_user_admin;
     extern const std::string has_permission_write;
@@ -1276,6 +1357,7 @@ namespace gpudb
     extern const std::string insert_records_from_files_SERIES;
     extern const std::string insert_records_from_files_abort;
     extern const std::string insert_records_from_files_accuracy;
+    extern const std::string insert_records_from_files_avro;
     extern const std::string insert_records_from_files_bad_record_table_limit;
     extern const std::string insert_records_from_files_bad_record_table_name;
     extern const std::string insert_records_from_files_batch_size;
@@ -1332,6 +1414,7 @@ namespace gpudb
     extern const std::string insert_records_from_files_json;
     extern const std::string insert_records_from_files_kafka_group_id;
     extern const std::string insert_records_from_files_loading_mode;
+    extern const std::string insert_records_from_files_local_time_offset;
     extern const std::string insert_records_from_files_no_error_if_exists;
     extern const std::string insert_records_from_files_num_tasks_per_rank;
     extern const std::string insert_records_from_files_parquet;
@@ -1344,6 +1427,7 @@ namespace gpudb
     extern const std::string insert_records_from_files_shapefile;
     extern const std::string insert_records_from_files_shard_keys;
     extern const std::string insert_records_from_files_single;
+    extern const std::string insert_records_from_files_skip_lines;
     extern const std::string insert_records_from_files_speed;
     extern const std::string insert_records_from_files_strategy_definition;
     extern const std::string insert_records_from_files_subscribe;
@@ -1373,6 +1457,7 @@ namespace gpudb
     extern const std::string insert_records_from_payload_SERIES;
     extern const std::string insert_records_from_payload_abort;
     extern const std::string insert_records_from_payload_accuracy;
+    extern const std::string insert_records_from_payload_avro;
     extern const std::string insert_records_from_payload_bad_record_table_limit;
     extern const std::string insert_records_from_payload_bad_record_table_name;
     extern const std::string insert_records_from_payload_batch_size;
@@ -1382,6 +1467,8 @@ namespace gpudb
     extern const std::string insert_records_from_payload_columns_to_skip;
     extern const std::string insert_records_from_payload_default_column_formats;
     extern const std::string insert_records_from_payload_delimited_text;
+    extern const std::string insert_records_from_payload_distributed_local;
+    extern const std::string insert_records_from_payload_distributed_shared;
     extern const std::string insert_records_from_payload_dry_run;
     extern const std::string insert_records_from_payload_error_handling;
     extern const std::string insert_records_from_payload_false;
@@ -1389,6 +1476,7 @@ namespace gpudb
     extern const std::string insert_records_from_payload_foreign_keys;
     extern const std::string insert_records_from_payload_foreign_shard_key;
     extern const std::string insert_records_from_payload_full;
+    extern const std::string insert_records_from_payload_head;
     extern const std::string insert_records_from_payload_ignore_bad_records;
     extern const std::string insert_records_from_payload_ingestion_mode;
     extern const std::string insert_records_from_payload_is_automatic_partition;
@@ -1423,6 +1511,8 @@ namespace gpudb
     extern const std::string insert_records_from_payload_is_unpivot;
     extern const std::string insert_records_from_payload_is_update_records_by_series;
     extern const std::string insert_records_from_payload_json;
+    extern const std::string insert_records_from_payload_loading_mode;
+    extern const std::string insert_records_from_payload_local_time_offset;
     extern const std::string insert_records_from_payload_no_error_if_exists;
     extern const std::string insert_records_from_payload_num_tasks_per_rank;
     extern const std::string insert_records_from_payload_parquet;
@@ -1430,12 +1520,17 @@ namespace gpudb
     extern const std::string insert_records_from_payload_partition_keys;
     extern const std::string insert_records_from_payload_partition_type;
     extern const std::string insert_records_from_payload_permissive;
+    extern const std::string insert_records_from_payload_poll_interval;
     extern const std::string insert_records_from_payload_primary_keys;
     extern const std::string insert_records_from_payload_shapefile;
     extern const std::string insert_records_from_payload_shard_keys;
     extern const std::string insert_records_from_payload_single;
+    extern const std::string insert_records_from_payload_skip_lines;
     extern const std::string insert_records_from_payload_speed;
     extern const std::string insert_records_from_payload_strategy_definition;
+    extern const std::string insert_records_from_payload_subscribe;
+    extern const std::string insert_records_from_payload_table_insert_mode;
+    extern const std::string insert_records_from_payload_table_per_file;
     extern const std::string insert_records_from_payload_text_comment_string;
     extern const std::string insert_records_from_payload_text_delimiter;
     extern const std::string insert_records_from_payload_text_escape_character;
@@ -1446,6 +1541,7 @@ namespace gpudb
     extern const std::string insert_records_from_payload_text_search_columns;
     extern const std::string insert_records_from_payload_text_search_min_column_length;
     extern const std::string insert_records_from_payload_true;
+    extern const std::string insert_records_from_payload_truncate_table;
     extern const std::string insert_records_from_payload_ttl;
     extern const std::string insert_records_from_payload_type_id;
     extern const std::string insert_records_from_payload_type_inference_mode;
@@ -1519,6 +1615,7 @@ namespace gpudb
     // Keywords for /merge/records request
     extern const std::string merge_records_chunk_size;
     extern const std::string merge_records_collection_name;
+    extern const std::string merge_records_create_temp_table;
     extern const std::string merge_records_false;
     extern const std::string merge_records_is_replicated;
     extern const std::string merge_records_persist;
@@ -1554,6 +1651,19 @@ namespace gpudb
     extern const std::string query_graph_target_nodes_table;
     extern const std::string query_graph_true;
 
+    // Keywords for /repartition/graph request
+    extern const std::string repartition_graph_new_graph_name;
+    extern const std::string repartition_graph_source_node;
+    extern const std::string repartition_graph_sql_request_avro_json;
+
+    // Keywords for /reserve/resource request
+    extern const std::string reserve_resource_change_owner;
+    extern const std::string reserve_resource_delete;
+    extern const std::string reserve_resource_evict;
+    extern const std::string reserve_resource_get_size;
+    extern const std::string reserve_resource_notify_untiered;
+    extern const std::string reserve_resource_tier;
+
     // Keywords for /revoke/permission request
     extern const std::string revoke_permission_admin;
     extern const std::string revoke_permission_columns;
@@ -1572,6 +1682,7 @@ namespace gpudb
     extern const std::string revoke_permission_sql_proc;
     extern const std::string revoke_permission_system;
     extern const std::string revoke_permission_table;
+    extern const std::string revoke_permission_table_monitor;
     extern const std::string revoke_permission_update;
     extern const std::string revoke_permission_user_admin;
     extern const std::string revoke_permission_write;
@@ -1674,6 +1785,19 @@ namespace gpudb
     extern const std::string show_proc_status_stderr;
     extern const std::string show_proc_status_stdout;
 
+    // Keywords for /show/resource/objects request
+    extern const std::string show_resource_objects_evictable;
+    extern const std::string show_resource_objects_expression;
+    extern const std::string show_resource_objects_id;
+    extern const std::string show_resource_objects_limit;
+    extern const std::string show_resource_objects_order_by;
+    extern const std::string show_resource_objects_owner_resource_group;
+    extern const std::string show_resource_objects_priority;
+    extern const std::string show_resource_objects_size;
+    extern const std::string show_resource_objects_table_names;
+    extern const std::string show_resource_objects_tier;
+    extern const std::string show_resource_objects_tiers;
+
     // Keywords for /show/resource/statistics request
     extern const std::string show_resource_statistics_false;
     extern const std::string show_resource_statistics_true;
@@ -1682,6 +1806,7 @@ namespace gpudb
     extern const std::string show_resource_groups_false;
     extern const std::string show_resource_groups_show_default_group;
     extern const std::string show_resource_groups_show_default_values;
+    extern const std::string show_resource_groups_show_tier_usage;
     extern const std::string show_resource_groups_true;
 
     // Keywords for /show/schema request
@@ -1761,6 +1886,7 @@ namespace gpudb
     extern const std::string show_table_last_refresh_time;
     extern const std::string show_table_next_refresh_time;
     extern const std::string show_table_no_access;
+    extern const std::string show_table_owner_resource_group;
     extern const std::string show_table_partition_definitions;
     extern const std::string show_table_partition_keys;
     extern const std::string show_table_partition_type;

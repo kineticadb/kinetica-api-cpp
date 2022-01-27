@@ -83,6 +83,21 @@ namespace gpudb
          * @param[in] options_  Optional parameters.
          *                      <ul>
          *                              <li>
+         *                      gpudb::merge_records_create_temp_table: If @a
+         *                      true, a unique temporary table name will be
+         *                      generated in the sys_temp schema and used in
+         *                      place of @a tableName. If @a persist is @a
+         *                      false, then this is always allowed even if the
+         *                      caller does not have permission to create
+         *                      tables. The generated name is returned in @a
+         *                      qualified_table_name.
+         *                      <ul>
+         *                              <li> gpudb::merge_records_true
+         *                              <li> gpudb::merge_records_false
+         *                      </ul>
+         *                      The default value is
+         *                      gpudb::merge_records_false.
+         *                              <li>
          *                      gpudb::merge_records_collection_name:
          *                      [DEPRECATED--please specify the containing
          *                      schema for the merged table as part of @a

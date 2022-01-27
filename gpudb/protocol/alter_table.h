@@ -290,6 +290,8 @@ namespace gpudb
          *                     Resubscribe to a paused data source
          *                     subscription. The data source can be kafka / S3
          *                     / Azure.
+         *                             <li> gpudb::alter_table_change_owner:
+         *                     Change the owner resource group of the table.
          *                     </ul>
          * @param[in] value_  The value of the modification, depending on @a
          *                    action.  For example, if @a action is @a

@@ -34,6 +34,19 @@ namespace gpudb
          * 
          * @param[in] name_  Name of the resource group to be deleted.
          * @param[in] options_  Optional parameters.
+         *                      <ul>
+         *                              <li>
+         *                      gpudb::delete_resource_group_cascade_delete: If
+         *                      @a true, delete any existing entities owned by
+         *                      this group. Otherwise this request will return
+         *                      an error of any such entities exist.
+         *                      <ul>
+         *                              <li> gpudb::delete_resource_group_true
+         *                              <li> gpudb::delete_resource_group_false
+         *                      </ul>
+         *                      The default value is
+         *                      gpudb::delete_resource_group_false.
+         *                      </ul>
          * 
          */
         DeleteResourceGroupRequest(const std::string& name_, const std::map<std::string, std::string>& options_):

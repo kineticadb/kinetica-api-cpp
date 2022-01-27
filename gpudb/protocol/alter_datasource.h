@@ -149,7 +149,24 @@ namespace gpudb
          *                                           <li>
          *                                   gpudb::alter_datasource_anonymous:
          *                                   Create an anonymous connection to
-         *                                   the storage provider
+         *                                   the storage provider--DEPRECATED:
+         *                                   this is now the default.  Specify
+         *                                   use_managed_credentials for
+         *                                   non-anonymous connection
+         *                                   <ul>
+         *                                           <li>
+         *                                   gpudb::alter_datasource_true
+         *                                           <li>
+         *                                   gpudb::alter_datasource_false
+         *                                   </ul>
+         *                                   The default value is
+         *                                   gpudb::alter_datasource_true.
+         *                                           <li>
+         *                                   gpudb::alter_datasource_use_managed_credentials:
+         *                                   When no credentials are supplied,
+         *                                   we use anonymous access by
+         *                                   default.  If this is set, we will
+         *                                   use cloud provider user settings.
          *                                   <ul>
          *                                           <li>
          *                                   gpudb::alter_datasource_true

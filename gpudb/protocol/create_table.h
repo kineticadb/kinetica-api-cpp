@@ -74,6 +74,20 @@ namespace gpudb
          *                      </ul>
          *                      The default value is gpudb::create_table_false.
          *                              <li>
+         *                      gpudb::create_table_create_temp_table: If @a
+         *                      true, a unique temporary table name will be
+         *                      generated in the sys_temp schema and used in
+         *                      place of @a tableName. If @a is_result_table is
+         *                      @a true, then this is always allowed even if
+         *                      the caller does not have permission to create
+         *                      tables. The generated name is returned in @a
+         *                      qualified_table_name.
+         *                      <ul>
+         *                              <li> gpudb::create_table_true
+         *                              <li> gpudb::create_table_false
+         *                      </ul>
+         *                      The default value is gpudb::create_table_false.
+         *                              <li>
          *                      gpudb::create_table_collection_name:
          *                      [DEPRECATED--please specify the containing
          *                      schema as part of @a tableName and use
@@ -223,9 +237,6 @@ namespace gpudb
          *                      href="../../../rm/concepts/#tier-strategies"
          *                      target="_top">tier strategy</a> for the table
          *                      and its columns.
-         *                              <li>
-         *                      gpudb::create_table_is_virtual_union:
-         *                      <DEVELOPER>
          *                      </ul>
          * 
          */

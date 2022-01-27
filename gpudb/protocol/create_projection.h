@@ -95,6 +95,21 @@ namespace gpudb
          * @param[in] options_  Optional parameters.
          *                      <ul>
          *                              <li>
+         *                      gpudb::create_projection_create_temp_table: If
+         *                      @a true, a unique temporary table name will be
+         *                      generated in the sys_temp schema and used in
+         *                      place of @a projectionName. If @a persist is @a
+         *                      false (or unspecified), then this is always
+         *                      allowed even if the caller does not have
+         *                      permission to create tables. The generated name
+         *                      is returned in @a qualified_projection_name.
+         *                      <ul>
+         *                              <li> gpudb::create_projection_true
+         *                              <li> gpudb::create_projection_false
+         *                      </ul>
+         *                      The default value is
+         *                      gpudb::create_projection_false.
+         *                              <li>
          *                      gpudb::create_projection_collection_name:
          *                      [DEPRECATED--please specify the containing
          *                      schema for the projection as part of @a

@@ -328,6 +328,12 @@ namespace gpudb
          *                      </ul>
          *                      The default value is gpudb::create_graph_false.
          *                              <li>
+         *                      gpudb::create_graph_label_delimiter: If
+         *                      provided the label string will be split
+         *                      according to this delimiter and each sub-string
+         *                      will be applied as a separate label onto the
+         *                      specified edge.  The default value is ''.
+         *                              <li>
          *                      gpudb::create_graph_sql_request_avro_json:
          *                      The default value is ''.
          *                      </ul>

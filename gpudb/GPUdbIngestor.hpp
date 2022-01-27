@@ -11,6 +11,7 @@
 #include <map>
 #include <string>
 #include <vector>
+#include <mutex>
 
 #include <boost/noncopyable.hpp>
 #include <boost/shared_ptr.hpp>
@@ -83,6 +84,11 @@ public:
      */
     size_t getCountUpdated() const { return m_count_updated; }
 
+    /**
+     * Returns the list of errors and warnings received since the last call
+     * to getErrors(), and clears the list.
+     */
+    std::vector<GPUdbInsertionException> getErrors();
 
     /**
      * Ensures that all queued records are inserted into the database.  If an error
@@ -155,6 +161,8 @@ private:
 //    record_key_buildter_ptr          m_shard_key_builder_ptr;
     std::vector<int32_t>             m_routing_table;
     std::vector<worker_queue_ptr_t>  m_worker_queues;
+    std::vector<GPUdbInsertionException> m_error_list;
+    std::mutex                       m_error_list_lock;
 
 };  // end class GPUdbIngestor
 

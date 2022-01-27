@@ -4,9 +4,9 @@ This project contains the source code for the C++ Kinetica API. The following
 links will provide the information needed to get started with Kinetica and the
 C++ API:
 
-* [C++ API documentation](http://www.kinetica.com/docs/7.1/api/c++/annotated.html)
-* [C++ API tutorial](http://www.kinetica.com/docs/7.1/tutorials/cpp_guide.html)
-* [Kinetica documentation site](http://www.kinetica.com/docs/7.1/index.html)
+* [C++ API documentation](https://docs.kinetica.com/7.1/api/c++/)
+* [C++ API tutorial](https://docs.kinetica.com/7.1/guides/cpp_guide/)
+* [Kinetica documentation site](https://docs.kinetica.com/7.1/)
 
 For the client-side API changes, please refer to [CHANGELOG.md](CHANGELOG.md),
 and for Kinetica function changes, please refer to
@@ -139,7 +139,7 @@ not work for Windows.
 
 #### Boost
 
-1. Download a Windows .zip Boost archive from the [official Boost repository](https://dl.bintray.com/boostorg/release/1.71.0/source/)
+1. Download a Windows .zip Boost archive from the [official Boost repository](https://www.boost.org/users/download/)
 2. Uncompress the Boost archive to the ``thirdparty`` directory
 3. From the Visual Studio build command prompt window:
    1. Change directory into the ``thirdparty/boost_<version>`` directory, e.g., ``boost_1_65_1``

@@ -38,6 +38,18 @@ namespace gpudb
          *                   with a @. Must not be the same name as an existing
          *                   user.
          * @param[in] options_  Optional parameters.
+         *                      <ul>
+         *                              <li>
+         *                      gpudb::create_user_external_create_home_directory:
+         *                      when true, a home directory in KiFS is created
+         *                      for this user
+         *                      <ul>
+         *                              <li> gpudb::create_user_external_true
+         *                              <li> gpudb::create_user_external_false
+         *                      </ul>
+         *                      The default value is
+         *                      gpudb::create_user_external_true.
+         *                      </ul>
          * 
          */
         CreateUserExternalRequest(const std::string& name_, const std::map<std::string, std::string>& options_):

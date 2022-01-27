@@ -42,8 +42,8 @@ namespace gpudb
          * @param[in] location_  Location of the remote storage in
          *                       'storage_provider_type://[storage_path[:storage_port]]'
          *                       format.
-         *                       Supported storage provider types are 'hdfs'
-         *                       and 's3'.
+         *                       Supported storage provider types are
+         *                       'azure','hdfs','kafka' and 's3'.
          * @param[in] userName_  Name of the remote system user; may be an
          *                       empty string
          * @param[in] password_  Password for the remote system user; may be an
@@ -134,7 +134,21 @@ namespace gpudb
          *                      of the Kafka topic to use as the data source
          *                              <li>
          *                      gpudb::create_datasource_anonymous: Use
-         *                      anonymous connection to storage provider
+         *                      anonymous connection to storage
+         *                      provider--DEPRECATED: this is now the default.
+         *                      Specify use_managed_credentials for
+         *                      non-anonymous connection.
+         *                      <ul>
+         *                              <li> gpudb::create_datasource_true
+         *                              <li> gpudb::create_datasource_false
+         *                      </ul>
+         *                      The default value is
+         *                      gpudb::create_datasource_true.
+         *                              <li>
+         *                      gpudb::create_datasource_use_managed_credentials:
+         *                      When no credentials are supplied, we use
+         *                      anonymous access by default.  If this is set,
+         *                      we will use cloud provider user settings.
          *                      <ul>
          *                              <li> gpudb::create_datasource_true
          *                              <li> gpudb::create_datasource_false

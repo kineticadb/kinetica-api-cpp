@@ -64,8 +64,8 @@ namespace gpudb
      * target="_top">aggregation functions</a> supplied to @a having.
      * <p>
      * The response is returned as a dynamic schema. For details see: <a
-     * href="../../../api/#dynamic-schemas" target="_top">dynamic schemas
-     * documentation</a>.
+     * href="../../../api/concepts/#dynamic-schemas" target="_top">dynamic
+     * schemas documentation</a>.
      * <p>
      * If a @a result_table name is specified in the @a options, the results
      * are stored in a new table with that name--no results are returned in the
@@ -128,6 +128,22 @@ namespace gpudb
          *                    limit to request subsequent pages of results.
          * @param[in] options_  Optional parameters.
          *                      <ul>
+         *                              <li>
+         *                      gpudb::aggregate_group_by_create_temp_table: If
+         *                      @a true, a unique temporary table name will be
+         *                      generated in the sys_temp schema and used in
+         *                      place of @a result_table. If @a
+         *                      result_table_persist is @a false (or
+         *                      unspecified), then this is always allowed even
+         *                      if the caller does not have permission to
+         *                      create tables. The generated name is returned
+         *                      in @a qualified_result_table_name.
+         *                      <ul>
+         *                              <li> gpudb::aggregate_group_by_true
+         *                              <li> gpudb::aggregate_group_by_false
+         *                      </ul>
+         *                      The default value is
+         *                      gpudb::aggregate_group_by_false.
          *                              <li>
          *                      gpudb::aggregate_group_by_collection_name:
          *                      [DEPRECATED--please specify the containing
@@ -327,6 +343,22 @@ namespace gpudb
          *                       gpudb::aggregate_group_by_binary.
          * @param[in] options_  Optional parameters.
          *                      <ul>
+         *                              <li>
+         *                      gpudb::aggregate_group_by_create_temp_table: If
+         *                      @a true, a unique temporary table name will be
+         *                      generated in the sys_temp schema and used in
+         *                      place of @a result_table. If @a
+         *                      result_table_persist is @a false (or
+         *                      unspecified), then this is always allowed even
+         *                      if the caller does not have permission to
+         *                      create tables. The generated name is returned
+         *                      in @a qualified_result_table_name.
+         *                      <ul>
+         *                              <li> gpudb::aggregate_group_by_true
+         *                              <li> gpudb::aggregate_group_by_false
+         *                      </ul>
+         *                      The default value is
+         *                      gpudb::aggregate_group_by_false.
          *                              <li>
          *                      gpudb::aggregate_group_by_collection_name:
          *                      [DEPRECATED--please specify the containing
@@ -616,8 +648,8 @@ namespace gpudb
      * target="_top">aggregation functions</a> supplied to @a having.
      * <p>
      * The response is returned as a dynamic schema. For details see: <a
-     * href="../../../api/#dynamic-schemas" target="_top">dynamic schemas
-     * documentation</a>.
+     * href="../../../api/concepts/#dynamic-schemas" target="_top">dynamic
+     * schemas documentation</a>.
      * <p>
      * If a @a result_table name is specified in the @a options, the results
      * are stored in a new table with that name--no results are returned in the
@@ -781,8 +813,8 @@ namespace gpudb
      * target="_top">aggregation functions</a> supplied to @a having.
      * <p>
      * The response is returned as a dynamic schema. For details see: <a
-     * href="../../../api/#dynamic-schemas" target="_top">dynamic schemas
-     * documentation</a>.
+     * href="../../../api/concepts/#dynamic-schemas" target="_top">dynamic
+     * schemas documentation</a>.
      * <p>
      * If a @a result_table name is specified in the @a options, the results
      * are stored in a new table with that name--no results are returned in the

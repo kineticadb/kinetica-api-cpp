@@ -66,6 +66,18 @@ namespace gpudb
          *                         target="_top">Expressions</a>.
          * @param[in] options_  Optional parameters.
          *                      <ul>
+         *                              <li> gpudb::filter_create_temp_table:
+         *                      If @a true, a unique temporary table name will
+         *                      be generated in the sys_temp schema and used in
+         *                      place of @a viewName. This is always allowed
+         *                      even if the caller does not have permission to
+         *                      create tables. The generated name is returned
+         *                      in @a qualified_view_name.
+         *                      <ul>
+         *                              <li> gpudb::filter_true
+         *                              <li> gpudb::filter_false
+         *                      </ul>
+         *                      The default value is gpudb::filter_false.
          *                              <li> gpudb::filter_collection_name:
          *                      [DEPRECATED--please specify the containing
          *                      schema for the view as part of @a viewName and

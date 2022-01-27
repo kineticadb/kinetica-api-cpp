@@ -33,8 +33,8 @@ namespace gpudb
      * {"limit":"10","sort_order":"descending"}.
      * <p>
      * The response is returned as a dynamic schema. For details see:
-     * <a href="../../../api/#dynamic-schemas" target="_top">dynamic schemas
-     * documentation</a>.
+     * <a href="../../../api/concepts/#dynamic-schemas" target="_top">dynamic
+     * schemas documentation</a>.
      * <p>
      * If a @a result_table name is specified in the
      * @a options, the results are stored in a new table with that name--no
@@ -102,6 +102,22 @@ namespace gpudb
          *                    limit to request subsequent pages of results.
          * @param[in] options_  Optional parameters.
          *                      <ul>
+         *                              <li>
+         *                      gpudb::aggregate_unique_create_temp_table: If
+         *                      @a true, a unique temporary table name will be
+         *                      generated in the sys_temp schema and used in
+         *                      place of @a result_table. If @a
+         *                      result_table_persist is @a false (or
+         *                      unspecified), then this is always allowed even
+         *                      if the caller does not have permission to
+         *                      create tables. The generated name is returned
+         *                      in @a qualified_result_table_name.
+         *                      <ul>
+         *                              <li> gpudb::aggregate_unique_true
+         *                              <li> gpudb::aggregate_unique_false
+         *                      </ul>
+         *                      The default value is
+         *                      gpudb::aggregate_unique_false.
          *                              <li>
          *                      gpudb::aggregate_unique_collection_name:
          *                      [DEPRECATED--please specify the containing
@@ -240,6 +256,22 @@ namespace gpudb
          *                       gpudb::aggregate_unique_binary.
          * @param[in] options_  Optional parameters.
          *                      <ul>
+         *                              <li>
+         *                      gpudb::aggregate_unique_create_temp_table: If
+         *                      @a true, a unique temporary table name will be
+         *                      generated in the sys_temp schema and used in
+         *                      place of @a result_table. If @a
+         *                      result_table_persist is @a false (or
+         *                      unspecified), then this is always allowed even
+         *                      if the caller does not have permission to
+         *                      create tables. The generated name is returned
+         *                      in @a qualified_result_table_name.
+         *                      <ul>
+         *                              <li> gpudb::aggregate_unique_true
+         *                              <li> gpudb::aggregate_unique_false
+         *                      </ul>
+         *                      The default value is
+         *                      gpudb::aggregate_unique_false.
          *                              <li>
          *                      gpudb::aggregate_unique_collection_name:
          *                      [DEPRECATED--please specify the containing
@@ -436,8 +468,8 @@ namespace gpudb
      * {"limit":"10","sort_order":"descending"}.
      * <p>
      * The response is returned as a dynamic schema. For details see:
-     * <a href="../../../api/#dynamic-schemas" target="_top">dynamic schemas
-     * documentation</a>.
+     * <a href="../../../api/concepts/#dynamic-schemas" target="_top">dynamic
+     * schemas documentation</a>.
      * <p>
      * If a @a result_table name is specified in the
      * @a options, the results are stored in a new table with that name--no
@@ -574,8 +606,8 @@ namespace gpudb
      * {"limit":"10","sort_order":"descending"}.
      * <p>
      * The response is returned as a dynamic schema. For details see:
-     * <a href="../../../api/#dynamic-schemas" target="_top">dynamic schemas
-     * documentation</a>.
+     * <a href="../../../api/concepts/#dynamic-schemas" target="_top">dynamic
+     * schemas documentation</a>.
      * <p>
      * If a @a result_table name is specified in the
      * @a options, the results are stored in a new table with that name--no
