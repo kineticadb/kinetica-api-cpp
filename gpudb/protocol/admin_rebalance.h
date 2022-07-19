@@ -19,26 +19,25 @@ namespace gpudb
      * distributed (as much as possible) across all the ranks.
      * <p>
      * The database must be offline for this operation, see {@link
-     * #adminOffline(const AdminOfflineRequest&) const}.
+     * #adminOffline(const AdminOfflineRequest&) const}
      * <p>
-     * If {@link #adminRebalance(const AdminRebalanceRequest&) const} is
-     * invoked after a change is made to the
-     * cluster, e.g., a host was added or removed,
-     * <a href="../../../concepts/tables/#sharding" target="_top">sharded
+     * * If {@link #adminRebalance(const AdminRebalanceRequest&) const} is
+     * invoked after a change is
+     *   made to the cluster, e.g., a host was added or removed,
+     *   <a href="../../../concepts/tables/#sharding" target="_top">sharded
      * data</a> will be
-     * evenly redistributed across the cluster by number of shards per rank
-     * while unsharded data will be redistributed across the cluster by data
-     * size per rank.
-     * <p>
-     * If {@link #adminRebalance(const AdminRebalanceRequest&) const} is
-     * invoked at some point when unsharded
-     * data (a.k.a. <a href="../../../concepts/tables/#random-sharding"
+     *   evenly redistributed across the cluster by number of shards per rank
+     *   while unsharded data will be redistributed across the cluster by data
+     *   size per rank
+     * * If {@link #adminRebalance(const AdminRebalanceRequest&) const}
+     *   is invoked at some point when unsharded data (a.k.a.
+     *   <a href="../../../concepts/tables/#random-sharding"
      * target="_top">randomly-sharded</a>)
-     * in the cluster is unevenly distributed over time, sharded data will
-     * not move while unsharded data will be redistributed across the
-     * cluster by data size per rank.
+     *   in the cluster is unevenly distributed over time, sharded data will
+     *   not move while unsharded data will be redistributed across the
+     *   cluster by data size per rank
      * <p>
-     * NOTE: Replicated data will not move as a result of this call.
+     * NOTE: Replicated data will not move as a result of this call
      * <p>
      * This endpoint's processing time depends on the amount of data in the
      * system,
@@ -229,26 +228,25 @@ namespace gpudb
      * distributed (as much as possible) across all the ranks.
      * <p>
      * The database must be offline for this operation, see {@link
-     * #adminOffline(const AdminOfflineRequest&) const}.
+     * #adminOffline(const AdminOfflineRequest&) const}
      * <p>
-     * If {@link #adminRebalance(const AdminRebalanceRequest&) const} is
-     * invoked after a change is made to the
-     * cluster, e.g., a host was added or removed,
-     * <a href="../../../concepts/tables/#sharding" target="_top">sharded
+     * * If {@link #adminRebalance(const AdminRebalanceRequest&) const} is
+     * invoked after a change is
+     *   made to the cluster, e.g., a host was added or removed,
+     *   <a href="../../../concepts/tables/#sharding" target="_top">sharded
      * data</a> will be
-     * evenly redistributed across the cluster by number of shards per rank
-     * while unsharded data will be redistributed across the cluster by data
-     * size per rank.
-     * <p>
-     * If {@link #adminRebalance(const AdminRebalanceRequest&) const} is
-     * invoked at some point when unsharded
-     * data (a.k.a. <a href="../../../concepts/tables/#random-sharding"
+     *   evenly redistributed across the cluster by number of shards per rank
+     *   while unsharded data will be redistributed across the cluster by data
+     *   size per rank
+     * * If {@link #adminRebalance(const AdminRebalanceRequest&) const}
+     *   is invoked at some point when unsharded data (a.k.a.
+     *   <a href="../../../concepts/tables/#random-sharding"
      * target="_top">randomly-sharded</a>)
-     * in the cluster is unevenly distributed over time, sharded data will
-     * not move while unsharded data will be redistributed across the
-     * cluster by data size per rank.
+     *   in the cluster is unevenly distributed over time, sharded data will
+     *   not move while unsharded data will be redistributed across the
+     *   cluster by data size per rank
      * <p>
-     * NOTE: Replicated data will not move as a result of this call.
+     * NOTE: Replicated data will not move as a result of this call
      * <p>
      * This endpoint's processing time depends on the amount of data in the
      * system,

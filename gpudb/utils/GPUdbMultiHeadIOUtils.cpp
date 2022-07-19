@@ -2879,9 +2879,7 @@ bool RecordKeyBuilder::operator==(const RecordKeyBuilder& rhs) const
 // --------------------- Begin Class WorkerQueue ----------------------
 WorkerQueue::WorkerQueue( const std::string& url ) :
       m_url( url ),
-      m_capacity( 1 ),
-      m_has_primary_key( false ),
-      m_update_on_existing_pk( false )
+      m_capacity( 1 )
 {
     // Reserve enough capacity for the queue
     m_queue = recordVector_T();
@@ -2891,13 +2889,9 @@ WorkerQueue::WorkerQueue( const std::string& url ) :
 
 
 
-WorkerQueue::WorkerQueue( const std::string& url, size_t capacity,
-                          bool has_primary_key,
-                          bool update_on_existing_pk ) :
+WorkerQueue::WorkerQueue( const std::string& url, size_t capacity ) :
       m_url( url ),
-      m_capacity( capacity ),
-      m_has_primary_key( has_primary_key ),
-      m_update_on_existing_pk( update_on_existing_pk )
+      m_capacity( capacity )
 {
     // Reserve enough capacity for the queue
     m_queue = recordVector_T();
@@ -2910,7 +2904,6 @@ WorkerQueue::WorkerQueue( const std::string& url, size_t capacity,
 WorkerQueue::~WorkerQueue()
 {
     m_queue.clear();
-    m_primary_key_map.clear();
 }
 
 
@@ -2926,9 +2919,6 @@ void WorkerQueue::flush( recordVector_T& flushed_records )
     // Reserve enough capacity in the "new" queue
     m_queue.reserve( m_capacity );
 
-    // Clear out the primary key map
-    m_primary_key_map.clear();
-
     return;
 }  // end WorkerQueue flush()
 
@@ -2942,44 +2932,7 @@ bool WorkerQueue::insert( const gpudb::GenericRecord& record,
                           const RecordKey& key,
                           recordVector_T& flushed_records )
 {
-    // Special insertion operation for records consisting primary keys
-    if ( m_has_primary_key && key.is_valid() )
-    {
-        // First check if the given key already exists as a primary key
-        typename primary_key_map_t::iterator it;
-        it = m_primary_key_map.find( key );
-
-        if ( it == m_primary_key_map.end() )
-        { // Key does NOT already exist
-            // Insert the record into the queue
-            m_queue.push_back( record );
-            
-            // Insert the (key, queue index) into the map that keep
-            // tracks of where the record associated with a given key
-            // is inside the record queue.
-            m_primary_key_map[ key ] = (m_queue.size() - 1);
-        }
-        else
-        { // key does already exist
-            // Check if the table allows updates on pre-existing primary keys
-            if ( m_update_on_existing_pk )
-            {  // yes, it's allowed
-                size_t record_index = it->second;
-                m_queue.at( record_index ) = record;
-            }
-            else
-            {   // updating existing primary keys not allowed; so not inserting
-                // this record
-                return false;
-            }
-        }
-    }  // end if primary keys exist
-    else // either no primary key involved or the given key is invalid;
-    {   // in the latter case, the server will return the appropriate error.
-        // In the former case, simply add to the queue
-        m_queue.push_back( record );
-    }
-
+    m_queue.push_back( record );
     // If the queue is full to the capacity, flush it and return those records
     if ( m_queue.size() == m_capacity )
     {

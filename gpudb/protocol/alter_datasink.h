@@ -104,6 +104,14 @@ namespace gpudb
          *                                 </ul>
          *                                 The default value is
          *                                 gpudb::alter_datasink_false.
+         *                                         <li>
+         *                                 gpudb::alter_datasink_schema_name:
+         *                                 Updates the schema name.  If @a
+         *                                 schema_name
+         *                                 doesn't exist, an error will be
+         *                                 thrown. If @a schema_name is empty,
+         *                                 then the user's
+         *                                 default schema will be used.
          *                                 </ul>
          * @param[in] options_  Optional parameters.
          * 

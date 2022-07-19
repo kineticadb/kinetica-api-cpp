@@ -325,14 +325,7 @@ private:
 
     gpudb::HttpUrl   m_url;
     size_t           m_capacity;
-    bool             m_has_primary_key;
-    bool             m_update_on_existing_pk;
     recordVector_T   m_queue;
-
-    /// Map of the primary key to the key's index in the record queue
-//    typedef std::map<const RecordKey&, size_t> primary_key_map_t;
-    typedef std::map<RecordKey, size_t> primary_key_map_t;
-    primary_key_map_t  m_primary_key_map;
 
     WorkerQueue();
 
@@ -344,8 +337,7 @@ public:
     WorkerQueue( const std::string& url );
 
     // Takes a string for the url
-    WorkerQueue( const std::string& url, size_t capacity, bool has_primary_key,
-                 bool update_on_existing_pk );
+    WorkerQueue( const std::string& url, size_t capacity );
     ~WorkerQueue();
 
     /// Returns the URL in string format for this worker

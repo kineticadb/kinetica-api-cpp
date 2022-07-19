@@ -83,6 +83,52 @@ namespace gpudb
          *                      times to run the k-means algorithm with a
          *                      different randomly selected starting points -
          *                      helps avoid local minimum. Default is 1.
+         *                              <li>
+         *                      gpudb::aggregate_k_means_create_temp_table: If
+         *                      @a true, a unique temporary table name will be
+         *                      generated in the sys_temp schema and used in
+         *                      place of @a result_table. If @a
+         *                      result_table_persist is @a false (or
+         *                      unspecified), then this is always allowed even
+         *                      if the caller does not have permission to
+         *                      create tables. The generated name is returned
+         *                      in @a qualified_result_table_name.
+         *                      <ul>
+         *                              <li> gpudb::aggregate_k_means_true
+         *                              <li> gpudb::aggregate_k_means_false
+         *                      </ul>
+         *                      The default value is
+         *                      gpudb::aggregate_k_means_false.
+         *                              <li>
+         *                      gpudb::aggregate_k_means_result_table: The name
+         *                      of a table used to store the results, in
+         *                      [schema_name.]table_name format, using standard
+         *                      <a
+         *                      href="../../../concepts/tables/#table-name-resolution"
+         *                      target="_top">name resolution rules</a> and
+         *                      meeting <a
+         *                      href="../../../concepts/tables/#table-naming-criteria"
+         *                      target="_top">table naming criteria</a>.  If
+         *                      this option is specified, the results are not
+         *                      returned in the response.
+         *                              <li>
+         *                      gpudb::aggregate_k_means_result_table_persist:
+         *                      If @a true, then the result table specified in
+         *                      @a result_table will be persisted and will not
+         *                      expire unless a @a ttl is specified.   If @a
+         *                      false, then the result table will be an
+         *                      in-memory table and will expire unless a @a ttl
+         *                      is specified otherwise.
+         *                      <ul>
+         *                              <li> gpudb::aggregate_k_means_true
+         *                              <li> gpudb::aggregate_k_means_false
+         *                      </ul>
+         *                      The default value is
+         *                      gpudb::aggregate_k_means_false.
+         *                              <li> gpudb::aggregate_k_means_ttl: Sets
+         *                      the <a href="../../../concepts/ttl/"
+         *                      target="_top">TTL</a> of the table specified in
+         *                      @a result_table.
          *                      </ul>
          * 
          */

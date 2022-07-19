@@ -109,6 +109,11 @@ namespace gpudb
          *                          closed loops (Eulerian paths) originating
          *                          and ending at each graph node within min
          *                          and max hops (levels).
+         *                                  <li>
+         *                          gpudb::match_graph_match_charging_stations:
+         *                          Matches an optimal path across a number of
+         *                          ev-charging stations between source and
+         *                          target locations.
          *                          </ul>
          *                          The default value is
          *                          gpudb::match_graph_markov_chain.
@@ -347,6 +352,24 @@ namespace gpudb
          *                      the batch size of the number of loops in
          *                      flushing(inserting) to the output table.  The
          *                      default value is '1000'.
+         *                              <li>
+         *                      gpudb::match_graph_charging_capacity: For the
+         *                      @a match_charging_stations solver only. This is
+         *                      the maximum ev-charging capacity of a vehicle
+         *                      (distance in meters or time in seconds
+         *                      depending on the unit of the graph weights).
+         *                      The default value is '300000.0'.
+         *                              <li>
+         *                      gpudb::match_graph_charging_candidates: For the
+         *                      @a match_charging_stations solver only. Solver
+         *                      searches for this many number of stations
+         *                      closest around each base charging location
+         *                      found by capacity.  The default value is '10'.
+         *                              <li>
+         *                      gpudb::match_graph_charging_penalty: For the @a
+         *                      match_charging_stations solver only. This is
+         *                      the penalty for full charging.  The default
+         *                      value is '30000.0'.
          *                      </ul>
          * 
          */

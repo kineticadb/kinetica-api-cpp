@@ -243,6 +243,12 @@ namespace gpudb
          *                           gpudb::visualize_image_hollowdiamond.
          *                           </ul>
          * @param[in] options_
+         *                      <ul>
+         *                              <li>
+         *                      gpudb::visualize_image_track_id_column_name
+         *                              <li>
+         *                      gpudb::visualize_image_track_order_column_name
+         *                      </ul>
          * 
          */
         VisualizeImageRequest(const std::vector<std::string>& tableNames_, const std::vector<std::string>& worldTableNames_, const std::string& xColumnName_, const std::string& yColumnName_, const std::string& symbolColumnName_, const std::string& geometryColumnName_, const std::vector<std::vector<std::string> >& trackIds_, const double minX_, const double maxX_, const double minY_, const double maxY_, const int32_t width_, const int32_t height_, const std::string& projection_, const int64_t bgColor_, const std::map<std::string, std::vector<std::string> >& styleOptions_, const std::map<std::string, std::string>& options_):

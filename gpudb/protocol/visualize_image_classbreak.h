@@ -288,6 +288,12 @@ namespace gpudb
          *                           gpudb::visualize_image_classbreak_circle.
          *                           </ul>
          * @param[in] options_
+         *                      <ul>
+         *                              <li>
+         *                      gpudb::visualize_image_classbreak_track_id_column_name
+         *                              <li>
+         *                      gpudb::visualize_image_classbreak_track_order_column_name
+         *                      </ul>
          * @param[in] cbTransparencyVec_
          * 
          */

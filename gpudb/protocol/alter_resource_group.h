@@ -37,7 +37,9 @@ namespace gpudb
          * parameters.
          * 
          * @param[in] name_  Name of the group to be altered. Must be an
-         *                   existing resource group name.
+         *                   existing resource group name or an empty string
+         *                   when used inconjunction with the is_default_group
+         *                   option.
          * @param[in] tierAttributes_  Optional map containing tier names and
          *                             their respective attribute group limits.
          *                             The only valid attribute limit that can
@@ -108,6 +110,19 @@ namespace gpudb
          *                      </ul>
          *                      The default value is
          *                      gpudb::alter_resource_group_false.
+         *                              <li>
+         *                      gpudb::alter_resource_group_persist: If @a true
+         *                      and a system-level change was requested, the
+         *                      system configuration will be written to disk
+         *                      upon successful application of this request.
+         *                      This will commit the changes from this request
+         *                      and any additional in-memory modifications.
+         *                      <ul>
+         *                              <li> gpudb::alter_resource_group_true
+         *                              <li> gpudb::alter_resource_group_false
+         *                      </ul>
+         *                      The default value is
+         *                      gpudb::alter_resource_group_true.
          *                      </ul>
          * 
          */

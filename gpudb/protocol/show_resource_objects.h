@@ -79,10 +79,10 @@ namespace gpudb
          *                      returned will never exceed the server's own
          *                      limit,
          *                      defined by the <a
-         *                      href="../../../config/#general"
+         *                      href="../../../config/#config-main-general"
          *                      target="_top">max_get_records_size</a>
-         *                      parameter in the server configuration.  The
-         *                      default value is '100'.
+         *                      parameter in the server
+         *                      configuration.  The default value is '100'.
          *                              <li>
          *                      gpudb::show_resource_objects_table_names:
          *                      Comma-separated list of tables to restrict the

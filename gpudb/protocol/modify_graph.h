@@ -247,6 +247,15 @@ namespace gpudb
          *                      larger the threshold for right and left turns;
          *                      0 < turn_angle < 90.  The default value is
          *                      '60'.
+         *                              <li> gpudb::modify_graph_use_rtree: Use
+         *                      an range tree structure to accelerate and
+         *                      improve the accuracy of snapping, especially to
+         *                      edges.
+         *                      <ul>
+         *                              <li> gpudb::modify_graph_true
+         *                              <li> gpudb::modify_graph_false
+         *                      </ul>
+         *                      The default value is gpudb::modify_graph_true.
          *                      </ul>
          * 
          */

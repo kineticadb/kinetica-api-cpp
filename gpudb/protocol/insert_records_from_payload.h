@@ -269,6 +269,15 @@ namespace gpudb
          *                      number of records that can be  written to the
          *                      bad-record-table.   Default value is 10000
          *                              <li>
+         *                      gpudb::insert_records_from_payload_bad_record_table_limit_per_input:
+         *                      For subscriptions: A positive integer
+         *                      indicating the maximum number of records that
+         *                      can be written to the bad-record-table per
+         *                      file/payload. Default value will be
+         *                      'bad_record_table_limit' and total size of the
+         *                      table per rank is limited to
+         *                      'bad_record_table_limit'
+         *                              <li>
          *                      gpudb::insert_records_from_payload_batch_size:
          *                      Internal tuning parameter--number of records
          *                      per batch when inserting data.

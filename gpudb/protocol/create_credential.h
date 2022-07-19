@@ -52,7 +52,12 @@ namespace gpudb
          *                           <li>
          *                   gpudb::create_credential_azure_storage_key
          *                           <li> gpudb::create_credential_docker
+         *                           <li>
+         *                   gpudb::create_credential_gcs_service_account_id
+         *                           <li>
+         *                   gpudb::create_credential_gcs_service_account_keys
          *                           <li> gpudb::create_credential_hdfs
+         *                           <li> gpudb::create_credential_jdbc
          *                           <li> gpudb::create_credential_kafka
          *                   </ul>
          * @param[in] identity_  User of the credential to be created.

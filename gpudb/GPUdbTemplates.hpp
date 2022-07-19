@@ -78,14 +78,17 @@ GetRecordsResponse<boost::any>& GPUdb::getRecords( const GetRecordsRequest& requ
  *                The minimum allowed value is 0. The maximum allowed value is
  *                MAX_INT.
  * @param limit  A positive integer indicating the maximum number of results to
- *               be returned. Or END_OF_SET (-9999) to indicate that the max
- *               number of results should be returned.  The number of records
- *               returned will never exceed the server's own limit, defined by
- *               the <a href="../../../config/#general"
+ *               be returned, or
+ *               END_OF_SET (-9999) to indicate that the maximum number of
+ *               results allowed by the server should be
+ *               returned.  The number of records returned will never exceed
+ *               the server's own limit, defined by the
+ *               <a href="../../../config/#config-main-general"
  *               target="_top">max_get_records_size</a> parameter in the server
- *               configuration.  Use @a hasMoreRecords to see if more records
- *               exist in the result to be fetched, and @a offset & @a limit to
- *               request subsequent pages of results.
+ *               configuration.
+ *               Use @a hasMoreRecords to see if more records exist in the
+ *               result to be fetched, and
+ *               @a offset & @a limit to request subsequent pages of results.
  * @param options
  *                 <ul>
  *                         <li> gpudb::get_records_expression: Optional filter
@@ -148,14 +151,17 @@ GetRecordsResponse<boost::any> GPUdb::getRecords( const std::string& tableName,
  *                The minimum allowed value is 0. The maximum allowed value is
  *                MAX_INT.
  * @param limit  A positive integer indicating the maximum number of results to
- *               be returned. Or END_OF_SET (-9999) to indicate that the max
- *               number of results should be returned.  The number of records
- *               returned will never exceed the server's own limit, defined by
- *               the <a href="../../../config/#general"
+ *               be returned, or
+ *               END_OF_SET (-9999) to indicate that the maximum number of
+ *               results allowed by the server should be
+ *               returned.  The number of records returned will never exceed
+ *               the server's own limit, defined by the
+ *               <a href="../../../config/#config-main-general"
  *               target="_top">max_get_records_size</a> parameter in the server
- *               configuration.  Use @a hasMoreRecords to see if more records
- *               exist in the result to be fetched, and @a offset & @a limit to
- *               request subsequent pages of results.
+ *               configuration.
+ *               Use @a hasMoreRecords to see if more records exist in the
+ *               result to be fetched, and
+ *               @a offset & @a limit to request subsequent pages of results.
  * @param options
  *                 <ul>
  *                         <li> gpudb::get_records_expression: Optional filter
@@ -425,13 +431,16 @@ GetRecordsFromCollectionResponse<boost::any>& GPUdb::getRecordsFromCollection( c
  *                The minimum allowed value is 0. The maximum allowed value is
  *                MAX_INT.
  * @param limit  A positive integer indicating the maximum number of results to
- *               be returned, or END_OF_SET (-9999) to indicate that the max
- *               number of results should be returned.  The number of records
- *               returned will never exceed the server's own limit, defined by
- *               the <a href="../../../config/#general"
+ *               be returned, or
+ *               END_OF_SET (-9999) to indicate that the maximum number of
+ *               results allowed by the server should be
+ *               returned.  The number of records returned will never exceed
+ *               the server's own limit, defined by the
+ *               <a href="../../../config/#config-main-general"
  *               target="_top">max_get_records_size</a> parameter in the server
- *               configuration.  Use @a offset & @a limit to request subsequent
- *               pages of results.
+ *               configuration.
+ *               Use @a offset & @a limit to request subsequent pages of
+ *               results.
  * @param options
  *                 <ul>
  *                         <li>
@@ -444,6 +453,9 @@ GetRecordsFromCollectionResponse<boost::any>& GPUdb::getRecordsFromCollection( c
  *                 </ul>
  *                 The default value is
  *                 gpudb::get_records_from_collection_false.
+ *                         <li> gpudb::get_records_from_collection_expression:
+ *                 Optional filter expression to apply to the table.  The
+ *                 default value is ''.
  *                 </ul>
  * 
  * @return Response object containing the result of the operation.
@@ -480,13 +492,16 @@ GetRecordsFromCollectionResponse<boost::any> GPUdb::getRecordsFromCollection( co
  *                The minimum allowed value is 0. The maximum allowed value is
  *                MAX_INT.
  * @param limit  A positive integer indicating the maximum number of results to
- *               be returned, or END_OF_SET (-9999) to indicate that the max
- *               number of results should be returned.  The number of records
- *               returned will never exceed the server's own limit, defined by
- *               the <a href="../../../config/#general"
+ *               be returned, or
+ *               END_OF_SET (-9999) to indicate that the maximum number of
+ *               results allowed by the server should be
+ *               returned.  The number of records returned will never exceed
+ *               the server's own limit, defined by the
+ *               <a href="../../../config/#config-main-general"
  *               target="_top">max_get_records_size</a> parameter in the server
- *               configuration.  Use @a offset & @a limit to request subsequent
- *               pages of results.
+ *               configuration.
+ *               Use @a offset & @a limit to request subsequent pages of
+ *               results.
  * @param options
  *                 <ul>
  *                         <li>
@@ -499,6 +514,9 @@ GetRecordsFromCollectionResponse<boost::any> GPUdb::getRecordsFromCollection( co
  *                 </ul>
  *                 The default value is
  *                 gpudb::get_records_from_collection_false.
+ *                         <li> gpudb::get_records_from_collection_expression:
+ *                 Optional filter expression to apply to the table.  The
+ *                 default value is ''.
  *                 </ul>
  * @param[out] response_  Response object containing the results of the
  *                        operation.

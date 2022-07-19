@@ -119,10 +119,10 @@ namespace gpudb
          *                      view this projection is part of.  The default
          *                      value is ''.
          *                              <li> gpudb::create_join_table_no_count:
-         *                      return a count of 0 for the join table for
-         *                      logging and for show_table. optimization needed
-         *                      for large overlapped equi-join stencils.  The
-         *                      default value is 'false'.
+         *                      Return a count of 0 for the join table for
+         *                      logging and for /show/table; optimization
+         *                      needed for large overlapped equi-join stencils.
+         *                      The default value is 'false'.
          *                              <li>
          *                      gpudb::create_join_table_chunk_size: Maximum
          *                      number of records per joined-chunk for this

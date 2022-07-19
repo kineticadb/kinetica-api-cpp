@@ -144,8 +144,7 @@ void GPUdbIngestor::construct( const gpudb::GPUdb& db,
             for ( WorkerList::const_iterator it = worker_list.begin(); it != worker_list.end(); ++it )
             {
                 std::string url = (std::string)( it->getAppendedUrl( "insert/records" ) );
-                worker_queue_ptr_t worker_queue( new WorkerQueue( url, batch_size, has_primary_key,
-                                                                  update_records_on_existing_pk ) );
+                worker_queue_ptr_t worker_queue( new WorkerQueue( url, batch_size ) );
                 m_worker_queues.push_back( worker_queue );
             }
 
@@ -165,8 +164,7 @@ void GPUdbIngestor::construct( const gpudb::GPUdb& db,
         else // multi-head ingest is NOT turned on; use the regular server IP address
         {
             std::string url = (std::string)( m_db.getUrl().getAppendedUrl( "/insert/records" ) );
-            worker_queue_ptr_t worker_queue( new WorkerQueue( url, batch_size, has_primary_key,
-                                                              update_records_on_existing_pk ) );
+            worker_queue_ptr_t worker_queue( new WorkerQueue( url, batch_size ) );
 
             m_worker_queues.push_back( worker_queue );
         }

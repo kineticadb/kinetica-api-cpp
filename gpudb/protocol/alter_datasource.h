@@ -46,7 +46,8 @@ namespace gpudb
          *                                   'storage_provider_type://[storage_path[:storage_port]]'
          *                                   format.
          *                                   Supported storage provider types
-         *                                   are 'hdfs' and 's3'.
+         *                                   are 'azure','gcs','hdfs','kafka'
+         *                                   and 's3'.
          *                                           <li>
          *                                   gpudb::alter_datasource_user_name:
          *                                   Name of the remote system user;
@@ -138,6 +139,19 @@ namespace gpudb
          *                                   Oauth token to access given
          *                                   storage container
          *                                           <li>
+         *                                   gpudb::alter_datasource_gcs_bucket_name:
+         *                                   Name of the Google Cloud Storage
+         *                                   bucket to use as the data source
+         *                                           <li>
+         *                                   gpudb::alter_datasource_gcs_project_id:
+         *                                   Name of the Google Cloud project
+         *                                   to use as the data source
+         *                                           <li>
+         *                                   gpudb::alter_datasource_gcs_service_account_keys:
+         *                                   Google Cloud service account keys
+         *                                   to use for authenticating the data
+         *                                   source
+         *                                           <li>
          *                                   gpudb::alter_datasource_kafka_url:
          *                                   The publicly-accessible full path
          *                                   URL to the kafka broker, e.g.,
@@ -187,6 +201,14 @@ namespace gpudb
          *                                   </ul>
          *                                   The default value is
          *                                   gpudb::alter_datasource_true.
+         *                                           <li>
+         *                                   gpudb::alter_datasource_schema_name:
+         *                                   Updates the schema name.  If @a
+         *                                   schema_name
+         *                                   doesn't exist, an error will be
+         *                                   thrown. If @a schema_name is
+         *                                   empty, then the user's
+         *                                   default schema will be used.
          *                                   </ul>
          * @param[in] options_  Optional parameters.
          * 

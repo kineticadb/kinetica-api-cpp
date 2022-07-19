@@ -43,7 +43,7 @@ namespace gpudb
          *                       'storage_provider_type://[storage_path[:storage_port]]'
          *                       format.
          *                       Supported storage provider types are
-         *                       'azure','hdfs','kafka' and 's3'.
+         *                       'azure','gcs','hdfs','jdbc','kafka' and 's3'.
          * @param[in] userName_  Name of the remote system user; may be an
          *                       empty string
          * @param[in] password_  Password for the remote system user; may be an
@@ -85,6 +85,14 @@ namespace gpudb
          *                      permissions that can be assumed for the given
          *                      S3 IAM user
          *                              <li>
+         *                      gpudb::create_datasource_s3_encryption_customer_algorithm:
+         *                      Customer encryption algorithm used encrypting
+         *                      data
+         *                              <li>
+         *                      gpudb::create_datasource_s3_encryption_customer_key:
+         *                      Customer encryption key to encrypt or decrypt
+         *                      data
+         *                              <li>
          *                      gpudb::create_datasource_hdfs_kerberos_keytab:
          *                      Kerberos keytab file location for the given
          *                      HDFS user
@@ -121,8 +129,20 @@ namespace gpudb
          *                      gpudb::create_datasource_azure_oauth_token:
          *                      Oauth token to access given storage container
          *                              <li>
+         *                      gpudb::create_datasource_gcs_bucket_name: Name
+         *                      of the Google Cloud Storage bucket to use as
+         *                      the data source
+         *                              <li>
+         *                      gpudb::create_datasource_gcs_project_id: Name
+         *                      of the Google Cloud project to use as the data
+         *                      source
+         *                              <li>
+         *                      gpudb::create_datasource_gcs_service_account_keys:
+         *                      Google Cloud service account keys to use for
+         *                      authenticating the data source
+         *                              <li>
          *                      gpudb::create_datasource_is_stream: To load
-         *                      from S3/Azure as a stream continuously.
+         *                      from Azure/GCS/S3 as a stream continuously.
          *                      <ul>
          *                              <li> gpudb::create_datasource_true
          *                              <li> gpudb::create_datasource_false
@@ -132,6 +152,12 @@ namespace gpudb
          *                              <li>
          *                      gpudb::create_datasource_kafka_topic_name: Name
          *                      of the Kafka topic to use as the data source
+         *                              <li>
+         *                      gpudb::create_datasource_jdbc_driver_jar_path:
+         *                      JDBC driver jar file location
+         *                              <li>
+         *                      gpudb::create_datasource_jdbc_driver_class_name:
+         *                      Name of the JDBC driver class
          *                              <li>
          *                      gpudb::create_datasource_anonymous: Use
          *                      anonymous connection to storage

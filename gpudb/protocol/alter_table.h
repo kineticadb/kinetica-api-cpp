@@ -18,9 +18,9 @@ namespace gpudb
      * <p>
      * Manage a table's columns--a column can be added, removed, or have its
      * <a href="../../../concepts/types/" target="_top">type and properties</a>
-     * modified, including
-     * whether it is <a href="../../../concepts/compression/"
-     * target="_top">compressed</a> or not.
+     * modified, including whether it is
+     * <a href="../../../concepts/dictionary_encoding/"
+     * target="_top">dictionary encoded</a> or not.
      * <p>
      * External tables cannot be modified except for their refresh method.
      * <p>
@@ -125,7 +125,7 @@ namespace gpudb
          *                     created.
          *                             <li> gpudb::alter_table_move_to_schema:
          *                     Moves a table or view into a schema named @a
-         *                     value.  If the schema provided is non-existent,
+         *                     value.  If the schema provided is nonexistent,
          *                     an error will be thrown. If @a value is empty,
          *                     then the table or view will be placed in the
          *                     user's default schema.
@@ -160,12 +160,8 @@ namespace gpudb
          *                     'char4' column, both 'char4' and 'dict' must be
          *                     specified in the @a options map.
          *                             <li>
-         *                     gpudb::alter_table_set_column_compression:
-         *                     Modifies the <a
-         *                     href="../../../concepts/compression/"
-         *                     target="_top">compression</a> setting on the
-         *                     column specified in @a value to the compression
-         *                     type specified in @a compression_type.
+         *                     gpudb::alter_table_set_column_compression: No
+         *                     longer supported; action will be ignored.
          *                             <li> gpudb::alter_table_delete_column:
          *                     Deletes the column specified in @a value from
          *                     the table specified in @a tableName.
@@ -325,11 +321,8 @@ namespace gpudb
          *                      column type (strings, separated by a comma:
          *                      int, double, string, null etc).
          *                              <li>
-         *                      gpudb::alter_table_compression_type: When
-         *                      setting column compression (@a
-         *                      set_column_compression for @a action),
-         *                      compression type to use: @a none (to use no
-         *                      compression) or a valid compression type.
+         *                      gpudb::alter_table_compression_type: No longer
+         *                      supported; option will be ignored.
          *                      <ul>
          *                              <li> gpudb::alter_table_none
          *                              <li> gpudb::alter_table_snappy
@@ -402,6 +395,8 @@ namespace gpudb
          *                      Create or delete a <a
          *                      href="../../../concepts/indexes/#chunk-skip-index"
          *                      target="_top">chunk skip index</a>.
+         *                              <li> gpudb::alter_table_geospatial:
+         *                      Create or delete a geospatial index
          *                      </ul>
          *                      The default value is gpudb::alter_table_column.
          *                      </ul>
@@ -488,9 +483,9 @@ namespace gpudb
      * <p>
      * Manage a table's columns--a column can be added, removed, or have its
      * <a href="../../../concepts/types/" target="_top">type and properties</a>
-     * modified, including
-     * whether it is <a href="../../../concepts/compression/"
-     * target="_top">compressed</a> or not.
+     * modified, including whether it is
+     * <a href="../../../concepts/dictionary_encoding/"
+     * target="_top">dictionary encoded</a> or not.
      * <p>
      * External tables cannot be modified except for their refresh method.
      * <p>

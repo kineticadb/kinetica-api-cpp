@@ -233,6 +233,23 @@ namespace gpudb
          *                                 '5'.
          *                                 </ul>
          * @param[in] options_  Optional parameters.
+         *                      <ul>
+         *                              <li>
+         *                      gpudb::alter_system_properties_persist: If @a
+         *                      true the system configuration will be written
+         *                      to disk upon successful application of this
+         *                      request. This will commit the changes from this
+         *                      request and any additional in-memory
+         *                      modifications.
+         *                      <ul>
+         *                              <li>
+         *                      gpudb::alter_system_properties_true
+         *                              <li>
+         *                      gpudb::alter_system_properties_false
+         *                      </ul>
+         *                      The default value is
+         *                      gpudb::alter_system_properties_true.
+         *                      </ul>
          * 
          */
         AlterSystemPropertiesRequest(const std::map<std::string, std::string>& propertyUpdatesMap_, const std::map<std::string, std::string>& options_):

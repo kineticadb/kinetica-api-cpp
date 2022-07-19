@@ -81,6 +81,12 @@ namespace gpudb
          *                      The default value is
          *                      gpudb::create_datasink_flat.
          *                              <li>
+         *                      gpudb::create_datasink_jdbc_driver_jar_path:
+         *                      JDBC driver jar file location
+         *                              <li>
+         *                      gpudb::create_datasink_jdbc_driver_class_name:
+         *                      Name of the JDBC driver class
+         *                              <li>
          *                      gpudb::create_datasink_skip_validation: Bypass
          *                      validation of connection to this data sink.
          *                      <ul>

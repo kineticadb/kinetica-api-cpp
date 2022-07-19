@@ -149,69 +149,17 @@ namespace gpudb
          * @param[in] options_  Optional parameters.
          *                      <ul>
          *                              <li>
-         *                      gpudb::create_graph_restriction_threshold_value:
-         *                      Value-based restriction comparison. Any node or
-         *                      edge with a RESTRICTIONS_VALUECOMPARED value
-         *                      greater than the @a restriction_threshold_value
-         *                      will not be included in the graph.
-         *                              <li>
          *                      gpudb::create_graph_merge_tolerance: If node
          *                      geospatial positions are input (e.g., WKTPOINT,
          *                      X, Y), determines the minimum separation
          *                      allowed between unique nodes. If nodes are
          *                      within the tolerance of each other, they will
          *                      be merged as a single node.  The default value
-         *                      is '1.0E-4'.
-         *                              <li> gpudb::create_graph_min_x: Minimum
-         *                      x (longitude) value for spatial graph
-         *                      associations.  The default value is '-180.0'.
-         *                              <li> gpudb::create_graph_max_x: Maximum
-         *                      x (longitude) value for spatial graph
-         *                      associations.  The default value is '180.0'.
-         *                              <li> gpudb::create_graph_min_y: Minimum
-         *                      y (latitude) value for spatial graph
-         *                      associations.  The default value is '-90.0'.
-         *                              <li> gpudb::create_graph_max_y: Maximum
-         *                      y (latitude) value for spatial graph
-         *                      associations.  The default value is '90.0'.
+         *                      is '1.0E-5'.
          *                              <li> gpudb::create_graph_recreate: If
          *                      set to @a true and the graph (using @a
          *                      graphName) already exists, the graph is deleted
          *                      and recreated.
-         *                      <ul>
-         *                              <li> gpudb::create_graph_true
-         *                              <li> gpudb::create_graph_false
-         *                      </ul>
-         *                      The default value is gpudb::create_graph_false.
-         *                              <li> gpudb::create_graph_modify: If set
-         *                      to @a true, @a recreate is set to @a true, and
-         *                      the graph (specified using @a graphName)
-         *                      already exists, the graph is updated with the
-         *                      given components.
-         *                      <ul>
-         *                              <li> gpudb::create_graph_true
-         *                              <li> gpudb::create_graph_false
-         *                      </ul>
-         *                      The default value is gpudb::create_graph_false.
-         *                              <li>
-         *                      gpudb::create_graph_export_create_results: If
-         *                      set to @a true, returns the graph topology in
-         *                      the response as arrays.
-         *                      <ul>
-         *                              <li> gpudb::create_graph_true
-         *                              <li> gpudb::create_graph_false
-         *                      </ul>
-         *                      The default value is gpudb::create_graph_false.
-         *                              <li>
-         *                      gpudb::create_graph_enable_graph_draw: If set
-         *                      to @a true, adds a 'EDGE_WKTLINE' column
-         *                      identifier to the specified @a graph_table so
-         *                      the graph can be viewed via WMS; for social and
-         *                      non-geospatial graphs, the 'EDGE_WKTLINE'
-         *                      column identifier will be populated with
-         *                      spatial coordinates derived from a flattening
-         *                      layout algorithm so the graph can still be
-         *                      viewed.
          *                      <ul>
          *                              <li> gpudb::create_graph_true
          *                              <li> gpudb::create_graph_false
@@ -225,19 +173,6 @@ namespace gpudb
          *                      information). If set to @a false, the graph
          *                      will be removed when the graph server is
          *                      shutdown.
-         *                      <ul>
-         *                              <li> gpudb::create_graph_true
-         *                              <li> gpudb::create_graph_false
-         *                      </ul>
-         *                      The default value is gpudb::create_graph_false.
-         *                              <li> gpudb::create_graph_sync_db: If
-         *                      set to @a true and @a save_persist is set to @a
-         *                      true, the graph will be fully reconstructed
-         *                      upon a database restart and be updated to align
-         *                      with any source table(s) updates made since the
-         *                      creation of the graph. If dynamic graph updates
-         *                      upon table inserts are desired, use @a
-         *                      add_table_monitor instead.
          *                      <ul>
          *                              <li> gpudb::create_graph_true
          *                              <li> gpudb::create_graph_false
@@ -273,18 +208,6 @@ namespace gpudb
          *                      columns: 'EDGE_ID', 'EDGE_NODE1_ID',
          *                      'EDGE_NODE2_ID'. If left blank, no table is
          *                      created.  The default value is ''.
-         *                              <li>
-         *                      gpudb::create_graph_remove_label_only: When
-         *                      RESTRICTIONS on labeled entities requested, if
-         *                      set to true this will NOT delete the entity but
-         *                      only the label associated with the entity.
-         *                      Otherwise (default), it'll delete the label AND
-         *                      the entity.
-         *                      <ul>
-         *                              <li> gpudb::create_graph_true
-         *                              <li> gpudb::create_graph_false
-         *                      </ul>
-         *                      The default value is gpudb::create_graph_false.
          *                              <li> gpudb::create_graph_add_turns:
          *                      Adds dummy 'pillowed' edges around intersection
          *                      nodes where there are more than three edges so
@@ -296,17 +219,6 @@ namespace gpudb
          *                              <li> gpudb::create_graph_false
          *                      </ul>
          *                      The default value is gpudb::create_graph_false.
-         *                              <li> gpudb::create_graph_turn_angle:
-         *                      Value in degrees modifies the thresholds for
-         *                      attributing right, left, sharp turns, and
-         *                      intersections. It is the vertical deviation
-         *                      angle from the incoming edge to the
-         *                      intersection node. The larger the value, the
-         *                      larger the threshold for sharp turns and
-         *                      intersections; the smaller the value, the
-         *                      larger the threshold for right and left turns;
-         *                      0 < turn_angle < 90.  The default value is
-         *                      '60'.
          *                              <li>
          *                      gpudb::create_graph_is_partitioned:
          *                      <ul>
@@ -326,16 +238,13 @@ namespace gpudb
          *                              <li> gpudb::create_graph_true
          *                              <li> gpudb::create_graph_false
          *                      </ul>
-         *                      The default value is gpudb::create_graph_false.
+         *                      The default value is gpudb::create_graph_true.
          *                              <li>
          *                      gpudb::create_graph_label_delimiter: If
          *                      provided the label string will be split
          *                      according to this delimiter and each sub-string
          *                      will be applied as a separate label onto the
          *                      specified edge.  The default value is ''.
-         *                              <li>
-         *                      gpudb::create_graph_sql_request_avro_json:
-         *                      The default value is ''.
          *                      </ul>
          * 
          */

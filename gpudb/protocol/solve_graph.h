@@ -102,13 +102,12 @@ namespace gpudb
          *                           constant values in an
          *                           identifier combination, the number of
          *                           values specified must match across the
-         *                           combination. If @a
-         *                           remove_previous_restrictions is set
-         *                           to @a true, any
+         *                           combination. If
+         *                           remove_previous_restrictions option is set
+         *                           to true, any
          *                           provided restrictions will replace the
-         *                           existing restrictions. If
-         *                           @a remove_previous_restrictions is set to
-         *                           @a false, any provided
+         *                           existing restrictions. Otherwise, any
+         *                           provided
          *                           restrictions will be added (in the case of
          *                           'RESTRICTIONS_VALUECOMPARED') to or
          *                           replaced (in the case of
@@ -218,33 +217,6 @@ namespace gpudb
          *                      the setting value. If set to 0, the setting is
          *                      ignored.  The default value is '1000'.
          *                              <li>
-         *                      gpudb::solve_graph_export_solve_results:
-         *                      Returns solution results inside the @a
-         *                      resultPerDestinationNode array in the response
-         *                      if set to @a true.
-         *                      <ul>
-         *                              <li> gpudb::solve_graph_true
-         *                              <li> gpudb::solve_graph_false
-         *                      </ul>
-         *                      The default value is gpudb::solve_graph_false.
-         *                              <li>
-         *                      gpudb::solve_graph_remove_previous_restrictions:
-         *                      Ignore the restrictions applied to the graph
-         *                      during the creation stage and only use the
-         *                      restrictions specified in this request if set
-         *                      to @a true.
-         *                      <ul>
-         *                              <li> gpudb::solve_graph_true
-         *                              <li> gpudb::solve_graph_false
-         *                      </ul>
-         *                      The default value is gpudb::solve_graph_false.
-         *                              <li>
-         *                      gpudb::solve_graph_restriction_threshold_value:
-         *                      Value-based restriction comparison. Any node or
-         *                      edge with a RESTRICTIONS_VALUECOMPARED value
-         *                      greater than the @a restriction_threshold_value
-         *                      will not be included in the solution.
-         *                              <li>
          *                      gpudb::solve_graph_uniform_weights: When
          *                      specified, assigns the given value to all the
          *                      edges in the graph. Note that weights provided
@@ -291,26 +263,6 @@ namespace gpudb
          *                      default value of two millions is overridden to
          *                      a lesser value, it can potentially speed up the
          *                      solver.  The default value is '2000000'.
-         *                              <li> gpudb::solve_graph_accurate_snaps:
-         *                      Valid for single source destination pair solves
-         *                      if points are described in NODE_WKTPOINT
-         *                      identifier types: When true (default), it snaps
-         *                      to the nearest node of the graph; otherwise, it
-         *                      searches for the closest entity that could be
-         *                      an edge. For the latter case (false), the
-         *                      solver modifies the resulting cost with the
-         *                      weights proportional to the ratio of the snap
-         *                      location within the edge. This may be an
-         *                      over-kill when the performance is considered
-         *                      and the difference is well less than 1 percent.
-         *                      In batch runs, since the performance is of
-         *                      utmost importance, the option is always
-         *                      considered 'false'.
-         *                      <ul>
-         *                              <li> gpudb::solve_graph_true
-         *                              <li> gpudb::solve_graph_false
-         *                      </ul>
-         *                      The default value is gpudb::solve_graph_true.
          *                              <li>
          *                      gpudb::solve_graph_output_edge_path: If true
          *                      then concatenated edge ids will be added as the
@@ -373,6 +325,25 @@ namespace gpudb
          *                      output
          *                      </ul>
          *                      The default value is gpudb::solve_graph_false.
+         *                              <li>
+         *                      gpudb::solve_graph_solve_heuristic: Specify
+         *                      heuristic search criterion only for the geo
+         *                      graphs and shortest path solves towards a
+         *                      single target
+         *                      <ul>
+         *                              <li> gpudb::solve_graph_astar: Employs
+         *                      A-STAR heuristics to speed up the shortest path
+         *                      traversal
+         *                              <li> gpudb::solve_graph_none: No
+         *                      heuristics are applied
+         *                      </ul>
+         *                      The default value is gpudb::solve_graph_none.
+         *                              <li> gpudb::solve_graph_astar_radius:
+         *                      For path solvers only when 'solve_heuristic'
+         *                      option is 'astar'. The shortest path traversal
+         *                      front includes nodes only within this radius
+         *                      (kilometers) as it moves towards the target
+         *                      location.  The default value is '70'.
          *                      </ul>
          * 
          */

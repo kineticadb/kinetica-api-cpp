@@ -62,6 +62,10 @@ namespace gpudb
          *                                   gpudb::alter_credential_hdfs
          *                                           <li>
          *                                   gpudb::alter_credential_kafka
+         *                                           <li>
+         *                                   gpudb::alter_credential_gcs_service_account_id
+         *                                           <li>
+         *                                   gpudb::alter_credential_gcs_service_account_keys
          *                                   </ul>
          *                                           <li>
          *                                   gpudb::alter_credential_identity:
@@ -69,6 +73,14 @@ namespace gpudb
          *                                           <li>
          *                                   gpudb::alter_credential_secret:
          *                                   New password for the credential
+         *                                           <li>
+         *                                   gpudb::alter_credential_schema_name:
+         *                                   Updates the schema name.  If @a
+         *                                   schema_name
+         *                                   doesn't exist, an error will be
+         *                                   thrown. If @a schema_name is
+         *                                   empty, then the user's
+         *                                   default schema will be used.
          *                                   </ul>
          * @param[in] options_  Optional parameters.
          * 

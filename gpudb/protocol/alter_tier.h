@@ -47,14 +47,25 @@ namespace gpudb
          *                      Maximum size in bytes this tier may hold at
          *                      once.
          *                              <li> gpudb::alter_tier_high_watermark:
-         *                      Threshold of usage of this tier's resource
-         *                      that, once exceeded, will trigger
-         *                      watermark-based eviction from this tier.
+         *                      Threshold of usage of this tier's resource that
+         *                      once exceeded, will trigger watermark-based
+         *                      eviction from this tier.
          *                              <li> gpudb::alter_tier_low_watermark:
-         *                      Threshold of resource usage that, once fallen
+         *                      Threshold of resource usage that once fallen
          *                      below after crossing the @a high_watermark,
          *                      will cease watermark-based eviction from this
          *                      tier.
+         *                              <li> gpudb::alter_tier_persist: If @a
+         *                      true the system configuration will be written
+         *                      to disk upon successful application of this
+         *                      request. This will commit the changes from this
+         *                      request and any additional in-memory
+         *                      modifications.
+         *                      <ul>
+         *                              <li> gpudb::alter_tier_true
+         *                              <li> gpudb::alter_tier_false
+         *                      </ul>
+         *                      The default value is gpudb::alter_tier_true.
          *                      </ul>
          * 
          */

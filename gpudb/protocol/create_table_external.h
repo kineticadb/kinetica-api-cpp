@@ -85,12 +85,13 @@ namespace gpudb
          *                        path (or relative to the path) specified by
          *                        the
          *                        external files directory in the Kinetica
-         *                        <a href="../../../config/#external-files"
+         *                        <a
+         *                        href="../../../config/#config-main-external-files"
          *                        target="_top">configuration file</a>.
-         *                        Wildcards (*) can be used to specify a group
-         *                        of files
-         *                        Prefix matching is supported, the prefixes
-         *                        must be aligned with directories.
+         *                        Wildcards (*) can be used to
+         *                        specify a group of files.  Prefix matching is
+         *                        supported, the prefixes must be aligned with
+         *                        directories.
          *                        If the first path ends in .tsv, the text
          *                        delimiter will be defaulted to a tab
          *                        character.
@@ -318,6 +319,15 @@ namespace gpudb
          *                      A positive integer indicating the maximum
          *                      number of records that can be  written to the
          *                      bad-record-table.   Default value is 10000
+         *                              <li>
+         *                      gpudb::create_table_external_bad_record_table_limit_per_input:
+         *                      For subscriptions: A positive integer
+         *                      indicating the maximum number of records that
+         *                      can be written to the bad-record-table per
+         *                      file/payload. Default value will be
+         *                      'bad_record_table_limit' and total size of the
+         *                      table per rank is limited to
+         *                      'bad_record_table_limit'
          *                              <li>
          *                      gpudb::create_table_external_batch_size:
          *                      Internal tuning parameter--number of records
@@ -771,6 +781,15 @@ namespace gpudb
          *                      </ul>
          *                      The default value is
          *                      gpudb::create_table_external_speed.
+         *                              <li>
+         *                      gpudb::create_table_external_remote_query:
+         *                      Remote SQL query from which data will be
+         *                      sourced
+         *                              <li>
+         *                      gpudb::create_table_external_remote_query_filter_column:
+         *                      Name of column to be used for splitting the
+         *                      query into multiple sub-queries.  The default
+         *                      value is ''.
          *                      </ul>
          * 
          */

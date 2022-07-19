@@ -94,10 +94,11 @@ namespace gpudb
          *                        datasource_name, these file
          *                        paths must resolve to accessible files at
          *                        that data source location. Prefix matching is
-         *                        is supported.
+         *                        supported.
          *                        If the data source is hdfs, prefixes must be
          *                        aligned with directories, i.e. partial file
-         *                        names will not match.
+         *                        names will
+         *                        not match.
          *                        If no data source is specified, the files are
          *                        assumed to be local to the database and must
          *                        all be
@@ -105,12 +106,13 @@ namespace gpudb
          *                        path (or relative to the path) specified by
          *                        the
          *                        external files directory in the Kinetica
-         *                        <a href="../../../config/#external-files"
+         *                        <a
+         *                        href="../../../config/#config-main-external-files"
          *                        target="_top">configuration file</a>.
-         *                        Wildcards (*) can be used to specify a group
-         *                        of files.
-         *                        Prefix matching is supported, the prefixes
-         *                        must be aligned with directories.
+         *                        Wildcards (*) can be used to
+         *                        specify a group of files.  Prefix matching is
+         *                        supported, the prefixes must be aligned with
+         *                        directories.
          *                        If the first path ends in .tsv, the text
          *                        delimiter will be defaulted to a tab
          *                        character.
@@ -326,6 +328,15 @@ namespace gpudb
          *                      A positive integer indicating the maximum
          *                      number of records that can be  written to the
          *                      bad-record-table.   Default value is 10000
+         *                              <li>
+         *                      gpudb::insert_records_from_files_bad_record_table_limit_per_input:
+         *                      For subscriptions: A positive integer
+         *                      indicating the maximum number of records that
+         *                      can be written to the bad-record-table per
+         *                      file/payload. Default value will be
+         *                      'bad_record_table_limit' and total size of the
+         *                      table per rank is limited to
+         *                      'bad_record_table_limit'
          *                              <li>
          *                      gpudb::insert_records_from_files_batch_size:
          *                      Internal tuning parameter--number of records

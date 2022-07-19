@@ -13,7 +13,7 @@ namespace gpudb
      * A set of input parameters for {@link
      * #adminSwitchover(const AdminSwitchoverRequest&) const}.
      * <p>
-     * Manually switchover one or more processes to another host. Individual
+     * Manually switch over one or more processes to another host. Individual
      * ranks or entire hosts may be moved to another host.
      */
     struct AdminSwitchoverRequest
@@ -34,29 +34,35 @@ namespace gpudb
          * Constructs an AdminSwitchoverRequest object with the specified
          * parameters.
          * 
-         * @param[in] processes_  Indicates the process identifier to
-         *                        switchover to another host. Options are
+         * @param[in] processes_  Indicates the process identifier to switch
+         *                        over to another host. Options are
          *                        'hostN' and 'rankN' where 'N' corresponds to
          *                        the number associated with a host or rank in
-         *                        the <a href="../../../config/#network"
+         *                        the
+         *                        <a
+         *                        href="../../../config/#config-main-network"
          *                        target="_top">Network</a> section of the
-         *                        gpudb.conf file, e.g., 'host[N].address' or
-         *                        'rank[N].host'. If 'hostN' is provided, all
-         *                        processes on that host will be moved to
-         *                        another host. Each entry in this array will
-         *                        be switched over to the corresponding host
+         *                        gpudb.conf file; e.g.,
+         *                        'host[N].address' or 'rank[N].host'. If
+         *                        'hostN' is provided, all processes on that
+         *                        host will be
+         *                        moved to another host. Each entry in this
+         *                        array will be switched over to the
+         *                        corresponding host
          *                        entry at the same index in @a destinations.
-         * @param[in] destinations_  Indicates to which host to switchover each
-         *                           corresponding process given in @a
-         *                           processes. Each index must be specified as
-         *                           'hostN' where 'N' corresponds to the
-         *                           number associated with a host or rank in
-         *                           the <a href="../../../config/#network"
+         * @param[in] destinations_  Indicates to which host to switch over
+         *                           each corresponding process given in
+         *                           @a processes. Each index must be specified
+         *                           as 'hostN' where 'N' corresponds to the
+         *                           number
+         *                           associated with a host or rank in the <a
+         *                           href="../../../config/#config-main-network"
          *                           target="_top">Network</a> section of the
-         *                           gpudb.conf file, e.g., 'host[N].address'.
+         *                           gpudb.conf file; e.g., 'host[N].address'.
          *                           Each entry in this array will receive the
-         *                           corresponding process entry at the same
-         *                           index in @a processes.
+         *                           corresponding
+         *                           process entry at the same index in @a
+         *                           processes.
          * @param[in] options_  Optional parameters.
          *                      <ul>
          *                              <li> gpudb::admin_switchover_dry_run:
@@ -139,7 +145,7 @@ namespace gpudb
      * A set of output parameters for {@link
      * #adminSwitchover(const AdminSwitchoverRequest&) const}.
      * <p>
-     * Manually switchover one or more processes to another host. Individual
+     * Manually switch over one or more processes to another host. Individual
      * ranks or entire hosts may be moved to another host.
      */
     struct AdminSwitchoverResponse

@@ -33,14 +33,7 @@ namespace gpudb
      * for more information.
      * <p>
      * To return the adjacency list in the response, leave @a adjacencyTable
-     * empty. To return the adjacency list in a table and not in the response,
-     * provide
-     * a value to @a adjacencyTable and set
-     * @a export_query_results to
-     * @a false. To return the
-     * adjacency list both in a table and the response, provide a value to
-     * @a adjacencyTable and set @a export_query_results
-     * to @a true.
+     * empty.
      * <p>
      * IMPORTANT: It's highly recommended that you review the
      * <a href="../../../graph_solver/network_graph_solver/"
@@ -112,10 +105,8 @@ namespace gpudb
          *                             href="../../../concepts/tables/#table-naming-criteria"
          *                             target="_top">table naming criteria</a>.
          *                             If left blank, the query results are
-         *                             instead returned in the response even if
-         *                             @a export_query_results is set to @a
-         *                             false. If the 'QUERY_TARGET_NODE_LABEL'
-         *                             <a
+         *                             instead returned in the response. If the
+         *                             'QUERY_TARGET_NODE_LABEL' <a
          *                             href="../../../graph_solver/network_graph_solver/#query-identifiers"
          *                             target="_top">query identifier</a> is
          *                             used in @a queries, then two additional
@@ -158,63 +149,18 @@ namespace gpudb
          *                      The default value is gpudb::query_graph_false.
          *                              <li> gpudb::query_graph_limit: When
          *                      specified, limits the number of query results.
-         *                      Note that if the @a target_nodes_table is
-         *                      provided, the size of the corresponding table
-         *                      will be limited by the @a limit value.  The
-         *                      default value is an empty std::map.
+         *                      The size of the nodes table will be limited by
+         *                      the @a limit value.  The default value is an
+         *                      empty std::map.
          *                              <li>
-         *                      gpudb::query_graph_target_nodes_table: Name of
-         *                      the table to store the list of the final nodes
-         *                      reached during the traversal, in
-         *                      [schema_name.]table_name format, using standard
-         *                      <a
-         *                      href="../../../concepts/tables/#table-name-resolution"
-         *                      target="_top">name resolution rules</a> and
-         *                      meeting <a
-         *                      href="../../../concepts/tables/#table-naming-criteria"
-         *                      target="_top">table naming criteria</a>.  If
-         *                      this value is left as the default, the table
-         *                      name will default to the @a adjacencyTable
-         *                      value plus a '_nodes' suffix, e.g.,
-         *                      '<adjacency_table_name>_nodes'.  The default
-         *                      value is ''.
-         *                              <li>
-         *                      gpudb::query_graph_restriction_threshold_value:
-         *                      Value-based restriction comparison. Any node or
-         *                      edge with a RESTRICTIONS_VALUECOMPARED value
-         *                      greater than the @a restriction_threshold_value
-         *                      will not be included in the solution.
-         *                              <li>
-         *                      gpudb::query_graph_export_query_results:
-         *                      Returns query results in the response. If set
-         *                      to @a true, the @a adjacencyListIntArray (if
-         *                      the query was based on IDs), @a
-         *                      adjacencyListStringArray (if the query was
-         *                      based on names), or @a adjacencyListWktArray
-         *                      (if the query was based on WKTs) will be
-         *                      populated with the results. If set to @a false,
-         *                      none of the arrays will be populated.
+         *                      gpudb::query_graph_output_wkt_path: If true
+         *                      then concatenated wkt line segments will be
+         *                      added as the WKT column of the adjacency table.
          *                      <ul>
          *                              <li> gpudb::query_graph_true
          *                              <li> gpudb::query_graph_false
          *                      </ul>
-         *                      The default value is gpudb::query_graph_false.
-         *                              <li>
-         *                      gpudb::query_graph_enable_graph_draw: If set to
-         *                      @a true, adds a WKT-type column named
-         *                      'QUERY_EDGE_WKTLINE' to the given @a
-         *                      adjacencyTable and inputs WKT values from the
-         *                      source graph (if available) or auto-generated
-         *                      WKT values (if there are no WKT values in the
-         *                      source graph). A subsequent call to the <a
-         *                      href="../../../api/rest/wms_rest/"
-         *                      target="_top">/wms</a> endpoint can then be
-         *                      made to display the query results on a map.
-         *                      <ul>
-         *                              <li> gpudb::query_graph_true
-         *                              <li> gpudb::query_graph_false
-         *                      </ul>
-         *                      The default value is gpudb::query_graph_false.
+         *                      The default value is gpudb::query_graph_true.
          *                              <li> gpudb::query_graph_and_labels: If
          *                      set to @a true, the result of the query has
          *                      entities that satisfy all of the target labels,
@@ -345,14 +291,7 @@ namespace gpudb
      * for more information.
      * <p>
      * To return the adjacency list in the response, leave @a adjacencyTable
-     * empty. To return the adjacency list in a table and not in the response,
-     * provide
-     * a value to @a adjacencyTable and set
-     * @a export_query_results to
-     * @a false. To return the
-     * adjacency list both in a table and the response, provide a value to
-     * @a adjacencyTable and set @a export_query_results
-     * to @a true.
+     * empty.
      * <p>
      * IMPORTANT: It's highly recommended that you review the
      * <a href="../../../graph_solver/network_graph_solver/"

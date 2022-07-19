@@ -77,38 +77,46 @@ namespace gpudb
          *                    this array corresponds to the entry at the same
          *                    index in the @a configParams.
          * @param[in] configParams_  Array of maps containing configuration
-         *                           parameters to apply to the new ranks found
-         *                           in @a hosts. For example,
+         *                           parameters to apply to the new ranks
+         *                           found in @a hosts. For example,
          *                           '{"rank.gpu":"2",
          *                           "tier.ram.rank.limit":"10000000000"}'.
-         *                           Currently, the available parameters are
-         *                           rank-specific parameters in the <a
-         *                           href="../../../config/#network"
-         *                           target="_top">Network</a>, <a
-         *                           href="../../../config/#hardware"
-         *                           target="_top">Hardware</a>, <a
-         *                           href="../../../config/#text-search"
-         *                           target="_top">Text Search</a>, and <a
-         *                           href="../../../config/#ram-tier"
+         *                           Currently, the available parameters
+         *                           are rank-specific parameters in the <a
+         *                           href="../../../config/#config-main-network"
+         *                           target="_top">Network</a>,
+         *                           <a
+         *                           href="../../../config/#config-main-hardware"
+         *                           target="_top">Hardware</a>,
+         *                           <a
+         *                           href="../../../config/#config-main-text-search"
+         *                           target="_top">Text Search</a>, and
+         *                           <a
+         *                           href="../../../config/#config-main-ram-tier"
          *                           target="_top">RAM Tiered Storage</a>
          *                           sections in the gpudb.conf file, with the
          *                           key exception of the 'rankN.host' settings
          *                           in the Network section that will be
-         *                           determined by @a hosts instead. Though
-         *                           many of these configuration parameters
-         *                           typically are affixed with 'rankN' in the
-         *                           gpudb.conf file (where N is the rank
-         *                           number), the 'N' should be omitted in @a
-         *                           configParams as the new rank number(s) are
-         *                           not allocated until the ranks have been
-         *                           added to the cluster. Each entry in this
-         *                           array corresponds to the entry at the same
-         *                           index in the @a hosts. This array must
-         *                           either be completely empty or have the
-         *                           same number of elements as the @a hosts.
-         *                           An empty @a configParams array will result
-         *                           in the new ranks being set with default
-         *                           parameters.
+         *                           determined by
+         *                           @a hosts instead. Though many of these
+         *                           configuration parameters typically are
+         *                           affixed with
+         *                           'rankN' in the gpudb.conf file (where N is
+         *                           the rank number), the 'N' should be
+         *                           omitted in
+         *                           @a configParams as the new rank number(s)
+         *                           are not allocated until the ranks have
+         *                           been added
+         *                           to the cluster. Each entry in this array
+         *                           corresponds to the entry at the same index
+         *                           in the
+         *                           @a hosts. This array must either be
+         *                           completely empty or have the same number
+         *                           of elements as
+         *                           the @a hosts.  An empty @a configParams
+         *                           array will result in the new ranks being
+         *                           set
+         *                           with default parameters.
          * @param[in] options_  Optional parameters.
          *                      <ul>
          *                              <li> gpudb::admin_add_ranks_dry_run: If
