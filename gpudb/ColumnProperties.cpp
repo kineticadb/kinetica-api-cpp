@@ -53,6 +53,8 @@ namespace gpudb
 
         const std::string CHAR256       ( "char256"        );
 
+        const std::string BOOLEAN       ( "boolean"        );
+
         const std::string INT8          ( "int8"           );
 
         const std::string INT16         ( "int16"          );

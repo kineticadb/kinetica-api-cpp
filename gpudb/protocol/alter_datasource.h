@@ -95,9 +95,18 @@ namespace gpudb
          *                                   be assumed for the given S3 IAM
          *                                   user
          *                                           <li>
+         *                                   gpudb::alter_datasource_s3_encryption_customer_algorithm:
+         *                                   Customer encryption algorithm used
+         *                                   encrypting data
+         *                                           <li>
+         *                                   gpudb::alter_datasource_s3_encryption_customer_key:
+         *                                   Customer encryption key to encrypt
+         *                                   or decrypt data
+         *                                           <li>
          *                                   gpudb::alter_datasource_hdfs_kerberos_keytab:
          *                                   Kerberos keytab file location for
-         *                                   the given HDFS user
+         *                                   the given HDFS user.  This may be
+         *                                   a KIFS file.
          *                                           <li>
          *                                   gpudb::alter_datasource_hdfs_delegation_token:
          *                                   Delegation token for the given
@@ -160,6 +169,13 @@ namespace gpudb
          *                                   gpudb::alter_datasource_kafka_topic_name:
          *                                   Name of the Kafka topic to use as
          *                                   the data source
+         *                                           <li>
+         *                                   gpudb::alter_datasource_jdbc_driver_jar_path:
+         *                                   JDBC driver jar file location.
+         *                                   This may be a KIFS file.
+         *                                           <li>
+         *                                   gpudb::alter_datasource_jdbc_driver_class_name:
+         *                                   Name of the JDBC driver class
          *                                           <li>
          *                                   gpudb::alter_datasource_anonymous:
          *                                   Create an anonymous connection to

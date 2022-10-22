@@ -59,13 +59,13 @@ namespace gpudb
          *                                           <li>
          *                                   gpudb::alter_credential_docker
          *                                           <li>
-         *                                   gpudb::alter_credential_hdfs
-         *                                           <li>
-         *                                   gpudb::alter_credential_kafka
-         *                                           <li>
          *                                   gpudb::alter_credential_gcs_service_account_id
          *                                           <li>
          *                                   gpudb::alter_credential_gcs_service_account_keys
+         *                                           <li>
+         *                                   gpudb::alter_credential_hdfs
+         *                                           <li>
+         *                                   gpudb::alter_credential_kafka
          *                                   </ul>
          *                                           <li>
          *                                   gpudb::alter_credential_identity:

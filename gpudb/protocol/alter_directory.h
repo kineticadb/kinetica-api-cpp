@@ -3,89 +3,77 @@
  *
  *  DO NOT EDIT DIRECTLY.
  */
-#ifndef __CREATE_DIRECTORY_H__
-#define __CREATE_DIRECTORY_H__
+#ifndef __ALTER_DIRECTORY_H__
+#define __ALTER_DIRECTORY_H__
 
 namespace gpudb
 {
 
     /**
      * A set of input parameters for {@link
-     * #createDirectory(const CreateDirectoryRequest&) const}.
+     * #alterDirectory(const AlterDirectoryRequest&) const}.
      * <p>
-     * Creates a new directory in <a href="../../../tools/kifs/"
-     * target="_top">KiFS</a>. The new
-     * directory serves as a location in which the user can upload files using
-     * {@link #uploadFiles(const UploadFilesRequest&) const}.
+     * Alters an existing directory in <a href="../../../tools/kifs/"
+     * target="_top">KiFS</a>.
      */
-    struct CreateDirectoryRequest
+    struct AlterDirectoryRequest
     {
 
         /**
-         * Constructs a CreateDirectoryRequest object with default parameter
+         * Constructs an AlterDirectoryRequest object with default parameter
          * values.
          */
-        CreateDirectoryRequest() :
+        AlterDirectoryRequest() :
             directoryName(std::string()),
+            directoryUpdatesMap(std::map<std::string, std::string>()),
             options(std::map<std::string, std::string>())
         {
         }
 
         /**
-         * Constructs a CreateDirectoryRequest object with the specified
+         * Constructs an AlterDirectoryRequest object with the specified
          * parameters.
          * 
          * @param[in] directoryName_  Name of the directory in KiFS to be
-         *                            created.
+         *                            altered.
+         * @param[in] directoryUpdatesMap_  Map containing the properties of
+         *                                  the directory to be altered. Error
+         *                                  if empty.
+         *                                  <ul>
+         *                                          <li>
+         *                                  gpudb::alter_directory_data_limit:
+         *                                  The maximum capacity, in bytes, to
+         *                                  apply to the directory. Set to -1
+         *                                  to indicate no upper limit.
+         *                                  </ul>
          * @param[in] options_  Optional parameters.
-         *                      <ul>
-         *                              <li>
-         *                      gpudb::create_directory_create_home_directory:
-         *                      When set, a home directory is created for the
-         *                      user name provided in the value. The @a
-         *                      directoryName must be an empty string in this
-         *                      case. The user must exist.
-         *                              <li>
-         *                      gpudb::create_directory_data_limit: The maximum
-         *                      capacity, in bytes, to apply to the created
-         *                      directory. Set to -1 to indicate no upper
-         *                      limit. If empty, the system default limit is
-         *                      applied.
-         *                              <li>
-         *                      gpudb::create_directory_no_error_if_exists: If
-         *                      @a true, does not return an error if the
-         *                      directory already exists
-         *                      <ul>
-         *                              <li> gpudb::create_directory_true
-         *                              <li> gpudb::create_directory_false
-         *                      </ul>
-         *                      The default value is
-         *                      gpudb::create_directory_false.
-         *                      </ul>
          * 
          */
-        CreateDirectoryRequest(const std::string& directoryName_, const std::map<std::string, std::string>& options_):
+        AlterDirectoryRequest(const std::string& directoryName_, const std::map<std::string, std::string>& directoryUpdatesMap_, const std::map<std::string, std::string>& options_):
             directoryName( directoryName_ ),
+            directoryUpdatesMap( directoryUpdatesMap_ ),
             options( options_ )
         {
         }
 
         std::string directoryName;
+        std::map<std::string, std::string> directoryUpdatesMap;
         std::map<std::string, std::string> options;
     };
 }
 
 namespace avro
 {
-    template<> struct codec_traits<gpudb::CreateDirectoryRequest>
+    template<> struct codec_traits<gpudb::AlterDirectoryRequest>
     {
-        static void encode(Encoder& e, const gpudb::CreateDirectoryRequest& v)
+        static void encode(Encoder& e, const gpudb::AlterDirectoryRequest& v)
         {
             ::avro::encode(e, v.directoryName);
+            ::avro::encode(e, v.directoryUpdatesMap);
             ::avro::encode(e, v.options);
         }
 
-        static void decode(Decoder& d, gpudb::CreateDirectoryRequest& v)
+        static void decode(Decoder& d, gpudb::AlterDirectoryRequest& v)
         {
             if (::avro::ResolvingDecoder *rd = dynamic_cast< ::avro::ResolvingDecoder*>(&d))
             {
@@ -100,6 +88,10 @@ namespace avro
                             break;
 
                         case 1:
+                            ::avro::decode(d, v.directoryUpdatesMap);
+                            break;
+
+                        case 2:
                             ::avro::decode(d, v.options);
                             break;
 
@@ -111,6 +103,7 @@ namespace avro
             else
             {
                 ::avro::decode(d, v.directoryName);
+                ::avro::decode(d, v.directoryUpdatesMap);
                 ::avro::decode(d, v.options);
             }
         }
@@ -122,21 +115,19 @@ namespace gpudb
 
     /**
      * A set of output parameters for {@link
-     * #createDirectory(const CreateDirectoryRequest&) const}.
+     * #alterDirectory(const AlterDirectoryRequest&) const}.
      * <p>
-     * Creates a new directory in <a href="../../../tools/kifs/"
-     * target="_top">KiFS</a>. The new
-     * directory serves as a location in which the user can upload files using
-     * {@link #uploadFiles(const UploadFilesRequest&) const}.
+     * Alters an existing directory in <a href="../../../tools/kifs/"
+     * target="_top">KiFS</a>.
      */
-    struct CreateDirectoryResponse
+    struct AlterDirectoryResponse
     {
 
         /**
-         * Constructs a CreateDirectoryResponse object with default parameter
+         * Constructs an AlterDirectoryResponse object with default parameter
          * values.
          */
-        CreateDirectoryResponse() :
+        AlterDirectoryResponse() :
             directoryName(std::string()),
             info(std::map<std::string, std::string>())
         {
@@ -149,15 +140,15 @@ namespace gpudb
 
 namespace avro
 {
-    template<> struct codec_traits<gpudb::CreateDirectoryResponse>
+    template<> struct codec_traits<gpudb::AlterDirectoryResponse>
     {
-        static void encode(Encoder& e, const gpudb::CreateDirectoryResponse& v)
+        static void encode(Encoder& e, const gpudb::AlterDirectoryResponse& v)
         {
             ::avro::encode(e, v.directoryName);
             ::avro::encode(e, v.info);
         }
 
-        static void decode(Decoder& d, gpudb::CreateDirectoryResponse& v)
+        static void decode(Decoder& d, gpudb::AlterDirectoryResponse& v)
         {
             if (::avro::ResolvingDecoder *rd = dynamic_cast< ::avro::ResolvingDecoder*>(&d))
             {

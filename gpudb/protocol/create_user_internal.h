@@ -48,17 +48,23 @@ namespace gpudb
          *                      with this user
          *                              <li>
          *                      gpudb::create_user_internal_default_schema:
-         *                      default schema associate with this user
+         *                      Default schema to associate with this user
          *                              <li>
          *                      gpudb::create_user_internal_create_home_directory:
-         *                      when true, a home directory in KiFS is created
-         *                      for this user
+         *                      When @a true, a home directory in KiFS is
+         *                      created for this user
          *                      <ul>
          *                              <li> gpudb::create_user_internal_true
          *                              <li> gpudb::create_user_internal_false
          *                      </ul>
          *                      The default value is
          *                      gpudb::create_user_internal_true.
+         *                              <li>
+         *                      gpudb::create_user_internal_directory_data_limit:
+         *                      The maximum capacity to apply to the created
+         *                      directory if @a create_home_directory is @a
+         *                      true. Set to -1 to indicate no upper limit. If
+         *                      empty, the system default limit is applied.
          *                      </ul>
          * 
          */

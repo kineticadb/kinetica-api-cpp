@@ -188,6 +188,14 @@ namespace gpudb
 
         /**
          * This property provides optimized memory and query performance for
+         * int columns. Ints with this property must be between 0 and
+         * 1(inclusive)
+         */
+        extern const std::string BOOLEAN;
+
+
+        /**
+         * This property provides optimized memory and query performance for
          * int columns. Ints with this property must be between -128 and +127
          * (inclusive)
          */

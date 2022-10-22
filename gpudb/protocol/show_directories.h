@@ -114,6 +114,8 @@ namespace gpudb
             directories(std::vector<std::string>()),
             users(std::vector<std::string>()),
             creationTimes(std::vector<int64_t>()),
+            dataUsages(std::vector<int64_t>()),
+            dataLimits(std::vector<int64_t>()),
             permissions(std::vector<std::string>()),
             info(std::map<std::string, std::string>())
         {
@@ -122,6 +124,8 @@ namespace gpudb
         std::vector<std::string> directories;
         std::vector<std::string> users;
         std::vector<int64_t> creationTimes;
+        std::vector<int64_t> dataUsages;
+        std::vector<int64_t> dataLimits;
         std::vector<std::string> permissions;
         std::map<std::string, std::string> info;
     };
@@ -136,6 +140,8 @@ namespace avro
             ::avro::encode(e, v.directories);
             ::avro::encode(e, v.users);
             ::avro::encode(e, v.creationTimes);
+            ::avro::encode(e, v.dataUsages);
+            ::avro::encode(e, v.dataLimits);
             ::avro::encode(e, v.permissions);
             ::avro::encode(e, v.info);
         }
@@ -163,10 +169,18 @@ namespace avro
                             break;
 
                         case 3:
-                            ::avro::decode(d, v.permissions);
+                            ::avro::decode(d, v.dataUsages);
                             break;
 
                         case 4:
+                            ::avro::decode(d, v.dataLimits);
+                            break;
+
+                        case 5:
+                            ::avro::decode(d, v.permissions);
+                            break;
+
+                        case 6:
                             ::avro::decode(d, v.info);
                             break;
 
@@ -180,6 +194,8 @@ namespace avro
                 ::avro::decode(d, v.directories);
                 ::avro::decode(d, v.users);
                 ::avro::decode(d, v.creationTimes);
+                ::avro::decode(d, v.dataUsages);
+                ::avro::decode(d, v.dataLimits);
                 ::avro::decode(d, v.permissions);
                 ::avro::decode(d, v.info);
             }

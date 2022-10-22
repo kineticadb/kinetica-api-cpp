@@ -401,11 +401,13 @@ namespace gpudb
          *                      match the source data field names for a
          *                      name-mapping
          *                      to be successful.
+         *                      Mutually exclusive with @a columns_to_skip.
          *                              <li>
          *                      gpudb::insert_records_from_files_columns_to_skip:
          *                      Specifies a comma-delimited list of columns
          *                      from the source data to
-         *                      skip.  Mutually exclusive to columns_to_load.
+         *                      skip.  Mutually exclusive with @a
+         *                      columns_to_load.
          *                              <li>
          *                      gpudb::insert_records_from_files_datasource_name:
          *                      Name of an existing external data source from
@@ -766,6 +768,16 @@ namespace gpudb
          *                      </ul>
          *                      The default value is
          *                      gpudb::insert_records_from_files_speed.
+         *                              <li>
+         *                      gpudb::insert_records_from_files_update_on_existing_pk:
+         *                      <ul>
+         *                              <li>
+         *                      gpudb::insert_records_from_files_true
+         *                              <li>
+         *                      gpudb::insert_records_from_files_false
+         *                      </ul>
+         *                      The default value is
+         *                      gpudb::insert_records_from_files_false.
          *                      </ul>
          * 
          */

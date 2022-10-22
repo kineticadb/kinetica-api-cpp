@@ -40,15 +40,28 @@ namespace gpudb
          * @param[in] options_  Optional parameters.
          *                      <ul>
          *                              <li>
+         *                      gpudb::create_user_external_resource_group:
+         *                      Name of an existing resource group to associate
+         *                      with this user
+         *                              <li>
+         *                      gpudb::create_user_external_default_schema:
+         *                      Default schema to associate with this user
+         *                              <li>
          *                      gpudb::create_user_external_create_home_directory:
-         *                      when true, a home directory in KiFS is created
-         *                      for this user
+         *                      When @a true, a home directory in KiFS is
+         *                      created for this user
          *                      <ul>
          *                              <li> gpudb::create_user_external_true
          *                              <li> gpudb::create_user_external_false
          *                      </ul>
          *                      The default value is
          *                      gpudb::create_user_external_true.
+         *                              <li>
+         *                      gpudb::create_user_external_directory_data_limit:
+         *                      The maximum capacity to apply to the created
+         *                      directory if @a create_home_directory is @a
+         *                      true. Set to -1 to indicate no upper limit. If
+         *                      empty, the system default limit is applied.
          *                      </ul>
          * 
          */

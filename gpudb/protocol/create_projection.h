@@ -206,6 +206,67 @@ namespace gpudb
          *                      </ul>
          *                      The default value is
          *                      gpudb::create_projection_false.
+         *                              <li>
+         *                      gpudb::create_projection_partition_type: <a
+         *                      href="../../../concepts/tables/#partitioning"
+         *                      target="_top">Partitioning</a> scheme to use.
+         *                      <ul>
+         *                              <li> gpudb::create_projection_RANGE:
+         *                      Use <a
+         *                      href="../../../concepts/tables/#partitioning-by-range"
+         *                      target="_top">range partitioning</a>.
+         *                              <li> gpudb::create_projection_INTERVAL:
+         *                      Use <a
+         *                      href="../../../concepts/tables/#partitioning-by-interval"
+         *                      target="_top">interval partitioning</a>.
+         *                              <li> gpudb::create_projection_LIST: Use
+         *                      <a
+         *                      href="../../../concepts/tables/#partitioning-by-list"
+         *                      target="_top">list partitioning</a>.
+         *                              <li> gpudb::create_projection_HASH: Use
+         *                      <a
+         *                      href="../../../concepts/tables/#partitioning-by-hash"
+         *                      target="_top">hash partitioning</a>.
+         *                              <li> gpudb::create_projection_SERIES:
+         *                      Use <a
+         *                      href="../../../concepts/tables/#partitioning-by-series"
+         *                      target="_top">series partitioning</a>.
+         *                      </ul>
+         *                              <li>
+         *                      gpudb::create_projection_partition_keys:
+         *                      Comma-separated list of partition keys, which
+         *                      are the columns or column expressions by which
+         *                      records will be assigned to partitions defined
+         *                      by @a partition_definitions.
+         *                              <li>
+         *                      gpudb::create_projection_partition_definitions:
+         *                      Comma-separated list of partition definitions,
+         *                      whose format depends on the choice of @a
+         *                      partition_type.  See <a
+         *                      href="../../../concepts/tables/#partitioning-by-range"
+         *                      target="_top">range partitioning</a>, <a
+         *                      href="../../../concepts/tables/#partitioning-by-interval"
+         *                      target="_top">interval partitioning</a>, <a
+         *                      href="../../../concepts/tables/#partitioning-by-list"
+         *                      target="_top">list partitioning</a>, <a
+         *                      href="../../../concepts/tables/#partitioning-by-hash"
+         *                      target="_top">hash partitioning</a>, or <a
+         *                      href="../../../concepts/tables/#partitioning-by-series"
+         *                      target="_top">series partitioning</a> for
+         *                      example formats.
+         *                              <li>
+         *                      gpudb::create_projection_is_automatic_partition:
+         *                      If @a true, a new partition will be created for
+         *                      values which don't fall into an existing
+         *                      partition.  Currently only supported for <a
+         *                      href="../../../concepts/tables/#partitioning-by-list"
+         *                      target="_top">list partitions</a>.
+         *                      <ul>
+         *                              <li> gpudb::create_projection_true
+         *                              <li> gpudb::create_projection_false
+         *                      </ul>
+         *                      The default value is
+         *                      gpudb::create_projection_false.
          *                              <li> gpudb::create_projection_view_id:
          *                      ID of view of which this projection is a
          *                      member.  The default value is ''.

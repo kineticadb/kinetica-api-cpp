@@ -93,13 +93,14 @@ namespace gpudb
     const std::string admin_switchover_true   ( "true"    );
 
     // Keywords for /admin/verifydb request
-    const std::string admin_verify_db_concurrent_safe ( "concurrent_safe"  );
-    const std::string admin_verify_db_false           ( "false"            );
-    const std::string admin_verify_db_rebuild_on_error( "rebuild_on_error" );
-    const std::string admin_verify_db_true            ( "true"             );
-    const std::string admin_verify_db_verify_nulls    ( "verify_nulls"     );
-    const std::string admin_verify_db_verify_persist  ( "verify_persist"   );
-    const std::string admin_verify_db_verify_rank0    ( "verify_rank0"     );
+    const std::string admin_verify_db_concurrent_safe       ( "concurrent_safe"        );
+    const std::string admin_verify_db_delete_orphaned_tables( "delete_orphaned_tables" );
+    const std::string admin_verify_db_false                 ( "false"                  );
+    const std::string admin_verify_db_rebuild_on_error      ( "rebuild_on_error"       );
+    const std::string admin_verify_db_true                  ( "true"                   );
+    const std::string admin_verify_db_verify_nulls          ( "verify_nulls"           );
+    const std::string admin_verify_db_verify_persist        ( "verify_persist"         );
+    const std::string admin_verify_db_verify_rank0          ( "verify_rank0"           );
 
     // Keywords for /aggregate/groupby request
     const std::string aggregate_group_by_ascending                    ( "ascending"                     );
@@ -246,51 +247,76 @@ namespace gpudb
     const std::string alter_credential_type                    ( "type"                     );
 
     // Keywords for /alter/datasink request
-    const std::string alter_datasink_connection_timeout( "connection_timeout" );
-    const std::string alter_datasink_credential        ( "credential"         );
-    const std::string alter_datasink_destination       ( "destination"        );
-    const std::string alter_datasink_false             ( "false"              );
-    const std::string alter_datasink_flat              ( "flat"               );
-    const std::string alter_datasink_json_format       ( "json_format"        );
-    const std::string alter_datasink_kafka_topic_name  ( "kafka_topic_name"   );
-    const std::string alter_datasink_max_batch_size    ( "max_batch_size"     );
-    const std::string alter_datasink_max_message_size  ( "max_message_size"   );
-    const std::string alter_datasink_nested            ( "nested"             );
-    const std::string alter_datasink_schema_name       ( "schema_name"        );
-    const std::string alter_datasink_skip_validation   ( "skip_validation"    );
-    const std::string alter_datasink_true              ( "true"               );
-    const std::string alter_datasink_wait_timeout      ( "wait_timeout"       );
+    const std::string alter_datasink_anonymous                 ( "anonymous"                  );
+    const std::string alter_datasink_azure_container_name      ( "azure_container_name"       );
+    const std::string alter_datasink_azure_oauth_token         ( "azure_oauth_token"          );
+    const std::string alter_datasink_azure_sas_token           ( "azure_sas_token"            );
+    const std::string alter_datasink_azure_storage_account_name( "azure_storage_account_name" );
+    const std::string alter_datasink_azure_tenant_id           ( "azure_tenant_id"            );
+    const std::string alter_datasink_connection_timeout        ( "connection_timeout"         );
+    const std::string alter_datasink_credential                ( "credential"                 );
+    const std::string alter_datasink_destination               ( "destination"                );
+    const std::string alter_datasink_false                     ( "false"                      );
+    const std::string alter_datasink_flat                      ( "flat"                       );
+    const std::string alter_datasink_gcs_bucket_name           ( "gcs_bucket_name"            );
+    const std::string alter_datasink_gcs_project_id            ( "gcs_project_id"             );
+    const std::string alter_datasink_gcs_service_account_keys  ( "gcs_service_account_keys"   );
+    const std::string alter_datasink_hdfs_delegation_token     ( "hdfs_delegation_token"      );
+    const std::string alter_datasink_hdfs_kerberos_keytab      ( "hdfs_kerberos_keytab"       );
+    const std::string alter_datasink_hdfs_use_kerberos         ( "hdfs_use_kerberos"          );
+    const std::string alter_datasink_json_format               ( "json_format"                );
+    const std::string alter_datasink_kafka_topic_name          ( "kafka_topic_name"           );
+    const std::string alter_datasink_kafka_url                 ( "kafka_url"                  );
+    const std::string alter_datasink_max_batch_size            ( "max_batch_size"             );
+    const std::string alter_datasink_max_message_size          ( "max_message_size"           );
+    const std::string alter_datasink_nested                    ( "nested"                     );
+    const std::string alter_datasink_s3_aws_role_arn           ( "s3_aws_role_arn"            );
+    const std::string alter_datasink_s3_bucket_name            ( "s3_bucket_name"             );
+    const std::string alter_datasink_s3_region                 ( "s3_region"                  );
+    const std::string alter_datasink_schema_name               ( "schema_name"                );
+    const std::string alter_datasink_skip_validation           ( "skip_validation"            );
+    const std::string alter_datasink_true                      ( "true"                       );
+    const std::string alter_datasink_use_https                 ( "use_https"                  );
+    const std::string alter_datasink_use_managed_credentials   ( "use_managed_credentials"    );
+    const std::string alter_datasink_wait_timeout              ( "wait_timeout"               );
 
     // Keywords for /alter/datasource request
-    const std::string alter_datasource_anonymous                 ( "anonymous"                  );
-    const std::string alter_datasource_azure_container_name      ( "azure_container_name"       );
-    const std::string alter_datasource_azure_oauth_token         ( "azure_oauth_token"          );
-    const std::string alter_datasource_azure_sas_token           ( "azure_sas_token"            );
-    const std::string alter_datasource_azure_storage_account_name( "azure_storage_account_name" );
-    const std::string alter_datasource_azure_tenant_id           ( "azure_tenant_id"            );
-    const std::string alter_datasource_connection_timeout        ( "connection_timeout"         );
-    const std::string alter_datasource_credential                ( "credential"                 );
-    const std::string alter_datasource_false                     ( "false"                      );
-    const std::string alter_datasource_gcs_bucket_name           ( "gcs_bucket_name"            );
-    const std::string alter_datasource_gcs_project_id            ( "gcs_project_id"             );
-    const std::string alter_datasource_gcs_service_account_keys  ( "gcs_service_account_keys"   );
-    const std::string alter_datasource_hdfs_delegation_token     ( "hdfs_delegation_token"      );
-    const std::string alter_datasource_hdfs_kerberos_keytab      ( "hdfs_kerberos_keytab"       );
-    const std::string alter_datasource_hdfs_use_kerberos         ( "hdfs_use_kerberos"          );
-    const std::string alter_datasource_kafka_topic_name          ( "kafka_topic_name"           );
-    const std::string alter_datasource_kafka_url                 ( "kafka_url"                  );
-    const std::string alter_datasource_location                  ( "location"                   );
-    const std::string alter_datasource_password                  ( "password"                   );
-    const std::string alter_datasource_s3_aws_role_arn           ( "s3_aws_role_arn"            );
-    const std::string alter_datasource_s3_bucket_name            ( "s3_bucket_name"             );
-    const std::string alter_datasource_s3_region                 ( "s3_region"                  );
-    const std::string alter_datasource_schema_name               ( "schema_name"                );
-    const std::string alter_datasource_skip_validation           ( "skip_validation"            );
-    const std::string alter_datasource_true                      ( "true"                       );
-    const std::string alter_datasource_use_https                 ( "use_https"                  );
-    const std::string alter_datasource_use_managed_credentials   ( "use_managed_credentials"    );
-    const std::string alter_datasource_user_name                 ( "user_name"                  );
-    const std::string alter_datasource_wait_timeout              ( "wait_timeout"               );
+    const std::string alter_datasource_anonymous                       ( "anonymous"                        );
+    const std::string alter_datasource_azure_container_name            ( "azure_container_name"             );
+    const std::string alter_datasource_azure_oauth_token               ( "azure_oauth_token"                );
+    const std::string alter_datasource_azure_sas_token                 ( "azure_sas_token"                  );
+    const std::string alter_datasource_azure_storage_account_name      ( "azure_storage_account_name"       );
+    const std::string alter_datasource_azure_tenant_id                 ( "azure_tenant_id"                  );
+    const std::string alter_datasource_connection_timeout              ( "connection_timeout"               );
+    const std::string alter_datasource_credential                      ( "credential"                       );
+    const std::string alter_datasource_false                           ( "false"                            );
+    const std::string alter_datasource_gcs_bucket_name                 ( "gcs_bucket_name"                  );
+    const std::string alter_datasource_gcs_project_id                  ( "gcs_project_id"                   );
+    const std::string alter_datasource_gcs_service_account_keys        ( "gcs_service_account_keys"         );
+    const std::string alter_datasource_hdfs_delegation_token           ( "hdfs_delegation_token"            );
+    const std::string alter_datasource_hdfs_kerberos_keytab            ( "hdfs_kerberos_keytab"             );
+    const std::string alter_datasource_hdfs_use_kerberos               ( "hdfs_use_kerberos"                );
+    const std::string alter_datasource_jdbc_driver_class_name          ( "jdbc_driver_class_name"           );
+    const std::string alter_datasource_jdbc_driver_jar_path            ( "jdbc_driver_jar_path"             );
+    const std::string alter_datasource_kafka_topic_name                ( "kafka_topic_name"                 );
+    const std::string alter_datasource_kafka_url                       ( "kafka_url"                        );
+    const std::string alter_datasource_location                        ( "location"                         );
+    const std::string alter_datasource_password                        ( "password"                         );
+    const std::string alter_datasource_s3_aws_role_arn                 ( "s3_aws_role_arn"                  );
+    const std::string alter_datasource_s3_bucket_name                  ( "s3_bucket_name"                   );
+    const std::string alter_datasource_s3_encryption_customer_algorithm( "s3_encryption_customer_algorithm" );
+    const std::string alter_datasource_s3_encryption_customer_key      ( "s3_encryption_customer_key"       );
+    const std::string alter_datasource_s3_region                       ( "s3_region"                        );
+    const std::string alter_datasource_schema_name                     ( "schema_name"                      );
+    const std::string alter_datasource_skip_validation                 ( "skip_validation"                  );
+    const std::string alter_datasource_true                            ( "true"                             );
+    const std::string alter_datasource_use_https                       ( "use_https"                        );
+    const std::string alter_datasource_use_managed_credentials         ( "use_managed_credentials"          );
+    const std::string alter_datasource_user_name                       ( "user_name"                        );
+    const std::string alter_datasource_wait_timeout                    ( "wait_timeout"                     );
+
+    // Keywords for /alter/directory request
+    const std::string alter_directory_data_limit( "data_limit" );
 
     // Keywords for /alter/graph request
     const std::string alter_graph_add_table_monitor( "add_table_monitor" );
@@ -343,6 +369,7 @@ namespace gpudb
     const std::string alter_system_properties_clear_cache                ( "clear_cache"                 );
     const std::string alter_system_properties_communicator_test          ( "communicator_test"           );
     const std::string alter_system_properties_concurrent_kernel_execution( "concurrent_kernel_execution" );
+    const std::string alter_system_properties_egress_single_file_max_size( "egress_single_file_max_size" );
     const std::string alter_system_properties_enable_audit               ( "enable_audit"                );
     const std::string alter_system_properties_enable_overlapped_equi_join( "enable_overlapped_equi_join" );
     const std::string alter_system_properties_evict_columns              ( "evict_columns"               );
@@ -354,6 +381,7 @@ namespace gpudb
     const std::string alter_system_properties_kafka_timeout              ( "kafka_timeout"               );
     const std::string alter_system_properties_kafka_wait_time            ( "kafka_wait_time"             );
     const std::string alter_system_properties_kernel_omp_threads         ( "kernel_omp_threads"          );
+    const std::string alter_system_properties_max_concurrent_kernels     ( "max_concurrent_kernels"      );
     const std::string alter_system_properties_max_get_records_size       ( "max_get_records_size"        );
     const std::string alter_system_properties_network_speed              ( "network_speed"               );
     const std::string alter_system_properties_persist                    ( "persist"                     );
@@ -364,6 +392,8 @@ namespace gpudb
     const std::string alter_system_properties_sm_omp_threads             ( "sm_omp_threads"              );
     const std::string alter_system_properties_subtask_concurrency_limit  ( "subtask_concurrency_limit"   );
     const std::string alter_system_properties_synchronous_compression    ( "synchronous_compression"     );
+    const std::string alter_system_properties_tcs_per_tom                ( "tcs_per_tom"                 );
+    const std::string alter_system_properties_tps_per_tom                ( "tps_per_tom"                 );
     const std::string alter_system_properties_true                       ( "true"                        );
 
     // Keywords for /alter/table request
@@ -485,20 +515,38 @@ namespace gpudb
     const std::string create_credential_true                    ( "true"                     );
 
     // Keywords for /create/datasink request
-    const std::string create_datasink_connection_timeout    ( "connection_timeout"     );
-    const std::string create_datasink_credential            ( "credential"             );
-    const std::string create_datasink_false                 ( "false"                  );
-    const std::string create_datasink_flat                  ( "flat"                   );
-    const std::string create_datasink_jdbc_driver_class_name( "jdbc_driver_class_name" );
-    const std::string create_datasink_jdbc_driver_jar_path  ( "jdbc_driver_jar_path"   );
-    const std::string create_datasink_json_format           ( "json_format"            );
-    const std::string create_datasink_kafka_topic_name      ( "kafka_topic_name"       );
-    const std::string create_datasink_max_batch_size        ( "max_batch_size"         );
-    const std::string create_datasink_max_message_size      ( "max_message_size"       );
-    const std::string create_datasink_nested                ( "nested"                 );
-    const std::string create_datasink_skip_validation       ( "skip_validation"        );
-    const std::string create_datasink_true                  ( "true"                   );
-    const std::string create_datasink_wait_timeout          ( "wait_timeout"           );
+    const std::string create_datasink_azure_container_name            ( "azure_container_name"             );
+    const std::string create_datasink_azure_oauth_token               ( "azure_oauth_token"                );
+    const std::string create_datasink_azure_sas_token                 ( "azure_sas_token"                  );
+    const std::string create_datasink_azure_storage_account_name      ( "azure_storage_account_name"       );
+    const std::string create_datasink_azure_tenant_id                 ( "azure_tenant_id"                  );
+    const std::string create_datasink_connection_timeout              ( "connection_timeout"               );
+    const std::string create_datasink_credential                      ( "credential"                       );
+    const std::string create_datasink_false                           ( "false"                            );
+    const std::string create_datasink_flat                            ( "flat"                             );
+    const std::string create_datasink_gcs_bucket_name                 ( "gcs_bucket_name"                  );
+    const std::string create_datasink_gcs_project_id                  ( "gcs_project_id"                   );
+    const std::string create_datasink_gcs_service_account_keys        ( "gcs_service_account_keys"         );
+    const std::string create_datasink_hdfs_delegation_token           ( "hdfs_delegation_token"            );
+    const std::string create_datasink_hdfs_kerberos_keytab            ( "hdfs_kerberos_keytab"             );
+    const std::string create_datasink_hdfs_use_kerberos               ( "hdfs_use_kerberos"                );
+    const std::string create_datasink_jdbc_driver_class_name          ( "jdbc_driver_class_name"           );
+    const std::string create_datasink_jdbc_driver_jar_path            ( "jdbc_driver_jar_path"             );
+    const std::string create_datasink_json_format                     ( "json_format"                      );
+    const std::string create_datasink_kafka_topic_name                ( "kafka_topic_name"                 );
+    const std::string create_datasink_max_batch_size                  ( "max_batch_size"                   );
+    const std::string create_datasink_max_message_size                ( "max_message_size"                 );
+    const std::string create_datasink_nested                          ( "nested"                           );
+    const std::string create_datasink_s3_aws_role_arn                 ( "s3_aws_role_arn"                  );
+    const std::string create_datasink_s3_bucket_name                  ( "s3_bucket_name"                   );
+    const std::string create_datasink_s3_encryption_customer_algorithm( "s3_encryption_customer_algorithm" );
+    const std::string create_datasink_s3_encryption_customer_key      ( "s3_encryption_customer_key"       );
+    const std::string create_datasink_s3_region                       ( "s3_region"                        );
+    const std::string create_datasink_skip_validation                 ( "skip_validation"                  );
+    const std::string create_datasink_true                            ( "true"                             );
+    const std::string create_datasink_use_https                       ( "use_https"                        );
+    const std::string create_datasink_use_managed_credentials         ( "use_managed_credentials"          );
+    const std::string create_datasink_wait_timeout                    ( "wait_timeout"                     );
 
     // Keywords for /create/datasource request
     const std::string create_datasource_anonymous                       ( "anonymous"                        );
@@ -533,6 +581,7 @@ namespace gpudb
 
     // Keywords for /create/directory request
     const std::string create_directory_create_home_directory( "create_home_directory" );
+    const std::string create_directory_data_limit           ( "data_limit"            );
     const std::string create_directory_false                ( "false"                 );
     const std::string create_directory_no_error_if_exists   ( "no_error_if_exists"    );
     const std::string create_directory_true                 ( "true"                  );
@@ -613,12 +662,18 @@ namespace gpudb
     const std::string create_proc_nondistributed          ( "nondistributed"           );
 
     // Keywords for /create/projection request
+    const std::string create_projection_HASH                  ( "HASH"                   );
+    const std::string create_projection_INTERVAL              ( "INTERVAL"               );
+    const std::string create_projection_LIST                  ( "LIST"                   );
+    const std::string create_projection_RANGE                 ( "RANGE"                  );
+    const std::string create_projection_SERIES                ( "SERIES"                 );
     const std::string create_projection_chunk_size            ( "chunk_size"             );
     const std::string create_projection_collection_name       ( "collection_name"        );
     const std::string create_projection_create_indexes        ( "create_indexes"         );
     const std::string create_projection_create_temp_table     ( "create_temp_table"      );
     const std::string create_projection_expression            ( "expression"             );
     const std::string create_projection_false                 ( "false"                  );
+    const std::string create_projection_is_automatic_partition( "is_automatic_partition" );
     const std::string create_projection_is_replicated         ( "is_replicated"          );
     const std::string create_projection_limit                 ( "limit"                  );
     const std::string create_projection_on_head_node_creation ( "on_head_node_creation"  );
@@ -628,6 +683,9 @@ namespace gpudb
     const std::string create_projection_on_worker_refresh     ( "on_worker_refresh"      );
     const std::string create_projection_on_worker_restart     ( "on_worker_restart"      );
     const std::string create_projection_order_by              ( "order_by"               );
+    const std::string create_projection_partition_definitions ( "partition_definitions"  );
+    const std::string create_projection_partition_keys        ( "partition_keys"         );
+    const std::string create_projection_partition_type        ( "partition_type"         );
     const std::string create_projection_persist               ( "persist"                );
     const std::string create_projection_preserve_dict_encoding( "preserve_dict_encoding" );
     const std::string create_projection_retain_partitions     ( "retain_partitions"      );
@@ -783,6 +841,7 @@ namespace gpudb
     const std::string create_table_external_is_unique                       ( "is_unique"                        );
     const std::string create_table_external_is_unpivot                      ( "is_unpivot"                       );
     const std::string create_table_external_is_update_records_by_series     ( "is_update_records_by_series"      );
+    const std::string create_table_external_jdbc_fetch_size                 ( "jdbc_fetch_size"                  );
     const std::string create_table_external_json                            ( "json"                             );
     const std::string create_table_external_kafka_group_id                  ( "kafka_group_id"                   );
     const std::string create_table_external_loading_mode                    ( "loading_mode"                     );
@@ -804,6 +863,7 @@ namespace gpudb
     const std::string create_table_external_refresh_method                  ( "refresh_method"                   );
     const std::string create_table_external_remote_query                    ( "remote_query"                     );
     const std::string create_table_external_remote_query_filter_column      ( "remote_query_filter_column"       );
+    const std::string create_table_external_remote_query_partition_column   ( "remote_query_partition_column"    );
     const std::string create_table_external_shapefile                       ( "shapefile"                        );
     const std::string create_table_external_shard_keys                      ( "shard_keys"                       );
     const std::string create_table_external_single                          ( "single"                           );
@@ -828,6 +888,7 @@ namespace gpudb
     const std::string create_table_external_type_id                         ( "type_id"                          );
     const std::string create_table_external_type_inference_mode             ( "type_inference_mode"              );
     const std::string create_table_external_type_inference_only             ( "type_inference_only"              );
+    const std::string create_table_external_update_on_existing_pk           ( "update_on_existing_pk"            );
 
     // Keywords for /create/tablemonitor request
     const std::string create_table_monitor_datasink_name     ( "datasink_name"      );
@@ -855,6 +916,7 @@ namespace gpudb
     const std::string create_table_monitor_update_type_schema( "update_type_schema" );
 
     // Keywords for /create/type request
+    const std::string create_type_boolean       ( "boolean"        );
     const std::string create_type_char1         ( "char1"          );
     const std::string create_type_char128       ( "char128"        );
     const std::string create_type_char16        ( "char16"         );
@@ -919,12 +981,16 @@ namespace gpudb
 
     // Keywords for /create/user/external request
     const std::string create_user_external_create_home_directory( "create_home_directory" );
+    const std::string create_user_external_default_schema       ( "default_schema"        );
+    const std::string create_user_external_directory_data_limit ( "directory_data_limit"  );
     const std::string create_user_external_false                ( "false"                 );
+    const std::string create_user_external_resource_group       ( "resource_group"        );
     const std::string create_user_external_true                 ( "true"                  );
 
     // Keywords for /create/user/internal request
     const std::string create_user_internal_create_home_directory( "create_home_directory" );
     const std::string create_user_internal_default_schema       ( "default_schema"        );
+    const std::string create_user_internal_directory_data_limit ( "directory_data_limit"  );
     const std::string create_user_internal_false                ( "false"                 );
     const std::string create_user_internal_resource_group       ( "resource_group"        );
     const std::string create_user_internal_true                 ( "true"                  );
@@ -1026,6 +1092,27 @@ namespace gpudb
     // Keywords for /execute/sql request and response
     const std::string execute_sql_false( "false" );
     const std::string execute_sql_true ( "true"  );
+
+    // Keywords for /export/records/tofiles request
+    const std::string export_records_to_files_batch_size               ( "batch_size"                );
+    const std::string export_records_to_files_column_formats           ( "column_formats"            );
+    const std::string export_records_to_files_columns_to_export        ( "columns_to_export"         );
+    const std::string export_records_to_files_columns_to_skip          ( "columns_to_skip"           );
+    const std::string export_records_to_files_datasink_name            ( "datasink_name"             );
+    const std::string export_records_to_files_default_column_formats   ( "default_column_formats"    );
+    const std::string export_records_to_files_delimited_text           ( "delimited_text"            );
+    const std::string export_records_to_files_export_ddl               ( "export_ddl"                );
+    const std::string export_records_to_files_false                    ( "false"                     );
+    const std::string export_records_to_files_file_extention           ( "file_extention"            );
+    const std::string export_records_to_files_file_type                ( "file_type"                 );
+    const std::string export_records_to_files_kinetica_header          ( "kinetica_header"           );
+    const std::string export_records_to_files_kinetica_header_delimiter( "kinetica_header_delimiter" );
+    const std::string export_records_to_files_parquet                  ( "parquet"                   );
+    const std::string export_records_to_files_single_file              ( "single_file"               );
+    const std::string export_records_to_files_text_delimiter           ( "text_delimiter"            );
+    const std::string export_records_to_files_text_has_header          ( "text_has_header"           );
+    const std::string export_records_to_files_text_null_string         ( "text_null_string"          );
+    const std::string export_records_to_files_true                     ( "true"                      );
 
     // Keywords for /export/records/totable request
     const std::string export_records_to_table_batch_size   ( "batch_size"    );
@@ -1484,6 +1571,7 @@ namespace gpudb
     const std::string insert_records_from_files_type_id                         ( "type_id"                          );
     const std::string insert_records_from_files_type_inference_mode             ( "type_inference_mode"              );
     const std::string insert_records_from_files_type_inference_only             ( "type_inference_only"              );
+    const std::string insert_records_from_files_update_on_existing_pk           ( "update_on_existing_pk"            );
 
     // Keywords for /insert/records/frompayload request
     const std::string insert_records_from_payload_HASH                            ( "HASH"                             );
@@ -1583,79 +1671,78 @@ namespace gpudb
     const std::string insert_records_from_payload_type_id                         ( "type_id"                          );
     const std::string insert_records_from_payload_type_inference_mode             ( "type_inference_mode"              );
     const std::string insert_records_from_payload_type_inference_only             ( "type_inference_only"              );
+    const std::string insert_records_from_payload_update_on_existing_pk           ( "update_on_existing_pk"            );
 
     // Keywords for /insert/records/fromquery request
-    const std::string insert_records_from_query_HASH                            ( "HASH"                             );
-    const std::string insert_records_from_query_INTERVAL                        ( "INTERVAL"                         );
-    const std::string insert_records_from_query_LIST                            ( "LIST"                             );
-    const std::string insert_records_from_query_RANGE                           ( "RANGE"                            );
-    const std::string insert_records_from_query_SERIES                          ( "SERIES"                           );
-    const std::string insert_records_from_query_abort                           ( "abort"                            );
-    const std::string insert_records_from_query_bad_record_table_limit          ( "bad_record_table_limit"           );
-    const std::string insert_records_from_query_bad_record_table_limit_per_input( "bad_record_table_limit_per_input" );
-    const std::string insert_records_from_query_bad_record_table_name           ( "bad_record_table_name"            );
-    const std::string insert_records_from_query_chunk_size                      ( "chunk_size"                       );
-    const std::string insert_records_from_query_datasource_name                 ( "datasource_name"                  );
-    const std::string insert_records_from_query_distributed_local               ( "distributed_local"                );
-    const std::string insert_records_from_query_distributed_shared              ( "distributed_shared"               );
-    const std::string insert_records_from_query_dry_run                         ( "dry_run"                          );
-    const std::string insert_records_from_query_error_handling                  ( "error_handling"                   );
-    const std::string insert_records_from_query_false                           ( "false"                            );
-    const std::string insert_records_from_query_foreign_keys                    ( "foreign_keys"                     );
-    const std::string insert_records_from_query_foreign_shard_key               ( "foreign_shard_key"                );
-    const std::string insert_records_from_query_full                            ( "full"                             );
-    const std::string insert_records_from_query_head                            ( "head"                             );
-    const std::string insert_records_from_query_ignore_bad_records              ( "ignore_bad_records"               );
-    const std::string insert_records_from_query_ingestion_mode                  ( "ingestion_mode"                   );
-    const std::string insert_records_from_query_is_automatic_partition          ( "is_automatic_partition"           );
-    const std::string insert_records_from_query_is_create_sql_proc              ( "is_create_sql_proc"               );
-    const std::string insert_records_from_query_is_create_view                  ( "is_create_view"                   );
-    const std::string insert_records_from_query_is_external_table               ( "is_external_table"                );
-    const std::string insert_records_from_query_is_filter_by_area               ( "is_filter_by_area"                );
-    const std::string insert_records_from_query_is_filter_by_area_geometry      ( "is_filter_by_area_geometry"       );
-    const std::string insert_records_from_query_is_filter_by_box                ( "is_filter_by_box"                 );
-    const std::string insert_records_from_query_is_filter_by_box_geometry       ( "is_filter_by_box_geometry"        );
-    const std::string insert_records_from_query_is_filter_by_geometry           ( "is_filter_by_geometry"            );
-    const std::string insert_records_from_query_is_filter_by_list               ( "is_filter_by_list"                );
-    const std::string insert_records_from_query_is_filter_by_radius             ( "is_filter_by_radius"              );
-    const std::string insert_records_from_query_is_filter_by_radius_geometry    ( "is_filter_by_radius_geometry"     );
-    const std::string insert_records_from_query_is_filter_by_range              ( "is_filter_by_range"               );
-    const std::string insert_records_from_query_is_filter_by_series             ( "is_filter_by_series"              );
-    const std::string insert_records_from_query_is_filter_by_series_values      ( "is_filter_by_series_values"       );
-    const std::string insert_records_from_query_is_filter_by_string             ( "is_filter_by_string"              );
-    const std::string insert_records_from_query_is_filter_by_table              ( "is_filter_by_table"               );
-    const std::string insert_records_from_query_is_filter_by_value              ( "is_filter_by_value"               );
-    const std::string insert_records_from_query_is_filter_view                  ( "is_filter_view"                   );
-    const std::string insert_records_from_query_is_group_by                     ( "is_group_by"                      );
-    const std::string insert_records_from_query_is_join                         ( "is_join"                          );
-    const std::string insert_records_from_query_is_merge                        ( "is_merge"                         );
-    const std::string insert_records_from_query_is_other_view                   ( "is_other_view"                    );
-    const std::string insert_records_from_query_is_projection                   ( "is_projection"                    );
-    const std::string insert_records_from_query_is_replicated                   ( "is_replicated"                    );
-    const std::string insert_records_from_query_is_result_table                 ( "is_result_table"                  );
-    const std::string insert_records_from_query_is_table                        ( "is_table"                         );
-    const std::string insert_records_from_query_is_union                        ( "is_union"                         );
-    const std::string insert_records_from_query_is_unique                       ( "is_unique"                        );
-    const std::string insert_records_from_query_is_unpivot                      ( "is_unpivot"                       );
-    const std::string insert_records_from_query_is_update_records_by_series     ( "is_update_records_by_series"      );
-    const std::string insert_records_from_query_jdbc_fetch_size                 ( "jdbc_fetch_size"                  );
-    const std::string insert_records_from_query_loading_mode                    ( "loading_mode"                     );
-    const std::string insert_records_from_query_no_error_if_exists              ( "no_error_if_exists"               );
-    const std::string insert_records_from_query_num_tasks_per_rank              ( "num_tasks_per_rank"               );
-    const std::string insert_records_from_query_partition_definitions           ( "partition_definitions"            );
-    const std::string insert_records_from_query_partition_keys                  ( "partition_keys"                   );
-    const std::string insert_records_from_query_partition_type                  ( "partition_type"                   );
-    const std::string insert_records_from_query_permissive                      ( "permissive"                       );
-    const std::string insert_records_from_query_primary_keys                    ( "primary_keys"                     );
-    const std::string insert_records_from_query_remote_query                    ( "remote_query"                     );
-    const std::string insert_records_from_query_remote_query_filter_column      ( "remote_query_filter_column"       );
-    const std::string insert_records_from_query_shard_keys                      ( "shard_keys"                       );
-    const std::string insert_records_from_query_strategy_definition             ( "strategy_definition"              );
-    const std::string insert_records_from_query_true                            ( "true"                             );
-    const std::string insert_records_from_query_truncate_table                  ( "truncate_table"                   );
-    const std::string insert_records_from_query_ttl                             ( "ttl"                              );
-    const std::string insert_records_from_query_type_id                         ( "type_id"                          );
-    const std::string insert_records_from_query_type_inference_only             ( "type_inference_only"              );
+    const std::string insert_records_from_query_HASH                         ( "HASH"                          );
+    const std::string insert_records_from_query_INTERVAL                     ( "INTERVAL"                      );
+    const std::string insert_records_from_query_LIST                         ( "LIST"                          );
+    const std::string insert_records_from_query_RANGE                        ( "RANGE"                         );
+    const std::string insert_records_from_query_SERIES                       ( "SERIES"                        );
+    const std::string insert_records_from_query_abort                        ( "abort"                         );
+    const std::string insert_records_from_query_bad_record_table_limit       ( "bad_record_table_limit"        );
+    const std::string insert_records_from_query_bad_record_table_name        ( "bad_record_table_name"         );
+    const std::string insert_records_from_query_batch_size                   ( "batch_size"                    );
+    const std::string insert_records_from_query_chunk_size                   ( "chunk_size"                    );
+    const std::string insert_records_from_query_datasource_name              ( "datasource_name"               );
+    const std::string insert_records_from_query_dry_run                      ( "dry_run"                       );
+    const std::string insert_records_from_query_error_handling               ( "error_handling"                );
+    const std::string insert_records_from_query_false                        ( "false"                         );
+    const std::string insert_records_from_query_foreign_keys                 ( "foreign_keys"                  );
+    const std::string insert_records_from_query_foreign_shard_key            ( "foreign_shard_key"             );
+    const std::string insert_records_from_query_full                         ( "full"                          );
+    const std::string insert_records_from_query_ignore_bad_records           ( "ignore_bad_records"            );
+    const std::string insert_records_from_query_ingestion_mode               ( "ingestion_mode"                );
+    const std::string insert_records_from_query_is_automatic_partition       ( "is_automatic_partition"        );
+    const std::string insert_records_from_query_is_create_sql_proc           ( "is_create_sql_proc"            );
+    const std::string insert_records_from_query_is_create_view               ( "is_create_view"                );
+    const std::string insert_records_from_query_is_external_table            ( "is_external_table"             );
+    const std::string insert_records_from_query_is_filter_by_area            ( "is_filter_by_area"             );
+    const std::string insert_records_from_query_is_filter_by_area_geometry   ( "is_filter_by_area_geometry"    );
+    const std::string insert_records_from_query_is_filter_by_box             ( "is_filter_by_box"              );
+    const std::string insert_records_from_query_is_filter_by_box_geometry    ( "is_filter_by_box_geometry"     );
+    const std::string insert_records_from_query_is_filter_by_geometry        ( "is_filter_by_geometry"         );
+    const std::string insert_records_from_query_is_filter_by_list            ( "is_filter_by_list"             );
+    const std::string insert_records_from_query_is_filter_by_radius          ( "is_filter_by_radius"           );
+    const std::string insert_records_from_query_is_filter_by_radius_geometry ( "is_filter_by_radius_geometry"  );
+    const std::string insert_records_from_query_is_filter_by_range           ( "is_filter_by_range"            );
+    const std::string insert_records_from_query_is_filter_by_series          ( "is_filter_by_series"           );
+    const std::string insert_records_from_query_is_filter_by_series_values   ( "is_filter_by_series_values"    );
+    const std::string insert_records_from_query_is_filter_by_string          ( "is_filter_by_string"           );
+    const std::string insert_records_from_query_is_filter_by_table           ( "is_filter_by_table"            );
+    const std::string insert_records_from_query_is_filter_by_value           ( "is_filter_by_value"            );
+    const std::string insert_records_from_query_is_filter_view               ( "is_filter_view"                );
+    const std::string insert_records_from_query_is_group_by                  ( "is_group_by"                   );
+    const std::string insert_records_from_query_is_join                      ( "is_join"                       );
+    const std::string insert_records_from_query_is_merge                     ( "is_merge"                      );
+    const std::string insert_records_from_query_is_other_view                ( "is_other_view"                 );
+    const std::string insert_records_from_query_is_projection                ( "is_projection"                 );
+    const std::string insert_records_from_query_is_replicated                ( "is_replicated"                 );
+    const std::string insert_records_from_query_is_result_table              ( "is_result_table"               );
+    const std::string insert_records_from_query_is_table                     ( "is_table"                      );
+    const std::string insert_records_from_query_is_union                     ( "is_union"                      );
+    const std::string insert_records_from_query_is_unique                    ( "is_unique"                     );
+    const std::string insert_records_from_query_is_unpivot                   ( "is_unpivot"                    );
+    const std::string insert_records_from_query_is_update_records_by_series  ( "is_update_records_by_series"   );
+    const std::string insert_records_from_query_jdbc_fetch_size              ( "jdbc_fetch_size"               );
+    const std::string insert_records_from_query_no_error_if_exists           ( "no_error_if_exists"            );
+    const std::string insert_records_from_query_num_tasks_per_rank           ( "num_tasks_per_rank"            );
+    const std::string insert_records_from_query_partition_definitions        ( "partition_definitions"         );
+    const std::string insert_records_from_query_partition_keys               ( "partition_keys"                );
+    const std::string insert_records_from_query_partition_type               ( "partition_type"                );
+    const std::string insert_records_from_query_permissive                   ( "permissive"                    );
+    const std::string insert_records_from_query_primary_keys                 ( "primary_keys"                  );
+    const std::string insert_records_from_query_remote_query                 ( "remote_query"                  );
+    const std::string insert_records_from_query_remote_query_filter_column   ( "remote_query_filter_column"    );
+    const std::string insert_records_from_query_remote_query_partition_column( "remote_query_partition_column" );
+    const std::string insert_records_from_query_shard_keys                   ( "shard_keys"                    );
+    const std::string insert_records_from_query_strategy_definition          ( "strategy_definition"           );
+    const std::string insert_records_from_query_true                         ( "true"                          );
+    const std::string insert_records_from_query_truncate_table               ( "truncate_table"                );
+    const std::string insert_records_from_query_ttl                          ( "ttl"                           );
+    const std::string insert_records_from_query_type_id                      ( "type_id"                       );
+    const std::string insert_records_from_query_type_inference_only          ( "type_inference_only"           );
+    const std::string insert_records_from_query_update_on_existing_pk        ( "update_on_existing_pk"         );
 
     // Keywords for /insert/records/random request
     const std::string insert_records_random_all            ( "all"             );
@@ -1688,12 +1775,14 @@ namespace gpudb
 
     // Keywords for /match/graph request
     const std::string match_graph_aggregated_output      ( "aggregated_output"       );
+    const std::string match_graph_batch_tsm_mode         ( "batch_tsm_mode"          );
     const std::string match_graph_chain_width            ( "chain_width"             );
     const std::string match_graph_charging_candidates    ( "charging_candidates"     );
     const std::string match_graph_charging_capacity      ( "charging_capacity"       );
     const std::string match_graph_charging_penalty       ( "charging_penalty"        );
     const std::string match_graph_destination            ( "destination"             );
     const std::string match_graph_enable_truck_reuse     ( "enable_truck_reuse"      );
+    const std::string match_graph_even                   ( "even"                    );
     const std::string match_graph_false                  ( "false"                   );
     const std::string match_graph_filter_folding_paths   ( "filter_folding_paths"    );
     const std::string match_graph_gps_noise              ( "gps_noise"               );
@@ -1709,13 +1798,17 @@ namespace gpudb
     const std::string match_graph_max_combinations       ( "max_combinations"        );
     const std::string match_graph_max_loop_level         ( "max_loop_level"          );
     const std::string match_graph_max_num_threads        ( "max_num_threads"         );
+    const std::string match_graph_max_supply_combinations( "max_supply_combinations" );
     const std::string match_graph_max_trip_cost          ( "max_trip_cost"           );
     const std::string match_graph_max_truck_stops        ( "max_truck_stops"         );
     const std::string match_graph_min_loop_level         ( "min_loop_level"          );
+    const std::string match_graph_none                   ( "none"                    );
     const std::string match_graph_num_segments           ( "num_segments"            );
+    const std::string match_graph_odd                    ( "odd"                     );
     const std::string match_graph_output_batch_size      ( "output_batch_size"       );
     const std::string match_graph_output_tracks          ( "output_tracks"           );
     const std::string match_graph_partial_loading        ( "partial_loading"         );
+    const std::string match_graph_restricted_truck_type  ( "restricted_truck_type"   );
     const std::string match_graph_right_turn_penalty     ( "right_turn_penalty"      );
     const std::string match_graph_search_limit           ( "search_limit"            );
     const std::string match_graph_search_radius          ( "search_radius"           );
@@ -1723,6 +1816,7 @@ namespace gpudb
     const std::string match_graph_sharp_turn_penalty     ( "sharp_turn_penalty"      );
     const std::string match_graph_source                 ( "source"                  );
     const std::string match_graph_truck_service_limit    ( "truck_service_limit"     );
+    const std::string match_graph_truck_service_radius   ( "truck_service_radius"    );
     const std::string match_graph_true                   ( "true"                    );
     const std::string match_graph_unit_unloading_cost    ( "unit_unloading_cost"     );
 
@@ -2098,6 +2192,17 @@ namespace gpudb
     const std::string upload_files_multipart_upload_uuid       ( "multipart_upload_uuid"        );
     const std::string upload_files_none                        ( "none"                         );
     const std::string upload_files_upload_part                 ( "upload_part"                  );
+
+    // Keywords for /visualize/getfeatureinfo request
+    const std::string visualize_get_feature_info_auto_column_selection( "auto_column_selection" );
+    const std::string visualize_get_feature_info_binary               ( "binary"                );
+    const std::string visualize_get_feature_info_false                ( "false"                 );
+    const std::string visualize_get_feature_info_geojson              ( "geojson"               );
+    const std::string visualize_get_feature_info_html                 ( "html"                  );
+    const std::string visualize_get_feature_info_json                 ( "json"                  );
+    const std::string visualize_get_feature_info_plate_carree         ( "plate_carree"          );
+    const std::string visualize_get_feature_info_true                 ( "true"                  );
+    const std::string visualize_get_feature_info_web_mercator         ( "web_mercator"          );
 
     // Keywords for /visualize/image request
     const std::string visualize_image_102100                 ( "102100"                  );

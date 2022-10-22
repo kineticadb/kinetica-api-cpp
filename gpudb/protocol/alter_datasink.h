@@ -62,10 +62,124 @@ namespace gpudb
          *                                 target="_top">credential</a> object
          *                                 to be used in this data sink
          *                                         <li>
+         *                                 gpudb::alter_datasink_s3_bucket_name:
+         *                                 Name of the Amazon S3 bucket to use
+         *                                 as the data sink
+         *                                         <li>
+         *                                 gpudb::alter_datasink_s3_region:
+         *                                 Name of the Amazon S3 region where
+         *                                 the given bucket is located
+         *                                         <li>
+         *                                 gpudb::alter_datasink_s3_aws_role_arn:
+         *                                 Amazon IAM Role ARN which has
+         *                                 required S3 permissions that can be
+         *                                 assumed for the given S3 IAM user
+         *                                         <li>
+         *                                 gpudb::alter_datasink_hdfs_kerberos_keytab:
+         *                                 Kerberos keytab file location for
+         *                                 the given HDFS user.  This may be a
+         *                                 KIFS file.
+         *                                         <li>
+         *                                 gpudb::alter_datasink_hdfs_delegation_token:
+         *                                 Delegation token for the given HDFS
+         *                                 user
+         *                                         <li>
+         *                                 gpudb::alter_datasink_hdfs_use_kerberos:
+         *                                 Use kerberos authentication for the
+         *                                 given HDFS cluster
+         *                                 <ul>
+         *                                         <li>
+         *                                 gpudb::alter_datasink_true
+         *                                         <li>
+         *                                 gpudb::alter_datasink_false
+         *                                 </ul>
+         *                                 The default value is
+         *                                 gpudb::alter_datasink_false.
+         *                                         <li>
+         *                                 gpudb::alter_datasink_azure_storage_account_name:
+         *                                 Name of the Azure storage account to
+         *                                 use as the data sink, this is valid
+         *                                 only if tenant_id is specified
+         *                                         <li>
+         *                                 gpudb::alter_datasink_azure_container_name:
+         *                                 Name of the Azure storage container
+         *                                 to use as the data sink
+         *                                         <li>
+         *                                 gpudb::alter_datasink_azure_tenant_id:
+         *                                 Active Directory tenant ID (or
+         *                                 directory ID)
+         *                                         <li>
+         *                                 gpudb::alter_datasink_azure_sas_token:
+         *                                 Shared access signature token for
+         *                                 Azure storage account to use as the
+         *                                 data sink
+         *                                         <li>
+         *                                 gpudb::alter_datasink_azure_oauth_token:
+         *                                 Oauth token to access given storage
+         *                                 container
+         *                                         <li>
+         *                                 gpudb::alter_datasink_gcs_bucket_name:
+         *                                 Name of the Google Cloud Storage
+         *                                 bucket to use as the data sink
+         *                                         <li>
+         *                                 gpudb::alter_datasink_gcs_project_id:
+         *                                 Name of the Google Cloud project to
+         *                                 use as the data sink
+         *                                         <li>
+         *                                 gpudb::alter_datasink_gcs_service_account_keys:
+         *                                 Google Cloud service account keys to
+         *                                 use for authenticating the data sink
+         *                                         <li>
+         *                                 gpudb::alter_datasink_kafka_url: The
+         *                                 publicly-accessible full path URL to
+         *                                 the kafka broker, e.g.,
+         *                                 'http://172.123.45.67:9300'.
+         *                                         <li>
          *                                 gpudb::alter_datasink_kafka_topic_name:
          *                                 Name of the Kafka topic to use for
          *                                 this data sink, if it references a
          *                                 Kafka broker
+         *                                         <li>
+         *                                 gpudb::alter_datasink_anonymous:
+         *                                 Create an anonymous connection to
+         *                                 the storage provider--DEPRECATED:
+         *                                 this is now the default.  Specify
+         *                                 use_managed_credentials for
+         *                                 non-anonymous connection
+         *                                 <ul>
+         *                                         <li>
+         *                                 gpudb::alter_datasink_true
+         *                                         <li>
+         *                                 gpudb::alter_datasink_false
+         *                                 </ul>
+         *                                 The default value is
+         *                                 gpudb::alter_datasink_true.
+         *                                         <li>
+         *                                 gpudb::alter_datasink_use_managed_credentials:
+         *                                 When no credentials are supplied, we
+         *                                 use anonymous access by default.  If
+         *                                 this is set, we will use cloud
+         *                                 provider user settings.
+         *                                 <ul>
+         *                                         <li>
+         *                                 gpudb::alter_datasink_true
+         *                                         <li>
+         *                                 gpudb::alter_datasink_false
+         *                                 </ul>
+         *                                 The default value is
+         *                                 gpudb::alter_datasink_false.
+         *                                         <li>
+         *                                 gpudb::alter_datasink_use_https: Use
+         *                                 https to connect to datasink if
+         *                                 true, otherwise use http
+         *                                 <ul>
+         *                                         <li>
+         *                                 gpudb::alter_datasink_true
+         *                                         <li>
+         *                                 gpudb::alter_datasink_false
+         *                                 </ul>
+         *                                 The default value is
+         *                                 gpudb::alter_datasink_true.
          *                                         <li>
          *                                 gpudb::alter_datasink_max_batch_size:
          *                                 Maximum number of records per

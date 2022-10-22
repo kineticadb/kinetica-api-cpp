@@ -46,8 +46,8 @@ namespace gpudb
          *                        If the table does not exist, the table will
          *                        be created using either an existing
          *                        @a type_id or the type inferred from the
-         *                        file, and the new table name will have to
-         *                        meet standard
+         *                        remote query, and the new table name will
+         *                        have to meet standard
          *                        <a
          *                        href="../../../concepts/tables/#table-naming-criteria"
          *                        target="_top">table naming criteria</a>.
@@ -255,25 +255,17 @@ namespace gpudb
          *                      were rejected are written.  The
          *                      bad-record-table has the following columns:
          *                      line_number (long), line_rejected (string),
-         *                      error_message (string).
+         *                      error_message (string). When error handling is
+         *                      Abort, bad records table is not populated.
          *                              <li>
          *                      gpudb::insert_records_from_query_bad_record_table_limit:
          *                      A positive integer indicating the maximum
          *                      number of records that can be  written to the
          *                      bad-record-table.   Default value is 10000
          *                              <li>
-         *                      gpudb::insert_records_from_query_bad_record_table_limit_per_input:
-         *                      For subscriptions: A positive integer
-         *                      indicating the maximum number of records that
-         *                      can be written to the bad-record-table per
-         *                      file/payload. Default value will be
-         *                      'bad_record_table_limit' and total size of the
-         *                      table per rank is limited to
-         *                      'bad_record_table_limit'
-         *                              <li>
-         *                      gpudb::insert_records_from_query_jdbc_fetch_size:
-         *                      The JDBC fetch size, which determines how many
-         *                      rows to fetch per round trip.
+         *                      gpudb::insert_records_from_query_batch_size:
+         *                      Number of records per batch when inserting
+         *                      data.
          *                              <li>
          *                      gpudb::insert_records_from_query_datasource_name:
          *                      Name of an existing external data source from
@@ -299,7 +291,7 @@ namespace gpudb
          *                      this mode.
          *                      </ul>
          *                      The default value is
-         *                      gpudb::insert_records_from_query_permissive.
+         *                      gpudb::insert_records_from_query_abort.
          *                              <li>
          *                      gpudb::insert_records_from_query_ingestion_mode:
          *                      Whether to do a full load, dry run, or perform
@@ -324,61 +316,14 @@ namespace gpudb
          *                      The default value is
          *                      gpudb::insert_records_from_query_full.
          *                              <li>
-         *                      gpudb::insert_records_from_query_loading_mode:
-         *                      Scheme for distributing the extraction and
-         *                      loading of data from the source data file(s).
-         *                      This option applies only when loading files
-         *                      that are local to the database
-         *                      <ul>
+         *                      gpudb::insert_records_from_query_jdbc_fetch_size:
+         *                      The JDBC fetch size, which determines how many
+         *                      rows to fetch per round trip.
          *                              <li>
-         *                      gpudb::insert_records_from_query_head: The head
-         *                      node loads all data. All files must be
-         *                      available to the head node.
-         *                              <li>
-         *                      gpudb::insert_records_from_query_distributed_shared:
-         *                      The head node coordinates loading data by
-         *                      worker
-         *                      processes across all nodes from shared files
-         *                      available to all workers.
-         *                      NOTE:
-         *                      Instead of existing on a shared source, the
-         *                      files can be duplicated on a source local to
-         *                      each host
-         *                      to improve performance, though the files must
-         *                      appear as the same data set from the
-         *                      perspective of
-         *                      all hosts performing the load.
-         *                              <li>
-         *                      gpudb::insert_records_from_query_distributed_local:
-         *                      A single worker process on each node loads all
-         *                      files
-         *                      that are available to it. This option works
-         *                      best when each worker loads files from its own
-         *                      file
-         *                      system, to maximize performance. In order to
-         *                      avoid data duplication, either each worker
-         *                      performing
-         *                      the load needs to have visibility to a set of
-         *                      files unique to it (no file is visible to more
-         *                      than
-         *                      one node) or the target table needs to have a
-         *                      primary key (which will allow the worker to
-         *                      automatically deduplicate data).
-         *                      NOTE:
-         *                      If the target table doesn't exist, the table
-         *                      structure will be determined by the head node.
-         *                      If the
-         *                      head node has no files local to it, it will be
-         *                      unable to determine the structure and the
-         *                      request
-         *                      will fail.
-         *                      If the head node is configured to have no
-         *                      worker processes, no data strictly accessible
-         *                      to the head
-         *                      node will be loaded.
-         *                      </ul>
-         *                      The default value is
-         *                      gpudb::insert_records_from_query_head.
+         *                      gpudb::insert_records_from_query_num_tasks_per_rank:
+         *                      Optional: number of tasks for reading data per
+         *                      rank. Default will be
+         *                      external_file_reader_num_tasks
          *                              <li>
          *                      gpudb::insert_records_from_query_primary_keys:
          *                      Optional: comma separated list of column names,
@@ -393,7 +338,7 @@ namespace gpudb
          *                      gpudb::insert_records_from_query_truncate_table:
          *                      If set to @a true, truncates the table
          *                      specified by @a tableName prior to loading the
-         *                      file(s).
+         *                      data.
          *                      <ul>
          *                              <li>
          *                      gpudb::insert_records_from_query_true
@@ -403,19 +348,29 @@ namespace gpudb
          *                      The default value is
          *                      gpudb::insert_records_from_query_false.
          *                              <li>
-         *                      gpudb::insert_records_from_query_num_tasks_per_rank:
-         *                      Optional: number of tasks for reading file per
-         *                      rank. Default will be
-         *                      external_file_reader_num_tasks
-         *                              <li>
          *                      gpudb::insert_records_from_query_remote_query:
          *                      Remote SQL query from which data will be
          *                      sourced
          *                              <li>
          *                      gpudb::insert_records_from_query_remote_query_filter_column:
          *                      Name of column to be used for splitting the
-         *                      query into multiple sub-queries.  The default
+         *                      query into multiple sub-queries using the data
+         *                      distribution of given column.  The default
          *                      value is ''.
+         *                              <li>
+         *                      gpudb::insert_records_from_query_remote_query_partition_column:
+         *                      Alias name for remote_query_filter_column.  The
+         *                      default value is ''.
+         *                              <li>
+         *                      gpudb::insert_records_from_query_update_on_existing_pk:
+         *                      <ul>
+         *                              <li>
+         *                      gpudb::insert_records_from_query_true
+         *                              <li>
+         *                      gpudb::insert_records_from_query_false
+         *                      </ul>
+         *                      The default value is
+         *                      gpudb::insert_records_from_query_false.
          *                      </ul>
          * 
          */

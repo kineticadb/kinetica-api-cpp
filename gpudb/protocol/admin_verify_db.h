@@ -37,6 +37,8 @@ namespace gpudb
          *                      <ul>
          *                              <li>
          *                      gpudb::admin_verify_db_rebuild_on_error:
+         *                      [DEPRECATED -- Use the Rebuild DB feature of
+         *                      GAdmin instead.]
          *                      <ul>
          *                              <li> gpudb::admin_verify_db_true
          *                              <li> gpudb::admin_verify_db_false
@@ -44,9 +46,8 @@ namespace gpudb
          *                      The default value is
          *                      gpudb::admin_verify_db_false.
          *                              <li>
-         *                      gpudb::admin_verify_db_verify_nulls: When
-         *                      enabled, verifies that null values are set to
-         *                      zero
+         *                      gpudb::admin_verify_db_verify_nulls: When @a
+         *                      true, verifies that null values are set to zero
          *                      <ul>
          *                              <li> gpudb::admin_verify_db_true
          *                              <li> gpudb::admin_verify_db_false
@@ -54,7 +55,9 @@ namespace gpudb
          *                      The default value is
          *                      gpudb::admin_verify_db_false.
          *                              <li>
-         *                      gpudb::admin_verify_db_verify_persist:
+         *                      gpudb::admin_verify_db_verify_persist: When @a
+         *                      true, persistent objects will be compared
+         *                      against their state in memory.
          *                      <ul>
          *                              <li> gpudb::admin_verify_db_true
          *                              <li> gpudb::admin_verify_db_false
@@ -62,8 +65,8 @@ namespace gpudb
          *                      The default value is
          *                      gpudb::admin_verify_db_false.
          *                              <li>
-         *                      gpudb::admin_verify_db_concurrent_safe: When
-         *                      enabled, allows this endpoint to be run safely
+         *                      gpudb::admin_verify_db_concurrent_safe: When @a
+         *                      true, allows this endpoint to be run safely
          *                      with other concurrent database operations.
          *                      Other operations may be slower while this is
          *                      running.
@@ -74,9 +77,21 @@ namespace gpudb
          *                      The default value is
          *                      gpudb::admin_verify_db_true.
          *                              <li>
-         *                      gpudb::admin_verify_db_verify_rank0: When
-         *                      enabled, compares rank0 table meta-data against
-         *                      workers meta-data
+         *                      gpudb::admin_verify_db_verify_rank0: If @a
+         *                      true, compare rank0 table metadata against
+         *                      workers' metadata
+         *                      <ul>
+         *                              <li> gpudb::admin_verify_db_true
+         *                              <li> gpudb::admin_verify_db_false
+         *                      </ul>
+         *                      The default value is
+         *                      gpudb::admin_verify_db_false.
+         *                              <li>
+         *                      gpudb::admin_verify_db_delete_orphaned_tables:
+         *                      If @a true, orphaned table directories found on
+         *                      workers for which there is no corresponding
+         *                      metadata will be deleted. Must set @a
+         *                      verify_persist in @a options to @a true
          *                      <ul>
          *                              <li> gpudb::admin_verify_db_true
          *                              <li> gpudb::admin_verify_db_false

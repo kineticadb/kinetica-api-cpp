@@ -38,9 +38,10 @@ namespace gpudb
          * 
          * @param[in] name_  Name of the data sink to be created.
          * @param[in] destination_  Destination for the output data in format
-         *                          'destination_type://path[:port]'.
-         *                          Supported destination types are 'http',
-         *                          'https' and 'kafka'.
+         *                          'storage_provider_type://path[:port]'.
+         *                          Supported storage provider types are
+         *                          'azure', 'gcs', 'hdfs', 'http', 'https',
+         *                          'jdbc', 'kafka' and 's3'.
          * @param[in] options_  Optional parameters.
          *                      <ul>
          *                              <li>
@@ -56,6 +57,78 @@ namespace gpudb
          *                      href="../../../concepts/credentials/"
          *                      target="_top">credential</a> object to be used
          *                      in this data sink
+         *                              <li>
+         *                      gpudb::create_datasink_s3_bucket_name: Name of
+         *                      the Amazon S3 bucket to use as the data sink
+         *                              <li> gpudb::create_datasink_s3_region:
+         *                      Name of the Amazon S3 region where the given
+         *                      bucket is located
+         *                              <li>
+         *                      gpudb::create_datasink_s3_aws_role_arn: Amazon
+         *                      IAM Role ARN which has required S3 permissions
+         *                      that can be assumed for the given S3 IAM user
+         *                              <li>
+         *                      gpudb::create_datasink_s3_encryption_customer_algorithm:
+         *                      Customer encryption algorithm used encrypting
+         *                      data
+         *                              <li>
+         *                      gpudb::create_datasink_s3_encryption_customer_key:
+         *                      Customer encryption key to encrypt or decrypt
+         *                      data
+         *                              <li>
+         *                      gpudb::create_datasink_hdfs_kerberos_keytab:
+         *                      Kerberos keytab file location for the given
+         *                      HDFS user.  This may be a KIFS file.
+         *                              <li>
+         *                      gpudb::create_datasink_hdfs_delegation_token:
+         *                      Delegation token for the given HDFS user
+         *                              <li>
+         *                      gpudb::create_datasink_hdfs_use_kerberos: Use
+         *                      kerberos authentication for the given HDFS
+         *                      cluster
+         *                      <ul>
+         *                              <li> gpudb::create_datasink_true
+         *                              <li> gpudb::create_datasink_false
+         *                      </ul>
+         *                      The default value is
+         *                      gpudb::create_datasink_false.
+         *                              <li>
+         *                      gpudb::create_datasink_azure_storage_account_name:
+         *                      Name of the Azure storage account to use as the
+         *                      data sink, this is valid only if tenant_id is
+         *                      specified
+         *                              <li>
+         *                      gpudb::create_datasink_azure_container_name:
+         *                      Name of the Azure storage container to use as
+         *                      the data sink
+         *                              <li>
+         *                      gpudb::create_datasink_azure_tenant_id: Active
+         *                      Directory tenant ID (or directory ID)
+         *                              <li>
+         *                      gpudb::create_datasink_azure_sas_token: Shared
+         *                      access signature token for Azure storage
+         *                      account to use as the data sink
+         *                              <li>
+         *                      gpudb::create_datasink_azure_oauth_token: Oauth
+         *                      token to access given storage container
+         *                              <li>
+         *                      gpudb::create_datasink_gcs_bucket_name: Name of
+         *                      the Google Cloud Storage bucket to use as the
+         *                      data sink
+         *                              <li>
+         *                      gpudb::create_datasink_gcs_project_id: Name of
+         *                      the Google Cloud project to use as the data
+         *                      sink
+         *                              <li>
+         *                      gpudb::create_datasink_gcs_service_account_keys:
+         *                      Google Cloud service account keys to use for
+         *                      authenticating the data sink
+         *                              <li>
+         *                      gpudb::create_datasink_jdbc_driver_jar_path:
+         *                      JDBC driver jar file location
+         *                              <li>
+         *                      gpudb::create_datasink_jdbc_driver_class_name:
+         *                      Name of the JDBC driver class
          *                              <li>
          *                      gpudb::create_datasink_kafka_topic_name: Name
          *                      of the Kafka topic to publish to if @a
@@ -81,11 +154,25 @@ namespace gpudb
          *                      The default value is
          *                      gpudb::create_datasink_flat.
          *                              <li>
-         *                      gpudb::create_datasink_jdbc_driver_jar_path:
-         *                      JDBC driver jar file location
-         *                              <li>
-         *                      gpudb::create_datasink_jdbc_driver_class_name:
-         *                      Name of the JDBC driver class
+         *                      gpudb::create_datasink_use_managed_credentials:
+         *                      When no credentials are supplied, we use
+         *                      anonymous access by default.  If this is set,
+         *                      we will use cloud provider user settings.
+         *                      <ul>
+         *                              <li> gpudb::create_datasink_true
+         *                              <li> gpudb::create_datasink_false
+         *                      </ul>
+         *                      The default value is
+         *                      gpudb::create_datasink_false.
+         *                              <li> gpudb::create_datasink_use_https:
+         *                      Use https to connect to datasink if true,
+         *                      otherwise use http
+         *                      <ul>
+         *                              <li> gpudb::create_datasink_true
+         *                              <li> gpudb::create_datasink_false
+         *                      </ul>
+         *                      The default value is
+         *                      gpudb::create_datasink_true.
          *                              <li>
          *                      gpudb::create_datasink_skip_validation: Bypass
          *                      validation of connection to this data sink.

@@ -231,6 +231,24 @@ namespace gpudb
          *                                 poll will timeout if datasource has
          *                                 no records.  The default value is
          *                                 '5'.
+         *                                         <li>
+         *                                 gpudb::alter_system_properties_egress_single_file_max_size:
+         *                                 Max file size (in MB) to allow
+         *                                 saving to a single file. May be
+         *                                 overridden by target limitations.
+         *                                 The default value is '100'.
+         *                                         <li>
+         *                                 gpudb::alter_system_properties_max_concurrent_kernels:
+         *                                 Sets the max_concurrent_kernels
+         *                                 value of the conf.
+         *                                         <li>
+         *                                 gpudb::alter_system_properties_tcs_per_tom:
+         *                                 Sets the tcs_per_tom value of the
+         *                                 conf.
+         *                                         <li>
+         *                                 gpudb::alter_system_properties_tps_per_tom:
+         *                                 Sets the tps_per_tom value of the
+         *                                 conf.
          *                                 </ul>
          * @param[in] options_  Optional parameters.
          *                      <ul>

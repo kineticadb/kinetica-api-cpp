@@ -341,11 +341,13 @@ namespace gpudb
          *                      match the source data field names for a
          *                      name-mapping
          *                      to be successful.
+         *                      Mutually exclusive with @a columns_to_skip.
          *                              <li>
          *                      gpudb::insert_records_from_payload_columns_to_skip:
          *                      Specifies a comma-delimited list of columns
          *                      from the source data to
-         *                      skip.  Mutually exclusive to columns_to_load.
+         *                      skip.  Mutually exclusive with @a
+         *                      columns_to_load.
          *                              <li>
          *                      gpudb::insert_records_from_payload_default_column_formats:
          *                      Specifies the default format to be applied to
@@ -696,6 +698,16 @@ namespace gpudb
          *                      </ul>
          *                      The default value is
          *                      gpudb::insert_records_from_payload_speed.
+         *                              <li>
+         *                      gpudb::insert_records_from_payload_update_on_existing_pk:
+         *                      <ul>
+         *                              <li>
+         *                      gpudb::insert_records_from_payload_true
+         *                              <li>
+         *                      gpudb::insert_records_from_payload_false
+         *                      </ul>
+         *                      The default value is
+         *                      gpudb::insert_records_from_payload_false.
          *                      </ul>
          * 
          */

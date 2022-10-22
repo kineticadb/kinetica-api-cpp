@@ -2076,26 +2076,30 @@ AdminVerifyDbResponse& adminVerifyDb( const AdminVerifyDbRequest& request_,
  * @param options  Optional parameters.
  *                 <ul>
  *                         <li> gpudb::admin_verify_db_rebuild_on_error:
+ *                 [DEPRECATED -- Use the Rebuild DB feature of GAdmin
+ *                 instead.]
  *                 <ul>
  *                         <li> gpudb::admin_verify_db_true
  *                         <li> gpudb::admin_verify_db_false
  *                 </ul>
  *                 The default value is gpudb::admin_verify_db_false.
- *                         <li> gpudb::admin_verify_db_verify_nulls: When
- *                 enabled, verifies that null values are set to zero
+ *                         <li> gpudb::admin_verify_db_verify_nulls: When @a
+ *                 true, verifies that null values are set to zero
  *                 <ul>
  *                         <li> gpudb::admin_verify_db_true
  *                         <li> gpudb::admin_verify_db_false
  *                 </ul>
  *                 The default value is gpudb::admin_verify_db_false.
- *                         <li> gpudb::admin_verify_db_verify_persist:
+ *                         <li> gpudb::admin_verify_db_verify_persist: When @a
+ *                 true, persistent objects will be compared against their
+ *                 state in memory.
  *                 <ul>
  *                         <li> gpudb::admin_verify_db_true
  *                         <li> gpudb::admin_verify_db_false
  *                 </ul>
  *                 The default value is gpudb::admin_verify_db_false.
- *                         <li> gpudb::admin_verify_db_concurrent_safe: When
- *                 enabled, allows this endpoint to be run safely with other
+ *                         <li> gpudb::admin_verify_db_concurrent_safe: When @a
+ *                 true, allows this endpoint to be run safely with other
  *                 concurrent database operations. Other operations may be
  *                 slower while this is running.
  *                 <ul>
@@ -2103,9 +2107,17 @@ AdminVerifyDbResponse& adminVerifyDb( const AdminVerifyDbRequest& request_,
  *                         <li> gpudb::admin_verify_db_false
  *                 </ul>
  *                 The default value is gpudb::admin_verify_db_true.
- *                         <li> gpudb::admin_verify_db_verify_rank0: When
- *                 enabled, compares rank0 table meta-data against workers
- *                 meta-data
+ *                         <li> gpudb::admin_verify_db_verify_rank0: If @a
+ *                 true, compare rank0 table metadata against workers' metadata
+ *                 <ul>
+ *                         <li> gpudb::admin_verify_db_true
+ *                         <li> gpudb::admin_verify_db_false
+ *                 </ul>
+ *                 The default value is gpudb::admin_verify_db_false.
+ *                         <li> gpudb::admin_verify_db_delete_orphaned_tables:
+ *                 If @a true, orphaned table directories found on workers for
+ *                 which there is no corresponding metadata will be deleted.
+ *                 Must set @a verify_persist in @a options to @a true
  *                 <ul>
  *                         <li> gpudb::admin_verify_db_true
  *                         <li> gpudb::admin_verify_db_false
@@ -2127,26 +2139,30 @@ AdminVerifyDbResponse adminVerifyDb( const std::map<std::string, std::string>& o
  * @param options  Optional parameters.
  *                 <ul>
  *                         <li> gpudb::admin_verify_db_rebuild_on_error:
+ *                 [DEPRECATED -- Use the Rebuild DB feature of GAdmin
+ *                 instead.]
  *                 <ul>
  *                         <li> gpudb::admin_verify_db_true
  *                         <li> gpudb::admin_verify_db_false
  *                 </ul>
  *                 The default value is gpudb::admin_verify_db_false.
- *                         <li> gpudb::admin_verify_db_verify_nulls: When
- *                 enabled, verifies that null values are set to zero
+ *                         <li> gpudb::admin_verify_db_verify_nulls: When @a
+ *                 true, verifies that null values are set to zero
  *                 <ul>
  *                         <li> gpudb::admin_verify_db_true
  *                         <li> gpudb::admin_verify_db_false
  *                 </ul>
  *                 The default value is gpudb::admin_verify_db_false.
- *                         <li> gpudb::admin_verify_db_verify_persist:
+ *                         <li> gpudb::admin_verify_db_verify_persist: When @a
+ *                 true, persistent objects will be compared against their
+ *                 state in memory.
  *                 <ul>
  *                         <li> gpudb::admin_verify_db_true
  *                         <li> gpudb::admin_verify_db_false
  *                 </ul>
  *                 The default value is gpudb::admin_verify_db_false.
- *                         <li> gpudb::admin_verify_db_concurrent_safe: When
- *                 enabled, allows this endpoint to be run safely with other
+ *                         <li> gpudb::admin_verify_db_concurrent_safe: When @a
+ *                 true, allows this endpoint to be run safely with other
  *                 concurrent database operations. Other operations may be
  *                 slower while this is running.
  *                 <ul>
@@ -2154,9 +2170,17 @@ AdminVerifyDbResponse adminVerifyDb( const std::map<std::string, std::string>& o
  *                         <li> gpudb::admin_verify_db_false
  *                 </ul>
  *                 The default value is gpudb::admin_verify_db_true.
- *                         <li> gpudb::admin_verify_db_verify_rank0: When
- *                 enabled, compares rank0 table meta-data against workers
- *                 meta-data
+ *                         <li> gpudb::admin_verify_db_verify_rank0: If @a
+ *                 true, compare rank0 table metadata against workers' metadata
+ *                 <ul>
+ *                         <li> gpudb::admin_verify_db_true
+ *                         <li> gpudb::admin_verify_db_false
+ *                 </ul>
+ *                 The default value is gpudb::admin_verify_db_false.
+ *                         <li> gpudb::admin_verify_db_delete_orphaned_tables:
+ *                 If @a true, orphaned table directories found on workers for
+ *                 which there is no corresponding metadata will be deleted.
+ *                 Must set @a verify_persist in @a options to @a true
  *                 <ul>
  *                         <li> gpudb::admin_verify_db_true
  *                         <li> gpudb::admin_verify_db_false
@@ -5189,12 +5213,12 @@ AlterCredentialResponse& alterCredential( const AlterCredentialRequest& request_
  *                                      <li>
  *                              gpudb::alter_credential_azure_storage_key
  *                                      <li> gpudb::alter_credential_docker
- *                                      <li> gpudb::alter_credential_hdfs
- *                                      <li> gpudb::alter_credential_kafka
  *                                      <li>
  *                              gpudb::alter_credential_gcs_service_account_id
  *                                      <li>
  *                              gpudb::alter_credential_gcs_service_account_keys
+ *                                      <li> gpudb::alter_credential_hdfs
+ *                                      <li> gpudb::alter_credential_kafka
  *                              </ul>
  *                                      <li> gpudb::alter_credential_identity:
  *                              New user for the credential
@@ -5240,12 +5264,12 @@ AlterCredentialResponse alterCredential( const std::string& credentialName,
  *                                      <li>
  *                              gpudb::alter_credential_azure_storage_key
  *                                      <li> gpudb::alter_credential_docker
- *                                      <li> gpudb::alter_credential_hdfs
- *                                      <li> gpudb::alter_credential_kafka
  *                                      <li>
  *                              gpudb::alter_credential_gcs_service_account_id
  *                                      <li>
  *                              gpudb::alter_credential_gcs_service_account_keys
+ *                                      <li> gpudb::alter_credential_hdfs
+ *                                      <li> gpudb::alter_credential_kafka
  *                              </ul>
  *                                      <li> gpudb::alter_credential_identity:
  *                              New user for the credential
@@ -5328,9 +5352,96 @@ AlterDatasinkResponse& alterDatasink( const AlterDatasinkRequest& request_,
  *                            target="_top">credential</a> object to be used in
  *                            this data sink
  *                                    <li>
+ *                            gpudb::alter_datasink_s3_bucket_name: Name of the
+ *                            Amazon S3 bucket to use as the data sink
+ *                                    <li> gpudb::alter_datasink_s3_region:
+ *                            Name of the Amazon S3 region where the given
+ *                            bucket is located
+ *                                    <li>
+ *                            gpudb::alter_datasink_s3_aws_role_arn: Amazon IAM
+ *                            Role ARN which has required S3 permissions that
+ *                            can be assumed for the given S3 IAM user
+ *                                    <li>
+ *                            gpudb::alter_datasink_hdfs_kerberos_keytab:
+ *                            Kerberos keytab file location for the given HDFS
+ *                            user.  This may be a KIFS file.
+ *                                    <li>
+ *                            gpudb::alter_datasink_hdfs_delegation_token:
+ *                            Delegation token for the given HDFS user
+ *                                    <li>
+ *                            gpudb::alter_datasink_hdfs_use_kerberos: Use
+ *                            kerberos authentication for the given HDFS
+ *                            cluster
+ *                            <ul>
+ *                                    <li> gpudb::alter_datasink_true
+ *                                    <li> gpudb::alter_datasink_false
+ *                            </ul>
+ *                            The default value is gpudb::alter_datasink_false.
+ *                                    <li>
+ *                            gpudb::alter_datasink_azure_storage_account_name:
+ *                            Name of the Azure storage account to use as the
+ *                            data sink, this is valid only if tenant_id is
+ *                            specified
+ *                                    <li>
+ *                            gpudb::alter_datasink_azure_container_name: Name
+ *                            of the Azure storage container to use as the data
+ *                            sink
+ *                                    <li>
+ *                            gpudb::alter_datasink_azure_tenant_id: Active
+ *                            Directory tenant ID (or directory ID)
+ *                                    <li>
+ *                            gpudb::alter_datasink_azure_sas_token: Shared
+ *                            access signature token for Azure storage account
+ *                            to use as the data sink
+ *                                    <li>
+ *                            gpudb::alter_datasink_azure_oauth_token: Oauth
+ *                            token to access given storage container
+ *                                    <li>
+ *                            gpudb::alter_datasink_gcs_bucket_name: Name of
+ *                            the Google Cloud Storage bucket to use as the
+ *                            data sink
+ *                                    <li>
+ *                            gpudb::alter_datasink_gcs_project_id: Name of the
+ *                            Google Cloud project to use as the data sink
+ *                                    <li>
+ *                            gpudb::alter_datasink_gcs_service_account_keys:
+ *                            Google Cloud service account keys to use for
+ *                            authenticating the data sink
+ *                                    <li> gpudb::alter_datasink_kafka_url: The
+ *                            publicly-accessible full path URL to the kafka
+ *                            broker, e.g., 'http://172.123.45.67:9300'.
+ *                                    <li>
  *                            gpudb::alter_datasink_kafka_topic_name: Name of
  *                            the Kafka topic to use for this data sink, if it
  *                            references a Kafka broker
+ *                                    <li> gpudb::alter_datasink_anonymous:
+ *                            Create an anonymous connection to the storage
+ *                            provider--DEPRECATED: this is now the default.
+ *                            Specify use_managed_credentials for non-anonymous
+ *                            connection
+ *                            <ul>
+ *                                    <li> gpudb::alter_datasink_true
+ *                                    <li> gpudb::alter_datasink_false
+ *                            </ul>
+ *                            The default value is gpudb::alter_datasink_true.
+ *                                    <li>
+ *                            gpudb::alter_datasink_use_managed_credentials:
+ *                            When no credentials are supplied, we use
+ *                            anonymous access by default.  If this is set, we
+ *                            will use cloud provider user settings.
+ *                            <ul>
+ *                                    <li> gpudb::alter_datasink_true
+ *                                    <li> gpudb::alter_datasink_false
+ *                            </ul>
+ *                            The default value is gpudb::alter_datasink_false.
+ *                                    <li> gpudb::alter_datasink_use_https: Use
+ *                            https to connect to datasink if true, otherwise
+ *                            use http
+ *                            <ul>
+ *                                    <li> gpudb::alter_datasink_true
+ *                                    <li> gpudb::alter_datasink_false
+ *                            </ul>
+ *                            The default value is gpudb::alter_datasink_true.
  *                                    <li>
  *                            gpudb::alter_datasink_max_batch_size: Maximum
  *                            number of records per notification message.  The
@@ -5400,9 +5511,96 @@ AlterDatasinkResponse alterDatasink( const std::string& name,
  *                            target="_top">credential</a> object to be used in
  *                            this data sink
  *                                    <li>
+ *                            gpudb::alter_datasink_s3_bucket_name: Name of the
+ *                            Amazon S3 bucket to use as the data sink
+ *                                    <li> gpudb::alter_datasink_s3_region:
+ *                            Name of the Amazon S3 region where the given
+ *                            bucket is located
+ *                                    <li>
+ *                            gpudb::alter_datasink_s3_aws_role_arn: Amazon IAM
+ *                            Role ARN which has required S3 permissions that
+ *                            can be assumed for the given S3 IAM user
+ *                                    <li>
+ *                            gpudb::alter_datasink_hdfs_kerberos_keytab:
+ *                            Kerberos keytab file location for the given HDFS
+ *                            user.  This may be a KIFS file.
+ *                                    <li>
+ *                            gpudb::alter_datasink_hdfs_delegation_token:
+ *                            Delegation token for the given HDFS user
+ *                                    <li>
+ *                            gpudb::alter_datasink_hdfs_use_kerberos: Use
+ *                            kerberos authentication for the given HDFS
+ *                            cluster
+ *                            <ul>
+ *                                    <li> gpudb::alter_datasink_true
+ *                                    <li> gpudb::alter_datasink_false
+ *                            </ul>
+ *                            The default value is gpudb::alter_datasink_false.
+ *                                    <li>
+ *                            gpudb::alter_datasink_azure_storage_account_name:
+ *                            Name of the Azure storage account to use as the
+ *                            data sink, this is valid only if tenant_id is
+ *                            specified
+ *                                    <li>
+ *                            gpudb::alter_datasink_azure_container_name: Name
+ *                            of the Azure storage container to use as the data
+ *                            sink
+ *                                    <li>
+ *                            gpudb::alter_datasink_azure_tenant_id: Active
+ *                            Directory tenant ID (or directory ID)
+ *                                    <li>
+ *                            gpudb::alter_datasink_azure_sas_token: Shared
+ *                            access signature token for Azure storage account
+ *                            to use as the data sink
+ *                                    <li>
+ *                            gpudb::alter_datasink_azure_oauth_token: Oauth
+ *                            token to access given storage container
+ *                                    <li>
+ *                            gpudb::alter_datasink_gcs_bucket_name: Name of
+ *                            the Google Cloud Storage bucket to use as the
+ *                            data sink
+ *                                    <li>
+ *                            gpudb::alter_datasink_gcs_project_id: Name of the
+ *                            Google Cloud project to use as the data sink
+ *                                    <li>
+ *                            gpudb::alter_datasink_gcs_service_account_keys:
+ *                            Google Cloud service account keys to use for
+ *                            authenticating the data sink
+ *                                    <li> gpudb::alter_datasink_kafka_url: The
+ *                            publicly-accessible full path URL to the kafka
+ *                            broker, e.g., 'http://172.123.45.67:9300'.
+ *                                    <li>
  *                            gpudb::alter_datasink_kafka_topic_name: Name of
  *                            the Kafka topic to use for this data sink, if it
  *                            references a Kafka broker
+ *                                    <li> gpudb::alter_datasink_anonymous:
+ *                            Create an anonymous connection to the storage
+ *                            provider--DEPRECATED: this is now the default.
+ *                            Specify use_managed_credentials for non-anonymous
+ *                            connection
+ *                            <ul>
+ *                                    <li> gpudb::alter_datasink_true
+ *                                    <li> gpudb::alter_datasink_false
+ *                            </ul>
+ *                            The default value is gpudb::alter_datasink_true.
+ *                                    <li>
+ *                            gpudb::alter_datasink_use_managed_credentials:
+ *                            When no credentials are supplied, we use
+ *                            anonymous access by default.  If this is set, we
+ *                            will use cloud provider user settings.
+ *                            <ul>
+ *                                    <li> gpudb::alter_datasink_true
+ *                                    <li> gpudb::alter_datasink_false
+ *                            </ul>
+ *                            The default value is gpudb::alter_datasink_false.
+ *                                    <li> gpudb::alter_datasink_use_https: Use
+ *                            https to connect to datasink if true, otherwise
+ *                            use http
+ *                            <ul>
+ *                                    <li> gpudb::alter_datasink_true
+ *                                    <li> gpudb::alter_datasink_false
+ *                            </ul>
+ *                            The default value is gpudb::alter_datasink_true.
  *                                    <li>
  *                            gpudb::alter_datasink_max_batch_size: Maximum
  *                            number of records per notification message.  The
@@ -5532,9 +5730,17 @@ AlterDatasourceResponse& alterDatasource( const AlterDatasourceRequest& request_
  *                              IAM Role ARN which has required S3 permissions
  *                              that can be assumed for the given S3 IAM user
  *                                      <li>
+ *                              gpudb::alter_datasource_s3_encryption_customer_algorithm:
+ *                              Customer encryption algorithm used encrypting
+ *                              data
+ *                                      <li>
+ *                              gpudb::alter_datasource_s3_encryption_customer_key:
+ *                              Customer encryption key to encrypt or decrypt
+ *                              data
+ *                                      <li>
  *                              gpudb::alter_datasource_hdfs_kerberos_keytab:
  *                              Kerberos keytab file location for the given
- *                              HDFS user
+ *                              HDFS user.  This may be a KIFS file.
  *                                      <li>
  *                              gpudb::alter_datasource_hdfs_delegation_token:
  *                              Delegation token for the given HDFS user
@@ -5586,6 +5792,13 @@ AlterDatasourceResponse& alterDatasource( const AlterDatasourceRequest& request_
  *                                      <li>
  *                              gpudb::alter_datasource_kafka_topic_name: Name
  *                              of the Kafka topic to use as the data source
+ *                                      <li>
+ *                              gpudb::alter_datasource_jdbc_driver_jar_path:
+ *                              JDBC driver jar file location.  This may be a
+ *                              KIFS file.
+ *                                      <li>
+ *                              gpudb::alter_datasource_jdbc_driver_class_name:
+ *                              Name of the JDBC driver class
  *                                      <li> gpudb::alter_datasource_anonymous:
  *                              Create an anonymous connection to the storage
  *                              provider--DEPRECATED: this is now the default.
@@ -5686,9 +5899,17 @@ AlterDatasourceResponse alterDatasource( const std::string& name,
  *                              IAM Role ARN which has required S3 permissions
  *                              that can be assumed for the given S3 IAM user
  *                                      <li>
+ *                              gpudb::alter_datasource_s3_encryption_customer_algorithm:
+ *                              Customer encryption algorithm used encrypting
+ *                              data
+ *                                      <li>
+ *                              gpudb::alter_datasource_s3_encryption_customer_key:
+ *                              Customer encryption key to encrypt or decrypt
+ *                              data
+ *                                      <li>
  *                              gpudb::alter_datasource_hdfs_kerberos_keytab:
  *                              Kerberos keytab file location for the given
- *                              HDFS user
+ *                              HDFS user.  This may be a KIFS file.
  *                                      <li>
  *                              gpudb::alter_datasource_hdfs_delegation_token:
  *                              Delegation token for the given HDFS user
@@ -5740,6 +5961,13 @@ AlterDatasourceResponse alterDatasource( const std::string& name,
  *                                      <li>
  *                              gpudb::alter_datasource_kafka_topic_name: Name
  *                              of the Kafka topic to use as the data source
+ *                                      <li>
+ *                              gpudb::alter_datasource_jdbc_driver_jar_path:
+ *                              JDBC driver jar file location.  This may be a
+ *                              KIFS file.
+ *                                      <li>
+ *                              gpudb::alter_datasource_jdbc_driver_class_name:
+ *                              Name of the JDBC driver class
  *                                      <li> gpudb::alter_datasource_anonymous:
  *                              Create an anonymous connection to the storage
  *                              provider--DEPRECATED: this is now the default.
@@ -5791,6 +6019,84 @@ AlterDatasourceResponse& alterDatasource( const std::string& name,
                                           const std::map<std::string, std::string>& datasourceUpdatesMap,
                                           const std::map<std::string, std::string>& options,
                                           AlterDatasourceResponse& response_ ) const;
+
+/**
+ * Alters an existing directory in <a href="../../../tools/kifs/"
+ * target="_top">KiFS</a>.
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+AlterDirectoryResponse alterDirectory( const AlterDirectoryRequest& request_ ) const;
+
+/**
+ * Alters an existing directory in <a href="../../../tools/kifs/"
+ * target="_top">KiFS</a>.
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+AlterDirectoryResponse& alterDirectory( const AlterDirectoryRequest& request_,
+                                        AlterDirectoryResponse& response_ ) const;
+
+/**
+ * Alters an existing directory in <a href="../../../tools/kifs/"
+ * target="_top">KiFS</a>.
+ * 
+ * @param directoryName  Name of the directory in KiFS to be altered.
+ * @param directoryUpdatesMap  Map containing the properties of the directory
+ *                             to be altered. Error if empty.
+ *                             <ul>
+ *                                     <li> gpudb::alter_directory_data_limit:
+ *                             The maximum capacity, in bytes, to apply to the
+ *                             directory. Set to -1 to indicate no upper limit.
+ *                             </ul>
+ * @param options  Optional parameters.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+AlterDirectoryResponse alterDirectory( const std::string& directoryName,
+                                       const std::map<std::string, std::string>& directoryUpdatesMap,
+                                       const std::map<std::string, std::string>& options ) const;
+
+/**
+ * Alters an existing directory in <a href="../../../tools/kifs/"
+ * target="_top">KiFS</a>.
+ * 
+ * @param directoryName  Name of the directory in KiFS to be altered.
+ * @param directoryUpdatesMap  Map containing the properties of the directory
+ *                             to be altered. Error if empty.
+ *                             <ul>
+ *                                     <li> gpudb::alter_directory_data_limit:
+ *                             The maximum capacity, in bytes, to apply to the
+ *                             directory. Set to -1 to indicate no upper limit.
+ *                             </ul>
+ * @param options  Optional parameters.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+AlterDirectoryResponse& alterDirectory( const std::string& directoryName,
+                                        const std::map<std::string, std::string>& directoryUpdatesMap,
+                                        const std::map<std::string, std::string>& options,
+                                        AlterDirectoryResponse& response_ ) const;
 
 /**
  * @private
@@ -6538,6 +6844,21 @@ AlterSystemPropertiesResponse& alterSystemProperties( const AlterSystemPropertie
  *                            Number of seconds after which kakfa poll will
  *                            timeout if datasource has no records.  The
  *                            default value is '5'.
+ *                                    <li>
+ *                            gpudb::alter_system_properties_egress_single_file_max_size:
+ *                            Max file size (in MB) to allow saving to a single
+ *                            file. May be overridden by target limitations.
+ *                            The default value is '100'.
+ *                                    <li>
+ *                            gpudb::alter_system_properties_max_concurrent_kernels:
+ *                            Sets the max_concurrent_kernels value of the
+ *                            conf.
+ *                                    <li>
+ *                            gpudb::alter_system_properties_tcs_per_tom: Sets
+ *                            the tcs_per_tom value of the conf.
+ *                                    <li>
+ *                            gpudb::alter_system_properties_tps_per_tom: Sets
+ *                            the tps_per_tom value of the conf.
  *                            </ul>
  * @param options  Optional parameters.
  *                 <ul>
@@ -6728,6 +7049,21 @@ AlterSystemPropertiesResponse alterSystemProperties( const std::map<std::string,
  *                            Number of seconds after which kakfa poll will
  *                            timeout if datasource has no records.  The
  *                            default value is '5'.
+ *                                    <li>
+ *                            gpudb::alter_system_properties_egress_single_file_max_size:
+ *                            Max file size (in MB) to allow saving to a single
+ *                            file. May be overridden by target limitations.
+ *                            The default value is '100'.
+ *                                    <li>
+ *                            gpudb::alter_system_properties_max_concurrent_kernels:
+ *                            Sets the max_concurrent_kernels value of the
+ *                            conf.
+ *                                    <li>
+ *                            gpudb::alter_system_properties_tcs_per_tom: Sets
+ *                            the tcs_per_tom value of the conf.
+ *                                    <li>
+ *                            gpudb::alter_system_properties_tps_per_tom: Sets
+ *                            the tps_per_tom value of the conf.
  *                            </ul>
  * @param options  Optional parameters.
  *                 <ul>
@@ -9003,9 +9339,9 @@ CreateDatasinkResponse& createDatasink( const CreateDatasinkRequest& request_,
  * 
  * @param name  Name of the data sink to be created.
  * @param destination  Destination for the output data in format
- *                     'destination_type://path[:port]'.
- *                     Supported destination types are 'http', 'https' and
- *                     'kafka'.
+ *                     'storage_provider_type://path[:port]'.
+ *                     Supported storage provider types are 'azure', 'gcs',
+ *                     'hdfs', 'http', 'https', 'jdbc', 'kafka' and 's3'.
  * @param options  Optional parameters.
  *                 <ul>
  *                         <li> gpudb::create_datasink_connection_timeout:
@@ -9016,6 +9352,56 @@ CreateDatasinkResponse& createDatasink( const CreateDatasinkRequest& request_,
  *                 <a href="../../../concepts/credentials/"
  *                 target="_top">credential</a> object to be used in this data
  *                 sink
+ *                         <li> gpudb::create_datasink_s3_bucket_name: Name of
+ *                 the Amazon S3 bucket to use as the data sink
+ *                         <li> gpudb::create_datasink_s3_region: Name of the
+ *                 Amazon S3 region where the given bucket is located
+ *                         <li> gpudb::create_datasink_s3_aws_role_arn: Amazon
+ *                 IAM Role ARN which has required S3 permissions that can be
+ *                 assumed for the given S3 IAM user
+ *                         <li>
+ *                 gpudb::create_datasink_s3_encryption_customer_algorithm:
+ *                 Customer encryption algorithm used encrypting data
+ *                         <li>
+ *                 gpudb::create_datasink_s3_encryption_customer_key: Customer
+ *                 encryption key to encrypt or decrypt data
+ *                         <li> gpudb::create_datasink_hdfs_kerberos_keytab:
+ *                 Kerberos keytab file location for the given HDFS user.  This
+ *                 may be a KIFS file.
+ *                         <li> gpudb::create_datasink_hdfs_delegation_token:
+ *                 Delegation token for the given HDFS user
+ *                         <li> gpudb::create_datasink_hdfs_use_kerberos: Use
+ *                 kerberos authentication for the given HDFS cluster
+ *                 <ul>
+ *                         <li> gpudb::create_datasink_true
+ *                         <li> gpudb::create_datasink_false
+ *                 </ul>
+ *                 The default value is gpudb::create_datasink_false.
+ *                         <li>
+ *                 gpudb::create_datasink_azure_storage_account_name: Name of
+ *                 the Azure storage account to use as the data sink, this is
+ *                 valid only if tenant_id is specified
+ *                         <li> gpudb::create_datasink_azure_container_name:
+ *                 Name of the Azure storage container to use as the data sink
+ *                         <li> gpudb::create_datasink_azure_tenant_id: Active
+ *                 Directory tenant ID (or directory ID)
+ *                         <li> gpudb::create_datasink_azure_sas_token: Shared
+ *                 access signature token for Azure storage account to use as
+ *                 the data sink
+ *                         <li> gpudb::create_datasink_azure_oauth_token: Oauth
+ *                 token to access given storage container
+ *                         <li> gpudb::create_datasink_gcs_bucket_name: Name of
+ *                 the Google Cloud Storage bucket to use as the data sink
+ *                         <li> gpudb::create_datasink_gcs_project_id: Name of
+ *                 the Google Cloud project to use as the data sink
+ *                         <li>
+ *                 gpudb::create_datasink_gcs_service_account_keys: Google
+ *                 Cloud service account keys to use for authenticating the
+ *                 data sink
+ *                         <li> gpudb::create_datasink_jdbc_driver_jar_path:
+ *                 JDBC driver jar file location
+ *                         <li> gpudb::create_datasink_jdbc_driver_class_name:
+ *                 Name of the JDBC driver class
  *                         <li> gpudb::create_datasink_kafka_topic_name: Name
  *                 of the Kafka topic to publish to if @a destination is a
  *                 Kafka broker
@@ -9034,10 +9420,22 @@ CreateDatasinkResponse& createDatasink( const CreateDatasinkRequest& request_,
  *                         <li> gpudb::create_datasink_nested
  *                 </ul>
  *                 The default value is gpudb::create_datasink_flat.
- *                         <li> gpudb::create_datasink_jdbc_driver_jar_path:
- *                 JDBC driver jar file location
- *                         <li> gpudb::create_datasink_jdbc_driver_class_name:
- *                 Name of the JDBC driver class
+ *                         <li> gpudb::create_datasink_use_managed_credentials:
+ *                 When no credentials are supplied, we use anonymous access by
+ *                 default.  If this is set, we will use cloud provider user
+ *                 settings.
+ *                 <ul>
+ *                         <li> gpudb::create_datasink_true
+ *                         <li> gpudb::create_datasink_false
+ *                 </ul>
+ *                 The default value is gpudb::create_datasink_false.
+ *                         <li> gpudb::create_datasink_use_https: Use https to
+ *                 connect to datasink if true, otherwise use http
+ *                 <ul>
+ *                         <li> gpudb::create_datasink_true
+ *                         <li> gpudb::create_datasink_false
+ *                 </ul>
+ *                 The default value is gpudb::create_datasink_true.
  *                         <li> gpudb::create_datasink_skip_validation: Bypass
  *                 validation of connection to this data sink.
  *                 <ul>
@@ -9062,9 +9460,9 @@ CreateDatasinkResponse createDatasink( const std::string& name,
  * 
  * @param name  Name of the data sink to be created.
  * @param destination  Destination for the output data in format
- *                     'destination_type://path[:port]'.
- *                     Supported destination types are 'http', 'https' and
- *                     'kafka'.
+ *                     'storage_provider_type://path[:port]'.
+ *                     Supported storage provider types are 'azure', 'gcs',
+ *                     'hdfs', 'http', 'https', 'jdbc', 'kafka' and 's3'.
  * @param options  Optional parameters.
  *                 <ul>
  *                         <li> gpudb::create_datasink_connection_timeout:
@@ -9075,6 +9473,56 @@ CreateDatasinkResponse createDatasink( const std::string& name,
  *                 <a href="../../../concepts/credentials/"
  *                 target="_top">credential</a> object to be used in this data
  *                 sink
+ *                         <li> gpudb::create_datasink_s3_bucket_name: Name of
+ *                 the Amazon S3 bucket to use as the data sink
+ *                         <li> gpudb::create_datasink_s3_region: Name of the
+ *                 Amazon S3 region where the given bucket is located
+ *                         <li> gpudb::create_datasink_s3_aws_role_arn: Amazon
+ *                 IAM Role ARN which has required S3 permissions that can be
+ *                 assumed for the given S3 IAM user
+ *                         <li>
+ *                 gpudb::create_datasink_s3_encryption_customer_algorithm:
+ *                 Customer encryption algorithm used encrypting data
+ *                         <li>
+ *                 gpudb::create_datasink_s3_encryption_customer_key: Customer
+ *                 encryption key to encrypt or decrypt data
+ *                         <li> gpudb::create_datasink_hdfs_kerberos_keytab:
+ *                 Kerberos keytab file location for the given HDFS user.  This
+ *                 may be a KIFS file.
+ *                         <li> gpudb::create_datasink_hdfs_delegation_token:
+ *                 Delegation token for the given HDFS user
+ *                         <li> gpudb::create_datasink_hdfs_use_kerberos: Use
+ *                 kerberos authentication for the given HDFS cluster
+ *                 <ul>
+ *                         <li> gpudb::create_datasink_true
+ *                         <li> gpudb::create_datasink_false
+ *                 </ul>
+ *                 The default value is gpudb::create_datasink_false.
+ *                         <li>
+ *                 gpudb::create_datasink_azure_storage_account_name: Name of
+ *                 the Azure storage account to use as the data sink, this is
+ *                 valid only if tenant_id is specified
+ *                         <li> gpudb::create_datasink_azure_container_name:
+ *                 Name of the Azure storage container to use as the data sink
+ *                         <li> gpudb::create_datasink_azure_tenant_id: Active
+ *                 Directory tenant ID (or directory ID)
+ *                         <li> gpudb::create_datasink_azure_sas_token: Shared
+ *                 access signature token for Azure storage account to use as
+ *                 the data sink
+ *                         <li> gpudb::create_datasink_azure_oauth_token: Oauth
+ *                 token to access given storage container
+ *                         <li> gpudb::create_datasink_gcs_bucket_name: Name of
+ *                 the Google Cloud Storage bucket to use as the data sink
+ *                         <li> gpudb::create_datasink_gcs_project_id: Name of
+ *                 the Google Cloud project to use as the data sink
+ *                         <li>
+ *                 gpudb::create_datasink_gcs_service_account_keys: Google
+ *                 Cloud service account keys to use for authenticating the
+ *                 data sink
+ *                         <li> gpudb::create_datasink_jdbc_driver_jar_path:
+ *                 JDBC driver jar file location
+ *                         <li> gpudb::create_datasink_jdbc_driver_class_name:
+ *                 Name of the JDBC driver class
  *                         <li> gpudb::create_datasink_kafka_topic_name: Name
  *                 of the Kafka topic to publish to if @a destination is a
  *                 Kafka broker
@@ -9093,10 +9541,22 @@ CreateDatasinkResponse createDatasink( const std::string& name,
  *                         <li> gpudb::create_datasink_nested
  *                 </ul>
  *                 The default value is gpudb::create_datasink_flat.
- *                         <li> gpudb::create_datasink_jdbc_driver_jar_path:
- *                 JDBC driver jar file location
- *                         <li> gpudb::create_datasink_jdbc_driver_class_name:
- *                 Name of the JDBC driver class
+ *                         <li> gpudb::create_datasink_use_managed_credentials:
+ *                 When no credentials are supplied, we use anonymous access by
+ *                 default.  If this is set, we will use cloud provider user
+ *                 settings.
+ *                 <ul>
+ *                         <li> gpudb::create_datasink_true
+ *                         <li> gpudb::create_datasink_false
+ *                 </ul>
+ *                 The default value is gpudb::create_datasink_false.
+ *                         <li> gpudb::create_datasink_use_https: Use https to
+ *                 connect to datasink if true, otherwise use http
+ *                 <ul>
+ *                         <li> gpudb::create_datasink_true
+ *                         <li> gpudb::create_datasink_false
+ *                 </ul>
+ *                 The default value is gpudb::create_datasink_true.
  *                         <li> gpudb::create_datasink_skip_validation: Bypass
  *                 validation of connection to this data sink.
  *                 <ul>
@@ -9195,7 +9655,8 @@ CreateDatasourceResponse& createDatasource( const CreateDatasourceRequest& reque
  *                 gpudb::create_datasource_s3_encryption_customer_key:
  *                 Customer encryption key to encrypt or decrypt data
  *                         <li> gpudb::create_datasource_hdfs_kerberos_keytab:
- *                 Kerberos keytab file location for the given HDFS user
+ *                 Kerberos keytab file location for the given HDFS user.  This
+ *                 may be a KIFS file.
  *                         <li> gpudb::create_datasource_hdfs_delegation_token:
  *                 Delegation token for the given HDFS user
  *                         <li> gpudb::create_datasource_hdfs_use_kerberos: Use
@@ -9237,7 +9698,7 @@ CreateDatasourceResponse& createDatasource( const CreateDatasourceRequest& reque
  *                         <li> gpudb::create_datasource_kafka_topic_name: Name
  *                 of the Kafka topic to use as the data source
  *                         <li> gpudb::create_datasource_jdbc_driver_jar_path:
- *                 JDBC driver jar file location
+ *                 JDBC driver jar file location.  This may be a KIFS file.
  *                         <li>
  *                 gpudb::create_datasource_jdbc_driver_class_name: Name of the
  *                 JDBC driver class
@@ -9322,7 +9783,8 @@ CreateDatasourceResponse createDatasource( const std::string& name,
  *                 gpudb::create_datasource_s3_encryption_customer_key:
  *                 Customer encryption key to encrypt or decrypt data
  *                         <li> gpudb::create_datasource_hdfs_kerberos_keytab:
- *                 Kerberos keytab file location for the given HDFS user
+ *                 Kerberos keytab file location for the given HDFS user.  This
+ *                 may be a KIFS file.
  *                         <li> gpudb::create_datasource_hdfs_delegation_token:
  *                 Delegation token for the given HDFS user
  *                         <li> gpudb::create_datasource_hdfs_use_kerberos: Use
@@ -9364,7 +9826,7 @@ CreateDatasourceResponse createDatasource( const std::string& name,
  *                         <li> gpudb::create_datasource_kafka_topic_name: Name
  *                 of the Kafka topic to use as the data source
  *                         <li> gpudb::create_datasource_jdbc_driver_jar_path:
- *                 JDBC driver jar file location
+ *                 JDBC driver jar file location.  This may be a KIFS file.
  *                         <li>
  *                 gpudb::create_datasource_jdbc_driver_class_name: Name of the
  *                 JDBC driver class
@@ -9521,6 +9983,10 @@ CreateDirectoryResponse& createDirectory( const CreateDirectoryRequest& request_
  *                 When set, a home directory is created for the user name
  *                 provided in the value. The @a directoryName must be an empty
  *                 string in this case. The user must exist.
+ *                         <li> gpudb::create_directory_data_limit: The maximum
+ *                 capacity, in bytes, to apply to the created directory. Set
+ *                 to -1 to indicate no upper limit. If empty, the system
+ *                 default limit is applied.
  *                         <li> gpudb::create_directory_no_error_if_exists: If
  *                 @a true, does not return an error if the directory already
  *                 exists
@@ -9552,6 +10018,10 @@ CreateDirectoryResponse createDirectory( const std::string& directoryName,
  *                 When set, a home directory is created for the user name
  *                 provided in the value. The @a directoryName must be an empty
  *                 string in this case. The user must exist.
+ *                         <li> gpudb::create_directory_data_limit: The maximum
+ *                 capacity, in bytes, to apply to the created directory. Set
+ *                 to -1 to indicate no upper limit. If empty, the system
+ *                 default limit is applied.
  *                         <li> gpudb::create_directory_no_error_if_exists: If
  *                 @a true, does not return an error if the directory already
  *                 exists
@@ -11013,6 +11483,54 @@ CreateProjectionResponse& createProjection( const CreateProjectionRequest& reque
  *                         <li> gpudb::create_projection_false
  *                 </ul>
  *                 The default value is gpudb::create_projection_false.
+ *                         <li> gpudb::create_projection_partition_type: <a
+ *                 href="../../../concepts/tables/#partitioning"
+ *                 target="_top">Partitioning</a> scheme to use.
+ *                 <ul>
+ *                         <li> gpudb::create_projection_RANGE: Use <a
+ *                 href="../../../concepts/tables/#partitioning-by-range"
+ *                 target="_top">range partitioning</a>.
+ *                         <li> gpudb::create_projection_INTERVAL: Use <a
+ *                 href="../../../concepts/tables/#partitioning-by-interval"
+ *                 target="_top">interval partitioning</a>.
+ *                         <li> gpudb::create_projection_LIST: Use <a
+ *                 href="../../../concepts/tables/#partitioning-by-list"
+ *                 target="_top">list partitioning</a>.
+ *                         <li> gpudb::create_projection_HASH: Use <a
+ *                 href="../../../concepts/tables/#partitioning-by-hash"
+ *                 target="_top">hash partitioning</a>.
+ *                         <li> gpudb::create_projection_SERIES: Use <a
+ *                 href="../../../concepts/tables/#partitioning-by-series"
+ *                 target="_top">series partitioning</a>.
+ *                 </ul>
+ *                         <li> gpudb::create_projection_partition_keys:
+ *                 Comma-separated list of partition keys, which are the
+ *                 columns or column expressions by which records will be
+ *                 assigned to partitions defined by @a partition_definitions.
+ *                         <li> gpudb::create_projection_partition_definitions:
+ *                 Comma-separated list of partition definitions, whose format
+ *                 depends on the choice of @a partition_type.  See <a
+ *                 href="../../../concepts/tables/#partitioning-by-range"
+ *                 target="_top">range partitioning</a>, <a
+ *                 href="../../../concepts/tables/#partitioning-by-interval"
+ *                 target="_top">interval partitioning</a>, <a
+ *                 href="../../../concepts/tables/#partitioning-by-list"
+ *                 target="_top">list partitioning</a>, <a
+ *                 href="../../../concepts/tables/#partitioning-by-hash"
+ *                 target="_top">hash partitioning</a>, or <a
+ *                 href="../../../concepts/tables/#partitioning-by-series"
+ *                 target="_top">series partitioning</a> for example formats.
+ *                         <li>
+ *                 gpudb::create_projection_is_automatic_partition: If @a true,
+ *                 a new partition will be created for values which don't fall
+ *                 into an existing partition.  Currently only supported for <a
+ *                 href="../../../concepts/tables/#partitioning-by-list"
+ *                 target="_top">list partitions</a>.
+ *                 <ul>
+ *                         <li> gpudb::create_projection_true
+ *                         <li> gpudb::create_projection_false
+ *                 </ul>
+ *                 The default value is gpudb::create_projection_false.
  *                         <li> gpudb::create_projection_view_id: ID of view of
  *                 which this projection is a member.  The default value is ''.
  *                 </ul>
@@ -11162,6 +11680,54 @@ CreateProjectionResponse createProjection( const std::string& tableName,
  *                         <li> gpudb::create_projection_retain_partitions:
  *                 Determines whether the created projection will retain the
  *                 partitioning scheme from the source table.
+ *                 <ul>
+ *                         <li> gpudb::create_projection_true
+ *                         <li> gpudb::create_projection_false
+ *                 </ul>
+ *                 The default value is gpudb::create_projection_false.
+ *                         <li> gpudb::create_projection_partition_type: <a
+ *                 href="../../../concepts/tables/#partitioning"
+ *                 target="_top">Partitioning</a> scheme to use.
+ *                 <ul>
+ *                         <li> gpudb::create_projection_RANGE: Use <a
+ *                 href="../../../concepts/tables/#partitioning-by-range"
+ *                 target="_top">range partitioning</a>.
+ *                         <li> gpudb::create_projection_INTERVAL: Use <a
+ *                 href="../../../concepts/tables/#partitioning-by-interval"
+ *                 target="_top">interval partitioning</a>.
+ *                         <li> gpudb::create_projection_LIST: Use <a
+ *                 href="../../../concepts/tables/#partitioning-by-list"
+ *                 target="_top">list partitioning</a>.
+ *                         <li> gpudb::create_projection_HASH: Use <a
+ *                 href="../../../concepts/tables/#partitioning-by-hash"
+ *                 target="_top">hash partitioning</a>.
+ *                         <li> gpudb::create_projection_SERIES: Use <a
+ *                 href="../../../concepts/tables/#partitioning-by-series"
+ *                 target="_top">series partitioning</a>.
+ *                 </ul>
+ *                         <li> gpudb::create_projection_partition_keys:
+ *                 Comma-separated list of partition keys, which are the
+ *                 columns or column expressions by which records will be
+ *                 assigned to partitions defined by @a partition_definitions.
+ *                         <li> gpudb::create_projection_partition_definitions:
+ *                 Comma-separated list of partition definitions, whose format
+ *                 depends on the choice of @a partition_type.  See <a
+ *                 href="../../../concepts/tables/#partitioning-by-range"
+ *                 target="_top">range partitioning</a>, <a
+ *                 href="../../../concepts/tables/#partitioning-by-interval"
+ *                 target="_top">interval partitioning</a>, <a
+ *                 href="../../../concepts/tables/#partitioning-by-list"
+ *                 target="_top">list partitioning</a>, <a
+ *                 href="../../../concepts/tables/#partitioning-by-hash"
+ *                 target="_top">hash partitioning</a>, or <a
+ *                 href="../../../concepts/tables/#partitioning-by-series"
+ *                 target="_top">series partitioning</a> for example formats.
+ *                         <li>
+ *                 gpudb::create_projection_is_automatic_partition: If @a true,
+ *                 a new partition will be created for values which don't fall
+ *                 into an existing partition.  Currently only supported for <a
+ *                 href="../../../concepts/tables/#partitioning-by-list"
+ *                 target="_top">list partitions</a>.
  *                 <ul>
  *                         <li> gpudb::create_projection_true
  *                         <li> gpudb::create_projection_false
@@ -12345,10 +12911,11 @@ CreateTableExternalResponse& createTableExternal( const CreateTableExternalReque
  *                 the target table exists, the column names must match the
  *                 source data field names for a name-mapping
  *                 to be successful.
+ *                 Mutually exclusive with @a columns_to_skip.
  *                         <li> gpudb::create_table_external_columns_to_skip:
  *                 Specifies a comma-delimited list of columns from the source
  *                 data to
- *                 skip.  Mutually exclusive to columns_to_load.
+ *                 skip.  Mutually exclusive with @a columns_to_load.
  *                         <li> gpudb::create_table_external_datasource_name:
  *                 Name of an existing external data source from which data
  *                 file(s) specified in @a filepaths will be loaded
@@ -12448,6 +13015,9 @@ CreateTableExternalResponse& createTableExternal( const CreateTableExternalReque
  *                 data.  The inferred type is returned in the response.
  *                 </ul>
  *                 The default value is gpudb::create_table_external_full.
+ *                         <li> gpudb::create_table_external_jdbc_fetch_size:
+ *                 The JDBC fetch size, which determines how many rows to fetch
+ *                 per round trip.
  *                         <li> gpudb::create_table_external_kafka_group_id:
  *                 The group id to be used consuming data from a kakfa topic
  *                 (valid only for kafka datasource subscriptions).
@@ -12645,7 +13215,19 @@ CreateTableExternalResponse& createTableExternal( const CreateTableExternalReque
  *                         <li>
  *                 gpudb::create_table_external_remote_query_filter_column:
  *                 Name of column to be used for splitting the query into
- *                 multiple sub-queries.  The default value is ''.
+ *                 multiple sub-queries using the data distribution of given
+ *                 column.  The default value is ''.
+ *                         <li>
+ *                 gpudb::create_table_external_remote_query_partition_column:
+ *                 Alias name for remote_query_filter_column.  The default
+ *                 value is ''.
+ *                         <li>
+ *                 gpudb::create_table_external_update_on_existing_pk:
+ *                 <ul>
+ *                         <li> gpudb::create_table_external_true
+ *                         <li> gpudb::create_table_external_false
+ *                 </ul>
+ *                 The default value is gpudb::create_table_external_false.
  *                 </ul>
  * 
  * @return Response object containing the result of the operation.
@@ -12943,10 +13525,11 @@ CreateTableExternalResponse createTableExternal( const std::string& tableName,
  *                 the target table exists, the column names must match the
  *                 source data field names for a name-mapping
  *                 to be successful.
+ *                 Mutually exclusive with @a columns_to_skip.
  *                         <li> gpudb::create_table_external_columns_to_skip:
  *                 Specifies a comma-delimited list of columns from the source
  *                 data to
- *                 skip.  Mutually exclusive to columns_to_load.
+ *                 skip.  Mutually exclusive with @a columns_to_load.
  *                         <li> gpudb::create_table_external_datasource_name:
  *                 Name of an existing external data source from which data
  *                 file(s) specified in @a filepaths will be loaded
@@ -13046,6 +13629,9 @@ CreateTableExternalResponse createTableExternal( const std::string& tableName,
  *                 data.  The inferred type is returned in the response.
  *                 </ul>
  *                 The default value is gpudb::create_table_external_full.
+ *                         <li> gpudb::create_table_external_jdbc_fetch_size:
+ *                 The JDBC fetch size, which determines how many rows to fetch
+ *                 per round trip.
  *                         <li> gpudb::create_table_external_kafka_group_id:
  *                 The group id to be used consuming data from a kakfa topic
  *                 (valid only for kafka datasource subscriptions).
@@ -13243,7 +13829,19 @@ CreateTableExternalResponse createTableExternal( const std::string& tableName,
  *                         <li>
  *                 gpudb::create_table_external_remote_query_filter_column:
  *                 Name of column to be used for splitting the query into
- *                 multiple sub-queries.  The default value is ''.
+ *                 multiple sub-queries using the data distribution of given
+ *                 column.  The default value is ''.
+ *                         <li>
+ *                 gpudb::create_table_external_remote_query_partition_column:
+ *                 Alias name for remote_query_filter_column.  The default
+ *                 value is ''.
+ *                         <li>
+ *                 gpudb::create_table_external_update_on_existing_pk:
+ *                 <ul>
+ *                         <li> gpudb::create_table_external_true
+ *                         <li> gpudb::create_table_external_false
+ *                 </ul>
+ *                 The default value is gpudb::create_table_external_false.
  *                 </ul>
  * @param[out] response_  Response object containing the results of the
  *                        operation.
@@ -14096,6 +14694,10 @@ CreateTypeResponse& createType( const CreateTypeRequest& request_,
  *                    provides optimized memory, disk and query performance for
  *                    string columns. Strings with this property must be no
  *                    longer than 256 characters.
+ *                            <li> gpudb::create_type_boolean: This property
+ *                    provides optimized memory and query performance for int
+ *                    columns. Ints with this property must be between 0 and
+ *                    1(inclusive)
  *                            <li> gpudb::create_type_int8: This property
  *                    provides optimized memory and query performance for int
  *                    columns. Ints with this property must be between -128 and
@@ -14318,6 +14920,10 @@ CreateTypeResponse createType( const std::string& typeDefinition,
  *                    provides optimized memory, disk and query performance for
  *                    string columns. Strings with this property must be no
  *                    longer than 256 characters.
+ *                            <li> gpudb::create_type_boolean: This property
+ *                    provides optimized memory and query performance for int
+ *                    columns. Ints with this property must be between 0 and
+ *                    1(inclusive)
  *                            <li> gpudb::create_type_int8: This property
  *                    provides optimized memory and query performance for int
  *                    columns. Ints with this property must be between -128 and
@@ -14811,14 +15417,24 @@ CreateUserExternalResponse& createUserExternal( const CreateUserExternalRequest&
  *              same name as an existing user.
  * @param options  Optional parameters.
  *                 <ul>
+ *                         <li> gpudb::create_user_external_resource_group:
+ *                 Name of an existing resource group to associate with this
+ *                 user
+ *                         <li> gpudb::create_user_external_default_schema:
+ *                 Default schema to associate with this user
  *                         <li>
- *                 gpudb::create_user_external_create_home_directory: when
+ *                 gpudb::create_user_external_create_home_directory: When @a
  *                 true, a home directory in KiFS is created for this user
  *                 <ul>
  *                         <li> gpudb::create_user_external_true
  *                         <li> gpudb::create_user_external_false
  *                 </ul>
  *                 The default value is gpudb::create_user_external_true.
+ *                         <li>
+ *                 gpudb::create_user_external_directory_data_limit: The
+ *                 maximum capacity to apply to the created directory if @a
+ *                 create_home_directory is @a true. Set to -1 to indicate no
+ *                 upper limit. If empty, the system default limit is applied.
  *                 </ul>
  * 
  * @return Response object containing the result of the operation.
@@ -14840,14 +15456,24 @@ CreateUserExternalResponse createUserExternal( const std::string& name,
  *              same name as an existing user.
  * @param options  Optional parameters.
  *                 <ul>
+ *                         <li> gpudb::create_user_external_resource_group:
+ *                 Name of an existing resource group to associate with this
+ *                 user
+ *                         <li> gpudb::create_user_external_default_schema:
+ *                 Default schema to associate with this user
  *                         <li>
- *                 gpudb::create_user_external_create_home_directory: when
+ *                 gpudb::create_user_external_create_home_directory: When @a
  *                 true, a home directory in KiFS is created for this user
  *                 <ul>
  *                         <li> gpudb::create_user_external_true
  *                         <li> gpudb::create_user_external_false
  *                 </ul>
  *                 The default value is gpudb::create_user_external_true.
+ *                         <li>
+ *                 gpudb::create_user_external_directory_data_limit: The
+ *                 maximum capacity to apply to the created directory if @a
+ *                 create_home_directory is @a true. Set to -1 to indicate no
+ *                 upper limit. If empty, the system default limit is applied.
  *                 </ul>
  * @param[out] response_  Response object containing the results of the
  *                        operation.
@@ -14906,15 +15532,20 @@ CreateUserInternalResponse& createUserInternal( const CreateUserInternalRequest&
  *                 Name of an existing resource group to associate with this
  *                 user
  *                         <li> gpudb::create_user_internal_default_schema:
- *                 default schema associate with this user
+ *                 Default schema to associate with this user
  *                         <li>
- *                 gpudb::create_user_internal_create_home_directory: when
+ *                 gpudb::create_user_internal_create_home_directory: When @a
  *                 true, a home directory in KiFS is created for this user
  *                 <ul>
  *                         <li> gpudb::create_user_internal_true
  *                         <li> gpudb::create_user_internal_false
  *                 </ul>
  *                 The default value is gpudb::create_user_internal_true.
+ *                         <li>
+ *                 gpudb::create_user_internal_directory_data_limit: The
+ *                 maximum capacity to apply to the created directory if @a
+ *                 create_home_directory is @a true. Set to -1 to indicate no
+ *                 upper limit. If empty, the system default limit is applied.
  *                 </ul>
  * 
  * @return Response object containing the result of the operation.
@@ -14940,15 +15571,20 @@ CreateUserInternalResponse createUserInternal( const std::string& name,
  *                 Name of an existing resource group to associate with this
  *                 user
  *                         <li> gpudb::create_user_internal_default_schema:
- *                 default schema associate with this user
+ *                 Default schema to associate with this user
  *                         <li>
- *                 gpudb::create_user_internal_create_home_directory: when
+ *                 gpudb::create_user_internal_create_home_directory: When @a
  *                 true, a home directory in KiFS is created for this user
  *                 <ul>
  *                         <li> gpudb::create_user_internal_true
  *                         <li> gpudb::create_user_internal_false
  *                 </ul>
  *                 The default value is gpudb::create_user_internal_true.
+ *                         <li>
+ *                 gpudb::create_user_internal_directory_data_limit: The
+ *                 maximum capacity to apply to the created directory if @a
+ *                 create_home_directory is @a true. Set to -1 to indicate no
+ *                 upper limit. If empty, the system default limit is applied.
  *                 </ul>
  * @param[out] response_  Response object containing the results of the
  *                        operation.
@@ -17188,6 +17824,432 @@ ExecuteSqlResponse& executeSql( const std::string& statement,
                                 const std::vector<std::vector<uint8_t> >& data,
                                 const std::map<std::string, std::string>& options,
                                 ExecuteSqlResponse& response_ ) const;
+
+/**
+ * Export records from a table to files. All tables can be exported, in full or
+ * partial
+ * (see @a columns_to_export and @a columns_to_skip).
+ * Additional filtering can be applied when using export table with expression
+ * through SQL.
+ * Default destination is KIFS, though other storage types (Azure, S3, GCS, and
+ * HDFS) are supported
+ * through @a datasink_name; see {@link
+ * #createDatasink(const CreateDatasinkRequest&) const}.
+ * <p>
+ * Server's local file system is not supported.  Default file format is
+ * delimited text. See options for
+ * different file types and different options for each file type.  Table is
+ * saved to a single file if
+ * within max file size limits (may vary depending on datasink type).  If not,
+ * then table is split into
+ * multiple files; these may be smaller than the max size limit.
+ * <p>
+ * All filenames created are returned in the response.
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+ExportRecordsToFilesResponse exportRecordsToFiles( const ExportRecordsToFilesRequest& request_ ) const;
+
+/**
+ * Export records from a table to files. All tables can be exported, in full or
+ * partial
+ * (see @a columns_to_export and @a columns_to_skip).
+ * Additional filtering can be applied when using export table with expression
+ * through SQL.
+ * Default destination is KIFS, though other storage types (Azure, S3, GCS, and
+ * HDFS) are supported
+ * through @a datasink_name; see {@link
+ * #createDatasink(const CreateDatasinkRequest&,CreateDatasinkResponse&) const}.
+ * <p>
+ * Server's local file system is not supported.  Default file format is
+ * delimited text. See options for
+ * different file types and different options for each file type.  Table is
+ * saved to a single file if
+ * within max file size limits (may vary depending on datasink type).  If not,
+ * then table is split into
+ * multiple files; these may be smaller than the max size limit.
+ * <p>
+ * All filenames created are returned in the response.
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+ExportRecordsToFilesResponse& exportRecordsToFiles( const ExportRecordsToFilesRequest& request_,
+                                                    ExportRecordsToFilesResponse& response_ ) const;
+
+/**
+ * Export records from a table to files. All tables can be exported, in full or
+ * partial
+ * (see @a columns_to_export and @a columns_to_skip).
+ * Additional filtering can be applied when using export table with expression
+ * through SQL.
+ * Default destination is KIFS, though other storage types (Azure, S3, GCS, and
+ * HDFS) are supported
+ * through @a datasink_name; see {@link
+ * #createDatasink(const std::string&,const std::string&,const std::map<std::string, std::string>&) const}.
+ * <p>
+ * Server's local file system is not supported.  Default file format is
+ * delimited text. See options for
+ * different file types and different options for each file type.  Table is
+ * saved to a single file if
+ * within max file size limits (may vary depending on datasink type).  If not,
+ * then table is split into
+ * multiple files; these may be smaller than the max size limit.
+ * <p>
+ * All filenames created are returned in the response.
+ * 
+ * @param tableName
+ * @param filepath  Path to data export target.  If @a filepath has a file
+ *                  extension, it is
+ *                  read as the name of a file. If @a filepath is a directory,
+ *                  then the source table name with a
+ *                  random UUID appended will be used as the name of each
+ *                  exported file, all written to that directory.
+ *                  If filepath is a filename, then all exported files will
+ *                  have a random UUID appended to the given
+ *                  name.  In either case, the target directory specified or
+ *                  implied must exist.  The names of all
+ *                  exported files are returned in the response.
+ * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li> gpudb::export_records_to_files_batch_size:
+ *                 Number of records to be exported as a batch.  The default
+ *                 value is '1000000'.
+ *                         <li> gpudb::export_records_to_files_column_formats:
+ *                 For each source column specified, applies the
+ *                 column-property-bound
+ *                 format.  Currently supported column properties include date,
+ *                 time, & datetime. The parameter value
+ *                 must be formatted as a JSON string of maps of column names
+ *                 to maps of column properties to their
+ *                 corresponding column formats, e.g.,
+ *                 '{ "order_date" : { "date" : "%Y.%m.%d" }, "order_time" : {
+ *                 "time" : "%H:%M:%S" } }'.
+ *                 See @a default_column_formats for valid format syntax.
+ *                         <li>
+ *                 gpudb::export_records_to_files_columns_to_export: Specifies
+ *                 a comma-delimited list of columns from the source table to
+ *                 export, written to the output file in the order they are
+ *                 given.
+ *                 Column names can be provided, in which case the target file
+ *                 will use those names as the column
+ *                 headers as well.
+ *                 Alternatively, column numbers can be specified--discretely
+ *                 or as a range.  For example, a value of
+ *                 '5,7,1..3' will write values from the fifth column in the
+ *                 source table into the first column in the
+ *                 target file, from the seventh column in the source table
+ *                 into the second column in the target file,
+ *                 and from the first through third columns in the source table
+ *                 into the third through fifth columns in
+ *                 the target file.
+ *                 Mutually exclusive with @a columns_to_skip.
+ *                         <li> gpudb::export_records_to_files_columns_to_skip:
+ *                 Comma-separated list of column names or column numbers to
+ *                 not
+ *                 export.  All columns in the source table not specified will
+ *                 be written to the target file in the
+ *                 order they appear in the table definition.  Mutually
+ *                 exclusive with
+ *                 @a columns_to_export.
+ *                         <li> gpudb::export_records_to_files_datasink_name:
+ *                 Datasink name, created using /create/datasink.
+ *                         <li>
+ *                 gpudb::export_records_to_files_default_column_formats:
+ *                 Specifies the default format to use to write data.
+ *                 Currently
+ *                 supported column properties include date, time, & datetime.
+ *                 This default column-property-bound
+ *                 format can be overridden by specifying a column property &
+ *                 format for a given source column in
+ *                 @a column_formats. For each specified annotation, the format
+ *                 will apply to all
+ *                 columns with that annotation unless custom @a column_formats
+ *                 for that
+ *                 annotation are specified.
+ *                 The parameter value must be formatted as a JSON string that
+ *                 is a map of column properties to their
+ *                 respective column formats, e.g., '{ "date" : "%Y.%m.%d",
+ *                 "time" : "%H:%M:%S" }'.  Column
+ *                 formats are specified as a string of control characters and
+ *                 plain text. The supported control
+ *                 characters are 'Y', 'm', 'd', 'H', 'M', 'S', and 's', which
+ *                 follow the Linux 'strptime()'
+ *                 specification, as well as 's', which specifies seconds and
+ *                 fractional seconds (though the fractional
+ *                 component will be truncated past milliseconds).
+ *                 Formats for the 'date' annotation must include the 'Y', 'm',
+ *                 and 'd' control characters. Formats for
+ *                 the 'time' annotation must include the 'H', 'M', and either
+ *                 'S' or 's' (but not both) control
+ *                 characters. Formats for the 'datetime' annotation meet both
+ *                 the 'date' and 'time' control character
+ *                 requirements. For example, '{"datetime" : "%m/%d/%Y
+ *                 %H:%M:%S" }' would be used to write text
+ *                 as "05/04/2000 12:12:11"
+ *                         <li> gpudb::export_records_to_files_export_ddl: Save
+ *                 DDL to a separate file.  The default value is 'false'.
+ *                         <li> gpudb::export_records_to_files_file_extention:
+ *                 Extension to give the export file.  The default value is
+ *                 '.csv'.
+ *                         <li> gpudb::export_records_to_files_file_type:
+ *                 Specifies the file format to use when exporting data.
+ *                 <ul>
+ *                         <li> gpudb::export_records_to_files_delimited_text:
+ *                 Delimited text file format; e.g., CSV, TSV, PSV, etc.
+ *                         <li> gpudb::export_records_to_files_parquet
+ *                 </ul>
+ *                 The default value is
+ *                 gpudb::export_records_to_files_delimited_text.
+ *                         <li> gpudb::export_records_to_files_kinetica_header:
+ *                 Whether to include a Kinetica proprietary header. Will not
+ *                 be
+ *                 written if @a text_has_header is
+ *                 @a false.
+ *                 <ul>
+ *                         <li> gpudb::export_records_to_files_true
+ *                         <li> gpudb::export_records_to_files_false
+ *                 </ul>
+ *                 The default value is gpudb::export_records_to_files_false.
+ *                         <li>
+ *                 gpudb::export_records_to_files_kinetica_header_delimiter: If
+ *                 a Kinetica proprietary header is included, then specify a
+ *                 property separator. Different from column delimiter.  The
+ *                 default value is '|'.
+ *                         <li> gpudb::export_records_to_files_single_file:
+ *                 Save records to a single file. This option may be ignored if
+ *                 file
+ *                 size exceeds internal file size limits (this limit will
+ *                 differ on different targets).
+ *                 <ul>
+ *                         <li> gpudb::export_records_to_files_true
+ *                         <li> gpudb::export_records_to_files_false
+ *                 </ul>
+ *                 The default value is gpudb::export_records_to_files_true.
+ *                         <li> gpudb::export_records_to_files_text_delimiter:
+ *                 Specifies the character to write out to delimit field values
+ *                 and
+ *                 field names in the header (if present).
+ *                 For @a delimited_text @a file_type only.  The default value
+ *                 is ','.
+ *                         <li> gpudb::export_records_to_files_text_has_header:
+ *                 Indicates whether to write out a header row.
+ *                 For @a delimited_text @a file_type only.
+ *                 <ul>
+ *                         <li> gpudb::export_records_to_files_true
+ *                         <li> gpudb::export_records_to_files_false
+ *                 </ul>
+ *                 The default value is gpudb::export_records_to_files_true.
+ *                         <li>
+ *                 gpudb::export_records_to_files_text_null_string: Specifies
+ *                 the character string that should be written out for the null
+ *                 value in the data.
+ *                 For @a delimited_text @a file_type only.  The default value
+ *                 is '\\N'.
+ *                 </ul>
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+ExportRecordsToFilesResponse exportRecordsToFiles( const std::string& tableName,
+                                                   const std::string& filepath,
+                                                   const std::map<std::string, std::string>& options ) const;
+
+/**
+ * Export records from a table to files. All tables can be exported, in full or
+ * partial
+ * (see @a columns_to_export and @a columns_to_skip).
+ * Additional filtering can be applied when using export table with expression
+ * through SQL.
+ * Default destination is KIFS, though other storage types (Azure, S3, GCS, and
+ * HDFS) are supported
+ * through @a datasink_name; see {@link
+ * #createDatasink(const std::string&,const std::string&,const std::map<std::string, std::string>&,CreateDatasinkResponse&) const}.
+ * <p>
+ * Server's local file system is not supported.  Default file format is
+ * delimited text. See options for
+ * different file types and different options for each file type.  Table is
+ * saved to a single file if
+ * within max file size limits (may vary depending on datasink type).  If not,
+ * then table is split into
+ * multiple files; these may be smaller than the max size limit.
+ * <p>
+ * All filenames created are returned in the response.
+ * 
+ * @param tableName
+ * @param filepath  Path to data export target.  If @a filepath has a file
+ *                  extension, it is
+ *                  read as the name of a file. If @a filepath is a directory,
+ *                  then the source table name with a
+ *                  random UUID appended will be used as the name of each
+ *                  exported file, all written to that directory.
+ *                  If filepath is a filename, then all exported files will
+ *                  have a random UUID appended to the given
+ *                  name.  In either case, the target directory specified or
+ *                  implied must exist.  The names of all
+ *                  exported files are returned in the response.
+ * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li> gpudb::export_records_to_files_batch_size:
+ *                 Number of records to be exported as a batch.  The default
+ *                 value is '1000000'.
+ *                         <li> gpudb::export_records_to_files_column_formats:
+ *                 For each source column specified, applies the
+ *                 column-property-bound
+ *                 format.  Currently supported column properties include date,
+ *                 time, & datetime. The parameter value
+ *                 must be formatted as a JSON string of maps of column names
+ *                 to maps of column properties to their
+ *                 corresponding column formats, e.g.,
+ *                 '{ "order_date" : { "date" : "%Y.%m.%d" }, "order_time" : {
+ *                 "time" : "%H:%M:%S" } }'.
+ *                 See @a default_column_formats for valid format syntax.
+ *                         <li>
+ *                 gpudb::export_records_to_files_columns_to_export: Specifies
+ *                 a comma-delimited list of columns from the source table to
+ *                 export, written to the output file in the order they are
+ *                 given.
+ *                 Column names can be provided, in which case the target file
+ *                 will use those names as the column
+ *                 headers as well.
+ *                 Alternatively, column numbers can be specified--discretely
+ *                 or as a range.  For example, a value of
+ *                 '5,7,1..3' will write values from the fifth column in the
+ *                 source table into the first column in the
+ *                 target file, from the seventh column in the source table
+ *                 into the second column in the target file,
+ *                 and from the first through third columns in the source table
+ *                 into the third through fifth columns in
+ *                 the target file.
+ *                 Mutually exclusive with @a columns_to_skip.
+ *                         <li> gpudb::export_records_to_files_columns_to_skip:
+ *                 Comma-separated list of column names or column numbers to
+ *                 not
+ *                 export.  All columns in the source table not specified will
+ *                 be written to the target file in the
+ *                 order they appear in the table definition.  Mutually
+ *                 exclusive with
+ *                 @a columns_to_export.
+ *                         <li> gpudb::export_records_to_files_datasink_name:
+ *                 Datasink name, created using /create/datasink.
+ *                         <li>
+ *                 gpudb::export_records_to_files_default_column_formats:
+ *                 Specifies the default format to use to write data.
+ *                 Currently
+ *                 supported column properties include date, time, & datetime.
+ *                 This default column-property-bound
+ *                 format can be overridden by specifying a column property &
+ *                 format for a given source column in
+ *                 @a column_formats. For each specified annotation, the format
+ *                 will apply to all
+ *                 columns with that annotation unless custom @a column_formats
+ *                 for that
+ *                 annotation are specified.
+ *                 The parameter value must be formatted as a JSON string that
+ *                 is a map of column properties to their
+ *                 respective column formats, e.g., '{ "date" : "%Y.%m.%d",
+ *                 "time" : "%H:%M:%S" }'.  Column
+ *                 formats are specified as a string of control characters and
+ *                 plain text. The supported control
+ *                 characters are 'Y', 'm', 'd', 'H', 'M', 'S', and 's', which
+ *                 follow the Linux 'strptime()'
+ *                 specification, as well as 's', which specifies seconds and
+ *                 fractional seconds (though the fractional
+ *                 component will be truncated past milliseconds).
+ *                 Formats for the 'date' annotation must include the 'Y', 'm',
+ *                 and 'd' control characters. Formats for
+ *                 the 'time' annotation must include the 'H', 'M', and either
+ *                 'S' or 's' (but not both) control
+ *                 characters. Formats for the 'datetime' annotation meet both
+ *                 the 'date' and 'time' control character
+ *                 requirements. For example, '{"datetime" : "%m/%d/%Y
+ *                 %H:%M:%S" }' would be used to write text
+ *                 as "05/04/2000 12:12:11"
+ *                         <li> gpudb::export_records_to_files_export_ddl: Save
+ *                 DDL to a separate file.  The default value is 'false'.
+ *                         <li> gpudb::export_records_to_files_file_extention:
+ *                 Extension to give the export file.  The default value is
+ *                 '.csv'.
+ *                         <li> gpudb::export_records_to_files_file_type:
+ *                 Specifies the file format to use when exporting data.
+ *                 <ul>
+ *                         <li> gpudb::export_records_to_files_delimited_text:
+ *                 Delimited text file format; e.g., CSV, TSV, PSV, etc.
+ *                         <li> gpudb::export_records_to_files_parquet
+ *                 </ul>
+ *                 The default value is
+ *                 gpudb::export_records_to_files_delimited_text.
+ *                         <li> gpudb::export_records_to_files_kinetica_header:
+ *                 Whether to include a Kinetica proprietary header. Will not
+ *                 be
+ *                 written if @a text_has_header is
+ *                 @a false.
+ *                 <ul>
+ *                         <li> gpudb::export_records_to_files_true
+ *                         <li> gpudb::export_records_to_files_false
+ *                 </ul>
+ *                 The default value is gpudb::export_records_to_files_false.
+ *                         <li>
+ *                 gpudb::export_records_to_files_kinetica_header_delimiter: If
+ *                 a Kinetica proprietary header is included, then specify a
+ *                 property separator. Different from column delimiter.  The
+ *                 default value is '|'.
+ *                         <li> gpudb::export_records_to_files_single_file:
+ *                 Save records to a single file. This option may be ignored if
+ *                 file
+ *                 size exceeds internal file size limits (this limit will
+ *                 differ on different targets).
+ *                 <ul>
+ *                         <li> gpudb::export_records_to_files_true
+ *                         <li> gpudb::export_records_to_files_false
+ *                 </ul>
+ *                 The default value is gpudb::export_records_to_files_true.
+ *                         <li> gpudb::export_records_to_files_text_delimiter:
+ *                 Specifies the character to write out to delimit field values
+ *                 and
+ *                 field names in the header (if present).
+ *                 For @a delimited_text @a file_type only.  The default value
+ *                 is ','.
+ *                         <li> gpudb::export_records_to_files_text_has_header:
+ *                 Indicates whether to write out a header row.
+ *                 For @a delimited_text @a file_type only.
+ *                 <ul>
+ *                         <li> gpudb::export_records_to_files_true
+ *                         <li> gpudb::export_records_to_files_false
+ *                 </ul>
+ *                 The default value is gpudb::export_records_to_files_true.
+ *                         <li>
+ *                 gpudb::export_records_to_files_text_null_string: Specifies
+ *                 the character string that should be written out for the null
+ *                 value in the data.
+ *                 For @a delimited_text @a file_type only.  The default value
+ *                 is '\\N'.
+ *                 </ul>
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+ExportRecordsToFilesResponse& exportRecordsToFiles( const std::string& tableName,
+                                                    const std::string& filepath,
+                                                    const std::map<std::string, std::string>& options,
+                                                    ExportRecordsToFilesResponse& response_ ) const;
 
 /**
  * Exports records from source table to  specified target table in an external
@@ -25421,10 +26483,11 @@ InsertRecordsFromFilesResponse& insertRecordsFromFiles( const InsertRecordsFromF
  *                 the target table exists, the column names must match the
  *                 source data field names for a name-mapping
  *                 to be successful.
+ *                 Mutually exclusive with @a columns_to_skip.
  *                         <li>
  *                 gpudb::insert_records_from_files_columns_to_skip: Specifies
  *                 a comma-delimited list of columns from the source data to
- *                 skip.  Mutually exclusive to columns_to_load.
+ *                 skip.  Mutually exclusive with @a columns_to_load.
  *                         <li>
  *                 gpudb::insert_records_from_files_datasource_name: Name of an
  *                 existing external data source from which data file(s)
@@ -25701,6 +26764,13 @@ InsertRecordsFromFilesResponse& insertRecordsFromFiles( const InsertRecordsFromF
  *                 fit with minimum data scanned
  *                 </ul>
  *                 The default value is gpudb::insert_records_from_files_speed.
+ *                         <li>
+ *                 gpudb::insert_records_from_files_update_on_existing_pk:
+ *                 <ul>
+ *                         <li> gpudb::insert_records_from_files_true
+ *                         <li> gpudb::insert_records_from_files_false
+ *                 </ul>
+ *                 The default value is gpudb::insert_records_from_files_false.
  *                 </ul>
  * 
  * @return Response object containing the result of the operation.
@@ -26016,10 +27086,11 @@ InsertRecordsFromFilesResponse insertRecordsFromFiles( const std::string& tableN
  *                 the target table exists, the column names must match the
  *                 source data field names for a name-mapping
  *                 to be successful.
+ *                 Mutually exclusive with @a columns_to_skip.
  *                         <li>
  *                 gpudb::insert_records_from_files_columns_to_skip: Specifies
  *                 a comma-delimited list of columns from the source data to
- *                 skip.  Mutually exclusive to columns_to_load.
+ *                 skip.  Mutually exclusive with @a columns_to_load.
  *                         <li>
  *                 gpudb::insert_records_from_files_datasource_name: Name of an
  *                 existing external data source from which data file(s)
@@ -26296,6 +27367,13 @@ InsertRecordsFromFilesResponse insertRecordsFromFiles( const std::string& tableN
  *                 fit with minimum data scanned
  *                 </ul>
  *                 The default value is gpudb::insert_records_from_files_speed.
+ *                         <li>
+ *                 gpudb::insert_records_from_files_update_on_existing_pk:
+ *                 <ul>
+ *                         <li> gpudb::insert_records_from_files_true
+ *                         <li> gpudb::insert_records_from_files_false
+ *                 </ul>
+ *                 The default value is gpudb::insert_records_from_files_false.
  *                 </ul>
  * @param[out] response_  Response object containing the results of the
  *                        operation.
@@ -26601,11 +27679,12 @@ InsertRecordsFromPayloadResponse& insertRecordsFromPayload( const InsertRecordsF
  *                 the target table exists, the column names must match the
  *                 source data field names for a name-mapping
  *                 to be successful.
+ *                 Mutually exclusive with @a columns_to_skip.
  *                         <li>
  *                 gpudb::insert_records_from_payload_columns_to_skip:
  *                 Specifies a comma-delimited list of columns from the source
  *                 data to
- *                 skip.  Mutually exclusive to columns_to_load.
+ *                 skip.  Mutually exclusive with @a columns_to_load.
  *                         <li>
  *                 gpudb::insert_records_from_payload_default_column_formats:
  *                 Specifies the default format to be applied to source data
@@ -26887,6 +27966,14 @@ InsertRecordsFromPayloadResponse& insertRecordsFromPayload( const InsertRecordsF
  *                 </ul>
  *                 The default value is
  *                 gpudb::insert_records_from_payload_speed.
+ *                         <li>
+ *                 gpudb::insert_records_from_payload_update_on_existing_pk:
+ *                 <ul>
+ *                         <li> gpudb::insert_records_from_payload_true
+ *                         <li> gpudb::insert_records_from_payload_false
+ *                 </ul>
+ *                 The default value is
+ *                 gpudb::insert_records_from_payload_false.
  *                 </ul>
  * 
  * @return Response object containing the result of the operation.
@@ -27153,11 +28240,12 @@ InsertRecordsFromPayloadResponse insertRecordsFromPayload( const std::string& ta
  *                 the target table exists, the column names must match the
  *                 source data field names for a name-mapping
  *                 to be successful.
+ *                 Mutually exclusive with @a columns_to_skip.
  *                         <li>
  *                 gpudb::insert_records_from_payload_columns_to_skip:
  *                 Specifies a comma-delimited list of columns from the source
  *                 data to
- *                 skip.  Mutually exclusive to columns_to_load.
+ *                 skip.  Mutually exclusive with @a columns_to_load.
  *                         <li>
  *                 gpudb::insert_records_from_payload_default_column_formats:
  *                 Specifies the default format to be applied to source data
@@ -27439,6 +28527,14 @@ InsertRecordsFromPayloadResponse insertRecordsFromPayload( const std::string& ta
  *                 </ul>
  *                 The default value is
  *                 gpudb::insert_records_from_payload_speed.
+ *                         <li>
+ *                 gpudb::insert_records_from_payload_update_on_existing_pk:
+ *                 <ul>
+ *                         <li> gpudb::insert_records_from_payload_true
+ *                         <li> gpudb::insert_records_from_payload_false
+ *                 </ul>
+ *                 The default value is
+ *                 gpudb::insert_records_from_payload_false.
  *                 </ul>
  * @param[out] response_  Response object containing the results of the
  *                        operation.
@@ -27497,7 +28593,8 @@ InsertRecordsFromQueryResponse& insertRecordsFromQuery( const InsertRecordsFromQ
  *                   If the table does not exist, the table will be created
  *                   using either an existing
  *                   @a type_id or the type inferred from the
- *                   file, and the new table name will have to meet standard
+ *                   remote query, and the new table name will have to meet
+ *                   standard
  *                   <a href="../../../concepts/tables/#table-naming-criteria"
  *                   target="_top">table naming criteria</a>.
  * @param remoteQuery  Query for which result data needs to be imported
@@ -27671,23 +28768,15 @@ InsertRecordsFromQueryResponse& insertRecordsFromQuery( const InsertRecordsFromQ
  *                 Optional name of a table to which records that were rejected
  *                 are written.  The bad-record-table has the following
  *                 columns: line_number (long), line_rejected (string),
- *                 error_message (string).
+ *                 error_message (string). When error handling is Abort, bad
+ *                 records table is not populated.
  *                         <li>
  *                 gpudb::insert_records_from_query_bad_record_table_limit: A
  *                 positive integer indicating the maximum number of records
  *                 that can be  written to the bad-record-table.   Default
  *                 value is 10000
- *                         <li>
- *                 gpudb::insert_records_from_query_bad_record_table_limit_per_input:
- *                 For subscriptions: A positive integer indicating the maximum
- *                 number of records that can be written to the
- *                 bad-record-table per file/payload. Default value will be
- *                 'bad_record_table_limit' and total size of the table per
- *                 rank is limited to 'bad_record_table_limit'
- *                         <li>
- *                 gpudb::insert_records_from_query_jdbc_fetch_size: The JDBC
- *                 fetch size, which determines how many rows to fetch per
- *                 round trip.
+ *                         <li> gpudb::insert_records_from_query_batch_size:
+ *                 Number of records per batch when inserting data.
  *                         <li>
  *                 gpudb::insert_records_from_query_datasource_name: Name of an
  *                 existing external data source from which table will be
@@ -27707,8 +28796,7 @@ InsertRecordsFromQueryResponse& insertRecordsFromQuery( const InsertRecordsFromQ
  *                 is encountered.  Primary key collisions are considered
  *                 abortable errors in this mode.
  *                 </ul>
- *                 The default value is
- *                 gpudb::insert_records_from_query_permissive.
+ *                 The default value is gpudb::insert_records_from_query_abort.
  *                         <li>
  *                 gpudb::insert_records_from_query_ingestion_mode: Whether to
  *                 do a full load, dry run, or perform a type inference on the
@@ -27726,48 +28814,14 @@ InsertRecordsFromQueryResponse& insertRecordsFromQuery( const InsertRecordsFromQ
  *                 any data.  The inferred type is returned in the response.
  *                 </ul>
  *                 The default value is gpudb::insert_records_from_query_full.
- *                         <li> gpudb::insert_records_from_query_loading_mode:
- *                 Scheme for distributing the extraction and loading of data
- *                 from the source data file(s). This option applies only when
- *                 loading files that are local to the database
- *                 <ul>
- *                         <li> gpudb::insert_records_from_query_head: The head
- *                 node loads all data. All files must be available to the head
- *                 node.
  *                         <li>
- *                 gpudb::insert_records_from_query_distributed_shared: The
- *                 head node coordinates loading data by worker
- *                 processes across all nodes from shared files available to
- *                 all workers.
- *                 NOTE:
- *                 Instead of existing on a shared source, the files can be
- *                 duplicated on a source local to each host
- *                 to improve performance, though the files must appear as the
- *                 same data set from the perspective of
- *                 all hosts performing the load.
+ *                 gpudb::insert_records_from_query_jdbc_fetch_size: The JDBC
+ *                 fetch size, which determines how many rows to fetch per
+ *                 round trip.
  *                         <li>
- *                 gpudb::insert_records_from_query_distributed_local: A single
- *                 worker process on each node loads all files
- *                 that are available to it. This option works best when each
- *                 worker loads files from its own file
- *                 system, to maximize performance. In order to avoid data
- *                 duplication, either each worker performing
- *                 the load needs to have visibility to a set of files unique
- *                 to it (no file is visible to more than
- *                 one node) or the target table needs to have a primary key
- *                 (which will allow the worker to
- *                 automatically deduplicate data).
- *                 NOTE:
- *                 If the target table doesn't exist, the table structure will
- *                 be determined by the head node. If the
- *                 head node has no files local to it, it will be unable to
- *                 determine the structure and the request
- *                 will fail.
- *                 If the head node is configured to have no worker processes,
- *                 no data strictly accessible to the head
- *                 node will be loaded.
- *                 </ul>
- *                 The default value is gpudb::insert_records_from_query_head.
+ *                 gpudb::insert_records_from_query_num_tasks_per_rank:
+ *                 Optional: number of tasks for reading data per rank. Default
+ *                 will be external_file_reader_num_tasks
  *                         <li> gpudb::insert_records_from_query_primary_keys:
  *                 Optional: comma separated list of column names, to set as
  *                 primary keys, when not specified in the type.  The default
@@ -27779,22 +28833,30 @@ InsertRecordsFromQueryResponse& insertRecordsFromQuery( const InsertRecordsFromQ
  *                         <li>
  *                 gpudb::insert_records_from_query_truncate_table: If set to
  *                 @a true, truncates the table specified by @a tableName prior
- *                 to loading the file(s).
+ *                 to loading the data.
  *                 <ul>
  *                         <li> gpudb::insert_records_from_query_true
  *                         <li> gpudb::insert_records_from_query_false
  *                 </ul>
  *                 The default value is gpudb::insert_records_from_query_false.
- *                         <li>
- *                 gpudb::insert_records_from_query_num_tasks_per_rank:
- *                 Optional: number of tasks for reading file per rank. Default
- *                 will be external_file_reader_num_tasks
  *                         <li> gpudb::insert_records_from_query_remote_query:
  *                 Remote SQL query from which data will be sourced
  *                         <li>
  *                 gpudb::insert_records_from_query_remote_query_filter_column:
  *                 Name of column to be used for splitting the query into
- *                 multiple sub-queries.  The default value is ''.
+ *                 multiple sub-queries using the data distribution of given
+ *                 column.  The default value is ''.
+ *                         <li>
+ *                 gpudb::insert_records_from_query_remote_query_partition_column:
+ *                 Alias name for remote_query_filter_column.  The default
+ *                 value is ''.
+ *                         <li>
+ *                 gpudb::insert_records_from_query_update_on_existing_pk:
+ *                 <ul>
+ *                         <li> gpudb::insert_records_from_query_true
+ *                         <li> gpudb::insert_records_from_query_false
+ *                 </ul>
+ *                 The default value is gpudb::insert_records_from_query_false.
  *                 </ul>
  * 
  * @return Response object containing the result of the operation.
@@ -27818,7 +28880,8 @@ InsertRecordsFromQueryResponse insertRecordsFromQuery( const std::string& tableN
  *                   If the table does not exist, the table will be created
  *                   using either an existing
  *                   @a type_id or the type inferred from the
- *                   file, and the new table name will have to meet standard
+ *                   remote query, and the new table name will have to meet
+ *                   standard
  *                   <a href="../../../concepts/tables/#table-naming-criteria"
  *                   target="_top">table naming criteria</a>.
  * @param remoteQuery  Query for which result data needs to be imported
@@ -27992,23 +29055,15 @@ InsertRecordsFromQueryResponse insertRecordsFromQuery( const std::string& tableN
  *                 Optional name of a table to which records that were rejected
  *                 are written.  The bad-record-table has the following
  *                 columns: line_number (long), line_rejected (string),
- *                 error_message (string).
+ *                 error_message (string). When error handling is Abort, bad
+ *                 records table is not populated.
  *                         <li>
  *                 gpudb::insert_records_from_query_bad_record_table_limit: A
  *                 positive integer indicating the maximum number of records
  *                 that can be  written to the bad-record-table.   Default
  *                 value is 10000
- *                         <li>
- *                 gpudb::insert_records_from_query_bad_record_table_limit_per_input:
- *                 For subscriptions: A positive integer indicating the maximum
- *                 number of records that can be written to the
- *                 bad-record-table per file/payload. Default value will be
- *                 'bad_record_table_limit' and total size of the table per
- *                 rank is limited to 'bad_record_table_limit'
- *                         <li>
- *                 gpudb::insert_records_from_query_jdbc_fetch_size: The JDBC
- *                 fetch size, which determines how many rows to fetch per
- *                 round trip.
+ *                         <li> gpudb::insert_records_from_query_batch_size:
+ *                 Number of records per batch when inserting data.
  *                         <li>
  *                 gpudb::insert_records_from_query_datasource_name: Name of an
  *                 existing external data source from which table will be
@@ -28028,8 +29083,7 @@ InsertRecordsFromQueryResponse insertRecordsFromQuery( const std::string& tableN
  *                 is encountered.  Primary key collisions are considered
  *                 abortable errors in this mode.
  *                 </ul>
- *                 The default value is
- *                 gpudb::insert_records_from_query_permissive.
+ *                 The default value is gpudb::insert_records_from_query_abort.
  *                         <li>
  *                 gpudb::insert_records_from_query_ingestion_mode: Whether to
  *                 do a full load, dry run, or perform a type inference on the
@@ -28047,48 +29101,14 @@ InsertRecordsFromQueryResponse insertRecordsFromQuery( const std::string& tableN
  *                 any data.  The inferred type is returned in the response.
  *                 </ul>
  *                 The default value is gpudb::insert_records_from_query_full.
- *                         <li> gpudb::insert_records_from_query_loading_mode:
- *                 Scheme for distributing the extraction and loading of data
- *                 from the source data file(s). This option applies only when
- *                 loading files that are local to the database
- *                 <ul>
- *                         <li> gpudb::insert_records_from_query_head: The head
- *                 node loads all data. All files must be available to the head
- *                 node.
  *                         <li>
- *                 gpudb::insert_records_from_query_distributed_shared: The
- *                 head node coordinates loading data by worker
- *                 processes across all nodes from shared files available to
- *                 all workers.
- *                 NOTE:
- *                 Instead of existing on a shared source, the files can be
- *                 duplicated on a source local to each host
- *                 to improve performance, though the files must appear as the
- *                 same data set from the perspective of
- *                 all hosts performing the load.
+ *                 gpudb::insert_records_from_query_jdbc_fetch_size: The JDBC
+ *                 fetch size, which determines how many rows to fetch per
+ *                 round trip.
  *                         <li>
- *                 gpudb::insert_records_from_query_distributed_local: A single
- *                 worker process on each node loads all files
- *                 that are available to it. This option works best when each
- *                 worker loads files from its own file
- *                 system, to maximize performance. In order to avoid data
- *                 duplication, either each worker performing
- *                 the load needs to have visibility to a set of files unique
- *                 to it (no file is visible to more than
- *                 one node) or the target table needs to have a primary key
- *                 (which will allow the worker to
- *                 automatically deduplicate data).
- *                 NOTE:
- *                 If the target table doesn't exist, the table structure will
- *                 be determined by the head node. If the
- *                 head node has no files local to it, it will be unable to
- *                 determine the structure and the request
- *                 will fail.
- *                 If the head node is configured to have no worker processes,
- *                 no data strictly accessible to the head
- *                 node will be loaded.
- *                 </ul>
- *                 The default value is gpudb::insert_records_from_query_head.
+ *                 gpudb::insert_records_from_query_num_tasks_per_rank:
+ *                 Optional: number of tasks for reading data per rank. Default
+ *                 will be external_file_reader_num_tasks
  *                         <li> gpudb::insert_records_from_query_primary_keys:
  *                 Optional: comma separated list of column names, to set as
  *                 primary keys, when not specified in the type.  The default
@@ -28100,22 +29120,30 @@ InsertRecordsFromQueryResponse insertRecordsFromQuery( const std::string& tableN
  *                         <li>
  *                 gpudb::insert_records_from_query_truncate_table: If set to
  *                 @a true, truncates the table specified by @a tableName prior
- *                 to loading the file(s).
+ *                 to loading the data.
  *                 <ul>
  *                         <li> gpudb::insert_records_from_query_true
  *                         <li> gpudb::insert_records_from_query_false
  *                 </ul>
  *                 The default value is gpudb::insert_records_from_query_false.
- *                         <li>
- *                 gpudb::insert_records_from_query_num_tasks_per_rank:
- *                 Optional: number of tasks for reading file per rank. Default
- *                 will be external_file_reader_num_tasks
  *                         <li> gpudb::insert_records_from_query_remote_query:
  *                 Remote SQL query from which data will be sourced
  *                         <li>
  *                 gpudb::insert_records_from_query_remote_query_filter_column:
  *                 Name of column to be used for splitting the query into
- *                 multiple sub-queries.  The default value is ''.
+ *                 multiple sub-queries using the data distribution of given
+ *                 column.  The default value is ''.
+ *                         <li>
+ *                 gpudb::insert_records_from_query_remote_query_partition_column:
+ *                 Alias name for remote_query_filter_column.  The default
+ *                 value is ''.
+ *                         <li>
+ *                 gpudb::insert_records_from_query_update_on_existing_pk:
+ *                 <ul>
+ *                         <li> gpudb::insert_records_from_query_true
+ *                         <li> gpudb::insert_records_from_query_false
+ *                 </ul>
+ *                 The default value is gpudb::insert_records_from_query_false.
  *                 </ul>
  * @param[out] response_  Response object containing the results of the
  *                        operation.
@@ -29101,7 +30129,7 @@ MatchGraphResponse& matchGraph( const MatchGraphRequest& request_,
  *                       href="../../../concepts/tables/#table-naming-criteria"
  *                       target="_top">table naming criteria</a>.  This table
  *                       contains a <a
- *                       href="../../../geospatial/geo_objects/#geospatial-tracks"
+ *                       href="../../../location_intelligence/geo_objects/#geospatial-tracks"
  *                       target="_top">track</a> of geospatial points for the
  *                       matched portion of the graph, a track ID, and a score
  *                       value. Also outputs a details table containing a trip
@@ -29157,6 +30185,11 @@ MatchGraphResponse& matchGraph( const MatchGraphRequest& request_,
  *                 number of generated combinations for sequencing the demand
  *                 locations - can increase this up to 2M.  The default value
  *                 is '10000'.
+ *                         <li> gpudb::match_graph_max_supply_combinations: For
+ *                 the @a match_supply_demand solver only. This is the cutoff
+ *                 for the number of generated combinations for sequencing the
+ *                 supply locations if/when 'permute_supplies' is true.  The
+ *                 default value is '10000'.
  *                         <li> gpudb::match_graph_left_turn_penalty: This will
  *                 add an additonal weight over the edges labelled as 'left
  *                 turn' if the 'add_turn' option parameter of the
@@ -29248,6 +30281,36 @@ MatchGraphResponse& matchGraph( const MatchGraphRequest& request_,
  *                 'enable_truck_reuse' is on, this condition will be applied
  *                 separately at each round trip use of the same truck.  The
  *                 default value is '0'.
+ *                         <li> gpudb::match_graph_truck_service_radius: For
+ *                 the @a match_supply_demand solver only. If specified
+ *                 (greater than zero), it filters the demands outside this
+ *                 radius centered around the truck's originating location
+ *                 (distance or time).  The default value is '0.0'.
+ *                         <li> gpudb::match_graph_batch_tsm_mode: For the @a
+ *                 match_supply_demand solver only. When enabled, it sets the
+ *                 number of visits on each demand location by a single
+ *                 salesman at each trip is considered to be (one) 1, otherwise
+ *                 there is no bound.
+ *                 <ul>
+ *                         <li> gpudb::match_graph_true: Sets only one visit
+ *                 per demand location by a salesman (tsm mode)
+ *                         <li> gpudb::match_graph_false: No preset limit
+ *                 (usual msdo mode)
+ *                 </ul>
+ *                 The default value is gpudb::match_graph_false.
+ *                         <li> gpudb::match_graph_restricted_truck_type: For
+ *                 the @a match_supply_demand solver only. Optimization is
+ *                 performed by restricting routes labeled by
+ *                 'MSDO_ODDEVEN_RESTRICTED' only for this truck type
+ *                 <ul>
+ *                         <li> gpudb::match_graph_odd: Applies odd/even rule
+ *                 restrictions to odd tagged vehicles.
+ *                         <li> gpudb::match_graph_even: Applies odd/even rule
+ *                 restrictions to even tagged vehicles.
+ *                         <li> gpudb::match_graph_none: Does not apply
+ *                 odd/even rule restrictions to any vehicles.
+ *                 </ul>
+ *                 The default value is gpudb::match_graph_none.
  *                         <li> gpudb::match_graph_server_id: Indicates which
  *                 graph server(s) to send the request to. Default is to send
  *                 to the server, amongst those containing the corresponding
@@ -29377,7 +30440,7 @@ MatchGraphResponse matchGraph( const std::string& graphName,
  *                       href="../../../concepts/tables/#table-naming-criteria"
  *                       target="_top">table naming criteria</a>.  This table
  *                       contains a <a
- *                       href="../../../geospatial/geo_objects/#geospatial-tracks"
+ *                       href="../../../location_intelligence/geo_objects/#geospatial-tracks"
  *                       target="_top">track</a> of geospatial points for the
  *                       matched portion of the graph, a track ID, and a score
  *                       value. Also outputs a details table containing a trip
@@ -29433,6 +30496,11 @@ MatchGraphResponse matchGraph( const std::string& graphName,
  *                 number of generated combinations for sequencing the demand
  *                 locations - can increase this up to 2M.  The default value
  *                 is '10000'.
+ *                         <li> gpudb::match_graph_max_supply_combinations: For
+ *                 the @a match_supply_demand solver only. This is the cutoff
+ *                 for the number of generated combinations for sequencing the
+ *                 supply locations if/when 'permute_supplies' is true.  The
+ *                 default value is '10000'.
  *                         <li> gpudb::match_graph_left_turn_penalty: This will
  *                 add an additonal weight over the edges labelled as 'left
  *                 turn' if the 'add_turn' option parameter of the
@@ -29524,6 +30592,36 @@ MatchGraphResponse matchGraph( const std::string& graphName,
  *                 'enable_truck_reuse' is on, this condition will be applied
  *                 separately at each round trip use of the same truck.  The
  *                 default value is '0'.
+ *                         <li> gpudb::match_graph_truck_service_radius: For
+ *                 the @a match_supply_demand solver only. If specified
+ *                 (greater than zero), it filters the demands outside this
+ *                 radius centered around the truck's originating location
+ *                 (distance or time).  The default value is '0.0'.
+ *                         <li> gpudb::match_graph_batch_tsm_mode: For the @a
+ *                 match_supply_demand solver only. When enabled, it sets the
+ *                 number of visits on each demand location by a single
+ *                 salesman at each trip is considered to be (one) 1, otherwise
+ *                 there is no bound.
+ *                 <ul>
+ *                         <li> gpudb::match_graph_true: Sets only one visit
+ *                 per demand location by a salesman (tsm mode)
+ *                         <li> gpudb::match_graph_false: No preset limit
+ *                 (usual msdo mode)
+ *                 </ul>
+ *                 The default value is gpudb::match_graph_false.
+ *                         <li> gpudb::match_graph_restricted_truck_type: For
+ *                 the @a match_supply_demand solver only. Optimization is
+ *                 performed by restricting routes labeled by
+ *                 'MSDO_ODDEVEN_RESTRICTED' only for this truck type
+ *                 <ul>
+ *                         <li> gpudb::match_graph_odd: Applies odd/even rule
+ *                 restrictions to odd tagged vehicles.
+ *                         <li> gpudb::match_graph_even: Applies odd/even rule
+ *                 restrictions to even tagged vehicles.
+ *                         <li> gpudb::match_graph_none: Does not apply
+ *                 odd/even rule restrictions to any vehicles.
+ *                 </ul>
+ *                 The default value is gpudb::match_graph_none.
  *                         <li> gpudb::match_graph_server_id: Indicates which
  *                 graph server(s) to send the request to. Default is to send
  *                 to the server, amongst those containing the corresponding
@@ -35823,6 +36921,172 @@ UploadFilesFromurlResponse& uploadFilesFromurl( const std::vector<std::string>& 
                                                 const std::vector<std::string>& urls,
                                                 const std::map<std::string, std::string>& options,
                                                 UploadFilesFromurlResponse& response_ ) const;
+
+/**
+ * @private
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+VisualizeGetFeatureInfoResponse visualizeGetFeatureInfo( const VisualizeGetFeatureInfoRequest& request_ ) const;
+
+/**
+ * @private
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+VisualizeGetFeatureInfoResponse& visualizeGetFeatureInfo( const VisualizeGetFeatureInfoRequest& request_,
+                                                          VisualizeGetFeatureInfoResponse& response_ ) const;
+
+/**
+ * @private
+ * 
+ * @param tableNames
+ * @param xColumnNames
+ * @param yColumnNames
+ * @param geometryColumnNames
+ * @param queryColumnNames
+ * @param projection
+ *                    <ul>
+ *                            <li>
+ *                    gpudb::visualize_get_feature_info_plate_carree
+ *                            <li>
+ *                    gpudb::visualize_get_feature_info_web_mercator
+ *                    </ul>
+ * @param minX
+ * @param maxX
+ * @param minY
+ * @param maxY
+ * @param width
+ * @param height
+ * @param x
+ * @param y
+ * @param radius
+ * @param limit
+ * @param encoding
+ *                  <ul>
+ *                          <li> gpudb::visualize_get_feature_info_binary
+ *                          <li> gpudb::visualize_get_feature_info_json
+ *                          <li> gpudb::visualize_get_feature_info_geojson
+ *                          <li> gpudb::visualize_get_feature_info_html
+ *                  </ul>
+ * @param options
+ *                 <ul>
+ *                         <li>
+ *                 gpudb::visualize_get_feature_info_auto_column_selection:
+ *                 <ul>
+ *                         <li> gpudb::visualize_get_feature_info_false
+ *                         <li> gpudb::visualize_get_feature_info_true
+ *                 </ul>
+ *                 The default value is
+ *                 gpudb::visualize_get_feature_info_false.
+ *                 </ul>
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+VisualizeGetFeatureInfoResponse visualizeGetFeatureInfo( const std::vector<std::string>& tableNames,
+                                                         const std::vector<std::string>& xColumnNames,
+                                                         const std::vector<std::string>& yColumnNames,
+                                                         const std::vector<std::string>& geometryColumnNames,
+                                                         const std::vector<std::vector<std::string> >& queryColumnNames,
+                                                         const std::string& projection,
+                                                         const double minX,
+                                                         const double maxX,
+                                                         const double minY,
+                                                         const double maxY,
+                                                         const int32_t width,
+                                                         const int32_t height,
+                                                         const int32_t x,
+                                                         const int32_t y,
+                                                         const int32_t radius,
+                                                         const int64_t limit,
+                                                         const std::string& encoding,
+                                                         const std::map<std::string, std::string>& options ) const;
+
+/**
+ * @private
+ * 
+ * @param tableNames
+ * @param xColumnNames
+ * @param yColumnNames
+ * @param geometryColumnNames
+ * @param queryColumnNames
+ * @param projection
+ *                    <ul>
+ *                            <li>
+ *                    gpudb::visualize_get_feature_info_plate_carree
+ *                            <li>
+ *                    gpudb::visualize_get_feature_info_web_mercator
+ *                    </ul>
+ * @param minX
+ * @param maxX
+ * @param minY
+ * @param maxY
+ * @param width
+ * @param height
+ * @param x
+ * @param y
+ * @param radius
+ * @param limit
+ * @param encoding
+ *                  <ul>
+ *                          <li> gpudb::visualize_get_feature_info_binary
+ *                          <li> gpudb::visualize_get_feature_info_json
+ *                          <li> gpudb::visualize_get_feature_info_geojson
+ *                          <li> gpudb::visualize_get_feature_info_html
+ *                  </ul>
+ * @param options
+ *                 <ul>
+ *                         <li>
+ *                 gpudb::visualize_get_feature_info_auto_column_selection:
+ *                 <ul>
+ *                         <li> gpudb::visualize_get_feature_info_false
+ *                         <li> gpudb::visualize_get_feature_info_true
+ *                 </ul>
+ *                 The default value is
+ *                 gpudb::visualize_get_feature_info_false.
+ *                 </ul>
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+VisualizeGetFeatureInfoResponse& visualizeGetFeatureInfo( const std::vector<std::string>& tableNames,
+                                                          const std::vector<std::string>& xColumnNames,
+                                                          const std::vector<std::string>& yColumnNames,
+                                                          const std::vector<std::string>& geometryColumnNames,
+                                                          const std::vector<std::vector<std::string> >& queryColumnNames,
+                                                          const std::string& projection,
+                                                          const double minX,
+                                                          const double maxX,
+                                                          const double minY,
+                                                          const double maxY,
+                                                          const int32_t width,
+                                                          const int32_t height,
+                                                          const int32_t x,
+                                                          const int32_t y,
+                                                          const int32_t radius,
+                                                          const int64_t limit,
+                                                          const std::string& encoding,
+                                                          const std::map<std::string, std::string>& options,
+                                                          VisualizeGetFeatureInfoResponse& response_ ) const;
 
 /**
  * @private

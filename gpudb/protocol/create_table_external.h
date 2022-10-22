@@ -392,11 +392,13 @@ namespace gpudb
          *                      match the source data field names for a
          *                      name-mapping
          *                      to be successful.
+         *                      Mutually exclusive with @a columns_to_skip.
          *                              <li>
          *                      gpudb::create_table_external_columns_to_skip:
          *                      Specifies a comma-delimited list of columns
          *                      from the source data to
-         *                      skip.  Mutually exclusive to columns_to_load.
+         *                      skip.  Mutually exclusive with @a
+         *                      columns_to_load.
          *                              <li>
          *                      gpudb::create_table_external_datasource_name:
          *                      Name of an existing external data source from
@@ -529,6 +531,10 @@ namespace gpudb
          *                      </ul>
          *                      The default value is
          *                      gpudb::create_table_external_full.
+         *                              <li>
+         *                      gpudb::create_table_external_jdbc_fetch_size:
+         *                      The JDBC fetch size, which determines how many
+         *                      rows to fetch per round trip.
          *                              <li>
          *                      gpudb::create_table_external_kafka_group_id:
          *                      The group id to be used consuming data from a
@@ -788,8 +794,21 @@ namespace gpudb
          *                              <li>
          *                      gpudb::create_table_external_remote_query_filter_column:
          *                      Name of column to be used for splitting the
-         *                      query into multiple sub-queries.  The default
+         *                      query into multiple sub-queries using the data
+         *                      distribution of given column.  The default
          *                      value is ''.
+         *                              <li>
+         *                      gpudb::create_table_external_remote_query_partition_column:
+         *                      Alias name for remote_query_filter_column.  The
+         *                      default value is ''.
+         *                              <li>
+         *                      gpudb::create_table_external_update_on_existing_pk:
+         *                      <ul>
+         *                              <li> gpudb::create_table_external_true
+         *                              <li> gpudb::create_table_external_false
+         *                      </ul>
+         *                      The default value is
+         *                      gpudb::create_table_external_false.
          *                      </ul>
          * 
          */

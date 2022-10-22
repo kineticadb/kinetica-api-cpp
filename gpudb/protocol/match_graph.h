@@ -126,7 +126,7 @@ namespace gpudb
          *                            href="../../../concepts/tables/#table-naming-criteria"
          *                            target="_top">table naming criteria</a>.
          *                            This table contains a <a
-         *                            href="../../../geospatial/geo_objects/#geospatial-tracks"
+         *                            href="../../../location_intelligence/geo_objects/#geospatial-tracks"
          *                            target="_top">track</a> of geospatial
          *                            points for the matched portion of the
          *                            graph, a track ID, and a score value.
@@ -196,6 +196,13 @@ namespace gpudb
          *                      for sequencing the demand locations - can
          *                      increase this up to 2M.  The default value is
          *                      '10000'.
+         *                              <li>
+         *                      gpudb::match_graph_max_supply_combinations: For
+         *                      the @a match_supply_demand solver only. This is
+         *                      the cutoff for the number of generated
+         *                      combinations for sequencing the supply
+         *                      locations if/when 'permute_supplies' is true.
+         *                      The default value is '10000'.
          *                              <li>
          *                      gpudb::match_graph_left_turn_penalty: This will
          *                      add an additonal weight over the edges labelled
@@ -314,6 +321,45 @@ namespace gpudb
          *                      'enable_truck_reuse' is on, this condition will
          *                      be applied separately at each round trip use of
          *                      the same truck.  The default value is '0'.
+         *                              <li>
+         *                      gpudb::match_graph_truck_service_radius: For
+         *                      the @a match_supply_demand solver only. If
+         *                      specified (greater than zero), it filters the
+         *                      demands outside this radius centered around the
+         *                      truck's originating location (distance or
+         *                      time).  The default value is '0.0'.
+         *                              <li> gpudb::match_graph_batch_tsm_mode:
+         *                      For the @a match_supply_demand solver only.
+         *                      When enabled, it sets the number of visits on
+         *                      each demand location by a single salesman at
+         *                      each trip is considered to be (one) 1,
+         *                      otherwise there is no bound.
+         *                      <ul>
+         *                              <li> gpudb::match_graph_true: Sets only
+         *                      one visit per demand location by a salesman
+         *                      (tsm mode)
+         *                              <li> gpudb::match_graph_false: No
+         *                      preset limit (usual msdo mode)
+         *                      </ul>
+         *                      The default value is gpudb::match_graph_false.
+         *                              <li>
+         *                      gpudb::match_graph_restricted_truck_type: For
+         *                      the @a match_supply_demand solver only.
+         *                      Optimization is performed by restricting routes
+         *                      labeled by 'MSDO_ODDEVEN_RESTRICTED' only for
+         *                      this truck type
+         *                      <ul>
+         *                              <li> gpudb::match_graph_odd: Applies
+         *                      odd/even rule restrictions to odd tagged
+         *                      vehicles.
+         *                              <li> gpudb::match_graph_even: Applies
+         *                      odd/even rule restrictions to even tagged
+         *                      vehicles.
+         *                              <li> gpudb::match_graph_none: Does not
+         *                      apply odd/even rule restrictions to any
+         *                      vehicles.
+         *                      </ul>
+         *                      The default value is gpudb::match_graph_none.
          *                              <li> gpudb::match_graph_server_id:
          *                      Indicates which graph server(s) to send the
          *                      request to. Default is to send to the server,

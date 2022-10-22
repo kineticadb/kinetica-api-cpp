@@ -95,7 +95,7 @@ namespace gpudb
          *                              <li>
          *                      gpudb::create_datasource_hdfs_kerberos_keytab:
          *                      Kerberos keytab file location for the given
-         *                      HDFS user
+         *                      HDFS user.  This may be a KIFS file.
          *                              <li>
          *                      gpudb::create_datasource_hdfs_delegation_token:
          *                      Delegation token for the given HDFS user
@@ -154,7 +154,8 @@ namespace gpudb
          *                      of the Kafka topic to use as the data source
          *                              <li>
          *                      gpudb::create_datasource_jdbc_driver_jar_path:
-         *                      JDBC driver jar file location
+         *                      JDBC driver jar file location.  This may be a
+         *                      KIFS file.
          *                              <li>
          *                      gpudb::create_datasource_jdbc_driver_class_name:
          *                      Name of the JDBC driver class

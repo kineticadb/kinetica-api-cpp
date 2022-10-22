@@ -1,23 +1,47 @@
+<h3 align="center" style="margin:0px">
+	<img width="200" src="https://2wz2rk1b7g6s3mm3mk3dj0lh-wpengine.netdna-ssl.com/wp-content/uploads/2018/08/kinetica_logo.svg" alt="Kinetica Logo"/>
+</h3>
+<h5 align="center" style="margin:0px">
+	<a href="https://www.kinetica.com/">Website</a>
+	|
+	<a href="https://docs.kinetica.com/7.1/">Docs</a>
+	|
+	<a href="https://docs.kinetica.com/7.1/api/c++/">API Docs</a>
+	|
+	<a href="https://join.slack.com/t/kinetica-community/shared_invite/zt-1bt9x3mvr-uMKrXlSDXfy3oU~sKi84qg">Community Slack</a>   
+</h5>
+
+
 # Kinetica C++ API
 
-This project contains the source code for the C++ Kinetica API. The following
-links will provide the information needed to get started with Kinetica and the
-C++ API:
+-  [Overview](#overview)
+-  [Building the API (Linux)](#building-the-api-linux)
+-  [Building the API (Windows)](#building-the-api-windows)
+-  [Support](#support)
+-  [Contact Us](#contact-us)
+ 
+
+## Overview
+
+This project contains the source code for the C++ Kinetica API.
+
+The C++ API is supported on both Linux-based systems and Windows.
+
+* [Building the API (Linux)](#building-the-api-linux)
+* [Building the API (Windows)](#building-the-api-windows)
+
+The following links will provide the information needed to get started with
+Kinetica and the C++ API:
 
 * [C++ API documentation](https://docs.kinetica.com/7.1/api/c++/)
 * [C++ API tutorial](https://docs.kinetica.com/7.1/guides/cpp_guide/)
 * [Kinetica documentation site](https://docs.kinetica.com/7.1/)
 
-For the client-side API changes, please refer to [CHANGELOG.md](CHANGELOG.md),
-and for Kinetica function changes, please refer to
+For changes to the client-side API, please refer to
+[CHANGELOG.md](CHANGELOG.md).  For
+changes to Kinetica functions, please refer to
 [CHANGELOG-FUNCTIONS.md](CHANGELOG-FUNCTIONS.md).
 
-The C++ API is supported on both Linux-based systems and Windows.
-
-## Contents
-
-* [Building the API (Linux)](#building-the-api-linux)
-* [Building the API (Windows)](#building-the-api-windows)
 
 ## Building the API (Linux)
 
@@ -222,3 +246,24 @@ libraries. You may need to update the project paths.
 
 **TIP:** If you do not need SSL support, add ``GPUDB_NO_HTTPS`` to the
 preprocessor definitions
+
+
+## Support
+
+For bugs, please submit an
+[issue on Github](https://github.com/kineticadb/kinetica-api-cpp/issues).
+
+For support, you can post on
+[stackoverflow](https://stackoverflow.com/questions/tagged/kinetica) under the
+``kinetica`` tag or
+[Slack](https://join.slack.com/t/kinetica-community/shared_invite/zt-1bt9x3mvr-uMKrXlSDXfy3oU~sKi84qg).
+
+
+## Contact Us
+
+* Ask a question on Slack:
+  [Slack](https://join.slack.com/t/kinetica-community/shared_invite/zt-1bt9x3mvr-uMKrXlSDXfy3oU~sKi84qg)
+* Follow on GitHub:
+  [Follow @kineticadb](https://github.com/kineticadb) 
+* Email us:  <support@kinetica.com>
+* Visit:  <https://www.kinetica.com/contact/>
