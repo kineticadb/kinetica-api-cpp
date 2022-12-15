@@ -1,11 +1,11 @@
-a) You should have fetched the entire bitbucket gpudb-api-cpp project. Should find example, project, src and thirdaprty directories underneath.
+a) You should have fetched the entire gpudb-api-cpp project with the example, project, src and thirdaprty directories underneath.
 
-b) thirdparty has a README.txt which states that you will have to download boost and copy it under the thirdparty dir. Tested with boost_1_59_0.
+b) The thirdparty/ directory has a README.txt which states that you will have to download boost and copy it under the thirdparty dir. Tested with boost_1_59_0.
 
 c) Under <sandbox>\gpudb-api-cpp\project\gpudbapidll, you will see gpudbapidll.sln. This solution has been tested on 2013 VS community edition.
 
-d) A bunch of include dirs and library search dirs contain hardcoded path. Will make ENV vars when I have time. But you may have to change the C++ and Linker
-property sheet to change the dirs.
+d) Some #include dirs and library search dirs contain hardcoded path. 
+You may have to edit the C++ and Linker property sheet to change the directories to match your build host.
 
 e) Do a full build on the project gpudbapilib. This should create <sndbox>\gpudb-api-cpp\project\gpudbapidll\x64\Release\gpudbapilib.lib.
 
