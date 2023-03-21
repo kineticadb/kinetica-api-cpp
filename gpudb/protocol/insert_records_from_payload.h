@@ -257,6 +257,15 @@ namespace gpudb
          * @param[in] options_  Optional parameters.
          *                      <ul>
          *                              <li>
+         *                      gpudb::insert_records_from_payload_avro_num_records:
+         *                      Optional number of avro records, if data
+         *                      includes only records.
+         *                              <li>
+         *                      gpudb::insert_records_from_payload_avro_schema:
+         *                      Optional string representing avro schema, for
+         *                      insert records in avro format, that does not
+         *                      include is schema.
+         *                              <li>
          *                      gpudb::insert_records_from_payload_bad_record_table_name:
          *                      Optional name of a table to which records that
          *                      were rejected are written.  The
@@ -348,6 +357,25 @@ namespace gpudb
          *                      from the source data to
          *                      skip.  Mutually exclusive with @a
          *                      columns_to_load.
+         *                              <li>
+         *                      gpudb::insert_records_from_payload_compression_type:
+         *                      Optional: payload compression type
+         *                      <ul>
+         *                              <li>
+         *                      gpudb::insert_records_from_payload_none:
+         *                      Uncompressed
+         *                              <li>
+         *                      gpudb::insert_records_from_payload_auto:
+         *                      Default. Auto detect compression type
+         *                              <li>
+         *                      gpudb::insert_records_from_payload_gzip: gzip
+         *                      file compression.
+         *                              <li>
+         *                      gpudb::insert_records_from_payload_bzip2: bzip2
+         *                      file compression.
+         *                      </ul>
+         *                      The default value is
+         *                      gpudb::insert_records_from_payload_auto.
          *                              <li>
          *                      gpudb::insert_records_from_payload_default_column_formats:
          *                      Specifies the default format to be applied to
@@ -521,6 +549,14 @@ namespace gpudb
          *                      gpudb::insert_records_from_payload_local_time_offset:
          *                      For Avro local timestamp columns
          *                              <li>
+         *                      gpudb::insert_records_from_payload_max_records_to_load:
+         *                      Limit the number of records to load in this
+         *                      request: If this number is larger than a
+         *                      batch_size, then the number of records loaded
+         *                      will be limited to the next whole number of
+         *                      batch_size (per working thread).  The default
+         *                      value is ''.
+         *                              <li>
          *                      gpudb::insert_records_from_payload_num_tasks_per_rank:
          *                      Optional: number of tasks for reading file per
          *                      rank. Default will be
@@ -671,6 +707,18 @@ namespace gpudb
          *                      Set minimum column size. Used only when
          *                      'text_search_columns' has a value.
          *                              <li>
+         *                      gpudb::insert_records_from_payload_truncate_strings:
+         *                      If set to @a true, truncate string values that
+         *                      are longer than the column's type size.
+         *                      <ul>
+         *                              <li>
+         *                      gpudb::insert_records_from_payload_true
+         *                              <li>
+         *                      gpudb::insert_records_from_payload_false
+         *                      </ul>
+         *                      The default value is
+         *                      gpudb::insert_records_from_payload_false.
+         *                              <li>
          *                      gpudb::insert_records_from_payload_truncate_table:
          *                      If set to @a true, truncates the table
          *                      specified by @a tableName prior to loading the
@@ -700,6 +748,16 @@ namespace gpudb
          *                      gpudb::insert_records_from_payload_speed.
          *                              <li>
          *                      gpudb::insert_records_from_payload_update_on_existing_pk:
+         *                      <ul>
+         *                              <li>
+         *                      gpudb::insert_records_from_payload_true
+         *                              <li>
+         *                      gpudb::insert_records_from_payload_false
+         *                      </ul>
+         *                      The default value is
+         *                      gpudb::insert_records_from_payload_false.
+         *                              <li>
+         *                      gpudb::insert_records_from_payload_ignore_existing_pk:
          *                      <ul>
          *                              <li>
          *                      gpudb::insert_records_from_payload_true

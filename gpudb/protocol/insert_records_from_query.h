@@ -320,6 +320,17 @@ namespace gpudb
          *                      The JDBC fetch size, which determines how many
          *                      rows to fetch per round trip.
          *                              <li>
+         *                      gpudb::insert_records_from_query_jdbc_session_init_statement:
+         *                      Executes the statement per each jdbc session
+         *                      before doing actual load.  The default value is
+         *                      ''.
+         *                              <li>
+         *                      gpudb::insert_records_from_query_num_splits_per_rank:
+         *                      Optional: number of splits for reading data per
+         *                      rank. Default will be
+         *                      external_file_reader_num_tasks.  The default
+         *                      value is ''.
+         *                              <li>
          *                      gpudb::insert_records_from_query_num_tasks_per_rank:
          *                      Optional: number of tasks for reading data per
          *                      rank. Default will be
@@ -334,6 +345,18 @@ namespace gpudb
          *                      Optional: comma separated list of column names,
          *                      to set as primary keys, when not specified in
          *                      the type.  The default value is ''.
+         *                              <li>
+         *                      gpudb::insert_records_from_query_subscribe:
+         *                      Continuously poll the data source to check for
+         *                      new data and load it into the table.
+         *                      <ul>
+         *                              <li>
+         *                      gpudb::insert_records_from_query_true
+         *                              <li>
+         *                      gpudb::insert_records_from_query_false
+         *                      </ul>
+         *                      The default value is
+         *                      gpudb::insert_records_from_query_false.
          *                              <li>
          *                      gpudb::insert_records_from_query_truncate_table:
          *                      If set to @a true, truncates the table
@@ -352,17 +375,37 @@ namespace gpudb
          *                      Remote SQL query from which data will be
          *                      sourced
          *                              <li>
+         *                      gpudb::insert_records_from_query_remote_query_order_by:
+         *                      Name of column to be used for splitting the
+         *                      query into multiple sub-queries using ordering
+         *                      of given column.  The default value is ''.
+         *                              <li>
          *                      gpudb::insert_records_from_query_remote_query_filter_column:
          *                      Name of column to be used for splitting the
          *                      query into multiple sub-queries using the data
          *                      distribution of given column.  The default
          *                      value is ''.
          *                              <li>
+         *                      gpudb::insert_records_from_query_remote_query_increasing_column:
+         *                      Column on subscribed remote query result that
+         *                      will increase for new records (e.g.,
+         *                      TIMESTAMP).  The default value is ''.
+         *                              <li>
          *                      gpudb::insert_records_from_query_remote_query_partition_column:
          *                      Alias name for remote_query_filter_column.  The
          *                      default value is ''.
          *                              <li>
          *                      gpudb::insert_records_from_query_update_on_existing_pk:
+         *                      <ul>
+         *                              <li>
+         *                      gpudb::insert_records_from_query_true
+         *                              <li>
+         *                      gpudb::insert_records_from_query_false
+         *                      </ul>
+         *                      The default value is
+         *                      gpudb::insert_records_from_query_false.
+         *                              <li>
+         *                      gpudb::insert_records_from_query_ignore_existing_pk:
          *                      <ul>
          *                              <li>
          *                      gpudb::insert_records_from_query_true

@@ -186,7 +186,7 @@ endif()
 MESSAGE(STATUS "*")
 
 # Need at least 1.48 version for boost::asio::connect(socket, iterator) function.
-find_package(Boost 1.48 COMPONENTS system thread regex)
+find_package(Boost 1.48 COMPONENTS iostreams regex system thread)
 
 MESSAGE(STATUS "* Boost_FOUND        = ${Boost_FOUND}")
 MESSAGE(STATUS "* Boost_VERSION      = ${Boost_VERSION}")
@@ -196,7 +196,7 @@ MESSAGE(STATUS "* Boost_LIBRARIES    = ${Boost_LIBRARIES}")
 MESSAGE(STATUS "*")
 
 if (NOT Boost_FOUND)
-    MESSAGE(STATUS "ERROR : Unable to find Boost 'regex', 'system' and 'thread' libraries. ")
+    MESSAGE(STATUS "ERROR : Unable to find Boost 'iostreams', 'regex', 'system' and 'thread' libraries. ")
     MESSAGE(STATUS "Please set one or all of the CMake variables BOOST_ROOT, BOOST_INCLUDEDIR, BOOST_LIBRARYDIR to help find it.")
     MESSAGE(STATUS "E.G. cmake -DBOOST_ROOT=/path/to/boost/install -DBOOST_INCLUDEDIR=/path/to/boost/install/include -DBOOST_LIBRARYDIR=/path/to/boost/install/lib")
     MESSAGE(FATAL_ERROR "Unable to find Boost libraries. Aborting.")
@@ -409,6 +409,8 @@ ADD_LIBRARY_FULL( gpudb_api_cpp_lib_${STATIC_OR_SHARED} ${STATIC_OR_SHARED}
     PROPERTIES FOLDER "Library"
     PROPERTIES COMPILE_FLAGS "-std=c++0x"
     PROPERTIES OUTPUT_NAME "gpudb_api_cpp"
+    PROPERTIES VERSION "${GPUDB_API_CPP_VERSION}"
+    PROPERTIES SOVERSION "${API_CPP_VERSION_MAJOR}.${API_CPP_VERSION_MINOR}"
 )
 
 endfunction( gpudb_api_cpp_lib_TARGETS )

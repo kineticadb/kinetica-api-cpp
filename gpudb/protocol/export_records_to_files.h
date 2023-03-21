@@ -168,7 +168,7 @@ namespace gpudb
          *                      DDL to a separate file.  The default value is
          *                      'false'.
          *                              <li>
-         *                      gpudb::export_records_to_files_file_extention:
+         *                      gpudb::export_records_to_files_file_extension:
          *                      Extension to give the export file.  The default
          *                      value is '.csv'.
          *                              <li>

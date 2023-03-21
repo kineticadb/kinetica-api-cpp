@@ -816,7 +816,8 @@ namespace gpudb
                 columnProperties.push_back(ColumnProperty::NULLABLE);
             }
 
-            if (type == ColumnProperty::CHAR1
+            if (type == ColumnProperty::BOOLEAN
+                || type == ColumnProperty::CHAR1
                 || type == ColumnProperty::CHAR2
                 || type == ColumnProperty::CHAR4
                 || type == ColumnProperty::CHAR8
@@ -842,8 +843,6 @@ namespace gpudb
                 columnProperties.push_back(type);
                 columnProperties.push_back( ColumnProperty::WKT );
             }
-
-            
 
             columns.push_back(Type::Column(expressions[i], columnType.first, columnProperties));
         }

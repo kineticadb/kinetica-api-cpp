@@ -64,6 +64,11 @@ public:
      */
     WorkerList( const GPUdb &gpudb, const std::string& ip_regex_str );
 
+    /* Creates an empty WorkerList
+     */
+    WorkerList()
+    {}
+
 //    ~WorkerList();
 
 
@@ -119,6 +124,9 @@ public:
     // Resets the key to be an empty one with the new buffer size
     void reset( size_t buffer_size );
 
+
+    // Adds a boolean to the buffer.
+    void add_boolean( bool value, bool is_null );
 
     // Adds a char1 to the buffer
     void add_char1( const std::string& value, bool is_null );
@@ -246,6 +254,7 @@ private:
 
     enum ColumnType_T
     {
+        BOOLEAN,
         CHAR1,
         CHAR2,
         CHAR4,
@@ -339,6 +348,9 @@ public:
     // Takes a string for the url
     WorkerQueue( const std::string& url, size_t capacity );
     ~WorkerQueue();
+
+    /// Clear queue without sending
+    void clear();
 
     /// Returns the URL in string format for this worker
     const gpudb::HttpUrl& get_url() const { return m_url; }

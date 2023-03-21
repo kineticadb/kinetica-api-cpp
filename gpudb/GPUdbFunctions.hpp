@@ -2092,7 +2092,10 @@ AdminVerifyDbResponse& adminVerifyDb( const AdminVerifyDbRequest& request_,
  *                 The default value is gpudb::admin_verify_db_false.
  *                         <li> gpudb::admin_verify_db_verify_persist: When @a
  *                 true, persistent objects will be compared against their
- *                 state in memory.
+ *                 state in memory and workers will be checked for orphaned
+ *                 table data in persist. To check for orphaned worker data,
+ *                 either set @a concurrent_safe in @a options to @a true or
+ *                 place the database offline.
  *                 <ul>
  *                         <li> gpudb::admin_verify_db_true
  *                         <li> gpudb::admin_verify_db_false
@@ -2117,7 +2120,9 @@ AdminVerifyDbResponse& adminVerifyDb( const AdminVerifyDbRequest& request_,
  *                         <li> gpudb::admin_verify_db_delete_orphaned_tables:
  *                 If @a true, orphaned table directories found on workers for
  *                 which there is no corresponding metadata will be deleted.
- *                 Must set @a verify_persist in @a options to @a true
+ *                 Must set @a verify_persist in @a options to @a true. It is
+ *                 recommended to run this while the database is offline OR set
+ *                 @a concurrent_safe in @a options to @a true
  *                 <ul>
  *                         <li> gpudb::admin_verify_db_true
  *                         <li> gpudb::admin_verify_db_false
@@ -2155,7 +2160,10 @@ AdminVerifyDbResponse adminVerifyDb( const std::map<std::string, std::string>& o
  *                 The default value is gpudb::admin_verify_db_false.
  *                         <li> gpudb::admin_verify_db_verify_persist: When @a
  *                 true, persistent objects will be compared against their
- *                 state in memory.
+ *                 state in memory and workers will be checked for orphaned
+ *                 table data in persist. To check for orphaned worker data,
+ *                 either set @a concurrent_safe in @a options to @a true or
+ *                 place the database offline.
  *                 <ul>
  *                         <li> gpudb::admin_verify_db_true
  *                         <li> gpudb::admin_verify_db_false
@@ -2180,7 +2188,9 @@ AdminVerifyDbResponse adminVerifyDb( const std::map<std::string, std::string>& o
  *                         <li> gpudb::admin_verify_db_delete_orphaned_tables:
  *                 If @a true, orphaned table directories found on workers for
  *                 which there is no corresponding metadata will be deleted.
- *                 Must set @a verify_persist in @a options to @a true
+ *                 Must set @a verify_persist in @a options to @a true. It is
+ *                 recommended to run this while the database is offline OR set
+ *                 @a concurrent_safe in @a options to @a true
  *                 <ul>
  *                         <li> gpudb::admin_verify_db_true
  *                         <li> gpudb::admin_verify_db_false
@@ -6762,16 +6772,6 @@ AlterSystemPropertiesResponse& alterSystemProperties( const AlterSystemPropertie
  *                            check_values=[enabled] where if enabled is true
  *                            the value of the messages received are verified.
  *                                    <li>
- *                            gpudb::alter_system_properties_set_message_timers_enabled:
- *                            Enables the communicator test to collect
- *                            additional timing statistics when the value
- *                            string is @a true. Disables collecting statistics
- *                            when the value string is @a false
- *                            <ul>
- *                                    <li> gpudb::alter_system_properties_true
- *                                    <li> gpudb::alter_system_properties_false
- *                            </ul>
- *                                    <li>
  *                            gpudb::alter_system_properties_network_speed:
  *                            Invoke the network speed test and report timing
  *                            results. Value string is a semicolon-separated
@@ -6831,19 +6831,17 @@ AlterSystemPropertiesResponse& alterSystemProperties( const AlterSystemPropertie
  *                            value is 'true'.
  *                                    <li>
  *                            gpudb::alter_system_properties_kafka_batch_size:
- *                            Maximum number of records to be read in a single
- *                            kafka batched request.  The default value is
- *                            '1000'.
+ *                            Maximum number of records to be ingested in a
+ *                            single batch.  The default value is '1000'.
+ *                                    <li>
+ *                            gpudb::alter_system_properties_kafka_poll_timeout:
+ *                            Maximum time (milliseconds) for each poll to get
+ *                            records from kafka.  The default value is '0'.
  *                                    <li>
  *                            gpudb::alter_system_properties_kafka_wait_time:
- *                            Maximum number of seconds to wait in a single
- *                            kafka batched request.  The default value is
- *                            '30'.
- *                                    <li>
- *                            gpudb::alter_system_properties_kafka_timeout:
- *                            Number of seconds after which kakfa poll will
- *                            timeout if datasource has no records.  The
- *                            default value is '5'.
+ *                            Maximum time (seconds) to buffer records received
+ *                            from kafka before ingestion.  The default value
+ *                            is '30'.
  *                                    <li>
  *                            gpudb::alter_system_properties_egress_single_file_max_size:
  *                            Max file size (in MB) to allow saving to a single
@@ -6967,16 +6965,6 @@ AlterSystemPropertiesResponse alterSystemProperties( const std::map<std::string,
  *                            check_values=[enabled] where if enabled is true
  *                            the value of the messages received are verified.
  *                                    <li>
- *                            gpudb::alter_system_properties_set_message_timers_enabled:
- *                            Enables the communicator test to collect
- *                            additional timing statistics when the value
- *                            string is @a true. Disables collecting statistics
- *                            when the value string is @a false
- *                            <ul>
- *                                    <li> gpudb::alter_system_properties_true
- *                                    <li> gpudb::alter_system_properties_false
- *                            </ul>
- *                                    <li>
  *                            gpudb::alter_system_properties_network_speed:
  *                            Invoke the network speed test and report timing
  *                            results. Value string is a semicolon-separated
@@ -7036,19 +7024,17 @@ AlterSystemPropertiesResponse alterSystemProperties( const std::map<std::string,
  *                            value is 'true'.
  *                                    <li>
  *                            gpudb::alter_system_properties_kafka_batch_size:
- *                            Maximum number of records to be read in a single
- *                            kafka batched request.  The default value is
- *                            '1000'.
+ *                            Maximum number of records to be ingested in a
+ *                            single batch.  The default value is '1000'.
+ *                                    <li>
+ *                            gpudb::alter_system_properties_kafka_poll_timeout:
+ *                            Maximum time (milliseconds) for each poll to get
+ *                            records from kafka.  The default value is '0'.
  *                                    <li>
  *                            gpudb::alter_system_properties_kafka_wait_time:
- *                            Maximum number of seconds to wait in a single
- *                            kafka batched request.  The default value is
- *                            '30'.
- *                                    <li>
- *                            gpudb::alter_system_properties_kafka_timeout:
- *                            Number of seconds after which kakfa poll will
- *                            timeout if datasource has no records.  The
- *                            default value is '5'.
+ *                            Maximum time (seconds) to buffer records received
+ *                            from kafka before ingestion.  The default value
+ *                            is '30'.
  *                                    <li>
  *                            gpudb::alter_system_properties_egress_single_file_max_size:
  *                            Max file size (in MB) to allow saving to a single
@@ -7393,12 +7379,19 @@ AlterTableResponse& alterTable( const AlterTableRequest& request_,
  *                specified in @a value with format 'YYYY-MM-DD HH:MM:SS'.
  *                Subsequent refreshes occur at the specified time + N * the
  *                refresh period.
+ *                        <li> gpudb::alter_table_set_refresh_stop_time: Sets
+ *                the time to stop periodic refreshes of this <a
+ *                href="../../../concepts/materialized_views/"
+ *                target="_top">materialized view</a> to the datetime string
+ *                specified in @a value with format 'YYYY-MM-DD HH:MM:SS'.
  *                        <li> gpudb::alter_table_set_refresh_period: Sets the
  *                time interval in seconds at which to refresh this <a
  *                href="../../../concepts/materialized_views/"
  *                target="_top">materialized view</a> to the value specified in
  *                @a value.  Also, sets the refresh method to periodic if not
  *                already set.
+ *                        <li> gpudb::alter_table_set_refresh_span: Sets the
+ *                future time-offset(in seconds) for the view refresh to stop.
  *                        <li> gpudb::alter_table_set_refresh_execute_as: Sets
  *                the user name to refresh this <a
  *                href="../../../concepts/materialized_views/"
@@ -7702,12 +7695,19 @@ AlterTableResponse alterTable( const std::string& tableName,
  *                specified in @a value with format 'YYYY-MM-DD HH:MM:SS'.
  *                Subsequent refreshes occur at the specified time + N * the
  *                refresh period.
+ *                        <li> gpudb::alter_table_set_refresh_stop_time: Sets
+ *                the time to stop periodic refreshes of this <a
+ *                href="../../../concepts/materialized_views/"
+ *                target="_top">materialized view</a> to the datetime string
+ *                specified in @a value with format 'YYYY-MM-DD HH:MM:SS'.
  *                        <li> gpudb::alter_table_set_refresh_period: Sets the
  *                time interval in seconds at which to refresh this <a
  *                href="../../../concepts/materialized_views/"
  *                target="_top">materialized view</a> to the value specified in
  *                @a value.  Also, sets the refresh method to periodic if not
  *                already set.
+ *                        <li> gpudb::alter_table_set_refresh_span: Sets the
+ *                future time-offset(in seconds) for the view refresh to stop.
  *                        <li> gpudb::alter_table_set_refresh_execute_as: Sets
  *                the user name to refresh this <a
  *                href="../../../concepts/materialized_views/"
@@ -8243,6 +8243,8 @@ AlterTierResponse& alterTier( const AlterTierRequest& request_,
  *                         <li> gpudb::alter_tier_false
  *                 </ul>
  *                 The default value is gpudb::alter_tier_true.
+ *                         <li> gpudb::alter_tier_rank: Apply the requested
+ *                 change only to a specific rank.
  *                 </ul>
  * 
  * @return Response object containing the result of the operation.
@@ -8287,6 +8289,8 @@ AlterTierResponse alterTier( const std::string& name,
  *                         <li> gpudb::alter_tier_false
  *                 </ul>
  *                 The default value is gpudb::alter_tier_true.
+ *                         <li> gpudb::alter_tier_rank: Apply the requested
+ *                 change only to a specific rank.
  *                 </ul>
  * @param[out] response_  Response object containing the results of the
  *                        operation.
@@ -8552,7 +8556,22 @@ AppendRecordsResponse& appendRecords( const AppendRecordsRequest& request_,
  *                 match those of a source table record being inserted will
  *                 remain unchanged and the new record discarded.  If the
  *                 specified table does not have a primary key, then this
- *                 option is ignored.
+ *                 option has no effect.
+ *                 <ul>
+ *                         <li> gpudb::append_records_true
+ *                         <li> gpudb::append_records_false
+ *                 </ul>
+ *                 The default value is gpudb::append_records_false.
+ *                         <li> gpudb::append_records_ignore_existing_pk:
+ *                 Specifies the record collision policy for inserting the
+ *                 source table records (specified by @a sourceTableName) into
+ *                 the target table (specified by @a tableName) table with a <a
+ *                 href="../../../concepts/tables/#primary-keys"
+ *                 target="_top">primary key</a>.  If set to @a true, any
+ *                 source table records being inserted with primary key values
+ *                 that match those of an existing target table record will be
+ *                 ignored with no error generated.  If the specified table
+ *                 does not have a primary key, then this option has no affect.
  *                 <ul>
  *                         <li> gpudb::append_records_true
  *                         <li> gpudb::append_records_false
@@ -8636,7 +8655,22 @@ AppendRecordsResponse appendRecords( const std::string& tableName,
  *                 match those of a source table record being inserted will
  *                 remain unchanged and the new record discarded.  If the
  *                 specified table does not have a primary key, then this
- *                 option is ignored.
+ *                 option has no effect.
+ *                 <ul>
+ *                         <li> gpudb::append_records_true
+ *                         <li> gpudb::append_records_false
+ *                 </ul>
+ *                 The default value is gpudb::append_records_false.
+ *                         <li> gpudb::append_records_ignore_existing_pk:
+ *                 Specifies the record collision policy for inserting the
+ *                 source table records (specified by @a sourceTableName) into
+ *                 the target table (specified by @a tableName) table with a <a
+ *                 href="../../../concepts/tables/#primary-keys"
+ *                 target="_top">primary key</a>.  If set to @a true, any
+ *                 source table records being inserted with primary key values
+ *                 that match those of an existing target table record will be
+ *                 ignored with no error generated.  If the specified table
+ *                 does not have a primary key, then this option has no affect.
  *                 <ul>
  *                         <li> gpudb::append_records_true
  *                         <li> gpudb::append_records_false
@@ -10918,9 +10952,8 @@ CreateMaterializedViewResponse& createMaterializedView( const CreateMaterialized
  *                 of a schema which is to contain the newly created view. If
  *                 the schema provided is non-existent, it will be
  *                 automatically created.
- *                         <li> gpudb::create_materialized_view_ttl: Sets the
- *                 <a href="../../../concepts/ttl/" target="_top">TTL</a> of
- *                 the table specified in @a tableName.
+ *                         <li> gpudb::create_materialized_view_execute_as:
+ *                 User name to use to run the refresh job
  *                         <li> gpudb::create_materialized_view_persist: If @a
  *                 true, then the materialized view specified in @a tableName
  *                 will be persisted and will not expire unless a @a ttl is
@@ -10932,6 +10965,14 @@ CreateMaterializedViewResponse& createMaterializedView( const CreateMaterialized
  *                         <li> gpudb::create_materialized_view_false
  *                 </ul>
  *                 The default value is gpudb::create_materialized_view_false.
+ *                         <li> gpudb::create_materialized_view_refresh_span:
+ *                 Sets the future time-offset(in seconds) at which periodic
+ *                 refresh stops
+ *                         <li>
+ *                 gpudb::create_materialized_view_refresh_stop_time: When @a
+ *                 refresh_method is @a periodic, specifies the time at which a
+ *                 periodic refresh is stopped.  Value is a datetime string
+ *                 with format 'YYYY-MM-DD HH:MM:SS'.
  *                         <li> gpudb::create_materialized_view_refresh_method:
  *                 Method by which the join can be refreshed when the data in
  *                 underlying member tables have changed.
@@ -10959,8 +11000,9 @@ CreateMaterializedViewResponse& createMaterializedView( const CreateMaterialized
  *                 refresh_method is @a periodic, specifies the first time at
  *                 which a refresh is to be done.  Value is a datetime string
  *                 with format 'YYYY-MM-DD HH:MM:SS'.
- *                         <li> gpudb::create_materialized_view_execute_as:
- *                 User name to use to run the refresh job
+ *                         <li> gpudb::create_materialized_view_ttl: Sets the
+ *                 <a href="../../../concepts/ttl/" target="_top">TTL</a> of
+ *                 the table specified in @a tableName.
  *                 </ul>
  * 
  * @return Response object containing the result of the operation.
@@ -11001,9 +11043,8 @@ CreateMaterializedViewResponse createMaterializedView( const std::string& tableN
  *                 of a schema which is to contain the newly created view. If
  *                 the schema provided is non-existent, it will be
  *                 automatically created.
- *                         <li> gpudb::create_materialized_view_ttl: Sets the
- *                 <a href="../../../concepts/ttl/" target="_top">TTL</a> of
- *                 the table specified in @a tableName.
+ *                         <li> gpudb::create_materialized_view_execute_as:
+ *                 User name to use to run the refresh job
  *                         <li> gpudb::create_materialized_view_persist: If @a
  *                 true, then the materialized view specified in @a tableName
  *                 will be persisted and will not expire unless a @a ttl is
@@ -11015,6 +11056,14 @@ CreateMaterializedViewResponse createMaterializedView( const std::string& tableN
  *                         <li> gpudb::create_materialized_view_false
  *                 </ul>
  *                 The default value is gpudb::create_materialized_view_false.
+ *                         <li> gpudb::create_materialized_view_refresh_span:
+ *                 Sets the future time-offset(in seconds) at which periodic
+ *                 refresh stops
+ *                         <li>
+ *                 gpudb::create_materialized_view_refresh_stop_time: When @a
+ *                 refresh_method is @a periodic, specifies the time at which a
+ *                 periodic refresh is stopped.  Value is a datetime string
+ *                 with format 'YYYY-MM-DD HH:MM:SS'.
  *                         <li> gpudb::create_materialized_view_refresh_method:
  *                 Method by which the join can be refreshed when the data in
  *                 underlying member tables have changed.
@@ -11042,8 +11091,9 @@ CreateMaterializedViewResponse createMaterializedView( const std::string& tableN
  *                 refresh_method is @a periodic, specifies the first time at
  *                 which a refresh is to be done.  Value is a datetime string
  *                 with format 'YYYY-MM-DD HH:MM:SS'.
- *                         <li> gpudb::create_materialized_view_execute_as:
- *                 User name to use to run the refresh job
+ *                         <li> gpudb::create_materialized_view_ttl: Sets the
+ *                 <a href="../../../concepts/ttl/" target="_top">TTL</a> of
+ *                 the table specified in @a tableName.
  *                 </ul>
  * @param[out] response_  Response object containing the results of the
  *                        operation.
@@ -11430,8 +11480,11 @@ CreateProjectionResponse& createProjection( const CreateProjectionRequest& reque
  *                         <li> gpudb::create_projection_false
  *                 </ul>
  *                 The default value is gpudb::create_projection_false.
+ *                         <li> gpudb::create_projection_offset: The number of
+ *                 initial results to skip (this can be useful for paging
+ *                 through the results).  The default value is '0'.
  *                         <li> gpudb::create_projection_limit: The number of
- *                 records to keep.  The default value is ''.
+ *                 records to keep.  The default value is '-9999'.
  *                         <li> gpudb::create_projection_order_by:
  *                 Comma-separated list of the columns to be sorted by; e.g.
  *                 'timestamp asc, x desc'.  The columns specified must be
@@ -11632,8 +11685,11 @@ CreateProjectionResponse createProjection( const std::string& tableName,
  *                         <li> gpudb::create_projection_false
  *                 </ul>
  *                 The default value is gpudb::create_projection_false.
+ *                         <li> gpudb::create_projection_offset: The number of
+ *                 initial results to skip (this can be useful for paging
+ *                 through the results).  The default value is '0'.
  *                         <li> gpudb::create_projection_limit: The number of
- *                 records to keep.  The default value is ''.
+ *                 records to keep.  The default value is '-9999'.
  *                         <li> gpudb::create_projection_order_by:
  *                 Comma-separated list of the columns to be sorted by; e.g.
  *                 'timestamp asc, x desc'.  The columns specified must be
@@ -12847,6 +12903,12 @@ CreateTableExternalResponse& createTableExternal( const CreateTableExternalReque
  *                            </ul>
  * @param options  Optional parameters.
  *                 <ul>
+ *                         <li> gpudb::create_table_external_avro_num_records:
+ *                 Optional number of avro records, if data includes only
+ *                 records.
+ *                         <li> gpudb::create_table_external_avro_schema:
+ *                 Optional string representing avro schema, for insert records
+ *                 in avro format, that does not include is schema.
  *                         <li>
  *                 gpudb::create_table_external_bad_record_table_name: Optional
  *                 name of a table to which records that were rejected are
@@ -12916,6 +12978,18 @@ CreateTableExternalResponse& createTableExternal( const CreateTableExternalReque
  *                 Specifies a comma-delimited list of columns from the source
  *                 data to
  *                 skip.  Mutually exclusive with @a columns_to_load.
+ *                         <li> gpudb::create_table_external_compression_type:
+ *                 Optional: compression type
+ *                 <ul>
+ *                         <li> gpudb::create_table_external_none: Uncompressed
+ *                         <li> gpudb::create_table_external_auto: Default.
+ *                 Auto detect compression type
+ *                         <li> gpudb::create_table_external_gzip: gzip file
+ *                 compression.
+ *                         <li> gpudb::create_table_external_bzip2: bzip2 file
+ *                 compression.
+ *                 </ul>
+ *                 The default value is gpudb::create_table_external_auto.
  *                         <li> gpudb::create_table_external_datasource_name:
  *                 Name of an existing external data source from which data
  *                 file(s) specified in @a filepaths will be loaded
@@ -13021,6 +13095,19 @@ CreateTableExternalResponse& createTableExternal( const CreateTableExternalReque
  *                         <li> gpudb::create_table_external_kafka_group_id:
  *                 The group id to be used consuming data from a kakfa topic
  *                 (valid only for kafka datasource subscriptions).
+ *                         <li>
+ *                 gpudb::create_table_external_kafka_offset_reset_policy:
+ *                 Policy to determine whether the data consumption starts
+ *                 either at earliest offset or latest offset.
+ *                 <ul>
+ *                         <li> gpudb::create_table_external_earliest
+ *                         <li> gpudb::create_table_external_latest
+ *                 </ul>
+ *                 The default value is gpudb::create_table_external_earliest.
+ *                         <li>
+ *                 gpudb::create_table_external_kafka_subscription_cancel_after:
+ *                 Sets the subscription lifespan (in minutes). Expired
+ *                 subscription will be cancelled automatically.
  *                         <li> gpudb::create_table_external_loading_mode:
  *                 Scheme for distributing the extraction and loading of data
  *                 from the source data file(s). This option applies only when
@@ -13064,6 +13151,12 @@ CreateTableExternalResponse& createTableExternal( const CreateTableExternalReque
  *                 The default value is gpudb::create_table_external_head.
  *                         <li> gpudb::create_table_external_local_time_offset:
  *                 For Avro local timestamp columns
+ *                         <li>
+ *                 gpudb::create_table_external_max_records_to_load: Limit the
+ *                 number of records to load in this request: If this number is
+ *                 larger than a batch_size, then the number of records loaded
+ *                 will be limited to the next whole number of batch_size (per
+ *                 working thread).  The default value is ''.
  *                         <li>
  *                 gpudb::create_table_external_num_tasks_per_rank: Optional:
  *                 number of tasks for reading file per rank. Default will be
@@ -13190,6 +13283,14 @@ CreateTableExternalResponse& createTableExternal( const CreateTableExternalReque
  *                 gpudb::create_table_external_text_search_min_column_length:
  *                 Set minimum column size. Used only when
  *                 'text_search_columns' has a value.
+ *                         <li> gpudb::create_table_external_truncate_strings:
+ *                 If set to @a true, truncate string values that are longer
+ *                 than the column's type size.
+ *                 <ul>
+ *                         <li> gpudb::create_table_external_true
+ *                         <li> gpudb::create_table_external_false
+ *                 </ul>
+ *                 The default value is gpudb::create_table_external_false.
  *                         <li> gpudb::create_table_external_truncate_table: If
  *                 set to @a true, truncates the table specified by @a
  *                 tableName prior to loading the file(s).
@@ -13218,11 +13319,22 @@ CreateTableExternalResponse& createTableExternal( const CreateTableExternalReque
  *                 multiple sub-queries using the data distribution of given
  *                 column.  The default value is ''.
  *                         <li>
+ *                 gpudb::create_table_external_remote_query_increasing_column:
+ *                 Column on subscribed remote query result that will increase
+ *                 for new records (e.g., TIMESTAMP).  The default value is ''.
+ *                         <li>
  *                 gpudb::create_table_external_remote_query_partition_column:
  *                 Alias name for remote_query_filter_column.  The default
  *                 value is ''.
  *                         <li>
  *                 gpudb::create_table_external_update_on_existing_pk:
+ *                 <ul>
+ *                         <li> gpudb::create_table_external_true
+ *                         <li> gpudb::create_table_external_false
+ *                 </ul>
+ *                 The default value is gpudb::create_table_external_false.
+ *                         <li>
+ *                 gpudb::create_table_external_ignore_existing_pk:
  *                 <ul>
  *                         <li> gpudb::create_table_external_true
  *                         <li> gpudb::create_table_external_false
@@ -13461,6 +13573,12 @@ CreateTableExternalResponse createTableExternal( const std::string& tableName,
  *                            </ul>
  * @param options  Optional parameters.
  *                 <ul>
+ *                         <li> gpudb::create_table_external_avro_num_records:
+ *                 Optional number of avro records, if data includes only
+ *                 records.
+ *                         <li> gpudb::create_table_external_avro_schema:
+ *                 Optional string representing avro schema, for insert records
+ *                 in avro format, that does not include is schema.
  *                         <li>
  *                 gpudb::create_table_external_bad_record_table_name: Optional
  *                 name of a table to which records that were rejected are
@@ -13530,6 +13648,18 @@ CreateTableExternalResponse createTableExternal( const std::string& tableName,
  *                 Specifies a comma-delimited list of columns from the source
  *                 data to
  *                 skip.  Mutually exclusive with @a columns_to_load.
+ *                         <li> gpudb::create_table_external_compression_type:
+ *                 Optional: compression type
+ *                 <ul>
+ *                         <li> gpudb::create_table_external_none: Uncompressed
+ *                         <li> gpudb::create_table_external_auto: Default.
+ *                 Auto detect compression type
+ *                         <li> gpudb::create_table_external_gzip: gzip file
+ *                 compression.
+ *                         <li> gpudb::create_table_external_bzip2: bzip2 file
+ *                 compression.
+ *                 </ul>
+ *                 The default value is gpudb::create_table_external_auto.
  *                         <li> gpudb::create_table_external_datasource_name:
  *                 Name of an existing external data source from which data
  *                 file(s) specified in @a filepaths will be loaded
@@ -13635,6 +13765,19 @@ CreateTableExternalResponse createTableExternal( const std::string& tableName,
  *                         <li> gpudb::create_table_external_kafka_group_id:
  *                 The group id to be used consuming data from a kakfa topic
  *                 (valid only for kafka datasource subscriptions).
+ *                         <li>
+ *                 gpudb::create_table_external_kafka_offset_reset_policy:
+ *                 Policy to determine whether the data consumption starts
+ *                 either at earliest offset or latest offset.
+ *                 <ul>
+ *                         <li> gpudb::create_table_external_earliest
+ *                         <li> gpudb::create_table_external_latest
+ *                 </ul>
+ *                 The default value is gpudb::create_table_external_earliest.
+ *                         <li>
+ *                 gpudb::create_table_external_kafka_subscription_cancel_after:
+ *                 Sets the subscription lifespan (in minutes). Expired
+ *                 subscription will be cancelled automatically.
  *                         <li> gpudb::create_table_external_loading_mode:
  *                 Scheme for distributing the extraction and loading of data
  *                 from the source data file(s). This option applies only when
@@ -13678,6 +13821,12 @@ CreateTableExternalResponse createTableExternal( const std::string& tableName,
  *                 The default value is gpudb::create_table_external_head.
  *                         <li> gpudb::create_table_external_local_time_offset:
  *                 For Avro local timestamp columns
+ *                         <li>
+ *                 gpudb::create_table_external_max_records_to_load: Limit the
+ *                 number of records to load in this request: If this number is
+ *                 larger than a batch_size, then the number of records loaded
+ *                 will be limited to the next whole number of batch_size (per
+ *                 working thread).  The default value is ''.
  *                         <li>
  *                 gpudb::create_table_external_num_tasks_per_rank: Optional:
  *                 number of tasks for reading file per rank. Default will be
@@ -13804,6 +13953,14 @@ CreateTableExternalResponse createTableExternal( const std::string& tableName,
  *                 gpudb::create_table_external_text_search_min_column_length:
  *                 Set minimum column size. Used only when
  *                 'text_search_columns' has a value.
+ *                         <li> gpudb::create_table_external_truncate_strings:
+ *                 If set to @a true, truncate string values that are longer
+ *                 than the column's type size.
+ *                 <ul>
+ *                         <li> gpudb::create_table_external_true
+ *                         <li> gpudb::create_table_external_false
+ *                 </ul>
+ *                 The default value is gpudb::create_table_external_false.
  *                         <li> gpudb::create_table_external_truncate_table: If
  *                 set to @a true, truncates the table specified by @a
  *                 tableName prior to loading the file(s).
@@ -13832,11 +13989,22 @@ CreateTableExternalResponse createTableExternal( const std::string& tableName,
  *                 multiple sub-queries using the data distribution of given
  *                 column.  The default value is ''.
  *                         <li>
+ *                 gpudb::create_table_external_remote_query_increasing_column:
+ *                 Column on subscribed remote query result that will increase
+ *                 for new records (e.g., TIMESTAMP).  The default value is ''.
+ *                         <li>
  *                 gpudb::create_table_external_remote_query_partition_column:
  *                 Alias name for remote_query_filter_column.  The default
  *                 value is ''.
  *                         <li>
  *                 gpudb::create_table_external_update_on_existing_pk:
+ *                 <ul>
+ *                         <li> gpudb::create_table_external_true
+ *                         <li> gpudb::create_table_external_false
+ *                 </ul>
+ *                 The default value is gpudb::create_table_external_false.
+ *                         <li>
+ *                 gpudb::create_table_external_ignore_existing_pk:
  *                 <ul>
  *                         <li> gpudb::create_table_external_true
  *                         <li> gpudb::create_table_external_false
@@ -17518,17 +17686,10 @@ ExecuteSqlResponse& executeSql( const ExecuteSqlRequest& request_,
  *               @a offset & @a limit to request subsequent pages of results.
  * @param requestSchemaStr  Avro schema of @a data.
  * @param data  An array of binary-encoded data for the records to be binded to
- *              the SQL query.
+ *              the SQL query.  Or use @a query_parameters to pass the data in
+ *              JSON format.
  * @param options  Optional parameters.
  *                 <ul>
- *                         <li> gpudb::execute_sql_parallel_execution: If @a
- *                 false, disables the parallel step execution of the given
- *                 query.
- *                 <ul>
- *                         <li> gpudb::execute_sql_true
- *                         <li> gpudb::execute_sql_false
- *                 </ul>
- *                 The default value is gpudb::execute_sql_true.
  *                         <li> gpudb::execute_sql_cost_based_optimization: If
  *                 @a false, disables the cost-based optimization of the given
  *                 query.
@@ -17537,37 +17698,6 @@ ExecuteSqlResponse& executeSql( const ExecuteSqlRequest& request_,
  *                         <li> gpudb::execute_sql_false
  *                 </ul>
  *                 The default value is gpudb::execute_sql_false.
- *                         <li> gpudb::execute_sql_plan_cache: If @a false,
- *                 disables plan caching for the given query.
- *                 <ul>
- *                         <li> gpudb::execute_sql_true
- *                         <li> gpudb::execute_sql_false
- *                 </ul>
- *                 The default value is gpudb::execute_sql_true.
- *                         <li> gpudb::execute_sql_rule_based_optimization: If
- *                 @a false, disables rule-based rewrite optimizations for the
- *                 given query
- *                 <ul>
- *                         <li> gpudb::execute_sql_true
- *                         <li> gpudb::execute_sql_false
- *                 </ul>
- *                 The default value is gpudb::execute_sql_true.
- *                         <li> gpudb::execute_sql_results_caching: If @a
- *                 false, disables caching of the results of the given query
- *                 <ul>
- *                         <li> gpudb::execute_sql_true
- *                         <li> gpudb::execute_sql_false
- *                 </ul>
- *                 The default value is gpudb::execute_sql_true.
- *                         <li> gpudb::execute_sql_paging_table: When empty or
- *                 the specified paging table not exists, the system will
- *                 create a paging table and return when query output has more
- *                 records than the user asked. If the paging table exists in
- *                 the system, the records from the paging table are returned
- *                 without evaluating the query.
- *                         <li> gpudb::execute_sql_paging_table_ttl: Sets the
- *                 <a href="../../../concepts/ttl/" target="_top">TTL</a> of
- *                 the paging table.
  *                         <li> gpudb::execute_sql_distributed_joins: If @a
  *                 true, enables the use of distributed joins in servicing the
  *                 given query.  Any query requiring a distributed join will
@@ -17590,13 +17720,14 @@ ExecuteSqlResponse& executeSql( const ExecuteSqlRequest& request_,
  *                         <li> gpudb::execute_sql_false
  *                 </ul>
  *                 The default value is gpudb::execute_sql_false.
- *                         <li> gpudb::execute_sql_ssq_optimization: If @a
- *                 false, scalar subqueries will be translated into joins
+ *                         <li> gpudb::execute_sql_ignore_existing_pk: Can be
+ *                 used to customize behavior when the updated primary key
+ *                 value already exists as described in /insert/records.
  *                 <ul>
  *                         <li> gpudb::execute_sql_true
  *                         <li> gpudb::execute_sql_false
  *                 </ul>
- *                 The default value is gpudb::execute_sql_true.
+ *                 The default value is gpudb::execute_sql_false.
  *                         <li> gpudb::execute_sql_late_materialization: If @a
  *                 true, Joins/Filters results  will always be materialized (
  *                 saved to result tables format)
@@ -17605,31 +17736,25 @@ ExecuteSqlResponse& executeSql( const ExecuteSqlRequest& request_,
  *                         <li> gpudb::execute_sql_false
  *                 </ul>
  *                 The default value is gpudb::execute_sql_false.
- *                         <li> gpudb::execute_sql_ttl: Sets the <a
- *                 href="../../../concepts/ttl/" target="_top">TTL</a> of the
- *                 intermediate result tables used in query execution.
- *                         <li> gpudb::execute_sql_update_on_existing_pk: Can
- *                 be used to customize behavior when the updated primary key
- *                 value already exists as described in /insert/records.
- *                 <ul>
- *                         <li> gpudb::execute_sql_true
- *                         <li> gpudb::execute_sql_false
- *                 </ul>
- *                 The default value is gpudb::execute_sql_false.
- *                         <li> gpudb::execute_sql_preserve_dict_encoding: If
- *                 @a true, then columns that were dict encoded in the source
- *                 table will be dict encoded in the projection table.
+ *                         <li> gpudb::execute_sql_paging_table: When empty or
+ *                 the specified paging table not exists, the system will
+ *                 create a paging table and return when query output has more
+ *                 records than the user asked. If the paging table exists in
+ *                 the system, the records from the paging table are returned
+ *                 without evaluating the query.
+ *                         <li> gpudb::execute_sql_paging_table_ttl: Sets the
+ *                 <a href="../../../concepts/ttl/" target="_top">TTL</a> of
+ *                 the paging table.
+ *                         <li> gpudb::execute_sql_parallel_execution: If @a
+ *                 false, disables the parallel step execution of the given
+ *                 query.
  *                 <ul>
  *                         <li> gpudb::execute_sql_true
  *                         <li> gpudb::execute_sql_false
  *                 </ul>
  *                 The default value is gpudb::execute_sql_true.
- *                         <li> gpudb::execute_sql_validate_change_column: When
- *                 changing a column using alter table, validate the change
- *                 before applying it. If @a true, then validate all values. A
- *                 value too large (or too long) for the new type will prevent
- *                 any change. If @a false, then when a value is too large or
- *                 long, it will be truncated.
+ *                         <li> gpudb::execute_sql_plan_cache: If @a false,
+ *                 disables plan caching for the given query.
  *                 <ul>
  *                         <li> gpudb::execute_sql_true
  *                         <li> gpudb::execute_sql_false
@@ -17644,6 +17769,62 @@ ExecuteSqlResponse& executeSql( const ExecuteSqlRequest& request_,
  *                         <li> gpudb::execute_sql_false
  *                 </ul>
  *                 The default value is gpudb::execute_sql_false.
+ *                         <li> gpudb::execute_sql_preserve_dict_encoding: If
+ *                 @a true, then columns that were dict encoded in the source
+ *                 table will be dict encoded in the projection table.
+ *                 <ul>
+ *                         <li> gpudb::execute_sql_true
+ *                         <li> gpudb::execute_sql_false
+ *                 </ul>
+ *                 The default value is gpudb::execute_sql_true.
+ *                         <li> gpudb::execute_sql_query_parameters: Query
+ *                 parameters in JSON array or arrays (for inserting multiple
+ *                 rows).  This can be used instead of @a data and @a
+ *                 requestSchemaStr.
+ *                         <li> gpudb::execute_sql_results_caching: If @a
+ *                 false, disables caching of the results of the given query
+ *                 <ul>
+ *                         <li> gpudb::execute_sql_true
+ *                         <li> gpudb::execute_sql_false
+ *                 </ul>
+ *                 The default value is gpudb::execute_sql_true.
+ *                         <li> gpudb::execute_sql_rule_based_optimization: If
+ *                 @a false, disables rule-based rewrite optimizations for the
+ *                 given query
+ *                 <ul>
+ *                         <li> gpudb::execute_sql_true
+ *                         <li> gpudb::execute_sql_false
+ *                 </ul>
+ *                 The default value is gpudb::execute_sql_true.
+ *                         <li> gpudb::execute_sql_ssq_optimization: If @a
+ *                 false, scalar subqueries will be translated into joins
+ *                 <ul>
+ *                         <li> gpudb::execute_sql_true
+ *                         <li> gpudb::execute_sql_false
+ *                 </ul>
+ *                 The default value is gpudb::execute_sql_true.
+ *                         <li> gpudb::execute_sql_ttl: Sets the <a
+ *                 href="../../../concepts/ttl/" target="_top">TTL</a> of the
+ *                 intermediate result tables used in query execution.
+ *                         <li> gpudb::execute_sql_update_on_existing_pk: Can
+ *                 be used to customize behavior when the updated primary key
+ *                 value already exists as described in /insert/records.
+ *                 <ul>
+ *                         <li> gpudb::execute_sql_true
+ *                         <li> gpudb::execute_sql_false
+ *                 </ul>
+ *                 The default value is gpudb::execute_sql_false.
+ *                         <li> gpudb::execute_sql_validate_change_column: When
+ *                 changing a column using alter table, validate the change
+ *                 before applying it. If @a true, then validate all values. A
+ *                 value too large (or too long) for the new type will prevent
+ *                 any change. If @a false, then when a value is too large or
+ *                 long, it will be truncated.
+ *                 <ul>
+ *                         <li> gpudb::execute_sql_true
+ *                         <li> gpudb::execute_sql_false
+ *                 </ul>
+ *                 The default value is gpudb::execute_sql_true.
  *                 </ul>
  * 
  * @return Response object containing the result of the operation.
@@ -17682,17 +17863,10 @@ ExecuteSqlResponse executeSql( const std::string& statement,
  *               @a offset & @a limit to request subsequent pages of results.
  * @param requestSchemaStr  Avro schema of @a data.
  * @param data  An array of binary-encoded data for the records to be binded to
- *              the SQL query.
+ *              the SQL query.  Or use @a query_parameters to pass the data in
+ *              JSON format.
  * @param options  Optional parameters.
  *                 <ul>
- *                         <li> gpudb::execute_sql_parallel_execution: If @a
- *                 false, disables the parallel step execution of the given
- *                 query.
- *                 <ul>
- *                         <li> gpudb::execute_sql_true
- *                         <li> gpudb::execute_sql_false
- *                 </ul>
- *                 The default value is gpudb::execute_sql_true.
  *                         <li> gpudb::execute_sql_cost_based_optimization: If
  *                 @a false, disables the cost-based optimization of the given
  *                 query.
@@ -17701,37 +17875,6 @@ ExecuteSqlResponse executeSql( const std::string& statement,
  *                         <li> gpudb::execute_sql_false
  *                 </ul>
  *                 The default value is gpudb::execute_sql_false.
- *                         <li> gpudb::execute_sql_plan_cache: If @a false,
- *                 disables plan caching for the given query.
- *                 <ul>
- *                         <li> gpudb::execute_sql_true
- *                         <li> gpudb::execute_sql_false
- *                 </ul>
- *                 The default value is gpudb::execute_sql_true.
- *                         <li> gpudb::execute_sql_rule_based_optimization: If
- *                 @a false, disables rule-based rewrite optimizations for the
- *                 given query
- *                 <ul>
- *                         <li> gpudb::execute_sql_true
- *                         <li> gpudb::execute_sql_false
- *                 </ul>
- *                 The default value is gpudb::execute_sql_true.
- *                         <li> gpudb::execute_sql_results_caching: If @a
- *                 false, disables caching of the results of the given query
- *                 <ul>
- *                         <li> gpudb::execute_sql_true
- *                         <li> gpudb::execute_sql_false
- *                 </ul>
- *                 The default value is gpudb::execute_sql_true.
- *                         <li> gpudb::execute_sql_paging_table: When empty or
- *                 the specified paging table not exists, the system will
- *                 create a paging table and return when query output has more
- *                 records than the user asked. If the paging table exists in
- *                 the system, the records from the paging table are returned
- *                 without evaluating the query.
- *                         <li> gpudb::execute_sql_paging_table_ttl: Sets the
- *                 <a href="../../../concepts/ttl/" target="_top">TTL</a> of
- *                 the paging table.
  *                         <li> gpudb::execute_sql_distributed_joins: If @a
  *                 true, enables the use of distributed joins in servicing the
  *                 given query.  Any query requiring a distributed join will
@@ -17754,13 +17897,14 @@ ExecuteSqlResponse executeSql( const std::string& statement,
  *                         <li> gpudb::execute_sql_false
  *                 </ul>
  *                 The default value is gpudb::execute_sql_false.
- *                         <li> gpudb::execute_sql_ssq_optimization: If @a
- *                 false, scalar subqueries will be translated into joins
+ *                         <li> gpudb::execute_sql_ignore_existing_pk: Can be
+ *                 used to customize behavior when the updated primary key
+ *                 value already exists as described in /insert/records.
  *                 <ul>
  *                         <li> gpudb::execute_sql_true
  *                         <li> gpudb::execute_sql_false
  *                 </ul>
- *                 The default value is gpudb::execute_sql_true.
+ *                 The default value is gpudb::execute_sql_false.
  *                         <li> gpudb::execute_sql_late_materialization: If @a
  *                 true, Joins/Filters results  will always be materialized (
  *                 saved to result tables format)
@@ -17769,31 +17913,25 @@ ExecuteSqlResponse executeSql( const std::string& statement,
  *                         <li> gpudb::execute_sql_false
  *                 </ul>
  *                 The default value is gpudb::execute_sql_false.
- *                         <li> gpudb::execute_sql_ttl: Sets the <a
- *                 href="../../../concepts/ttl/" target="_top">TTL</a> of the
- *                 intermediate result tables used in query execution.
- *                         <li> gpudb::execute_sql_update_on_existing_pk: Can
- *                 be used to customize behavior when the updated primary key
- *                 value already exists as described in /insert/records.
- *                 <ul>
- *                         <li> gpudb::execute_sql_true
- *                         <li> gpudb::execute_sql_false
- *                 </ul>
- *                 The default value is gpudb::execute_sql_false.
- *                         <li> gpudb::execute_sql_preserve_dict_encoding: If
- *                 @a true, then columns that were dict encoded in the source
- *                 table will be dict encoded in the projection table.
+ *                         <li> gpudb::execute_sql_paging_table: When empty or
+ *                 the specified paging table not exists, the system will
+ *                 create a paging table and return when query output has more
+ *                 records than the user asked. If the paging table exists in
+ *                 the system, the records from the paging table are returned
+ *                 without evaluating the query.
+ *                         <li> gpudb::execute_sql_paging_table_ttl: Sets the
+ *                 <a href="../../../concepts/ttl/" target="_top">TTL</a> of
+ *                 the paging table.
+ *                         <li> gpudb::execute_sql_parallel_execution: If @a
+ *                 false, disables the parallel step execution of the given
+ *                 query.
  *                 <ul>
  *                         <li> gpudb::execute_sql_true
  *                         <li> gpudb::execute_sql_false
  *                 </ul>
  *                 The default value is gpudb::execute_sql_true.
- *                         <li> gpudb::execute_sql_validate_change_column: When
- *                 changing a column using alter table, validate the change
- *                 before applying it. If @a true, then validate all values. A
- *                 value too large (or too long) for the new type will prevent
- *                 any change. If @a false, then when a value is too large or
- *                 long, it will be truncated.
+ *                         <li> gpudb::execute_sql_plan_cache: If @a false,
+ *                 disables plan caching for the given query.
  *                 <ul>
  *                         <li> gpudb::execute_sql_true
  *                         <li> gpudb::execute_sql_false
@@ -17808,6 +17946,62 @@ ExecuteSqlResponse executeSql( const std::string& statement,
  *                         <li> gpudb::execute_sql_false
  *                 </ul>
  *                 The default value is gpudb::execute_sql_false.
+ *                         <li> gpudb::execute_sql_preserve_dict_encoding: If
+ *                 @a true, then columns that were dict encoded in the source
+ *                 table will be dict encoded in the projection table.
+ *                 <ul>
+ *                         <li> gpudb::execute_sql_true
+ *                         <li> gpudb::execute_sql_false
+ *                 </ul>
+ *                 The default value is gpudb::execute_sql_true.
+ *                         <li> gpudb::execute_sql_query_parameters: Query
+ *                 parameters in JSON array or arrays (for inserting multiple
+ *                 rows).  This can be used instead of @a data and @a
+ *                 requestSchemaStr.
+ *                         <li> gpudb::execute_sql_results_caching: If @a
+ *                 false, disables caching of the results of the given query
+ *                 <ul>
+ *                         <li> gpudb::execute_sql_true
+ *                         <li> gpudb::execute_sql_false
+ *                 </ul>
+ *                 The default value is gpudb::execute_sql_true.
+ *                         <li> gpudb::execute_sql_rule_based_optimization: If
+ *                 @a false, disables rule-based rewrite optimizations for the
+ *                 given query
+ *                 <ul>
+ *                         <li> gpudb::execute_sql_true
+ *                         <li> gpudb::execute_sql_false
+ *                 </ul>
+ *                 The default value is gpudb::execute_sql_true.
+ *                         <li> gpudb::execute_sql_ssq_optimization: If @a
+ *                 false, scalar subqueries will be translated into joins
+ *                 <ul>
+ *                         <li> gpudb::execute_sql_true
+ *                         <li> gpudb::execute_sql_false
+ *                 </ul>
+ *                 The default value is gpudb::execute_sql_true.
+ *                         <li> gpudb::execute_sql_ttl: Sets the <a
+ *                 href="../../../concepts/ttl/" target="_top">TTL</a> of the
+ *                 intermediate result tables used in query execution.
+ *                         <li> gpudb::execute_sql_update_on_existing_pk: Can
+ *                 be used to customize behavior when the updated primary key
+ *                 value already exists as described in /insert/records.
+ *                 <ul>
+ *                         <li> gpudb::execute_sql_true
+ *                         <li> gpudb::execute_sql_false
+ *                 </ul>
+ *                 The default value is gpudb::execute_sql_false.
+ *                         <li> gpudb::execute_sql_validate_change_column: When
+ *                 changing a column using alter table, validate the change
+ *                 before applying it. If @a true, then validate all values. A
+ *                 value too large (or too long) for the new type will prevent
+ *                 any change. If @a false, then when a value is too large or
+ *                 long, it will be truncated.
+ *                 <ul>
+ *                         <li> gpudb::execute_sql_true
+ *                         <li> gpudb::execute_sql_false
+ *                 </ul>
+ *                 The default value is gpudb::execute_sql_true.
  *                 </ul>
  * @param[out] response_  Response object containing the results of the
  *                        operation.
@@ -18001,7 +18195,7 @@ ExportRecordsToFilesResponse& exportRecordsToFiles( const ExportRecordsToFilesRe
  *                 as "05/04/2000 12:12:11"
  *                         <li> gpudb::export_records_to_files_export_ddl: Save
  *                 DDL to a separate file.  The default value is 'false'.
- *                         <li> gpudb::export_records_to_files_file_extention:
+ *                         <li> gpudb::export_records_to_files_file_extension:
  *                 Extension to give the export file.  The default value is
  *                 '.csv'.
  *                         <li> gpudb::export_records_to_files_file_type:
@@ -18180,7 +18374,7 @@ ExportRecordsToFilesResponse exportRecordsToFiles( const std::string& tableName,
  *                 as "05/04/2000 12:12:11"
  *                         <li> gpudb::export_records_to_files_export_ddl: Save
  *                 DDL to a separate file.  The default value is 'false'.
- *                         <li> gpudb::export_records_to_files_file_extention:
+ *                         <li> gpudb::export_records_to_files_file_extension:
  *                 Extension to give the export file.  The default value is
  *                 '.csv'.
  *                         <li> gpudb::export_records_to_files_file_type:
@@ -18300,6 +18494,36 @@ ExportRecordsToTableResponse& exportRecordsToTable( const ExportRecordsToTableRe
  *                         <li> gpudb::export_records_to_table_datasink_name:
  *                 Name of an existing external data sink to which table name
  *                 specified in @a tableName will be exported
+ *                         <li>
+ *                 gpudb::export_records_to_table_jdbc_session_init_statement:
+ *                 Executes the statement per each jdbc session before doing
+ *                 actual load.  The default value is ''.
+ *                         <li>
+ *                 gpudb::export_records_to_table_jdbc_connection_init_statement:
+ *                 Executes the statement once before doing actual load.  The
+ *                 default value is ''.
+ *                         <li> gpudb::export_records_to_table_remote_table:
+ *                 Name of the target table to which source table is exported.
+ *                 When this option is specified remote_query cannot be
+ *                 specified.  The default value is ''.
+ *                         <li>
+ *                 gpudb::export_records_to_table_use_st_geomfrom_casts: Wraps
+ *                 parametrized variables with st_geomfromtext or
+ *                 st_geomfromwkb based on source column type
+ *                 <ul>
+ *                         <li> gpudb::export_records_to_table_true
+ *                         <li> gpudb::export_records_to_table_false
+ *                 </ul>
+ *                 The default value is gpudb::export_records_to_table_false.
+ *                         <li>
+ *                 gpudb::export_records_to_table_use_indexed_parameters: Uses
+ *                 $n style syntax when generating insert query for
+ *                 remote_table option
+ *                 <ul>
+ *                         <li> gpudb::export_records_to_table_true
+ *                         <li> gpudb::export_records_to_table_false
+ *                 </ul>
+ *                 The default value is gpudb::export_records_to_table_true.
  *                 </ul>
  * 
  * @return Response object containing the result of the operation.
@@ -18329,6 +18553,36 @@ ExportRecordsToTableResponse exportRecordsToTable( const std::string& tableName,
  *                         <li> gpudb::export_records_to_table_datasink_name:
  *                 Name of an existing external data sink to which table name
  *                 specified in @a tableName will be exported
+ *                         <li>
+ *                 gpudb::export_records_to_table_jdbc_session_init_statement:
+ *                 Executes the statement per each jdbc session before doing
+ *                 actual load.  The default value is ''.
+ *                         <li>
+ *                 gpudb::export_records_to_table_jdbc_connection_init_statement:
+ *                 Executes the statement once before doing actual load.  The
+ *                 default value is ''.
+ *                         <li> gpudb::export_records_to_table_remote_table:
+ *                 Name of the target table to which source table is exported.
+ *                 When this option is specified remote_query cannot be
+ *                 specified.  The default value is ''.
+ *                         <li>
+ *                 gpudb::export_records_to_table_use_st_geomfrom_casts: Wraps
+ *                 parametrized variables with st_geomfromtext or
+ *                 st_geomfromwkb based on source column type
+ *                 <ul>
+ *                         <li> gpudb::export_records_to_table_true
+ *                         <li> gpudb::export_records_to_table_false
+ *                 </ul>
+ *                 The default value is gpudb::export_records_to_table_false.
+ *                         <li>
+ *                 gpudb::export_records_to_table_use_indexed_parameters: Uses
+ *                 $n style syntax when generating insert query for
+ *                 remote_table option
+ *                 <ul>
+ *                         <li> gpudb::export_records_to_table_true
+ *                         <li> gpudb::export_records_to_table_false
+ *                 </ul>
+ *                 The default value is gpudb::export_records_to_table_true.
  *                 </ul>
  * @param[out] response_  Response object containing the results of the
  *                        operation.
@@ -25905,7 +26159,21 @@ InsertRecordsResponse& insertRecords( const InsertRecordsRequest<TRequest>& requ
  *                 with primary key values that match those of a record being
  *                 inserted will remain unchanged and the new record discarded.
  *                 If the specified table does not have a primary key, then
- *                 this option is ignored.
+ *                 this option has no affect.
+ *                 <ul>
+ *                         <li> gpudb::insert_records_true
+ *                         <li> gpudb::insert_records_false
+ *                 </ul>
+ *                 The default value is gpudb::insert_records_false.
+ *                         <li> gpudb::insert_records_ignore_existing_pk:
+ *                 Specifies the record collision policy for inserting into a
+ *                 table with a <a
+ *                 href="../../../concepts/tables/#primary-keys"
+ *                 target="_top">primary key</a>.  If set to @a true, any
+ *                 record being inserted with primary key values that match
+ *                 those of an existing table record will be ignored with no
+ *                 error generated.  If the specified table does not have a
+ *                 primary key, then this option has no affect.
  *                 <ul>
  *                         <li> gpudb::insert_records_true
  *                         <li> gpudb::insert_records_false
@@ -26020,7 +26288,21 @@ InsertRecordsResponse insertRecords( const std::string& tableName,
  *                 with primary key values that match those of a record being
  *                 inserted will remain unchanged and the new record discarded.
  *                 If the specified table does not have a primary key, then
- *                 this option is ignored.
+ *                 this option has no affect.
+ *                 <ul>
+ *                         <li> gpudb::insert_records_true
+ *                         <li> gpudb::insert_records_false
+ *                 </ul>
+ *                 The default value is gpudb::insert_records_false.
+ *                         <li> gpudb::insert_records_ignore_existing_pk:
+ *                 Specifies the record collision policy for inserting into a
+ *                 table with a <a
+ *                 href="../../../concepts/tables/#primary-keys"
+ *                 target="_top">primary key</a>.  If set to @a true, any
+ *                 record being inserted with primary key values that match
+ *                 those of an existing table record will be ignored with no
+ *                 error generated.  If the specified table does not have a
+ *                 primary key, then this option has no affect.
  *                 <ul>
  *                         <li> gpudb::insert_records_true
  *                         <li> gpudb::insert_records_false
@@ -26418,6 +26700,12 @@ InsertRecordsFromFilesResponse& insertRecordsFromFiles( const InsertRecordsFromF
  * @param options  Optional parameters.
  *                 <ul>
  *                         <li>
+ *                 gpudb::insert_records_from_files_avro_num_records: Optional
+ *                 number of avro records, if data includes only records.
+ *                         <li> gpudb::insert_records_from_files_avro_schema:
+ *                 Optional string representing avro schema, if data includes
+ *                 only records.
+ *                         <li>
  *                 gpudb::insert_records_from_files_bad_record_table_name:
  *                 Optional name of a table to which records that were rejected
  *                 are written.  The bad-record-table has the following
@@ -26488,6 +26776,20 @@ InsertRecordsFromFilesResponse& insertRecordsFromFiles( const InsertRecordsFromF
  *                 gpudb::insert_records_from_files_columns_to_skip: Specifies
  *                 a comma-delimited list of columns from the source data to
  *                 skip.  Mutually exclusive with @a columns_to_load.
+ *                         <li>
+ *                 gpudb::insert_records_from_files_compression_type: Optional:
+ *                 compression type
+ *                 <ul>
+ *                         <li> gpudb::insert_records_from_files_none:
+ *                 Uncompressed file
+ *                         <li> gpudb::insert_records_from_files_auto: Default.
+ *                 Auto detect compression type
+ *                         <li> gpudb::insert_records_from_files_gzip: gzip
+ *                 file compression.
+ *                         <li> gpudb::insert_records_from_files_bzip2: bzip2
+ *                 file compression.
+ *                 </ul>
+ *                 The default value is gpudb::insert_records_from_files_auto.
  *                         <li>
  *                 gpudb::insert_records_from_files_datasource_name: Name of an
  *                 existing external data source from which data file(s)
@@ -26580,6 +26882,20 @@ InsertRecordsFromFilesResponse& insertRecordsFromFiles( const InsertRecordsFromF
  *                 gpudb::insert_records_from_files_kafka_group_id: The group
  *                 id to be used consuming data from a kakfa topic (valid only
  *                 for kafka datasource subscriptions).
+ *                         <li>
+ *                 gpudb::insert_records_from_files_kafka_offset_reset_policy:
+ *                 Policy to determine whether the data consumption starts
+ *                 either at earliest offset or latest offset.
+ *                 <ul>
+ *                         <li> gpudb::insert_records_from_files_earliest
+ *                         <li> gpudb::insert_records_from_files_latest
+ *                 </ul>
+ *                 The default value is
+ *                 gpudb::insert_records_from_files_earliest.
+ *                         <li>
+ *                 gpudb::insert_records_from_files_kafka_subscription_cancel_after:
+ *                 Sets the subscription lifespan (in minutes). Expired
+ *                 subscription will be cancelled automatically.
  *                         <li> gpudb::insert_records_from_files_loading_mode:
  *                 Scheme for distributing the extraction and loading of data
  *                 from the source data file(s). This option applies only when
@@ -26625,6 +26941,12 @@ InsertRecordsFromFilesResponse& insertRecordsFromFiles( const InsertRecordsFromF
  *                         <li>
  *                 gpudb::insert_records_from_files_local_time_offset: For Avro
  *                 local timestamp columns
+ *                         <li>
+ *                 gpudb::insert_records_from_files_max_records_to_load: Limit
+ *                 the number of records to load in this request: If this
+ *                 number is larger than a batch_size, then the number of
+ *                 records loaded will be limited to the next whole number of
+ *                 batch_size (per working thread).  The default value is ''.
  *                         <li>
  *                 gpudb::insert_records_from_files_num_tasks_per_rank:
  *                 Optional: number of tasks for reading file per rank. Default
@@ -26744,6 +27066,15 @@ InsertRecordsFromFilesResponse& insertRecordsFromFiles( const InsertRecordsFromF
  *                 Set minimum column size. Used only when
  *                 'text_search_columns' has a value.
  *                         <li>
+ *                 gpudb::insert_records_from_files_truncate_strings: If set to
+ *                 @a true, truncate string values that are longer than the
+ *                 column's type size.
+ *                 <ul>
+ *                         <li> gpudb::insert_records_from_files_true
+ *                         <li> gpudb::insert_records_from_files_false
+ *                 </ul>
+ *                 The default value is gpudb::insert_records_from_files_false.
+ *                         <li>
  *                 gpudb::insert_records_from_files_truncate_table: If set to
  *                 @a true, truncates the table specified by @a tableName prior
  *                 to loading the file(s).
@@ -26766,6 +27097,13 @@ InsertRecordsFromFilesResponse& insertRecordsFromFiles( const InsertRecordsFromF
  *                 The default value is gpudb::insert_records_from_files_speed.
  *                         <li>
  *                 gpudb::insert_records_from_files_update_on_existing_pk:
+ *                 <ul>
+ *                         <li> gpudb::insert_records_from_files_true
+ *                         <li> gpudb::insert_records_from_files_false
+ *                 </ul>
+ *                 The default value is gpudb::insert_records_from_files_false.
+ *                         <li>
+ *                 gpudb::insert_records_from_files_ignore_existing_pk:
  *                 <ul>
  *                         <li> gpudb::insert_records_from_files_true
  *                         <li> gpudb::insert_records_from_files_false
@@ -27021,6 +27359,12 @@ InsertRecordsFromFilesResponse insertRecordsFromFiles( const std::string& tableN
  * @param options  Optional parameters.
  *                 <ul>
  *                         <li>
+ *                 gpudb::insert_records_from_files_avro_num_records: Optional
+ *                 number of avro records, if data includes only records.
+ *                         <li> gpudb::insert_records_from_files_avro_schema:
+ *                 Optional string representing avro schema, if data includes
+ *                 only records.
+ *                         <li>
  *                 gpudb::insert_records_from_files_bad_record_table_name:
  *                 Optional name of a table to which records that were rejected
  *                 are written.  The bad-record-table has the following
@@ -27091,6 +27435,20 @@ InsertRecordsFromFilesResponse insertRecordsFromFiles( const std::string& tableN
  *                 gpudb::insert_records_from_files_columns_to_skip: Specifies
  *                 a comma-delimited list of columns from the source data to
  *                 skip.  Mutually exclusive with @a columns_to_load.
+ *                         <li>
+ *                 gpudb::insert_records_from_files_compression_type: Optional:
+ *                 compression type
+ *                 <ul>
+ *                         <li> gpudb::insert_records_from_files_none:
+ *                 Uncompressed file
+ *                         <li> gpudb::insert_records_from_files_auto: Default.
+ *                 Auto detect compression type
+ *                         <li> gpudb::insert_records_from_files_gzip: gzip
+ *                 file compression.
+ *                         <li> gpudb::insert_records_from_files_bzip2: bzip2
+ *                 file compression.
+ *                 </ul>
+ *                 The default value is gpudb::insert_records_from_files_auto.
  *                         <li>
  *                 gpudb::insert_records_from_files_datasource_name: Name of an
  *                 existing external data source from which data file(s)
@@ -27183,6 +27541,20 @@ InsertRecordsFromFilesResponse insertRecordsFromFiles( const std::string& tableN
  *                 gpudb::insert_records_from_files_kafka_group_id: The group
  *                 id to be used consuming data from a kakfa topic (valid only
  *                 for kafka datasource subscriptions).
+ *                         <li>
+ *                 gpudb::insert_records_from_files_kafka_offset_reset_policy:
+ *                 Policy to determine whether the data consumption starts
+ *                 either at earliest offset or latest offset.
+ *                 <ul>
+ *                         <li> gpudb::insert_records_from_files_earliest
+ *                         <li> gpudb::insert_records_from_files_latest
+ *                 </ul>
+ *                 The default value is
+ *                 gpudb::insert_records_from_files_earliest.
+ *                         <li>
+ *                 gpudb::insert_records_from_files_kafka_subscription_cancel_after:
+ *                 Sets the subscription lifespan (in minutes). Expired
+ *                 subscription will be cancelled automatically.
  *                         <li> gpudb::insert_records_from_files_loading_mode:
  *                 Scheme for distributing the extraction and loading of data
  *                 from the source data file(s). This option applies only when
@@ -27228,6 +27600,12 @@ InsertRecordsFromFilesResponse insertRecordsFromFiles( const std::string& tableN
  *                         <li>
  *                 gpudb::insert_records_from_files_local_time_offset: For Avro
  *                 local timestamp columns
+ *                         <li>
+ *                 gpudb::insert_records_from_files_max_records_to_load: Limit
+ *                 the number of records to load in this request: If this
+ *                 number is larger than a batch_size, then the number of
+ *                 records loaded will be limited to the next whole number of
+ *                 batch_size (per working thread).  The default value is ''.
  *                         <li>
  *                 gpudb::insert_records_from_files_num_tasks_per_rank:
  *                 Optional: number of tasks for reading file per rank. Default
@@ -27347,6 +27725,15 @@ InsertRecordsFromFilesResponse insertRecordsFromFiles( const std::string& tableN
  *                 Set minimum column size. Used only when
  *                 'text_search_columns' has a value.
  *                         <li>
+ *                 gpudb::insert_records_from_files_truncate_strings: If set to
+ *                 @a true, truncate string values that are longer than the
+ *                 column's type size.
+ *                 <ul>
+ *                         <li> gpudb::insert_records_from_files_true
+ *                         <li> gpudb::insert_records_from_files_false
+ *                 </ul>
+ *                 The default value is gpudb::insert_records_from_files_false.
+ *                         <li>
  *                 gpudb::insert_records_from_files_truncate_table: If set to
  *                 @a true, truncates the table specified by @a tableName prior
  *                 to loading the file(s).
@@ -27369,6 +27756,13 @@ InsertRecordsFromFilesResponse insertRecordsFromFiles( const std::string& tableN
  *                 The default value is gpudb::insert_records_from_files_speed.
  *                         <li>
  *                 gpudb::insert_records_from_files_update_on_existing_pk:
+ *                 <ul>
+ *                         <li> gpudb::insert_records_from_files_true
+ *                         <li> gpudb::insert_records_from_files_false
+ *                 </ul>
+ *                 The default value is gpudb::insert_records_from_files_false.
+ *                         <li>
+ *                 gpudb::insert_records_from_files_ignore_existing_pk:
  *                 <ul>
  *                         <li> gpudb::insert_records_from_files_true
  *                         <li> gpudb::insert_records_from_files_false
@@ -27614,6 +28008,13 @@ InsertRecordsFromPayloadResponse& insertRecordsFromPayload( const InsertRecordsF
  * @param options  Optional parameters.
  *                 <ul>
  *                         <li>
+ *                 gpudb::insert_records_from_payload_avro_num_records:
+ *                 Optional number of avro records, if data includes only
+ *                 records.
+ *                         <li> gpudb::insert_records_from_payload_avro_schema:
+ *                 Optional string representing avro schema, for insert records
+ *                 in avro format, that does not include is schema.
+ *                         <li>
  *                 gpudb::insert_records_from_payload_bad_record_table_name:
  *                 Optional name of a table to which records that were rejected
  *                 are written.  The bad-record-table has the following
@@ -27685,6 +28086,21 @@ InsertRecordsFromPayloadResponse& insertRecordsFromPayload( const InsertRecordsF
  *                 Specifies a comma-delimited list of columns from the source
  *                 data to
  *                 skip.  Mutually exclusive with @a columns_to_load.
+ *                         <li>
+ *                 gpudb::insert_records_from_payload_compression_type:
+ *                 Optional: payload compression type
+ *                 <ul>
+ *                         <li> gpudb::insert_records_from_payload_none:
+ *                 Uncompressed
+ *                         <li> gpudb::insert_records_from_payload_auto:
+ *                 Default. Auto detect compression type
+ *                         <li> gpudb::insert_records_from_payload_gzip: gzip
+ *                 file compression.
+ *                         <li> gpudb::insert_records_from_payload_bzip2: bzip2
+ *                 file compression.
+ *                 </ul>
+ *                 The default value is
+ *                 gpudb::insert_records_from_payload_auto.
  *                         <li>
  *                 gpudb::insert_records_from_payload_default_column_formats:
  *                 Specifies the default format to be applied to source data
@@ -27820,6 +28236,12 @@ InsertRecordsFromPayloadResponse& insertRecordsFromPayload( const InsertRecordsF
  *                 gpudb::insert_records_from_payload_local_time_offset: For
  *                 Avro local timestamp columns
  *                         <li>
+ *                 gpudb::insert_records_from_payload_max_records_to_load:
+ *                 Limit the number of records to load in this request: If this
+ *                 number is larger than a batch_size, then the number of
+ *                 records loaded will be limited to the next whole number of
+ *                 batch_size (per working thread).  The default value is ''.
+ *                         <li>
  *                 gpudb::insert_records_from_payload_num_tasks_per_rank:
  *                 Optional: number of tasks for reading file per rank. Default
  *                 will be external_file_reader_num_tasks
@@ -27944,6 +28366,16 @@ InsertRecordsFromPayloadResponse& insertRecordsFromPayload( const InsertRecordsF
  *                 Set minimum column size. Used only when
  *                 'text_search_columns' has a value.
  *                         <li>
+ *                 gpudb::insert_records_from_payload_truncate_strings: If set
+ *                 to @a true, truncate string values that are longer than the
+ *                 column's type size.
+ *                 <ul>
+ *                         <li> gpudb::insert_records_from_payload_true
+ *                         <li> gpudb::insert_records_from_payload_false
+ *                 </ul>
+ *                 The default value is
+ *                 gpudb::insert_records_from_payload_false.
+ *                         <li>
  *                 gpudb::insert_records_from_payload_truncate_table: If set to
  *                 @a true, truncates the table specified by @a tableName prior
  *                 to loading the file(s).
@@ -27968,6 +28400,14 @@ InsertRecordsFromPayloadResponse& insertRecordsFromPayload( const InsertRecordsF
  *                 gpudb::insert_records_from_payload_speed.
  *                         <li>
  *                 gpudb::insert_records_from_payload_update_on_existing_pk:
+ *                 <ul>
+ *                         <li> gpudb::insert_records_from_payload_true
+ *                         <li> gpudb::insert_records_from_payload_false
+ *                 </ul>
+ *                 The default value is
+ *                 gpudb::insert_records_from_payload_false.
+ *                         <li>
+ *                 gpudb::insert_records_from_payload_ignore_existing_pk:
  *                 <ul>
  *                         <li> gpudb::insert_records_from_payload_true
  *                         <li> gpudb::insert_records_from_payload_false
@@ -28175,6 +28615,13 @@ InsertRecordsFromPayloadResponse insertRecordsFromPayload( const std::string& ta
  * @param options  Optional parameters.
  *                 <ul>
  *                         <li>
+ *                 gpudb::insert_records_from_payload_avro_num_records:
+ *                 Optional number of avro records, if data includes only
+ *                 records.
+ *                         <li> gpudb::insert_records_from_payload_avro_schema:
+ *                 Optional string representing avro schema, for insert records
+ *                 in avro format, that does not include is schema.
+ *                         <li>
  *                 gpudb::insert_records_from_payload_bad_record_table_name:
  *                 Optional name of a table to which records that were rejected
  *                 are written.  The bad-record-table has the following
@@ -28246,6 +28693,21 @@ InsertRecordsFromPayloadResponse insertRecordsFromPayload( const std::string& ta
  *                 Specifies a comma-delimited list of columns from the source
  *                 data to
  *                 skip.  Mutually exclusive with @a columns_to_load.
+ *                         <li>
+ *                 gpudb::insert_records_from_payload_compression_type:
+ *                 Optional: payload compression type
+ *                 <ul>
+ *                         <li> gpudb::insert_records_from_payload_none:
+ *                 Uncompressed
+ *                         <li> gpudb::insert_records_from_payload_auto:
+ *                 Default. Auto detect compression type
+ *                         <li> gpudb::insert_records_from_payload_gzip: gzip
+ *                 file compression.
+ *                         <li> gpudb::insert_records_from_payload_bzip2: bzip2
+ *                 file compression.
+ *                 </ul>
+ *                 The default value is
+ *                 gpudb::insert_records_from_payload_auto.
  *                         <li>
  *                 gpudb::insert_records_from_payload_default_column_formats:
  *                 Specifies the default format to be applied to source data
@@ -28381,6 +28843,12 @@ InsertRecordsFromPayloadResponse insertRecordsFromPayload( const std::string& ta
  *                 gpudb::insert_records_from_payload_local_time_offset: For
  *                 Avro local timestamp columns
  *                         <li>
+ *                 gpudb::insert_records_from_payload_max_records_to_load:
+ *                 Limit the number of records to load in this request: If this
+ *                 number is larger than a batch_size, then the number of
+ *                 records loaded will be limited to the next whole number of
+ *                 batch_size (per working thread).  The default value is ''.
+ *                         <li>
  *                 gpudb::insert_records_from_payload_num_tasks_per_rank:
  *                 Optional: number of tasks for reading file per rank. Default
  *                 will be external_file_reader_num_tasks
@@ -28505,6 +28973,16 @@ InsertRecordsFromPayloadResponse insertRecordsFromPayload( const std::string& ta
  *                 Set minimum column size. Used only when
  *                 'text_search_columns' has a value.
  *                         <li>
+ *                 gpudb::insert_records_from_payload_truncate_strings: If set
+ *                 to @a true, truncate string values that are longer than the
+ *                 column's type size.
+ *                 <ul>
+ *                         <li> gpudb::insert_records_from_payload_true
+ *                         <li> gpudb::insert_records_from_payload_false
+ *                 </ul>
+ *                 The default value is
+ *                 gpudb::insert_records_from_payload_false.
+ *                         <li>
  *                 gpudb::insert_records_from_payload_truncate_table: If set to
  *                 @a true, truncates the table specified by @a tableName prior
  *                 to loading the file(s).
@@ -28529,6 +29007,14 @@ InsertRecordsFromPayloadResponse insertRecordsFromPayload( const std::string& ta
  *                 gpudb::insert_records_from_payload_speed.
  *                         <li>
  *                 gpudb::insert_records_from_payload_update_on_existing_pk:
+ *                 <ul>
+ *                         <li> gpudb::insert_records_from_payload_true
+ *                         <li> gpudb::insert_records_from_payload_false
+ *                 </ul>
+ *                 The default value is
+ *                 gpudb::insert_records_from_payload_false.
+ *                         <li>
+ *                 gpudb::insert_records_from_payload_ignore_existing_pk:
  *                 <ul>
  *                         <li> gpudb::insert_records_from_payload_true
  *                         <li> gpudb::insert_records_from_payload_false
@@ -28819,6 +29305,15 @@ InsertRecordsFromQueryResponse& insertRecordsFromQuery( const InsertRecordsFromQ
  *                 fetch size, which determines how many rows to fetch per
  *                 round trip.
  *                         <li>
+ *                 gpudb::insert_records_from_query_jdbc_session_init_statement:
+ *                 Executes the statement per each jdbc session before doing
+ *                 actual load.  The default value is ''.
+ *                         <li>
+ *                 gpudb::insert_records_from_query_num_splits_per_rank:
+ *                 Optional: number of splits for reading data per rank.
+ *                 Default will be external_file_reader_num_tasks.  The default
+ *                 value is ''.
+ *                         <li>
  *                 gpudb::insert_records_from_query_num_tasks_per_rank:
  *                 Optional: number of tasks for reading data per rank. Default
  *                 will be external_file_reader_num_tasks
@@ -28830,6 +29325,14 @@ InsertRecordsFromQueryResponse& insertRecordsFromQuery( const InsertRecordsFromQ
  *                 Optional: comma separated list of column names, to set as
  *                 primary keys, when not specified in the type.  The default
  *                 value is ''.
+ *                         <li> gpudb::insert_records_from_query_subscribe:
+ *                 Continuously poll the data source to check for new data and
+ *                 load it into the table.
+ *                 <ul>
+ *                         <li> gpudb::insert_records_from_query_true
+ *                         <li> gpudb::insert_records_from_query_false
+ *                 </ul>
+ *                 The default value is gpudb::insert_records_from_query_false.
  *                         <li>
  *                 gpudb::insert_records_from_query_truncate_table: If set to
  *                 @a true, truncates the table specified by @a tableName prior
@@ -28842,16 +29345,32 @@ InsertRecordsFromQueryResponse& insertRecordsFromQuery( const InsertRecordsFromQ
  *                         <li> gpudb::insert_records_from_query_remote_query:
  *                 Remote SQL query from which data will be sourced
  *                         <li>
+ *                 gpudb::insert_records_from_query_remote_query_order_by: Name
+ *                 of column to be used for splitting the query into multiple
+ *                 sub-queries using ordering of given column.  The default
+ *                 value is ''.
+ *                         <li>
  *                 gpudb::insert_records_from_query_remote_query_filter_column:
  *                 Name of column to be used for splitting the query into
  *                 multiple sub-queries using the data distribution of given
  *                 column.  The default value is ''.
+ *                         <li>
+ *                 gpudb::insert_records_from_query_remote_query_increasing_column:
+ *                 Column on subscribed remote query result that will increase
+ *                 for new records (e.g., TIMESTAMP).  The default value is ''.
  *                         <li>
  *                 gpudb::insert_records_from_query_remote_query_partition_column:
  *                 Alias name for remote_query_filter_column.  The default
  *                 value is ''.
  *                         <li>
  *                 gpudb::insert_records_from_query_update_on_existing_pk:
+ *                 <ul>
+ *                         <li> gpudb::insert_records_from_query_true
+ *                         <li> gpudb::insert_records_from_query_false
+ *                 </ul>
+ *                 The default value is gpudb::insert_records_from_query_false.
+ *                         <li>
+ *                 gpudb::insert_records_from_query_ignore_existing_pk:
  *                 <ul>
  *                         <li> gpudb::insert_records_from_query_true
  *                         <li> gpudb::insert_records_from_query_false
@@ -29106,6 +29625,15 @@ InsertRecordsFromQueryResponse insertRecordsFromQuery( const std::string& tableN
  *                 fetch size, which determines how many rows to fetch per
  *                 round trip.
  *                         <li>
+ *                 gpudb::insert_records_from_query_jdbc_session_init_statement:
+ *                 Executes the statement per each jdbc session before doing
+ *                 actual load.  The default value is ''.
+ *                         <li>
+ *                 gpudb::insert_records_from_query_num_splits_per_rank:
+ *                 Optional: number of splits for reading data per rank.
+ *                 Default will be external_file_reader_num_tasks.  The default
+ *                 value is ''.
+ *                         <li>
  *                 gpudb::insert_records_from_query_num_tasks_per_rank:
  *                 Optional: number of tasks for reading data per rank. Default
  *                 will be external_file_reader_num_tasks
@@ -29117,6 +29645,14 @@ InsertRecordsFromQueryResponse insertRecordsFromQuery( const std::string& tableN
  *                 Optional: comma separated list of column names, to set as
  *                 primary keys, when not specified in the type.  The default
  *                 value is ''.
+ *                         <li> gpudb::insert_records_from_query_subscribe:
+ *                 Continuously poll the data source to check for new data and
+ *                 load it into the table.
+ *                 <ul>
+ *                         <li> gpudb::insert_records_from_query_true
+ *                         <li> gpudb::insert_records_from_query_false
+ *                 </ul>
+ *                 The default value is gpudb::insert_records_from_query_false.
  *                         <li>
  *                 gpudb::insert_records_from_query_truncate_table: If set to
  *                 @a true, truncates the table specified by @a tableName prior
@@ -29129,16 +29665,32 @@ InsertRecordsFromQueryResponse insertRecordsFromQuery( const std::string& tableN
  *                         <li> gpudb::insert_records_from_query_remote_query:
  *                 Remote SQL query from which data will be sourced
  *                         <li>
+ *                 gpudb::insert_records_from_query_remote_query_order_by: Name
+ *                 of column to be used for splitting the query into multiple
+ *                 sub-queries using ordering of given column.  The default
+ *                 value is ''.
+ *                         <li>
  *                 gpudb::insert_records_from_query_remote_query_filter_column:
  *                 Name of column to be used for splitting the query into
  *                 multiple sub-queries using the data distribution of given
  *                 column.  The default value is ''.
+ *                         <li>
+ *                 gpudb::insert_records_from_query_remote_query_increasing_column:
+ *                 Column on subscribed remote query result that will increase
+ *                 for new records (e.g., TIMESTAMP).  The default value is ''.
  *                         <li>
  *                 gpudb::insert_records_from_query_remote_query_partition_column:
  *                 Alias name for remote_query_filter_column.  The default
  *                 value is ''.
  *                         <li>
  *                 gpudb::insert_records_from_query_update_on_existing_pk:
+ *                 <ul>
+ *                         <li> gpudb::insert_records_from_query_true
+ *                         <li> gpudb::insert_records_from_query_false
+ *                 </ul>
+ *                 The default value is gpudb::insert_records_from_query_false.
+ *                         <li>
+ *                 gpudb::insert_records_from_query_ignore_existing_pk:
  *                 <ul>
  *                         <li> gpudb::insert_records_from_query_true
  *                         <li> gpudb::insert_records_from_query_false
@@ -30120,6 +30672,15 @@ MatchGraphResponse& matchGraph( const MatchGraphRequest& request_,
  *                             <li> gpudb::match_graph_match_charging_stations:
  *                     Matches an optimal path across a number of ev-charging
  *                     stations between source and target locations.
+ *                             <li> gpudb::match_graph_match_similarity:
+ *                     Matches the intersection set(s) by computing the Jaccard
+ *                     similarity score between node pairs.
+ *                             <li> gpudb::match_graph_match_pickup_dropoff:
+ *                     Matches the pickups and dropoffs by optimizing the total
+ *                     trip costs
+ *                             <li> gpudb::match_graph_match_clusters: Matches
+ *                     the graph nodes with a cluster index using Louvain
+ *                     clustering algorithm
  *                     </ul>
  *                     The default value is gpudb::match_graph_markov_chain.
  * @param solutionTable  The name of the table used to store the results, in
@@ -30225,12 +30786,12 @@ MatchGraphResponse& matchGraph( const MatchGraphRequest& request_,
  *                 populated directly from the edge weights starting from their
  *                 originating depots.  The default value is 'false'.
  *                         <li> gpudb::match_graph_max_trip_cost: For the @a
- *                 match_supply_demand solver only. If this constraint is
- *                 greater than zero (default) then the trucks will skip
- *                 travelling from one demand location to another if the cost
- *                 between them is greater than this number (distance or time).
- *                 Zero (default) value means no check is performed.  The
- *                 default value is '0.0'.
+ *                 match_supply_demand and @a match_pickup_dropoff solvers
+ *                 only. If this constraint is greater than zero (default) then
+ *                 the trucks/rides will skip travelling from one demand/pick
+ *                 location to another if the cost between them is greater than
+ *                 this number (distance or time). Zero (default) value means
+ *                 no check is performed.  The default value is '0.0'.
  *                         <li> gpudb::match_graph_filter_folding_paths: For
  *                 the @a markov_chain solver only. When true (non-default),
  *                 the paths per sequence combination is checked for folding
@@ -30258,34 +30819,50 @@ MatchGraphResponse& matchGraph( const MatchGraphRequest& request_,
  *                 number cores available. Default value of zero allows the
  *                 algorithm to set the maximal number of threads within these
  *                 constraints.  The default value is '0'.
- *                         <li> gpudb::match_graph_truck_service_limit: For the
- *                 @a match_supply_demand solver only. If specified (greater
- *                 than zero), any truck's total service cost (distance or
+ *                         <li> gpudb::match_graph_service_limit: For the @a
+ *                 match_supply_demand solver only. If specified (greater than
+ *                 zero), any supply actor's total service cost (distance or
  *                 time) will be limited by the specified value including
  *                 multiple rounds (if set).  The default value is '0.0'.
- *                         <li> gpudb::match_graph_enable_truck_reuse: For the
- *                 @a match_supply_demand solver only. If specified (true), all
- *                 trucks can be scheduled for second rounds from their
+ *                         <li> gpudb::match_graph_enable_reuse: For the @a
+ *                 match_supply_demand solver only. If specified (true), all
+ *                 supply actors can be scheduled for second rounds from their
  *                 originating depots.
  *                 <ul>
- *                         <li> gpudb::match_graph_true: Allows reusing trucks
- *                 for scheduling again.
- *                         <li> gpudb::match_graph_false: Trucks are scheduled
- *                 only once from their depots.
+ *                         <li> gpudb::match_graph_true: Allows reusing supply
+ *                 actors (trucks, e.g.) for scheduling again.
+ *                         <li> gpudb::match_graph_false: Supply actors are
+ *                 scheduled only once from their depots.
  *                 </ul>
  *                 The default value is gpudb::match_graph_false.
- *                         <li> gpudb::match_graph_max_truck_stops: For the @a
+ *                         <li> gpudb::match_graph_max_stops: For the @a
  *                 match_supply_demand solver only. If specified (greater than
- *                 zero), a truck can at most have this many stops (demand
- *                 locations) in one round trip. Otherwise, it is unlimited. If
- *                 'enable_truck_reuse' is on, this condition will be applied
- *                 separately at each round trip use of the same truck.  The
- *                 default value is '0'.
- *                         <li> gpudb::match_graph_truck_service_radius: For
- *                 the @a match_supply_demand solver only. If specified
- *                 (greater than zero), it filters the demands outside this
- *                 radius centered around the truck's originating location
- *                 (distance or time).  The default value is '0.0'.
+ *                 zero), a supply actor (truck) can at most have this many
+ *                 stops (demand locations) in one round trip. Otherwise, it is
+ *                 unlimited. If 'enable_truck_reuse' is on, this condition
+ *                 will be applied separately at each round trip use of the
+ *                 same truck.  The default value is '0'.
+ *                         <li> gpudb::match_graph_service_radius: For the @a
+ *                 match_supply_demand and @a match_pickup_dropoff solvers
+ *                 only. If specified (greater than zero), it filters the
+ *                 demands/picks outside this radius centered around the supply
+ *                 actor/ride's originating location (distance or time).  The
+ *                 default value is '0.0'.
+ *                         <li> gpudb::match_graph_permute_supplies: For the @a
+ *                 match_supply_demand solver only. If specified (true), supply
+ *                 side actors are permuted for the demand combinations during
+ *                 msdo optimization - note that this option increases
+ *                 optimization time significantly - use of 'max_combinations'
+ *                 option is recommended to prevent prohibitively long runs
+ *                 <ul>
+ *                         <li> gpudb::match_graph_true: Generates sequences
+ *                 over supply side permutations if total supply is less than
+ *                 twice the total demand
+ *                         <li> gpudb::match_graph_false: Permutations are not
+ *                 performed, rather a specific order of supplies based on
+ *                 capacity is computed
+ *                 </ul>
+ *                 The default value is gpudb::match_graph_true.
  *                         <li> gpudb::match_graph_batch_tsm_mode: For the @a
  *                 match_supply_demand solver only. When enabled, it sets the
  *                 number of visits on each demand location by a single
@@ -30298,10 +30875,49 @@ MatchGraphResponse& matchGraph( const MatchGraphRequest& request_,
  *                 (usual msdo mode)
  *                 </ul>
  *                 The default value is gpudb::match_graph_false.
- *                         <li> gpudb::match_graph_restricted_truck_type: For
- *                 the @a match_supply_demand solver only. Optimization is
- *                 performed by restricting routes labeled by
- *                 'MSDO_ODDEVEN_RESTRICTED' only for this truck type
+ *                         <li> gpudb::match_graph_round_trip: For the @a
+ *                 match_supply_demand solver only. When enabled, the supply
+ *                 will have to return back to the origination location.
+ *                 <ul>
+ *                         <li> gpudb::match_graph_true: The optimization is
+ *                 done for trips in round trip manner always returning to
+ *                 originating locations
+ *                         <li> gpudb::match_graph_false: Supplies do not have
+ *                 to come back to their originating locations in their routes.
+ *                 The routes are considered finished at the final dropoff.
+ *                 </ul>
+ *                 The default value is gpudb::match_graph_true.
+ *                         <li> gpudb::match_graph_num_cycles: For the @a
+ *                 match_clusters solver only. Terminates the cluster exchange
+ *                 iterations across 2-step-cycles (outer loop) when quality
+ *                 does not improve during iterations.  The default value is
+ *                 '10'.
+ *                         <li> gpudb::match_graph_num_loops_per_cycle: For the
+ *                 @a match_clusters solver only. Terminates the cluster
+ *                 exchanges within the first step iterations of a cycle (inner
+ *                 loop) unless convergence is reached.  The default value is
+ *                 '10'.
+ *                         <li> gpudb::match_graph_num_output_clusters: For the
+ *                 @a match_clusters solver only.  Limits the output to the top
+ *                 'num_output_clusters' clusters based on density. Default
+ *                 value of zero outputs all clusters.  The default value is
+ *                 '0'.
+ *                         <li> gpudb::match_graph_max_num_clusters: For the @a
+ *                 match_clusters solver only. If set (value greater than
+ *                 zero), it terminates when the number of clusters goes below
+ *                 than this number.  The default value is '0'.
+ *                         <li> gpudb::match_graph_cluster_quality_metric: For
+ *                 the @a match_clusters solver only. The quality metric for
+ *                 Louvain modularity optimization solver.
+ *                 <ul>
+ *                         <li> gpudb::match_graph_girwan: Uses the Newman
+ *                 Girwan quality metric for cluster solver
+ *                 </ul>
+ *                 The default value is gpudb::match_graph_girwan.
+ *                         <li> gpudb::match_graph_restricted_type: For the @a
+ *                 match_supply_demand solver only. Optimization is performed
+ *                 by restricting routes labeled by 'MSDO_ODDEVEN_RESTRICTED'
+ *                 only for this supply actor (truck) type
  *                 <ul>
  *                         <li> gpudb::match_graph_odd: Applies odd/even rule
  *                 restrictions to odd tagged vehicles.
@@ -30355,6 +30971,24 @@ MatchGraphResponse& matchGraph( const MatchGraphRequest& request_,
  *                         <li> gpudb::match_graph_charging_penalty: For the @a
  *                 match_charging_stations solver only. This is the penalty for
  *                 full charging.  The default value is '30000.0'.
+ *                         <li> gpudb::match_graph_max_hops: For the @a
+ *                 match_similarity solver only. Searches within this maximum
+ *                 hops for source and target node pairs to compute the Jaccard
+ *                 scores.  The default value is '3'.
+ *                         <li> gpudb::match_graph_traversal_node_limit: For
+ *                 the @a match_similarity solver only. Limits the traversal
+ *                 depth if it reaches this many number of nodes.  The default
+ *                 value is '1000'.
+ *                         <li> gpudb::match_graph_paired_similarity: For the
+ *                 @a match_similarity solver only. If true, it computes
+ *                 Jaccard score between each pair, otherwise it will compute
+ *                 Jaccard from the intersection set between the source and
+ *                 target nodes
+ *                 <ul>
+ *                         <li> gpudb::match_graph_true
+ *                         <li> gpudb::match_graph_false
+ *                 </ul>
+ *                 The default value is gpudb::match_graph_true.
  *                 </ul>
  * 
  * @return Response object containing the result of the operation.
@@ -30431,6 +31065,15 @@ MatchGraphResponse matchGraph( const std::string& graphName,
  *                             <li> gpudb::match_graph_match_charging_stations:
  *                     Matches an optimal path across a number of ev-charging
  *                     stations between source and target locations.
+ *                             <li> gpudb::match_graph_match_similarity:
+ *                     Matches the intersection set(s) by computing the Jaccard
+ *                     similarity score between node pairs.
+ *                             <li> gpudb::match_graph_match_pickup_dropoff:
+ *                     Matches the pickups and dropoffs by optimizing the total
+ *                     trip costs
+ *                             <li> gpudb::match_graph_match_clusters: Matches
+ *                     the graph nodes with a cluster index using Louvain
+ *                     clustering algorithm
  *                     </ul>
  *                     The default value is gpudb::match_graph_markov_chain.
  * @param solutionTable  The name of the table used to store the results, in
@@ -30536,12 +31179,12 @@ MatchGraphResponse matchGraph( const std::string& graphName,
  *                 populated directly from the edge weights starting from their
  *                 originating depots.  The default value is 'false'.
  *                         <li> gpudb::match_graph_max_trip_cost: For the @a
- *                 match_supply_demand solver only. If this constraint is
- *                 greater than zero (default) then the trucks will skip
- *                 travelling from one demand location to another if the cost
- *                 between them is greater than this number (distance or time).
- *                 Zero (default) value means no check is performed.  The
- *                 default value is '0.0'.
+ *                 match_supply_demand and @a match_pickup_dropoff solvers
+ *                 only. If this constraint is greater than zero (default) then
+ *                 the trucks/rides will skip travelling from one demand/pick
+ *                 location to another if the cost between them is greater than
+ *                 this number (distance or time). Zero (default) value means
+ *                 no check is performed.  The default value is '0.0'.
  *                         <li> gpudb::match_graph_filter_folding_paths: For
  *                 the @a markov_chain solver only. When true (non-default),
  *                 the paths per sequence combination is checked for folding
@@ -30569,34 +31212,50 @@ MatchGraphResponse matchGraph( const std::string& graphName,
  *                 number cores available. Default value of zero allows the
  *                 algorithm to set the maximal number of threads within these
  *                 constraints.  The default value is '0'.
- *                         <li> gpudb::match_graph_truck_service_limit: For the
- *                 @a match_supply_demand solver only. If specified (greater
- *                 than zero), any truck's total service cost (distance or
+ *                         <li> gpudb::match_graph_service_limit: For the @a
+ *                 match_supply_demand solver only. If specified (greater than
+ *                 zero), any supply actor's total service cost (distance or
  *                 time) will be limited by the specified value including
  *                 multiple rounds (if set).  The default value is '0.0'.
- *                         <li> gpudb::match_graph_enable_truck_reuse: For the
- *                 @a match_supply_demand solver only. If specified (true), all
- *                 trucks can be scheduled for second rounds from their
+ *                         <li> gpudb::match_graph_enable_reuse: For the @a
+ *                 match_supply_demand solver only. If specified (true), all
+ *                 supply actors can be scheduled for second rounds from their
  *                 originating depots.
  *                 <ul>
- *                         <li> gpudb::match_graph_true: Allows reusing trucks
- *                 for scheduling again.
- *                         <li> gpudb::match_graph_false: Trucks are scheduled
- *                 only once from their depots.
+ *                         <li> gpudb::match_graph_true: Allows reusing supply
+ *                 actors (trucks, e.g.) for scheduling again.
+ *                         <li> gpudb::match_graph_false: Supply actors are
+ *                 scheduled only once from their depots.
  *                 </ul>
  *                 The default value is gpudb::match_graph_false.
- *                         <li> gpudb::match_graph_max_truck_stops: For the @a
+ *                         <li> gpudb::match_graph_max_stops: For the @a
  *                 match_supply_demand solver only. If specified (greater than
- *                 zero), a truck can at most have this many stops (demand
- *                 locations) in one round trip. Otherwise, it is unlimited. If
- *                 'enable_truck_reuse' is on, this condition will be applied
- *                 separately at each round trip use of the same truck.  The
- *                 default value is '0'.
- *                         <li> gpudb::match_graph_truck_service_radius: For
- *                 the @a match_supply_demand solver only. If specified
- *                 (greater than zero), it filters the demands outside this
- *                 radius centered around the truck's originating location
- *                 (distance or time).  The default value is '0.0'.
+ *                 zero), a supply actor (truck) can at most have this many
+ *                 stops (demand locations) in one round trip. Otherwise, it is
+ *                 unlimited. If 'enable_truck_reuse' is on, this condition
+ *                 will be applied separately at each round trip use of the
+ *                 same truck.  The default value is '0'.
+ *                         <li> gpudb::match_graph_service_radius: For the @a
+ *                 match_supply_demand and @a match_pickup_dropoff solvers
+ *                 only. If specified (greater than zero), it filters the
+ *                 demands/picks outside this radius centered around the supply
+ *                 actor/ride's originating location (distance or time).  The
+ *                 default value is '0.0'.
+ *                         <li> gpudb::match_graph_permute_supplies: For the @a
+ *                 match_supply_demand solver only. If specified (true), supply
+ *                 side actors are permuted for the demand combinations during
+ *                 msdo optimization - note that this option increases
+ *                 optimization time significantly - use of 'max_combinations'
+ *                 option is recommended to prevent prohibitively long runs
+ *                 <ul>
+ *                         <li> gpudb::match_graph_true: Generates sequences
+ *                 over supply side permutations if total supply is less than
+ *                 twice the total demand
+ *                         <li> gpudb::match_graph_false: Permutations are not
+ *                 performed, rather a specific order of supplies based on
+ *                 capacity is computed
+ *                 </ul>
+ *                 The default value is gpudb::match_graph_true.
  *                         <li> gpudb::match_graph_batch_tsm_mode: For the @a
  *                 match_supply_demand solver only. When enabled, it sets the
  *                 number of visits on each demand location by a single
@@ -30609,10 +31268,49 @@ MatchGraphResponse matchGraph( const std::string& graphName,
  *                 (usual msdo mode)
  *                 </ul>
  *                 The default value is gpudb::match_graph_false.
- *                         <li> gpudb::match_graph_restricted_truck_type: For
- *                 the @a match_supply_demand solver only. Optimization is
- *                 performed by restricting routes labeled by
- *                 'MSDO_ODDEVEN_RESTRICTED' only for this truck type
+ *                         <li> gpudb::match_graph_round_trip: For the @a
+ *                 match_supply_demand solver only. When enabled, the supply
+ *                 will have to return back to the origination location.
+ *                 <ul>
+ *                         <li> gpudb::match_graph_true: The optimization is
+ *                 done for trips in round trip manner always returning to
+ *                 originating locations
+ *                         <li> gpudb::match_graph_false: Supplies do not have
+ *                 to come back to their originating locations in their routes.
+ *                 The routes are considered finished at the final dropoff.
+ *                 </ul>
+ *                 The default value is gpudb::match_graph_true.
+ *                         <li> gpudb::match_graph_num_cycles: For the @a
+ *                 match_clusters solver only. Terminates the cluster exchange
+ *                 iterations across 2-step-cycles (outer loop) when quality
+ *                 does not improve during iterations.  The default value is
+ *                 '10'.
+ *                         <li> gpudb::match_graph_num_loops_per_cycle: For the
+ *                 @a match_clusters solver only. Terminates the cluster
+ *                 exchanges within the first step iterations of a cycle (inner
+ *                 loop) unless convergence is reached.  The default value is
+ *                 '10'.
+ *                         <li> gpudb::match_graph_num_output_clusters: For the
+ *                 @a match_clusters solver only.  Limits the output to the top
+ *                 'num_output_clusters' clusters based on density. Default
+ *                 value of zero outputs all clusters.  The default value is
+ *                 '0'.
+ *                         <li> gpudb::match_graph_max_num_clusters: For the @a
+ *                 match_clusters solver only. If set (value greater than
+ *                 zero), it terminates when the number of clusters goes below
+ *                 than this number.  The default value is '0'.
+ *                         <li> gpudb::match_graph_cluster_quality_metric: For
+ *                 the @a match_clusters solver only. The quality metric for
+ *                 Louvain modularity optimization solver.
+ *                 <ul>
+ *                         <li> gpudb::match_graph_girwan: Uses the Newman
+ *                 Girwan quality metric for cluster solver
+ *                 </ul>
+ *                 The default value is gpudb::match_graph_girwan.
+ *                         <li> gpudb::match_graph_restricted_type: For the @a
+ *                 match_supply_demand solver only. Optimization is performed
+ *                 by restricting routes labeled by 'MSDO_ODDEVEN_RESTRICTED'
+ *                 only for this supply actor (truck) type
  *                 <ul>
  *                         <li> gpudb::match_graph_odd: Applies odd/even rule
  *                 restrictions to odd tagged vehicles.
@@ -30666,6 +31364,24 @@ MatchGraphResponse matchGraph( const std::string& graphName,
  *                         <li> gpudb::match_graph_charging_penalty: For the @a
  *                 match_charging_stations solver only. This is the penalty for
  *                 full charging.  The default value is '30000.0'.
+ *                         <li> gpudb::match_graph_max_hops: For the @a
+ *                 match_similarity solver only. Searches within this maximum
+ *                 hops for source and target node pairs to compute the Jaccard
+ *                 scores.  The default value is '3'.
+ *                         <li> gpudb::match_graph_traversal_node_limit: For
+ *                 the @a match_similarity solver only. Limits the traversal
+ *                 depth if it reaches this many number of nodes.  The default
+ *                 value is '1000'.
+ *                         <li> gpudb::match_graph_paired_similarity: For the
+ *                 @a match_similarity solver only. If true, it computes
+ *                 Jaccard score between each pair, otherwise it will compute
+ *                 Jaccard from the intersection set between the source and
+ *                 target nodes
+ *                 <ul>
+ *                         <li> gpudb::match_graph_true
+ *                         <li> gpudb::match_graph_false
+ *                 </ul>
+ *                 The default value is gpudb::match_graph_true.
  *                 </ul>
  * @param[out] response_  Response object containing the results of the
  *                        operation.
@@ -31588,7 +32304,7 @@ QueryGraphResponse& queryGraph( const QueryGraphRequest& request_,
  *                         <li> gpudb::query_graph_true
  *                         <li> gpudb::query_graph_false
  *                 </ul>
- *                 The default value is gpudb::query_graph_true.
+ *                 The default value is gpudb::query_graph_false.
  *                         <li> gpudb::query_graph_and_labels: If set to @a
  *                 true, the result of the query has entities that satisfy all
  *                 of the target labels, instead of any.
@@ -31721,7 +32437,7 @@ QueryGraphResponse queryGraph( const std::string& graphName,
  *                         <li> gpudb::query_graph_true
  *                         <li> gpudb::query_graph_false
  *                 </ul>
- *                 The default value is gpudb::query_graph_true.
+ *                 The default value is gpudb::query_graph_false.
  *                         <li> gpudb::query_graph_and_labels: If set to @a
  *                 true, the result of the query has entities that satisfy all
  *                 of the target labels, instead of any.
@@ -36092,6 +36808,22 @@ UpdateRecordsResponse& updateRecords( const UpdateRecordsRequest<TRequest>& requ
  *                 exist
  *                 </ul>
  *                 The default value is gpudb::update_records_false.
+ *                         <li> gpudb::update_records_ignore_existing_pk:
+ *                 Specifies the record collision policy for tables with a <a
+ *                 href="../../../concepts/tables/#primary-keys"
+ *                 target="_top">primary key</a> when updating columns of the
+ *                 <a href="../../../concepts/tables/#primary-keys"
+ *                 target="_top">primary key</a> or inserting new records.  If
+ *                 set to @a true, any record being updated or inserted with
+ *                 primary key values that match those of an existing record
+ *                 will be ignored with no error generated.  If the specified
+ *                 table does not have a primary key, then this option has no
+ *                 affect.
+ *                 <ul>
+ *                         <li> gpudb::update_records_true
+ *                         <li> gpudb::update_records_false
+ *                 </ul>
+ *                 The default value is gpudb::update_records_false.
  *                         <li> gpudb::update_records_update_partition: Force
  *                 qualifying records to be deleted and reinserted so their
  *                 partition membership will be reevaluated.
@@ -36240,6 +36972,22 @@ UpdateRecordsResponse updateRecords( const std::string& tableName,
  *                         <li> gpudb::update_records_false: Discard updated
  *                 and inserted records when the same primary keys already
  *                 exist
+ *                 </ul>
+ *                 The default value is gpudb::update_records_false.
+ *                         <li> gpudb::update_records_ignore_existing_pk:
+ *                 Specifies the record collision policy for tables with a <a
+ *                 href="../../../concepts/tables/#primary-keys"
+ *                 target="_top">primary key</a> when updating columns of the
+ *                 <a href="../../../concepts/tables/#primary-keys"
+ *                 target="_top">primary key</a> or inserting new records.  If
+ *                 set to @a true, any record being updated or inserted with
+ *                 primary key values that match those of an existing record
+ *                 will be ignored with no error generated.  If the specified
+ *                 table does not have a primary key, then this option has no
+ *                 affect.
+ *                 <ul>
+ *                         <li> gpudb::update_records_true
+ *                         <li> gpudb::update_records_false
  *                 </ul>
  *                 The default value is gpudb::update_records_false.
  *                         <li> gpudb::update_records_update_partition: Force
@@ -36655,6 +37403,19 @@ UploadFilesResponse& uploadFiles( const UploadFilesRequest& request_,
  *                 multipart upload. Part numbers start at 1, increment by 1,
  *                 and must be uploaded
  *                 sequentially
+ *                         <li> gpudb::upload_files_delete_if_exists: If @a
+ *                 true,
+ *                 any existing files specified in @a fileNames will be deleted
+ *                 prior to start of upload.
+ *                 Otherwise the file is replaced once the upload completes.
+ *                 Rollback of the original file is
+ *                 no longer possible if the upload is cancelled, aborted or
+ *                 fails if the file was deleted beforehand.
+ *                 <ul>
+ *                         <li> gpudb::upload_files_true
+ *                         <li> gpudb::upload_files_false
+ *                 </ul>
+ *                 The default value is gpudb::upload_files_false.
  *                 </ul>
  * 
  * @return Response object containing the result of the operation.
@@ -36774,6 +37535,19 @@ UploadFilesResponse uploadFiles( const std::vector<std::string>& fileNames,
  *                 multipart upload. Part numbers start at 1, increment by 1,
  *                 and must be uploaded
  *                 sequentially
+ *                         <li> gpudb::upload_files_delete_if_exists: If @a
+ *                 true,
+ *                 any existing files specified in @a fileNames will be deleted
+ *                 prior to start of upload.
+ *                 Otherwise the file is replaced once the upload completes.
+ *                 Rollback of the original file is
+ *                 no longer possible if the upload is cancelled, aborted or
+ *                 fails if the file was deleted beforehand.
+ *                 <ul>
+ *                         <li> gpudb::upload_files_true
+ *                         <li> gpudb::upload_files_false
+ *                 </ul>
+ *                 The default value is gpudb::upload_files_false.
  *                 </ul>
  * @param[out] response_  Response object containing the results of the
  *                        operation.
@@ -37256,6 +38030,8 @@ VisualizeImageResponse& visualizeImage( const VisualizeImageRequest& request_,
  *                      </ul>
  * @param options
  *                 <ul>
+ *                         <li> gpudb::visualize_image_pointcolor_attr
+ *                         <li> gpudb::visualize_image_shapefillcolor_attr
  *                         <li> gpudb::visualize_image_track_id_column_name
  *                         <li> gpudb::visualize_image_track_order_column_name
  *                 </ul>
@@ -37422,6 +38198,8 @@ VisualizeImageResponse visualizeImage( const std::vector<std::string>& tableName
  *                      </ul>
  * @param options
  *                 <ul>
+ *                         <li> gpudb::visualize_image_pointcolor_attr
+ *                         <li> gpudb::visualize_image_shapefillcolor_attr
  *                         <li> gpudb::visualize_image_track_id_column_name
  *                         <li> gpudb::visualize_image_track_order_column_name
  *                 </ul>

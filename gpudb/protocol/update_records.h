@@ -153,6 +153,27 @@ namespace gpudb
          *                      The default value is
          *                      gpudb::update_records_false.
          *                              <li>
+         *                      gpudb::update_records_ignore_existing_pk:
+         *                      Specifies the record collision policy for
+         *                      tables with a <a
+         *                      href="../../../concepts/tables/#primary-keys"
+         *                      target="_top">primary key</a> when updating
+         *                      columns of the <a
+         *                      href="../../../concepts/tables/#primary-keys"
+         *                      target="_top">primary key</a> or inserting new
+         *                      records.  If set to @a true, any record being
+         *                      updated or inserted with primary key values
+         *                      that match those of an existing record will be
+         *                      ignored with no error generated.  If the
+         *                      specified table does not have a primary key,
+         *                      then this option has no affect.
+         *                      <ul>
+         *                              <li> gpudb::update_records_true
+         *                              <li> gpudb::update_records_false
+         *                      </ul>
+         *                      The default value is
+         *                      gpudb::update_records_false.
+         *                              <li>
          *                      gpudb::update_records_update_partition: Force
          *                      qualifying records to be deleted and reinserted
          *                      so their partition membership will be
@@ -303,6 +324,27 @@ namespace gpudb
          *                              <li> gpudb::update_records_false:
          *                      Discard updated and inserted records when the
          *                      same primary keys already exist
+         *                      </ul>
+         *                      The default value is
+         *                      gpudb::update_records_false.
+         *                              <li>
+         *                      gpudb::update_records_ignore_existing_pk:
+         *                      Specifies the record collision policy for
+         *                      tables with a <a
+         *                      href="../../../concepts/tables/#primary-keys"
+         *                      target="_top">primary key</a> when updating
+         *                      columns of the <a
+         *                      href="../../../concepts/tables/#primary-keys"
+         *                      target="_top">primary key</a> or inserting new
+         *                      records.  If set to @a true, any record being
+         *                      updated or inserted with primary key values
+         *                      that match those of an existing record will be
+         *                      ignored with no error generated.  If the
+         *                      specified table does not have a primary key,
+         *                      then this option has no affect.
+         *                      <ul>
+         *                              <li> gpudb::update_records_true
+         *                              <li> gpudb::update_records_false
          *                      </ul>
          *                      The default value is
          *                      gpudb::update_records_false.
@@ -585,6 +627,27 @@ namespace gpudb
          *                              <li> gpudb::update_records_false:
          *                      Discard updated and inserted records when the
          *                      same primary keys already exist
+         *                      </ul>
+         *                      The default value is
+         *                      gpudb::update_records_false.
+         *                              <li>
+         *                      gpudb::update_records_ignore_existing_pk:
+         *                      Specifies the record collision policy for
+         *                      tables with a <a
+         *                      href="../../../concepts/tables/#primary-keys"
+         *                      target="_top">primary key</a> when updating
+         *                      columns of the <a
+         *                      href="../../../concepts/tables/#primary-keys"
+         *                      target="_top">primary key</a> or inserting new
+         *                      records.  If set to @a true, any record being
+         *                      updated or inserted with primary key values
+         *                      that match those of an existing record will be
+         *                      ignored with no error generated.  If the
+         *                      specified table does not have a primary key,
+         *                      then this option has no affect.
+         *                      <ul>
+         *                              <li> gpudb::update_records_true
+         *                              <li> gpudb::update_records_false
          *                      </ul>
          *                      The default value is
          *                      gpudb::update_records_false.

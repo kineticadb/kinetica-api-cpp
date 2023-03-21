@@ -152,6 +152,21 @@ namespace gpudb
          *                      multipart upload. Part numbers start at 1,
          *                      increment by 1, and must be uploaded
          *                      sequentially
+         *                              <li>
+         *                      gpudb::upload_files_delete_if_exists: If @a
+         *                      true,
+         *                      any existing files specified in @a fileNames
+         *                      will be deleted prior to start of upload.
+         *                      Otherwise the file is replaced once the upload
+         *                      completes.  Rollback of the original file is
+         *                      no longer possible if the upload is cancelled,
+         *                      aborted or fails if the file was deleted
+         *                      beforehand.
+         *                      <ul>
+         *                              <li> gpudb::upload_files_true
+         *                              <li> gpudb::upload_files_false
+         *                      </ul>
+         *                      The default value is gpudb::upload_files_false.
          *                      </ul>
          * 
          */

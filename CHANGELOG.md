@@ -2,6 +2,18 @@
 
 ## Version 7.1
 
+### Version 7.1.9.0 - 2023-03-19
+
+#### Added
+-   Support for `BOOLEAN` type
+
+#### Changed
+-   Improved `GPUdbIngestor` error handling and primary/shard key determination
+
+#### Notes
+-   Check CHANGELOG-FUNCTIONS.md for endpoint related changes.
+
+
 ### Version 7.1.8.0 - 2022-10-22
 
 #### Notes

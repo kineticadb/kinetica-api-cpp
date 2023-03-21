@@ -116,10 +116,10 @@ void RecordRetriever::construct( const gpudb::GPUdb& db,
             worker_queue_ptr_t worker_queue( new WorkerQueue( url ) );
             m_worker_queues.push_back( worker_queue );
         }
-    } catch (GPUdbException e)
+    } catch (const GPUdbException& e)
     {
         throw GPUdbException( e.what() );
-    } catch (std::exception e)
+    } catch (const std::exception& e)
     {
         throw GPUdbException( e.what() );
     }
@@ -223,10 +223,10 @@ RecordRetriever::getRecordsByKey( const gpudb::GenericRecord& record,
                       raw_response.recordsBinary.size() );
 
         return decoded_response;
-    } catch (GPUdbException e)
+    } catch (const GPUdbException& e)
     {
         throw GPUdbException( e.what() );
-    } catch (std::exception e)
+    } catch (const std::exception& e)
     {
         throw GPUdbException( e.what() );
     }

@@ -316,6 +316,14 @@ namespace gpudb
          * @param[in] options_  Optional parameters.
          *                      <ul>
          *                              <li>
+         *                      gpudb::insert_records_from_files_avro_num_records:
+         *                      Optional number of avro records, if data
+         *                      includes only records.
+         *                              <li>
+         *                      gpudb::insert_records_from_files_avro_schema:
+         *                      Optional string representing avro schema, if
+         *                      data includes only records.
+         *                              <li>
          *                      gpudb::insert_records_from_files_bad_record_table_name:
          *                      Optional name of a table to which records that
          *                      were rejected are written.  The
@@ -408,6 +416,25 @@ namespace gpudb
          *                      from the source data to
          *                      skip.  Mutually exclusive with @a
          *                      columns_to_load.
+         *                              <li>
+         *                      gpudb::insert_records_from_files_compression_type:
+         *                      Optional: compression type
+         *                      <ul>
+         *                              <li>
+         *                      gpudb::insert_records_from_files_none:
+         *                      Uncompressed file
+         *                              <li>
+         *                      gpudb::insert_records_from_files_auto: Default.
+         *                      Auto detect compression type
+         *                              <li>
+         *                      gpudb::insert_records_from_files_gzip: gzip
+         *                      file compression.
+         *                              <li>
+         *                      gpudb::insert_records_from_files_bzip2: bzip2
+         *                      file compression.
+         *                      </ul>
+         *                      The default value is
+         *                      gpudb::insert_records_from_files_auto.
          *                              <li>
          *                      gpudb::insert_records_from_files_datasource_name:
          *                      Name of an existing external data source from
@@ -532,6 +559,24 @@ namespace gpudb
          *                      kakfa topic (valid only for kafka datasource
          *                      subscriptions).
          *                              <li>
+         *                      gpudb::insert_records_from_files_kafka_offset_reset_policy:
+         *                      Policy to determine whether the data
+         *                      consumption starts either at earliest offset or
+         *                      latest offset.
+         *                      <ul>
+         *                              <li>
+         *                      gpudb::insert_records_from_files_earliest
+         *                              <li>
+         *                      gpudb::insert_records_from_files_latest
+         *                      </ul>
+         *                      The default value is
+         *                      gpudb::insert_records_from_files_earliest.
+         *                              <li>
+         *                      gpudb::insert_records_from_files_kafka_subscription_cancel_after:
+         *                      Sets the subscription lifespan (in minutes).
+         *                      Expired subscription will be cancelled
+         *                      automatically.
+         *                              <li>
          *                      gpudb::insert_records_from_files_loading_mode:
          *                      Scheme for distributing the extraction and
          *                      loading of data from the source data file(s).
@@ -590,6 +635,14 @@ namespace gpudb
          *                              <li>
          *                      gpudb::insert_records_from_files_local_time_offset:
          *                      For Avro local timestamp columns
+         *                              <li>
+         *                      gpudb::insert_records_from_files_max_records_to_load:
+         *                      Limit the number of records to load in this
+         *                      request: If this number is larger than a
+         *                      batch_size, then the number of records loaded
+         *                      will be limited to the next whole number of
+         *                      batch_size (per working thread).  The default
+         *                      value is ''.
          *                              <li>
          *                      gpudb::insert_records_from_files_num_tasks_per_rank:
          *                      Optional: number of tasks for reading file per
@@ -741,6 +794,18 @@ namespace gpudb
          *                      Set minimum column size. Used only when
          *                      'text_search_columns' has a value.
          *                              <li>
+         *                      gpudb::insert_records_from_files_truncate_strings:
+         *                      If set to @a true, truncate string values that
+         *                      are longer than the column's type size.
+         *                      <ul>
+         *                              <li>
+         *                      gpudb::insert_records_from_files_true
+         *                              <li>
+         *                      gpudb::insert_records_from_files_false
+         *                      </ul>
+         *                      The default value is
+         *                      gpudb::insert_records_from_files_false.
+         *                              <li>
          *                      gpudb::insert_records_from_files_truncate_table:
          *                      If set to @a true, truncates the table
          *                      specified by @a tableName prior to loading the
@@ -770,6 +835,16 @@ namespace gpudb
          *                      gpudb::insert_records_from_files_speed.
          *                              <li>
          *                      gpudb::insert_records_from_files_update_on_existing_pk:
+         *                      <ul>
+         *                              <li>
+         *                      gpudb::insert_records_from_files_true
+         *                              <li>
+         *                      gpudb::insert_records_from_files_false
+         *                      </ul>
+         *                      The default value is
+         *                      gpudb::insert_records_from_files_false.
+         *                              <li>
+         *                      gpudb::insert_records_from_files_ignore_existing_pk:
          *                      <ul>
          *                              <li>
          *                      gpudb::insert_records_from_files_true

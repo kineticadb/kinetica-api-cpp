@@ -56,7 +56,7 @@ RHEL:
 Ubuntu:
 
     apt-get update -y
-    apt-get install -y which gcc gcc-c++ cmake make libbz2-dev zlib1g-dev chrpath
+    apt-get install -y debianutils gcc g++ cmake make libbz2-dev zlib1g-dev chrpath
 
 ### Clone the Repository
 

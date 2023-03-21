@@ -121,19 +121,30 @@ void GPUdbIngestor::construct( const gpudb::GPUdb& db,
         m_shard_key_builder_ptr = NULL;
     }
 
+    // If caller specified RETURN_INDIVIDUAL_ERRORS without ALLOW_PARTIAL_BATCH
+    // then we will need to do our own error handling
+    m_simulate_error_mode = false;
+    str_to_str_map_t::const_iterator individual_errors = m_insert_options.find( gpudb::insert_records_return_individual_errors );
+    str_to_str_map_t::const_iterator partial_batch = m_insert_options.find( gpudb::insert_records_allow_partial_batch );
+    m_return_individual_errors =
+        ( individual_errors != m_insert_options.end() ) &&
+        ( individual_errors->second == gpudb::insert_records_true ) &&
+        (( partial_batch == m_insert_options.end() ) ||
+         ( partial_batch->second != gpudb::insert_records_true ));
+
     // Set up the worker queues
     // ------------------------
     // Do we update records if there are matching primary keys in the database?
-    bool update_records_on_existing_pk = false;
-    str_to_str_map_t::const_iterator iter = m_insert_options.find( gpudb::insert_records_update_on_existing_pk );
-    if ( iter != m_insert_options.end() )
-    {   // The option is given, but is it true?
-        if ( gpudb::insert_records_true.compare( iter->second ) == 0 )
-            update_records_on_existing_pk = true;
-    }
+    // bool update_records_on_existing_pk = false;
+    // str_to_str_map_t::const_iterator iter = m_insert_options.find( gpudb::insert_records_update_on_existing_pk );
+    // if ( iter != m_insert_options.end() )
+    // {   // The option is given, but is it true?
+    //     if ( gpudb::insert_records_true.compare( iter->second ) == 0 )
+    //         update_records_on_existing_pk = true;
+    // }
 
     // Does the record type have primary keys?
-    bool has_primary_key = (m_primary_key_builder_ptr != NULL);
+//    bool has_primary_key = (m_primary_key_builder_ptr != NULL);
     try
     {
         // If we have multiple workers, then use those (unless the table
@@ -168,10 +179,10 @@ void GPUdbIngestor::construct( const gpudb::GPUdb& db,
 
             m_worker_queues.push_back( worker_queue );
         }
-    } catch (GPUdbException e)
+    } catch (const GPUdbException& e)
     {
         throw GPUdbException( e.what() );
-    } catch (std::exception e)
+    } catch (const std::exception& e)
     {
         throw GPUdbException( e.what() );
     }
@@ -213,6 +224,14 @@ std::vector<GPUdbInsertionException> GPUdbIngestor::getErrors()
     return copy;
 }
 
+std::vector<GPUdbInsertionException> GPUdbIngestor::getWarnings()
+{
+    std::unique_lock<std::mutex> lock(m_error_list_lock);
+    std::vector<GPUdbInsertionException> copy;
+    copy.swap(m_warning_list);
+    return copy;
+}
+
 /*
  * Ensures that all queued records are inserted into the database.  If an error
  * occurs while inserting the records from any queue, the recoreds will no
@@ -226,6 +245,12 @@ void GPUdbIngestor::flush()
     std::vector<worker_queue_ptr_t>::const_iterator it;
     for ( it = m_worker_queues.begin(); it != m_worker_queues.end(); ++it )
     {
+        if (m_simulate_error_mode)
+        {
+            (it->get())->clear();
+            continue;
+        }
+
         // Flush the queue
         WorkerQueue::recordVector_T records_to_flush;
         (it->get())->flush( records_to_flush );
@@ -273,22 +298,24 @@ void GPUdbIngestor::flush( const std::vector<gpudb::GenericRecord>& queue,
             std::vector<gpudb::GenericRecord> record;
             if (boost::istarts_with(entry.first, "error_"))
             {
+                m_simulate_error_mode |= m_return_individual_errors;
                 size_t index = (size_t)atoi(entry.first.substr(6).c_str());
                 if (queue.size() > index)
                     record.push_back(queue.at(index));
+                const std::string& message = entry.second;
                 std::unique_lock<std::mutex> lock(m_error_list_lock);
-                m_error_list.push_back(GPUdbInsertionException(url, record, entry.second));
+                m_error_list.push_back(GPUdbInsertionException(url, record, message));
             }
             else if (boost::istarts_with(entry.first, "WARN"))
             {
                 std::unique_lock<std::mutex> lock(m_error_list_lock);
-                m_error_list.push_back(GPUdbInsertionException(url, record, entry.second));
+                m_warning_list.push_back(GPUdbInsertionException(url, record, entry.second));
             }
         }
-    } catch (gpudb::GPUdbException e)
+    } catch (const gpudb::GPUdbException& e)
     {  // throw the records to the caller since they weren't inserted into the db
         throw GPUdbInsertionException( url, queue, e.what() );
-    } catch (std::exception e)
+    } catch (const std::exception& e)
     {  // throw the records to the caller since they weren't inserted into the db
         throw GPUdbInsertionException( url, queue, e.what() );
     }
@@ -307,6 +334,10 @@ void GPUdbIngestor::flush( const std::vector<gpudb::GenericRecord>& queue,
  */
 void GPUdbIngestor::insert( gpudb::GenericRecord record )
 {
+    // Don't accept new records if there was an error thrown already with returnIndividualErrors
+    if ( m_simulate_error_mode )
+        return;
+
     // Create the record keys
     RecordKey primary_key; // used to check for uniqueness
     RecordKey shard_key;   // used to find which worker to send this record to
@@ -355,8 +386,6 @@ void GPUdbIngestor::insert( gpudb::GenericRecord record )
 }  // end insert a single record
 
 
-
-
 /*
  * Queues a list of records for insertion into Kientica.  If any queue reaches
  * the <member cref="batch_size" />, all records in the queue will be
@@ -369,6 +398,10 @@ void GPUdbIngestor::insert( gpudb::GenericRecord record )
  */
 void GPUdbIngestor::insert( std::vector<gpudb::GenericRecord> records )
 {
+    // Don't accept new records if there was an error thrown already with returnIndividualErrors
+    if ( m_simulate_error_mode )
+        return;
+
     // Insert one record at a time
     for ( size_t i = 0; i < records.size(); ++i )
     {
@@ -376,7 +409,7 @@ void GPUdbIngestor::insert( std::vector<gpudb::GenericRecord> records )
         {
             this->insert( records[ i ] );
         }
-        catch ( GPUdbInsertionException e )
+        catch ( GPUdbInsertionException& e )
         {
             // Add the remaining records to the insertion exception queue
             e.append_records( (records.begin() + i + 1), records.end() );
@@ -386,8 +419,6 @@ void GPUdbIngestor::insert( std::vector<gpudb::GenericRecord> records )
         }
     }  // end outer loop
 }  // end insert multiple records
-
-
 
 
 } // end namespace gpudb

@@ -245,6 +245,10 @@ namespace gpudb
          * @param[in] options_
          *                      <ul>
          *                              <li>
+         *                      gpudb::visualize_image_pointcolor_attr
+         *                              <li>
+         *                      gpudb::visualize_image_shapefillcolor_attr
+         *                              <li>
          *                      gpudb::visualize_image_track_id_column_name
          *                              <li>
          *                      gpudb::visualize_image_track_order_column_name

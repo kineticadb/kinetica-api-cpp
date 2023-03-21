@@ -103,7 +103,27 @@ namespace gpudb
          *                      record being inserted will remain unchanged and
          *                      the new record discarded.  If the specified
          *                      table does not have a primary key, then this
-         *                      option is ignored.
+         *                      option has no effect.
+         *                      <ul>
+         *                              <li> gpudb::append_records_true
+         *                              <li> gpudb::append_records_false
+         *                      </ul>
+         *                      The default value is
+         *                      gpudb::append_records_false.
+         *                              <li>
+         *                      gpudb::append_records_ignore_existing_pk:
+         *                      Specifies the record collision policy for
+         *                      inserting the source table records (specified
+         *                      by @a sourceTableName) into the target table
+         *                      (specified by @a tableName) table with a <a
+         *                      href="../../../concepts/tables/#primary-keys"
+         *                      target="_top">primary key</a>.  If set to @a
+         *                      true, any source table records being inserted
+         *                      with primary key values that match those of an
+         *                      existing target table record will be ignored
+         *                      with no error generated.  If the specified
+         *                      table does not have a primary key, then this
+         *                      option has no affect.
          *                      <ul>
          *                              <li> gpudb::append_records_true
          *                              <li> gpudb::append_records_false

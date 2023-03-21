@@ -133,19 +133,6 @@ namespace gpudb
          *                                 if enabled is true the value of the
          *                                 messages received are verified.
          *                                         <li>
-         *                                 gpudb::alter_system_properties_set_message_timers_enabled:
-         *                                 Enables the communicator test to
-         *                                 collect additional timing statistics
-         *                                 when the value string is @a true.
-         *                                 Disables collecting statistics when
-         *                                 the value string is @a false
-         *                                 <ul>
-         *                                         <li>
-         *                                 gpudb::alter_system_properties_true
-         *                                         <li>
-         *                                 gpudb::alter_system_properties_false
-         *                                 </ul>
-         *                                         <li>
          *                                 gpudb::alter_system_properties_network_speed:
          *                                 Invoke the network speed test and
          *                                 report timing results. Value string
@@ -217,20 +204,20 @@ namespace gpudb
          *                                 The default value is 'true'.
          *                                         <li>
          *                                 gpudb::alter_system_properties_kafka_batch_size:
-         *                                 Maximum number of records to be read
-         *                                 in a single kafka batched request.
-         *                                 The default value is '1000'.
+         *                                 Maximum number of records to be
+         *                                 ingested in a single batch.  The
+         *                                 default value is '1000'.
+         *                                         <li>
+         *                                 gpudb::alter_system_properties_kafka_poll_timeout:
+         *                                 Maximum time (milliseconds) for each
+         *                                 poll to get records from kafka.  The
+         *                                 default value is '0'.
          *                                         <li>
          *                                 gpudb::alter_system_properties_kafka_wait_time:
-         *                                 Maximum number of seconds to wait in
-         *                                 a single kafka batched request.  The
-         *                                 default value is '30'.
-         *                                         <li>
-         *                                 gpudb::alter_system_properties_kafka_timeout:
-         *                                 Number of seconds after which kakfa
-         *                                 poll will timeout if datasource has
-         *                                 no records.  The default value is
-         *                                 '5'.
+         *                                 Maximum time (seconds) to buffer
+         *                                 records received from kafka before
+         *                                 ingestion.  The default value is
+         *                                 '30'.
          *                                         <li>
          *                                 gpudb::alter_system_properties_egress_single_file_max_size:
          *                                 Max file size (in MB) to allow

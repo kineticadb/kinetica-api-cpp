@@ -135,9 +135,13 @@ namespace gpudb
          *                      </ul>
          *                      The default value is
          *                      gpudb::create_projection_false.
+         *                              <li> gpudb::create_projection_offset:
+         *                      The number of initial results to skip (this can
+         *                      be useful for paging through the results).  The
+         *                      default value is '0'.
          *                              <li> gpudb::create_projection_limit:
          *                      The number of records to keep.  The default
-         *                      value is ''.
+         *                      value is '-9999'.
          *                              <li> gpudb::create_projection_order_by:
          *                      Comma-separated list of the columns to be
          *                      sorted by; e.g. 'timestamp asc, x desc'.  The

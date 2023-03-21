@@ -186,7 +186,7 @@ WorkerList::WorkerList(const GPUdb &gpudb, const std::string &ip_regex_str )
     try
     {
         ip_regex = std::regex( ip_regex_str );
-    } catch (std::exception e)
+    } catch (const std::exception&)
     {
         throw GPUdbException( "Unable to create a regular expression from given pattern '"
                               + ip_regex_str + "'" );
@@ -901,6 +901,7 @@ typedef Int2048_buf  char256_buf_t;
 
 enum ColumnTypeSize_T
 {
+    BOOLEAN   =   1,
     CHAR1     =   1,
     CHAR2     =   2,
     CHAR4     =   4,
@@ -1100,6 +1101,31 @@ void RecordKey::add( uint8_t b )
     // Let's not forget to increment the size!
     m_buffer[ m_current_size++ ] = b;
 }
+
+
+/*
+ * Adds a boolean to the buffer.
+ *
+ * <param name="value">The boolean to be added.</param>
+ * <param name="is_null">Indicates that a null value is to be added.</param>
+ */
+void RecordKey::add_boolean( bool value, bool is_null )
+{
+    // Check if the given number of characters will fit in the buffer
+    this->will_buffer_overflow( ColumnTypeSize_T::BOOLEAN );
+
+    // Handle nulls
+    if ( is_null )
+    {   // Add one zero for the null value
+        this->add( 0 ); // only 0
+        return;
+    }
+
+    // Copy the bytes of the bool to the buffer
+    memset( &m_buffer[0] + m_current_size, value ? 1 : 0, ColumnTypeSize_T::BOOLEAN );
+    m_current_size += ColumnTypeSize_T::BOOLEAN;
+    return;
+} // end RecordKey::add_bool
 
 
 /*
@@ -2239,6 +2265,25 @@ RecordKeyBuilder::RecordKeyBuilder( bool is_primary_key, const gpudb::Type& reco
     int track_id_column_idx = -1; // not found yet
 
     const std::vector<gpudb::Type::Column> columns = record_type.getColumns();
+    std::string sk_property = gpudb::ColumnProperty::SHARD_KEY;
+    if (!is_primary_key)
+    {
+        // If shard_key == primary_key, then columns will only have the PK property
+        // so we'll need to use that when checking for shard_key
+
+        // Go through the list and see if any have the shard_key property
+        bool found_sk = false;
+        for ( size_t i = 0; i < columns.size(); ++i )
+            if (columns[ i ].hasProperty( gpudb::ColumnProperty::SHARD_KEY ))
+            {
+                found_sk = true;
+                break;
+            }
+        
+        if (!found_sk)
+            sk_property = gpudb::ColumnProperty::PRIMARY_KEY;
+    }
+
     for ( size_t i = 0; i < columns.size(); ++i )
     {
         // Get the column
@@ -2265,7 +2310,7 @@ RecordKeyBuilder::RecordKeyBuilder( bool is_primary_key, const gpudb::Type& reco
         {
             m_pk_shard_key_indices.push_back( i );
         }
-        else if ( !is_primary_key && column.hasProperty( gpudb::ColumnProperty::SHARD_KEY ) )
+        else if ( !is_primary_key && column.hasProperty( sk_property ) )
         {
             m_pk_shard_key_indices.push_back( i );
         }
@@ -2308,8 +2353,13 @@ RecordKeyBuilder::RecordKeyBuilder( bool is_primary_key, const gpudb::Type& reco
             }
 
             case gpudb::Type::Column::ColumnType::INT:
-            {   // Int can be a regular integer or int8 or int16
-                if ( column.hasProperty( gpudb::ColumnProperty::INT8 ) )
+            {   // Int can be a regular integer or boolean or int8 or int16
+                if ( column.hasProperty( gpudb::ColumnProperty::BOOLEAN ) )
+                {
+                    m_column_types.push_back( ColumnType_T::BOOLEAN );
+                    m_key_buffer_size += ColumnTypeSize_T::BOOLEAN;
+                }
+                else if ( column.hasProperty( gpudb::ColumnProperty::INT8 ) )
                 {
                     m_column_types.push_back( ColumnType_T::INT8 );
                     m_key_buffer_size += ColumnTypeSize_T::INT8;
@@ -2645,6 +2695,7 @@ bool RecordKeyBuilder::build( const gpudb::GenericRecord& record, RecordKey& rec
                 break;
             }  // end case int
 
+            case ColumnType_T::BOOLEAN:
             case ColumnType_T::INT8:
             {
                 int32_t value = 0;
@@ -2833,6 +2884,7 @@ bool RecordKeyBuilder::buildExpression( const gpudb::GenericRecord& record,
                 ss << record.getAsFloat( column_index );  break;
             }
 
+            case ColumnType_T::BOOLEAN:
             case ColumnType_T::INT8:
             case ColumnType_T::INT16:
             case ColumnType_T::INT:
@@ -2908,6 +2960,15 @@ WorkerQueue::~WorkerQueue()
 
 
 /*
+ *  Clear queue without sending
+ */
+void WorkerQueue::clear()
+{
+    m_queue.clear();
+}
+
+
+/*
  *  Returns the current queue and creates a new internal queue.
  */
 void WorkerQueue::flush( recordVector_T& flushed_records )
@@ -2929,7 +2990,7 @@ void WorkerQueue::flush( recordVector_T& flushed_records )
  *  false otherwise.
  */
 bool WorkerQueue::insert( const gpudb::GenericRecord& record,
-                          const RecordKey& key,
+                          const RecordKey& /* key */,
                           recordVector_T& flushed_records )
 {
     m_queue.push_back( record );

@@ -114,6 +114,19 @@ namespace gpudb
          *                          Matches an optimal path across a number of
          *                          ev-charging stations between source and
          *                          target locations.
+         *                                  <li>
+         *                          gpudb::match_graph_match_similarity:
+         *                          Matches the intersection set(s) by
+         *                          computing the Jaccard similarity score
+         *                          between node pairs.
+         *                                  <li>
+         *                          gpudb::match_graph_match_pickup_dropoff:
+         *                          Matches the pickups and dropoffs by
+         *                          optimizing the total trip costs
+         *                                  <li>
+         *                          gpudb::match_graph_match_clusters: Matches
+         *                          the graph nodes with a cluster index using
+         *                          Louvain clustering algorithm
          *                          </ul>
          *                          The default value is
          *                          gpudb::match_graph_markov_chain.
@@ -250,13 +263,15 @@ namespace gpudb
          *                      starting from their originating depots.  The
          *                      default value is 'false'.
          *                              <li> gpudb::match_graph_max_trip_cost:
-         *                      For the @a match_supply_demand solver only. If
-         *                      this constraint is greater than zero (default)
-         *                      then the trucks will skip travelling from one
-         *                      demand location to another if the cost between
-         *                      them is greater than this number (distance or
-         *                      time). Zero (default) value means no check is
-         *                      performed.  The default value is '0.0'.
+         *                      For the @a match_supply_demand and @a
+         *                      match_pickup_dropoff solvers only. If this
+         *                      constraint is greater than zero (default) then
+         *                      the trucks/rides will skip travelling from one
+         *                      demand/pick location to another if the cost
+         *                      between them is greater than this number
+         *                      (distance or time). Zero (default) value means
+         *                      no check is performed.  The default value is
+         *                      '0.0'.
          *                              <li>
          *                      gpudb::match_graph_filter_folding_paths: For
          *                      the @a markov_chain solver only. When true
@@ -291,43 +306,64 @@ namespace gpudb
          *                      algorithm to set the maximal number of threads
          *                      within these constraints.  The default value is
          *                      '0'.
-         *                              <li>
-         *                      gpudb::match_graph_truck_service_limit: For the
-         *                      @a match_supply_demand solver only. If
-         *                      specified (greater than zero), any truck's
-         *                      total service cost (distance or time) will be
-         *                      limited by the specified value including
-         *                      multiple rounds (if set).  The default value is
-         *                      '0.0'.
-         *                              <li>
-         *                      gpudb::match_graph_enable_truck_reuse: For the
-         *                      @a match_supply_demand solver only. If
-         *                      specified (true), all trucks can be scheduled
-         *                      for second rounds from their originating
-         *                      depots.
+         *                              <li> gpudb::match_graph_service_limit:
+         *                      For the @a match_supply_demand solver only. If
+         *                      specified (greater than zero), any supply
+         *                      actor's total service cost (distance or time)
+         *                      will be limited by the specified value
+         *                      including multiple rounds (if set).  The
+         *                      default value is '0.0'.
+         *                              <li> gpudb::match_graph_enable_reuse:
+         *                      For the @a match_supply_demand solver only. If
+         *                      specified (true), all supply actors can be
+         *                      scheduled for second rounds from their
+         *                      originating depots.
          *                      <ul>
          *                              <li> gpudb::match_graph_true: Allows
-         *                      reusing trucks for scheduling again.
-         *                              <li> gpudb::match_graph_false: Trucks
-         *                      are scheduled only once from their depots.
+         *                      reusing supply actors (trucks, e.g.) for
+         *                      scheduling again.
+         *                              <li> gpudb::match_graph_false: Supply
+         *                      actors are scheduled only once from their
+         *                      depots.
          *                      </ul>
          *                      The default value is gpudb::match_graph_false.
-         *                              <li>
-         *                      gpudb::match_graph_max_truck_stops: For the @a
-         *                      match_supply_demand solver only. If specified
-         *                      (greater than zero), a truck can at most have
-         *                      this many stops (demand locations) in one round
-         *                      trip. Otherwise, it is unlimited. If
+         *                              <li> gpudb::match_graph_max_stops: For
+         *                      the @a match_supply_demand solver only. If
+         *                      specified (greater than zero), a supply actor
+         *                      (truck) can at most have this many stops
+         *                      (demand locations) in one round trip.
+         *                      Otherwise, it is unlimited. If
          *                      'enable_truck_reuse' is on, this condition will
          *                      be applied separately at each round trip use of
          *                      the same truck.  The default value is '0'.
+         *                              <li> gpudb::match_graph_service_radius:
+         *                      For the @a match_supply_demand and @a
+         *                      match_pickup_dropoff solvers only. If specified
+         *                      (greater than zero), it filters the
+         *                      demands/picks outside this radius centered
+         *                      around the supply actor/ride's originating
+         *                      location (distance or time).  The default value
+         *                      is '0.0'.
          *                              <li>
-         *                      gpudb::match_graph_truck_service_radius: For
-         *                      the @a match_supply_demand solver only. If
-         *                      specified (greater than zero), it filters the
-         *                      demands outside this radius centered around the
-         *                      truck's originating location (distance or
-         *                      time).  The default value is '0.0'.
+         *                      gpudb::match_graph_permute_supplies: For the @a
+         *                      match_supply_demand solver only. If specified
+         *                      (true), supply side actors are permuted for the
+         *                      demand combinations during msdo optimization -
+         *                      note that this option increases optimization
+         *                      time significantly - use of 'max_combinations'
+         *                      option is recommended to prevent prohibitively
+         *                      long runs
+         *                      <ul>
+         *                              <li> gpudb::match_graph_true: Generates
+         *                      sequences over supply side permutations if
+         *                      total supply is less than twice the total
+         *                      demand
+         *                              <li> gpudb::match_graph_false:
+         *                      Permutations are not performed, rather a
+         *                      specific order of supplies based on capacity is
+         *                      computed
+         *                      </ul>
+         *                      The default value is gpudb::match_graph_true.
          *                              <li> gpudb::match_graph_batch_tsm_mode:
          *                      For the @a match_supply_demand solver only.
          *                      When enabled, it sets the number of visits on
@@ -342,12 +378,64 @@ namespace gpudb
          *                      preset limit (usual msdo mode)
          *                      </ul>
          *                      The default value is gpudb::match_graph_false.
+         *                              <li> gpudb::match_graph_round_trip: For
+         *                      the @a match_supply_demand solver only. When
+         *                      enabled, the supply will have to return back to
+         *                      the origination location.
+         *                      <ul>
+         *                              <li> gpudb::match_graph_true: The
+         *                      optimization is done for trips in round trip
+         *                      manner always returning to originating
+         *                      locations
+         *                              <li> gpudb::match_graph_false: Supplies
+         *                      do not have to come back to their originating
+         *                      locations in their routes. The routes are
+         *                      considered finished at the final dropoff.
+         *                      </ul>
+         *                      The default value is gpudb::match_graph_true.
+         *                              <li> gpudb::match_graph_num_cycles: For
+         *                      the @a match_clusters solver only. Terminates
+         *                      the cluster exchange iterations across
+         *                      2-step-cycles (outer loop) when quality does
+         *                      not improve during iterations.  The default
+         *                      value is '10'.
          *                              <li>
-         *                      gpudb::match_graph_restricted_truck_type: For
-         *                      the @a match_supply_demand solver only.
-         *                      Optimization is performed by restricting routes
-         *                      labeled by 'MSDO_ODDEVEN_RESTRICTED' only for
-         *                      this truck type
+         *                      gpudb::match_graph_num_loops_per_cycle: For the
+         *                      @a match_clusters solver only. Terminates the
+         *                      cluster exchanges within the first step
+         *                      iterations of a cycle (inner loop) unless
+         *                      convergence is reached.  The default value is
+         *                      '10'.
+         *                              <li>
+         *                      gpudb::match_graph_num_output_clusters: For the
+         *                      @a match_clusters solver only.  Limits the
+         *                      output to the top 'num_output_clusters'
+         *                      clusters based on density. Default value of
+         *                      zero outputs all clusters.  The default value
+         *                      is '0'.
+         *                              <li>
+         *                      gpudb::match_graph_max_num_clusters: For the @a
+         *                      match_clusters solver only. If set (value
+         *                      greater than zero), it terminates when the
+         *                      number of clusters goes below than this number.
+         *                      The default value is '0'.
+         *                              <li>
+         *                      gpudb::match_graph_cluster_quality_metric: For
+         *                      the @a match_clusters solver only. The quality
+         *                      metric for Louvain modularity optimization
+         *                      solver.
+         *                      <ul>
+         *                              <li> gpudb::match_graph_girwan: Uses
+         *                      the Newman Girwan quality metric for cluster
+         *                      solver
+         *                      </ul>
+         *                      The default value is gpudb::match_graph_girwan.
+         *                              <li>
+         *                      gpudb::match_graph_restricted_type: For the @a
+         *                      match_supply_demand solver only. Optimization
+         *                      is performed by restricting routes labeled by
+         *                      'MSDO_ODDEVEN_RESTRICTED' only for this supply
+         *                      actor (truck) type
          *                      <ul>
          *                              <li> gpudb::match_graph_odd: Applies
          *                      odd/even rule restrictions to odd tagged
@@ -416,6 +504,28 @@ namespace gpudb
          *                      match_charging_stations solver only. This is
          *                      the penalty for full charging.  The default
          *                      value is '30000.0'.
+         *                              <li> gpudb::match_graph_max_hops: For
+         *                      the @a match_similarity solver only. Searches
+         *                      within this maximum hops for source and target
+         *                      node pairs to compute the Jaccard scores.  The
+         *                      default value is '3'.
+         *                              <li>
+         *                      gpudb::match_graph_traversal_node_limit: For
+         *                      the @a match_similarity solver only. Limits the
+         *                      traversal depth if it reaches this many number
+         *                      of nodes.  The default value is '1000'.
+         *                              <li>
+         *                      gpudb::match_graph_paired_similarity: For the
+         *                      @a match_similarity solver only. If true, it
+         *                      computes Jaccard score between each pair,
+         *                      otherwise it will compute Jaccard from the
+         *                      intersection set between the source and target
+         *                      nodes
+         *                      <ul>
+         *                              <li> gpudb::match_graph_true
+         *                              <li> gpudb::match_graph_false
+         *                      </ul>
+         *                      The default value is gpudb::match_graph_true.
          *                      </ul>
          * 
          */

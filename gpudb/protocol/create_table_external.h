@@ -308,6 +308,15 @@ namespace gpudb
          * @param[in] options_  Optional parameters.
          *                      <ul>
          *                              <li>
+         *                      gpudb::create_table_external_avro_num_records:
+         *                      Optional number of avro records, if data
+         *                      includes only records.
+         *                              <li>
+         *                      gpudb::create_table_external_avro_schema:
+         *                      Optional string representing avro schema, for
+         *                      insert records in avro format, that does not
+         *                      include is schema.
+         *                              <li>
          *                      gpudb::create_table_external_bad_record_table_name:
          *                      Optional name of a table to which records that
          *                      were rejected are written.  The
@@ -399,6 +408,22 @@ namespace gpudb
          *                      from the source data to
          *                      skip.  Mutually exclusive with @a
          *                      columns_to_load.
+         *                              <li>
+         *                      gpudb::create_table_external_compression_type:
+         *                      Optional: compression type
+         *                      <ul>
+         *                              <li> gpudb::create_table_external_none:
+         *                      Uncompressed
+         *                              <li> gpudb::create_table_external_auto:
+         *                      Default. Auto detect compression type
+         *                              <li> gpudb::create_table_external_gzip:
+         *                      gzip file compression.
+         *                              <li>
+         *                      gpudb::create_table_external_bzip2: bzip2 file
+         *                      compression.
+         *                      </ul>
+         *                      The default value is
+         *                      gpudb::create_table_external_auto.
          *                              <li>
          *                      gpudb::create_table_external_datasource_name:
          *                      Name of an existing external data source from
@@ -541,6 +566,24 @@ namespace gpudb
          *                      kakfa topic (valid only for kafka datasource
          *                      subscriptions).
          *                              <li>
+         *                      gpudb::create_table_external_kafka_offset_reset_policy:
+         *                      Policy to determine whether the data
+         *                      consumption starts either at earliest offset or
+         *                      latest offset.
+         *                      <ul>
+         *                              <li>
+         *                      gpudb::create_table_external_earliest
+         *                              <li>
+         *                      gpudb::create_table_external_latest
+         *                      </ul>
+         *                      The default value is
+         *                      gpudb::create_table_external_earliest.
+         *                              <li>
+         *                      gpudb::create_table_external_kafka_subscription_cancel_after:
+         *                      Sets the subscription lifespan (in minutes).
+         *                      Expired subscription will be cancelled
+         *                      automatically.
+         *                              <li>
          *                      gpudb::create_table_external_loading_mode:
          *                      Scheme for distributing the extraction and
          *                      loading of data from the source data file(s).
@@ -598,6 +641,14 @@ namespace gpudb
          *                              <li>
          *                      gpudb::create_table_external_local_time_offset:
          *                      For Avro local timestamp columns
+         *                              <li>
+         *                      gpudb::create_table_external_max_records_to_load:
+         *                      Limit the number of records to load in this
+         *                      request: If this number is larger than a
+         *                      batch_size, then the number of records loaded
+         *                      will be limited to the next whole number of
+         *                      batch_size (per working thread).  The default
+         *                      value is ''.
          *                              <li>
          *                      gpudb::create_table_external_num_tasks_per_rank:
          *                      Optional: number of tasks for reading file per
@@ -763,6 +814,16 @@ namespace gpudb
          *                      Set minimum column size. Used only when
          *                      'text_search_columns' has a value.
          *                              <li>
+         *                      gpudb::create_table_external_truncate_strings:
+         *                      If set to @a true, truncate string values that
+         *                      are longer than the column's type size.
+         *                      <ul>
+         *                              <li> gpudb::create_table_external_true
+         *                              <li> gpudb::create_table_external_false
+         *                      </ul>
+         *                      The default value is
+         *                      gpudb::create_table_external_false.
+         *                              <li>
          *                      gpudb::create_table_external_truncate_table: If
          *                      set to @a true, truncates the table specified
          *                      by @a tableName prior to loading the file(s).
@@ -798,11 +859,24 @@ namespace gpudb
          *                      distribution of given column.  The default
          *                      value is ''.
          *                              <li>
+         *                      gpudb::create_table_external_remote_query_increasing_column:
+         *                      Column on subscribed remote query result that
+         *                      will increase for new records (e.g.,
+         *                      TIMESTAMP).  The default value is ''.
+         *                              <li>
          *                      gpudb::create_table_external_remote_query_partition_column:
          *                      Alias name for remote_query_filter_column.  The
          *                      default value is ''.
          *                              <li>
          *                      gpudb::create_table_external_update_on_existing_pk:
+         *                      <ul>
+         *                              <li> gpudb::create_table_external_true
+         *                              <li> gpudb::create_table_external_false
+         *                      </ul>
+         *                      The default value is
+         *                      gpudb::create_table_external_false.
+         *                              <li>
+         *                      gpudb::create_table_external_ignore_existing_pk:
          *                      <ul>
          *                              <li> gpudb::create_table_external_true
          *                              <li> gpudb::create_table_external_false

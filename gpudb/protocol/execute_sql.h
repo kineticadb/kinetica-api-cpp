@@ -65,18 +65,10 @@ namespace gpudb
          *                    of results.
          * @param[in] requestSchemaStr_  Avro schema of @a data.
          * @param[in] data_  An array of binary-encoded data for the records to
-         *                   be binded to the SQL query.
+         *                   be binded to the SQL query.  Or use @a
+         *                   query_parameters to pass the data in JSON format.
          * @param[in] options_  Optional parameters.
          *                      <ul>
-         *                              <li>
-         *                      gpudb::execute_sql_parallel_execution: If @a
-         *                      false, disables the parallel step execution of
-         *                      the given query.
-         *                      <ul>
-         *                              <li> gpudb::execute_sql_true
-         *                              <li> gpudb::execute_sql_false
-         *                      </ul>
-         *                      The default value is gpudb::execute_sql_true.
          *                              <li>
          *                      gpudb::execute_sql_cost_based_optimization: If
          *                      @a false, disables the cost-based optimization
@@ -86,44 +78,6 @@ namespace gpudb
          *                              <li> gpudb::execute_sql_false
          *                      </ul>
          *                      The default value is gpudb::execute_sql_false.
-         *                              <li> gpudb::execute_sql_plan_cache: If
-         *                      @a false, disables plan caching for the given
-         *                      query.
-         *                      <ul>
-         *                              <li> gpudb::execute_sql_true
-         *                              <li> gpudb::execute_sql_false
-         *                      </ul>
-         *                      The default value is gpudb::execute_sql_true.
-         *                              <li>
-         *                      gpudb::execute_sql_rule_based_optimization: If
-         *                      @a false, disables rule-based rewrite
-         *                      optimizations for the given query
-         *                      <ul>
-         *                              <li> gpudb::execute_sql_true
-         *                              <li> gpudb::execute_sql_false
-         *                      </ul>
-         *                      The default value is gpudb::execute_sql_true.
-         *                              <li>
-         *                      gpudb::execute_sql_results_caching: If @a
-         *                      false, disables caching of the results of the
-         *                      given query
-         *                      <ul>
-         *                              <li> gpudb::execute_sql_true
-         *                              <li> gpudb::execute_sql_false
-         *                      </ul>
-         *                      The default value is gpudb::execute_sql_true.
-         *                              <li> gpudb::execute_sql_paging_table:
-         *                      When empty or the specified paging table not
-         *                      exists, the system will create a paging table
-         *                      and return when query output has more records
-         *                      than the user asked. If the paging table exists
-         *                      in the system, the records from the paging
-         *                      table are returned without evaluating the
-         *                      query.
-         *                              <li>
-         *                      gpudb::execute_sql_paging_table_ttl: Sets the
-         *                      <a href="../../../concepts/ttl/"
-         *                      target="_top">TTL</a> of the paging table.
          *                              <li>
          *                      gpudb::execute_sql_distributed_joins: If @a
          *                      true, enables the use of distributed joins in
@@ -151,14 +105,15 @@ namespace gpudb
          *                      </ul>
          *                      The default value is gpudb::execute_sql_false.
          *                              <li>
-         *                      gpudb::execute_sql_ssq_optimization: If @a
-         *                      false, scalar subqueries will be translated
-         *                      into joins
+         *                      gpudb::execute_sql_ignore_existing_pk: Can be
+         *                      used to customize behavior when the updated
+         *                      primary key value already exists as described
+         *                      in /insert/records.
          *                      <ul>
          *                              <li> gpudb::execute_sql_true
          *                              <li> gpudb::execute_sql_false
          *                      </ul>
-         *                      The default value is gpudb::execute_sql_true.
+         *                      The default value is gpudb::execute_sql_false.
          *                              <li>
          *                      gpudb::execute_sql_late_materialization: If @a
          *                      true, Joins/Filters results  will always be
@@ -168,15 +123,40 @@ namespace gpudb
          *                              <li> gpudb::execute_sql_false
          *                      </ul>
          *                      The default value is gpudb::execute_sql_false.
-         *                              <li> gpudb::execute_sql_ttl: Sets the
-         *                      <a href="../../../concepts/ttl/"
-         *                      target="_top">TTL</a> of the intermediate
-         *                      result tables used in query execution.
+         *                              <li> gpudb::execute_sql_paging_table:
+         *                      When empty or the specified paging table not
+         *                      exists, the system will create a paging table
+         *                      and return when query output has more records
+         *                      than the user asked. If the paging table exists
+         *                      in the system, the records from the paging
+         *                      table are returned without evaluating the
+         *                      query.
          *                              <li>
-         *                      gpudb::execute_sql_update_on_existing_pk: Can
-         *                      be used to customize behavior when the updated
-         *                      primary key value already exists as described
-         *                      in /insert/records.
+         *                      gpudb::execute_sql_paging_table_ttl: Sets the
+         *                      <a href="../../../concepts/ttl/"
+         *                      target="_top">TTL</a> of the paging table.
+         *                              <li>
+         *                      gpudb::execute_sql_parallel_execution: If @a
+         *                      false, disables the parallel step execution of
+         *                      the given query.
+         *                      <ul>
+         *                              <li> gpudb::execute_sql_true
+         *                              <li> gpudb::execute_sql_false
+         *                      </ul>
+         *                      The default value is gpudb::execute_sql_true.
+         *                              <li> gpudb::execute_sql_plan_cache: If
+         *                      @a false, disables plan caching for the given
+         *                      query.
+         *                      <ul>
+         *                              <li> gpudb::execute_sql_true
+         *                              <li> gpudb::execute_sql_false
+         *                      </ul>
+         *                      The default value is gpudb::execute_sql_true.
+         *                              <li> gpudb::execute_sql_prepare_mode:
+         *                      If @a true, compiles a query into an execution
+         *                      plan and saves it in query cache. Query
+         *                      execution is not performed and an empty
+         *                      response will be returned to user
          *                      <ul>
          *                              <li> gpudb::execute_sql_true
          *                              <li> gpudb::execute_sql_false
@@ -193,6 +173,52 @@ namespace gpudb
          *                      </ul>
          *                      The default value is gpudb::execute_sql_true.
          *                              <li>
+         *                      gpudb::execute_sql_query_parameters: Query
+         *                      parameters in JSON array or arrays (for
+         *                      inserting multiple rows).  This can be used
+         *                      instead of @a data and @a requestSchemaStr.
+         *                              <li>
+         *                      gpudb::execute_sql_results_caching: If @a
+         *                      false, disables caching of the results of the
+         *                      given query
+         *                      <ul>
+         *                              <li> gpudb::execute_sql_true
+         *                              <li> gpudb::execute_sql_false
+         *                      </ul>
+         *                      The default value is gpudb::execute_sql_true.
+         *                              <li>
+         *                      gpudb::execute_sql_rule_based_optimization: If
+         *                      @a false, disables rule-based rewrite
+         *                      optimizations for the given query
+         *                      <ul>
+         *                              <li> gpudb::execute_sql_true
+         *                              <li> gpudb::execute_sql_false
+         *                      </ul>
+         *                      The default value is gpudb::execute_sql_true.
+         *                              <li>
+         *                      gpudb::execute_sql_ssq_optimization: If @a
+         *                      false, scalar subqueries will be translated
+         *                      into joins
+         *                      <ul>
+         *                              <li> gpudb::execute_sql_true
+         *                              <li> gpudb::execute_sql_false
+         *                      </ul>
+         *                      The default value is gpudb::execute_sql_true.
+         *                              <li> gpudb::execute_sql_ttl: Sets the
+         *                      <a href="../../../concepts/ttl/"
+         *                      target="_top">TTL</a> of the intermediate
+         *                      result tables used in query execution.
+         *                              <li>
+         *                      gpudb::execute_sql_update_on_existing_pk: Can
+         *                      be used to customize behavior when the updated
+         *                      primary key value already exists as described
+         *                      in /insert/records.
+         *                      <ul>
+         *                              <li> gpudb::execute_sql_true
+         *                              <li> gpudb::execute_sql_false
+         *                      </ul>
+         *                      The default value is gpudb::execute_sql_false.
+         *                              <li>
          *                      gpudb::execute_sql_validate_change_column: When
          *                      changing a column using alter table, validate
          *                      the change before applying it. If @a true, then
@@ -205,16 +231,6 @@ namespace gpudb
          *                              <li> gpudb::execute_sql_false
          *                      </ul>
          *                      The default value is gpudb::execute_sql_true.
-         *                              <li> gpudb::execute_sql_prepare_mode:
-         *                      If @a true, compiles a query into an execution
-         *                      plan and saves it in query cache. Query
-         *                      execution is not performed and an empty
-         *                      response will be returned to user
-         *                      <ul>
-         *                              <li> gpudb::execute_sql_true
-         *                              <li> gpudb::execute_sql_false
-         *                      </ul>
-         *                      The default value is gpudb::execute_sql_false.
          *                      </ul>
          * 
          */
@@ -264,18 +280,10 @@ namespace gpudb
          *                       gpudb::execute_sql_binary.
          * @param[in] requestSchemaStr_  Avro schema of @a data.
          * @param[in] data_  An array of binary-encoded data for the records to
-         *                   be binded to the SQL query.
+         *                   be binded to the SQL query.  Or use @a
+         *                   query_parameters to pass the data in JSON format.
          * @param[in] options_  Optional parameters.
          *                      <ul>
-         *                              <li>
-         *                      gpudb::execute_sql_parallel_execution: If @a
-         *                      false, disables the parallel step execution of
-         *                      the given query.
-         *                      <ul>
-         *                              <li> gpudb::execute_sql_true
-         *                              <li> gpudb::execute_sql_false
-         *                      </ul>
-         *                      The default value is gpudb::execute_sql_true.
          *                              <li>
          *                      gpudb::execute_sql_cost_based_optimization: If
          *                      @a false, disables the cost-based optimization
@@ -285,44 +293,6 @@ namespace gpudb
          *                              <li> gpudb::execute_sql_false
          *                      </ul>
          *                      The default value is gpudb::execute_sql_false.
-         *                              <li> gpudb::execute_sql_plan_cache: If
-         *                      @a false, disables plan caching for the given
-         *                      query.
-         *                      <ul>
-         *                              <li> gpudb::execute_sql_true
-         *                              <li> gpudb::execute_sql_false
-         *                      </ul>
-         *                      The default value is gpudb::execute_sql_true.
-         *                              <li>
-         *                      gpudb::execute_sql_rule_based_optimization: If
-         *                      @a false, disables rule-based rewrite
-         *                      optimizations for the given query
-         *                      <ul>
-         *                              <li> gpudb::execute_sql_true
-         *                              <li> gpudb::execute_sql_false
-         *                      </ul>
-         *                      The default value is gpudb::execute_sql_true.
-         *                              <li>
-         *                      gpudb::execute_sql_results_caching: If @a
-         *                      false, disables caching of the results of the
-         *                      given query
-         *                      <ul>
-         *                              <li> gpudb::execute_sql_true
-         *                              <li> gpudb::execute_sql_false
-         *                      </ul>
-         *                      The default value is gpudb::execute_sql_true.
-         *                              <li> gpudb::execute_sql_paging_table:
-         *                      When empty or the specified paging table not
-         *                      exists, the system will create a paging table
-         *                      and return when query output has more records
-         *                      than the user asked. If the paging table exists
-         *                      in the system, the records from the paging
-         *                      table are returned without evaluating the
-         *                      query.
-         *                              <li>
-         *                      gpudb::execute_sql_paging_table_ttl: Sets the
-         *                      <a href="../../../concepts/ttl/"
-         *                      target="_top">TTL</a> of the paging table.
          *                              <li>
          *                      gpudb::execute_sql_distributed_joins: If @a
          *                      true, enables the use of distributed joins in
@@ -350,14 +320,15 @@ namespace gpudb
          *                      </ul>
          *                      The default value is gpudb::execute_sql_false.
          *                              <li>
-         *                      gpudb::execute_sql_ssq_optimization: If @a
-         *                      false, scalar subqueries will be translated
-         *                      into joins
+         *                      gpudb::execute_sql_ignore_existing_pk: Can be
+         *                      used to customize behavior when the updated
+         *                      primary key value already exists as described
+         *                      in /insert/records.
          *                      <ul>
          *                              <li> gpudb::execute_sql_true
          *                              <li> gpudb::execute_sql_false
          *                      </ul>
-         *                      The default value is gpudb::execute_sql_true.
+         *                      The default value is gpudb::execute_sql_false.
          *                              <li>
          *                      gpudb::execute_sql_late_materialization: If @a
          *                      true, Joins/Filters results  will always be
@@ -367,15 +338,40 @@ namespace gpudb
          *                              <li> gpudb::execute_sql_false
          *                      </ul>
          *                      The default value is gpudb::execute_sql_false.
-         *                              <li> gpudb::execute_sql_ttl: Sets the
-         *                      <a href="../../../concepts/ttl/"
-         *                      target="_top">TTL</a> of the intermediate
-         *                      result tables used in query execution.
+         *                              <li> gpudb::execute_sql_paging_table:
+         *                      When empty or the specified paging table not
+         *                      exists, the system will create a paging table
+         *                      and return when query output has more records
+         *                      than the user asked. If the paging table exists
+         *                      in the system, the records from the paging
+         *                      table are returned without evaluating the
+         *                      query.
          *                              <li>
-         *                      gpudb::execute_sql_update_on_existing_pk: Can
-         *                      be used to customize behavior when the updated
-         *                      primary key value already exists as described
-         *                      in /insert/records.
+         *                      gpudb::execute_sql_paging_table_ttl: Sets the
+         *                      <a href="../../../concepts/ttl/"
+         *                      target="_top">TTL</a> of the paging table.
+         *                              <li>
+         *                      gpudb::execute_sql_parallel_execution: If @a
+         *                      false, disables the parallel step execution of
+         *                      the given query.
+         *                      <ul>
+         *                              <li> gpudb::execute_sql_true
+         *                              <li> gpudb::execute_sql_false
+         *                      </ul>
+         *                      The default value is gpudb::execute_sql_true.
+         *                              <li> gpudb::execute_sql_plan_cache: If
+         *                      @a false, disables plan caching for the given
+         *                      query.
+         *                      <ul>
+         *                              <li> gpudb::execute_sql_true
+         *                              <li> gpudb::execute_sql_false
+         *                      </ul>
+         *                      The default value is gpudb::execute_sql_true.
+         *                              <li> gpudb::execute_sql_prepare_mode:
+         *                      If @a true, compiles a query into an execution
+         *                      plan and saves it in query cache. Query
+         *                      execution is not performed and an empty
+         *                      response will be returned to user
          *                      <ul>
          *                              <li> gpudb::execute_sql_true
          *                              <li> gpudb::execute_sql_false
@@ -392,6 +388,52 @@ namespace gpudb
          *                      </ul>
          *                      The default value is gpudb::execute_sql_true.
          *                              <li>
+         *                      gpudb::execute_sql_query_parameters: Query
+         *                      parameters in JSON array or arrays (for
+         *                      inserting multiple rows).  This can be used
+         *                      instead of @a data and @a requestSchemaStr.
+         *                              <li>
+         *                      gpudb::execute_sql_results_caching: If @a
+         *                      false, disables caching of the results of the
+         *                      given query
+         *                      <ul>
+         *                              <li> gpudb::execute_sql_true
+         *                              <li> gpudb::execute_sql_false
+         *                      </ul>
+         *                      The default value is gpudb::execute_sql_true.
+         *                              <li>
+         *                      gpudb::execute_sql_rule_based_optimization: If
+         *                      @a false, disables rule-based rewrite
+         *                      optimizations for the given query
+         *                      <ul>
+         *                              <li> gpudb::execute_sql_true
+         *                              <li> gpudb::execute_sql_false
+         *                      </ul>
+         *                      The default value is gpudb::execute_sql_true.
+         *                              <li>
+         *                      gpudb::execute_sql_ssq_optimization: If @a
+         *                      false, scalar subqueries will be translated
+         *                      into joins
+         *                      <ul>
+         *                              <li> gpudb::execute_sql_true
+         *                              <li> gpudb::execute_sql_false
+         *                      </ul>
+         *                      The default value is gpudb::execute_sql_true.
+         *                              <li> gpudb::execute_sql_ttl: Sets the
+         *                      <a href="../../../concepts/ttl/"
+         *                      target="_top">TTL</a> of the intermediate
+         *                      result tables used in query execution.
+         *                              <li>
+         *                      gpudb::execute_sql_update_on_existing_pk: Can
+         *                      be used to customize behavior when the updated
+         *                      primary key value already exists as described
+         *                      in /insert/records.
+         *                      <ul>
+         *                              <li> gpudb::execute_sql_true
+         *                              <li> gpudb::execute_sql_false
+         *                      </ul>
+         *                      The default value is gpudb::execute_sql_false.
+         *                              <li>
          *                      gpudb::execute_sql_validate_change_column: When
          *                      changing a column using alter table, validate
          *                      the change before applying it. If @a true, then
@@ -404,16 +446,6 @@ namespace gpudb
          *                              <li> gpudb::execute_sql_false
          *                      </ul>
          *                      The default value is gpudb::execute_sql_true.
-         *                              <li> gpudb::execute_sql_prepare_mode:
-         *                      If @a true, compiles a query into an execution
-         *                      plan and saves it in query cache. Query
-         *                      execution is not performed and an empty
-         *                      response will be returned to user
-         *                      <ul>
-         *                              <li> gpudb::execute_sql_true
-         *                              <li> gpudb::execute_sql_false
-         *                      </ul>
-         *                      The default value is gpudb::execute_sql_false.
          *                      </ul>
          * 
          */

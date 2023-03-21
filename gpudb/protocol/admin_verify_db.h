@@ -57,7 +57,11 @@ namespace gpudb
          *                              <li>
          *                      gpudb::admin_verify_db_verify_persist: When @a
          *                      true, persistent objects will be compared
-         *                      against their state in memory.
+         *                      against their state in memory and workers will
+         *                      be checked for orphaned table data in persist.
+         *                      To check for orphaned worker data, either set
+         *                      @a concurrent_safe in @a options to @a true or
+         *                      place the database offline.
          *                      <ul>
          *                              <li> gpudb::admin_verify_db_true
          *                              <li> gpudb::admin_verify_db_false
@@ -91,7 +95,10 @@ namespace gpudb
          *                      If @a true, orphaned table directories found on
          *                      workers for which there is no corresponding
          *                      metadata will be deleted. Must set @a
-         *                      verify_persist in @a options to @a true
+         *                      verify_persist in @a options to @a true. It is
+         *                      recommended to run this while the database is
+         *                      offline OR set @a concurrent_safe in @a options
+         *                      to @a true
          *                      <ul>
          *                              <li> gpudb::admin_verify_db_true
          *                              <li> gpudb::admin_verify_db_false

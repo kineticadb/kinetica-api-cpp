@@ -358,7 +358,7 @@ namespace gpudb {
         try {
             HttpUrl url( m_urls[0], "/show/system/properties" );
             response = submitRequest( url, request, response );
-        } catch (GPUdbException ex) {
+        } catch (const GPUdbException&) {
             // Note: Not worth dying just because the HA ring node
             // addresses couldn't be found
             return;
@@ -899,7 +899,7 @@ namespace gpudb {
         {
             std::istringstream iss( port_str );
             iss >> hmPort;
-        } catch (std::exception ex)
+        } catch (const std::exception&)
         {
             throw new GPUdbException( "No parsable value found for host manager port number." );
             // throw new GPUdbException( "No parsable value found for host manager port number "
@@ -968,7 +968,7 @@ namespace gpudb {
                 {
                     url = switchUrl( originalUrl );
                 }
-                catch (GPUdbHAUnavailableException ha_ex)
+                catch (const GPUdbHAUnavailableException& ha_ex)
                 {
                     std::string message = GPUDB_STREAM_TO_STRING( ha_ex.what()
                                                                   << "; original exception: "
@@ -982,7 +982,7 @@ namespace gpudb {
                 {
                     url = switchUrl( originalUrl );
                 }
-                catch (GPUdbHAUnavailableException ha_ex)
+                catch (const GPUdbHAUnavailableException& ha_ex)
                 {
                     std::string message = GPUDB_STREAM_TO_STRING( ha_ex.what()
                                                                   << "; original exception: "
@@ -1000,7 +1000,7 @@ namespace gpudb {
                 {
                     url = switchUrl( originalUrl );
                 }
-                catch (GPUdbHAUnavailableException ha_ex)
+                catch (const GPUdbHAUnavailableException& ha_ex)
                 {
                     std::string message = GPUDB_STREAM_TO_STRING( ha_ex.what()
                                                                   << "; original exception: "
@@ -1038,7 +1038,7 @@ namespace gpudb {
                 {
                     hmUrl = switchHmUrl( originalHmUrl );
                 }
-                catch (GPUdbHAUnavailableException ha_ex)
+                catch (const GPUdbHAUnavailableException& ha_ex)
                 {
                     std::string message = GPUDB_STREAM_TO_STRING( ha_ex.what()
                                                                   << "; original exception: "
@@ -1052,7 +1052,7 @@ namespace gpudb {
                 {
                     hmUrl = switchHmUrl( originalHmUrl );
                 }
-                catch (GPUdbHAUnavailableException ha_ex)
+                catch (const GPUdbHAUnavailableException& ha_ex)
                 {
                     std::string message = GPUDB_STREAM_TO_STRING( ha_ex.what()
                                                                   << "; original exception: "
@@ -1070,7 +1070,7 @@ namespace gpudb {
                 {
                     hmUrl = switchHmUrl( originalHmUrl );
                 }
-                catch (GPUdbHAUnavailableException ha_ex)
+                catch (const GPUdbHAUnavailableException& ha_ex)
                 {
                     std::string message = GPUDB_STREAM_TO_STRING( ha_ex.what()
                                                                   << "; original exception: "

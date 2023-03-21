@@ -66,6 +66,8 @@ namespace gpudb
          *                              <li> gpudb::alter_tier_false
          *                      </ul>
          *                      The default value is gpudb::alter_tier_true.
+         *                              <li> gpudb::alter_tier_rank: Apply the
+         *                      requested change only to a specific rank.
          *                      </ul>
          * 
          */

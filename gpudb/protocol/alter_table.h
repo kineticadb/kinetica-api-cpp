@@ -244,6 +244,13 @@ namespace gpudb
          *                     refreshes occur at the specified time + N * the
          *                     refresh period.
          *                             <li>
+         *                     gpudb::alter_table_set_refresh_stop_time: Sets
+         *                     the time to stop periodic refreshes of this <a
+         *                     href="../../../concepts/materialized_views/"
+         *                     target="_top">materialized view</a> to the
+         *                     datetime string specified in @a value with
+         *                     format 'YYYY-MM-DD HH:MM:SS'.
+         *                             <li>
          *                     gpudb::alter_table_set_refresh_period: Sets the
          *                     time interval in seconds at which to refresh
          *                     this <a
@@ -251,6 +258,10 @@ namespace gpudb
          *                     target="_top">materialized view</a> to the value
          *                     specified in @a value.  Also, sets the refresh
          *                     method to periodic if not already set.
+         *                             <li>
+         *                     gpudb::alter_table_set_refresh_span: Sets the
+         *                     future time-offset(in seconds) for the view
+         *                     refresh to stop.
          *                             <li>
          *                     gpudb::alter_table_set_refresh_execute_as: Sets
          *                     the user name to refresh this <a

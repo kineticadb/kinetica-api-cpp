@@ -85,10 +85,16 @@ public:
     size_t getCountUpdated() const { return m_count_updated; }
 
     /**
-     * Returns the list of errors and warnings received since the last call
+     * Returns the list of errors received since the last call
      * to getErrors(), and clears the list.
      */
     std::vector<GPUdbInsertionException> getErrors();
+
+    /**
+     * Returns the list of warnings received since the last call
+     * to getWarnings(), and clears the list.
+     */
+    std::vector<GPUdbInsertionException> getWarnings();
 
     /**
      * Ensures that all queued records are inserted into the database.  If an error
@@ -151,6 +157,8 @@ private:
     const gpudb::GPUdb&              m_db;
     std::string                      m_table_name;
     size_t                           m_batch_size;
+    bool                             m_return_individual_errors;
+    bool                             m_simulate_error_mode; // Simulate returnIndividualErrors after an error
     std::atomic<size_t>              m_count_inserted;
     std::atomic<size_t>              m_count_updated;
     str_to_str_map_t                 m_insert_options;
@@ -162,6 +170,7 @@ private:
     std::vector<int32_t>             m_routing_table;
     std::vector<worker_queue_ptr_t>  m_worker_queues;
     std::vector<GPUdbInsertionException> m_error_list;
+    std::vector<GPUdbInsertionException> m_warning_list;
     std::mutex                       m_error_list_lock;
 
 };  // end class GPUdbIngestor

@@ -64,10 +64,8 @@ namespace gpudb
          *                      schema provided is non-existent, it will be
          *                      automatically created.
          *                              <li>
-         *                      gpudb::create_materialized_view_ttl: Sets the
-         *                      <a href="../../../concepts/ttl/"
-         *                      target="_top">TTL</a> of the table specified in
-         *                      @a tableName.
+         *                      gpudb::create_materialized_view_execute_as:
+         *                      User name to use to run the refresh job
          *                              <li>
          *                      gpudb::create_materialized_view_persist: If @a
          *                      true, then the materialized view specified in
@@ -84,6 +82,16 @@ namespace gpudb
          *                      </ul>
          *                      The default value is
          *                      gpudb::create_materialized_view_false.
+         *                              <li>
+         *                      gpudb::create_materialized_view_refresh_span:
+         *                      Sets the future time-offset(in seconds) at
+         *                      which periodic refresh stops
+         *                              <li>
+         *                      gpudb::create_materialized_view_refresh_stop_time:
+         *                      When @a refresh_method is @a periodic,
+         *                      specifies the time at which a periodic refresh
+         *                      is stopped.  Value is a datetime string with
+         *                      format 'YYYY-MM-DD HH:MM:SS'.
          *                              <li>
          *                      gpudb::create_materialized_view_refresh_method:
          *                      Method by which the join can be refreshed when
@@ -123,8 +131,10 @@ namespace gpudb
          *                      to be done.  Value is a datetime string with
          *                      format 'YYYY-MM-DD HH:MM:SS'.
          *                              <li>
-         *                      gpudb::create_materialized_view_execute_as:
-         *                      User name to use to run the refresh job
+         *                      gpudb::create_materialized_view_ttl: Sets the
+         *                      <a href="../../../concepts/ttl/"
+         *                      target="_top">TTL</a> of the table specified in
+         *                      @a tableName.
          *                      </ul>
          * 
          */
