@@ -219,6 +219,19 @@ namespace gpudb
          *                                 ingestion.  The default value is
          *                                 '30'.
          *                                         <li>
+         *                                 gpudb::alter_system_properties_egress_parquet_compression:
+         *                                 Parquet file compression type
+         *                                 <ul>
+         *                                         <li>
+         *                                 gpudb::alter_system_properties_uncompressed
+         *                                         <li>
+         *                                 gpudb::alter_system_properties_snappy
+         *                                         <li>
+         *                                 gpudb::alter_system_properties_gzip
+         *                                 </ul>
+         *                                 The default value is
+         *                                 gpudb::alter_system_properties_snappy.
+         *                                         <li>
          *                                 gpudb::alter_system_properties_egress_single_file_max_size:
          *                                 Max file size (in MB) to allow
          *                                 saving to a single file. May be

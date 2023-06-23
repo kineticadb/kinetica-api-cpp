@@ -89,44 +89,75 @@ namespace gpudb
          *                              <li>
          *                      gpudb::append_records_update_on_existing_pk:
          *                      Specifies the record collision policy for
-         *                      inserting the source table records (specified
-         *                      by @a sourceTableName) into the target table
-         *                      (specified by @a tableName) table with a <a
+         *                      inserting source table
+         *                      records (specified by @a sourceTableName) into
+         *                      a target table
+         *                      (specified by @a tableName) with a <a
          *                      href="../../../concepts/tables/#primary-keys"
-         *                      target="_top">primary key</a>.  If set to @a
-         *                      true, any existing target table record with
+         *                      target="_top">primary key</a>. If
+         *                      set to @a true, any existing table record with
          *                      primary key values that match those of a source
          *                      table record being inserted will be replaced by
-         *                      that new record.  If set to @a false, any
-         *                      existing target table record with primary key
-         *                      values that match those of a source table
-         *                      record being inserted will remain unchanged and
-         *                      the new record discarded.  If the specified
-         *                      table does not have a primary key, then this
-         *                      option has no effect.
+         *                      that
+         *                      new record (the new data will be "upserted").
+         *                      If set to
+         *                      @a false, any existing table record with
+         *                      primary
+         *                      key values that match those of a source table
+         *                      record being inserted will remain unchanged,
+         *                      while the
+         *                      source record will be rejected and an error
+         *                      handled as determined by
+         *                      @a ignore_existing_pk.  If the specified table
+         *                      does not have a primary key,
+         *                      then this option has no effect.
          *                      <ul>
-         *                              <li> gpudb::append_records_true
-         *                              <li> gpudb::append_records_false
+         *                              <li> gpudb::append_records_true: Upsert
+         *                      new records when primary keys match existing
+         *                      records
+         *                              <li> gpudb::append_records_false:
+         *                      Reject new records when primary keys match
+         *                      existing records
          *                      </ul>
          *                      The default value is
          *                      gpudb::append_records_false.
          *                              <li>
          *                      gpudb::append_records_ignore_existing_pk:
-         *                      Specifies the record collision policy for
-         *                      inserting the source table records (specified
-         *                      by @a sourceTableName) into the target table
-         *                      (specified by @a tableName) table with a <a
+         *                      Specifies the record collision
+         *                      error-suppression policy for
+         *                      inserting source table records (specified by @a
+         *                      sourceTableName) into a target table
+         *                      (specified by @a tableName) with a <a
          *                      href="../../../concepts/tables/#primary-keys"
-         *                      target="_top">primary key</a>.  If set to @a
-         *                      true, any source table records being inserted
-         *                      with primary key values that match those of an
-         *                      existing target table record will be ignored
-         *                      with no error generated.  If the specified
-         *                      table does not have a primary key, then this
-         *                      option has no affect.
+         *                      target="_top">primary key</a>, only
+         *                      used when not in upsert mode (upsert mode is
+         *                      disabled when
+         *                      @a update_on_existing_pk is
+         *                      @a false).  If set to
+         *                      @a true, any source table record being inserted
+         *                      that
+         *                      is rejected for having primary key values that
+         *                      match those of an existing target table record
+         *                      will
+         *                      be ignored with no error generated.  If @a
+         *                      false,
+         *                      the rejection of any source table record for
+         *                      having primary key values matching an existing
+         *                      target
+         *                      table record will result in an error being
+         *                      raised.  If the specified table does not have a
+         *                      primary
+         *                      key or if upsert mode is in effect (@a
+         *                      update_on_existing_pk is
+         *                      @a true), then this option has no effect.
          *                      <ul>
-         *                              <li> gpudb::append_records_true
-         *                              <li> gpudb::append_records_false
+         *                              <li> gpudb::append_records_true: Ignore
+         *                      source table records whose primary key values
+         *                      collide with those of target table records
+         *                              <li> gpudb::append_records_false: Raise
+         *                      an error for any source table record whose
+         *                      primary key values collide with those of a
+         *                      target table record
          *                      </ul>
          *                      The default value is
          *                      gpudb::append_records_false.

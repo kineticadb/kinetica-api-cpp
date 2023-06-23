@@ -34,6 +34,12 @@ namespace gpudb
          * parameters.
          * 
          * @param[in] fileNames_  An array of names of files to be deleted.
+         *                        File paths may contain wildcard characters
+         *                        after the KiFS directory delimeter.
+         *                        Accepted wildcard characters are asterisk (*)
+         *                        to represent any string of zero or more
+         *                        characters, and question mark (?) to indicate
+         *                        a single character.
          * @param[in] options_  Optional parameters.
          *                      <ul>
          *                              <li>
@@ -119,10 +125,12 @@ namespace gpudb
          * values.
          */
         DeleteFilesResponse() :
+            fileNames(std::vector<std::string>()),
             info(std::map<std::string, std::string>())
         {
         }
 
+        std::vector<std::string> fileNames;
         std::map<std::string, std::string> info;
     };
 }
@@ -133,6 +141,7 @@ namespace avro
     {
         static void encode(Encoder& e, const gpudb::DeleteFilesResponse& v)
         {
+            ::avro::encode(e, v.fileNames);
             ::avro::encode(e, v.info);
         }
 
@@ -147,6 +156,10 @@ namespace avro
                     switch (*it)
                     {
                         case 0:
+                            ::avro::decode(d, v.fileNames);
+                            break;
+
+                        case 1:
                             ::avro::decode(d, v.info);
                             break;
 
@@ -157,6 +170,7 @@ namespace avro
             }
             else
             {
+                ::avro::decode(d, v.fileNames);
                 ::avro::decode(d, v.info);
             }
         }

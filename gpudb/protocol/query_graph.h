@@ -148,10 +148,10 @@ namespace gpudb
          *                      </ul>
          *                      The default value is gpudb::query_graph_false.
          *                              <li> gpudb::query_graph_limit: When
-         *                      specified, limits the number of query results.
-         *                      The size of the nodes table will be limited by
-         *                      the @a limit value.  The default value is an
-         *                      empty std::map.
+         *                      specified (>0), limits the number of query
+         *                      results. The size of the nodes table will be
+         *                      limited by the @a limit value.  The default
+         *                      value is '0'.
          *                              <li>
          *                      gpudb::query_graph_output_wkt_path: If true
          *                      then concatenated wkt line segments will be

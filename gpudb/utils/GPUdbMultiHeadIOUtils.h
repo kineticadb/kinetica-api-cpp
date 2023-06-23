@@ -197,6 +197,9 @@ public:
     // Adds an unsigned long value to the buffer
     void add_ulong( const std::string& value, bool is_null );
 
+    // Adds a uuid to the buffer
+    void add_uuid( const std::string& value, bool is_null );
+
 
     /// Compute the hash of the key in the buffer
     void compute_hash();
@@ -277,7 +280,8 @@ private:
         STRING,
         TIME,
         TIMESTAMP,
-        ULONG
+        ULONG,
+        UUID,
     };
 
     // Some typedefs for nullable types

@@ -105,13 +105,34 @@ namespace gpudb
          *                      </ul>
          *                      The default value is gpudb::execute_sql_false.
          *                              <li>
-         *                      gpudb::execute_sql_ignore_existing_pk: Can be
-         *                      used to customize behavior when the updated
-         *                      primary key value already exists as described
-         *                      in /insert/records.
+         *                      gpudb::execute_sql_ignore_existing_pk:
+         *                      Specifies the record collision
+         *                      error-suppression policy for
+         *                      inserting into or updating a table with a <a
+         *                      href="../../../concepts/tables/#primary-keys"
+         *                      target="_top">primary key</a>, only
+         *                      used when primary key record collisions are
+         *                      rejected (@a update_on_existing_pk
+         *                      is @a false).  If set to
+         *                      @a true, any record insert/update that is
+         *                      rejected
+         *                      for resulting in a primary key collision with
+         *                      an existing table record will be ignored with
+         *                      no error
+         *                      generated.  If @a false, the rejection of any
+         *                      insert/update for resulting in a primary key
+         *                      collision will cause an error to be reported.
+         *                      If the
+         *                      specified table does not have a primary key or
+         *                      if @a update_on_existing_pk is
+         *                      @a true, then this option has no effect.
          *                      <ul>
-         *                              <li> gpudb::execute_sql_true
-         *                              <li> gpudb::execute_sql_false
+         *                              <li> gpudb::execute_sql_true: Ignore
+         *                      inserts/updates that result in primary key
+         *                      collisions with existing records
+         *                              <li> gpudb::execute_sql_false: Treat as
+         *                      errors any inserts/updates that result in
+         *                      primary key collisions with existing records
          *                      </ul>
          *                      The default value is gpudb::execute_sql_false.
          *                              <li>
@@ -209,13 +230,32 @@ namespace gpudb
          *                      target="_top">TTL</a> of the intermediate
          *                      result tables used in query execution.
          *                              <li>
-         *                      gpudb::execute_sql_update_on_existing_pk: Can
-         *                      be used to customize behavior when the updated
-         *                      primary key value already exists as described
-         *                      in /insert/records.
+         *                      gpudb::execute_sql_update_on_existing_pk:
+         *                      Specifies the record collision policy for
+         *                      inserting into or updating
+         *                      a table with a <a
+         *                      href="../../../concepts/tables/#primary-keys"
+         *                      target="_top">primary key</a>. If set to
+         *                      @a true, any existing table record with primary
+         *                      key values that match those of a record being
+         *                      inserted or updated will be replaced by that
+         *                      record.
+         *                      If set to @a false, any such primary key
+         *                      collision will result in the insert/update
+         *                      being rejected and the error handled as
+         *                      determined by
+         *                      @a ignore_existing_pk.  If the specified table
+         *                      does not have a primary key,
+         *                      then this option has no effect.
          *                      <ul>
-         *                              <li> gpudb::execute_sql_true
-         *                              <li> gpudb::execute_sql_false
+         *                              <li> gpudb::execute_sql_true: Replace
+         *                      the collided-into record with the record
+         *                      inserted or updated when a new/modified record
+         *                      causes a primary key collision with an existing
+         *                      record
+         *                              <li> gpudb::execute_sql_false: Reject
+         *                      the insert or update when it results in a
+         *                      primary key collision with an existing record
          *                      </ul>
          *                      The default value is gpudb::execute_sql_false.
          *                              <li>
@@ -320,13 +360,34 @@ namespace gpudb
          *                      </ul>
          *                      The default value is gpudb::execute_sql_false.
          *                              <li>
-         *                      gpudb::execute_sql_ignore_existing_pk: Can be
-         *                      used to customize behavior when the updated
-         *                      primary key value already exists as described
-         *                      in /insert/records.
+         *                      gpudb::execute_sql_ignore_existing_pk:
+         *                      Specifies the record collision
+         *                      error-suppression policy for
+         *                      inserting into or updating a table with a <a
+         *                      href="../../../concepts/tables/#primary-keys"
+         *                      target="_top">primary key</a>, only
+         *                      used when primary key record collisions are
+         *                      rejected (@a update_on_existing_pk
+         *                      is @a false).  If set to
+         *                      @a true, any record insert/update that is
+         *                      rejected
+         *                      for resulting in a primary key collision with
+         *                      an existing table record will be ignored with
+         *                      no error
+         *                      generated.  If @a false, the rejection of any
+         *                      insert/update for resulting in a primary key
+         *                      collision will cause an error to be reported.
+         *                      If the
+         *                      specified table does not have a primary key or
+         *                      if @a update_on_existing_pk is
+         *                      @a true, then this option has no effect.
          *                      <ul>
-         *                              <li> gpudb::execute_sql_true
-         *                              <li> gpudb::execute_sql_false
+         *                              <li> gpudb::execute_sql_true: Ignore
+         *                      inserts/updates that result in primary key
+         *                      collisions with existing records
+         *                              <li> gpudb::execute_sql_false: Treat as
+         *                      errors any inserts/updates that result in
+         *                      primary key collisions with existing records
          *                      </ul>
          *                      The default value is gpudb::execute_sql_false.
          *                              <li>
@@ -424,13 +485,32 @@ namespace gpudb
          *                      target="_top">TTL</a> of the intermediate
          *                      result tables used in query execution.
          *                              <li>
-         *                      gpudb::execute_sql_update_on_existing_pk: Can
-         *                      be used to customize behavior when the updated
-         *                      primary key value already exists as described
-         *                      in /insert/records.
+         *                      gpudb::execute_sql_update_on_existing_pk:
+         *                      Specifies the record collision policy for
+         *                      inserting into or updating
+         *                      a table with a <a
+         *                      href="../../../concepts/tables/#primary-keys"
+         *                      target="_top">primary key</a>. If set to
+         *                      @a true, any existing table record with primary
+         *                      key values that match those of a record being
+         *                      inserted or updated will be replaced by that
+         *                      record.
+         *                      If set to @a false, any such primary key
+         *                      collision will result in the insert/update
+         *                      being rejected and the error handled as
+         *                      determined by
+         *                      @a ignore_existing_pk.  If the specified table
+         *                      does not have a primary key,
+         *                      then this option has no effect.
          *                      <ul>
-         *                              <li> gpudb::execute_sql_true
-         *                              <li> gpudb::execute_sql_false
+         *                              <li> gpudb::execute_sql_true: Replace
+         *                      the collided-into record with the record
+         *                      inserted or updated when a new/modified record
+         *                      causes a primary key collision with an existing
+         *                      record
+         *                              <li> gpudb::execute_sql_false: Reject
+         *                      the insert or update when it results in a
+         *                      primary key collision with an existing record
          *                      </ul>
          *                      The default value is gpudb::execute_sql_false.
          *                              <li>

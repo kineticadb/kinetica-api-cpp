@@ -425,11 +425,14 @@ namespace gpudb
          *                      metric for Louvain modularity optimization
          *                      solver.
          *                      <ul>
-         *                              <li> gpudb::match_graph_girwan: Uses
+         *                              <li> gpudb::match_graph_girvan: Uses
          *                      the Newman Girwan quality metric for cluster
          *                      solver
+         *                              <li> gpudb::match_graph_spectral:
+         *                      Applies recursive spectral bisection (RSB)
+         *                      partitioning solver
          *                      </ul>
-         *                      The default value is gpudb::match_graph_girwan.
+         *                      The default value is gpudb::match_graph_girvan.
          *                              <li>
          *                      gpudb::match_graph_restricted_type: For the @a
          *                      match_supply_demand solver only. Optimization

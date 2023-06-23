@@ -15,6 +15,7 @@
 #include "admin_alter_jobs.h"
 #include "admin_backup_begin.h"
 #include "admin_backup_end.h"
+#include "admin_ha_refresh.h"
 #include "admin_offline.h"
 #include "admin_rebalance.h"
 #include "admin_remove_host.h"

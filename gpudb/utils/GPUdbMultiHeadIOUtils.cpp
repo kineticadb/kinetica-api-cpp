@@ -924,7 +924,8 @@ enum ColumnTypeSize_T
     STRING    =   8,
     TIME      =   4,
     TIMESTAMP =   8,
-    ULONG     =   8
+    ULONG     =   8,
+    UUID      =  16,
 };
 
 #define GPUDB_HASH_SEED 10
@@ -2041,6 +2042,55 @@ void RecordKey::add_ulong( const std::string &value, bool is_null )
 } // end RecordKey::add_ulong
 
 
+/*
+ * Adds a uuid to the buffer.
+ *
+ * <param name="value">The uuid to be added.</param>
+ * <param name="is_null">Indicates that a null value is to be added.</param>
+ */
+void RecordKey::add_uuid( const std::string& value, bool is_null )
+{
+    // Check if the given number of characters will fit in the buffer
+    this->will_buffer_overflow( ColumnTypeSize_T::UUID );
+
+    // Handle nulls
+    if ( is_null )
+    {   // Add 16 bytes of zeroes for the null value
+        this->add_long( 0, is_null );
+        this->add_long( 0, is_null );
+        return;
+    }
+
+    // Final group of 12 split into two sections.  E.g., 123e4567-e89b-12d3-a456-426614174000
+    long parts[6];
+    int sscanf_response = sscanf( value.c_str(), "%8lx-%4lx-%4lx-%4lx-%4lx%8lx", &parts[0], &parts[1], &parts[2], &parts[3], &parts[4], &parts[5] );
+
+    // Could not parse it as a uuid with hyphens
+    if (sscanf_response != 6)
+    {
+        // Try it without hyphens
+        sscanf_response = sscanf( value.c_str(), "%8lx%4lx%4lx%4lx%4lx%8lx", &parts[0], &parts[1], &parts[2], &parts[3], &parts[4], &parts[5] );
+
+        if (sscanf_response != 6)
+        {
+            this->add_long( 0, is_null );
+            this->add_long( 0, is_null );
+            m_is_valid = false;
+            return;
+        }
+    }
+
+    // // See: uuid_string_to_int128_t()
+    this->add_int((int)parts[5], is_null); // Last 8 hex digits of last group
+    this->add_int16((int16_t)parts[4], is_null); // First 4 hex digits of last group
+    this->add_int16((int16_t)parts[3], is_null); // Fourth group, 4 hex digits
+    this->add_int16((int16_t)parts[2], is_null); // Third group, 4 hex digits
+    this->add_int16((int16_t)parts[1], is_null); // Second group, 4 hex digits
+    this->add_int((int)parts[0], is_null); // First 8 hex digits
+
+    return;
+} // end RecordKey::add_uuid
+
 
 
 // Needed for parsing time
@@ -2469,6 +2519,11 @@ RecordKeyBuilder::RecordKeyBuilder( bool is_primary_key, const gpudb::Type& reco
                     m_column_types.push_back( ColumnType_T::ULONG );
                     m_key_buffer_size += ColumnTypeSize_T::ULONG;
                 }
+                else if ( column.hasProperty( gpudb::ColumnProperty::UUID) )
+                {
+                    m_column_types.push_back( ColumnType_T::UUID );
+                    m_key_buffer_size += ColumnTypeSize_T::UUID;
+                }
                 else // a regular string
                 {
                     m_column_types.push_back( ColumnType_T::STRING );
@@ -2520,11 +2575,7 @@ bool RecordKeyBuilder::build( const gpudb::GenericRecord& record, RecordKey& rec
 
         // Figure out if it's a nullable type and also if it's a null value
         // (which tells us whether we can get a value out of the column)
-        bool can_get_value = false;
-        if ( !record.isNull( column_index ) )
-        {
-            can_get_value = true;
-        }
+        bool is_null = record.isNull( column_index );
 
         // Get the relevant column's value out from the record
         // (the type may be different per column) and add to the record key
@@ -2533,165 +2584,165 @@ bool RecordKeyBuilder::build( const gpudb::GenericRecord& record, RecordKey& rec
             case ColumnType_T::CHAR1:
             {
                 std::string value;
-                if ( can_get_value )
+                if ( !is_null )
                     value = record.getAsString( column_index );
 
                 // Now we add the char1 value (or null) to the record key
-                record_key.add_char1( value, record.isNull( column_index ) );
+                record_key.add_char1( value, is_null );
                 break;
             }  // end case char1
 
             case ColumnType_T::CHAR2:
             {
                 std::string value;
-                if ( can_get_value )
+                if ( !is_null )
                     value = record.getAsString( column_index );
 
                 // Now we add the char2 value (or null) to the record key
-                record_key.add_char2( value, record.isNull( column_index ) );
+                record_key.add_char2( value, is_null );
                 break;
             }  // end case char2
 
             case ColumnType_T::CHAR4:
             {
                 std::string value;
-                if ( can_get_value )
+                if ( !is_null )
                     value = record.getAsString( column_index );
 
                 // Now we add the char4 value (or null) to the record key
-                record_key.add_char4( value, record.isNull( column_index ) );
+                record_key.add_char4( value, is_null );
                 break;
             }  // end case char4
 
             case ColumnType_T::CHAR8:
             {
                 std::string value;
-                if ( can_get_value )
+                if ( !is_null )
                     value = record.getAsString( column_index );
 
                 // Now we add the char8 value (or null) to the record key
-                record_key.add_char8( value, record.isNull( column_index ) );
+                record_key.add_char8( value, is_null );
                 break;
             }  // end case char8
 
             case ColumnType_T::CHAR16:
             {
                 std::string value;
-                if ( can_get_value )
+                if ( !is_null )
                     value = record.getAsString( column_index );
 
                 // Now we add the char16 value (or null) to the record key
-                record_key.add_char16( value, record.isNull( column_index ) );
+                record_key.add_char16( value, is_null );
                 break;
             }  // end case char16
 
             case ColumnType_T::CHAR32:
             {
                 std::string value;
-                if ( can_get_value )
+                if ( !is_null )
                     value = record.getAsString( column_index );
 
                 // Now we add the char32 value (or null) to the record key
-                record_key.add_char32( value, record.isNull( column_index ) );
+                record_key.add_char32( value, is_null );
                 break;
             }  // end case char32
 
             case ColumnType_T::CHAR64:
             {
                 std::string value;
-                if ( can_get_value )
+                if ( !is_null )
                     value = record.getAsString( column_index );
 
                 // Now we add the char64 value (or null) to the record key
-                record_key.add_char64( value, record.isNull( column_index ) );
+                record_key.add_char64( value, is_null );
                 break;
             }  // end case char64
 
             case ColumnType_T::CHAR128:
             {
                 std::string value;
-                if ( can_get_value )
+                if ( !is_null )
                     value = record.getAsString( column_index );
 
                 // Now we add the char128 value (or null) to the record key
-                record_key.add_char128( value, record.isNull( column_index ) );
+                record_key.add_char128( value, is_null );
                 break;
             }  // end case char128
 
             case ColumnType_T::CHAR256:
             {
                 std::string value;
-                if ( can_get_value )
+                if ( !is_null )
                     value = record.getAsString( column_index );
 
                 // Now we add the char256 value (or null) to the record key
-                record_key.add_char256( value, record.isNull( column_index ) );
+                record_key.add_char256( value, is_null );
                 break;
             }  // end case char256
 
             case ColumnType_T::DATE:
             {
                 std::string value;
-                if ( can_get_value )
+                if ( !is_null )
                     value = record.getAsString( column_index );
 
                 // Now we add the date value (or null) to the record key
-                record_key.add_date( value, record.isNull( column_index ) );
+                record_key.add_date( value, is_null );
                 break;
             }  // end case date
 
             case ColumnType_T::DATETIME:
             {
                 std::string value;
-                if ( can_get_value )
+                if ( !is_null )
                     value = record.getAsString( column_index );
 
                 // Now we add the datetime value (or null) to the record key
-                record_key.add_datetime( value, record.isNull( column_index ) );
+                record_key.add_datetime( value, is_null );
                 break;
             }  // end case datetime
 
             case ColumnType_T::DECIMAL:
             {
                 std::string value;
-                if ( can_get_value )
+                if ( !is_null )
                     value = record.getAsString( column_index );
 
                 // Now we add the decimal value (or null) to the record key
-                record_key.add_decimal( value, record.isNull( column_index ) );
+                record_key.add_decimal( value, is_null );
                 break;
             }  // end case decimal
 
             case ColumnType_T::DOUBLE:
             {
                 double value = 0;
-                if ( can_get_value )
+                if ( !is_null )
                     value = record.getAsDouble( column_index );
 
                 // Now we add the double value (or null) to the record key
-                record_key.add_double( value, record.isNull( column_index ) );
+                record_key.add_double( value, is_null );
                 break;
             }  // end case double
 
             case ColumnType_T::FLOAT:
             {
                 float value = 0;
-                if ( can_get_value )
+                if ( !is_null )
                     value = record.getAsFloat( column_index );
 
                 // Now we add the float value (or null) to the record key
-                record_key.add_float( value, record.isNull( column_index ) );
+                record_key.add_float( value, is_null );
                 break;
             }  // end case float
 
             case ColumnType_T::INT:
             {
                 int32_t value = 0;
-                if ( can_get_value )
+                if ( !is_null )
                     value = record.getAsInt( column_index );
 
                 // Now we add the int value (or null) to the record key
-                record_key.add_int( value, record.isNull( column_index ) );
+                record_key.add_int( value, is_null );
                 break;
             }  // end case int
 
@@ -2699,88 +2750,99 @@ bool RecordKeyBuilder::build( const gpudb::GenericRecord& record, RecordKey& rec
             case ColumnType_T::INT8:
             {
                 int32_t value = 0;
-                if ( can_get_value )
+                if ( !is_null )
                     value = record.getAsInt( column_index );
 
                 // Now we add the int8 value (or null) to the record key
-                record_key.add_int8( (int8_t)value, record.isNull( column_index ) );
+                record_key.add_int8( (int8_t)value, is_null );
                 break;
             }  // end case int8
 
             case ColumnType_T::INT16:
             {
                 int32_t value = 0;
-                if ( can_get_value )
+                if ( !is_null )
                     value = record.getAsInt( column_index );
 
                 // Now we add the int16 value (or null) to the record key
-                record_key.add_int16( (int16_t)value, record.isNull( column_index ) );
+                record_key.add_int16( (int16_t)value, is_null );
                 break;
             }  // end case int16
 
             case ColumnType_T::IPV4:
             {
                 std::string value;
-                if ( can_get_value )
+                if ( !is_null )
                     value = record.getAsString( column_index );
 
                 // Now we add the IPv4 value (or null) to the record key
-                record_key.add_ipv4( value, record.isNull( column_index ) );
+                record_key.add_ipv4( value, is_null );
                 break;
             }  // end case ipv4
 
             case ColumnType_T::LONG:
             {
                 int64_t value = 0;
-                if ( can_get_value )
+                if ( !is_null )
                     value = record.getAsLong( column_index );
 
                 // Now we add the long value (or null) to the record key
-                record_key.add_long( value, record.isNull( column_index ) );
+                record_key.add_long( value, is_null );
                 break;
             }  // end case long
 
             case ColumnType_T::TIME:
             {
                 std::string value;
-                if ( can_get_value )
+                if ( !is_null )
                     value = record.getAsString( column_index );
 
                 // Now we add the time value (or null) to the record key
-                record_key.add_time( value, record.isNull( column_index ) );
+                record_key.add_time( value, is_null );
                 break;
             }  // end case time
 
             case ColumnType_T::TIMESTAMP:
             {
                 int64_t value = 0;
-                if ( can_get_value )
+                if ( !is_null )
                     value = record.getAsLong( column_index );
 
                 // Now we add the long value (or null) to the record key
-                record_key.add_timestamp( value, record.isNull( column_index ) );
+                record_key.add_timestamp( value, is_null );
                 break;
             }  // end case timestamp
 
             case ColumnType_T::ULONG:
             {
                 std::string value;
-                if ( can_get_value )
+                if ( !is_null )
                     value = record.getAsString( column_index );
 
                 // Now we add the long value (or null) to the record key
-                record_key.add_ulong( value, record.isNull( column_index ) );
+                record_key.add_ulong( value, is_null );
                 break;
             }  // end case timestamp
+
+            case ColumnType_T::UUID:
+            {
+                std::string value;
+                if ( !is_null )
+                    value = record.getAsString( column_index );
+
+                // Now we add the UUID value (or null) to the record key
+                record_key.add_uuid( value, is_null );
+                break;
+            }  // end case uuid
 
             case ColumnType_T::STRING:
             {
                 std::string value;
-                if ( can_get_value )
+                if ( !is_null )
                     value = record.getAsString( column_index );
 
                 // Now we add the string value (or null) to the record key
-                record_key.add_string( value, record.isNull( column_index ) );
+                record_key.add_string( value, is_null );
                 break;
             }  // end case string
 
@@ -2851,6 +2913,7 @@ bool RecordKeyBuilder::buildExpression( const gpudb::GenericRecord& record,
             case ColumnType_T::IPV4:
             case ColumnType_T::TIME:
             case ColumnType_T::STRING:
+            case ColumnType_T::UUID:
             {
                 ss << "\""
                    << record.getAsString( column_index )

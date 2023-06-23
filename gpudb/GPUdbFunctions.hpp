@@ -60,8 +60,7 @@ AdminAddHostResponse& adminAddHost( const AdminAddHostRequest& request_,
  *                         <li> gpudb::admin_add_host_accepts_failover: If set
  *                 to @a true, the host will accept processes (ranks, graph
  *                 server, etc.) in the event of a failover on another node in
- *                 the cluster. See <a href="../../../n_plus_1/"
- *                 target="_top">Cluster Resilience</a> for more information.
+ *                 the cluster.
  *                 <ul>
  *                         <li> gpudb::admin_add_host_true
  *                         <li> gpudb::admin_add_host_false
@@ -122,8 +121,7 @@ AdminAddHostResponse adminAddHost( const std::string& hostAddress,
  *                         <li> gpudb::admin_add_host_accepts_failover: If set
  *                 to @a true, the host will accept processes (ranks, graph
  *                 server, etc.) in the event of a failover on another node in
- *                 the cluster. See <a href="../../../n_plus_1/"
- *                 target="_top">Cluster Resilience</a> for more information.
+ *                 the cluster.
  *                 <ul>
  *                         <li> gpudb::admin_add_host_true
  *                         <li> gpudb::admin_add_host_false
@@ -496,8 +494,7 @@ AdminAlterHostResponse& adminAlterHost( const AdminAlterHostRequest& request_,
  *                         <li> gpudb::admin_alter_host_accepts_failover: If
  *                 set to @a true, the host will accept processes (ranks, graph
  *                 server, etc.) in the event of a failover on another node in
- *                 the cluster. See <a href="../../../n_plus_1/"
- *                 target="_top">Cluster Resilience</a> for more information.
+ *                 the cluster.
  *                 <ul>
  *                         <li> gpudb::admin_alter_host_true
  *                         <li> gpudb::admin_alter_host_false
@@ -525,8 +522,7 @@ AdminAlterHostResponse adminAlterHost( const std::string& host,
  *                         <li> gpudb::admin_alter_host_accepts_failover: If
  *                 set to @a true, the host will accept processes (ranks, graph
  *                 server, etc.) in the event of a failover on another node in
- *                 the cluster. See <a href="../../../n_plus_1/"
- *                 target="_top">Cluster Resilience</a> for more information.
+ *                 the cluster.
  *                 <ul>
  *                         <li> gpudb::admin_alter_host_true
  *                         <li> gpudb::admin_alter_host_false
@@ -768,6 +764,68 @@ AdminBackupEndResponse adminBackupEnd( const std::map<std::string, std::string>&
 
 AdminBackupEndResponse& adminBackupEnd( const std::map<std::string, std::string>& options,
                                         AdminBackupEndResponse& response_ ) const;
+
+/**
+ * Restarts the HA processing on the given cluster as a mechanism of accepting
+ * breaking HA conf changes. Additionally the cluster is put into read-only
+ * while HA is restarting.
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+AdminHaRefreshResponse adminHaRefresh( const AdminHaRefreshRequest& request_ ) const;
+
+/**
+ * Restarts the HA processing on the given cluster as a mechanism of accepting
+ * breaking HA conf changes. Additionally the cluster is put into read-only
+ * while HA is restarting.
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+AdminHaRefreshResponse& adminHaRefresh( const AdminHaRefreshRequest& request_,
+                                        AdminHaRefreshResponse& response_ ) const;
+
+/**
+ * Restarts the HA processing on the given cluster as a mechanism of accepting
+ * breaking HA conf changes. Additionally the cluster is put into read-only
+ * while HA is restarting.
+ * 
+ * @param options  Optional parameters.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+AdminHaRefreshResponse adminHaRefresh( const std::map<std::string, std::string>& options ) const;
+
+/**
+ * Restarts the HA processing on the given cluster as a mechanism of accepting
+ * breaking HA conf changes. Additionally the cluster is put into read-only
+ * while HA is restarting.
+ * 
+ * @param options  Optional parameters.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+AdminHaRefreshResponse& adminHaRefresh( const std::map<std::string, std::string>& options,
+                                        AdminHaRefreshResponse& response_ ) const;
 
 /**
  * Take the system offline. When the system is offline, no user operations can
@@ -6843,6 +6901,18 @@ AlterSystemPropertiesResponse& alterSystemProperties( const AlterSystemPropertie
  *                            from kafka before ingestion.  The default value
  *                            is '30'.
  *                                    <li>
+ *                            gpudb::alter_system_properties_egress_parquet_compression:
+ *                            Parquet file compression type
+ *                            <ul>
+ *                                    <li>
+ *                            gpudb::alter_system_properties_uncompressed
+ *                                    <li>
+ *                            gpudb::alter_system_properties_snappy
+ *                                    <li> gpudb::alter_system_properties_gzip
+ *                            </ul>
+ *                            The default value is
+ *                            gpudb::alter_system_properties_snappy.
+ *                                    <li>
  *                            gpudb::alter_system_properties_egress_single_file_max_size:
  *                            Max file size (in MB) to allow saving to a single
  *                            file. May be overridden by target limitations.
@@ -7035,6 +7105,18 @@ AlterSystemPropertiesResponse alterSystemProperties( const std::map<std::string,
  *                            Maximum time (seconds) to buffer records received
  *                            from kafka before ingestion.  The default value
  *                            is '30'.
+ *                                    <li>
+ *                            gpudb::alter_system_properties_egress_parquet_compression:
+ *                            Parquet file compression type
+ *                            <ul>
+ *                                    <li>
+ *                            gpudb::alter_system_properties_uncompressed
+ *                                    <li>
+ *                            gpudb::alter_system_properties_snappy
+ *                                    <li> gpudb::alter_system_properties_gzip
+ *                            </ul>
+ *                            The default value is
+ *                            gpudb::alter_system_properties_snappy.
  *                                    <li>
  *                            gpudb::alter_system_properties_egress_single_file_max_size:
  *                            Max file size (in MB) to allow saving to a single
@@ -8233,6 +8315,9 @@ AlterTierResponse& alterTier( const AlterTierRequest& request_,
  *                 resource usage that once fallen below after crossing the @a
  *                 high_watermark, will cease watermark-based eviction from
  *                 this tier.
+ *                         <li> gpudb::alter_tier_wait_timeout: Timeout in
+ *                 seconds for reading from or writing to this resource.
+ *                 Applies to cold storage tiers only.
  *                         <li> gpudb::alter_tier_persist: If @a true the
  *                 system configuration will be written to disk upon successful
  *                 application of this request. This will commit the changes
@@ -8279,6 +8364,9 @@ AlterTierResponse alterTier( const std::string& name,
  *                 resource usage that once fallen below after crossing the @a
  *                 high_watermark, will cease watermark-based eviction from
  *                 this tier.
+ *                         <li> gpudb::alter_tier_wait_timeout: Timeout in
+ *                 seconds for reading from or writing to this resource.
+ *                 Applies to cold storage tiers only.
  *                         <li> gpudb::alter_tier_persist: If @a true the
  *                 system configuration will be written to disk upon successful
  *                 application of this request. This will commit the changes
@@ -8544,37 +8632,60 @@ AppendRecordsResponse& appendRecords( const AppendRecordsRequest& request_,
  *                 desc'. The @a order_by columns do not have to be present in
  *                 @a fieldMap.  The default value is ''.
  *                         <li> gpudb::append_records_update_on_existing_pk:
- *                 Specifies the record collision policy for inserting the
- *                 source table records (specified by @a sourceTableName) into
- *                 the target table (specified by @a tableName) table with a <a
+ *                 Specifies the record collision policy for inserting source
+ *                 table
+ *                 records (specified by @a sourceTableName) into a target
+ *                 table
+ *                 (specified by @a tableName) with a <a
  *                 href="../../../concepts/tables/#primary-keys"
- *                 target="_top">primary key</a>.  If set to @a true, any
- *                 existing target table record with primary key values that
- *                 match those of a source table record being inserted will be
- *                 replaced by that new record.  If set to @a false, any
- *                 existing target table record with primary key values that
- *                 match those of a source table record being inserted will
- *                 remain unchanged and the new record discarded.  If the
- *                 specified table does not have a primary key, then this
- *                 option has no effect.
+ *                 target="_top">primary key</a>. If
+ *                 set to @a true, any existing table record with
+ *                 primary key values that match those of a source table record
+ *                 being inserted will be replaced by that
+ *                 new record (the new data will be "upserted"). If set to
+ *                 @a false, any existing table record with primary
+ *                 key values that match those of a source table record being
+ *                 inserted will remain unchanged, while the
+ *                 source record will be rejected and an error handled as
+ *                 determined by
+ *                 @a ignore_existing_pk.  If the specified table does not have
+ *                 a primary key,
+ *                 then this option has no effect.
  *                 <ul>
- *                         <li> gpudb::append_records_true
- *                         <li> gpudb::append_records_false
+ *                         <li> gpudb::append_records_true: Upsert new records
+ *                 when primary keys match existing records
+ *                         <li> gpudb::append_records_false: Reject new records
+ *                 when primary keys match existing records
  *                 </ul>
  *                 The default value is gpudb::append_records_false.
  *                         <li> gpudb::append_records_ignore_existing_pk:
- *                 Specifies the record collision policy for inserting the
- *                 source table records (specified by @a sourceTableName) into
- *                 the target table (specified by @a tableName) table with a <a
+ *                 Specifies the record collision error-suppression policy for
+ *                 inserting source table records (specified by @a
+ *                 sourceTableName) into a target table
+ *                 (specified by @a tableName) with a <a
  *                 href="../../../concepts/tables/#primary-keys"
- *                 target="_top">primary key</a>.  If set to @a true, any
- *                 source table records being inserted with primary key values
- *                 that match those of an existing target table record will be
- *                 ignored with no error generated.  If the specified table
- *                 does not have a primary key, then this option has no affect.
+ *                 target="_top">primary key</a>, only
+ *                 used when not in upsert mode (upsert mode is disabled when
+ *                 @a update_on_existing_pk is
+ *                 @a false).  If set to
+ *                 @a true, any source table record being inserted that
+ *                 is rejected for having primary key values that match those
+ *                 of an existing target table record will
+ *                 be ignored with no error generated.  If @a false,
+ *                 the rejection of any source table record for having primary
+ *                 key values matching an existing target
+ *                 table record will result in an error being raised.  If the
+ *                 specified table does not have a primary
+ *                 key or if upsert mode is in effect (@a update_on_existing_pk
+ *                 is
+ *                 @a true), then this option has no effect.
  *                 <ul>
- *                         <li> gpudb::append_records_true
- *                         <li> gpudb::append_records_false
+ *                         <li> gpudb::append_records_true: Ignore source table
+ *                 records whose primary key values collide with those of
+ *                 target table records
+ *                         <li> gpudb::append_records_false: Raise an error for
+ *                 any source table record whose primary key values collide
+ *                 with those of a target table record
  *                 </ul>
  *                 The default value is gpudb::append_records_false.
  *                         <li> gpudb::append_records_truncate_strings: If set
@@ -8643,37 +8754,60 @@ AppendRecordsResponse appendRecords( const std::string& tableName,
  *                 desc'. The @a order_by columns do not have to be present in
  *                 @a fieldMap.  The default value is ''.
  *                         <li> gpudb::append_records_update_on_existing_pk:
- *                 Specifies the record collision policy for inserting the
- *                 source table records (specified by @a sourceTableName) into
- *                 the target table (specified by @a tableName) table with a <a
+ *                 Specifies the record collision policy for inserting source
+ *                 table
+ *                 records (specified by @a sourceTableName) into a target
+ *                 table
+ *                 (specified by @a tableName) with a <a
  *                 href="../../../concepts/tables/#primary-keys"
- *                 target="_top">primary key</a>.  If set to @a true, any
- *                 existing target table record with primary key values that
- *                 match those of a source table record being inserted will be
- *                 replaced by that new record.  If set to @a false, any
- *                 existing target table record with primary key values that
- *                 match those of a source table record being inserted will
- *                 remain unchanged and the new record discarded.  If the
- *                 specified table does not have a primary key, then this
- *                 option has no effect.
+ *                 target="_top">primary key</a>. If
+ *                 set to @a true, any existing table record with
+ *                 primary key values that match those of a source table record
+ *                 being inserted will be replaced by that
+ *                 new record (the new data will be "upserted"). If set to
+ *                 @a false, any existing table record with primary
+ *                 key values that match those of a source table record being
+ *                 inserted will remain unchanged, while the
+ *                 source record will be rejected and an error handled as
+ *                 determined by
+ *                 @a ignore_existing_pk.  If the specified table does not have
+ *                 a primary key,
+ *                 then this option has no effect.
  *                 <ul>
- *                         <li> gpudb::append_records_true
- *                         <li> gpudb::append_records_false
+ *                         <li> gpudb::append_records_true: Upsert new records
+ *                 when primary keys match existing records
+ *                         <li> gpudb::append_records_false: Reject new records
+ *                 when primary keys match existing records
  *                 </ul>
  *                 The default value is gpudb::append_records_false.
  *                         <li> gpudb::append_records_ignore_existing_pk:
- *                 Specifies the record collision policy for inserting the
- *                 source table records (specified by @a sourceTableName) into
- *                 the target table (specified by @a tableName) table with a <a
+ *                 Specifies the record collision error-suppression policy for
+ *                 inserting source table records (specified by @a
+ *                 sourceTableName) into a target table
+ *                 (specified by @a tableName) with a <a
  *                 href="../../../concepts/tables/#primary-keys"
- *                 target="_top">primary key</a>.  If set to @a true, any
- *                 source table records being inserted with primary key values
- *                 that match those of an existing target table record will be
- *                 ignored with no error generated.  If the specified table
- *                 does not have a primary key, then this option has no affect.
+ *                 target="_top">primary key</a>, only
+ *                 used when not in upsert mode (upsert mode is disabled when
+ *                 @a update_on_existing_pk is
+ *                 @a false).  If set to
+ *                 @a true, any source table record being inserted that
+ *                 is rejected for having primary key values that match those
+ *                 of an existing target table record will
+ *                 be ignored with no error generated.  If @a false,
+ *                 the rejection of any source table record for having primary
+ *                 key values matching an existing target
+ *                 table record will result in an error being raised.  If the
+ *                 specified table does not have a primary
+ *                 key or if upsert mode is in effect (@a update_on_existing_pk
+ *                 is
+ *                 @a true), then this option has no effect.
  *                 <ul>
- *                         <li> gpudb::append_records_true
- *                         <li> gpudb::append_records_false
+ *                         <li> gpudb::append_records_true: Ignore source table
+ *                 records whose primary key values collide with those of
+ *                 target table records
+ *                         <li> gpudb::append_records_false: Raise an error for
+ *                 any source table record whose primary key values collide
+ *                 with those of a target table record
  *                 </ul>
  *                 The default value is gpudb::append_records_false.
  *                         <li> gpudb::append_records_truncate_strings: If set
@@ -9390,6 +9524,17 @@ CreateDatasinkResponse& createDatasink( const CreateDatasinkRequest& request_,
  *                 the Amazon S3 bucket to use as the data sink
  *                         <li> gpudb::create_datasink_s3_region: Name of the
  *                 Amazon S3 region where the given bucket is located
+ *                         <li>
+ *                 gpudb::create_datasink_s3_use_virtual_addressing: When true
+ *                 (default), the requests URI should be specified in
+ *                 virtual-hosted-style format where the bucket name is part of
+ *                 the domain name in the URL.
+ *                 Otherwise set to false to use path-style URI for requests.
+ *                 <ul>
+ *                         <li> gpudb::create_datasink_true
+ *                         <li> gpudb::create_datasink_false
+ *                 </ul>
+ *                 The default value is gpudb::create_datasink_true.
  *                         <li> gpudb::create_datasink_s3_aws_role_arn: Amazon
  *                 IAM Role ARN which has required S3 permissions that can be
  *                 assumed for the given S3 IAM user
@@ -9511,6 +9656,17 @@ CreateDatasinkResponse createDatasink( const std::string& name,
  *                 the Amazon S3 bucket to use as the data sink
  *                         <li> gpudb::create_datasink_s3_region: Name of the
  *                 Amazon S3 region where the given bucket is located
+ *                         <li>
+ *                 gpudb::create_datasink_s3_use_virtual_addressing: When true
+ *                 (default), the requests URI should be specified in
+ *                 virtual-hosted-style format where the bucket name is part of
+ *                 the domain name in the URL.
+ *                 Otherwise set to false to use path-style URI for requests.
+ *                 <ul>
+ *                         <li> gpudb::create_datasink_true
+ *                         <li> gpudb::create_datasink_false
+ *                 </ul>
+ *                 The default value is gpudb::create_datasink_true.
  *                         <li> gpudb::create_datasink_s3_aws_role_arn: Amazon
  *                 IAM Role ARN which has required S3 permissions that can be
  *                 assumed for the given S3 IAM user
@@ -9679,6 +9835,17 @@ CreateDatasourceResponse& createDatasource( const CreateDatasourceRequest& reque
  *                 of the Amazon S3 bucket to use as the data source
  *                         <li> gpudb::create_datasource_s3_region: Name of the
  *                 Amazon S3 region where the given bucket is located
+ *                         <li>
+ *                 gpudb::create_datasource_s3_use_virtual_addressing: When
+ *                 true (default), the requests URI should be specified in
+ *                 virtual-hosted-style format where the bucket name is part of
+ *                 the domain name in the URL.
+ *                 Otherwise set to false to use path-style URI for requests.
+ *                 <ul>
+ *                         <li> gpudb::create_datasource_true
+ *                         <li> gpudb::create_datasource_false
+ *                 </ul>
+ *                 The default value is gpudb::create_datasource_true.
  *                         <li> gpudb::create_datasource_s3_aws_role_arn:
  *                 Amazon IAM Role ARN which has required S3 permissions that
  *                 can be assumed for the given S3 IAM user
@@ -9807,6 +9974,17 @@ CreateDatasourceResponse createDatasource( const std::string& name,
  *                 of the Amazon S3 bucket to use as the data source
  *                         <li> gpudb::create_datasource_s3_region: Name of the
  *                 Amazon S3 region where the given bucket is located
+ *                         <li>
+ *                 gpudb::create_datasource_s3_use_virtual_addressing: When
+ *                 true (default), the requests URI should be specified in
+ *                 virtual-hosted-style format where the bucket name is part of
+ *                 the domain name in the URL.
+ *                 Otherwise set to false to use path-style URI for requests.
+ *                 <ul>
+ *                         <li> gpudb::create_datasource_true
+ *                         <li> gpudb::create_datasource_false
+ *                 </ul>
+ *                 The default value is gpudb::create_datasource_true.
  *                         <li> gpudb::create_datasource_s3_aws_role_arn:
  *                 Amazon IAM Role ARN which has required S3 permissions that
  *                 can be assumed for the given S3 IAM user
@@ -12903,12 +13081,23 @@ CreateTableExternalResponse& createTableExternal( const CreateTableExternalReque
  *                            </ul>
  * @param options  Optional parameters.
  *                 <ul>
+ *                         <li> gpudb::create_table_external_avro_header_bytes:
+ *                 Optional number of bytes to skip when reading an avro
+ *                 record.
  *                         <li> gpudb::create_table_external_avro_num_records:
  *                 Optional number of avro records, if data includes only
  *                 records.
  *                         <li> gpudb::create_table_external_avro_schema:
  *                 Optional string representing avro schema, for insert records
  *                 in avro format, that does not include is schema.
+ *                         <li> gpudb::create_table_external_avro_schemaless:
+ *                 When user provides 'avro_schema', avro data is assumed to be
+ *                 schemaless, unless specified. Default is 'true' when given
+ *                 avro_schema. Igonred when avro_schema is not given.
+ *                 <ul>
+ *                         <li> gpudb::create_table_external_true
+ *                         <li> gpudb::create_table_external_false
+ *                 </ul>
  *                         <li>
  *                 gpudb::create_table_external_bad_record_table_name: Optional
  *                 name of a table to which records that were rejected are
@@ -13073,6 +13262,35 @@ CreateTableExternalResponse& createTableExternal( const CreateTableExternalReque
  *                 </ul>
  *                 The default value is
  *                 gpudb::create_table_external_delimited_text.
+ *                         <li>
+ *                 gpudb::create_table_external_ignore_existing_pk: Specifies
+ *                 the record collision error-suppression policy for
+ *                 inserting into a table with a <a
+ *                 href="../../../concepts/tables/#primary-keys"
+ *                 target="_top">primary key</a>, only used when
+ *                 not in upsert mode (upsert mode is disabled when @a
+ *                 update_on_existing_pk is
+ *                 @a false).  If set to
+ *                 @a true, any record being inserted that is rejected
+ *                 for having primary key values that match those of an
+ *                 existing table record will be ignored with no
+ *                 error generated.  If @a false, the rejection of any
+ *                 record for having primary key values matching an existing
+ *                 record will result in an error being
+ *                 reported, as determined by @a error_handling.  If the
+ *                 specified table does not
+ *                 have a primary key or if upsert mode is in effect (@a
+ *                 update_on_existing_pk is
+ *                 @a true), then this option has no effect.
+ *                 <ul>
+ *                         <li> gpudb::create_table_external_true: Ignore new
+ *                 records whose primary key values collide with those of
+ *                 existing records
+ *                         <li> gpudb::create_table_external_false: Treat as
+ *                 errors any new records whose primary key values collide with
+ *                 those of existing records
+ *                 </ul>
+ *                 The default value is gpudb::create_table_external_false.
  *                         <li> gpudb::create_table_external_ingestion_mode:
  *                 Whether to do a full load, dry run, or perform a type
  *                 inference on the source data.
@@ -13328,16 +13546,26 @@ CreateTableExternalResponse& createTableExternal( const CreateTableExternalReque
  *                 value is ''.
  *                         <li>
  *                 gpudb::create_table_external_update_on_existing_pk:
+ *                 Specifies the record collision policy for inserting into a
+ *                 table
+ *                 with a <a href="../../../concepts/tables/#primary-keys"
+ *                 target="_top">primary key</a>. If set to
+ *                 @a true, any existing table record with primary
+ *                 key values that match those of a record being inserted will
+ *                 be replaced by that new record (the new
+ *                 data will be "upserted"). If set to @a false,
+ *                 any existing table record with primary key values that match
+ *                 those of a record being inserted will
+ *                 remain unchanged, while the new record will be rejected and
+ *                 the error handled as determined by
+ *                 @a ignore_existing_pk & @a error_handling.  If the
+ *                 specified table does not have a primary key, then this
+ *                 option has no effect.
  *                 <ul>
- *                         <li> gpudb::create_table_external_true
- *                         <li> gpudb::create_table_external_false
- *                 </ul>
- *                 The default value is gpudb::create_table_external_false.
- *                         <li>
- *                 gpudb::create_table_external_ignore_existing_pk:
- *                 <ul>
- *                         <li> gpudb::create_table_external_true
- *                         <li> gpudb::create_table_external_false
+ *                         <li> gpudb::create_table_external_true: Upsert new
+ *                 records when primary keys match existing records
+ *                         <li> gpudb::create_table_external_false: Reject new
+ *                 records when primary keys match existing records
  *                 </ul>
  *                 The default value is gpudb::create_table_external_false.
  *                 </ul>
@@ -13573,12 +13801,23 @@ CreateTableExternalResponse createTableExternal( const std::string& tableName,
  *                            </ul>
  * @param options  Optional parameters.
  *                 <ul>
+ *                         <li> gpudb::create_table_external_avro_header_bytes:
+ *                 Optional number of bytes to skip when reading an avro
+ *                 record.
  *                         <li> gpudb::create_table_external_avro_num_records:
  *                 Optional number of avro records, if data includes only
  *                 records.
  *                         <li> gpudb::create_table_external_avro_schema:
  *                 Optional string representing avro schema, for insert records
  *                 in avro format, that does not include is schema.
+ *                         <li> gpudb::create_table_external_avro_schemaless:
+ *                 When user provides 'avro_schema', avro data is assumed to be
+ *                 schemaless, unless specified. Default is 'true' when given
+ *                 avro_schema. Igonred when avro_schema is not given.
+ *                 <ul>
+ *                         <li> gpudb::create_table_external_true
+ *                         <li> gpudb::create_table_external_false
+ *                 </ul>
  *                         <li>
  *                 gpudb::create_table_external_bad_record_table_name: Optional
  *                 name of a table to which records that were rejected are
@@ -13743,6 +13982,35 @@ CreateTableExternalResponse createTableExternal( const std::string& tableName,
  *                 </ul>
  *                 The default value is
  *                 gpudb::create_table_external_delimited_text.
+ *                         <li>
+ *                 gpudb::create_table_external_ignore_existing_pk: Specifies
+ *                 the record collision error-suppression policy for
+ *                 inserting into a table with a <a
+ *                 href="../../../concepts/tables/#primary-keys"
+ *                 target="_top">primary key</a>, only used when
+ *                 not in upsert mode (upsert mode is disabled when @a
+ *                 update_on_existing_pk is
+ *                 @a false).  If set to
+ *                 @a true, any record being inserted that is rejected
+ *                 for having primary key values that match those of an
+ *                 existing table record will be ignored with no
+ *                 error generated.  If @a false, the rejection of any
+ *                 record for having primary key values matching an existing
+ *                 record will result in an error being
+ *                 reported, as determined by @a error_handling.  If the
+ *                 specified table does not
+ *                 have a primary key or if upsert mode is in effect (@a
+ *                 update_on_existing_pk is
+ *                 @a true), then this option has no effect.
+ *                 <ul>
+ *                         <li> gpudb::create_table_external_true: Ignore new
+ *                 records whose primary key values collide with those of
+ *                 existing records
+ *                         <li> gpudb::create_table_external_false: Treat as
+ *                 errors any new records whose primary key values collide with
+ *                 those of existing records
+ *                 </ul>
+ *                 The default value is gpudb::create_table_external_false.
  *                         <li> gpudb::create_table_external_ingestion_mode:
  *                 Whether to do a full load, dry run, or perform a type
  *                 inference on the source data.
@@ -13998,16 +14266,26 @@ CreateTableExternalResponse createTableExternal( const std::string& tableName,
  *                 value is ''.
  *                         <li>
  *                 gpudb::create_table_external_update_on_existing_pk:
+ *                 Specifies the record collision policy for inserting into a
+ *                 table
+ *                 with a <a href="../../../concepts/tables/#primary-keys"
+ *                 target="_top">primary key</a>. If set to
+ *                 @a true, any existing table record with primary
+ *                 key values that match those of a record being inserted will
+ *                 be replaced by that new record (the new
+ *                 data will be "upserted"). If set to @a false,
+ *                 any existing table record with primary key values that match
+ *                 those of a record being inserted will
+ *                 remain unchanged, while the new record will be rejected and
+ *                 the error handled as determined by
+ *                 @a ignore_existing_pk & @a error_handling.  If the
+ *                 specified table does not have a primary key, then this
+ *                 option has no effect.
  *                 <ul>
- *                         <li> gpudb::create_table_external_true
- *                         <li> gpudb::create_table_external_false
- *                 </ul>
- *                 The default value is gpudb::create_table_external_false.
- *                         <li>
- *                 gpudb::create_table_external_ignore_existing_pk:
- *                 <ul>
- *                         <li> gpudb::create_table_external_true
- *                         <li> gpudb::create_table_external_false
+ *                         <li> gpudb::create_table_external_true: Upsert new
+ *                 records when primary keys match existing records
+ *                         <li> gpudb::create_table_external_false: Reject new
+ *                 records when primary keys match existing records
  *                 </ul>
  *                 The default value is gpudb::create_table_external_false.
  *                 </ul>
@@ -16095,7 +16373,12 @@ DeleteFilesResponse& deleteFiles( const DeleteFilesRequest& request_,
  * Deletes one or more files from <a href="../../../tools/kifs/"
  * target="_top">KiFS</a>.
  * 
- * @param fileNames  An array of names of files to be deleted.
+ * @param fileNames  An array of names of files to be deleted. File paths may
+ *                   contain wildcard characters after the KiFS directory
+ *                   delimeter.
+ *                   Accepted wildcard characters are asterisk (*) to represent
+ *                   any string of zero or more characters, and question mark
+ *                   (?) to indicate a single character.
  * @param options  Optional parameters.
  *                 <ul>
  *                         <li> gpudb::delete_files_no_error_if_not_exists: If
@@ -16119,7 +16402,12 @@ DeleteFilesResponse deleteFiles( const std::vector<std::string>& fileNames,
  * Deletes one or more files from <a href="../../../tools/kifs/"
  * target="_top">KiFS</a>.
  * 
- * @param fileNames  An array of names of files to be deleted.
+ * @param fileNames  An array of names of files to be deleted. File paths may
+ *                   contain wildcard characters after the KiFS directory
+ *                   delimeter.
+ *                   Accepted wildcard characters are asterisk (*) to represent
+ *                   any string of zero or more characters, and question mark
+ *                   (?) to indicate a single character.
  * @param options  Optional parameters.
  *                 <ul>
  *                         <li> gpudb::delete_files_no_error_if_not_exists: If
@@ -16693,8 +16981,12 @@ DownloadFilesResponse& downloadFiles( const DownloadFilesRequest& request_,
  * Downloads one or more files from <a href="../../../tools/kifs/"
  * target="_top">KiFS</a>.
  * 
- * @param fileNames  An array of the file names to download from KiFS. The full
- *                   path must be provided.
+ * @param fileNames  An array of the file names to download from KiFS. File
+ *                   paths may contain wildcard characters after the KiFS
+ *                   directory delimeter.
+ *                   Accepted wildcard characters are asterisk (*) to represent
+ *                   any string of zero or more characters, and question mark
+ *                   (?) to indicate a single character.
  * @param readOffsets  An array of starting byte offsets from which to read
  *                     each
  *                     respective file in @a fileNames. Must either be empty or
@@ -16737,8 +17029,12 @@ DownloadFilesResponse downloadFiles( const std::vector<std::string>& fileNames,
  * Downloads one or more files from <a href="../../../tools/kifs/"
  * target="_top">KiFS</a>.
  * 
- * @param fileNames  An array of the file names to download from KiFS. The full
- *                   path must be provided.
+ * @param fileNames  An array of the file names to download from KiFS. File
+ *                   paths may contain wildcard characters after the KiFS
+ *                   directory delimeter.
+ *                   Accepted wildcard characters are asterisk (*) to represent
+ *                   any string of zero or more characters, and question mark
+ *                   (?) to indicate a single character.
  * @param readOffsets  An array of starting byte offsets from which to read
  *                     each
  *                     respective file in @a fileNames. Must either be empty or
@@ -17720,12 +18016,29 @@ ExecuteSqlResponse& executeSql( const ExecuteSqlRequest& request_,
  *                         <li> gpudb::execute_sql_false
  *                 </ul>
  *                 The default value is gpudb::execute_sql_false.
- *                         <li> gpudb::execute_sql_ignore_existing_pk: Can be
- *                 used to customize behavior when the updated primary key
- *                 value already exists as described in /insert/records.
+ *                         <li> gpudb::execute_sql_ignore_existing_pk:
+ *                 Specifies the record collision error-suppression policy for
+ *                 inserting into or updating a table with a <a
+ *                 href="../../../concepts/tables/#primary-keys"
+ *                 target="_top">primary key</a>, only
+ *                 used when primary key record collisions are rejected (@a
+ *                 update_on_existing_pk
+ *                 is @a false).  If set to
+ *                 @a true, any record insert/update that is rejected
+ *                 for resulting in a primary key collision with an existing
+ *                 table record will be ignored with no error
+ *                 generated.  If @a false, the rejection of any
+ *                 insert/update for resulting in a primary key collision will
+ *                 cause an error to be reported.  If the
+ *                 specified table does not have a primary key or if @a
+ *                 update_on_existing_pk is
+ *                 @a true, then this option has no effect.
  *                 <ul>
- *                         <li> gpudb::execute_sql_true
- *                         <li> gpudb::execute_sql_false
+ *                         <li> gpudb::execute_sql_true: Ignore inserts/updates
+ *                 that result in primary key collisions with existing records
+ *                         <li> gpudb::execute_sql_false: Treat as errors any
+ *                 inserts/updates that result in primary key collisions with
+ *                 existing records
  *                 </ul>
  *                 The default value is gpudb::execute_sql_false.
  *                         <li> gpudb::execute_sql_late_materialization: If @a
@@ -17806,12 +18119,29 @@ ExecuteSqlResponse& executeSql( const ExecuteSqlRequest& request_,
  *                         <li> gpudb::execute_sql_ttl: Sets the <a
  *                 href="../../../concepts/ttl/" target="_top">TTL</a> of the
  *                 intermediate result tables used in query execution.
- *                         <li> gpudb::execute_sql_update_on_existing_pk: Can
- *                 be used to customize behavior when the updated primary key
- *                 value already exists as described in /insert/records.
+ *                         <li> gpudb::execute_sql_update_on_existing_pk:
+ *                 Specifies the record collision policy for inserting into or
+ *                 updating
+ *                 a table with a <a
+ *                 href="../../../concepts/tables/#primary-keys"
+ *                 target="_top">primary key</a>. If set to
+ *                 @a true, any existing table record with primary
+ *                 key values that match those of a record being inserted or
+ *                 updated will be replaced by that record.
+ *                 If set to @a false, any such primary key
+ *                 collision will result in the insert/update being rejected
+ *                 and the error handled as determined by
+ *                 @a ignore_existing_pk.  If the specified table does not have
+ *                 a primary key,
+ *                 then this option has no effect.
  *                 <ul>
- *                         <li> gpudb::execute_sql_true
- *                         <li> gpudb::execute_sql_false
+ *                         <li> gpudb::execute_sql_true: Replace the
+ *                 collided-into record with the record inserted or updated
+ *                 when a new/modified record causes a primary key collision
+ *                 with an existing record
+ *                         <li> gpudb::execute_sql_false: Reject the insert or
+ *                 update when it results in a primary key collision with an
+ *                 existing record
  *                 </ul>
  *                 The default value is gpudb::execute_sql_false.
  *                         <li> gpudb::execute_sql_validate_change_column: When
@@ -17897,12 +18227,29 @@ ExecuteSqlResponse executeSql( const std::string& statement,
  *                         <li> gpudb::execute_sql_false
  *                 </ul>
  *                 The default value is gpudb::execute_sql_false.
- *                         <li> gpudb::execute_sql_ignore_existing_pk: Can be
- *                 used to customize behavior when the updated primary key
- *                 value already exists as described in /insert/records.
+ *                         <li> gpudb::execute_sql_ignore_existing_pk:
+ *                 Specifies the record collision error-suppression policy for
+ *                 inserting into or updating a table with a <a
+ *                 href="../../../concepts/tables/#primary-keys"
+ *                 target="_top">primary key</a>, only
+ *                 used when primary key record collisions are rejected (@a
+ *                 update_on_existing_pk
+ *                 is @a false).  If set to
+ *                 @a true, any record insert/update that is rejected
+ *                 for resulting in a primary key collision with an existing
+ *                 table record will be ignored with no error
+ *                 generated.  If @a false, the rejection of any
+ *                 insert/update for resulting in a primary key collision will
+ *                 cause an error to be reported.  If the
+ *                 specified table does not have a primary key or if @a
+ *                 update_on_existing_pk is
+ *                 @a true, then this option has no effect.
  *                 <ul>
- *                         <li> gpudb::execute_sql_true
- *                         <li> gpudb::execute_sql_false
+ *                         <li> gpudb::execute_sql_true: Ignore inserts/updates
+ *                 that result in primary key collisions with existing records
+ *                         <li> gpudb::execute_sql_false: Treat as errors any
+ *                 inserts/updates that result in primary key collisions with
+ *                 existing records
  *                 </ul>
  *                 The default value is gpudb::execute_sql_false.
  *                         <li> gpudb::execute_sql_late_materialization: If @a
@@ -17983,12 +18330,29 @@ ExecuteSqlResponse executeSql( const std::string& statement,
  *                         <li> gpudb::execute_sql_ttl: Sets the <a
  *                 href="../../../concepts/ttl/" target="_top">TTL</a> of the
  *                 intermediate result tables used in query execution.
- *                         <li> gpudb::execute_sql_update_on_existing_pk: Can
- *                 be used to customize behavior when the updated primary key
- *                 value already exists as described in /insert/records.
+ *                         <li> gpudb::execute_sql_update_on_existing_pk:
+ *                 Specifies the record collision policy for inserting into or
+ *                 updating
+ *                 a table with a <a
+ *                 href="../../../concepts/tables/#primary-keys"
+ *                 target="_top">primary key</a>. If set to
+ *                 @a true, any existing table record with primary
+ *                 key values that match those of a record being inserted or
+ *                 updated will be replaced by that record.
+ *                 If set to @a false, any such primary key
+ *                 collision will result in the insert/update being rejected
+ *                 and the error handled as determined by
+ *                 @a ignore_existing_pk.  If the specified table does not have
+ *                 a primary key,
+ *                 then this option has no effect.
  *                 <ul>
- *                         <li> gpudb::execute_sql_true
- *                         <li> gpudb::execute_sql_false
+ *                         <li> gpudb::execute_sql_true: Replace the
+ *                 collided-into record with the record inserted or updated
+ *                 when a new/modified record causes a primary key collision
+ *                 with an existing record
+ *                         <li> gpudb::execute_sql_false: Reject the insert or
+ *                 update when it results in a primary key collision with an
+ *                 existing record
  *                 </ul>
  *                 The default value is gpudb::execute_sql_false.
  *                         <li> gpudb::execute_sql_validate_change_column: When
@@ -18222,6 +18586,17 @@ ExportRecordsToFilesResponse& exportRecordsToFiles( const ExportRecordsToFilesRe
  *                 a Kinetica proprietary header is included, then specify a
  *                 property separator. Different from column delimiter.  The
  *                 default value is '|'.
+ *                         <li>
+ *                 gpudb::export_records_to_files_compression_type: File
+ *                 compression type. Different file types support different
+ *                 compresion types. text: uncompressed. parquet: uncompressed,
+ *                 snappy, gzip.
+ *                 <ul>
+ *                         <li> gpudb::export_records_to_files_uncompressed
+ *                         <li> gpudb::export_records_to_files_snappy
+ *                         <li> gpudb::export_records_to_files_gzip
+ *                 </ul>
+ *                 The default value is gpudb::export_records_to_files_snappy.
  *                         <li> gpudb::export_records_to_files_single_file:
  *                 Save records to a single file. This option may be ignored if
  *                 file
@@ -18230,6 +18605,7 @@ ExportRecordsToFilesResponse& exportRecordsToFiles( const ExportRecordsToFilesRe
  *                 <ul>
  *                         <li> gpudb::export_records_to_files_true
  *                         <li> gpudb::export_records_to_files_false
+ *                         <li> gpudb::export_records_to_files_overwrite
  *                 </ul>
  *                 The default value is gpudb::export_records_to_files_true.
  *                         <li> gpudb::export_records_to_files_text_delimiter:
@@ -18401,6 +18777,17 @@ ExportRecordsToFilesResponse exportRecordsToFiles( const std::string& tableName,
  *                 a Kinetica proprietary header is included, then specify a
  *                 property separator. Different from column delimiter.  The
  *                 default value is '|'.
+ *                         <li>
+ *                 gpudb::export_records_to_files_compression_type: File
+ *                 compression type. Different file types support different
+ *                 compresion types. text: uncompressed. parquet: uncompressed,
+ *                 snappy, gzip.
+ *                 <ul>
+ *                         <li> gpudb::export_records_to_files_uncompressed
+ *                         <li> gpudb::export_records_to_files_snappy
+ *                         <li> gpudb::export_records_to_files_gzip
+ *                 </ul>
+ *                 The default value is gpudb::export_records_to_files_snappy.
  *                         <li> gpudb::export_records_to_files_single_file:
  *                 Save records to a single file. This option may be ignored if
  *                 file
@@ -18409,6 +18796,7 @@ ExportRecordsToFilesResponse exportRecordsToFiles( const std::string& tableName,
  *                 <ul>
  *                         <li> gpudb::export_records_to_files_true
  *                         <li> gpudb::export_records_to_files_false
+ *                         <li> gpudb::export_records_to_files_overwrite
  *                 </ul>
  *                 The default value is gpudb::export_records_to_files_true.
  *                         <li> gpudb::export_records_to_files_text_delimiter:
@@ -26150,33 +26538,55 @@ InsertRecordsResponse& insertRecords( const InsertRecordsRequest<TRequest>& requ
  *                 <ul>
  *                         <li> gpudb::insert_records_update_on_existing_pk:
  *                 Specifies the record collision policy for inserting into a
- *                 table with a <a
- *                 href="../../../concepts/tables/#primary-keys"
- *                 target="_top">primary key</a>.  If set to @a true, any
- *                 existing table record with primary key values that match
- *                 those of a record being inserted will be replaced by that
- *                 new record.  If set to @a false, any existing table record
- *                 with primary key values that match those of a record being
- *                 inserted will remain unchanged and the new record discarded.
- *                 If the specified table does not have a primary key, then
- *                 this option has no affect.
+ *                 table
+ *                 with a <a href="../../../concepts/tables/#primary-keys"
+ *                 target="_top">primary key</a>. If set to
+ *                 @a true, any existing table record with primary
+ *                 key values that match those of a record being inserted will
+ *                 be replaced by that new record (the new
+ *                 data will be "upserted"). If set to @a false,
+ *                 any existing table record with primary key values that match
+ *                 those of a record being inserted will
+ *                 remain unchanged, while the new record will be rejected and
+ *                 the error handled as determined by
+ *                 @a ignore_existing_pk, @a allow_partial_batch, &
+ *                 @a return_individual_errors.  If the specified table does
+ *                 not have a primary
+ *                 key, then this option has no effect.
  *                 <ul>
- *                         <li> gpudb::insert_records_true
- *                         <li> gpudb::insert_records_false
+ *                         <li> gpudb::insert_records_true: Upsert new records
+ *                 when primary keys match existing records
+ *                         <li> gpudb::insert_records_false: Reject new records
+ *                 when primary keys match existing records
  *                 </ul>
  *                 The default value is gpudb::insert_records_false.
  *                         <li> gpudb::insert_records_ignore_existing_pk:
- *                 Specifies the record collision policy for inserting into a
- *                 table with a <a
+ *                 Specifies the record collision error-suppression policy for
+ *                 inserting into a table with a <a
  *                 href="../../../concepts/tables/#primary-keys"
- *                 target="_top">primary key</a>.  If set to @a true, any
- *                 record being inserted with primary key values that match
- *                 those of an existing table record will be ignored with no
- *                 error generated.  If the specified table does not have a
- *                 primary key, then this option has no affect.
+ *                 target="_top">primary key</a>, only used when
+ *                 not in upsert mode (upsert mode is disabled when @a
+ *                 update_on_existing_pk is
+ *                 @a false).  If set to
+ *                 @a true, any record being inserted that is rejected
+ *                 for having primary key values that match those of an
+ *                 existing table record will be ignored with no
+ *                 error generated.  If @a false, the rejection of any
+ *                 record for having primary key values matching an existing
+ *                 record will result in an error being
+ *                 reported, as determined by @a allow_partial_batch &
+ *                 @a return_individual_errors.  If the specified table does
+ *                 not
+ *                 have a primary key or if upsert mode is in effect (@a
+ *                 update_on_existing_pk is
+ *                 @a true), then this option has no effect.
  *                 <ul>
- *                         <li> gpudb::insert_records_true
- *                         <li> gpudb::insert_records_false
+ *                         <li> gpudb::insert_records_true: Ignore new records
+ *                 whose primary key values collide with those of existing
+ *                 records
+ *                         <li> gpudb::insert_records_false: Treat as errors
+ *                 any new records whose primary key values collide with those
+ *                 of existing records
  *                 </ul>
  *                 The default value is gpudb::insert_records_false.
  *                         <li> gpudb::insert_records_return_record_ids: If @a
@@ -26279,33 +26689,55 @@ InsertRecordsResponse insertRecords( const std::string& tableName,
  *                 <ul>
  *                         <li> gpudb::insert_records_update_on_existing_pk:
  *                 Specifies the record collision policy for inserting into a
- *                 table with a <a
- *                 href="../../../concepts/tables/#primary-keys"
- *                 target="_top">primary key</a>.  If set to @a true, any
- *                 existing table record with primary key values that match
- *                 those of a record being inserted will be replaced by that
- *                 new record.  If set to @a false, any existing table record
- *                 with primary key values that match those of a record being
- *                 inserted will remain unchanged and the new record discarded.
- *                 If the specified table does not have a primary key, then
- *                 this option has no affect.
+ *                 table
+ *                 with a <a href="../../../concepts/tables/#primary-keys"
+ *                 target="_top">primary key</a>. If set to
+ *                 @a true, any existing table record with primary
+ *                 key values that match those of a record being inserted will
+ *                 be replaced by that new record (the new
+ *                 data will be "upserted"). If set to @a false,
+ *                 any existing table record with primary key values that match
+ *                 those of a record being inserted will
+ *                 remain unchanged, while the new record will be rejected and
+ *                 the error handled as determined by
+ *                 @a ignore_existing_pk, @a allow_partial_batch, &
+ *                 @a return_individual_errors.  If the specified table does
+ *                 not have a primary
+ *                 key, then this option has no effect.
  *                 <ul>
- *                         <li> gpudb::insert_records_true
- *                         <li> gpudb::insert_records_false
+ *                         <li> gpudb::insert_records_true: Upsert new records
+ *                 when primary keys match existing records
+ *                         <li> gpudb::insert_records_false: Reject new records
+ *                 when primary keys match existing records
  *                 </ul>
  *                 The default value is gpudb::insert_records_false.
  *                         <li> gpudb::insert_records_ignore_existing_pk:
- *                 Specifies the record collision policy for inserting into a
- *                 table with a <a
+ *                 Specifies the record collision error-suppression policy for
+ *                 inserting into a table with a <a
  *                 href="../../../concepts/tables/#primary-keys"
- *                 target="_top">primary key</a>.  If set to @a true, any
- *                 record being inserted with primary key values that match
- *                 those of an existing table record will be ignored with no
- *                 error generated.  If the specified table does not have a
- *                 primary key, then this option has no affect.
+ *                 target="_top">primary key</a>, only used when
+ *                 not in upsert mode (upsert mode is disabled when @a
+ *                 update_on_existing_pk is
+ *                 @a false).  If set to
+ *                 @a true, any record being inserted that is rejected
+ *                 for having primary key values that match those of an
+ *                 existing table record will be ignored with no
+ *                 error generated.  If @a false, the rejection of any
+ *                 record for having primary key values matching an existing
+ *                 record will result in an error being
+ *                 reported, as determined by @a allow_partial_batch &
+ *                 @a return_individual_errors.  If the specified table does
+ *                 not
+ *                 have a primary key or if upsert mode is in effect (@a
+ *                 update_on_existing_pk is
+ *                 @a true), then this option has no effect.
  *                 <ul>
- *                         <li> gpudb::insert_records_true
- *                         <li> gpudb::insert_records_false
+ *                         <li> gpudb::insert_records_true: Ignore new records
+ *                 whose primary key values collide with those of existing
+ *                 records
+ *                         <li> gpudb::insert_records_false: Treat as errors
+ *                 any new records whose primary key values collide with those
+ *                 of existing records
  *                 </ul>
  *                 The default value is gpudb::insert_records_false.
  *                         <li> gpudb::insert_records_return_record_ids: If @a
@@ -26700,11 +27132,23 @@ InsertRecordsFromFilesResponse& insertRecordsFromFiles( const InsertRecordsFromF
  * @param options  Optional parameters.
  *                 <ul>
  *                         <li>
+ *                 gpudb::insert_records_from_files_avro_header_bytes: Optional
+ *                 number of bytes to skip when reading an avro record.
+ *                         <li>
  *                 gpudb::insert_records_from_files_avro_num_records: Optional
  *                 number of avro records, if data includes only records.
  *                         <li> gpudb::insert_records_from_files_avro_schema:
  *                 Optional string representing avro schema, if data includes
  *                 only records.
+ *                         <li>
+ *                 gpudb::insert_records_from_files_avro_schemaless: When user
+ *                 provides 'avro_schema', avro data is assumed to be
+ *                 schemaless, unless specified. Default is 'true' when given
+ *                 avro_schema. Igonred when avro_schema is not given.
+ *                 <ul>
+ *                         <li> gpudb::insert_records_from_files_true
+ *                         <li> gpudb::insert_records_from_files_false
+ *                 </ul>
  *                         <li>
  *                 gpudb::insert_records_from_files_bad_record_table_name:
  *                 Optional name of a table to which records that were rejected
@@ -26861,6 +27305,35 @@ InsertRecordsFromFilesResponse& insertRecordsFromFiles( const InsertRecordsFromF
  *                 </ul>
  *                 The default value is
  *                 gpudb::insert_records_from_files_delimited_text.
+ *                         <li>
+ *                 gpudb::insert_records_from_files_ignore_existing_pk:
+ *                 Specifies the record collision error-suppression policy for
+ *                 inserting into a table with a <a
+ *                 href="../../../concepts/tables/#primary-keys"
+ *                 target="_top">primary key</a>, only used when
+ *                 not in upsert mode (upsert mode is disabled when @a
+ *                 update_on_existing_pk is
+ *                 @a false).  If set to
+ *                 @a true, any record being inserted that is rejected
+ *                 for having primary key values that match those of an
+ *                 existing table record will be ignored with no
+ *                 error generated.  If @a false, the rejection of any
+ *                 record for having primary key values matching an existing
+ *                 record will result in an error being
+ *                 reported, as determined by @a error_handling.  If the
+ *                 specified table does not
+ *                 have a primary key or if upsert mode is in effect (@a
+ *                 update_on_existing_pk is
+ *                 @a true), then this option has no effect.
+ *                 <ul>
+ *                         <li> gpudb::insert_records_from_files_true: Ignore
+ *                 new records whose primary key values collide with those of
+ *                 existing records
+ *                         <li> gpudb::insert_records_from_files_false: Treat
+ *                 as errors any new records whose primary key values collide
+ *                 with those of existing records
+ *                 </ul>
+ *                 The default value is gpudb::insert_records_from_files_false.
  *                         <li>
  *                 gpudb::insert_records_from_files_ingestion_mode: Whether to
  *                 do a full load, dry run, or perform a type inference on the
@@ -27097,16 +27570,26 @@ InsertRecordsFromFilesResponse& insertRecordsFromFiles( const InsertRecordsFromF
  *                 The default value is gpudb::insert_records_from_files_speed.
  *                         <li>
  *                 gpudb::insert_records_from_files_update_on_existing_pk:
+ *                 Specifies the record collision policy for inserting into a
+ *                 table
+ *                 with a <a href="../../../concepts/tables/#primary-keys"
+ *                 target="_top">primary key</a>. If set to
+ *                 @a true, any existing table record with primary
+ *                 key values that match those of a record being inserted will
+ *                 be replaced by that new record (the new
+ *                 data will be "upserted"). If set to @a false,
+ *                 any existing table record with primary key values that match
+ *                 those of a record being inserted will
+ *                 remain unchanged, while the new record will be rejected and
+ *                 the error handled as determined by
+ *                 @a ignore_existing_pk & @a error_handling.  If the
+ *                 specified table does not have a primary key, then this
+ *                 option has no effect.
  *                 <ul>
- *                         <li> gpudb::insert_records_from_files_true
- *                         <li> gpudb::insert_records_from_files_false
- *                 </ul>
- *                 The default value is gpudb::insert_records_from_files_false.
- *                         <li>
- *                 gpudb::insert_records_from_files_ignore_existing_pk:
- *                 <ul>
- *                         <li> gpudb::insert_records_from_files_true
- *                         <li> gpudb::insert_records_from_files_false
+ *                         <li> gpudb::insert_records_from_files_true: Upsert
+ *                 new records when primary keys match existing records
+ *                         <li> gpudb::insert_records_from_files_false: Reject
+ *                 new records when primary keys match existing records
  *                 </ul>
  *                 The default value is gpudb::insert_records_from_files_false.
  *                 </ul>
@@ -27359,11 +27842,23 @@ InsertRecordsFromFilesResponse insertRecordsFromFiles( const std::string& tableN
  * @param options  Optional parameters.
  *                 <ul>
  *                         <li>
+ *                 gpudb::insert_records_from_files_avro_header_bytes: Optional
+ *                 number of bytes to skip when reading an avro record.
+ *                         <li>
  *                 gpudb::insert_records_from_files_avro_num_records: Optional
  *                 number of avro records, if data includes only records.
  *                         <li> gpudb::insert_records_from_files_avro_schema:
  *                 Optional string representing avro schema, if data includes
  *                 only records.
+ *                         <li>
+ *                 gpudb::insert_records_from_files_avro_schemaless: When user
+ *                 provides 'avro_schema', avro data is assumed to be
+ *                 schemaless, unless specified. Default is 'true' when given
+ *                 avro_schema. Igonred when avro_schema is not given.
+ *                 <ul>
+ *                         <li> gpudb::insert_records_from_files_true
+ *                         <li> gpudb::insert_records_from_files_false
+ *                 </ul>
  *                         <li>
  *                 gpudb::insert_records_from_files_bad_record_table_name:
  *                 Optional name of a table to which records that were rejected
@@ -27520,6 +28015,35 @@ InsertRecordsFromFilesResponse insertRecordsFromFiles( const std::string& tableN
  *                 </ul>
  *                 The default value is
  *                 gpudb::insert_records_from_files_delimited_text.
+ *                         <li>
+ *                 gpudb::insert_records_from_files_ignore_existing_pk:
+ *                 Specifies the record collision error-suppression policy for
+ *                 inserting into a table with a <a
+ *                 href="../../../concepts/tables/#primary-keys"
+ *                 target="_top">primary key</a>, only used when
+ *                 not in upsert mode (upsert mode is disabled when @a
+ *                 update_on_existing_pk is
+ *                 @a false).  If set to
+ *                 @a true, any record being inserted that is rejected
+ *                 for having primary key values that match those of an
+ *                 existing table record will be ignored with no
+ *                 error generated.  If @a false, the rejection of any
+ *                 record for having primary key values matching an existing
+ *                 record will result in an error being
+ *                 reported, as determined by @a error_handling.  If the
+ *                 specified table does not
+ *                 have a primary key or if upsert mode is in effect (@a
+ *                 update_on_existing_pk is
+ *                 @a true), then this option has no effect.
+ *                 <ul>
+ *                         <li> gpudb::insert_records_from_files_true: Ignore
+ *                 new records whose primary key values collide with those of
+ *                 existing records
+ *                         <li> gpudb::insert_records_from_files_false: Treat
+ *                 as errors any new records whose primary key values collide
+ *                 with those of existing records
+ *                 </ul>
+ *                 The default value is gpudb::insert_records_from_files_false.
  *                         <li>
  *                 gpudb::insert_records_from_files_ingestion_mode: Whether to
  *                 do a full load, dry run, or perform a type inference on the
@@ -27756,16 +28280,26 @@ InsertRecordsFromFilesResponse insertRecordsFromFiles( const std::string& tableN
  *                 The default value is gpudb::insert_records_from_files_speed.
  *                         <li>
  *                 gpudb::insert_records_from_files_update_on_existing_pk:
+ *                 Specifies the record collision policy for inserting into a
+ *                 table
+ *                 with a <a href="../../../concepts/tables/#primary-keys"
+ *                 target="_top">primary key</a>. If set to
+ *                 @a true, any existing table record with primary
+ *                 key values that match those of a record being inserted will
+ *                 be replaced by that new record (the new
+ *                 data will be "upserted"). If set to @a false,
+ *                 any existing table record with primary key values that match
+ *                 those of a record being inserted will
+ *                 remain unchanged, while the new record will be rejected and
+ *                 the error handled as determined by
+ *                 @a ignore_existing_pk & @a error_handling.  If the
+ *                 specified table does not have a primary key, then this
+ *                 option has no effect.
  *                 <ul>
- *                         <li> gpudb::insert_records_from_files_true
- *                         <li> gpudb::insert_records_from_files_false
- *                 </ul>
- *                 The default value is gpudb::insert_records_from_files_false.
- *                         <li>
- *                 gpudb::insert_records_from_files_ignore_existing_pk:
- *                 <ul>
- *                         <li> gpudb::insert_records_from_files_true
- *                         <li> gpudb::insert_records_from_files_false
+ *                         <li> gpudb::insert_records_from_files_true: Upsert
+ *                 new records when primary keys match existing records
+ *                         <li> gpudb::insert_records_from_files_false: Reject
+ *                 new records when primary keys match existing records
  *                 </ul>
  *                 The default value is gpudb::insert_records_from_files_false.
  *                 </ul>
@@ -28008,12 +28542,25 @@ InsertRecordsFromPayloadResponse& insertRecordsFromPayload( const InsertRecordsF
  * @param options  Optional parameters.
  *                 <ul>
  *                         <li>
+ *                 gpudb::insert_records_from_payload_avro_header_bytes:
+ *                 Optional number of bytes to skip when reading an avro
+ *                 record.
+ *                         <li>
  *                 gpudb::insert_records_from_payload_avro_num_records:
  *                 Optional number of avro records, if data includes only
  *                 records.
  *                         <li> gpudb::insert_records_from_payload_avro_schema:
  *                 Optional string representing avro schema, for insert records
  *                 in avro format, that does not include is schema.
+ *                         <li>
+ *                 gpudb::insert_records_from_payload_avro_schemaless: When
+ *                 user provides 'avro_schema', avro data is assumed to be
+ *                 schemaless, unless specified. Default is 'true' when given
+ *                 avro_schema. Igonred when avro_schema is not given.
+ *                 <ul>
+ *                         <li> gpudb::insert_records_from_payload_true
+ *                         <li> gpudb::insert_records_from_payload_false
+ *                 </ul>
  *                         <li>
  *                 gpudb::insert_records_from_payload_bad_record_table_name:
  *                 Optional name of a table to which records that were rejected
@@ -28169,6 +28716,36 @@ InsertRecordsFromPayloadResponse& insertRecordsFromPayload( const InsertRecordsF
  *                 </ul>
  *                 The default value is
  *                 gpudb::insert_records_from_payload_delimited_text.
+ *                         <li>
+ *                 gpudb::insert_records_from_payload_ignore_existing_pk:
+ *                 Specifies the record collision error-suppression policy for
+ *                 inserting into a table with a <a
+ *                 href="../../../concepts/tables/#primary-keys"
+ *                 target="_top">primary key</a>, only used when
+ *                 not in upsert mode (upsert mode is disabled when @a
+ *                 update_on_existing_pk is
+ *                 @a false).  If set to
+ *                 @a true, any record being inserted that is rejected
+ *                 for having primary key values that match those of an
+ *                 existing table record will be ignored with no
+ *                 error generated.  If @a false, the rejection of any
+ *                 record for having primary key values matching an existing
+ *                 record will result in an error being
+ *                 reported, as determined by @a error_handling.  If the
+ *                 specified table does not
+ *                 have a primary key or if upsert mode is in effect (@a
+ *                 update_on_existing_pk is
+ *                 @a true), then this option has no effect.
+ *                 <ul>
+ *                         <li> gpudb::insert_records_from_payload_true: Ignore
+ *                 new records whose primary key values collide with those of
+ *                 existing records
+ *                         <li> gpudb::insert_records_from_payload_false: Treat
+ *                 as errors any new records whose primary key values collide
+ *                 with those of existing records
+ *                 </ul>
+ *                 The default value is
+ *                 gpudb::insert_records_from_payload_false.
  *                         <li>
  *                 gpudb::insert_records_from_payload_ingestion_mode: Whether
  *                 to do a full load, dry run, or perform a type inference on
@@ -28400,17 +28977,26 @@ InsertRecordsFromPayloadResponse& insertRecordsFromPayload( const InsertRecordsF
  *                 gpudb::insert_records_from_payload_speed.
  *                         <li>
  *                 gpudb::insert_records_from_payload_update_on_existing_pk:
+ *                 Specifies the record collision policy for inserting into a
+ *                 table
+ *                 with a <a href="../../../concepts/tables/#primary-keys"
+ *                 target="_top">primary key</a>. If set to
+ *                 @a true, any existing table record with primary
+ *                 key values that match those of a record being inserted will
+ *                 be replaced by that new record (the new
+ *                 data will be "upserted"). If set to @a false,
+ *                 any existing table record with primary key values that match
+ *                 those of a record being inserted will
+ *                 remain unchanged, while the new record will be rejected and
+ *                 the error handled as determined by
+ *                 @a ignore_existing_pk & @a error_handling.  If the
+ *                 specified table does not have a primary key, then this
+ *                 option has no effect.
  *                 <ul>
- *                         <li> gpudb::insert_records_from_payload_true
- *                         <li> gpudb::insert_records_from_payload_false
- *                 </ul>
- *                 The default value is
- *                 gpudb::insert_records_from_payload_false.
- *                         <li>
- *                 gpudb::insert_records_from_payload_ignore_existing_pk:
- *                 <ul>
- *                         <li> gpudb::insert_records_from_payload_true
- *                         <li> gpudb::insert_records_from_payload_false
+ *                         <li> gpudb::insert_records_from_payload_true: Upsert
+ *                 new records when primary keys match existing records
+ *                         <li> gpudb::insert_records_from_payload_false:
+ *                 Reject new records when primary keys match existing records
  *                 </ul>
  *                 The default value is
  *                 gpudb::insert_records_from_payload_false.
@@ -28615,12 +29201,25 @@ InsertRecordsFromPayloadResponse insertRecordsFromPayload( const std::string& ta
  * @param options  Optional parameters.
  *                 <ul>
  *                         <li>
+ *                 gpudb::insert_records_from_payload_avro_header_bytes:
+ *                 Optional number of bytes to skip when reading an avro
+ *                 record.
+ *                         <li>
  *                 gpudb::insert_records_from_payload_avro_num_records:
  *                 Optional number of avro records, if data includes only
  *                 records.
  *                         <li> gpudb::insert_records_from_payload_avro_schema:
  *                 Optional string representing avro schema, for insert records
  *                 in avro format, that does not include is schema.
+ *                         <li>
+ *                 gpudb::insert_records_from_payload_avro_schemaless: When
+ *                 user provides 'avro_schema', avro data is assumed to be
+ *                 schemaless, unless specified. Default is 'true' when given
+ *                 avro_schema. Igonred when avro_schema is not given.
+ *                 <ul>
+ *                         <li> gpudb::insert_records_from_payload_true
+ *                         <li> gpudb::insert_records_from_payload_false
+ *                 </ul>
  *                         <li>
  *                 gpudb::insert_records_from_payload_bad_record_table_name:
  *                 Optional name of a table to which records that were rejected
@@ -28776,6 +29375,36 @@ InsertRecordsFromPayloadResponse insertRecordsFromPayload( const std::string& ta
  *                 </ul>
  *                 The default value is
  *                 gpudb::insert_records_from_payload_delimited_text.
+ *                         <li>
+ *                 gpudb::insert_records_from_payload_ignore_existing_pk:
+ *                 Specifies the record collision error-suppression policy for
+ *                 inserting into a table with a <a
+ *                 href="../../../concepts/tables/#primary-keys"
+ *                 target="_top">primary key</a>, only used when
+ *                 not in upsert mode (upsert mode is disabled when @a
+ *                 update_on_existing_pk is
+ *                 @a false).  If set to
+ *                 @a true, any record being inserted that is rejected
+ *                 for having primary key values that match those of an
+ *                 existing table record will be ignored with no
+ *                 error generated.  If @a false, the rejection of any
+ *                 record for having primary key values matching an existing
+ *                 record will result in an error being
+ *                 reported, as determined by @a error_handling.  If the
+ *                 specified table does not
+ *                 have a primary key or if upsert mode is in effect (@a
+ *                 update_on_existing_pk is
+ *                 @a true), then this option has no effect.
+ *                 <ul>
+ *                         <li> gpudb::insert_records_from_payload_true: Ignore
+ *                 new records whose primary key values collide with those of
+ *                 existing records
+ *                         <li> gpudb::insert_records_from_payload_false: Treat
+ *                 as errors any new records whose primary key values collide
+ *                 with those of existing records
+ *                 </ul>
+ *                 The default value is
+ *                 gpudb::insert_records_from_payload_false.
  *                         <li>
  *                 gpudb::insert_records_from_payload_ingestion_mode: Whether
  *                 to do a full load, dry run, or perform a type inference on
@@ -29007,17 +29636,26 @@ InsertRecordsFromPayloadResponse insertRecordsFromPayload( const std::string& ta
  *                 gpudb::insert_records_from_payload_speed.
  *                         <li>
  *                 gpudb::insert_records_from_payload_update_on_existing_pk:
+ *                 Specifies the record collision policy for inserting into a
+ *                 table
+ *                 with a <a href="../../../concepts/tables/#primary-keys"
+ *                 target="_top">primary key</a>. If set to
+ *                 @a true, any existing table record with primary
+ *                 key values that match those of a record being inserted will
+ *                 be replaced by that new record (the new
+ *                 data will be "upserted"). If set to @a false,
+ *                 any existing table record with primary key values that match
+ *                 those of a record being inserted will
+ *                 remain unchanged, while the new record will be rejected and
+ *                 the error handled as determined by
+ *                 @a ignore_existing_pk & @a error_handling.  If the
+ *                 specified table does not have a primary key, then this
+ *                 option has no effect.
  *                 <ul>
- *                         <li> gpudb::insert_records_from_payload_true
- *                         <li> gpudb::insert_records_from_payload_false
- *                 </ul>
- *                 The default value is
- *                 gpudb::insert_records_from_payload_false.
- *                         <li>
- *                 gpudb::insert_records_from_payload_ignore_existing_pk:
- *                 <ul>
- *                         <li> gpudb::insert_records_from_payload_true
- *                         <li> gpudb::insert_records_from_payload_false
+ *                         <li> gpudb::insert_records_from_payload_true: Upsert
+ *                 new records when primary keys match existing records
+ *                         <li> gpudb::insert_records_from_payload_false:
+ *                 Reject new records when primary keys match existing records
  *                 </ul>
  *                 The default value is
  *                 gpudb::insert_records_from_payload_false.
@@ -29284,6 +29922,35 @@ InsertRecordsFromQueryResponse& insertRecordsFromQuery( const InsertRecordsFromQ
  *                 </ul>
  *                 The default value is gpudb::insert_records_from_query_abort.
  *                         <li>
+ *                 gpudb::insert_records_from_query_ignore_existing_pk:
+ *                 Specifies the record collision error-suppression policy for
+ *                 inserting into a table with a <a
+ *                 href="../../../concepts/tables/#primary-keys"
+ *                 target="_top">primary key</a>, only used when
+ *                 not in upsert mode (upsert mode is disabled when @a
+ *                 update_on_existing_pk is
+ *                 @a false).  If set to
+ *                 @a true, any record being inserted that is rejected
+ *                 for having primary key values that match those of an
+ *                 existing table record will be ignored with no
+ *                 error generated.  If @a false, the rejection of any
+ *                 record for having primary key values matching an existing
+ *                 record will result in an error being
+ *                 reported, as determined by @a error_handling.  If the
+ *                 specified table does not
+ *                 have a primary key or if upsert mode is in effect (@a
+ *                 update_on_existing_pk is
+ *                 @a true), then this option has no effect.
+ *                 <ul>
+ *                         <li> gpudb::insert_records_from_query_true: Ignore
+ *                 new records whose primary key values collide with those of
+ *                 existing records
+ *                         <li> gpudb::insert_records_from_query_false: Treat
+ *                 as errors any new records whose primary key values collide
+ *                 with those of existing records
+ *                 </ul>
+ *                 The default value is gpudb::insert_records_from_query_false.
+ *                         <li>
  *                 gpudb::insert_records_from_query_ingestion_mode: Whether to
  *                 do a full load, dry run, or perform a type inference on the
  *                 source data.
@@ -29364,16 +30031,26 @@ InsertRecordsFromQueryResponse& insertRecordsFromQuery( const InsertRecordsFromQ
  *                 value is ''.
  *                         <li>
  *                 gpudb::insert_records_from_query_update_on_existing_pk:
+ *                 Specifies the record collision policy for inserting into a
+ *                 table
+ *                 with a <a href="../../../concepts/tables/#primary-keys"
+ *                 target="_top">primary key</a>. If set to
+ *                 @a true, any existing table record with primary
+ *                 key values that match those of a record being inserted will
+ *                 be replaced by that new record (the new
+ *                 data will be "upserted"). If set to @a false,
+ *                 any existing table record with primary key values that match
+ *                 those of a record being inserted will
+ *                 remain unchanged, while the new record will be rejected and
+ *                 the error handled as determined by
+ *                 @a ignore_existing_pk & @a error_handling.  If the
+ *                 specified table does not have a primary key, then this
+ *                 option has no effect.
  *                 <ul>
- *                         <li> gpudb::insert_records_from_query_true
- *                         <li> gpudb::insert_records_from_query_false
- *                 </ul>
- *                 The default value is gpudb::insert_records_from_query_false.
- *                         <li>
- *                 gpudb::insert_records_from_query_ignore_existing_pk:
- *                 <ul>
- *                         <li> gpudb::insert_records_from_query_true
- *                         <li> gpudb::insert_records_from_query_false
+ *                         <li> gpudb::insert_records_from_query_true: Upsert
+ *                 new records when primary keys match existing records
+ *                         <li> gpudb::insert_records_from_query_false: Reject
+ *                 new records when primary keys match existing records
  *                 </ul>
  *                 The default value is gpudb::insert_records_from_query_false.
  *                 </ul>
@@ -29604,6 +30281,35 @@ InsertRecordsFromQueryResponse insertRecordsFromQuery( const std::string& tableN
  *                 </ul>
  *                 The default value is gpudb::insert_records_from_query_abort.
  *                         <li>
+ *                 gpudb::insert_records_from_query_ignore_existing_pk:
+ *                 Specifies the record collision error-suppression policy for
+ *                 inserting into a table with a <a
+ *                 href="../../../concepts/tables/#primary-keys"
+ *                 target="_top">primary key</a>, only used when
+ *                 not in upsert mode (upsert mode is disabled when @a
+ *                 update_on_existing_pk is
+ *                 @a false).  If set to
+ *                 @a true, any record being inserted that is rejected
+ *                 for having primary key values that match those of an
+ *                 existing table record will be ignored with no
+ *                 error generated.  If @a false, the rejection of any
+ *                 record for having primary key values matching an existing
+ *                 record will result in an error being
+ *                 reported, as determined by @a error_handling.  If the
+ *                 specified table does not
+ *                 have a primary key or if upsert mode is in effect (@a
+ *                 update_on_existing_pk is
+ *                 @a true), then this option has no effect.
+ *                 <ul>
+ *                         <li> gpudb::insert_records_from_query_true: Ignore
+ *                 new records whose primary key values collide with those of
+ *                 existing records
+ *                         <li> gpudb::insert_records_from_query_false: Treat
+ *                 as errors any new records whose primary key values collide
+ *                 with those of existing records
+ *                 </ul>
+ *                 The default value is gpudb::insert_records_from_query_false.
+ *                         <li>
  *                 gpudb::insert_records_from_query_ingestion_mode: Whether to
  *                 do a full load, dry run, or perform a type inference on the
  *                 source data.
@@ -29684,16 +30390,26 @@ InsertRecordsFromQueryResponse insertRecordsFromQuery( const std::string& tableN
  *                 value is ''.
  *                         <li>
  *                 gpudb::insert_records_from_query_update_on_existing_pk:
+ *                 Specifies the record collision policy for inserting into a
+ *                 table
+ *                 with a <a href="../../../concepts/tables/#primary-keys"
+ *                 target="_top">primary key</a>. If set to
+ *                 @a true, any existing table record with primary
+ *                 key values that match those of a record being inserted will
+ *                 be replaced by that new record (the new
+ *                 data will be "upserted"). If set to @a false,
+ *                 any existing table record with primary key values that match
+ *                 those of a record being inserted will
+ *                 remain unchanged, while the new record will be rejected and
+ *                 the error handled as determined by
+ *                 @a ignore_existing_pk & @a error_handling.  If the
+ *                 specified table does not have a primary key, then this
+ *                 option has no effect.
  *                 <ul>
- *                         <li> gpudb::insert_records_from_query_true
- *                         <li> gpudb::insert_records_from_query_false
- *                 </ul>
- *                 The default value is gpudb::insert_records_from_query_false.
- *                         <li>
- *                 gpudb::insert_records_from_query_ignore_existing_pk:
- *                 <ul>
- *                         <li> gpudb::insert_records_from_query_true
- *                         <li> gpudb::insert_records_from_query_false
+ *                         <li> gpudb::insert_records_from_query_true: Upsert
+ *                 new records when primary keys match existing records
+ *                         <li> gpudb::insert_records_from_query_false: Reject
+ *                 new records when primary keys match existing records
  *                 </ul>
  *                 The default value is gpudb::insert_records_from_query_false.
  *                 </ul>
@@ -30910,10 +31626,12 @@ MatchGraphResponse& matchGraph( const MatchGraphRequest& request_,
  *                 the @a match_clusters solver only. The quality metric for
  *                 Louvain modularity optimization solver.
  *                 <ul>
- *                         <li> gpudb::match_graph_girwan: Uses the Newman
+ *                         <li> gpudb::match_graph_girvan: Uses the Newman
  *                 Girwan quality metric for cluster solver
+ *                         <li> gpudb::match_graph_spectral: Applies recursive
+ *                 spectral bisection (RSB) partitioning solver
  *                 </ul>
- *                 The default value is gpudb::match_graph_girwan.
+ *                 The default value is gpudb::match_graph_girvan.
  *                         <li> gpudb::match_graph_restricted_type: For the @a
  *                 match_supply_demand solver only. Optimization is performed
  *                 by restricting routes labeled by 'MSDO_ODDEVEN_RESTRICTED'
@@ -31303,10 +32021,12 @@ MatchGraphResponse matchGraph( const std::string& graphName,
  *                 the @a match_clusters solver only. The quality metric for
  *                 Louvain modularity optimization solver.
  *                 <ul>
- *                         <li> gpudb::match_graph_girwan: Uses the Newman
+ *                         <li> gpudb::match_graph_girvan: Uses the Newman
  *                 Girwan quality metric for cluster solver
+ *                         <li> gpudb::match_graph_spectral: Applies recursive
+ *                 spectral bisection (RSB) partitioning solver
  *                 </ul>
- *                 The default value is gpudb::match_graph_girwan.
+ *                 The default value is gpudb::match_graph_girvan.
  *                         <li> gpudb::match_graph_restricted_type: For the @a
  *                 match_supply_demand solver only. Optimization is performed
  *                 by restricting routes labeled by 'MSDO_ODDEVEN_RESTRICTED'
@@ -32293,10 +33013,10 @@ QueryGraphResponse& queryGraph( const QueryGraphRequest& request_,
  *                         <li> gpudb::query_graph_false
  *                 </ul>
  *                 The default value is gpudb::query_graph_false.
- *                         <li> gpudb::query_graph_limit: When specified,
+ *                         <li> gpudb::query_graph_limit: When specified (>0),
  *                 limits the number of query results. The size of the nodes
  *                 table will be limited by the @a limit value.  The default
- *                 value is an empty std::map.
+ *                 value is '0'.
  *                         <li> gpudb::query_graph_output_wkt_path: If true
  *                 then concatenated wkt line segments will be added as the WKT
  *                 column of the adjacency table.
@@ -32426,10 +33146,10 @@ QueryGraphResponse queryGraph( const std::string& graphName,
  *                         <li> gpudb::query_graph_false
  *                 </ul>
  *                 The default value is gpudb::query_graph_false.
- *                         <li> gpudb::query_graph_limit: When specified,
+ *                         <li> gpudb::query_graph_limit: When specified (>0),
  *                 limits the number of query results. The size of the nodes
  *                 table will be limited by the @a limit value.  The default
- *                 value is an empty std::map.
+ *                 value is '0'.
  *                         <li> gpudb::query_graph_output_wkt_path: If true
  *                 then concatenated wkt line segments will be added as the WKT
  *                 column of the adjacency table.
@@ -33865,7 +34585,11 @@ ShowFilesResponse& showFiles( const ShowFilesRequest& request_,
  * files in a given directory.
  * 
  * @param paths  File paths to show. Each path can be a KiFS directory name, or
- *               a full path to a KiFS file.
+ *               a full path to a KiFS file. File paths may contain wildcard
+ *               characters after the KiFS directory delimeter.
+ *               Accepted wildcard characters are asterisk (*) to represent any
+ *               string of zero or more characters, and question mark (?) to
+ *               indicate a single character.
  * @param options  Optional parameters.
  * 
  * @return Response object containing the result of the operation.
@@ -33881,7 +34605,11 @@ ShowFilesResponse showFiles( const std::vector<std::string>& paths,
  * files in a given directory.
  * 
  * @param paths  File paths to show. Each path can be a KiFS directory name, or
- *               a full path to a KiFS file.
+ *               a full path to a KiFS file. File paths may contain wildcard
+ *               characters after the KiFS directory delimeter.
+ *               Accepted wildcard characters are asterisk (*) to represent any
+ *               string of zero or more characters, and question mark (?) to
+ *               indicate a single character.
  * @param options  Optional parameters.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
@@ -36537,11 +37265,14 @@ SolveGraphResponse& solveGraph( const std::string& graphName,
  * restrictions can be removed by utilizing some available options through
  * @a options.
  * <p>
- * The @a update_on_existing_pk option specifies the record
- * collision policy for tables with a <a
- * href="../../../concepts/tables/#primary-keys" target="_top">primary key</a>,
- * and
- * is ignored on tables with no primary key.
+ * The @a update_on_existing_pk option specifies the record primary key
+ * collision
+ * policy for tables with a <a href="../../../concepts/tables/#primary-keys"
+ * target="_top">primary key</a>, while
+ * @a ignore_existing_pk specifies the record primary key collision
+ * error-suppression policy when those collisions result in the update being
+ * rejected.  Both are
+ * ignored on tables with no primary key.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -36579,11 +37310,14 @@ UpdateRecordsResponse updateRecordsRaw( const RawUpdateRecordsRequest& request_ 
  * restrictions can be removed by utilizing some available options through
  * @a options.
  * <p>
- * The @a update_on_existing_pk option specifies the record
- * collision policy for tables with a <a
- * href="../../../concepts/tables/#primary-keys" target="_top">primary key</a>,
- * and
- * is ignored on tables with no primary key.
+ * The @a update_on_existing_pk option specifies the record primary key
+ * collision
+ * policy for tables with a <a href="../../../concepts/tables/#primary-keys"
+ * target="_top">primary key</a>, while
+ * @a ignore_existing_pk specifies the record primary key collision
+ * error-suppression policy when those collisions result in the update being
+ * rejected.  Both are
+ * ignored on tables with no primary key.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -36625,11 +37359,14 @@ UpdateRecordsResponse& updateRecordsRaw( const RawUpdateRecordsRequest& request_
  * restrictions can be removed by utilizing some available options through
  * @a options.
  * <p>
- * The @a update_on_existing_pk option specifies the record
- * collision policy for tables with a <a
- * href="../../../concepts/tables/#primary-keys" target="_top">primary key</a>,
- * and
- * is ignored on tables with no primary key.
+ * The @a update_on_existing_pk option specifies the record primary key
+ * collision
+ * policy for tables with a <a href="../../../concepts/tables/#primary-keys"
+ * target="_top">primary key</a>, while
+ * @a ignore_existing_pk specifies the record primary key collision
+ * error-suppression policy when those collisions result in the update being
+ * rejected.  Both are
+ * ignored on tables with no primary key.
  * 
  * @tparam <TRequest>  The type of object being added.
  * 
@@ -36681,11 +37418,14 @@ UpdateRecordsResponse updateRecords( const UpdateRecordsRequest<TRequest>& reque
  * restrictions can be removed by utilizing some available options through
  * @a options.
  * <p>
- * The @a update_on_existing_pk option specifies the record
- * collision policy for tables with a <a
- * href="../../../concepts/tables/#primary-keys" target="_top">primary key</a>,
- * and
- * is ignored on tables with no primary key.
+ * The @a update_on_existing_pk option specifies the record primary key
+ * collision
+ * policy for tables with a <a href="../../../concepts/tables/#primary-keys"
+ * target="_top">primary key</a>, while
+ * @a ignore_existing_pk specifies the record primary key collision
+ * error-suppression policy when those collisions result in the update being
+ * rejected.  Both are
+ * ignored on tables with no primary key.
  * 
  * @tparam <TRequest>  The type of object being added.
  * 
@@ -36740,31 +37480,37 @@ UpdateRecordsResponse& updateRecords( const UpdateRecordsRequest<TRequest>& requ
  * restrictions can be removed by utilizing some available options through
  * @a options.
  * <p>
- * The @a update_on_existing_pk option specifies the record
- * collision policy for tables with a <a
- * href="../../../concepts/tables/#primary-keys" target="_top">primary key</a>,
- * and
- * is ignored on tables with no primary key.
+ * The @a update_on_existing_pk option specifies the record primary key
+ * collision
+ * policy for tables with a <a href="../../../concepts/tables/#primary-keys"
+ * target="_top">primary key</a>, while
+ * @a ignore_existing_pk specifies the record primary key collision
+ * error-suppression policy when those collisions result in the update being
+ * rejected.  Both are
+ * ignored on tables with no primary key.
  * 
  * @tparam <TRequest>  The type of object being added.
  * 
  * @param tableName  Name of table to be updated, in [schema_name.]table_name
- *                   format, using standard <a
- *                   href="../../../concepts/tables/#table-name-resolution"
+ *                   format, using standard
+ *                   <a href="../../../concepts/tables/#table-name-resolution"
  *                   target="_top">name resolution rules</a>.  Must be a
- *                   currently existing table and not a view.
+ *                   currently
+ *                   existing table and not a view.
  * @param expressions  A list of the actual predicates, one for each update;
  *                     format should follow the guidelines /filter.
  * @param newValuesMaps  List of new values for the matching records.  Each
- *                       element is a map with (key, value) pairs where the
- *                       keys are the names of the columns whose values are to
- *                       be updated; the values are the new values.  The number
- *                       of elements in the list should match the length of @a
- *                       expressions.
+ *                       element is a map with
+ *                       (key, value) pairs where the keys are the names of the
+ *                       columns whose values are to be updated; the
+ *                       values are the new values.  The number of elements in
+ *                       the list should match the length of @a expressions.
  * @param data  An *optional* list of new binary-avro encoded records to
- *              insert, one for each update.  If one of @a expressions does not
- *              yield a matching record to be updated, then the corresponding
- *              element from this list will be added to the table.
+ *              insert, one for each
+ *              update.  If one of @a expressions does not yield a matching
+ *              record to be updated, then the
+ *              corresponding element from this list will be added to the
+ *              table.
  * @param options  Optional parameters.
  *                 <ul>
  *                         <li> gpudb::update_records_global_expression: An
@@ -36772,56 +37518,90 @@ UpdateRecordsResponse& updateRecords( const UpdateRecordsRequest<TRequest>& requ
  *                 predicates listed in @a expressions.  The default value is
  *                 ''.
  *                         <li> gpudb::update_records_bypass_safety_checks:
- *                 When set to @a true, all predicates are available for
- *                 primary key updates.  Keep in mind that it is possible to
- *                 destroy data in this case, since a single predicate may
- *                 match multiple objects (potentially all of records of a
- *                 table), and then updating all of those records to have the
- *                 same primary key will, due to the primary key uniqueness
- *                 constraints, effectively delete all but one of those updated
- *                 records.
+ *                 When set to @a true,
+ *                 all predicates are available for primary key updates.  Keep
+ *                 in mind that it is possible to destroy
+ *                 data in this case, since a single predicate may match
+ *                 multiple objects (potentially all of records
+ *                 of a table), and then updating all of those records to have
+ *                 the same primary key will, due to the
+ *                 primary key uniqueness constraints, effectively delete all
+ *                 but one of those updated records.
  *                 <ul>
  *                         <li> gpudb::update_records_true
  *                         <li> gpudb::update_records_false
  *                 </ul>
  *                 The default value is gpudb::update_records_false.
  *                         <li> gpudb::update_records_update_on_existing_pk:
- *                 Specifies the record collision policy for tables with a <a
- *                 href="../../../concepts/tables/#primary-keys"
- *                 target="_top">primary key</a> when updating columns of the
+ *                 Specifies the record collision policy for updating a table
+ *                 with a
  *                 <a href="../../../concepts/tables/#primary-keys"
- *                 target="_top">primary key</a> or inserting new records.  If
- *                 @a true, existing records with primary key values that match
- *                 those of a record being updated or inserted will be replaced
- *                 by the updated and new records.  If @a false, existing
- *                 records with matching primary key values will remain
- *                 unchanged, and the updated or new records with primary key
- *                 values that match those of existing records will be
- *                 discarded.  If the specified table does not have a primary
- *                 key, then this option has no effect.
+ *                 target="_top">primary key</a>.  There are two ways that a
+ *                 record collision can
+ *                 occur.
+ *                 The first is an "update collision", which happens when the
+ *                 update changes the value of the updated
+ *                 record's primary key, and that new primary key already
+ *                 exists as the primary key of another record
+ *                 in the table.
+ *                 The second is an "insert collision", which occurs when a
+ *                 given filter in @a expressions
+ *                 finds no records to update, and the alternate insert record
+ *                 given in @a recordsToInsert (or
+ *                 @a recordsToInsertStr) contains a primary key matching that
+ *                 of an existing record in the
+ *                 table.
+ *                 If @a update_on_existing_pk is set to
+ *                 @a true, "update collisions" will result in the
+ *                 existing record collided into being removed and the record
+ *                 updated with values specified in
+ *                 @a newValuesMaps taking its place; "insert collisions" will
+ *                 result in the collided-into
+ *                 record being updated with the values in @a
+ *                 recordsToInsert/@a recordsToInsertStr
+ *                 (if given).
+ *                 If set to @a false, the existing collided-into
+ *                 record will remain unchanged, while the update will be
+ *                 rejected and the error handled as determined
+ *                 by @a ignore_existing_pk.  If the specified table does not
+ *                 have a primary key,
+ *                 then this option has no effect.
  *                 <ul>
- *                         <li> gpudb::update_records_true: Overwrite existing
- *                 records when updated and inserted records have the same
- *                 primary keys
- *                         <li> gpudb::update_records_false: Discard updated
- *                 and inserted records when the same primary keys already
- *                 exist
+ *                         <li> gpudb::update_records_true: Overwrite the
+ *                 collided-into record when updating a
+ *                 record's primary key or inserting an alternate record causes
+ *                 a primary key collision between the
+ *                 record being updated/inserted and another existing record in
+ *                 the table
+ *                         <li> gpudb::update_records_false: Reject updates
+ *                 which cause primary key collisions
+ *                 between the record being updated/inserted and an existing
+ *                 record in the table
  *                 </ul>
  *                 The default value is gpudb::update_records_false.
  *                         <li> gpudb::update_records_ignore_existing_pk:
- *                 Specifies the record collision policy for tables with a <a
+ *                 Specifies the record collision error-suppression policy for
+ *                 updating a table with a <a
  *                 href="../../../concepts/tables/#primary-keys"
- *                 target="_top">primary key</a> when updating columns of the
- *                 <a href="../../../concepts/tables/#primary-keys"
- *                 target="_top">primary key</a> or inserting new records.  If
- *                 set to @a true, any record being updated or inserted with
- *                 primary key values that match those of an existing record
- *                 will be ignored with no error generated.  If the specified
- *                 table does not have a primary key, then this option has no
- *                 affect.
+ *                 target="_top">primary key</a>, only used when primary
+ *                 key record collisions are rejected (@a update_on_existing_pk
+ *                 is
+ *                 @a false).  If set to
+ *                 @a true, any record update that is rejected for
+ *                 resulting in a primary key collision with an existing table
+ *                 record will be ignored with no error
+ *                 generated.  If @a false, the rejection of any update
+ *                 for resulting in a primary key collision will cause an error
+ *                 to be reported.  If the specified table
+ *                 does not have a primary key or if @a update_on_existing_pk
+ *                 is
+ *                 @a true, then this option has no effect.
  *                 <ul>
- *                         <li> gpudb::update_records_true
- *                         <li> gpudb::update_records_false
+ *                         <li> gpudb::update_records_true: Ignore updates that
+ *                 result in primary key collisions with existing records
+ *                         <li> gpudb::update_records_false: Treat as errors
+ *                 any updates that result in primary key collisions with
+ *                 existing records
  *                 </ul>
  *                 The default value is gpudb::update_records_false.
  *                         <li> gpudb::update_records_update_partition: Force
@@ -36842,11 +37622,13 @@ UpdateRecordsResponse& updateRecords( const UpdateRecordsRequest<TRequest>& requ
  *                 The default value is gpudb::update_records_false.
  *                         <li>
  *                 gpudb::update_records_use_expressions_in_new_values_maps:
- *                 When set to @a true, all new values in @a newValuesMaps are
- *                 considered as expression values. When set to @a false, all
- *                 new values in @a newValuesMaps are considered as constants.
- *                 NOTE:  When @a true, string constants will need to be quoted
- *                 to avoid being evaluated as expressions.
+ *                 When set to @a true,
+ *                 all new values in @a newValuesMaps are considered as
+ *                 expression values. When set to
+ *                 @a false, all new values in
+ *                 @a newValuesMaps are considered as constants.  NOTE:  When
+ *                 @a true, string constants will need
+ *                 to be quoted to avoid being evaluated as expressions.
  *                 <ul>
  *                         <li> gpudb::update_records_true
  *                         <li> gpudb::update_records_false
@@ -36906,31 +37688,37 @@ UpdateRecordsResponse updateRecords( const std::string& tableName,
  * restrictions can be removed by utilizing some available options through
  * @a options.
  * <p>
- * The @a update_on_existing_pk option specifies the record
- * collision policy for tables with a <a
- * href="../../../concepts/tables/#primary-keys" target="_top">primary key</a>,
- * and
- * is ignored on tables with no primary key.
+ * The @a update_on_existing_pk option specifies the record primary key
+ * collision
+ * policy for tables with a <a href="../../../concepts/tables/#primary-keys"
+ * target="_top">primary key</a>, while
+ * @a ignore_existing_pk specifies the record primary key collision
+ * error-suppression policy when those collisions result in the update being
+ * rejected.  Both are
+ * ignored on tables with no primary key.
  * 
  * @tparam <TRequest>  The type of object being added.
  * 
  * @param tableName  Name of table to be updated, in [schema_name.]table_name
- *                   format, using standard <a
- *                   href="../../../concepts/tables/#table-name-resolution"
+ *                   format, using standard
+ *                   <a href="../../../concepts/tables/#table-name-resolution"
  *                   target="_top">name resolution rules</a>.  Must be a
- *                   currently existing table and not a view.
+ *                   currently
+ *                   existing table and not a view.
  * @param expressions  A list of the actual predicates, one for each update;
  *                     format should follow the guidelines /filter.
  * @param newValuesMaps  List of new values for the matching records.  Each
- *                       element is a map with (key, value) pairs where the
- *                       keys are the names of the columns whose values are to
- *                       be updated; the values are the new values.  The number
- *                       of elements in the list should match the length of @a
- *                       expressions.
+ *                       element is a map with
+ *                       (key, value) pairs where the keys are the names of the
+ *                       columns whose values are to be updated; the
+ *                       values are the new values.  The number of elements in
+ *                       the list should match the length of @a expressions.
  * @param data  An *optional* list of new binary-avro encoded records to
- *              insert, one for each update.  If one of @a expressions does not
- *              yield a matching record to be updated, then the corresponding
- *              element from this list will be added to the table.
+ *              insert, one for each
+ *              update.  If one of @a expressions does not yield a matching
+ *              record to be updated, then the
+ *              corresponding element from this list will be added to the
+ *              table.
  * @param options  Optional parameters.
  *                 <ul>
  *                         <li> gpudb::update_records_global_expression: An
@@ -36938,56 +37726,90 @@ UpdateRecordsResponse updateRecords( const std::string& tableName,
  *                 predicates listed in @a expressions.  The default value is
  *                 ''.
  *                         <li> gpudb::update_records_bypass_safety_checks:
- *                 When set to @a true, all predicates are available for
- *                 primary key updates.  Keep in mind that it is possible to
- *                 destroy data in this case, since a single predicate may
- *                 match multiple objects (potentially all of records of a
- *                 table), and then updating all of those records to have the
- *                 same primary key will, due to the primary key uniqueness
- *                 constraints, effectively delete all but one of those updated
- *                 records.
+ *                 When set to @a true,
+ *                 all predicates are available for primary key updates.  Keep
+ *                 in mind that it is possible to destroy
+ *                 data in this case, since a single predicate may match
+ *                 multiple objects (potentially all of records
+ *                 of a table), and then updating all of those records to have
+ *                 the same primary key will, due to the
+ *                 primary key uniqueness constraints, effectively delete all
+ *                 but one of those updated records.
  *                 <ul>
  *                         <li> gpudb::update_records_true
  *                         <li> gpudb::update_records_false
  *                 </ul>
  *                 The default value is gpudb::update_records_false.
  *                         <li> gpudb::update_records_update_on_existing_pk:
- *                 Specifies the record collision policy for tables with a <a
- *                 href="../../../concepts/tables/#primary-keys"
- *                 target="_top">primary key</a> when updating columns of the
+ *                 Specifies the record collision policy for updating a table
+ *                 with a
  *                 <a href="../../../concepts/tables/#primary-keys"
- *                 target="_top">primary key</a> or inserting new records.  If
- *                 @a true, existing records with primary key values that match
- *                 those of a record being updated or inserted will be replaced
- *                 by the updated and new records.  If @a false, existing
- *                 records with matching primary key values will remain
- *                 unchanged, and the updated or new records with primary key
- *                 values that match those of existing records will be
- *                 discarded.  If the specified table does not have a primary
- *                 key, then this option has no effect.
+ *                 target="_top">primary key</a>.  There are two ways that a
+ *                 record collision can
+ *                 occur.
+ *                 The first is an "update collision", which happens when the
+ *                 update changes the value of the updated
+ *                 record's primary key, and that new primary key already
+ *                 exists as the primary key of another record
+ *                 in the table.
+ *                 The second is an "insert collision", which occurs when a
+ *                 given filter in @a expressions
+ *                 finds no records to update, and the alternate insert record
+ *                 given in @a recordsToInsert (or
+ *                 @a recordsToInsertStr) contains a primary key matching that
+ *                 of an existing record in the
+ *                 table.
+ *                 If @a update_on_existing_pk is set to
+ *                 @a true, "update collisions" will result in the
+ *                 existing record collided into being removed and the record
+ *                 updated with values specified in
+ *                 @a newValuesMaps taking its place; "insert collisions" will
+ *                 result in the collided-into
+ *                 record being updated with the values in @a
+ *                 recordsToInsert/@a recordsToInsertStr
+ *                 (if given).
+ *                 If set to @a false, the existing collided-into
+ *                 record will remain unchanged, while the update will be
+ *                 rejected and the error handled as determined
+ *                 by @a ignore_existing_pk.  If the specified table does not
+ *                 have a primary key,
+ *                 then this option has no effect.
  *                 <ul>
- *                         <li> gpudb::update_records_true: Overwrite existing
- *                 records when updated and inserted records have the same
- *                 primary keys
- *                         <li> gpudb::update_records_false: Discard updated
- *                 and inserted records when the same primary keys already
- *                 exist
+ *                         <li> gpudb::update_records_true: Overwrite the
+ *                 collided-into record when updating a
+ *                 record's primary key or inserting an alternate record causes
+ *                 a primary key collision between the
+ *                 record being updated/inserted and another existing record in
+ *                 the table
+ *                         <li> gpudb::update_records_false: Reject updates
+ *                 which cause primary key collisions
+ *                 between the record being updated/inserted and an existing
+ *                 record in the table
  *                 </ul>
  *                 The default value is gpudb::update_records_false.
  *                         <li> gpudb::update_records_ignore_existing_pk:
- *                 Specifies the record collision policy for tables with a <a
+ *                 Specifies the record collision error-suppression policy for
+ *                 updating a table with a <a
  *                 href="../../../concepts/tables/#primary-keys"
- *                 target="_top">primary key</a> when updating columns of the
- *                 <a href="../../../concepts/tables/#primary-keys"
- *                 target="_top">primary key</a> or inserting new records.  If
- *                 set to @a true, any record being updated or inserted with
- *                 primary key values that match those of an existing record
- *                 will be ignored with no error generated.  If the specified
- *                 table does not have a primary key, then this option has no
- *                 affect.
+ *                 target="_top">primary key</a>, only used when primary
+ *                 key record collisions are rejected (@a update_on_existing_pk
+ *                 is
+ *                 @a false).  If set to
+ *                 @a true, any record update that is rejected for
+ *                 resulting in a primary key collision with an existing table
+ *                 record will be ignored with no error
+ *                 generated.  If @a false, the rejection of any update
+ *                 for resulting in a primary key collision will cause an error
+ *                 to be reported.  If the specified table
+ *                 does not have a primary key or if @a update_on_existing_pk
+ *                 is
+ *                 @a true, then this option has no effect.
  *                 <ul>
- *                         <li> gpudb::update_records_true
- *                         <li> gpudb::update_records_false
+ *                         <li> gpudb::update_records_true: Ignore updates that
+ *                 result in primary key collisions with existing records
+ *                         <li> gpudb::update_records_false: Treat as errors
+ *                 any updates that result in primary key collisions with
+ *                 existing records
  *                 </ul>
  *                 The default value is gpudb::update_records_false.
  *                         <li> gpudb::update_records_update_partition: Force
@@ -37008,11 +37830,13 @@ UpdateRecordsResponse updateRecords( const std::string& tableName,
  *                 The default value is gpudb::update_records_false.
  *                         <li>
  *                 gpudb::update_records_use_expressions_in_new_values_maps:
- *                 When set to @a true, all new values in @a newValuesMaps are
- *                 considered as expression values. When set to @a false, all
- *                 new values in @a newValuesMaps are considered as constants.
- *                 NOTE:  When @a true, string constants will need to be quoted
- *                 to avoid being evaluated as expressions.
+ *                 When set to @a true,
+ *                 all new values in @a newValuesMaps are considered as
+ *                 expression values. When set to
+ *                 @a false, all new values in
+ *                 @a newValuesMaps are considered as constants.  NOTE:  When
+ *                 @a true, string constants will need
+ *                 to be quoted to avoid being evaluated as expressions.
  *                 <ul>
  *                         <li> gpudb::update_records_true
  *                         <li> gpudb::update_records_false
@@ -40086,7 +40910,6 @@ VisualizeImageLabelsResponse& visualizeImageLabels( const std::string& tableName
  * <a href="../../../graph_solver/network_graph_solver/" target="_top">Network
  * Graphs & Solvers</a>
  * for more information on graphs.
- * .
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -40105,7 +40928,6 @@ VisualizeIsochroneResponse visualizeIsochrone( const VisualizeIsochroneRequest& 
  * <a href="../../../graph_solver/network_graph_solver/" target="_top">Network
  * Graphs & Solvers</a>
  * for more information on graphs.
- * .
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -40128,7 +40950,6 @@ VisualizeIsochroneResponse& visualizeIsochrone( const VisualizeIsochroneRequest&
  * <a href="../../../graph_solver/network_graph_solver/" target="_top">Network
  * Graphs & Solvers</a>
  * for more information on graphs.
- * .
  * 
  * @param graphName  Name of the graph on which the isochrone is to be
  *                   computed.
@@ -40487,7 +41308,6 @@ VisualizeIsochroneResponse visualizeIsochrone( const std::string& graphName,
  * <a href="../../../graph_solver/network_graph_solver/" target="_top">Network
  * Graphs & Solvers</a>
  * for more information on graphs.
- * .
  * 
  * @param graphName  Name of the graph on which the isochrone is to be
  *                   computed.

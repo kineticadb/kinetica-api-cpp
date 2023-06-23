@@ -6,8 +6,13 @@
 #include <avro/Schema.hh>
 #include <avro/Specific.hh>
 
-#include <boost/core/demangle.hpp>
 #include <boost/lexical_cast.hpp>
+#if BOOST_VERSION >= 105600
+    #include <boost/core/demangle.hpp>
+#else
+    #include <boost/units/detail/utility.hpp> // Old versions have demangle() here.
+    namespace boost { namespace core { using boost::units::detail::demangle; } }
+#endif
 
 namespace gpudb
 {

@@ -51,9 +51,7 @@ namespace gpudb
          *                      gpudb::admin_add_host_accepts_failover: If set
          *                      to @a true, the host will accept processes
          *                      (ranks, graph server, etc.) in the event of a
-         *                      failover on another node in the cluster. See <a
-         *                      href="../../../n_plus_1/" target="_top">Cluster
-         *                      Resilience</a> for more information.
+         *                      failover on another node in the cluster.
          *                      <ul>
          *                              <li> gpudb::admin_add_host_true
          *                              <li> gpudb::admin_add_host_false

@@ -69,39 +69,69 @@ namespace gpudb
          *                              <li>
          *                      gpudb::insert_records_update_on_existing_pk:
          *                      Specifies the record collision policy for
-         *                      inserting into a table with a <a
+         *                      inserting into a table
+         *                      with a <a
          *                      href="../../../concepts/tables/#primary-keys"
-         *                      target="_top">primary key</a>.  If set to @a
-         *                      true, any existing table record with primary
+         *                      target="_top">primary key</a>. If set to
+         *                      @a true, any existing table record with primary
          *                      key values that match those of a record being
-         *                      inserted will be replaced by that new record.
-         *                      If set to @a false, any existing table record
-         *                      with primary key values that match those of a
-         *                      record being inserted will remain unchanged and
-         *                      the new record discarded.  If the specified
-         *                      table does not have a primary key, then this
-         *                      option has no affect.
+         *                      inserted will be replaced by that new record
+         *                      (the new
+         *                      data will be "upserted"). If set to @a false,
+         *                      any existing table record with primary key
+         *                      values that match those of a record being
+         *                      inserted will
+         *                      remain unchanged, while the new record will be
+         *                      rejected and the error handled as determined by
+         *                      @a ignore_existing_pk, @a allow_partial_batch,
+         *                      &
+         *                      @a return_individual_errors.  If the specified
+         *                      table does not have a primary
+         *                      key, then this option has no effect.
          *                      <ul>
-         *                              <li> gpudb::insert_records_true
-         *                              <li> gpudb::insert_records_false
+         *                              <li> gpudb::insert_records_true: Upsert
+         *                      new records when primary keys match existing
+         *                      records
+         *                              <li> gpudb::insert_records_false:
+         *                      Reject new records when primary keys match
+         *                      existing records
          *                      </ul>
          *                      The default value is
          *                      gpudb::insert_records_false.
          *                              <li>
          *                      gpudb::insert_records_ignore_existing_pk:
-         *                      Specifies the record collision policy for
+         *                      Specifies the record collision
+         *                      error-suppression policy for
          *                      inserting into a table with a <a
          *                      href="../../../concepts/tables/#primary-keys"
-         *                      target="_top">primary key</a>.  If set to @a
-         *                      true, any record being inserted with primary
-         *                      key values that match those of an existing
-         *                      table record will be ignored with no error
-         *                      generated.  If the specified table does not
-         *                      have a primary key, then this option has no
-         *                      affect.
+         *                      target="_top">primary key</a>, only used when
+         *                      not in upsert mode (upsert mode is disabled
+         *                      when @a update_on_existing_pk is
+         *                      @a false).  If set to
+         *                      @a true, any record being inserted that is
+         *                      rejected
+         *                      for having primary key values that match those
+         *                      of an existing table record will be ignored
+         *                      with no
+         *                      error generated.  If @a false, the rejection of
+         *                      any
+         *                      record for having primary key values matching
+         *                      an existing record will result in an error
+         *                      being
+         *                      reported, as determined by @a
+         *                      allow_partial_batch &
+         *                      @a return_individual_errors.  If the specified
+         *                      table does not
+         *                      have a primary key or if upsert mode is in
+         *                      effect (@a update_on_existing_pk is
+         *                      @a true), then this option has no effect.
          *                      <ul>
-         *                              <li> gpudb::insert_records_true
-         *                              <li> gpudb::insert_records_false
+         *                              <li> gpudb::insert_records_true: Ignore
+         *                      new records whose primary key values collide
+         *                      with those of existing records
+         *                              <li> gpudb::insert_records_false: Treat
+         *                      as errors any new records whose primary key
+         *                      values collide with those of existing records
          *                      </ul>
          *                      The default value is
          *                      gpudb::insert_records_false.
@@ -205,39 +235,69 @@ namespace gpudb
          *                              <li>
          *                      gpudb::insert_records_update_on_existing_pk:
          *                      Specifies the record collision policy for
-         *                      inserting into a table with a <a
+         *                      inserting into a table
+         *                      with a <a
          *                      href="../../../concepts/tables/#primary-keys"
-         *                      target="_top">primary key</a>.  If set to @a
-         *                      true, any existing table record with primary
+         *                      target="_top">primary key</a>. If set to
+         *                      @a true, any existing table record with primary
          *                      key values that match those of a record being
-         *                      inserted will be replaced by that new record.
-         *                      If set to @a false, any existing table record
-         *                      with primary key values that match those of a
-         *                      record being inserted will remain unchanged and
-         *                      the new record discarded.  If the specified
-         *                      table does not have a primary key, then this
-         *                      option has no affect.
+         *                      inserted will be replaced by that new record
+         *                      (the new
+         *                      data will be "upserted"). If set to @a false,
+         *                      any existing table record with primary key
+         *                      values that match those of a record being
+         *                      inserted will
+         *                      remain unchanged, while the new record will be
+         *                      rejected and the error handled as determined by
+         *                      @a ignore_existing_pk, @a allow_partial_batch,
+         *                      &
+         *                      @a return_individual_errors.  If the specified
+         *                      table does not have a primary
+         *                      key, then this option has no effect.
          *                      <ul>
-         *                              <li> gpudb::insert_records_true
-         *                              <li> gpudb::insert_records_false
+         *                              <li> gpudb::insert_records_true: Upsert
+         *                      new records when primary keys match existing
+         *                      records
+         *                              <li> gpudb::insert_records_false:
+         *                      Reject new records when primary keys match
+         *                      existing records
          *                      </ul>
          *                      The default value is
          *                      gpudb::insert_records_false.
          *                              <li>
          *                      gpudb::insert_records_ignore_existing_pk:
-         *                      Specifies the record collision policy for
+         *                      Specifies the record collision
+         *                      error-suppression policy for
          *                      inserting into a table with a <a
          *                      href="../../../concepts/tables/#primary-keys"
-         *                      target="_top">primary key</a>.  If set to @a
-         *                      true, any record being inserted with primary
-         *                      key values that match those of an existing
-         *                      table record will be ignored with no error
-         *                      generated.  If the specified table does not
-         *                      have a primary key, then this option has no
-         *                      affect.
+         *                      target="_top">primary key</a>, only used when
+         *                      not in upsert mode (upsert mode is disabled
+         *                      when @a update_on_existing_pk is
+         *                      @a false).  If set to
+         *                      @a true, any record being inserted that is
+         *                      rejected
+         *                      for having primary key values that match those
+         *                      of an existing table record will be ignored
+         *                      with no
+         *                      error generated.  If @a false, the rejection of
+         *                      any
+         *                      record for having primary key values matching
+         *                      an existing record will result in an error
+         *                      being
+         *                      reported, as determined by @a
+         *                      allow_partial_batch &
+         *                      @a return_individual_errors.  If the specified
+         *                      table does not
+         *                      have a primary key or if upsert mode is in
+         *                      effect (@a update_on_existing_pk is
+         *                      @a true), then this option has no effect.
          *                      <ul>
-         *                              <li> gpudb::insert_records_true
-         *                              <li> gpudb::insert_records_false
+         *                              <li> gpudb::insert_records_true: Ignore
+         *                      new records whose primary key values collide
+         *                      with those of existing records
+         *                              <li> gpudb::insert_records_false: Treat
+         *                      as errors any new records whose primary key
+         *                      values collide with those of existing records
          *                      </ul>
          *                      The default value is
          *                      gpudb::insert_records_false.
@@ -442,39 +502,69 @@ namespace gpudb
          *                              <li>
          *                      gpudb::insert_records_update_on_existing_pk:
          *                      Specifies the record collision policy for
-         *                      inserting into a table with a <a
+         *                      inserting into a table
+         *                      with a <a
          *                      href="../../../concepts/tables/#primary-keys"
-         *                      target="_top">primary key</a>.  If set to @a
-         *                      true, any existing table record with primary
+         *                      target="_top">primary key</a>. If set to
+         *                      @a true, any existing table record with primary
          *                      key values that match those of a record being
-         *                      inserted will be replaced by that new record.
-         *                      If set to @a false, any existing table record
-         *                      with primary key values that match those of a
-         *                      record being inserted will remain unchanged and
-         *                      the new record discarded.  If the specified
-         *                      table does not have a primary key, then this
-         *                      option has no affect.
+         *                      inserted will be replaced by that new record
+         *                      (the new
+         *                      data will be "upserted"). If set to @a false,
+         *                      any existing table record with primary key
+         *                      values that match those of a record being
+         *                      inserted will
+         *                      remain unchanged, while the new record will be
+         *                      rejected and the error handled as determined by
+         *                      @a ignore_existing_pk, @a allow_partial_batch,
+         *                      &
+         *                      @a return_individual_errors.  If the specified
+         *                      table does not have a primary
+         *                      key, then this option has no effect.
          *                      <ul>
-         *                              <li> gpudb::insert_records_true
-         *                              <li> gpudb::insert_records_false
+         *                              <li> gpudb::insert_records_true: Upsert
+         *                      new records when primary keys match existing
+         *                      records
+         *                              <li> gpudb::insert_records_false:
+         *                      Reject new records when primary keys match
+         *                      existing records
          *                      </ul>
          *                      The default value is
          *                      gpudb::insert_records_false.
          *                              <li>
          *                      gpudb::insert_records_ignore_existing_pk:
-         *                      Specifies the record collision policy for
+         *                      Specifies the record collision
+         *                      error-suppression policy for
          *                      inserting into a table with a <a
          *                      href="../../../concepts/tables/#primary-keys"
-         *                      target="_top">primary key</a>.  If set to @a
-         *                      true, any record being inserted with primary
-         *                      key values that match those of an existing
-         *                      table record will be ignored with no error
-         *                      generated.  If the specified table does not
-         *                      have a primary key, then this option has no
-         *                      affect.
+         *                      target="_top">primary key</a>, only used when
+         *                      not in upsert mode (upsert mode is disabled
+         *                      when @a update_on_existing_pk is
+         *                      @a false).  If set to
+         *                      @a true, any record being inserted that is
+         *                      rejected
+         *                      for having primary key values that match those
+         *                      of an existing table record will be ignored
+         *                      with no
+         *                      error generated.  If @a false, the rejection of
+         *                      any
+         *                      record for having primary key values matching
+         *                      an existing record will result in an error
+         *                      being
+         *                      reported, as determined by @a
+         *                      allow_partial_batch &
+         *                      @a return_individual_errors.  If the specified
+         *                      table does not
+         *                      have a primary key or if upsert mode is in
+         *                      effect (@a update_on_existing_pk is
+         *                      @a true), then this option has no effect.
          *                      <ul>
-         *                              <li> gpudb::insert_records_true
-         *                              <li> gpudb::insert_records_false
+         *                              <li> gpudb::insert_records_true: Ignore
+         *                      new records whose primary key values collide
+         *                      with those of existing records
+         *                              <li> gpudb::insert_records_false: Treat
+         *                      as errors any new records whose primary key
+         *                      values collide with those of existing records
          *                      </ul>
          *                      The default value is
          *                      gpudb::insert_records_false.

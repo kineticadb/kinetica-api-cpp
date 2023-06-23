@@ -80,6 +80,20 @@ namespace gpudb
          *                      Amazon S3 region where the given bucket is
          *                      located
          *                              <li>
+         *                      gpudb::create_datasource_s3_use_virtual_addressing:
+         *                      When true (default), the requests URI should be
+         *                      specified in virtual-hosted-style format where
+         *                      the bucket name is part of the domain name in
+         *                      the URL.
+         *                      Otherwise set to false to use path-style URI
+         *                      for requests.
+         *                      <ul>
+         *                              <li> gpudb::create_datasource_true
+         *                              <li> gpudb::create_datasource_false
+         *                      </ul>
+         *                      The default value is
+         *                      gpudb::create_datasource_true.
+         *                              <li>
          *                      gpudb::create_datasource_s3_aws_role_arn:
          *                      Amazon IAM Role ARN which has required S3
          *                      permissions that can be assumed for the given

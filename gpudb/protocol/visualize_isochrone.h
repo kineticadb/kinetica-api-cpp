@@ -22,7 +22,6 @@ namespace gpudb
      * <a href="../../../graph_solver/network_graph_solver/"
      * target="_top">Network Graphs & Solvers</a>
      * for more information on graphs.
-     * .
      */
     struct VisualizeIsochroneRequest
     {
@@ -699,7 +698,6 @@ namespace gpudb
      * <a href="../../../graph_solver/network_graph_solver/"
      * target="_top">Network Graphs & Solvers</a>
      * for more information on graphs.
-     * .
      */
     struct VisualizeIsochroneResponse
     {

@@ -44,11 +44,15 @@ namespace gpudb
      * restrictions can be removed by utilizing some available options through
      * @a options.
      * <p>
-     * The @a update_on_existing_pk option specifies the record
-     * collision policy for tables with a <a
+     * The @a update_on_existing_pk option specifies the record primary key
+     * collision
+     * policy for tables with a <a
      * href="../../../concepts/tables/#primary-keys" target="_top">primary
-     * key</a>, and
-     * is ignored on tables with no primary key.
+     * key</a>, while
+     * @a ignore_existing_pk specifies the record primary key collision
+     * error-suppression policy when those collisions result in the update
+     * being rejected.  Both are
+     * ignored on tables with no primary key.
      */
     struct RawUpdateRecordsRequest
     {
@@ -74,11 +78,12 @@ namespace gpudb
          * 
          * @param[in] tableName_  Name of table to be updated, in
          *                        [schema_name.]table_name format, using
-         *                        standard <a
+         *                        standard
+         *                        <a
          *                        href="../../../concepts/tables/#table-name-resolution"
          *                        target="_top">name resolution rules</a>.
-         *                        Must be a currently existing table and not a
-         *                        view.
+         *                        Must be a currently
+         *                        existing table and not a view.
          * @param[in] expressions_  A list of the actual predicates, one for
          *                          each update; format should follow the
          *                          guidelines /filter.
@@ -86,17 +91,17 @@ namespace gpudb
          *                            records.  Each element is a map with
          *                            (key, value) pairs where the keys are the
          *                            names of the columns whose values are to
-         *                            be updated; the values are the new
-         *                            values.  The number of elements in the
-         *                            list should match the length of @a
-         *                            expressions.
+         *                            be updated; the
+         *                            values are the new values.  The number of
+         *                            elements in the list should match the
+         *                            length of @a expressions.
          * @param[in] recordsToInsert_  An *optional* list of new binary-avro
          *                              encoded records to insert, one for each
          *                              update.  If one of @a expressions does
          *                              not yield a matching record to be
-         *                              updated, then the corresponding element
-         *                              from this list will be added to the
-         *                              table.
+         *                              updated, then the
+         *                              corresponding element from this list
+         *                              will be added to the table.
          * @param[in] options_  Optional parameters.
          *                      <ul>
          *                              <li>
@@ -106,16 +111,18 @@ namespace gpudb
          *                      expressions.  The default value is ''.
          *                              <li>
          *                      gpudb::update_records_bypass_safety_checks:
-         *                      When set to @a true, all predicates are
-         *                      available for primary key updates.  Keep in
-         *                      mind that it is possible to destroy data in
-         *                      this case, since a single predicate may match
-         *                      multiple objects (potentially all of records of
-         *                      a table), and then updating all of those
+         *                      When set to @a true,
+         *                      all predicates are available for primary key
+         *                      updates.  Keep in mind that it is possible to
+         *                      destroy
+         *                      data in this case, since a single predicate may
+         *                      match multiple objects (potentially all of
+         *                      records
+         *                      of a table), and then updating all of those
          *                      records to have the same primary key will, due
-         *                      to the primary key uniqueness constraints,
-         *                      effectively delete all but one of those updated
-         *                      records.
+         *                      to the
+         *                      primary key uniqueness constraints, effectively
+         *                      delete all but one of those updated records.
          *                      <ul>
          *                              <li> gpudb::update_records_true
          *                              <li> gpudb::update_records_false
@@ -125,51 +132,89 @@ namespace gpudb
          *                              <li>
          *                      gpudb::update_records_update_on_existing_pk:
          *                      Specifies the record collision policy for
-         *                      tables with a <a
+         *                      updating a table with a
+         *                      <a
          *                      href="../../../concepts/tables/#primary-keys"
-         *                      target="_top">primary key</a> when updating
-         *                      columns of the <a
-         *                      href="../../../concepts/tables/#primary-keys"
-         *                      target="_top">primary key</a> or inserting new
-         *                      records.  If @a true, existing records with
-         *                      primary key values that match those of a record
-         *                      being updated or inserted will be replaced by
-         *                      the updated and new records.  If @a false,
-         *                      existing records with matching primary key
-         *                      values will remain unchanged, and the updated
-         *                      or new records with primary key values that
-         *                      match those of existing records will be
-         *                      discarded.  If the specified table does not
-         *                      have a primary key, then this option has no
-         *                      effect.
+         *                      target="_top">primary key</a>.  There are two
+         *                      ways that a record collision can
+         *                      occur.
+         *                      The first is an "update collision", which
+         *                      happens when the update changes the value of
+         *                      the updated
+         *                      record's primary key, and that new primary key
+         *                      already exists as the primary key of another
+         *                      record
+         *                      in the table.
+         *                      The second is an "insert collision", which
+         *                      occurs when a given filter in @a expressions
+         *                      finds no records to update, and the alternate
+         *                      insert record given in @a recordsToInsert (or
+         *                      @a recordsToInsertStr) contains a primary key
+         *                      matching that of an existing record in the
+         *                      table.
+         *                      If @a update_on_existing_pk is set to
+         *                      @a true, "update collisions" will result in the
+         *                      existing record collided into being removed and
+         *                      the record updated with values specified in
+         *                      @a newValuesMaps taking its place; "insert
+         *                      collisions" will result in the collided-into
+         *                      record being updated with the values in @a
+         *                      recordsToInsert/@a recordsToInsertStr
+         *                      (if given).
+         *                      If set to @a false, the existing collided-into
+         *                      record will remain unchanged, while the update
+         *                      will be rejected and the error handled as
+         *                      determined
+         *                      by @a ignore_existing_pk.  If the specified
+         *                      table does not have a primary key,
+         *                      then this option has no effect.
          *                      <ul>
          *                              <li> gpudb::update_records_true:
-         *                      Overwrite existing records when updated and
-         *                      inserted records have the same primary keys
+         *                      Overwrite the collided-into record when
+         *                      updating a
+         *                      record's primary key or inserting an alternate
+         *                      record causes a primary key collision between
+         *                      the
+         *                      record being updated/inserted and another
+         *                      existing record in the table
          *                              <li> gpudb::update_records_false:
-         *                      Discard updated and inserted records when the
-         *                      same primary keys already exist
+         *                      Reject updates which cause primary key
+         *                      collisions
+         *                      between the record being updated/inserted and
+         *                      an existing record in the table
          *                      </ul>
          *                      The default value is
          *                      gpudb::update_records_false.
          *                              <li>
          *                      gpudb::update_records_ignore_existing_pk:
-         *                      Specifies the record collision policy for
-         *                      tables with a <a
+         *                      Specifies the record collision
+         *                      error-suppression policy for
+         *                      updating a table with a <a
          *                      href="../../../concepts/tables/#primary-keys"
-         *                      target="_top">primary key</a> when updating
-         *                      columns of the <a
-         *                      href="../../../concepts/tables/#primary-keys"
-         *                      target="_top">primary key</a> or inserting new
-         *                      records.  If set to @a true, any record being
-         *                      updated or inserted with primary key values
-         *                      that match those of an existing record will be
-         *                      ignored with no error generated.  If the
-         *                      specified table does not have a primary key,
-         *                      then this option has no affect.
+         *                      target="_top">primary key</a>, only used when
+         *                      primary
+         *                      key record collisions are rejected (@a
+         *                      update_on_existing_pk is
+         *                      @a false).  If set to
+         *                      @a true, any record update that is rejected for
+         *                      resulting in a primary key collision with an
+         *                      existing table record will be ignored with no
+         *                      error
+         *                      generated.  If @a false, the rejection of any
+         *                      update
+         *                      for resulting in a primary key collision will
+         *                      cause an error to be reported.  If the
+         *                      specified table
+         *                      does not have a primary key or if @a
+         *                      update_on_existing_pk is
+         *                      @a true, then this option has no effect.
          *                      <ul>
-         *                              <li> gpudb::update_records_true
-         *                              <li> gpudb::update_records_false
+         *                              <li> gpudb::update_records_true: Ignore
+         *                      updates that result in primary key collisions
+         *                      with existing records
+         *                              <li> gpudb::update_records_false: Treat
+         *                      as errors any updates that result in primary
+         *                      key collisions with existing records
          *                      </ul>
          *                      The default value is
          *                      gpudb::update_records_false.
@@ -197,11 +242,13 @@ namespace gpudb
          *                      gpudb::update_records_false.
          *                              <li>
          *                      gpudb::update_records_use_expressions_in_new_values_maps:
-         *                      When set to @a true, all new values in @a
-         *                      newValuesMaps are considered as expression
-         *                      values. When set to @a false, all new values in
+         *                      When set to @a true,
+         *                      all new values in @a newValuesMaps are
+         *                      considered as expression values. When set to
+         *                      @a false, all new values in
          *                      @a newValuesMaps are considered as constants.
-         *                      NOTE:  When @a true, string constants will need
+         *                      NOTE:  When
+         *                      @a true, string constants will need
          *                      to be quoted to avoid being evaluated as
          *                      expressions.
          *                      <ul>
@@ -234,11 +281,12 @@ namespace gpudb
          * 
          * @param[in] tableName_  Name of table to be updated, in
          *                        [schema_name.]table_name format, using
-         *                        standard <a
+         *                        standard
+         *                        <a
          *                        href="../../../concepts/tables/#table-name-resolution"
          *                        target="_top">name resolution rules</a>.
-         *                        Must be a currently existing table and not a
-         *                        view.
+         *                        Must be a currently
+         *                        existing table and not a view.
          * @param[in] expressions_  A list of the actual predicates, one for
          *                          each update; format should follow the
          *                          guidelines /filter.
@@ -246,17 +294,17 @@ namespace gpudb
          *                            records.  Each element is a map with
          *                            (key, value) pairs where the keys are the
          *                            names of the columns whose values are to
-         *                            be updated; the values are the new
-         *                            values.  The number of elements in the
-         *                            list should match the length of @a
-         *                            expressions.
+         *                            be updated; the
+         *                            values are the new values.  The number of
+         *                            elements in the list should match the
+         *                            length of @a expressions.
          * @param[in] recordsToInsert_  An *optional* list of new binary-avro
          *                              encoded records to insert, one for each
          *                              update.  If one of @a expressions does
          *                              not yield a matching record to be
-         *                              updated, then the corresponding element
-         *                              from this list will be added to the
-         *                              table.
+         *                              updated, then the
+         *                              corresponding element from this list
+         *                              will be added to the table.
          * @param[in] recordsToInsertStr_  An optional list of JSON encoded
          *                                 objects to insert, one for each
          *                                 update, to be added if the
@@ -281,16 +329,18 @@ namespace gpudb
          *                      expressions.  The default value is ''.
          *                              <li>
          *                      gpudb::update_records_bypass_safety_checks:
-         *                      When set to @a true, all predicates are
-         *                      available for primary key updates.  Keep in
-         *                      mind that it is possible to destroy data in
-         *                      this case, since a single predicate may match
-         *                      multiple objects (potentially all of records of
-         *                      a table), and then updating all of those
+         *                      When set to @a true,
+         *                      all predicates are available for primary key
+         *                      updates.  Keep in mind that it is possible to
+         *                      destroy
+         *                      data in this case, since a single predicate may
+         *                      match multiple objects (potentially all of
+         *                      records
+         *                      of a table), and then updating all of those
          *                      records to have the same primary key will, due
-         *                      to the primary key uniqueness constraints,
-         *                      effectively delete all but one of those updated
-         *                      records.
+         *                      to the
+         *                      primary key uniqueness constraints, effectively
+         *                      delete all but one of those updated records.
          *                      <ul>
          *                              <li> gpudb::update_records_true
          *                              <li> gpudb::update_records_false
@@ -300,51 +350,89 @@ namespace gpudb
          *                              <li>
          *                      gpudb::update_records_update_on_existing_pk:
          *                      Specifies the record collision policy for
-         *                      tables with a <a
+         *                      updating a table with a
+         *                      <a
          *                      href="../../../concepts/tables/#primary-keys"
-         *                      target="_top">primary key</a> when updating
-         *                      columns of the <a
-         *                      href="../../../concepts/tables/#primary-keys"
-         *                      target="_top">primary key</a> or inserting new
-         *                      records.  If @a true, existing records with
-         *                      primary key values that match those of a record
-         *                      being updated or inserted will be replaced by
-         *                      the updated and new records.  If @a false,
-         *                      existing records with matching primary key
-         *                      values will remain unchanged, and the updated
-         *                      or new records with primary key values that
-         *                      match those of existing records will be
-         *                      discarded.  If the specified table does not
-         *                      have a primary key, then this option has no
-         *                      effect.
+         *                      target="_top">primary key</a>.  There are two
+         *                      ways that a record collision can
+         *                      occur.
+         *                      The first is an "update collision", which
+         *                      happens when the update changes the value of
+         *                      the updated
+         *                      record's primary key, and that new primary key
+         *                      already exists as the primary key of another
+         *                      record
+         *                      in the table.
+         *                      The second is an "insert collision", which
+         *                      occurs when a given filter in @a expressions
+         *                      finds no records to update, and the alternate
+         *                      insert record given in @a recordsToInsert (or
+         *                      @a recordsToInsertStr) contains a primary key
+         *                      matching that of an existing record in the
+         *                      table.
+         *                      If @a update_on_existing_pk is set to
+         *                      @a true, "update collisions" will result in the
+         *                      existing record collided into being removed and
+         *                      the record updated with values specified in
+         *                      @a newValuesMaps taking its place; "insert
+         *                      collisions" will result in the collided-into
+         *                      record being updated with the values in @a
+         *                      recordsToInsert/@a recordsToInsertStr
+         *                      (if given).
+         *                      If set to @a false, the existing collided-into
+         *                      record will remain unchanged, while the update
+         *                      will be rejected and the error handled as
+         *                      determined
+         *                      by @a ignore_existing_pk.  If the specified
+         *                      table does not have a primary key,
+         *                      then this option has no effect.
          *                      <ul>
          *                              <li> gpudb::update_records_true:
-         *                      Overwrite existing records when updated and
-         *                      inserted records have the same primary keys
+         *                      Overwrite the collided-into record when
+         *                      updating a
+         *                      record's primary key or inserting an alternate
+         *                      record causes a primary key collision between
+         *                      the
+         *                      record being updated/inserted and another
+         *                      existing record in the table
          *                              <li> gpudb::update_records_false:
-         *                      Discard updated and inserted records when the
-         *                      same primary keys already exist
+         *                      Reject updates which cause primary key
+         *                      collisions
+         *                      between the record being updated/inserted and
+         *                      an existing record in the table
          *                      </ul>
          *                      The default value is
          *                      gpudb::update_records_false.
          *                              <li>
          *                      gpudb::update_records_ignore_existing_pk:
-         *                      Specifies the record collision policy for
-         *                      tables with a <a
+         *                      Specifies the record collision
+         *                      error-suppression policy for
+         *                      updating a table with a <a
          *                      href="../../../concepts/tables/#primary-keys"
-         *                      target="_top">primary key</a> when updating
-         *                      columns of the <a
-         *                      href="../../../concepts/tables/#primary-keys"
-         *                      target="_top">primary key</a> or inserting new
-         *                      records.  If set to @a true, any record being
-         *                      updated or inserted with primary key values
-         *                      that match those of an existing record will be
-         *                      ignored with no error generated.  If the
-         *                      specified table does not have a primary key,
-         *                      then this option has no affect.
+         *                      target="_top">primary key</a>, only used when
+         *                      primary
+         *                      key record collisions are rejected (@a
+         *                      update_on_existing_pk is
+         *                      @a false).  If set to
+         *                      @a true, any record update that is rejected for
+         *                      resulting in a primary key collision with an
+         *                      existing table record will be ignored with no
+         *                      error
+         *                      generated.  If @a false, the rejection of any
+         *                      update
+         *                      for resulting in a primary key collision will
+         *                      cause an error to be reported.  If the
+         *                      specified table
+         *                      does not have a primary key or if @a
+         *                      update_on_existing_pk is
+         *                      @a true, then this option has no effect.
          *                      <ul>
-         *                              <li> gpudb::update_records_true
-         *                              <li> gpudb::update_records_false
+         *                              <li> gpudb::update_records_true: Ignore
+         *                      updates that result in primary key collisions
+         *                      with existing records
+         *                              <li> gpudb::update_records_false: Treat
+         *                      as errors any updates that result in primary
+         *                      key collisions with existing records
          *                      </ul>
          *                      The default value is
          *                      gpudb::update_records_false.
@@ -372,11 +460,13 @@ namespace gpudb
          *                      gpudb::update_records_false.
          *                              <li>
          *                      gpudb::update_records_use_expressions_in_new_values_maps:
-         *                      When set to @a true, all new values in @a
-         *                      newValuesMaps are considered as expression
-         *                      values. When set to @a false, all new values in
+         *                      When set to @a true,
+         *                      all new values in @a newValuesMaps are
+         *                      considered as expression values. When set to
+         *                      @a false, all new values in
          *                      @a newValuesMaps are considered as constants.
-         *                      NOTE:  When @a true, string constants will need
+         *                      NOTE:  When
+         *                      @a true, string constants will need
          *                      to be quoted to avoid being evaluated as
          *                      expressions.
          *                      <ul>
@@ -523,11 +613,15 @@ namespace gpudb
      * restrictions can be removed by utilizing some available options through
      * @a options.
      * <p>
-     * The @a update_on_existing_pk option specifies the record
-     * collision policy for tables with a <a
+     * The @a update_on_existing_pk option specifies the record primary key
+     * collision
+     * policy for tables with a <a
      * href="../../../concepts/tables/#primary-keys" target="_top">primary
-     * key</a>, and
-     * is ignored on tables with no primary key.
+     * key</a>, while
+     * @a ignore_existing_pk specifies the record primary key collision
+     * error-suppression policy when those collisions result in the update
+     * being rejected.  Both are
+     * ignored on tables with no primary key.
      * 
      * @param <T>  The type of object being processed.
      * 
@@ -554,11 +648,12 @@ namespace gpudb
          * 
          * @param[in] tableName_  Name of table to be updated, in
          *                        [schema_name.]table_name format, using
-         *                        standard <a
+         *                        standard
+         *                        <a
          *                        href="../../../concepts/tables/#table-name-resolution"
          *                        target="_top">name resolution rules</a>.
-         *                        Must be a currently existing table and not a
-         *                        view.
+         *                        Must be a currently
+         *                        existing table and not a view.
          * @param[in] expressions_  A list of the actual predicates, one for
          *                          each update; format should follow the
          *                          guidelines /filter.
@@ -566,15 +661,16 @@ namespace gpudb
          *                            records.  Each element is a map with
          *                            (key, value) pairs where the keys are the
          *                            names of the columns whose values are to
-         *                            be updated; the values are the new
-         *                            values.  The number of elements in the
-         *                            list should match the length of @a
-         *                            expressions.
+         *                            be updated; the
+         *                            values are the new values.  The number of
+         *                            elements in the list should match the
+         *                            length of @a expressions.
          * @param[in] data_  An *optional* list of new binary-avro encoded
-         *                   records to insert, one for each update.  If one of
-         *                   @a expressions does not yield a matching record to
-         *                   be updated, then the corresponding element from
-         *                   this list will be added to the table.
+         *                   records to insert, one for each
+         *                   update.  If one of @a expressions does not yield a
+         *                   matching record to be updated, then the
+         *                   corresponding element from this list will be added
+         *                   to the table.
          * @param[in] options_  Optional parameters.
          *                      <ul>
          *                              <li>
@@ -584,16 +680,18 @@ namespace gpudb
          *                      expressions.  The default value is ''.
          *                              <li>
          *                      gpudb::update_records_bypass_safety_checks:
-         *                      When set to @a true, all predicates are
-         *                      available for primary key updates.  Keep in
-         *                      mind that it is possible to destroy data in
-         *                      this case, since a single predicate may match
-         *                      multiple objects (potentially all of records of
-         *                      a table), and then updating all of those
+         *                      When set to @a true,
+         *                      all predicates are available for primary key
+         *                      updates.  Keep in mind that it is possible to
+         *                      destroy
+         *                      data in this case, since a single predicate may
+         *                      match multiple objects (potentially all of
+         *                      records
+         *                      of a table), and then updating all of those
          *                      records to have the same primary key will, due
-         *                      to the primary key uniqueness constraints,
-         *                      effectively delete all but one of those updated
-         *                      records.
+         *                      to the
+         *                      primary key uniqueness constraints, effectively
+         *                      delete all but one of those updated records.
          *                      <ul>
          *                              <li> gpudb::update_records_true
          *                              <li> gpudb::update_records_false
@@ -603,51 +701,89 @@ namespace gpudb
          *                              <li>
          *                      gpudb::update_records_update_on_existing_pk:
          *                      Specifies the record collision policy for
-         *                      tables with a <a
+         *                      updating a table with a
+         *                      <a
          *                      href="../../../concepts/tables/#primary-keys"
-         *                      target="_top">primary key</a> when updating
-         *                      columns of the <a
-         *                      href="../../../concepts/tables/#primary-keys"
-         *                      target="_top">primary key</a> or inserting new
-         *                      records.  If @a true, existing records with
-         *                      primary key values that match those of a record
-         *                      being updated or inserted will be replaced by
-         *                      the updated and new records.  If @a false,
-         *                      existing records with matching primary key
-         *                      values will remain unchanged, and the updated
-         *                      or new records with primary key values that
-         *                      match those of existing records will be
-         *                      discarded.  If the specified table does not
-         *                      have a primary key, then this option has no
-         *                      effect.
+         *                      target="_top">primary key</a>.  There are two
+         *                      ways that a record collision can
+         *                      occur.
+         *                      The first is an "update collision", which
+         *                      happens when the update changes the value of
+         *                      the updated
+         *                      record's primary key, and that new primary key
+         *                      already exists as the primary key of another
+         *                      record
+         *                      in the table.
+         *                      The second is an "insert collision", which
+         *                      occurs when a given filter in @a expressions
+         *                      finds no records to update, and the alternate
+         *                      insert record given in @a recordsToInsert (or
+         *                      @a recordsToInsertStr) contains a primary key
+         *                      matching that of an existing record in the
+         *                      table.
+         *                      If @a update_on_existing_pk is set to
+         *                      @a true, "update collisions" will result in the
+         *                      existing record collided into being removed and
+         *                      the record updated with values specified in
+         *                      @a newValuesMaps taking its place; "insert
+         *                      collisions" will result in the collided-into
+         *                      record being updated with the values in @a
+         *                      recordsToInsert/@a recordsToInsertStr
+         *                      (if given).
+         *                      If set to @a false, the existing collided-into
+         *                      record will remain unchanged, while the update
+         *                      will be rejected and the error handled as
+         *                      determined
+         *                      by @a ignore_existing_pk.  If the specified
+         *                      table does not have a primary key,
+         *                      then this option has no effect.
          *                      <ul>
          *                              <li> gpudb::update_records_true:
-         *                      Overwrite existing records when updated and
-         *                      inserted records have the same primary keys
+         *                      Overwrite the collided-into record when
+         *                      updating a
+         *                      record's primary key or inserting an alternate
+         *                      record causes a primary key collision between
+         *                      the
+         *                      record being updated/inserted and another
+         *                      existing record in the table
          *                              <li> gpudb::update_records_false:
-         *                      Discard updated and inserted records when the
-         *                      same primary keys already exist
+         *                      Reject updates which cause primary key
+         *                      collisions
+         *                      between the record being updated/inserted and
+         *                      an existing record in the table
          *                      </ul>
          *                      The default value is
          *                      gpudb::update_records_false.
          *                              <li>
          *                      gpudb::update_records_ignore_existing_pk:
-         *                      Specifies the record collision policy for
-         *                      tables with a <a
+         *                      Specifies the record collision
+         *                      error-suppression policy for
+         *                      updating a table with a <a
          *                      href="../../../concepts/tables/#primary-keys"
-         *                      target="_top">primary key</a> when updating
-         *                      columns of the <a
-         *                      href="../../../concepts/tables/#primary-keys"
-         *                      target="_top">primary key</a> or inserting new
-         *                      records.  If set to @a true, any record being
-         *                      updated or inserted with primary key values
-         *                      that match those of an existing record will be
-         *                      ignored with no error generated.  If the
-         *                      specified table does not have a primary key,
-         *                      then this option has no affect.
+         *                      target="_top">primary key</a>, only used when
+         *                      primary
+         *                      key record collisions are rejected (@a
+         *                      update_on_existing_pk is
+         *                      @a false).  If set to
+         *                      @a true, any record update that is rejected for
+         *                      resulting in a primary key collision with an
+         *                      existing table record will be ignored with no
+         *                      error
+         *                      generated.  If @a false, the rejection of any
+         *                      update
+         *                      for resulting in a primary key collision will
+         *                      cause an error to be reported.  If the
+         *                      specified table
+         *                      does not have a primary key or if @a
+         *                      update_on_existing_pk is
+         *                      @a true, then this option has no effect.
          *                      <ul>
-         *                              <li> gpudb::update_records_true
-         *                              <li> gpudb::update_records_false
+         *                              <li> gpudb::update_records_true: Ignore
+         *                      updates that result in primary key collisions
+         *                      with existing records
+         *                              <li> gpudb::update_records_false: Treat
+         *                      as errors any updates that result in primary
+         *                      key collisions with existing records
          *                      </ul>
          *                      The default value is
          *                      gpudb::update_records_false.
@@ -675,11 +811,13 @@ namespace gpudb
          *                      gpudb::update_records_false.
          *                              <li>
          *                      gpudb::update_records_use_expressions_in_new_values_maps:
-         *                      When set to @a true, all new values in @a
-         *                      newValuesMaps are considered as expression
-         *                      values. When set to @a false, all new values in
+         *                      When set to @a true,
+         *                      all new values in @a newValuesMaps are
+         *                      considered as expression values. When set to
+         *                      @a false, all new values in
          *                      @a newValuesMaps are considered as constants.
-         *                      NOTE:  When @a true, string constants will need
+         *                      NOTE:  When
+         *                      @a true, string constants will need
          *                      to be quoted to avoid being evaluated as
          *                      expressions.
          *                      <ul>
@@ -750,11 +888,15 @@ namespace gpudb
      * restrictions can be removed by utilizing some available options through
      * @a options.
      * <p>
-     * The @a update_on_existing_pk option specifies the record
-     * collision policy for tables with a <a
+     * The @a update_on_existing_pk option specifies the record primary key
+     * collision
+     * policy for tables with a <a
      * href="../../../concepts/tables/#primary-keys" target="_top">primary
-     * key</a>, and
-     * is ignored on tables with no primary key.
+     * key</a>, while
+     * @a ignore_existing_pk specifies the record primary key collision
+     * error-suppression policy when those collisions result in the update
+     * being rejected.  Both are
+     * ignored on tables with no primary key.
      */
     struct UpdateRecordsResponse
     {

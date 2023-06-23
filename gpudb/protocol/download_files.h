@@ -36,7 +36,13 @@ namespace gpudb
          * parameters.
          * 
          * @param[in] fileNames_  An array of the file names to download from
-         *                        KiFS. The full path must be provided.
+         *                        KiFS. File paths may contain wildcard
+         *                        characters after the KiFS directory
+         *                        delimeter.
+         *                        Accepted wildcard characters are asterisk (*)
+         *                        to represent any string of zero or more
+         *                        characters, and question mark (?) to indicate
+         *                        a single character.
          * @param[in] readOffsets_  An array of starting byte offsets from
          *                          which to read each
          *                          respective file in @a fileNames. Must

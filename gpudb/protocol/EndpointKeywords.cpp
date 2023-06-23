@@ -369,6 +369,7 @@ namespace gpudb
     const std::string alter_system_properties_clear_cache                ( "clear_cache"                 );
     const std::string alter_system_properties_communicator_test          ( "communicator_test"           );
     const std::string alter_system_properties_concurrent_kernel_execution( "concurrent_kernel_execution" );
+    const std::string alter_system_properties_egress_parquet_compression ( "egress_parquet_compression"  );
     const std::string alter_system_properties_egress_single_file_max_size( "egress_single_file_max_size" );
     const std::string alter_system_properties_enable_audit               ( "enable_audit"                );
     const std::string alter_system_properties_enable_overlapped_equi_join( "enable_overlapped_equi_join" );
@@ -377,6 +378,7 @@ namespace gpudb
     const std::string alter_system_properties_external_files_directory   ( "external_files_directory"    );
     const std::string alter_system_properties_false                      ( "false"                       );
     const std::string alter_system_properties_flush_to_disk              ( "flush_to_disk"               );
+    const std::string alter_system_properties_gzip                       ( "gzip"                        );
     const std::string alter_system_properties_kafka_batch_size           ( "kafka_batch_size"            );
     const std::string alter_system_properties_kafka_poll_timeout         ( "kafka_poll_timeout"          );
     const std::string alter_system_properties_kafka_wait_time            ( "kafka_wait_time"             );
@@ -393,11 +395,13 @@ namespace gpudb
     const std::string alter_system_properties_shadow_filter_size         ( "shadow_filter_size"          );
     const std::string alter_system_properties_silent                     ( "silent"                      );
     const std::string alter_system_properties_sm_omp_threads             ( "sm_omp_threads"              );
+    const std::string alter_system_properties_snappy                     ( "snappy"                      );
     const std::string alter_system_properties_subtask_concurrency_limit  ( "subtask_concurrency_limit"   );
     const std::string alter_system_properties_synchronous_compression    ( "synchronous_compression"     );
     const std::string alter_system_properties_tcs_per_tom                ( "tcs_per_tom"                 );
     const std::string alter_system_properties_tps_per_tom                ( "tps_per_tom"                 );
     const std::string alter_system_properties_true                       ( "true"                        );
+    const std::string alter_system_properties_uncompressed               ( "uncompressed"                );
 
     // Keywords for /alter/table request
     const std::string alter_table_action                        ( "action"                         );
@@ -466,6 +470,7 @@ namespace gpudb
     const std::string alter_tier_persist       ( "persist"        );
     const std::string alter_tier_rank          ( "rank"           );
     const std::string alter_tier_true          ( "true"           );
+    const std::string alter_tier_wait_timeout  ( "wait_timeout"   );
 
     // Keywords for /alter/user request
     const std::string alter_user_set_default_schema( "set_default_schema" );
@@ -549,6 +554,7 @@ namespace gpudb
     const std::string create_datasink_s3_encryption_customer_algorithm( "s3_encryption_customer_algorithm" );
     const std::string create_datasink_s3_encryption_customer_key      ( "s3_encryption_customer_key"       );
     const std::string create_datasink_s3_region                       ( "s3_region"                        );
+    const std::string create_datasink_s3_use_virtual_addressing       ( "s3_use_virtual_addressing"        );
     const std::string create_datasink_skip_validation                 ( "skip_validation"                  );
     const std::string create_datasink_true                            ( "true"                             );
     const std::string create_datasink_use_https                       ( "use_https"                        );
@@ -580,6 +586,7 @@ namespace gpudb
     const std::string create_datasource_s3_encryption_customer_algorithm( "s3_encryption_customer_algorithm" );
     const std::string create_datasource_s3_encryption_customer_key      ( "s3_encryption_customer_key"       );
     const std::string create_datasource_s3_region                       ( "s3_region"                        );
+    const std::string create_datasource_s3_use_virtual_addressing       ( "s3_use_virtual_addressing"        );
     const std::string create_datasource_skip_validation                 ( "skip_validation"                  );
     const std::string create_datasource_true                            ( "true"                             );
     const std::string create_datasource_use_https                       ( "use_https"                        );
@@ -796,8 +803,10 @@ namespace gpudb
     const std::string create_table_external_accuracy                        ( "accuracy"                         );
     const std::string create_table_external_auto                            ( "auto"                             );
     const std::string create_table_external_avro                            ( "avro"                             );
+    const std::string create_table_external_avro_header_bytes               ( "avro_header_bytes"                );
     const std::string create_table_external_avro_num_records                ( "avro_num_records"                 );
     const std::string create_table_external_avro_schema                     ( "avro_schema"                      );
+    const std::string create_table_external_avro_schemaless                 ( "avro_schemaless"                  );
     const std::string create_table_external_bad_record_table_limit          ( "bad_record_table_limit"           );
     const std::string create_table_external_bad_record_table_limit_per_input( "bad_record_table_limit_per_input" );
     const std::string create_table_external_bad_record_table_name           ( "bad_record_table_name"            );
@@ -1125,6 +1134,7 @@ namespace gpudb
     const std::string export_records_to_files_column_formats           ( "column_formats"            );
     const std::string export_records_to_files_columns_to_export        ( "columns_to_export"         );
     const std::string export_records_to_files_columns_to_skip          ( "columns_to_skip"           );
+    const std::string export_records_to_files_compression_type         ( "compression_type"          );
     const std::string export_records_to_files_datasink_name            ( "datasink_name"             );
     const std::string export_records_to_files_default_column_formats   ( "default_column_formats"    );
     const std::string export_records_to_files_delimited_text           ( "delimited_text"            );
@@ -1132,14 +1142,18 @@ namespace gpudb
     const std::string export_records_to_files_false                    ( "false"                     );
     const std::string export_records_to_files_file_extension           ( "file_extension"            );
     const std::string export_records_to_files_file_type                ( "file_type"                 );
+    const std::string export_records_to_files_gzip                     ( "gzip"                      );
     const std::string export_records_to_files_kinetica_header          ( "kinetica_header"           );
     const std::string export_records_to_files_kinetica_header_delimiter( "kinetica_header_delimiter" );
+    const std::string export_records_to_files_overwrite                ( "overwrite"                 );
     const std::string export_records_to_files_parquet                  ( "parquet"                   );
     const std::string export_records_to_files_single_file              ( "single_file"               );
+    const std::string export_records_to_files_snappy                   ( "snappy"                    );
     const std::string export_records_to_files_text_delimiter           ( "text_delimiter"            );
     const std::string export_records_to_files_text_has_header          ( "text_has_header"           );
     const std::string export_records_to_files_text_null_string         ( "text_null_string"          );
     const std::string export_records_to_files_true                     ( "true"                      );
+    const std::string export_records_to_files_uncompressed             ( "uncompressed"              );
 
     // Keywords for /export/records/totable request
     const std::string export_records_to_table_batch_size                    ( "batch_size"                     );
@@ -1516,8 +1530,10 @@ namespace gpudb
     const std::string insert_records_from_files_accuracy                        ( "accuracy"                         );
     const std::string insert_records_from_files_auto                            ( "auto"                             );
     const std::string insert_records_from_files_avro                            ( "avro"                             );
+    const std::string insert_records_from_files_avro_header_bytes               ( "avro_header_bytes"                );
     const std::string insert_records_from_files_avro_num_records                ( "avro_num_records"                 );
     const std::string insert_records_from_files_avro_schema                     ( "avro_schema"                      );
+    const std::string insert_records_from_files_avro_schemaless                 ( "avro_schemaless"                  );
     const std::string insert_records_from_files_bad_record_table_limit          ( "bad_record_table_limit"           );
     const std::string insert_records_from_files_bad_record_table_limit_per_input( "bad_record_table_limit_per_input" );
     const std::string insert_records_from_files_bad_record_table_name           ( "bad_record_table_name"            );
@@ -1632,8 +1648,10 @@ namespace gpudb
     const std::string insert_records_from_payload_accuracy                        ( "accuracy"                         );
     const std::string insert_records_from_payload_auto                            ( "auto"                             );
     const std::string insert_records_from_payload_avro                            ( "avro"                             );
+    const std::string insert_records_from_payload_avro_header_bytes               ( "avro_header_bytes"                );
     const std::string insert_records_from_payload_avro_num_records                ( "avro_num_records"                 );
     const std::string insert_records_from_payload_avro_schema                     ( "avro_schema"                      );
+    const std::string insert_records_from_payload_avro_schemaless                 ( "avro_schemaless"                  );
     const std::string insert_records_from_payload_bad_record_table_limit          ( "bad_record_table_limit"           );
     const std::string insert_records_from_payload_bad_record_table_limit_per_input( "bad_record_table_limit_per_input" );
     const std::string insert_records_from_payload_bad_record_table_name           ( "bad_record_table_name"            );
@@ -1851,7 +1869,7 @@ namespace gpudb
     const std::string match_graph_even                   ( "even"                    );
     const std::string match_graph_false                  ( "false"                   );
     const std::string match_graph_filter_folding_paths   ( "filter_folding_paths"    );
-    const std::string match_graph_girwan                 ( "girwan"                  );
+    const std::string match_graph_girvan                 ( "girvan"                  );
     const std::string match_graph_gps_noise              ( "gps_noise"               );
     const std::string match_graph_intersection_penalty   ( "intersection_penalty"    );
     const std::string match_graph_inverse_solve          ( "inverse_solve"           );
@@ -1895,6 +1913,7 @@ namespace gpudb
     const std::string match_graph_service_radius         ( "service_radius"          );
     const std::string match_graph_sharp_turn_penalty     ( "sharp_turn_penalty"      );
     const std::string match_graph_source                 ( "source"                  );
+    const std::string match_graph_spectral               ( "spectral"                );
     const std::string match_graph_traversal_node_limit   ( "traversal_node_limit"    );
     const std::string match_graph_true                   ( "true"                    );
     const std::string match_graph_unit_unloading_cost    ( "unit_unloading_cost"     );

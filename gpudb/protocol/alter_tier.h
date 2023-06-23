@@ -55,6 +55,10 @@ namespace gpudb
          *                      below after crossing the @a high_watermark,
          *                      will cease watermark-based eviction from this
          *                      tier.
+         *                              <li> gpudb::alter_tier_wait_timeout:
+         *                      Timeout in seconds for reading from or writing
+         *                      to this resource. Applies to cold storage tiers
+         *                      only.
          *                              <li> gpudb::alter_tier_persist: If @a
          *                      true the system configuration will be written
          *                      to disk upon successful application of this

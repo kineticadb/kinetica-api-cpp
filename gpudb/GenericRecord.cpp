@@ -834,6 +834,8 @@ namespace gpudb
                 || type == ColumnProperty::IPV4
                 || type == ColumnProperty::TIME
                 || type == ColumnProperty::TIMESTAMP
+                || type == ColumnProperty::ULONG
+                || type == ColumnProperty::UUID
                 || type == ColumnProperty::WKT)
             {
                 columnProperties.push_back(type);

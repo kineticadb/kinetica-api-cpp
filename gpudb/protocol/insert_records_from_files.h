@@ -316,6 +316,10 @@ namespace gpudb
          * @param[in] options_  Optional parameters.
          *                      <ul>
          *                              <li>
+         *                      gpudb::insert_records_from_files_avro_header_bytes:
+         *                      Optional number of bytes to skip when reading
+         *                      an avro record.
+         *                              <li>
          *                      gpudb::insert_records_from_files_avro_num_records:
          *                      Optional number of avro records, if data
          *                      includes only records.
@@ -323,6 +327,18 @@ namespace gpudb
          *                      gpudb::insert_records_from_files_avro_schema:
          *                      Optional string representing avro schema, if
          *                      data includes only records.
+         *                              <li>
+         *                      gpudb::insert_records_from_files_avro_schemaless:
+         *                      When user provides 'avro_schema', avro data is
+         *                      assumed to be schemaless, unless specified.
+         *                      Default is 'true' when given avro_schema.
+         *                      Igonred when avro_schema is not given.
+         *                      <ul>
+         *                              <li>
+         *                      gpudb::insert_records_from_files_true
+         *                              <li>
+         *                      gpudb::insert_records_from_files_false
+         *                      </ul>
          *                              <li>
          *                      gpudb::insert_records_from_files_bad_record_table_name:
          *                      Optional name of a table to which records that
@@ -530,6 +546,43 @@ namespace gpudb
          *                      </ul>
          *                      The default value is
          *                      gpudb::insert_records_from_files_delimited_text.
+         *                              <li>
+         *                      gpudb::insert_records_from_files_ignore_existing_pk:
+         *                      Specifies the record collision
+         *                      error-suppression policy for
+         *                      inserting into a table with a <a
+         *                      href="../../../concepts/tables/#primary-keys"
+         *                      target="_top">primary key</a>, only used when
+         *                      not in upsert mode (upsert mode is disabled
+         *                      when @a update_on_existing_pk is
+         *                      @a false).  If set to
+         *                      @a true, any record being inserted that is
+         *                      rejected
+         *                      for having primary key values that match those
+         *                      of an existing table record will be ignored
+         *                      with no
+         *                      error generated.  If @a false, the rejection of
+         *                      any
+         *                      record for having primary key values matching
+         *                      an existing record will result in an error
+         *                      being
+         *                      reported, as determined by @a error_handling.
+         *                      If the specified table does not
+         *                      have a primary key or if upsert mode is in
+         *                      effect (@a update_on_existing_pk is
+         *                      @a true), then this option has no effect.
+         *                      <ul>
+         *                              <li>
+         *                      gpudb::insert_records_from_files_true: Ignore
+         *                      new records whose primary key values collide
+         *                      with those of existing records
+         *                              <li>
+         *                      gpudb::insert_records_from_files_false: Treat
+         *                      as errors any new records whose primary key
+         *                      values collide with those of existing records
+         *                      </ul>
+         *                      The default value is
+         *                      gpudb::insert_records_from_files_false.
          *                              <li>
          *                      gpudb::insert_records_from_files_ingestion_mode:
          *                      Whether to do a full load, dry run, or perform
@@ -835,21 +888,34 @@ namespace gpudb
          *                      gpudb::insert_records_from_files_speed.
          *                              <li>
          *                      gpudb::insert_records_from_files_update_on_existing_pk:
+         *                      Specifies the record collision policy for
+         *                      inserting into a table
+         *                      with a <a
+         *                      href="../../../concepts/tables/#primary-keys"
+         *                      target="_top">primary key</a>. If set to
+         *                      @a true, any existing table record with primary
+         *                      key values that match those of a record being
+         *                      inserted will be replaced by that new record
+         *                      (the new
+         *                      data will be "upserted"). If set to @a false,
+         *                      any existing table record with primary key
+         *                      values that match those of a record being
+         *                      inserted will
+         *                      remain unchanged, while the new record will be
+         *                      rejected and the error handled as determined by
+         *                      @a ignore_existing_pk & @a error_handling.  If
+         *                      the
+         *                      specified table does not have a primary key,
+         *                      then this option has no effect.
          *                      <ul>
          *                              <li>
-         *                      gpudb::insert_records_from_files_true
+         *                      gpudb::insert_records_from_files_true: Upsert
+         *                      new records when primary keys match existing
+         *                      records
          *                              <li>
-         *                      gpudb::insert_records_from_files_false
-         *                      </ul>
-         *                      The default value is
-         *                      gpudb::insert_records_from_files_false.
-         *                              <li>
-         *                      gpudb::insert_records_from_files_ignore_existing_pk:
-         *                      <ul>
-         *                              <li>
-         *                      gpudb::insert_records_from_files_true
-         *                              <li>
-         *                      gpudb::insert_records_from_files_false
+         *                      gpudb::insert_records_from_files_false: Reject
+         *                      new records when primary keys match existing
+         *                      records
          *                      </ul>
          *                      The default value is
          *                      gpudb::insert_records_from_files_false.
