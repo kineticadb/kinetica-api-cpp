@@ -59,6 +59,7 @@ namespace gpudb
          *                           <li> gpudb::create_credential_hdfs
          *                           <li> gpudb::create_credential_jdbc
          *                           <li> gpudb::create_credential_kafka
+         *                           <li> gpudb::create_credential_confluent
          *                   </ul>
          * @param[in] identity_  User of the credential to be created.
          * @param[in] secret_  Password of the credential to be created.

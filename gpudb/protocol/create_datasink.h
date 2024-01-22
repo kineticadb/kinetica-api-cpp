@@ -90,6 +90,11 @@ namespace gpudb
          *                      Customer encryption key to encrypt or decrypt
          *                      data
          *                              <li>
+         *                      gpudb::create_datasink_s3_encryption_type:
+         *                      Server side encryption type
+         *                              <li>
+         *                      gpudb::create_datasink_s3_kms_key_id: KMS key
+         *                              <li>
          *                      gpudb::create_datasink_hdfs_kerberos_keytab:
          *                      Kerberos keytab file location for the given
          *                      HDFS user.  This may be a KIFS file.

@@ -44,6 +44,8 @@ namespace gpudb
          *                     fully-qualified name when possible.
          * @param[in] objectType_  The type of object being checked
          *                         <ul>
+         *                                 <li> gpudb::has_permission_context:
+         *                         Context
          *                                 <li>
          *                         gpudb::has_permission_credential: Credential
          *                                 <li> gpudb::has_permission_datasink:

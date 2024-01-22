@@ -188,6 +188,11 @@ namespace gpudb
          *                              <li> gpudb::create_union_false
          *                      </ul>
          *                      The default value is gpudb::create_union_false.
+         *                              <li>
+         *                      gpudb::create_union_strategy_definition: The <a
+         *                      href="../../../rm/concepts/#tier-strategies"
+         *                      target="_top">tier strategy</a> for the table
+         *                      and its columns.
          *                      </ul>
          * 
          */

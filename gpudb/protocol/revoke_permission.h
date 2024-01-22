@@ -44,6 +44,8 @@ namespace gpudb
          * @param[in] objectType_  The type of object being revoked
          *                         <ul>
          *                                 <li>
+         *                         gpudb::revoke_permission_context: Context
+         *                                 <li>
          *                         gpudb::revoke_permission_credential:
          *                         Credential
          *                                 <li>

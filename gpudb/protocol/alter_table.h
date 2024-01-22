@@ -275,6 +275,11 @@ namespace gpudb
          *                     target="_top">text search</a> attribute from all
          *                     columns.
          *                             <li>
+         *                     gpudb::alter_table_remove_shard_keys: Removes
+         *                     the shard key property from all columns, so that
+         *                     the table will be considered randomly sharded.
+         *                     The data is not moved.  The @a value is ignored.
+         *                             <li>
          *                     gpudb::alter_table_set_strategy_definition: Sets
          *                     the <a
          *                     href="../../../rm/concepts/#tier-strategies"

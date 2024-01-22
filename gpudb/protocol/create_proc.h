@@ -103,6 +103,11 @@ namespace gpudb
          *                      the proc that will be executed per node. 0
          *                      allows unlimited concurrency.  The default
          *                      value is '0'.
+         *                              <li>
+         *                      gpudb::create_proc_set_environment: A python
+         *                      environment to use when executing the proc.
+         *                      Must be an existing environment, else an error
+         *                      will be returned.  The default value is ''.
          *                      </ul>
          * 
          */

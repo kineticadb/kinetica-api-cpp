@@ -2,6 +2,15 @@
 
 ## Version 7.1
 
+### Version 7.1.9.2 - 2024-01-22
+
+#### Added
+-   Support for disabling auto-discovery, failover, and certificate checking
+
+#### Notes
+-   Check CHANGELOG-FUNCTIONS.md for endpoint related changes.
+
+
 ### Version 7.1.9.1 - 2023-06-23
 
 #### Added

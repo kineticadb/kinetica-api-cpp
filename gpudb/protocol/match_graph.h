@@ -426,7 +426,7 @@ namespace gpudb
          *                      solver.
          *                      <ul>
          *                              <li> gpudb::match_graph_girvan: Uses
-         *                      the Newman Girwan quality metric for cluster
+         *                      the Newman Girvan quality metric for cluster
          *                      solver
          *                              <li> gpudb::match_graph_spectral:
          *                      Applies recursive spectral bisection (RSB)

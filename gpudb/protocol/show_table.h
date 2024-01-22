@@ -81,6 +81,18 @@ namespace gpudb
          *                              <li> gpudb::show_table_false
          *                      </ul>
          *                      The default value is gpudb::show_table_false.
+         *                              <li>
+         *                      gpudb::show_table_get_cached_sizes: If @a true
+         *                      then the number of records in each table, along
+         *                      with a cumulative count, will be returned;
+         *                      blank, otherwise. This version will return the
+         *                      sizes cached at rank 0, which may be stale if
+         *                      there is a multihead insert occuring.
+         *                      <ul>
+         *                              <li> gpudb::show_table_true
+         *                              <li> gpudb::show_table_false
+         *                      </ul>
+         *                      The default value is gpudb::show_table_false.
          *                              <li> gpudb::show_table_show_children:
          *                      If @a tableName is a schema, then @a true will
          *                      return information about the tables and views

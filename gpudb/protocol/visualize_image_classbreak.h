@@ -183,6 +183,16 @@ namespace gpudb
          *                           gpudb::visualize_image_classbreak_hollowdiamond
          *                                   <li>
          *                           gpudb::visualize_image_classbreak_symbolcode
+         *                                   <li>
+         *                           gpudb::visualize_image_classbreak_dash
+         *                                   <li>
+         *                           gpudb::visualize_image_classbreak_pipe
+         *                                   <li>
+         *                           gpudb::visualize_image_classbreak_plus
+         *                                   <li>
+         *                           gpudb::visualize_image_classbreak_hollowsquarewithplus
+         *                                   <li>
+         *                           gpudb::visualize_image_classbreak_dot
          *                           </ul>
          *                           The default value is
          *                           gpudb::visualize_image_classbreak_none.

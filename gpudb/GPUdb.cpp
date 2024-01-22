@@ -106,6 +106,13 @@ namespace gpudb {
                         ? base64Encode(options.getUsername() + ":" + options.getPassword() )
                         : ""),
         m_useSnappy( options.getUseSnappy() ),
+        m_disableFailover( options.getDisableFailover() ),
+
+        #ifndef GPUDB_NO_HTTPS
+        m_bypassSslCertCheck( options.getBypassSslCertCheck() ),
+        #endif
+
+        m_disableAutoDiscovery( options.getDisableAutoDiscovery() ),
         m_threadCount( options.getThreadCount() ),
         m_executor( options.getExecutor() ),
         m_httpHeaders( options.getHttpHeaders() ),
@@ -132,6 +139,13 @@ namespace gpudb {
                         ? base64Encode(options.getUsername() + ":" + options.getPassword())
                         : ""),
         m_useSnappy(options.getUseSnappy()),
+        m_disableFailover( options.getDisableFailover() ),
+
+        #ifndef GPUDB_NO_HTTPS
+        m_bypassSslCertCheck( options.getBypassSslCertCheck() ),
+        #endif
+
+        m_disableAutoDiscovery( options.getDisableAutoDiscovery() ),
         m_threadCount(options.getThreadCount()),
         m_executor(options.getExecutor()),
         m_httpHeaders(options.getHttpHeaders()),
@@ -178,6 +192,13 @@ namespace gpudb {
                         ? base64Encode(options.getUsername() + ":" + options.getPassword())
                         : ""),
         m_useSnappy(options.getUseSnappy()),
+        m_disableFailover( options.getDisableFailover() ),
+
+        #ifndef GPUDB_NO_HTTPS
+        m_bypassSslCertCheck( options.getBypassSslCertCheck() ),
+        #endif
+
+        m_disableAutoDiscovery( options.getDisableAutoDiscovery() ),
         m_threadCount(options.getThreadCount()),
         m_executor(options.getExecutor()),
         m_httpHeaders(options.getHttpHeaders()),
@@ -206,6 +227,13 @@ namespace gpudb {
                         ? base64Encode(options.getUsername() + ":" + options.getPassword())
                         : ""),
         m_useSnappy(options.getUseSnappy()),
+        m_disableFailover( options.getDisableFailover() ),
+
+        #ifndef GPUDB_NO_HTTPS
+        m_bypassSslCertCheck( options.getBypassSslCertCheck() ),
+        #endif
+
+        m_disableAutoDiscovery( options.getDisableAutoDiscovery() ),
         m_threadCount(options.getThreadCount()),
         m_executor(options.getExecutor()),
         m_httpHeaders(options.getHttpHeaders()),
@@ -249,8 +277,11 @@ namespace gpudb {
         m_primaryUrlStr = m_options.getPrimaryUrl();
         handlePrimaryURL();
 
-        // Get the HA ring head node addresses, if any
-        getHAringHeadNodeAdresses();
+        if( !m_disableAutoDiscovery )
+        {
+            // Get the HA ring head node addresses, if any
+            getHAringHeadNodeAddresses();
+        }
 
         // Create host manager URLs from the regular URLs
         updateHostManagerUrls();
@@ -350,7 +381,7 @@ namespace gpudb {
     /**
      * Update the URLs with the available HA ring information
      */
-    void GPUdb::getHAringHeadNodeAdresses()
+    void GPUdb::getHAringHeadNodeAddresses()
     {
         // Get the system properties to find out about the HA ring nodes
         ShowSystemPropertiesRequest  request;
@@ -691,6 +722,18 @@ namespace gpudb {
         return m_username;
     }
 
+    #ifndef GPUDB_NO_HTTPS
+    boost::asio::ssl::context* GPUdb::getSslContext() const
+    {
+        return m_sslContext;
+    }
+
+    bool GPUdb::getBypassSslCertCheck() const
+    {
+        return m_bypassSslCertCheck;
+    }
+
+    #endif
 
 
     /**
@@ -1100,6 +1143,7 @@ namespace gpudb {
             if (enableCompression && m_useSnappy)
             {
                 StringHttpRequest httpRequest(url);
+                httpRequest.setBypassSslCertCheck(this->getBypassSslCertCheck());
                 initHttpRequest(httpRequest);
                 std::string compressedRequest;
                 snappy::Compress((char*)&request[0], request.size(), &compressedRequest);
@@ -1112,6 +1156,7 @@ namespace gpudb {
             else
             {
                 BinaryHttpRequest httpRequest(url);
+                httpRequest.setBypassSslCertCheck(this->getBypassSslCertCheck());
                 initHttpRequest(httpRequest);
                 httpRequest.addRequestHeader( HEADER_CONTENT_TYPE, "application/octet-stream" );
                 httpRequest.addRequestHeader( HEADER_CONTENT_LENGTH,
@@ -1167,9 +1212,20 @@ namespace gpudb {
     }   // end submitRequestRaw( HttpUrl )
 
 
+    /**
+     * @brief 
+     * 
+     * @param oldUrl 
+     * @return const HttpUrl* 
+     */
     const HttpUrl* GPUdb::switchUrl(const HttpUrl* oldUrl) const
     {
         boost::mutex::scoped_lock lock(m_urlMutex);
+
+        if( m_disableFailover ) {
+            // ToDo : Log that failover has been disabled by client
+            throw new GPUdbException("Failover has been disabled by the client API");
+        }
 
         // If we have just one URL, then we can't switch to another!
         if ( m_urls.size() == 1 )
@@ -1233,9 +1289,12 @@ namespace gpudb {
     GPUdb::Options::Options() :
         #ifndef GPUDB_NO_HTTPS
         m_sslContext( NULL ),
+        m_bypassSslCertCheck( false ),
         #endif
 
         m_useSnappy( true ),
+        m_disableFailover( false ),
+        m_disableAutoDiscovery( false ),
         m_threadCount( 1 ),
         m_timeout( 0 ),
         m_hmPort( 9300 )
@@ -1278,6 +1337,11 @@ namespace gpudb {
     {
         return m_sslContext;
     }
+
+    bool GPUdb::Options::getBypassSslCertCheck() const
+    {
+        return m_bypassSslCertCheck;
+    }
     #endif
 
     size_t GPUdb::Options::getThreadCount() const
@@ -1298,6 +1362,16 @@ namespace gpudb {
     bool GPUdb::Options::getUseSnappy() const
     {
         return m_useSnappy;
+    }
+
+    bool GPUdb::Options::getDisableFailover() const
+    {
+        return m_disableFailover;
+    }
+
+    bool GPUdb::Options::getDisableAutoDiscovery() const
+    {
+        return m_disableAutoDiscovery;
     }
 
     std::string GPUdb::Options::getUsername() const
@@ -1335,6 +1409,11 @@ namespace gpudb {
         m_sslContext = value;
         return *this;
     }
+    GPUdb::Options& GPUdb::Options::setBypassSslCertCheck(const bool value)
+    {
+        m_bypassSslCertCheck = value;
+        return *this;
+    }
     #endif
 
     GPUdb::Options& GPUdb::Options::setThreadCount(const size_t value)
@@ -1369,6 +1448,18 @@ namespace gpudb {
     GPUdb::Options& GPUdb::Options::setUsername(const std::string& value)
     {
         m_username = value;
+        return *this;
+    }
+
+    GPUdb::Options& GPUdb::Options::setDisableFailover(const bool value)
+    {
+        m_disableFailover = value;
+        return *this;
+    }
+
+    GPUdb::Options& GPUdb::Options::setDisableAutoDiscovery(const bool value)
+    {
+        m_disableAutoDiscovery = value;
         return *this;
     }
 

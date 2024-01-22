@@ -43,7 +43,8 @@ namespace gpudb
          *                       'storage_provider_type://[storage_path[:storage_port]]'
          *                       format.
          *                       Supported storage provider types are
-         *                       'azure','gcs','hdfs','jdbc','kafka' and 's3'.
+         *                       'azure','gcs','hdfs','jdbc','kafka',
+         *                       'confluent' and 's3'.
          * @param[in] userName_  Name of the remote system user; may be an
          *                       empty string
          * @param[in] password_  Password for the remote system user; may be an
@@ -206,6 +207,14 @@ namespace gpudb
          *                      </ul>
          *                      The default value is
          *                      gpudb::create_datasource_true.
+         *                              <li>
+         *                      gpudb::create_datasource_schema_registry_location:
+         *                      Location of Confluent Schema registry in
+         *                      '[storage_path[:storage_port]]' format.
+         *                              <li>
+         *                      gpudb::create_datasource_schema_registry_credential:
+         *                      Confluent Schema registry Credential object
+         *                      name.
          *                      </ul>
          * 
          */

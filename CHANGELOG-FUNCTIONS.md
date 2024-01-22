@@ -4,6 +4,7 @@
 ## Version 7.1
 
 ### Version 7.1.9.0
+-   Added value 'gdb' to file_type option in external files endpoints (insert_records_from_files, create_table_external)
 
 #### Changed Endpoints
 -   Added option ``dependencies`` to ``/show/table`` endpoint to list the DDLs of the dependencies of a view
@@ -25,7 +26,21 @@
     -  ``/show/files``
     -  ``/download/files``
     -  ``/delete/files``
+-   Added ``/admin/ha/refresh``
+-   Added ``evict_to_cold`` option to ``/alter/system/properties``
+-   Added options ``execute_at_startup`` and ``execute_at_startup_as``  to ``/execute/proc`` endpoint to facilitate running procs (UDFs) on startup
+-   Added option ``clear_execute_at_startup`` to ``/kill/proc`` endpoint to remove a startup proc (UDF) instance
+-   Added option ``verify_orphaned_tables_only`` to ``/admin/verifydb`` endpoint
+-   Added 'orphaned_tables_total_size' to response for endpoint ``/admin/verifydb``
+-   Added new action ``rebuild`` to ``/alter/environment``
 
+#### Added
+-   Added new endpoints to support UDF python environment management:
+    -   ``/alter/environment``
+    -   ``/create/environment``
+    -   ``/drop/environment``
+    -   ``/show/environment``
+-   Added option ``set_environment`` to ``/create/proc`` endpoint
 
 ### Version 7.1.8.7
 

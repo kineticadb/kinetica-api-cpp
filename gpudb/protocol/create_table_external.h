@@ -537,6 +537,8 @@ namespace gpudb
          *                      gpudb::create_table_external_delimited_text:
          *                      Delimited text file format; e.g., CSV, TSV,
          *                      PSV, etc.
+         *                              <li> gpudb::create_table_external_gdb:
+         *                      Esri/GDB file format
          *                              <li> gpudb::create_table_external_json:
          *                      Json file format
          *                              <li>
@@ -548,6 +550,11 @@ namespace gpudb
          *                      </ul>
          *                      The default value is
          *                      gpudb::create_table_external_delimited_text.
+         *                              <li>
+         *                      gpudb::create_table_external_gdal_configuration_options:
+         *                      Comma separated list of gdal conf options, for
+         *                      the specific requets: key=value.  The default
+         *                      value is ''.
          *                              <li>
          *                      gpudb::create_table_external_ignore_existing_pk:
          *                      Specifies the record collision
@@ -634,6 +641,10 @@ namespace gpudb
          *                      Expired subscription will be cancelled
          *                      automatically.
          *                              <li>
+         *                      gpudb::create_table_external_layer: Optional:
+         *                      geo files layer(s) name(s): comma separated.
+         *                      The default value is ''.
+         *                              <li>
          *                      gpudb::create_table_external_loading_mode:
          *                      Scheme for distributing the extraction and
          *                      loading of data from the source data file(s).
@@ -687,7 +698,7 @@ namespace gpudb
          *                      node will be loaded.
          *                      </ul>
          *                      The default value is
-         *                      gpudb::create_table_external_head.
+         *                      gpudb::create_table_external_distributed_shared.
          *                              <li>
          *                      gpudb::create_table_external_local_time_offset:
          *                      For Avro local timestamp columns
@@ -735,6 +746,12 @@ namespace gpudb
          *                      </ul>
          *                      The default value is
          *                      gpudb::create_table_external_manual.
+         *                              <li>
+         *                      gpudb::create_table_external_schema_registry_schema_id
+         *                              <li>
+         *                      gpudb::create_table_external_schema_registry_schema_name
+         *                              <li>
+         *                      gpudb::create_table_external_schema_registry_schema_version
          *                              <li>
          *                      gpudb::create_table_external_shard_keys:
          *                      Optional: comma separated list of column names,
@@ -888,13 +905,14 @@ namespace gpudb
          *                      optimize type inference for:
          *                      <ul>
          *                              <li>
-         *                      gpudb::create_table_external_accuracy: scans
-         *                      all data to get exactly-typed & sized columns
-         *                      for all data present
+         *                      gpudb::create_table_external_accuracy: Scans
+         *                      data to get exactly-typed & sized columns for
+         *                      all data scanned.
          *                              <li>
-         *                      gpudb::create_table_external_speed: picks the
-         *                      widest possible column types so that 'all'
-         *                      values will fit with minimum data scanned
+         *                      gpudb::create_table_external_speed: Scans data
+         *                      and picks the widest possible column types so
+         *                      that 'all' values will fit with minimum data
+         *                      scanned
          *                      </ul>
          *                      The default value is
          *                      gpudb::create_table_external_speed.

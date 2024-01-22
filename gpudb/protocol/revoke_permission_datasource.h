@@ -40,6 +40,9 @@ namespace gpudb
          * @param[in] permission_  Permission to revoke from the user or role
          *                         <ul>
          *                                 <li>
+         *                         gpudb::revoke_permission_datasource_admin:
+         *                         Admin access on the given data source
+         *                                 <li>
          *                         gpudb::revoke_permission_datasource_connect:
          *                         Connect access on the given data source
          *                         </ul>

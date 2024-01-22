@@ -164,6 +164,9 @@ namespace gpudb
          *                                 retrieval call.  The default value
          *                                 is '20000'.
          *                                         <li>
+         *                                 gpudb::alter_system_properties_max_grbc_batch_size:
+         *                                 <DEVELOPER>
+         *                                         <li>
          *                                 gpudb::alter_system_properties_enable_audit:
          *                                 Enable or disable auditing.
          *                                         <li>
@@ -249,9 +252,32 @@ namespace gpudb
          *                                 gpudb::alter_system_properties_tps_per_tom:
          *                                 Sets the tps_per_tom value of the
          *                                 conf.
+         *                                         <li>
+         *                                 gpudb::alter_system_properties_ai_api_provider:
+         *                                 AI API provider type
+         *                                         <li>
+         *                                 gpudb::alter_system_properties_ai_api_url:
+         *                                 AI API URL
+         *                                         <li>
+         *                                 gpudb::alter_system_properties_ai_api_key:
+         *                                 AI API key
+         *                                         <li>
+         *                                 gpudb::alter_system_properties_ai_api_connection_timeout:
+         *                                 AI API connection timeout in seconds
          *                                 </ul>
          * @param[in] options_  Optional parameters.
          *                      <ul>
+         *                              <li>
+         *                      gpudb::alter_system_properties_evict_to_cold:
+         *                      If @a true and evict_columns is specified, the
+         *                      given objects will be evicted to cold storage
+         *                      (if such a tier exists).
+         *                      <ul>
+         *                              <li>
+         *                      gpudb::alter_system_properties_true
+         *                              <li>
+         *                      gpudb::alter_system_properties_false
+         *                      </ul>
          *                              <li>
          *                      gpudb::alter_system_properties_persist: If @a
          *                      true the system configuration will be written

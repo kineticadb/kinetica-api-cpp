@@ -44,6 +44,19 @@ namespace gpudb
          *                      is not specified, kill the proc instance(s)
          *                      where a matching run tag was provided to
          *                      /execute/proc.  The default value is ''.
+         *                              <li>
+         *                      gpudb::kill_proc_clear_execute_at_startup: If
+         *                      @a true, kill and remove the instance of the
+         *                      proc matching the auto-start run ID that was
+         *                      created to run when the database is started.
+         *                      The auto-start run ID was returned from
+         *                      /execute/proc and can be retrieved using
+         *                      /show/proc.
+         *                      <ul>
+         *                              <li> gpudb::kill_proc_true
+         *                              <li> gpudb::kill_proc_false
+         *                      </ul>
+         *                      The default value is gpudb::kill_proc_false.
          *                      </ul>
          * 
          */

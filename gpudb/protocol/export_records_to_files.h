@@ -207,10 +207,10 @@ namespace gpudb
          *                      delimiter.  The default value is '|'.
          *                              <li>
          *                      gpudb::export_records_to_files_compression_type:
-         *                      File compression type. Different file types
-         *                      support different compresion types. text:
-         *                      uncompressed. parquet: uncompressed, snappy,
-         *                      gzip.
+         *                      File compression type. GZip can be applied to
+         *                      text and Parquet files.  Snappy can only be
+         *                      applied to Parquet files, and is the default
+         *                      compression for them.
          *                      <ul>
          *                              <li>
          *                      gpudb::export_records_to_files_uncompressed
@@ -219,8 +219,6 @@ namespace gpudb
          *                              <li>
          *                      gpudb::export_records_to_files_gzip
          *                      </ul>
-         *                      The default value is
-         *                      gpudb::export_records_to_files_snappy.
          *                              <li>
          *                      gpudb::export_records_to_files_single_file:
          *                      Save records to a single file. This option may

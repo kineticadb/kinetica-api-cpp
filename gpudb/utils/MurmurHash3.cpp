@@ -48,6 +48,11 @@ inline uint64_t rotl64 ( uint64_t x, int8_t r )
 
 #endif // !defined(_MSC_VER)
 
+// The case statements below are designed to fallthrough.
+#if defined(__GNUC__) || defined(__clang__)
+    #pragma GCC diagnostic ignored "-Wimplicit-fallthrough"
+#endif
+
 //-----------------------------------------------------------------------------
 // Block read - if your platform needs to do endian-swapping or can only
 // handle aligned reads, do the conversion here
@@ -333,3 +338,6 @@ void MurmurHash3_x64_128 ( const void * key, const int len,
 
 //-----------------------------------------------------------------------------
 
+#if defined(__GNUC__) || defined(__clang__)
+    #pragma GCC diagnostic pop // "-Wimplicit-fallthrough"
+#endif

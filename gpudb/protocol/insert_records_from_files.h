@@ -535,6 +535,9 @@ namespace gpudb
          *                      Delimited text file format; e.g., CSV, TSV,
          *                      PSV, etc.
          *                              <li>
+         *                      gpudb::insert_records_from_files_gdb: Esri/GDB
+         *                      file format
+         *                              <li>
          *                      gpudb::insert_records_from_files_json: Json
          *                      file format
          *                              <li>
@@ -546,6 +549,11 @@ namespace gpudb
          *                      </ul>
          *                      The default value is
          *                      gpudb::insert_records_from_files_delimited_text.
+         *                              <li>
+         *                      gpudb::insert_records_from_files_gdal_configuration_options:
+         *                      Comma separated list of gdal conf options, for
+         *                      the specific requets: key=value.  The default
+         *                      value is ''.
          *                              <li>
          *                      gpudb::insert_records_from_files_ignore_existing_pk:
          *                      Specifies the record collision
@@ -630,6 +638,10 @@ namespace gpudb
          *                      Expired subscription will be cancelled
          *                      automatically.
          *                              <li>
+         *                      gpudb::insert_records_from_files_layer:
+         *                      Optional: geo files layer(s) name(s): comma
+         *                      separated.  The default value is ''.
+         *                              <li>
          *                      gpudb::insert_records_from_files_loading_mode:
          *                      Scheme for distributing the extraction and
          *                      loading of data from the source data file(s).
@@ -684,7 +696,7 @@ namespace gpudb
          *                      node will be loaded.
          *                      </ul>
          *                      The default value is
-         *                      gpudb::insert_records_from_files_head.
+         *                      gpudb::insert_records_from_files_distributed_shared.
          *                              <li>
          *                      gpudb::insert_records_from_files_local_time_offset:
          *                      For Avro local timestamp columns
@@ -714,6 +726,12 @@ namespace gpudb
          *                      Optional: comma separated list of column names,
          *                      to set as primary keys, when not specified in
          *                      the type.  The default value is ''.
+         *                              <li>
+         *                      gpudb::insert_records_from_files_schema_registry_schema_id
+         *                              <li>
+         *                      gpudb::insert_records_from_files_schema_registry_schema_name
+         *                              <li>
+         *                      gpudb::insert_records_from_files_schema_registry_schema_version
          *                              <li>
          *                      gpudb::insert_records_from_files_shard_keys:
          *                      Optional: comma separated list of column names,
@@ -877,12 +895,13 @@ namespace gpudb
          *                      <ul>
          *                              <li>
          *                      gpudb::insert_records_from_files_accuracy:
-         *                      scans all data to get exactly-typed & sized
-         *                      columns for all data present
+         *                      Scans data to get exactly-typed & sized columns
+         *                      for all data scanned.
          *                              <li>
-         *                      gpudb::insert_records_from_files_speed: picks
-         *                      the widest possible column types so that 'all'
-         *                      values will fit with minimum data scanned
+         *                      gpudb::insert_records_from_files_speed: Scans
+         *                      data and picks the widest possible column types
+         *                      so that 'all' values will fit with minimum data
+         *                      scanned
          *                      </ul>
          *                      The default value is
          *                      gpudb::insert_records_from_files_speed.

@@ -105,6 +105,17 @@ namespace gpudb
          *                      </ul>
          *                      The default value is
          *                      gpudb::admin_verify_db_false.
+         *                              <li>
+         *                      gpudb::admin_verify_db_verify_orphaned_tables_only:
+         *                      If @a true, only the presence of orphaned table
+         *                      directories will be checked, all persistence
+         *                      checks will be skipped
+         *                      <ul>
+         *                              <li> gpudb::admin_verify_db_true
+         *                              <li> gpudb::admin_verify_db_false
+         *                      </ul>
+         *                      The default value is
+         *                      gpudb::admin_verify_db_false.
          *                      </ul>
          * 
          */
@@ -174,12 +185,14 @@ namespace gpudb
         AdminVerifyDbResponse() :
             verifiedOk(bool()),
             errorList(std::vector<std::string>()),
+            orphanedTablesTotalSize(int64_t()),
             info(std::map<std::string, std::string>())
         {
         }
 
         bool verifiedOk;
         std::vector<std::string> errorList;
+        int64_t orphanedTablesTotalSize;
         std::map<std::string, std::string> info;
     };
 }
@@ -192,6 +205,7 @@ namespace avro
         {
             ::avro::encode(e, v.verifiedOk);
             ::avro::encode(e, v.errorList);
+            ::avro::encode(e, v.orphanedTablesTotalSize);
             ::avro::encode(e, v.info);
         }
 
@@ -214,6 +228,10 @@ namespace avro
                             break;
 
                         case 2:
+                            ::avro::decode(d, v.orphanedTablesTotalSize);
+                            break;
+
+                        case 3:
                             ::avro::decode(d, v.info);
                             break;
 
@@ -226,6 +244,7 @@ namespace avro
             {
                 ::avro::decode(d, v.verifiedOk);
                 ::avro::decode(d, v.errorList);
+                ::avro::decode(d, v.orphanedTablesTotalSize);
                 ::avro::decode(d, v.info);
             }
         }

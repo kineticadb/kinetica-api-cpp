@@ -44,6 +44,8 @@ namespace gpudb
          * @param[in] objectType_  The type of object being granted to
          *                         <ul>
          *                                 <li>
+         *                         gpudb::grant_permission_context: Context
+         *                                 <li>
          *                         gpudb::grant_permission_credential:
          *                         Credential
          *                                 <li>

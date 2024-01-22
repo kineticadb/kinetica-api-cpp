@@ -274,6 +274,12 @@ namespace gpudb
          *                              <li> gpudb::create_projection_view_id:
          *                      ID of view of which this projection is a
          *                      member.  The default value is ''.
+         *                              <li>
+         *                      gpudb::create_projection_strategy_definition:
+         *                      The <a
+         *                      href="../../../rm/concepts/#tier-strategies"
+         *                      target="_top">tier strategy</a> for the table
+         *                      and its columns.
          *                      </ul>
          * 
          */

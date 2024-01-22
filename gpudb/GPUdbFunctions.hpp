@@ -2186,6 +2186,15 @@ AdminVerifyDbResponse& adminVerifyDb( const AdminVerifyDbRequest& request_,
  *                         <li> gpudb::admin_verify_db_false
  *                 </ul>
  *                 The default value is gpudb::admin_verify_db_false.
+ *                         <li>
+ *                 gpudb::admin_verify_db_verify_orphaned_tables_only: If @a
+ *                 true, only the presence of orphaned table directories will
+ *                 be checked, all persistence checks will be skipped
+ *                 <ul>
+ *                         <li> gpudb::admin_verify_db_true
+ *                         <li> gpudb::admin_verify_db_false
+ *                 </ul>
+ *                 The default value is gpudb::admin_verify_db_false.
  *                 </ul>
  * 
  * @return Response object containing the result of the operation.
@@ -2249,6 +2258,15 @@ AdminVerifyDbResponse adminVerifyDb( const std::map<std::string, std::string>& o
  *                 Must set @a verify_persist in @a options to @a true. It is
  *                 recommended to run this while the database is offline OR set
  *                 @a concurrent_safe in @a options to @a true
+ *                 <ul>
+ *                         <li> gpudb::admin_verify_db_true
+ *                         <li> gpudb::admin_verify_db_false
+ *                 </ul>
+ *                 The default value is gpudb::admin_verify_db_false.
+ *                         <li>
+ *                 gpudb::admin_verify_db_verify_orphaned_tables_only: If @a
+ *                 true, only the presence of orphaned table directories will
+ *                 be checked, all persistence checks will be skipped
  *                 <ul>
  *                         <li> gpudb::admin_verify_db_true
  *                         <li> gpudb::admin_verify_db_false
@@ -2788,6 +2806,10 @@ AggregateGroupByResponse& aggregateGroupBy( const AggregateGroupByRequest& reque
  *                 the first aggregate, then the second aggregate, etc.
  *                 </ul>
  *                 The default value is gpudb::aggregate_group_by_value.
+ *                         <li> gpudb::aggregate_group_by_strategy_definition:
+ *                 The <a href="../../../rm/concepts/#tier-strategies"
+ *                 target="_top">tier strategy</a> for the table and its
+ *                 columns.
  *                         <li> gpudb::aggregate_group_by_result_table: The
  *                 name of a table used to store the results, in
  *                 [schema_name.]table_name format, using standard <a
@@ -3011,6 +3033,10 @@ AggregateGroupByResponse aggregateGroupBy( const std::string& tableName,
  *                 the first aggregate, then the second aggregate, etc.
  *                 </ul>
  *                 The default value is gpudb::aggregate_group_by_value.
+ *                         <li> gpudb::aggregate_group_by_strategy_definition:
+ *                 The <a href="../../../rm/concepts/#tier-strategies"
+ *                 target="_top">tier strategy</a> for the table and its
+ *                 columns.
  *                         <li> gpudb::aggregate_group_by_result_table: The
  *                 name of a table used to store the results, in
  *                 [schema_name.]table_name format, using standard <a
@@ -6167,6 +6193,136 @@ AlterDirectoryResponse& alterDirectory( const std::string& directoryName,
                                         AlterDirectoryResponse& response_ ) const;
 
 /**
+ * Alters an existing environment which can be referenced by a <a
+ * href="../../../concepts/udf/" target="_top">user-defined function</a> (UDF).
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+AlterEnvironmentResponse alterEnvironment( const AlterEnvironmentRequest& request_ ) const;
+
+/**
+ * Alters an existing environment which can be referenced by a <a
+ * href="../../../concepts/udf/" target="_top">user-defined function</a> (UDF).
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+AlterEnvironmentResponse& alterEnvironment( const AlterEnvironmentRequest& request_,
+                                            AlterEnvironmentResponse& response_ ) const;
+
+/**
+ * Alters an existing environment which can be referenced by a <a
+ * href="../../../concepts/udf/" target="_top">user-defined function</a> (UDF).
+ * 
+ * @param environmentName  Name of the environment to be altered.
+ * @param action  Modification operation to be applied
+ *                <ul>
+ *                        <li> gpudb::alter_environment_install_package:
+ *                Install a python package
+ *                        <li> gpudb::alter_environment_install_requirements:
+ *                Install packages from a requirements file
+ *                        <li> gpudb::alter_environment_uninstall_package:
+ *                Uninstall a python package.
+ *                        <li> gpudb::alter_environment_uninstall_requirements:
+ *                Uninstall packages from a requirements file
+ *                        <li> gpudb::alter_environment_reset: Uninstalls all
+ *                packages in the environment and resets it to the original
+ *                state at time of creation
+ *                        <li> gpudb::alter_environment_rebuild: Recreates the
+ *                environment and re-installs all packages, upgrades the
+ *                packages if necessary based on dependencies
+ *                </ul>
+ * @param value  The value of the modification, depending on @a action.  For
+ *               example, if @a action is @a install_package, this would be the
+ *               python package name.
+ *               If @a action is @a install_requirements, this would be the
+ *               path of a requirements file from which to install packages.
+ *               If an external data source is specified in @a datasource_name,
+ *               this can be the path to a wheel file or source archive.
+ *               Alternatively, if installing from a file (wheel or source
+ *               archive), the value may be a reference to a file in <a
+ *               href="../../../tools/kifs/" target="_top">KiFS</a>.
+ * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li> gpudb::alter_environment_datasource_name: Name
+ *                 of an existing external data source from which packages
+ *                 specified in @a value can be loaded
+ *                 </ul>
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+AlterEnvironmentResponse alterEnvironment( const std::string& environmentName,
+                                           const std::string& action,
+                                           const std::string& value,
+                                           const std::map<std::string, std::string>& options ) const;
+
+/**
+ * Alters an existing environment which can be referenced by a <a
+ * href="../../../concepts/udf/" target="_top">user-defined function</a> (UDF).
+ * 
+ * @param environmentName  Name of the environment to be altered.
+ * @param action  Modification operation to be applied
+ *                <ul>
+ *                        <li> gpudb::alter_environment_install_package:
+ *                Install a python package
+ *                        <li> gpudb::alter_environment_install_requirements:
+ *                Install packages from a requirements file
+ *                        <li> gpudb::alter_environment_uninstall_package:
+ *                Uninstall a python package.
+ *                        <li> gpudb::alter_environment_uninstall_requirements:
+ *                Uninstall packages from a requirements file
+ *                        <li> gpudb::alter_environment_reset: Uninstalls all
+ *                packages in the environment and resets it to the original
+ *                state at time of creation
+ *                        <li> gpudb::alter_environment_rebuild: Recreates the
+ *                environment and re-installs all packages, upgrades the
+ *                packages if necessary based on dependencies
+ *                </ul>
+ * @param value  The value of the modification, depending on @a action.  For
+ *               example, if @a action is @a install_package, this would be the
+ *               python package name.
+ *               If @a action is @a install_requirements, this would be the
+ *               path of a requirements file from which to install packages.
+ *               If an external data source is specified in @a datasource_name,
+ *               this can be the path to a wheel file or source archive.
+ *               Alternatively, if installing from a file (wheel or source
+ *               archive), the value may be a reference to a file in <a
+ *               href="../../../tools/kifs/" target="_top">KiFS</a>.
+ * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li> gpudb::alter_environment_datasource_name: Name
+ *                 of an existing external data source from which packages
+ *                 specified in @a value can be loaded
+ *                 </ul>
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+AlterEnvironmentResponse& alterEnvironment( const std::string& environmentName,
+                                            const std::string& action,
+                                            const std::string& value,
+                                            const std::map<std::string, std::string>& options,
+                                            AlterEnvironmentResponse& response_ ) const;
+
+/**
  * @private
  * 
  * @param[in] request_  Request object containing the parameters for the
@@ -6855,6 +7011,9 @@ AlterSystemPropertiesResponse& alterSystemProperties( const AlterSystemPropertie
  *                            serve for a given data retrieval call.  The
  *                            default value is '20000'.
  *                                    <li>
+ *                            gpudb::alter_system_properties_max_grbc_batch_size:
+ *                            <DEVELOPER>
+ *                                    <li>
  *                            gpudb::alter_system_properties_enable_audit:
  *                            Enable or disable auditing.
  *                                    <li>
@@ -6927,9 +7086,28 @@ AlterSystemPropertiesResponse& alterSystemProperties( const AlterSystemPropertie
  *                                    <li>
  *                            gpudb::alter_system_properties_tps_per_tom: Sets
  *                            the tps_per_tom value of the conf.
+ *                                    <li>
+ *                            gpudb::alter_system_properties_ai_api_provider:
+ *                            AI API provider type
+ *                                    <li>
+ *                            gpudb::alter_system_properties_ai_api_url: AI API
+ *                            URL
+ *                                    <li>
+ *                            gpudb::alter_system_properties_ai_api_key: AI API
+ *                            key
+ *                                    <li>
+ *                            gpudb::alter_system_properties_ai_api_connection_timeout:
+ *                            AI API connection timeout in seconds
  *                            </ul>
  * @param options  Optional parameters.
  *                 <ul>
+ *                         <li> gpudb::alter_system_properties_evict_to_cold:
+ *                 If @a true and evict_columns is specified, the given objects
+ *                 will be evicted to cold storage (if such a tier exists).
+ *                 <ul>
+ *                         <li> gpudb::alter_system_properties_true
+ *                         <li> gpudb::alter_system_properties_false
+ *                 </ul>
  *                         <li> gpudb::alter_system_properties_persist: If @a
  *                 true the system configuration will be written to disk upon
  *                 successful application of this request. This will commit the
@@ -7060,6 +7238,9 @@ AlterSystemPropertiesResponse alterSystemProperties( const std::map<std::string,
  *                            serve for a given data retrieval call.  The
  *                            default value is '20000'.
  *                                    <li>
+ *                            gpudb::alter_system_properties_max_grbc_batch_size:
+ *                            <DEVELOPER>
+ *                                    <li>
  *                            gpudb::alter_system_properties_enable_audit:
  *                            Enable or disable auditing.
  *                                    <li>
@@ -7132,9 +7313,28 @@ AlterSystemPropertiesResponse alterSystemProperties( const std::map<std::string,
  *                                    <li>
  *                            gpudb::alter_system_properties_tps_per_tom: Sets
  *                            the tps_per_tom value of the conf.
+ *                                    <li>
+ *                            gpudb::alter_system_properties_ai_api_provider:
+ *                            AI API provider type
+ *                                    <li>
+ *                            gpudb::alter_system_properties_ai_api_url: AI API
+ *                            URL
+ *                                    <li>
+ *                            gpudb::alter_system_properties_ai_api_key: AI API
+ *                            key
+ *                                    <li>
+ *                            gpudb::alter_system_properties_ai_api_connection_timeout:
+ *                            AI API connection timeout in seconds
  *                            </ul>
  * @param options  Optional parameters.
  *                 <ul>
+ *                         <li> gpudb::alter_system_properties_evict_to_cold:
+ *                 If @a true and evict_columns is specified, the given objects
+ *                 will be evicted to cold storage (if such a tier exists).
+ *                 <ul>
+ *                         <li> gpudb::alter_system_properties_true
+ *                         <li> gpudb::alter_system_properties_false
+ *                 </ul>
  *                         <li> gpudb::alter_system_properties_persist: If @a
  *                 true the system configuration will be written to disk upon
  *                 successful application of this request. This will commit the
@@ -7483,6 +7683,10 @@ AlterTableResponse& alterTable( const AlterTableRequest& request_,
  *                gpudb::alter_table_remove_text_search_attributes: Removes <a
  *                href="../../../concepts/full_text_search/" target="_top">text
  *                search</a> attribute from all columns.
+ *                        <li> gpudb::alter_table_remove_shard_keys: Removes
+ *                the shard key property from all columns, so that the table
+ *                will be considered randomly sharded.  The data is not moved.
+ *                The @a value is ignored.
  *                        <li> gpudb::alter_table_set_strategy_definition: Sets
  *                the <a href="../../../rm/concepts/#tier-strategies"
  *                target="_top">tier strategy</a> for the table and its columns
@@ -7799,6 +8003,10 @@ AlterTableResponse alterTable( const std::string& tableName,
  *                gpudb::alter_table_remove_text_search_attributes: Removes <a
  *                href="../../../concepts/full_text_search/" target="_top">text
  *                search</a> attribute from all columns.
+ *                        <li> gpudb::alter_table_remove_shard_keys: Removes
+ *                the shard key property from all columns, so that the table
+ *                will be considered randomly sharded.  The data is not moved.
+ *                The @a value is ignored.
  *                        <li> gpudb::alter_table_set_strategy_definition: Sets
  *                the <a href="../../../rm/concepts/#tier-strategies"
  *                target="_top">tier strategy</a> for the table and its columns
@@ -9412,6 +9620,7 @@ CreateCredentialResponse& createCredential( const CreateCredentialRequest& reque
  *                      <li> gpudb::create_credential_hdfs
  *                      <li> gpudb::create_credential_jdbc
  *                      <li> gpudb::create_credential_kafka
+ *                      <li> gpudb::create_credential_confluent
  *              </ul>
  * @param identity  User of the credential to be created.
  * @param secret  Password of the credential to be created.
@@ -9449,6 +9658,7 @@ CreateCredentialResponse createCredential( const std::string& credentialName,
  *                      <li> gpudb::create_credential_hdfs
  *                      <li> gpudb::create_credential_jdbc
  *                      <li> gpudb::create_credential_kafka
+ *                      <li> gpudb::create_credential_confluent
  *              </ul>
  * @param identity  User of the credential to be created.
  * @param secret  Password of the credential to be created.
@@ -9544,6 +9754,9 @@ CreateDatasinkResponse& createDatasink( const CreateDatasinkRequest& request_,
  *                         <li>
  *                 gpudb::create_datasink_s3_encryption_customer_key: Customer
  *                 encryption key to encrypt or decrypt data
+ *                         <li> gpudb::create_datasink_s3_encryption_type:
+ *                 Server side encryption type
+ *                         <li> gpudb::create_datasink_s3_kms_key_id: KMS key
  *                         <li> gpudb::create_datasink_hdfs_kerberos_keytab:
  *                 Kerberos keytab file location for the given HDFS user.  This
  *                 may be a KIFS file.
@@ -9676,6 +9889,9 @@ CreateDatasinkResponse createDatasink( const std::string& name,
  *                         <li>
  *                 gpudb::create_datasink_s3_encryption_customer_key: Customer
  *                 encryption key to encrypt or decrypt data
+ *                         <li> gpudb::create_datasink_s3_encryption_type:
+ *                 Server side encryption type
+ *                         <li> gpudb::create_datasink_s3_kms_key_id: KMS key
  *                         <li> gpudb::create_datasink_hdfs_kerberos_keytab:
  *                 Kerberos keytab file location for the given HDFS user.  This
  *                 may be a KIFS file.
@@ -9813,7 +10029,7 @@ CreateDatasourceResponse& createDatasource( const CreateDatasourceRequest& reque
  *                  'storage_provider_type://[storage_path[:storage_port]]'
  *                  format.
  *                  Supported storage provider types are
- *                  'azure','gcs','hdfs','jdbc','kafka' and 's3'.
+ *                  'azure','gcs','hdfs','jdbc','kafka', 'confluent' and 's3'.
  * @param userName  Name of the remote system user; may be an empty string
  * @param password  Password for the remote system user; may be an empty string
  * @param options  Optional parameters.
@@ -9929,6 +10145,13 @@ CreateDatasourceResponse& createDatasource( const CreateDatasourceRequest& reque
  *                         <li> gpudb::create_datasource_false
  *                 </ul>
  *                 The default value is gpudb::create_datasource_true.
+ *                         <li>
+ *                 gpudb::create_datasource_schema_registry_location: Location
+ *                 of Confluent Schema registry in
+ *                 '[storage_path[:storage_port]]' format.
+ *                         <li>
+ *                 gpudb::create_datasource_schema_registry_credential:
+ *                 Confluent Schema registry Credential object name.
  *                 </ul>
  * 
  * @return Response object containing the result of the operation.
@@ -9952,7 +10175,7 @@ CreateDatasourceResponse createDatasource( const std::string& name,
  *                  'storage_provider_type://[storage_path[:storage_port]]'
  *                  format.
  *                  Supported storage provider types are
- *                  'azure','gcs','hdfs','jdbc','kafka' and 's3'.
+ *                  'azure','gcs','hdfs','jdbc','kafka', 'confluent' and 's3'.
  * @param userName  Name of the remote system user; may be an empty string
  * @param password  Password for the remote system user; may be an empty string
  * @param options  Optional parameters.
@@ -10068,6 +10291,13 @@ CreateDatasourceResponse createDatasource( const std::string& name,
  *                         <li> gpudb::create_datasource_false
  *                 </ul>
  *                 The default value is gpudb::create_datasource_true.
+ *                         <li>
+ *                 gpudb::create_datasource_schema_registry_location: Location
+ *                 of Confluent Schema registry in
+ *                 '[storage_path[:storage_port]]' format.
+ *                         <li>
+ *                 gpudb::create_datasource_schema_registry_credential:
+ *                 Confluent Schema registry Credential object name.
  *                 </ul>
  * @param[out] response_  Response object containing the results of the
  *                        operation.
@@ -10254,6 +10484,72 @@ CreateDirectoryResponse createDirectory( const std::string& directoryName,
 CreateDirectoryResponse& createDirectory( const std::string& directoryName,
                                           const std::map<std::string, std::string>& options,
                                           CreateDirectoryResponse& response_ ) const;
+
+/**
+ * Creates a new environment which can be used by <a
+ * href="../../../concepts/udf/" target="_top">user-defined functions</a>
+ * (UDF).
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+CreateEnvironmentResponse createEnvironment( const CreateEnvironmentRequest& request_ ) const;
+
+/**
+ * Creates a new environment which can be used by <a
+ * href="../../../concepts/udf/" target="_top">user-defined functions</a>
+ * (UDF).
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+CreateEnvironmentResponse& createEnvironment( const CreateEnvironmentRequest& request_,
+                                              CreateEnvironmentResponse& response_ ) const;
+
+/**
+ * Creates a new environment which can be used by <a
+ * href="../../../concepts/udf/" target="_top">user-defined functions</a>
+ * (UDF).
+ * 
+ * @param environmentName  Name of the environment to be created.
+ * @param options  Optional parameters.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+CreateEnvironmentResponse createEnvironment( const std::string& environmentName,
+                                             const std::map<std::string, std::string>& options ) const;
+
+/**
+ * Creates a new environment which can be used by <a
+ * href="../../../concepts/udf/" target="_top">user-defined functions</a>
+ * (UDF).
+ * 
+ * @param environmentName  Name of the environment to be created.
+ * @param options  Optional parameters.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+CreateEnvironmentResponse& createEnvironment( const std::string& environmentName,
+                                              const std::map<std::string, std::string>& options,
+                                              CreateEnvironmentResponse& response_ ) const;
 
 /**
  * Creates a new graph network using given nodes, edges, weights, and
@@ -10935,6 +11231,10 @@ CreateJoinTableResponse& createJoinTable( const CreateJoinTableRequest& request_
  *                         <li> gpudb::create_join_table_false
  *                 </ul>
  *                 The default value is gpudb::create_join_table_false.
+ *                         <li> gpudb::create_join_table_strategy_definition:
+ *                 The <a href="../../../rm/concepts/#tier-strategies"
+ *                 target="_top">tier strategy</a> for the table and its
+ *                 columns.
  *                         <li> gpudb::create_join_table_ttl: Sets the <a
  *                 href="../../../concepts/ttl/" target="_top">TTL</a> of the
  *                 join table specified in @a joinTableName.
@@ -11021,6 +11321,10 @@ CreateJoinTableResponse createJoinTable( const std::string& joinTableName,
  *                         <li> gpudb::create_join_table_false
  *                 </ul>
  *                 The default value is gpudb::create_join_table_false.
+ *                         <li> gpudb::create_join_table_strategy_definition:
+ *                 The <a href="../../../rm/concepts/#tier-strategies"
+ *                 target="_top">tier strategy</a> for the table and its
+ *                 columns.
  *                         <li> gpudb::create_join_table_ttl: Sets the <a
  *                 href="../../../concepts/ttl/" target="_top">TTL</a> of the
  *                 join table specified in @a joinTableName.
@@ -11382,6 +11686,10 @@ CreateProcResponse& createProc( const CreateProcRequest& request_,
  *                 The maximum number of concurrent instances of the proc that
  *                 will be executed per node. 0 allows unlimited concurrency.
  *                 The default value is '0'.
+ *                         <li> gpudb::create_proc_set_environment: A python
+ *                 environment to use when executing the proc. Must be an
+ *                 existing environment, else an error will be returned.  The
+ *                 default value is ''.
  *                 </ul>
  * 
  * @return Response object containing the result of the operation.
@@ -11458,6 +11766,10 @@ CreateProcResponse createProc( const std::string& procName,
  *                 The maximum number of concurrent instances of the proc that
  *                 will be executed per node. 0 allows unlimited concurrency.
  *                 The default value is '0'.
+ *                         <li> gpudb::create_proc_set_environment: A python
+ *                 environment to use when executing the proc. Must be an
+ *                 existing environment, else an error will be returned.  The
+ *                 default value is ''.
  *                 </ul>
  * @param[out] response_  Response object containing the results of the
  *                        operation.
@@ -11764,6 +12076,10 @@ CreateProjectionResponse& createProjection( const CreateProjectionRequest& reque
  *                 The default value is gpudb::create_projection_false.
  *                         <li> gpudb::create_projection_view_id: ID of view of
  *                 which this projection is a member.  The default value is ''.
+ *                         <li> gpudb::create_projection_strategy_definition:
+ *                 The <a href="../../../rm/concepts/#tier-strategies"
+ *                 target="_top">tier strategy</a> for the table and its
+ *                 columns.
  *                 </ul>
  * 
  * @return Response object containing the result of the operation.
@@ -11969,6 +12285,10 @@ CreateProjectionResponse createProjection( const std::string& tableName,
  *                 The default value is gpudb::create_projection_false.
  *                         <li> gpudb::create_projection_view_id: ID of view of
  *                 which this projection is a member.  The default value is ''.
+ *                         <li> gpudb::create_projection_strategy_definition:
+ *                 The <a href="../../../rm/concepts/#tier-strategies"
+ *                 target="_top">tier strategy</a> for the table and its
+ *                 columns.
  *                 </ul>
  * @param[out] response_  Response object containing the results of the
  *                        operation.
@@ -13253,6 +13573,8 @@ CreateTableExternalResponse& createTableExternal( const CreateTableExternalReque
  *                 format
  *                         <li> gpudb::create_table_external_delimited_text:
  *                 Delimited text file format; e.g., CSV, TSV, PSV, etc.
+ *                         <li> gpudb::create_table_external_gdb: Esri/GDB file
+ *                 format
  *                         <li> gpudb::create_table_external_json: Json file
  *                 format
  *                         <li> gpudb::create_table_external_parquet: Apache
@@ -13262,6 +13584,10 @@ CreateTableExternalResponse& createTableExternal( const CreateTableExternalReque
  *                 </ul>
  *                 The default value is
  *                 gpudb::create_table_external_delimited_text.
+ *                         <li>
+ *                 gpudb::create_table_external_gdal_configuration_options:
+ *                 Comma separated list of gdal conf options, for the specific
+ *                 requets: key=value.  The default value is ''.
  *                         <li>
  *                 gpudb::create_table_external_ignore_existing_pk: Specifies
  *                 the record collision error-suppression policy for
@@ -13326,6 +13652,9 @@ CreateTableExternalResponse& createTableExternal( const CreateTableExternalReque
  *                 gpudb::create_table_external_kafka_subscription_cancel_after:
  *                 Sets the subscription lifespan (in minutes). Expired
  *                 subscription will be cancelled automatically.
+ *                         <li> gpudb::create_table_external_layer: Optional:
+ *                 geo files layer(s) name(s): comma separated.  The default
+ *                 value is ''.
  *                         <li> gpudb::create_table_external_loading_mode:
  *                 Scheme for distributing the extraction and loading of data
  *                 from the source data file(s). This option applies only when
@@ -13366,7 +13695,8 @@ CreateTableExternalResponse& createTableExternal( const CreateTableExternalReque
  *                 no data strictly accessible to the head
  *                 node will be loaded.
  *                 </ul>
- *                 The default value is gpudb::create_table_external_head.
+ *                 The default value is
+ *                 gpudb::create_table_external_distributed_shared.
  *                         <li> gpudb::create_table_external_local_time_offset:
  *                 For Avro local timestamp columns
  *                         <li>
@@ -13401,6 +13731,12 @@ CreateTableExternalResponse& createTableExternal( const CreateTableExternalReque
  *                 invoking the refresh action of /alter/table on this table.
  *                 </ul>
  *                 The default value is gpudb::create_table_external_manual.
+ *                         <li>
+ *                 gpudb::create_table_external_schema_registry_schema_id
+ *                         <li>
+ *                 gpudb::create_table_external_schema_registry_schema_name
+ *                         <li>
+ *                 gpudb::create_table_external_schema_registry_schema_version
  *                         <li> gpudb::create_table_external_shard_keys:
  *                 Optional: comma separated list of column names, to set as
  *                 primary keys, when not specified in the type.  The default
@@ -13521,12 +13857,12 @@ CreateTableExternalResponse& createTableExternal( const CreateTableExternalReque
  *                 gpudb::create_table_external_type_inference_mode: optimize
  *                 type inference for:
  *                 <ul>
- *                         <li> gpudb::create_table_external_accuracy: scans
- *                 all data to get exactly-typed & sized columns for all data
- *                 present
- *                         <li> gpudb::create_table_external_speed: picks the
- *                 widest possible column types so that 'all' values will fit
- *                 with minimum data scanned
+ *                         <li> gpudb::create_table_external_accuracy: Scans
+ *                 data to get exactly-typed & sized columns for all data
+ *                 scanned.
+ *                         <li> gpudb::create_table_external_speed: Scans data
+ *                 and picks the widest possible column types so that 'all'
+ *                 values will fit with minimum data scanned
  *                 </ul>
  *                 The default value is gpudb::create_table_external_speed.
  *                         <li> gpudb::create_table_external_remote_query:
@@ -13973,6 +14309,8 @@ CreateTableExternalResponse createTableExternal( const std::string& tableName,
  *                 format
  *                         <li> gpudb::create_table_external_delimited_text:
  *                 Delimited text file format; e.g., CSV, TSV, PSV, etc.
+ *                         <li> gpudb::create_table_external_gdb: Esri/GDB file
+ *                 format
  *                         <li> gpudb::create_table_external_json: Json file
  *                 format
  *                         <li> gpudb::create_table_external_parquet: Apache
@@ -13982,6 +14320,10 @@ CreateTableExternalResponse createTableExternal( const std::string& tableName,
  *                 </ul>
  *                 The default value is
  *                 gpudb::create_table_external_delimited_text.
+ *                         <li>
+ *                 gpudb::create_table_external_gdal_configuration_options:
+ *                 Comma separated list of gdal conf options, for the specific
+ *                 requets: key=value.  The default value is ''.
  *                         <li>
  *                 gpudb::create_table_external_ignore_existing_pk: Specifies
  *                 the record collision error-suppression policy for
@@ -14046,6 +14388,9 @@ CreateTableExternalResponse createTableExternal( const std::string& tableName,
  *                 gpudb::create_table_external_kafka_subscription_cancel_after:
  *                 Sets the subscription lifespan (in minutes). Expired
  *                 subscription will be cancelled automatically.
+ *                         <li> gpudb::create_table_external_layer: Optional:
+ *                 geo files layer(s) name(s): comma separated.  The default
+ *                 value is ''.
  *                         <li> gpudb::create_table_external_loading_mode:
  *                 Scheme for distributing the extraction and loading of data
  *                 from the source data file(s). This option applies only when
@@ -14086,7 +14431,8 @@ CreateTableExternalResponse createTableExternal( const std::string& tableName,
  *                 no data strictly accessible to the head
  *                 node will be loaded.
  *                 </ul>
- *                 The default value is gpudb::create_table_external_head.
+ *                 The default value is
+ *                 gpudb::create_table_external_distributed_shared.
  *                         <li> gpudb::create_table_external_local_time_offset:
  *                 For Avro local timestamp columns
  *                         <li>
@@ -14121,6 +14467,12 @@ CreateTableExternalResponse createTableExternal( const std::string& tableName,
  *                 invoking the refresh action of /alter/table on this table.
  *                 </ul>
  *                 The default value is gpudb::create_table_external_manual.
+ *                         <li>
+ *                 gpudb::create_table_external_schema_registry_schema_id
+ *                         <li>
+ *                 gpudb::create_table_external_schema_registry_schema_name
+ *                         <li>
+ *                 gpudb::create_table_external_schema_registry_schema_version
  *                         <li> gpudb::create_table_external_shard_keys:
  *                 Optional: comma separated list of column names, to set as
  *                 primary keys, when not specified in the type.  The default
@@ -14241,12 +14593,12 @@ CreateTableExternalResponse createTableExternal( const std::string& tableName,
  *                 gpudb::create_table_external_type_inference_mode: optimize
  *                 type inference for:
  *                 <ul>
- *                         <li> gpudb::create_table_external_accuracy: scans
- *                 all data to get exactly-typed & sized columns for all data
- *                 present
- *                         <li> gpudb::create_table_external_speed: picks the
- *                 widest possible column types so that 'all' values will fit
- *                 with minimum data scanned
+ *                         <li> gpudb::create_table_external_accuracy: Scans
+ *                 data to get exactly-typed & sized columns for all data
+ *                 scanned.
+ *                         <li> gpudb::create_table_external_speed: Scans data
+ *                 and picks the widest possible column types so that 'all'
+ *                 values will fit with minimum data scanned
  *                 </ul>
  *                 The default value is gpudb::create_table_external_speed.
  *                         <li> gpudb::create_table_external_remote_query:
@@ -15656,6 +16008,10 @@ CreateUnionResponse& createUnion( const CreateUnionRequest& request_,
  *                         <li> gpudb::create_union_false
  *                 </ul>
  *                 The default value is gpudb::create_union_false.
+ *                         <li> gpudb::create_union_strategy_definition: The <a
+ *                 href="../../../rm/concepts/#tier-strategies"
+ *                 target="_top">tier strategy</a> for the table and its
+ *                 columns.
  *                 </ul>
  * 
  * @return Response object containing the result of the operation.
@@ -15799,6 +16155,10 @@ CreateUnionResponse createUnion( const std::string& tableName,
  *                         <li> gpudb::create_union_false
  *                 </ul>
  *                 The default value is gpudb::create_union_false.
+ *                         <li> gpudb::create_union_strategy_definition: The <a
+ *                 href="../../../rm/concepts/#tier-strategies"
+ *                 target="_top">tier strategy</a> for the table and its
+ *                 columns.
  *                 </ul>
  * @param[out] response_  Response object containing the results of the
  *                        operation.
@@ -17382,6 +17742,94 @@ DropDatasourceResponse& dropDatasource( const std::string& name,
                                         DropDatasourceResponse& response_ ) const;
 
 /**
+ * Drop an existing <a href="../../../concepts/udf/" target="_top">user-defined
+ * function</a> (UDF) environment.
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+DropEnvironmentResponse dropEnvironment( const DropEnvironmentRequest& request_ ) const;
+
+/**
+ * Drop an existing <a href="../../../concepts/udf/" target="_top">user-defined
+ * function</a> (UDF) environment.
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+DropEnvironmentResponse& dropEnvironment( const DropEnvironmentRequest& request_,
+                                          DropEnvironmentResponse& response_ ) const;
+
+/**
+ * Drop an existing <a href="../../../concepts/udf/" target="_top">user-defined
+ * function</a> (UDF) environment.
+ * 
+ * @param environmentName  Name of the environment to be dropped. Must be an
+ *                         existing environment.
+ * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li> gpudb::drop_environment_no_error_if_not_exists:
+ *                 If @a true and if the environment specified in @a
+ *                 environmentName does not exist, no error is returned. If @a
+ *                 false and if the environment specified in @a environmentName
+ *                 does not exist, then an error is returned.
+ *                 <ul>
+ *                         <li> gpudb::drop_environment_true
+ *                         <li> gpudb::drop_environment_false
+ *                 </ul>
+ *                 The default value is gpudb::drop_environment_false.
+ *                 </ul>
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+DropEnvironmentResponse dropEnvironment( const std::string& environmentName,
+                                         const std::map<std::string, std::string>& options ) const;
+
+/**
+ * Drop an existing <a href="../../../concepts/udf/" target="_top">user-defined
+ * function</a> (UDF) environment.
+ * 
+ * @param environmentName  Name of the environment to be dropped. Must be an
+ *                         existing environment.
+ * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li> gpudb::drop_environment_no_error_if_not_exists:
+ *                 If @a true and if the environment specified in @a
+ *                 environmentName does not exist, no error is returned. If @a
+ *                 false and if the environment specified in @a environmentName
+ *                 does not exist, then an error is returned.
+ *                 <ul>
+ *                         <li> gpudb::drop_environment_true
+ *                         <li> gpudb::drop_environment_false
+ *                 </ul>
+ *                 The default value is gpudb::drop_environment_false.
+ *                 </ul>
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+DropEnvironmentResponse& dropEnvironment( const std::string& environmentName,
+                                          const std::map<std::string, std::string>& options,
+                                          DropEnvironmentResponse& response_ ) const;
+
+/**
  * @private
  * 
  * @param[in] request_  Request object containing the parameters for the
@@ -17761,6 +18209,19 @@ ExecuteProcResponse& executeProc( const ExecuteProcRequest& request_,
  *                 return via /show/proc/status. If the number of lines output
  *                 exceeds the maximum, earlier lines are discarded.  The
  *                 default value is '100'.
+ *                         <li> gpudb::execute_proc_execute_at_startup: If @a
+ *                 true, an instance of the proc will run when the database is
+ *                 started instead of running immediately. The @a runId can be
+ *                 retrieved using /show/proc and used in /show/proc/status.
+ *                 <ul>
+ *                         <li> gpudb::execute_proc_true
+ *                         <li> gpudb::execute_proc_false
+ *                 </ul>
+ *                 The default value is gpudb::execute_proc_false.
+ *                         <li> gpudb::execute_proc_execute_at_startup_as: Sets
+ *                 the alternate user name to execute this proc instance as
+ *                 when @a execute_at_startup is @a true.  The default value is
+ *                 ''.
  *                 </ul>
  * 
  * @return Response object containing the result of the operation.
@@ -17871,6 +18332,19 @@ ExecuteProcResponse executeProc( const std::string& procName,
  *                 return via /show/proc/status. If the number of lines output
  *                 exceeds the maximum, earlier lines are discarded.  The
  *                 default value is '100'.
+ *                         <li> gpudb::execute_proc_execute_at_startup: If @a
+ *                 true, an instance of the proc will run when the database is
+ *                 started instead of running immediately. The @a runId can be
+ *                 retrieved using /show/proc and used in /show/proc/status.
+ *                 <ul>
+ *                         <li> gpudb::execute_proc_true
+ *                         <li> gpudb::execute_proc_false
+ *                 </ul>
+ *                 The default value is gpudb::execute_proc_false.
+ *                         <li> gpudb::execute_proc_execute_at_startup_as: Sets
+ *                 the alternate user name to execute this proc instance as
+ *                 when @a execute_at_startup is @a true.  The default value is
+ *                 ''.
  *                 </ul>
  * @param[out] response_  Response object containing the results of the
  *                        operation.
@@ -18155,6 +18629,11 @@ ExecuteSqlResponse& executeSql( const ExecuteSqlRequest& request_,
  *                         <li> gpudb::execute_sql_false
  *                 </ul>
  *                 The default value is gpudb::execute_sql_true.
+ *                         <li> gpudb::execute_sql_current_schema: Use the
+ *                 supplied value as the <a
+ *                 href="../../../concepts/schemas/#default-schema"
+ *                 target="_top">default schema</a> when processing this SQL
+ *                 command.
  *                 </ul>
  * 
  * @return Response object containing the result of the operation.
@@ -18366,6 +18845,11 @@ ExecuteSqlResponse executeSql( const std::string& statement,
  *                         <li> gpudb::execute_sql_false
  *                 </ul>
  *                 The default value is gpudb::execute_sql_true.
+ *                         <li> gpudb::execute_sql_current_schema: Use the
+ *                 supplied value as the <a
+ *                 href="../../../concepts/schemas/#default-schema"
+ *                 target="_top">default schema</a> when processing this SQL
+ *                 command.
  *                 </ul>
  * @param[out] response_  Response object containing the results of the
  *                        operation.
@@ -18588,15 +19072,14 @@ ExportRecordsToFilesResponse& exportRecordsToFiles( const ExportRecordsToFilesRe
  *                 default value is '|'.
  *                         <li>
  *                 gpudb::export_records_to_files_compression_type: File
- *                 compression type. Different file types support different
- *                 compresion types. text: uncompressed. parquet: uncompressed,
- *                 snappy, gzip.
+ *                 compression type. GZip can be applied to text and Parquet
+ *                 files.  Snappy can only be applied to Parquet files, and is
+ *                 the default compression for them.
  *                 <ul>
  *                         <li> gpudb::export_records_to_files_uncompressed
  *                         <li> gpudb::export_records_to_files_snappy
  *                         <li> gpudb::export_records_to_files_gzip
  *                 </ul>
- *                 The default value is gpudb::export_records_to_files_snappy.
  *                         <li> gpudb::export_records_to_files_single_file:
  *                 Save records to a single file. This option may be ignored if
  *                 file
@@ -18779,15 +19262,14 @@ ExportRecordsToFilesResponse exportRecordsToFiles( const std::string& tableName,
  *                 default value is '|'.
  *                         <li>
  *                 gpudb::export_records_to_files_compression_type: File
- *                 compression type. Different file types support different
- *                 compresion types. text: uncompressed. parquet: uncompressed,
- *                 snappy, gzip.
+ *                 compression type. GZip can be applied to text and Parquet
+ *                 files.  Snappy can only be applied to Parquet files, and is
+ *                 the default compression for them.
  *                 <ul>
  *                         <li> gpudb::export_records_to_files_uncompressed
  *                         <li> gpudb::export_records_to_files_snappy
  *                         <li> gpudb::export_records_to_files_gzip
  *                 </ul>
- *                 The default value is gpudb::export_records_to_files_snappy.
  *                         <li> gpudb::export_records_to_files_single_file:
  *                 Save records to a single file. This option may be ignored if
  *                 file
@@ -24971,6 +25453,7 @@ GrantPermissionResponse& grantPermission( const GrantPermissionRequest& request_
  *                recommended to use a fully-qualified name when possible.
  * @param objectType  The type of object being granted to
  *                    <ul>
+ *                            <li> gpudb::grant_permission_context: Context
  *                            <li> gpudb::grant_permission_credential:
  *                    Credential
  *                            <li> gpudb::grant_permission_datasink: Data Sink
@@ -25043,6 +25526,7 @@ GrantPermissionResponse grantPermission( const std::string& principal,
  *                recommended to use a fully-qualified name when possible.
  * @param objectType  The type of object being granted to
  *                    <ul>
+ *                            <li> gpudb::grant_permission_context: Context
  *                            <li> gpudb::grant_permission_credential:
  *                    Credential
  *                            <li> gpudb::grant_permission_datasink: Data Sink
@@ -25244,6 +25728,8 @@ GrantPermissionDatasourceResponse& grantPermissionDatasource( const GrantPermiss
  *              granted. Must be an existing user or role.
  * @param permission  Permission to grant to the user or role
  *                    <ul>
+ *                            <li> gpudb::grant_permission_datasource_admin:
+ *                    Admin access on the given data source
  *                            <li> gpudb::grant_permission_datasource_connect:
  *                    Connect access on the given data source
  *                    </ul>
@@ -25269,6 +25755,8 @@ GrantPermissionDatasourceResponse grantPermissionDatasource( const std::string& 
  *              granted. Must be an existing user or role.
  * @param permission  Permission to grant to the user or role
  *                    <ul>
+ *                            <li> gpudb::grant_permission_datasource_admin:
+ *                    Admin access on the given data source
  *                            <li> gpudb::grant_permission_datasource_connect:
  *                    Connect access on the given data source
  *                    </ul>
@@ -25423,6 +25911,8 @@ GrantPermissionProcResponse& grantPermissionProc( const GrantPermissionProcReque
  *              granted. Must be an existing user or role.
  * @param permission  Permission to grant to the user or role.
  *                    <ul>
+ *                            <li> gpudb::grant_permission_proc_proc_admin:
+ *                    Admin access to the proc.
  *                            <li> gpudb::grant_permission_proc_proc_execute:
  *                    Execute access to the proc.
  *                    </ul>
@@ -25447,6 +25937,8 @@ GrantPermissionProcResponse grantPermissionProc( const std::string& name,
  *              granted. Must be an existing user or role.
  * @param permission  Permission to grant to the user or role.
  *                    <ul>
+ *                            <li> gpudb::grant_permission_proc_proc_admin:
+ *                    Admin access to the proc.
  *                            <li> gpudb::grant_permission_proc_proc_execute:
  *                    Execute access to the proc.
  *                    </ul>
@@ -25781,6 +26273,7 @@ HasPermissionResponse& hasPermission( const HasPermissionRequest& request_,
  *                recommended to use a fully-qualified name when possible.
  * @param objectType  The type of object being checked
  *                    <ul>
+ *                            <li> gpudb::has_permission_context: Context
  *                            <li> gpudb::has_permission_credential: Credential
  *                            <li> gpudb::has_permission_datasink: Data Sink
  *                            <li> gpudb::has_permission_datasource: Data
@@ -25854,6 +26347,7 @@ HasPermissionResponse hasPermission( const std::string& principal,
  *                recommended to use a fully-qualified name when possible.
  * @param objectType  The type of object being checked
  *                    <ul>
+ *                            <li> gpudb::has_permission_context: Context
  *                            <li> gpudb::has_permission_credential: Credential
  *                            <li> gpudb::has_permission_datasink: Data Sink
  *                            <li> gpudb::has_permission_datasource: Data
@@ -27296,6 +27790,8 @@ InsertRecordsFromFilesResponse& insertRecordsFromFiles( const InsertRecordsFromF
  *                         <li>
  *                 gpudb::insert_records_from_files_delimited_text: Delimited
  *                 text file format; e.g., CSV, TSV, PSV, etc.
+ *                         <li> gpudb::insert_records_from_files_gdb: Esri/GDB
+ *                 file format
  *                         <li> gpudb::insert_records_from_files_json: Json
  *                 file format
  *                         <li> gpudb::insert_records_from_files_parquet:
@@ -27305,6 +27801,10 @@ InsertRecordsFromFilesResponse& insertRecordsFromFiles( const InsertRecordsFromF
  *                 </ul>
  *                 The default value is
  *                 gpudb::insert_records_from_files_delimited_text.
+ *                         <li>
+ *                 gpudb::insert_records_from_files_gdal_configuration_options:
+ *                 Comma separated list of gdal conf options, for the specific
+ *                 requets: key=value.  The default value is ''.
  *                         <li>
  *                 gpudb::insert_records_from_files_ignore_existing_pk:
  *                 Specifies the record collision error-suppression policy for
@@ -27369,6 +27869,9 @@ InsertRecordsFromFilesResponse& insertRecordsFromFiles( const InsertRecordsFromF
  *                 gpudb::insert_records_from_files_kafka_subscription_cancel_after:
  *                 Sets the subscription lifespan (in minutes). Expired
  *                 subscription will be cancelled automatically.
+ *                         <li> gpudb::insert_records_from_files_layer:
+ *                 Optional: geo files layer(s) name(s): comma separated.  The
+ *                 default value is ''.
  *                         <li> gpudb::insert_records_from_files_loading_mode:
  *                 Scheme for distributing the extraction and loading of data
  *                 from the source data file(s). This option applies only when
@@ -27410,7 +27913,8 @@ InsertRecordsFromFilesResponse& insertRecordsFromFiles( const InsertRecordsFromF
  *                 no data strictly accessible to the head
  *                 node will be loaded.
  *                 </ul>
- *                 The default value is gpudb::insert_records_from_files_head.
+ *                 The default value is
+ *                 gpudb::insert_records_from_files_distributed_shared.
  *                         <li>
  *                 gpudb::insert_records_from_files_local_time_offset: For Avro
  *                 local timestamp columns
@@ -27434,6 +27938,12 @@ InsertRecordsFromFilesResponse& insertRecordsFromFiles( const InsertRecordsFromF
  *                 Optional: comma separated list of column names, to set as
  *                 primary keys, when not specified in the type.  The default
  *                 value is ''.
+ *                         <li>
+ *                 gpudb::insert_records_from_files_schema_registry_schema_id
+ *                         <li>
+ *                 gpudb::insert_records_from_files_schema_registry_schema_name
+ *                         <li>
+ *                 gpudb::insert_records_from_files_schema_registry_schema_version
  *                         <li> gpudb::insert_records_from_files_shard_keys:
  *                 Optional: comma separated list of column names, to set as
  *                 primary keys, when not specified in the type.  The default
@@ -27561,11 +28071,11 @@ InsertRecordsFromFilesResponse& insertRecordsFromFiles( const InsertRecordsFromF
  *                 optimize type inference for:
  *                 <ul>
  *                         <li> gpudb::insert_records_from_files_accuracy:
- *                 scans all data to get exactly-typed & sized columns for all
- *                 data present
- *                         <li> gpudb::insert_records_from_files_speed: picks
- *                 the widest possible column types so that 'all' values will
- *                 fit with minimum data scanned
+ *                 Scans data to get exactly-typed & sized columns for all data
+ *                 scanned.
+ *                         <li> gpudb::insert_records_from_files_speed: Scans
+ *                 data and picks the widest possible column types so that
+ *                 'all' values will fit with minimum data scanned
  *                 </ul>
  *                 The default value is gpudb::insert_records_from_files_speed.
  *                         <li>
@@ -28006,6 +28516,8 @@ InsertRecordsFromFilesResponse insertRecordsFromFiles( const std::string& tableN
  *                         <li>
  *                 gpudb::insert_records_from_files_delimited_text: Delimited
  *                 text file format; e.g., CSV, TSV, PSV, etc.
+ *                         <li> gpudb::insert_records_from_files_gdb: Esri/GDB
+ *                 file format
  *                         <li> gpudb::insert_records_from_files_json: Json
  *                 file format
  *                         <li> gpudb::insert_records_from_files_parquet:
@@ -28015,6 +28527,10 @@ InsertRecordsFromFilesResponse insertRecordsFromFiles( const std::string& tableN
  *                 </ul>
  *                 The default value is
  *                 gpudb::insert_records_from_files_delimited_text.
+ *                         <li>
+ *                 gpudb::insert_records_from_files_gdal_configuration_options:
+ *                 Comma separated list of gdal conf options, for the specific
+ *                 requets: key=value.  The default value is ''.
  *                         <li>
  *                 gpudb::insert_records_from_files_ignore_existing_pk:
  *                 Specifies the record collision error-suppression policy for
@@ -28079,6 +28595,9 @@ InsertRecordsFromFilesResponse insertRecordsFromFiles( const std::string& tableN
  *                 gpudb::insert_records_from_files_kafka_subscription_cancel_after:
  *                 Sets the subscription lifespan (in minutes). Expired
  *                 subscription will be cancelled automatically.
+ *                         <li> gpudb::insert_records_from_files_layer:
+ *                 Optional: geo files layer(s) name(s): comma separated.  The
+ *                 default value is ''.
  *                         <li> gpudb::insert_records_from_files_loading_mode:
  *                 Scheme for distributing the extraction and loading of data
  *                 from the source data file(s). This option applies only when
@@ -28120,7 +28639,8 @@ InsertRecordsFromFilesResponse insertRecordsFromFiles( const std::string& tableN
  *                 no data strictly accessible to the head
  *                 node will be loaded.
  *                 </ul>
- *                 The default value is gpudb::insert_records_from_files_head.
+ *                 The default value is
+ *                 gpudb::insert_records_from_files_distributed_shared.
  *                         <li>
  *                 gpudb::insert_records_from_files_local_time_offset: For Avro
  *                 local timestamp columns
@@ -28144,6 +28664,12 @@ InsertRecordsFromFilesResponse insertRecordsFromFiles( const std::string& tableN
  *                 Optional: comma separated list of column names, to set as
  *                 primary keys, when not specified in the type.  The default
  *                 value is ''.
+ *                         <li>
+ *                 gpudb::insert_records_from_files_schema_registry_schema_id
+ *                         <li>
+ *                 gpudb::insert_records_from_files_schema_registry_schema_name
+ *                         <li>
+ *                 gpudb::insert_records_from_files_schema_registry_schema_version
  *                         <li> gpudb::insert_records_from_files_shard_keys:
  *                 Optional: comma separated list of column names, to set as
  *                 primary keys, when not specified in the type.  The default
@@ -28271,11 +28797,11 @@ InsertRecordsFromFilesResponse insertRecordsFromFiles( const std::string& tableN
  *                 optimize type inference for:
  *                 <ul>
  *                         <li> gpudb::insert_records_from_files_accuracy:
- *                 scans all data to get exactly-typed & sized columns for all
- *                 data present
- *                         <li> gpudb::insert_records_from_files_speed: picks
- *                 the widest possible column types so that 'all' values will
- *                 fit with minimum data scanned
+ *                 Scans data to get exactly-typed & sized columns for all data
+ *                 scanned.
+ *                         <li> gpudb::insert_records_from_files_speed: Scans
+ *                 data and picks the widest possible column types so that
+ *                 'all' values will fit with minimum data scanned
  *                 </ul>
  *                 The default value is gpudb::insert_records_from_files_speed.
  *                         <li>
@@ -28707,6 +29233,8 @@ InsertRecordsFromPayloadResponse& insertRecordsFromPayload( const InsertRecordsF
  *                         <li>
  *                 gpudb::insert_records_from_payload_delimited_text: Delimited
  *                 text file format; e.g., CSV, TSV, PSV, etc.
+ *                         <li> gpudb::insert_records_from_payload_gdb:
+ *                 Esri/GDB file format
  *                         <li> gpudb::insert_records_from_payload_json: Json
  *                 file format
  *                         <li> gpudb::insert_records_from_payload_parquet:
@@ -28716,6 +29244,10 @@ InsertRecordsFromPayloadResponse& insertRecordsFromPayload( const InsertRecordsF
  *                 </ul>
  *                 The default value is
  *                 gpudb::insert_records_from_payload_delimited_text.
+ *                         <li>
+ *                 gpudb::insert_records_from_payload_gdal_configuration_options:
+ *                 Comma separated list of gdal conf options, for the specific
+ *                 requets: key=value.  The default value is ''.
  *                         <li>
  *                 gpudb::insert_records_from_payload_ignore_existing_pk:
  *                 Specifies the record collision error-suppression policy for
@@ -28765,6 +29297,9 @@ InsertRecordsFromPayloadResponse& insertRecordsFromPayload( const InsertRecordsF
  *                 </ul>
  *                 The default value is
  *                 gpudb::insert_records_from_payload_full.
+ *                         <li> gpudb::insert_records_from_payload_layer:
+ *                 Optional: geo files layer(s) name(s): comma separated.  The
+ *                 default value is ''.
  *                         <li>
  *                 gpudb::insert_records_from_payload_loading_mode: Scheme for
  *                 distributing the extraction and loading of data from the
@@ -28834,6 +29369,12 @@ InsertRecordsFromPayloadResponse& insertRecordsFromPayload( const InsertRecordsF
  *                 comma separated list of column names, to set as primary
  *                 keys, when not specified in the type.  The default value is
  *                 ''.
+ *                         <li>
+ *                 gpudb::insert_records_from_payload_schema_registry_schema_id
+ *                         <li>
+ *                 gpudb::insert_records_from_payload_schema_registry_schema_name
+ *                         <li>
+ *                 gpudb::insert_records_from_payload_schema_registry_schema_version
  *                         <li> gpudb::insert_records_from_payload_shard_keys:
  *                 Optional: comma separated list of column names, to set as
  *                 primary keys, when not specified in the type.  The default
@@ -28967,11 +29508,11 @@ InsertRecordsFromPayloadResponse& insertRecordsFromPayload( const InsertRecordsF
  *                 optimize type inference for:
  *                 <ul>
  *                         <li> gpudb::insert_records_from_payload_accuracy:
- *                 scans all data to get exactly-typed & sized columns for all
- *                 data present
- *                         <li> gpudb::insert_records_from_payload_speed: picks
- *                 the widest possible column types so that 'all' values will
- *                 fit with minimum data scanned
+ *                 Scans data to get exactly-typed & sized columns for all data
+ *                 scanned.
+ *                         <li> gpudb::insert_records_from_payload_speed: Scans
+ *                 data and picks the widest possible column types so that
+ *                 'all' values will fit with minimum data scanned
  *                 </ul>
  *                 The default value is
  *                 gpudb::insert_records_from_payload_speed.
@@ -29366,6 +29907,8 @@ InsertRecordsFromPayloadResponse insertRecordsFromPayload( const std::string& ta
  *                         <li>
  *                 gpudb::insert_records_from_payload_delimited_text: Delimited
  *                 text file format; e.g., CSV, TSV, PSV, etc.
+ *                         <li> gpudb::insert_records_from_payload_gdb:
+ *                 Esri/GDB file format
  *                         <li> gpudb::insert_records_from_payload_json: Json
  *                 file format
  *                         <li> gpudb::insert_records_from_payload_parquet:
@@ -29375,6 +29918,10 @@ InsertRecordsFromPayloadResponse insertRecordsFromPayload( const std::string& ta
  *                 </ul>
  *                 The default value is
  *                 gpudb::insert_records_from_payload_delimited_text.
+ *                         <li>
+ *                 gpudb::insert_records_from_payload_gdal_configuration_options:
+ *                 Comma separated list of gdal conf options, for the specific
+ *                 requets: key=value.  The default value is ''.
  *                         <li>
  *                 gpudb::insert_records_from_payload_ignore_existing_pk:
  *                 Specifies the record collision error-suppression policy for
@@ -29424,6 +29971,9 @@ InsertRecordsFromPayloadResponse insertRecordsFromPayload( const std::string& ta
  *                 </ul>
  *                 The default value is
  *                 gpudb::insert_records_from_payload_full.
+ *                         <li> gpudb::insert_records_from_payload_layer:
+ *                 Optional: geo files layer(s) name(s): comma separated.  The
+ *                 default value is ''.
  *                         <li>
  *                 gpudb::insert_records_from_payload_loading_mode: Scheme for
  *                 distributing the extraction and loading of data from the
@@ -29493,6 +30043,12 @@ InsertRecordsFromPayloadResponse insertRecordsFromPayload( const std::string& ta
  *                 comma separated list of column names, to set as primary
  *                 keys, when not specified in the type.  The default value is
  *                 ''.
+ *                         <li>
+ *                 gpudb::insert_records_from_payload_schema_registry_schema_id
+ *                         <li>
+ *                 gpudb::insert_records_from_payload_schema_registry_schema_name
+ *                         <li>
+ *                 gpudb::insert_records_from_payload_schema_registry_schema_version
  *                         <li> gpudb::insert_records_from_payload_shard_keys:
  *                 Optional: comma separated list of column names, to set as
  *                 primary keys, when not specified in the type.  The default
@@ -29626,11 +30182,11 @@ InsertRecordsFromPayloadResponse insertRecordsFromPayload( const std::string& ta
  *                 optimize type inference for:
  *                 <ul>
  *                         <li> gpudb::insert_records_from_payload_accuracy:
- *                 scans all data to get exactly-typed & sized columns for all
- *                 data present
- *                         <li> gpudb::insert_records_from_payload_speed: picks
- *                 the widest possible column types so that 'all' values will
- *                 fit with minimum data scanned
+ *                 Scans data to get exactly-typed & sized columns for all data
+ *                 scanned.
+ *                         <li> gpudb::insert_records_from_payload_speed: Scans
+ *                 data and picks the widest possible column types so that
+ *                 'all' values will fit with minimum data scanned
  *                 </ul>
  *                 The default value is
  *                 gpudb::insert_records_from_payload_speed.
@@ -31051,6 +31607,16 @@ KillProcResponse& killProc( const KillProcRequest& request_,
  *                 If @a runId is not specified, kill the proc instance(s)
  *                 where a matching run tag was provided to /execute/proc.  The
  *                 default value is ''.
+ *                         <li> gpudb::kill_proc_clear_execute_at_startup: If
+ *                 @a true, kill and remove the instance of the proc matching
+ *                 the auto-start run ID that was created to run when the
+ *                 database is started. The auto-start run ID was returned from
+ *                 /execute/proc and can be retrieved using /show/proc.
+ *                 <ul>
+ *                         <li> gpudb::kill_proc_true
+ *                         <li> gpudb::kill_proc_false
+ *                 </ul>
+ *                 The default value is gpudb::kill_proc_false.
  *                 </ul>
  * 
  * @return Response object containing the result of the operation.
@@ -31075,6 +31641,16 @@ KillProcResponse killProc( const std::string& runId,
  *                 If @a runId is not specified, kill the proc instance(s)
  *                 where a matching run tag was provided to /execute/proc.  The
  *                 default value is ''.
+ *                         <li> gpudb::kill_proc_clear_execute_at_startup: If
+ *                 @a true, kill and remove the instance of the proc matching
+ *                 the auto-start run ID that was created to run when the
+ *                 database is started. The auto-start run ID was returned from
+ *                 /execute/proc and can be retrieved using /show/proc.
+ *                 <ul>
+ *                         <li> gpudb::kill_proc_true
+ *                         <li> gpudb::kill_proc_false
+ *                 </ul>
+ *                 The default value is gpudb::kill_proc_false.
  *                 </ul>
  * @param[out] response_  Response object containing the results of the
  *                        operation.
@@ -31627,7 +32203,7 @@ MatchGraphResponse& matchGraph( const MatchGraphRequest& request_,
  *                 Louvain modularity optimization solver.
  *                 <ul>
  *                         <li> gpudb::match_graph_girvan: Uses the Newman
- *                 Girwan quality metric for cluster solver
+ *                 Girvan quality metric for cluster solver
  *                         <li> gpudb::match_graph_spectral: Applies recursive
  *                 spectral bisection (RSB) partitioning solver
  *                 </ul>
@@ -32022,7 +32598,7 @@ MatchGraphResponse matchGraph( const std::string& graphName,
  *                 Louvain modularity optimization solver.
  *                 <ul>
  *                         <li> gpudb::match_graph_girvan: Uses the Newman
- *                 Girwan quality metric for cluster solver
+ *                 Girvan quality metric for cluster solver
  *                         <li> gpudb::match_graph_spectral: Applies recursive
  *                 spectral bisection (RSB) partitioning solver
  *                 </ul>
@@ -33458,6 +34034,7 @@ RevokePermissionResponse& revokePermission( const RevokePermissionRequest& reque
  *                recommended to use a fully-qualified name when possible.
  * @param objectType  The type of object being revoked
  *                    <ul>
+ *                            <li> gpudb::revoke_permission_context: Context
  *                            <li> gpudb::revoke_permission_credential:
  *                    Credential
  *                            <li> gpudb::revoke_permission_datasink: Data Sink
@@ -33526,6 +34103,7 @@ RevokePermissionResponse revokePermission( const std::string& principal,
  *                recommended to use a fully-qualified name when possible.
  * @param objectType  The type of object being revoked
  *                    <ul>
+ *                            <li> gpudb::revoke_permission_context: Context
  *                            <li> gpudb::revoke_permission_credential:
  *                    Credential
  *                            <li> gpudb::revoke_permission_datasink: Data Sink
@@ -33725,6 +34303,8 @@ RevokePermissionDatasourceResponse& revokePermissionDatasource( const RevokePerm
  *              revoked. Must be an existing user or role.
  * @param permission  Permission to revoke from the user or role
  *                    <ul>
+ *                            <li> gpudb::revoke_permission_datasource_admin:
+ *                    Admin access on the given data source
  *                            <li> gpudb::revoke_permission_datasource_connect:
  *                    Connect access on the given data source
  *                    </ul>
@@ -33751,6 +34331,8 @@ RevokePermissionDatasourceResponse revokePermissionDatasource( const std::string
  *              revoked. Must be an existing user or role.
  * @param permission  Permission to revoke from the user or role
  *                    <ul>
+ *                            <li> gpudb::revoke_permission_datasource_admin:
+ *                    Admin access on the given data source
  *                            <li> gpudb::revoke_permission_datasource_connect:
  *                    Connect access on the given data source
  *                    </ul>
@@ -33904,6 +34486,8 @@ RevokePermissionProcResponse& revokePermissionProc( const RevokePermissionProcRe
  *              revoked. Must be an existing user or role.
  * @param permission  Permission to revoke from the user or role.
  *                    <ul>
+ *                            <li> gpudb::revoke_permission_proc_proc_admin:
+ *                    Admin access to the proc.
  *                            <li> gpudb::revoke_permission_proc_proc_execute:
  *                    Execute access to the proc.
  *                    </ul>
@@ -33928,6 +34512,8 @@ RevokePermissionProcResponse revokePermissionProc( const std::string& name,
  *              revoked. Must be an existing user or role.
  * @param permission  Permission to revoke from the user or role.
  *                    <ul>
+ *                            <li> gpudb::revoke_permission_proc_proc_admin:
+ *                    Admin access to the proc.
  *                            <li> gpudb::revoke_permission_proc_proc_execute:
  *                    Execute access to the proc.
  *                    </ul>
@@ -34546,6 +35132,108 @@ ShowDirectoriesResponse showDirectories( const std::string& directoryName,
 ShowDirectoriesResponse& showDirectories( const std::string& directoryName,
                                           const std::map<std::string, std::string>& options,
                                           ShowDirectoriesResponse& response_ ) const;
+
+/**
+ * Shows information about a specified <a href="../../../concepts/udf/"
+ * target="_top">user-defined function</a> (UDF) environment or all
+ * environments.
+ * Returns detailed information about existing environments.
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+ShowEnvironmentResponse showEnvironment( const ShowEnvironmentRequest& request_ ) const;
+
+/**
+ * Shows information about a specified <a href="../../../concepts/udf/"
+ * target="_top">user-defined function</a> (UDF) environment or all
+ * environments.
+ * Returns detailed information about existing environments.
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+ShowEnvironmentResponse& showEnvironment( const ShowEnvironmentRequest& request_,
+                                          ShowEnvironmentResponse& response_ ) const;
+
+/**
+ * Shows information about a specified <a href="../../../concepts/udf/"
+ * target="_top">user-defined function</a> (UDF) environment or all
+ * environments.
+ * Returns detailed information about existing environments.
+ * 
+ * @param environmentName  Name of the environment on which to retrieve
+ *                         information. The name must refer to a currently
+ *                         existing environment. If '*' or an empty value is
+ *                         specified, information about all environments will
+ *                         be returned.
+ * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li> gpudb::show_environment_no_error_if_not_exists:
+ *                 If @a true and if the environment specified in @a
+ *                 environmentName does not exist, no error is returned. If @a
+ *                 false and if the environment specified in @a environmentName
+ *                 does not exist, then an error is returned.
+ *                 <ul>
+ *                         <li> gpudb::show_environment_true
+ *                         <li> gpudb::show_environment_false
+ *                 </ul>
+ *                 The default value is gpudb::show_environment_false.
+ *                 </ul>
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+ShowEnvironmentResponse showEnvironment( const std::string& environmentName,
+                                         const std::map<std::string, std::string>& options ) const;
+
+/**
+ * Shows information about a specified <a href="../../../concepts/udf/"
+ * target="_top">user-defined function</a> (UDF) environment or all
+ * environments.
+ * Returns detailed information about existing environments.
+ * 
+ * @param environmentName  Name of the environment on which to retrieve
+ *                         information. The name must refer to a currently
+ *                         existing environment. If '*' or an empty value is
+ *                         specified, information about all environments will
+ *                         be returned.
+ * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li> gpudb::show_environment_no_error_if_not_exists:
+ *                 If @a true and if the environment specified in @a
+ *                 environmentName does not exist, no error is returned. If @a
+ *                 false and if the environment specified in @a environmentName
+ *                 does not exist, then an error is returned.
+ *                 <ul>
+ *                         <li> gpudb::show_environment_true
+ *                         <li> gpudb::show_environment_false
+ *                 </ul>
+ *                 The default value is gpudb::show_environment_false.
+ *                 </ul>
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+ShowEnvironmentResponse& showEnvironment( const std::string& environmentName,
+                                          const std::map<std::string, std::string>& options,
+                                          ShowEnvironmentResponse& response_ ) const;
 
 /**
  * Shows information about files in <a href="../../../tools/kifs/"
@@ -36097,6 +36785,16 @@ ShowTableResponse& showTable( const ShowTableRequest& request_,
  *                         <li> gpudb::show_table_false
  *                 </ul>
  *                 The default value is gpudb::show_table_false.
+ *                         <li> gpudb::show_table_get_cached_sizes: If @a true
+ *                 then the number of records in each table, along with a
+ *                 cumulative count, will be returned; blank, otherwise. This
+ *                 version will return the sizes cached at rank 0, which may be
+ *                 stale if there is a multihead insert occuring.
+ *                 <ul>
+ *                         <li> gpudb::show_table_true
+ *                         <li> gpudb::show_table_false
+ *                 </ul>
+ *                 The default value is gpudb::show_table_false.
  *                         <li> gpudb::show_table_show_children: If @a
  *                 tableName is a schema, then @a true will return information
  *                 about the tables and views in the schema, and @a false will
@@ -36175,6 +36873,16 @@ ShowTableResponse showTable( const std::string& tableName,
  *                         <li> gpudb::show_table_get_sizes: If @a true then
  *                 the number of records in each table, along with a cumulative
  *                 count, will be returned; blank, otherwise.
+ *                 <ul>
+ *                         <li> gpudb::show_table_true
+ *                         <li> gpudb::show_table_false
+ *                 </ul>
+ *                 The default value is gpudb::show_table_false.
+ *                         <li> gpudb::show_table_get_cached_sizes: If @a true
+ *                 then the number of records in each table, along with a
+ *                 cumulative count, will be returned; blank, otherwise. This
+ *                 version will return the sizes cached at rank 0, which may be
+ *                 stale if there is a multihead insert occuring.
  *                 <ul>
  *                         <li> gpudb::show_table_true
  *                         <li> gpudb::show_table_false
@@ -38787,6 +39495,12 @@ VisualizeImageResponse& visualizeImage( const VisualizeImageRequest& request_,
  *                              <li> gpudb::visualize_image_hollowsquare
  *                              <li> gpudb::visualize_image_hollowdiamond
  *                              <li> gpudb::visualize_image_symbolcode
+ *                              <li> gpudb::visualize_image_dash
+ *                              <li> gpudb::visualize_image_pipe
+ *                              <li> gpudb::visualize_image_plus
+ *                              <li>
+ *                      gpudb::visualize_image_hollowsquarewithplus
+ *                              <li> gpudb::visualize_image_dot
  *                      </ul>
  *                      The default value is gpudb::visualize_image_square.
  *                              <li> gpudb::visualize_image_symbolrotations:
@@ -38832,6 +39546,12 @@ VisualizeImageResponse& visualizeImage( const VisualizeImageRequest& request_,
  *                              <li> gpudb::visualize_image_oriented_arrow
  *                              <li> gpudb::visualize_image_oriented_triangle
  *                              <li> gpudb::visualize_image_symbolcode
+ *                              <li> gpudb::visualize_image_dash
+ *                              <li> gpudb::visualize_image_pipe
+ *                              <li> gpudb::visualize_image_plus
+ *                              <li>
+ *                      gpudb::visualize_image_hollowsquarewithplus
+ *                              <li> gpudb::visualize_image_dot
  *                      </ul>
  *                      The default value is gpudb::visualize_image_circle.
  *                              <li> gpudb::visualize_image_trackheadcolors:
@@ -38848,6 +39568,12 @@ VisualizeImageResponse& visualizeImage( const VisualizeImageRequest& request_,
  *                              <li> gpudb::visualize_image_hollowsquare
  *                              <li> gpudb::visualize_image_hollowdiamond
  *                              <li> gpudb::visualize_image_symbolcode
+ *                              <li> gpudb::visualize_image_dash
+ *                              <li> gpudb::visualize_image_pipe
+ *                              <li> gpudb::visualize_image_plus
+ *                              <li>
+ *                      gpudb::visualize_image_hollowsquarewithplus
+ *                              <li> gpudb::visualize_image_dot
  *                      </ul>
  *                      The default value is
  *                      gpudb::visualize_image_hollowdiamond.
@@ -38955,6 +39681,12 @@ VisualizeImageResponse visualizeImage( const std::vector<std::string>& tableName
  *                              <li> gpudb::visualize_image_hollowsquare
  *                              <li> gpudb::visualize_image_hollowdiamond
  *                              <li> gpudb::visualize_image_symbolcode
+ *                              <li> gpudb::visualize_image_dash
+ *                              <li> gpudb::visualize_image_pipe
+ *                              <li> gpudb::visualize_image_plus
+ *                              <li>
+ *                      gpudb::visualize_image_hollowsquarewithplus
+ *                              <li> gpudb::visualize_image_dot
  *                      </ul>
  *                      The default value is gpudb::visualize_image_square.
  *                              <li> gpudb::visualize_image_symbolrotations:
@@ -39000,6 +39732,12 @@ VisualizeImageResponse visualizeImage( const std::vector<std::string>& tableName
  *                              <li> gpudb::visualize_image_oriented_arrow
  *                              <li> gpudb::visualize_image_oriented_triangle
  *                              <li> gpudb::visualize_image_symbolcode
+ *                              <li> gpudb::visualize_image_dash
+ *                              <li> gpudb::visualize_image_pipe
+ *                              <li> gpudb::visualize_image_plus
+ *                              <li>
+ *                      gpudb::visualize_image_hollowsquarewithplus
+ *                              <li> gpudb::visualize_image_dot
  *                      </ul>
  *                      The default value is gpudb::visualize_image_circle.
  *                              <li> gpudb::visualize_image_trackheadcolors:
@@ -39016,6 +39754,12 @@ VisualizeImageResponse visualizeImage( const std::vector<std::string>& tableName
  *                              <li> gpudb::visualize_image_hollowsquare
  *                              <li> gpudb::visualize_image_hollowdiamond
  *                              <li> gpudb::visualize_image_symbolcode
+ *                              <li> gpudb::visualize_image_dash
+ *                              <li> gpudb::visualize_image_pipe
+ *                              <li> gpudb::visualize_image_plus
+ *                              <li>
+ *                      gpudb::visualize_image_hollowsquarewithplus
+ *                              <li> gpudb::visualize_image_dot
  *                      </ul>
  *                      The default value is
  *                      gpudb::visualize_image_hollowdiamond.
@@ -39557,6 +40301,12 @@ VisualizeImageClassbreakResponse& visualizeImageClassbreak( const VisualizeImage
  *                      gpudb::visualize_image_classbreak_hollowdiamond
  *                              <li>
  *                      gpudb::visualize_image_classbreak_symbolcode
+ *                              <li> gpudb::visualize_image_classbreak_dash
+ *                              <li> gpudb::visualize_image_classbreak_pipe
+ *                              <li> gpudb::visualize_image_classbreak_plus
+ *                              <li>
+ *                      gpudb::visualize_image_classbreak_hollowsquarewithplus
+ *                              <li> gpudb::visualize_image_classbreak_dot
  *                      </ul>
  *                      The default value is
  *                      gpudb::visualize_image_classbreak_none.
@@ -39803,6 +40553,12 @@ VisualizeImageClassbreakResponse visualizeImageClassbreak( const std::vector<std
  *                      gpudb::visualize_image_classbreak_hollowdiamond
  *                              <li>
  *                      gpudb::visualize_image_classbreak_symbolcode
+ *                              <li> gpudb::visualize_image_classbreak_dash
+ *                              <li> gpudb::visualize_image_classbreak_pipe
+ *                              <li> gpudb::visualize_image_classbreak_plus
+ *                              <li>
+ *                      gpudb::visualize_image_classbreak_hollowsquarewithplus
+ *                              <li> gpudb::visualize_image_classbreak_dot
  *                      </ul>
  *                      The default value is
  *                      gpudb::visualize_image_classbreak_none.

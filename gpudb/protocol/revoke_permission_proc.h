@@ -39,6 +39,9 @@ namespace gpudb
          * @param[in] permission_  Permission to revoke from the user or role.
          *                         <ul>
          *                                 <li>
+         *                         gpudb::revoke_permission_proc_proc_admin:
+         *                         Admin access to the proc.
+         *                                 <li>
          *                         gpudb::revoke_permission_proc_proc_execute:
          *                         Execute access to the proc.
          *                         </ul>

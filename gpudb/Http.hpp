@@ -91,6 +91,7 @@ namespace gpudb {
 
         #ifndef GPUDB_NO_HTTPS
         void setSslContext(boost::asio::ssl::context* sslContext);
+        void setBypassSslCertCheck(const bool value);
         #endif
 
         void setUrl(const HttpUrl& url);
@@ -109,6 +110,7 @@ namespace gpudb {
 
         #ifndef GPUDB_NO_HTTPS
         boost::asio::ssl::context* m_sslContext;
+        bool m_bypassSslCertCheck;
         #endif
 
         HttpUrl m_url;

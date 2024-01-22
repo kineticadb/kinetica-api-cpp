@@ -200,6 +200,12 @@ namespace gpudb
          *                      The default value is
          *                      gpudb::aggregate_group_by_value.
          *                              <li>
+         *                      gpudb::aggregate_group_by_strategy_definition:
+         *                      The <a
+         *                      href="../../../rm/concepts/#tier-strategies"
+         *                      target="_top">tier strategy</a> for the table
+         *                      and its columns.
+         *                              <li>
          *                      gpudb::aggregate_group_by_result_table: The
          *                      name of a table used to store the results, in
          *                      [schema_name.]table_name format, using standard
@@ -417,6 +423,12 @@ namespace gpudb
          *                      </ul>
          *                      The default value is
          *                      gpudb::aggregate_group_by_value.
+         *                              <li>
+         *                      gpudb::aggregate_group_by_strategy_definition:
+         *                      The <a
+         *                      href="../../../rm/concepts/#tier-strategies"
+         *                      target="_top">tier strategy</a> for the table
+         *                      and its columns.
          *                              <li>
          *                      gpudb::aggregate_group_by_result_table: The
          *                      name of a table used to store the results, in

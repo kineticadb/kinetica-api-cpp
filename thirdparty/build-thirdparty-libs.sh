@@ -62,8 +62,8 @@ function run_cmd
 
     #ret_code=$? this is return code of tee
     ret_code=${PIPESTATUS[0]}
-    if [ $ret_code != 0 ]; then
-        printf "Error : [%d] when executing command: '$CMD'\n" $ret_code
+    if [ "$ret_code" != 0 ]; then
+        printf "Error : [%d] when executing command: '$CMD'\n" "$ret_code"
         echo "Please see log file: $LOG"
         exit 1
     fi
@@ -100,7 +100,7 @@ STATIC_WITH_PIC=0
 NUM_PROCESSORS=$(nproc)
 
 # grab command line args
-while [[ $# > 0 ]]; do
+while [ $# -gt 0 ]; do
     key="$1"
     shift
 
@@ -216,6 +216,23 @@ function build_avro
         run_cmd "sed -i 's/BOOST_MESSAGE/BOOST_TEST_MESSAGE/g' test/buffertest.cc"
         run_cmd "sed -i 's/BOOST_CHECKPOINT/BOOST_TEST_CHECKPOINT/g' test/SchemaTests.cc"
 
+        if [ "$DISABLE_CXX11_ABI" -eq "1" ] || [ "${STATIC_WITH_PIC}" -eq "1" ]; then
+            local ABI_FLAGS=""
+            local PIC_FLAGS=""
+            if [ "${DISABLE_CXX11_ABI}" -eq "1" ]; then
+                ABI_FLAGS="-D_GLIBCXX_USE_CXX11_ABI=0"
+            fi
+            if [ "${STATIC_WITH_PIC}" -eq "1" ]; then
+                PIC_FLAGS="-fPIC"
+            fi
+
+            # Add our CXXFLAGS after they force 'set(CMAKE_CXX_FLAGS "-Wall")' if CMAKE_COMPILER_IS_GNUCXX
+            run_cmd "sed -i 's/find_package (Boost 1.38 REQUIRED/set(CMAKE_CXX_FLAGS \"\${CMAKE_CXX_FLAGS} ${PIC_FLAGS} ${ABI_FLAGS}\")\nfind_package (Boost 1.38 REQUIRED/g' CMakeLists.txt"
+            run_cmd "grep 'set(CMAKE_CXX_FLAGS .* ${PIC_FLAGS} ${ABI_FLAGS}' CMakeLists.txt"
+        fi
+
+        popd > /dev/null
+
         run_cmd "mkdir -p '$AVRO_BUILD_DIR'"
         pushd "$AVRO_BUILD_DIR" > /dev/null || exit 1
 
@@ -230,35 +247,15 @@ function build_avro
 
         run_cmd "cmake $GPUDB_AVRO_CMAKE_FLAGS -DCMAKE_INSTALL_PREFIX=$INSTALL_DIR -DCMAKE_INSTALL_RPATH='$INSTALL_DIR/lib' ../"
 
-        # Unfortunately, it seems the only way to get this flag in there is to manually
-        # update the makefiles after cmake has generated them.
-        if [ "$DISABLE_CXX11_ABI" -eq "1" ] || [ "${STATIC_WITH_PIC}" -eq "1" ]; then
-            local ABI_FLAGS=""
-            local PIC_FLAGS=""
-            if [ "${DISABLE_CXX11_ABI}" -eq "1" ]; then
-                ABI_FLAGS="-D_GLIBCXX_USE_CXX11_ABI=0"
-            fi
-            if [ "${STATIC_WITH_PIC}" -eq "1" ]; then
-                PIC_FLAGS="-fPIC"
-            fi
-            for f in $(find . -name "flags.make"); do
-                run_cmd "sed -i 's/CXX_FLAGS = /CXX_FLAGS = ${PIC_FLAGS} ${ABI_FLAGS} /g' $f"
-            done
-            run_cmd "sed -i 's/CMAKE_CXX_FLAGS:STRING=/CMAKE_CXX_FLAGS:STRING=${PIC_FLAGS} ${ABI_FLAGS} /g' $f"
-        fi
-
-        run_cmd "make -j '$NUM_PROCESSORS' install"
-
-        run_cmd "date > '$BUILD_DIR/$AVRO_ARCHIVE_NAME.built'"
-
         popd > /dev/null
     else
-        echo  | tee -a "$LOG"
         echo "Skipping $AVRO_ARCHIVE_NAME build, already built, installing from $AVRO_BUILD_DIR" | tee -a "$LOG"
-        pushd "$AVRO_BUILD_DIR" || exit 1
-            run_cmd "make -j '$NUM_PROCESSORS' install"
-        popd > /dev/null
     fi
+
+    pushd "$AVRO_BUILD_DIR" > /dev/null || exit 1
+        run_cmd "make -j '$NUM_PROCESSORS' install"
+        run_cmd "date > '$BUILD_DIR/$AVRO_ARCHIVE_NAME.built'"
+    popd > /dev/null
     echo
 }
 
@@ -281,7 +278,7 @@ function build_boost
 
     echo "Using Boost library at $BOOST_ARCHIVE." | tee -a "$LOG"
 
-    local BOOST_NAME=$(echo $(basename "$BOOST_ARCHIVE") | awk -F'.' '{print $1}')
+    local BOOST_NAME=$(basename "$BOOST_ARCHIVE" | awk -F'.' '{print $1}')
 
     local BJAM_FLAGS=""
     if [ $DISABLE_CXX11_ABI -eq 1 ]; then

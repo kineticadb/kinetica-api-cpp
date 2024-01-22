@@ -149,6 +149,22 @@ namespace gpudb
          *                      the number of lines output exceeds the maximum,
          *                      earlier lines are discarded.  The default value
          *                      is '100'.
+         *                              <li>
+         *                      gpudb::execute_proc_execute_at_startup: If @a
+         *                      true, an instance of the proc will run when the
+         *                      database is started instead of running
+         *                      immediately. The @a runId can be retrieved
+         *                      using /show/proc and used in /show/proc/status.
+         *                      <ul>
+         *                              <li> gpudb::execute_proc_true
+         *                              <li> gpudb::execute_proc_false
+         *                      </ul>
+         *                      The default value is gpudb::execute_proc_false.
+         *                              <li>
+         *                      gpudb::execute_proc_execute_at_startup_as: Sets
+         *                      the alternate user name to execute this proc
+         *                      instance as when @a execute_at_startup is @a
+         *                      true.  The default value is ''.
          *                      </ul>
          * 
          */

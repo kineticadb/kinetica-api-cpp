@@ -40,6 +40,9 @@ namespace gpudb
          * @param[in] permission_  Permission to grant to the user or role
          *                         <ul>
          *                                 <li>
+         *                         gpudb::grant_permission_datasource_admin:
+         *                         Admin access on the given data source
+         *                                 <li>
          *                         gpudb::grant_permission_datasource_connect:
          *                         Connect access on the given data source
          *                         </ul>

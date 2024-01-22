@@ -111,6 +111,12 @@ namespace gpudb
          *                      </ul>
          *                      The default value is
          *                      gpudb::create_join_table_false.
+         *                              <li>
+         *                      gpudb::create_join_table_strategy_definition:
+         *                      The <a
+         *                      href="../../../rm/concepts/#tier-strategies"
+         *                      target="_top">tier strategy</a> for the table
+         *                      and its columns.
          *                              <li> gpudb::create_join_table_ttl: Sets
          *                      the <a href="../../../concepts/ttl/"
          *                      target="_top">TTL</a> of the join table

@@ -271,6 +271,11 @@ namespace gpudb
          *                              <li> gpudb::execute_sql_false
          *                      </ul>
          *                      The default value is gpudb::execute_sql_true.
+         *                              <li> gpudb::execute_sql_current_schema:
+         *                      Use the supplied value as the <a
+         *                      href="../../../concepts/schemas/#default-schema"
+         *                      target="_top">default schema</a> when
+         *                      processing this SQL command.
          *                      </ul>
          * 
          */
@@ -526,6 +531,11 @@ namespace gpudb
          *                              <li> gpudb::execute_sql_false
          *                      </ul>
          *                      The default value is gpudb::execute_sql_true.
+         *                              <li> gpudb::execute_sql_current_schema:
+         *                      Use the supplied value as the <a
+         *                      href="../../../concepts/schemas/#default-schema"
+         *                      target="_top">default schema</a> when
+         *                      processing this SQL command.
          *                      </ul>
          * 
          */

@@ -144,6 +144,12 @@ namespace gpudb
          *                           gpudb::visualize_image_hollowdiamond
          *                                   <li>
          *                           gpudb::visualize_image_symbolcode
+         *                                   <li> gpudb::visualize_image_dash
+         *                                   <li> gpudb::visualize_image_pipe
+         *                                   <li> gpudb::visualize_image_plus
+         *                                   <li>
+         *                           gpudb::visualize_image_hollowsquarewithplus
+         *                                   <li> gpudb::visualize_image_dot
          *                           </ul>
          *                           The default value is
          *                           gpudb::visualize_image_square.
@@ -213,6 +219,12 @@ namespace gpudb
          *                           gpudb::visualize_image_oriented_triangle
          *                                   <li>
          *                           gpudb::visualize_image_symbolcode
+         *                                   <li> gpudb::visualize_image_dash
+         *                                   <li> gpudb::visualize_image_pipe
+         *                                   <li> gpudb::visualize_image_plus
+         *                                   <li>
+         *                           gpudb::visualize_image_hollowsquarewithplus
+         *                                   <li> gpudb::visualize_image_dot
          *                           </ul>
          *                           The default value is
          *                           gpudb::visualize_image_circle.
@@ -238,6 +250,12 @@ namespace gpudb
          *                           gpudb::visualize_image_hollowdiamond
          *                                   <li>
          *                           gpudb::visualize_image_symbolcode
+         *                                   <li> gpudb::visualize_image_dash
+         *                                   <li> gpudb::visualize_image_pipe
+         *                                   <li> gpudb::visualize_image_plus
+         *                                   <li>
+         *                           gpudb::visualize_image_hollowsquarewithplus
+         *                                   <li> gpudb::visualize_image_dot
          *                           </ul>
          *                           The default value is
          *                           gpudb::visualize_image_hollowdiamond.

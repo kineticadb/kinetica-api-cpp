@@ -471,6 +471,9 @@ namespace gpudb
          *                      Delimited text file format; e.g., CSV, TSV,
          *                      PSV, etc.
          *                              <li>
+         *                      gpudb::insert_records_from_payload_gdb:
+         *                      Esri/GDB file format
+         *                              <li>
          *                      gpudb::insert_records_from_payload_json: Json
          *                      file format
          *                              <li>
@@ -482,6 +485,11 @@ namespace gpudb
          *                      </ul>
          *                      The default value is
          *                      gpudb::insert_records_from_payload_delimited_text.
+         *                              <li>
+         *                      gpudb::insert_records_from_payload_gdal_configuration_options:
+         *                      Comma separated list of gdal conf options, for
+         *                      the specific requets: key=value.  The default
+         *                      value is ''.
          *                              <li>
          *                      gpudb::insert_records_from_payload_ignore_existing_pk:
          *                      Specifies the record collision
@@ -542,6 +550,10 @@ namespace gpudb
          *                      </ul>
          *                      The default value is
          *                      gpudb::insert_records_from_payload_full.
+         *                              <li>
+         *                      gpudb::insert_records_from_payload_layer:
+         *                      Optional: geo files layer(s) name(s): comma
+         *                      separated.  The default value is ''.
          *                              <li>
          *                      gpudb::insert_records_from_payload_loading_mode:
          *                      Scheme for distributing the extraction and
@@ -627,6 +639,12 @@ namespace gpudb
          *                      Optional: comma separated list of column names,
          *                      to set as primary keys, when not specified in
          *                      the type.  The default value is ''.
+         *                              <li>
+         *                      gpudb::insert_records_from_payload_schema_registry_schema_id
+         *                              <li>
+         *                      gpudb::insert_records_from_payload_schema_registry_schema_name
+         *                              <li>
+         *                      gpudb::insert_records_from_payload_schema_registry_schema_version
          *                              <li>
          *                      gpudb::insert_records_from_payload_shard_keys:
          *                      Optional: comma separated list of column names,
@@ -790,12 +808,13 @@ namespace gpudb
          *                      <ul>
          *                              <li>
          *                      gpudb::insert_records_from_payload_accuracy:
-         *                      scans all data to get exactly-typed & sized
-         *                      columns for all data present
+         *                      Scans data to get exactly-typed & sized columns
+         *                      for all data scanned.
          *                              <li>
-         *                      gpudb::insert_records_from_payload_speed: picks
-         *                      the widest possible column types so that 'all'
-         *                      values will fit with minimum data scanned
+         *                      gpudb::insert_records_from_payload_speed: Scans
+         *                      data and picks the widest possible column types
+         *                      so that 'all' values will fit with minimum data
+         *                      scanned
          *                      </ul>
          *                      The default value is
          *                      gpudb::insert_records_from_payload_speed.
