@@ -4,9 +4,9 @@
 <h5 align="center" style="margin:0px">
 	<a href="https://www.kinetica.com/">Website</a>
 	|
-	<a href="https://docs.kinetica.com/7.1/">Docs</a>
+	<a href="https://docs.kinetica.com/7.2/">Docs</a>
 	|
-	<a href="https://docs.kinetica.com/7.1/api/c++/">API Docs</a>
+	<a href="https://docs.kinetica.com/7.2/api/c++/">API Docs</a>
 	|
 	<a href="https://join.slack.com/t/kinetica-community/shared_invite/zt-1bt9x3mvr-uMKrXlSDXfy3oU~sKi84qg">Community Slack</a>   
 </h5>
@@ -33,9 +33,9 @@ The C++ API is supported on both Linux-based systems and Windows.
 The following links will provide the information needed to get started with
 Kinetica and the C++ API:
 
-* [C++ API documentation](https://docs.kinetica.com/7.1/api/c++/)
-* [C++ API tutorial](https://docs.kinetica.com/7.1/guides/cpp_guide/)
-* [Kinetica documentation site](https://docs.kinetica.com/7.1/)
+* [C++ API documentation](https://docs.kinetica.com/7.2/api/c++/)
+* [C++ API tutorial](https://docs.kinetica.com/7.2/guides/cpp_guide/)
+* [Kinetica documentation site](https://docs.kinetica.com/7.2/)
 
 For changes to the client-side API, please refer to
 [CHANGELOG.md](CHANGELOG.md).  For
