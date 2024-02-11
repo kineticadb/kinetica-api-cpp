@@ -920,6 +920,7 @@ enum ColumnTypeSize_T
     INT8      =   1,
     INT16     =   2,
     IPV4      =   4,
+    JSON      =   8,
     LONG      =   8,
     STRING    =   8,
     TIME      =   4,
@@ -2911,6 +2912,7 @@ bool RecordKeyBuilder::buildExpression( const gpudb::GenericRecord& record,
             case ColumnType_T::DATETIME:
             case ColumnType_T::DECIMAL:
             case ColumnType_T::IPV4:
+            case ColumnType_T::JSON:
             case ColumnType_T::TIME:
             case ColumnType_T::STRING:
             case ColumnType_T::UUID:

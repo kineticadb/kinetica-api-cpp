@@ -832,6 +832,7 @@ namespace gpudb
                 || type == ColumnProperty::INT8
                 || type == ColumnProperty::INT16
                 || type == ColumnProperty::IPV4
+                || type == ColumnProperty::JSON
                 || type == ColumnProperty::TIME
                 || type == ColumnProperty::TIMESTAMP
                 || type == ColumnProperty::ULONG

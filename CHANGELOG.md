@@ -1,15 +1,17 @@
 # GPUdb C++ API Changelog
 
-## Version 7.1
+## Version 7.2
 
-### Version 7.1.9.2 - 2024-01-22
+### Version 7.2.0.0 - 2024-02-11
 
 #### Added
--   Support for disabling auto-discovery, failover, and certificate checking
+-   Support for Array & Vector types
 
 #### Notes
 -   Check CHANGELOG-FUNCTIONS.md for endpoint related changes.
 
+
+## Version 7.1
 
 ### Version 7.1.9.1 - 2023-06-23
 
@@ -86,8 +88,6 @@
 
 #### Note
 -   Check CHANGELOG-FUNCTIONS.md for endpoint related changes.
-
-
 
 ### Version 7.1.0.0 - 2020-08-18
 

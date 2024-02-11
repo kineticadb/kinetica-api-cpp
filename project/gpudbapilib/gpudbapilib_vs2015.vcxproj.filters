@@ -69,9 +69,6 @@
     <ClCompile Include="..\..\gpudb\utils\Utils.h">
       <Filter>Header Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\gpudb\RecordRetriever.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\gpudb\Avro.hpp">
@@ -108,9 +105,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\gpudb\protocol\EndpointKeywords.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\gpudb\RecordRetriever.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -276,6 +276,7 @@ private:
         INT8,
         INT16,
         IPV4,
+        JSON,
         LONG,
         STRING,
         TIME,

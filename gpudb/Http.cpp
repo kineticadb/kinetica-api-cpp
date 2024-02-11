@@ -5,7 +5,6 @@
 #include <boost/bind.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/scoped_ptr.hpp>
-#include <iostream>
 
 namespace gpudb
 {
@@ -942,7 +941,6 @@ namespace gpudb
     HttpRequest::HttpRequest() :
         #ifndef GPUDB_NO_HTTPS
         m_sslContext(NULL),
-        m_bypassSslCertCheck( false ),
         #endif
 
         m_requestMethod(GET),
@@ -953,7 +951,6 @@ namespace gpudb
     HttpRequest::HttpRequest(const HttpUrl& url) :
         #ifndef GPUDB_NO_HTTPS
         m_sslContext(NULL),
-        m_bypassSslCertCheck( false ),
         #endif
 
         m_url(url),
@@ -1036,12 +1033,8 @@ namespace gpudb
             {
                 tempSslContext.reset(new boost::asio::ssl::context(boost::asio::ssl::context::sslv23));
                 tempSslContext->set_default_verify_paths();
-                int verifyCert = m_bypassSslCertCheck;
-                tempSslContext->set_verify_mode(m_bypassSslCertCheck ? boost::asio::ssl::verify_none : boost::asio::ssl::verify_peer);
-                if( !m_bypassSslCertCheck )
-                {
-                    tempSslContext->set_verify_callback(boost::asio::ssl::rfc2818_verification(m_url.getHost()));
-                }
+                tempSslContext->set_verify_mode(boost::asio::ssl::verify_peer);
+                tempSslContext->set_verify_callback(boost::asio::ssl::rfc2818_verification(m_url.getHost()));
             }
 
             SslTcpSocket socket(m_sslContext ? *m_sslContext : *tempSslContext,
@@ -1069,10 +1062,6 @@ namespace gpudb
     void HttpRequest::setSslContext(boost::asio::ssl::context* sslContext)
     {
         m_sslContext = sslContext;
-    }
-    void HttpRequest::setBypassSslCertCheck(const bool value)
-    {
-        m_bypassSslCertCheck = value;
     }
     #endif
 
