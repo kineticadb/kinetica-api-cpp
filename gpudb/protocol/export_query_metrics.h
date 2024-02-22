@@ -33,10 +33,15 @@ namespace gpudb
          *
          * @param[in] options_  Optional parameters.
          *                      <ul>
-         *                          <li>@ref gpudb::export_query_metrics_job_id
-         *                              "export_query_metrics_job_id": Export
-         *                              query metrics for the currently running
-         *                              job
+         *                          <li>@ref
+         *                              gpudb::export_query_metrics_expression
+         *                              "export_query_metrics_expression":
+         *                              Filter for multi query export
+         *                          <li>@ref
+         *                              gpudb::export_query_metrics_filepath
+         *                              "export_query_metrics_filepath": Path
+         *                              to export target specified as a
+         *                              filename or existing directory.
          *                          <li>@ref gpudb::export_query_metrics_format
          *                              "export_query_metrics_format":
          *                              Specifies which format to export the
@@ -45,11 +50,24 @@ namespace gpudb
          *                              <ul>
          *                                  <li>@ref
          *                                      gpudb::export_query_metrics_json
-         *                                      "export_query_metrics_json"
+         *                                      "export_query_metrics_json":
+         *                                      Generic json output
+         *                                  <li>@ref
+         *                                      gpudb::export_query_metrics_json_trace_event
+         *                                      "export_query_metrics_json_trace_event":
+         *                                      Chromium/Perfetto trace event
+         *                                      format
          *                              </ul>
          *                              The default value is @ref
          *                              gpudb::export_query_metrics_json
          *                              "export_query_metrics_json".
+         *                          <li>@ref gpudb::export_query_metrics_job_id
+         *                              "export_query_metrics_job_id": Export
+         *                              query metrics for the currently running
+         *                              job
+         *                          <li>@ref gpudb::export_query_metrics_limit
+         *                              "export_query_metrics_limit": Record
+         *                              limit per file for multi query export
          *                      </ul>
          *                      The default value is an empty map.
          */
@@ -61,19 +79,31 @@ namespace gpudb
         /**
          * Optional parameters.
          * <ul>
-         *     <li>@ref gpudb::export_query_metrics_job_id
-         *         "export_query_metrics_job_id": Export query metrics for the
-         *         currently running job
+         *     <li>@ref gpudb::export_query_metrics_expression
+         *         "export_query_metrics_expression": Filter for multi query
+         *         export
+         *     <li>@ref gpudb::export_query_metrics_filepath
+         *         "export_query_metrics_filepath": Path to export target
+         *         specified as a filename or existing directory.
          *     <li>@ref gpudb::export_query_metrics_format
          *         "export_query_metrics_format": Specifies which format to
          *         export the metrics.
          *         Supported values:
          *         <ul>
          *             <li>@ref gpudb::export_query_metrics_json
-         *                 "export_query_metrics_json"
+         *                 "export_query_metrics_json": Generic json output
+         *             <li>@ref gpudb::export_query_metrics_json_trace_event
+         *                 "export_query_metrics_json_trace_event":
+         *                 Chromium/Perfetto trace event format
          *         </ul>
          *         The default value is @ref gpudb::export_query_metrics_json
          *         "export_query_metrics_json".
+         *     <li>@ref gpudb::export_query_metrics_job_id
+         *         "export_query_metrics_job_id": Export query metrics for the
+         *         currently running job
+         *     <li>@ref gpudb::export_query_metrics_limit
+         *         "export_query_metrics_limit": Record limit per file for
+         *         multi query export
          * </ul>
          * The default value is an empty map.
          */
@@ -138,6 +168,9 @@ namespace gpudb
         /**
          * Additional information.
          * <ul>
+         *     <li>@ref gpudb::export_query_metrics_exported_files
+         *         "export_query_metrics_exported_files": Comma separated list
+         *         of filenames exported if applicable
          *     <li>@ref gpudb::export_query_metrics_output
          *         "export_query_metrics_output": Exported metrics if no other
          *         destination specified

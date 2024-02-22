@@ -23343,20 +23343,35 @@ ExportQueryMetricsResponse& exportQueryMetrics( const ExportQueryMetricsRequest&
  *
  * @param[in] options  Optional parameters.
  *                     <ul>
- *                         <li>@ref gpudb::export_query_metrics_job_id
- *                             "export_query_metrics_job_id": Export query
- *                             metrics for the currently running job
+ *                         <li>@ref gpudb::export_query_metrics_expression
+ *                             "export_query_metrics_expression": Filter for
+ *                             multi query export
+ *                         <li>@ref gpudb::export_query_metrics_filepath
+ *                             "export_query_metrics_filepath": Path to export
+ *                             target specified as a filename or existing
+ *                             directory.
  *                         <li>@ref gpudb::export_query_metrics_format
  *                             "export_query_metrics_format": Specifies which
  *                             format to export the metrics.
  *                             Supported values:
  *                             <ul>
  *                                 <li>@ref gpudb::export_query_metrics_json
- *                                     "export_query_metrics_json"
+ *                                     "export_query_metrics_json": Generic
+ *                                     json output
+ *                                 <li>@ref
+ *                                     gpudb::export_query_metrics_json_trace_event
+ *                                     "export_query_metrics_json_trace_event":
+ *                                     Chromium/Perfetto trace event format
  *                             </ul>
  *                             The default value is @ref
  *                             gpudb::export_query_metrics_json
  *                             "export_query_metrics_json".
+ *                         <li>@ref gpudb::export_query_metrics_job_id
+ *                             "export_query_metrics_job_id": Export query
+ *                             metrics for the currently running job
+ *                         <li>@ref gpudb::export_query_metrics_limit
+ *                             "export_query_metrics_limit": Record limit per
+ *                             file for multi query export
  *                     </ul>
  *                     The default value is an empty map.
  *
@@ -23371,20 +23386,35 @@ ExportQueryMetricsResponse exportQueryMetrics( const std::map<std::string, std::
  *
  * @param[in] options  Optional parameters.
  *                     <ul>
- *                         <li>@ref gpudb::export_query_metrics_job_id
- *                             "export_query_metrics_job_id": Export query
- *                             metrics for the currently running job
+ *                         <li>@ref gpudb::export_query_metrics_expression
+ *                             "export_query_metrics_expression": Filter for
+ *                             multi query export
+ *                         <li>@ref gpudb::export_query_metrics_filepath
+ *                             "export_query_metrics_filepath": Path to export
+ *                             target specified as a filename or existing
+ *                             directory.
  *                         <li>@ref gpudb::export_query_metrics_format
  *                             "export_query_metrics_format": Specifies which
  *                             format to export the metrics.
  *                             Supported values:
  *                             <ul>
  *                                 <li>@ref gpudb::export_query_metrics_json
- *                                     "export_query_metrics_json"
+ *                                     "export_query_metrics_json": Generic
+ *                                     json output
+ *                                 <li>@ref
+ *                                     gpudb::export_query_metrics_json_trace_event
+ *                                     "export_query_metrics_json_trace_event":
+ *                                     Chromium/Perfetto trace event format
  *                             </ul>
  *                             The default value is @ref
  *                             gpudb::export_query_metrics_json
  *                             "export_query_metrics_json".
+ *                         <li>@ref gpudb::export_query_metrics_job_id
+ *                             "export_query_metrics_job_id": Export query
+ *                             metrics for the currently running job
+ *                         <li>@ref gpudb::export_query_metrics_limit
+ *                             "export_query_metrics_limit": Record limit per
+ *                             file for multi query export
  *                     </ul>
  *                     The default value is an empty map.
  * @param[out] response_  @ref gpudb::ExportQueryMetricsResponse "Response"
@@ -44156,7 +44186,29 @@ ShowStatisticsResponse& showStatistics( const ShowStatisticsRequest& request_,
  *                        href="../../../concepts/tables/#table-name-resolution"
  *                        target="_top">name resolution rules</a>.  All
  *                        provided tables must exist, or an error is returned.
- * @param[in] options  Optional parameters. The default value is an empty map.
+ * @param[in] options  Optional parameters.
+ *                     <ul>
+ *                         <li>@ref
+ *                             gpudb::show_statistics_no_error_if_not_exists
+ *                             "show_statistics_no_error_if_not_exists": If
+ *                             @ref gpudb::show_statistics_true "true" and if
+ *                             the table names specified in @a tableNames does
+ *                             not exist, no error is returned. If @ref
+ *                             gpudb::show_statistics_false "false" and if the
+ *                             table names specified in @a tableNames does not
+ *                             exist, then an error is returned.
+ *                             Supported values:
+ *                             <ul>
+ *                                 <li>@ref gpudb::show_statistics_true
+ *                                     "show_statistics_true"
+ *                                 <li>@ref gpudb::show_statistics_false
+ *                                     "show_statistics_false"
+ *                             </ul>
+ *                             The default value is @ref
+ *                             gpudb::show_statistics_false
+ *                             "show_statistics_false".
+ *                     </ul>
+ *                     The default value is an empty map.
  *
  * @return @ref gpudb::ShowStatisticsResponse "Response" object containing the
  *         result of the operation.
@@ -44172,7 +44224,29 @@ ShowStatisticsResponse showStatistics( const std::vector<std::string>& tableName
  *                        href="../../../concepts/tables/#table-name-resolution"
  *                        target="_top">name resolution rules</a>.  All
  *                        provided tables must exist, or an error is returned.
- * @param[in] options  Optional parameters. The default value is an empty map.
+ * @param[in] options  Optional parameters.
+ *                     <ul>
+ *                         <li>@ref
+ *                             gpudb::show_statistics_no_error_if_not_exists
+ *                             "show_statistics_no_error_if_not_exists": If
+ *                             @ref gpudb::show_statistics_true "true" and if
+ *                             the table names specified in @a tableNames does
+ *                             not exist, no error is returned. If @ref
+ *                             gpudb::show_statistics_false "false" and if the
+ *                             table names specified in @a tableNames does not
+ *                             exist, then an error is returned.
+ *                             Supported values:
+ *                             <ul>
+ *                                 <li>@ref gpudb::show_statistics_true
+ *                                     "show_statistics_true"
+ *                                 <li>@ref gpudb::show_statistics_false
+ *                                     "show_statistics_false"
+ *                             </ul>
+ *                             The default value is @ref
+ *                             gpudb::show_statistics_false
+ *                             "show_statistics_false".
+ *                     </ul>
+ *                     The default value is an empty map.
  * @param[out] response_  @ref gpudb::ShowStatisticsResponse "Response" object
  *                        containing the results of the operation.
  *

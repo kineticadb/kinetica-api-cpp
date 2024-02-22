@@ -1110,12 +1110,17 @@ namespace gpudb
     const std::string execute_sql_true ( "true"  );
 
     // Keywords for /export/query/metrics request
-    const std::string export_query_metrics_format( "format" );
-    const std::string export_query_metrics_job_id( "job_id" );
-    const std::string export_query_metrics_json  ( "json"   );
+    const std::string export_query_metrics_expression      ( "expression"       );
+    const std::string export_query_metrics_filepath        ( "filepath"         );
+    const std::string export_query_metrics_format          ( "format"           );
+    const std::string export_query_metrics_job_id          ( "job_id"           );
+    const std::string export_query_metrics_json            ( "json"             );
+    const std::string export_query_metrics_json_trace_event( "json_trace_event" );
+    const std::string export_query_metrics_limit           ( "limit"            );
 
     // Keywords for /export/query/metrics response
-    const std::string export_query_metrics_output( "output" );
+    const std::string export_query_metrics_exported_files( "exported_files" );
+    const std::string export_query_metrics_output        ( "output"         );
 
     // Keywords for /export/records/tofiles request
     const std::string export_records_to_files_batch_size               ( "batch_size"                );
@@ -2060,6 +2065,11 @@ namespace gpudb
     const std::string show_sql_proc_execute_interval  ( "execute_interval"   );
     const std::string show_sql_proc_execute_start_time( "execute_start_time" );
     const std::string show_sql_proc_execute_stop_time ( "execute_stop_time"  );
+
+    // Keywords for /show/statistics request
+    const std::string show_statistics_false                 ( "false"                  );
+    const std::string show_statistics_no_error_if_not_exists( "no_error_if_not_exists" );
+    const std::string show_statistics_true                  ( "true"                   );
 
     // Keywords for /show/system/properties request
     const std::string show_system_properties_properties( "properties" );

@@ -257,6 +257,7 @@ private:
 
     enum ColumnType_T
     {
+//        ARRAY,
         BOOLEAN,
         CHAR1,
         CHAR2,
@@ -276,13 +277,14 @@ private:
         INT8,
         INT16,
         IPV4,
-        JSON,
+//        JSON,
         LONG,
         STRING,
         TIME,
         TIMESTAMP,
         ULONG,
         UUID,
+//        VECTOR,
     };
 
     // Some typedefs for nullable types

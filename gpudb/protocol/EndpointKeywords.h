@@ -1112,11 +1112,16 @@ namespace gpudb
     extern const std::string execute_sql_true;
 
     // Keywords for /export/query/metrics request
+    extern const std::string export_query_metrics_expression;
+    extern const std::string export_query_metrics_filepath;
     extern const std::string export_query_metrics_format;
     extern const std::string export_query_metrics_job_id;
     extern const std::string export_query_metrics_json;
+    extern const std::string export_query_metrics_json_trace_event;
+    extern const std::string export_query_metrics_limit;
 
     // Keywords for /export/query/metrics response
+    extern const std::string export_query_metrics_exported_files;
     extern const std::string export_query_metrics_output;
 
     // Keywords for /export/records/tofiles request
@@ -2062,6 +2067,11 @@ namespace gpudb
     extern const std::string show_sql_proc_execute_interval;
     extern const std::string show_sql_proc_execute_start_time;
     extern const std::string show_sql_proc_execute_stop_time;
+
+    // Keywords for /show/statistics request
+    extern const std::string show_statistics_false;
+    extern const std::string show_statistics_no_error_if_not_exists;
+    extern const std::string show_statistics_true;
 
     // Keywords for /show/system/properties request
     extern const std::string show_system_properties_properties;

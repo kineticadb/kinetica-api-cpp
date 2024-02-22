@@ -2,6 +2,12 @@
 
 ## Version 7.2
 
+### Version 7.2.0.1 - 2024-02-22
+
+#### Added
+-   Additional support for Array, JSON, & Vector types
+
+
 ### Version 7.2.0.0 - 2024-02-11
 
 #### Added

@@ -5,6 +5,8 @@
 #include "gpudb/utils/Utils.h"
 
 #ifndef GPUDB_NO_HTTPS
+// The practice of declaring the Bind placeholders (_1, _2, ...) in the global namespace is deprecated. Please use <boost/bind/bind.hpp> + using namespace boost::placeholders, or define BOOST_BIND_GLOBAL_PLACEHOLDERS to retain the current behavior.
+#define BOOST_BIND_GLOBAL_PLACEHOLDERS
 #include <boost/asio/ssl.hpp>
 #endif
 
@@ -252,6 +254,24 @@ public:
     const std::map<std::string, std::string>& getHttpHeaders() const;
     HASynchronicityMode getHASyncMode() const;
     size_t getTimeout() const;
+
+    /**
+     * This method is used to execute a SQL statement (e.g., DML, DDL).  It returns the number of
+     * rows affected by the statement.
+     * 
+     * @param sql        - The SQL query to execute
+     * @param parameters - Query parameters for the SQL query.  Can be empty.
+     * @param options    - Optional parameters for the executeSql call.
+     * 
+     * @return - number of rows affected by the execution of statement
+     */
+    long execute(const std::string& sql);
+    long execute(const std::string& sql, const std::string& parameters);
+    long execute(const std::string& sql, const std::string& parameters,
+                 const std::map<std::string, std::string>& options);
+    template<typename T> long execute(const std::string& sql, const std::vector<T>& parameters);
+    template<typename T> long execute(const std::string& sql, const std::vector<T>& parameters,
+                                      const std::map<std::string, std::string>& options);
 
     /// Some setters
     /// ------------

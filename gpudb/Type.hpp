@@ -3,6 +3,8 @@
 
 #include "ColumnProperties.h"
 
+// The practice of declaring the Bind placeholders (_1, _2, ...) in the global namespace is deprecated. Please use <boost/bind/bind.hpp> + using namespace boost::placeholders, or define BOOST_BIND_GLOBAL_PLACEHOLDERS to retain the current behavior.
+#define BOOST_BIND_GLOBAL_PLACEHOLDERS
 #include <avro/Schema.hh>
 
 namespace gpudb
@@ -36,8 +38,12 @@ namespace gpudb
                     ColumnType getType() const;
                     std::string getTypeName() const;
                     bool isNullable() const;
+                    bool isArray() const;
+                    std::string getArrayType() const;
                     const std::vector<std::string>& getProperties() const;
                     bool hasProperty( std::string property ) const;
+                    bool isVector() const;
+                    int getVectorDimensions() const;
 
                     /// Check if the given column is compatible with this column
                     /// (checks name, primitive types and type-related properties, including nullability).

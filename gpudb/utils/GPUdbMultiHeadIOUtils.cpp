@@ -920,7 +920,7 @@ enum ColumnTypeSize_T
     INT8      =   1,
     INT16     =   2,
     IPV4      =   4,
-    JSON      =   8,
+//    JSON      =   8,
     LONG      =   8,
     STRING    =   8,
     TIME      =   4,
@@ -2847,6 +2847,12 @@ bool RecordKeyBuilder::build( const gpudb::GenericRecord& record, RecordKey& rec
                 break;
             }  // end case string
 
+            // The following are not allowed as shard keys
+            // case ColumnType_T::WKB:
+            // case ColumnType_T::WKT:
+            // case ColumnType_T::ARRAY:
+            // case ColumnType_T::JSON:
+            // case ColumnType_T::VECTOR:
             default:
                 throw GPUdbException( "Unhandled type for column '" + column.getName()
                                       + "'."  );
@@ -2899,6 +2905,7 @@ bool RecordKeyBuilder::buildExpression( const gpudb::GenericRecord& record,
         // (the type may be different per column) and add to the record key
         switch ( m_column_types[ i ] )  // ith column
         {
+//            case ColumnType_T::ARRAY:
             case ColumnType_T::CHAR1:
             case ColumnType_T::CHAR2:
             case ColumnType_T::CHAR4:
@@ -2912,10 +2919,11 @@ bool RecordKeyBuilder::buildExpression( const gpudb::GenericRecord& record,
             case ColumnType_T::DATETIME:
             case ColumnType_T::DECIMAL:
             case ColumnType_T::IPV4:
-            case ColumnType_T::JSON:
+//            case ColumnType_T::JSON:
             case ColumnType_T::TIME:
             case ColumnType_T::STRING:
             case ColumnType_T::UUID:
+//            case ColumnType_T::VECTOR:
             {
                 ss << "\""
                    << record.getAsString( column_index )

@@ -93,7 +93,7 @@ void test_with_pk_and_non_nullable_column( const gpudb::GPUdb &db )
         // Create a type
         std::vector<gpudb::Type::Column> columns;
         columns.push_back( gpudb::Type::Column("c2",    gpudb::Type::Column::INT, gpudb::ColumnProperty::PRIMARY_KEY, gpudb::ColumnProperty::SHARD_KEY ) );
-        columns.push_back( gpudb::Type::Column("c1", gpudb::Type::Column::INT ) );
+        columns.push_back( gpudb::Type::Column("c1", gpudb::Type::Column::INT, gpudb::ColumnProperty::NULLABLE ) );
 
         gpudb::Type _type = gpudb::Type( "Test3", columns );
         std::string type_id = _type.create( db );
@@ -143,7 +143,7 @@ void test_with_pk_and_non_nullable_column( const gpudb::GPUdb &db )
         
         gpudb::GenericRecord record3(_type);
         record3.setAsInt( "c2", 2);
-        record3.setAsInt( "c1", NULL);
+        record3.setAsNullableInt( "c1", boost::optional<int32_t>(NULL));
         records.push_back( record3 );
 
         gpudb::GenericRecord record4(_type);

@@ -37,8 +37,33 @@ namespace gpudb
          *                         target="_top">name resolution rules</a>.
          *                         All provided tables must exist, or an error
          *                         is returned.
-         * @param[in] options_  Optional parameters. The default value is an
-         *                      empty map.
+         * @param[in] options_  Optional parameters.
+         *                      <ul>
+         *                          <li>@ref
+         *                              gpudb::show_statistics_no_error_if_not_exists
+         *                              "show_statistics_no_error_if_not_exists":
+         *                              If @ref gpudb::show_statistics_true
+         *                              "true" and if the table names specified
+         *                              in @a tableNames_ does not exist, no
+         *                              error is returned. If @ref
+         *                              gpudb::show_statistics_false "false"
+         *                              and if the table names specified in @a
+         *                              tableNames_ does not exist, then an
+         *                              error is returned.
+         *                              Supported values:
+         *                              <ul>
+         *                                  <li>@ref
+         *                                      gpudb::show_statistics_true
+         *                                      "show_statistics_true"
+         *                                  <li>@ref
+         *                                      gpudb::show_statistics_false
+         *                                      "show_statistics_false"
+         *                              </ul>
+         *                              The default value is @ref
+         *                              gpudb::show_statistics_false
+         *                              "show_statistics_false".
+         *                      </ul>
+         *                      The default value is an empty map.
          */
         ShowStatisticsRequest(const std::vector<std::string>& tableNames_, const std::map<std::string, std::string>& options_):
             tableNames( tableNames_ ),
@@ -56,7 +81,26 @@ namespace gpudb
         std::vector<std::string> tableNames;
 
         /**
-         * Optional parameters. The default value is an empty map.
+         * Optional parameters.
+         * <ul>
+         *     <li>@ref gpudb::show_statistics_no_error_if_not_exists
+         *         "show_statistics_no_error_if_not_exists": If @ref
+         *         gpudb::show_statistics_true "true" and if the table names
+         *         specified in @ref tableNames does not exist, no error is
+         *         returned. If @ref gpudb::show_statistics_false "false" and
+         *         if the table names specified in @ref tableNames does not
+         *         exist, then an error is returned.
+         *         Supported values:
+         *         <ul>
+         *             <li>@ref gpudb::show_statistics_true
+         *                 "show_statistics_true"
+         *             <li>@ref gpudb::show_statistics_false
+         *                 "show_statistics_false"
+         *         </ul>
+         *         The default value is @ref gpudb::show_statistics_false
+         *         "show_statistics_false".
+         * </ul>
+         * The default value is an empty map.
          */
         std::map<std::string, std::string> options;
     };

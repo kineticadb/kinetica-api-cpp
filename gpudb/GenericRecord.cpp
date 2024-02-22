@@ -7,7 +7,10 @@
 #include <iomanip>
 
 #include <avro/Compiler.hh>
+#include <boost/algorithm/string.hpp>
 #include <boost/lexical_cast.hpp>
+#include <boost/property_tree/ptree.hpp>
+#include <boost/property_tree/json_parser.hpp>
 
 namespace
 {
@@ -27,6 +30,92 @@ namespace
 
 namespace gpudb
 {
+    template<typename T> void VectorFromJsonString(std::vector<T>& result,
+                                                   const std::string& json_string)
+    {
+        // Populate jv property_tree
+        boost::property_tree::ptree jv;
+        std::istringstream stream(json_string);
+        boost::property_tree::json_parser::read_json(stream, jv);
+
+        // Populate result vector from property_tree
+        for (const auto& v : jv)
+            result.push_back(v.second.get_value<T>());
+    }
+
+    // Handle floating point numeric vals (always include at least one decimal)
+    template<typename T> void EncodeToStream(std::ostringstream& stream, const T& val)
+    {
+        std::ostringstream temp_stream;
+        temp_stream << val;
+
+        std::string str = temp_stream.str();
+        stream << str;
+        if (str.find('.') == std::string::npos)
+            stream << ".0";
+    }
+
+    template<> void EncodeToStream<bool>(std::ostringstream& stream, const bool& val)
+    {
+        stream << std::boolalpha << val;
+    }
+
+    template<> void EncodeToStream<int32_t>(std::ostringstream& stream, const int32_t& val)
+    {
+        stream << val;
+    }
+
+    template<> void EncodeToStream<int64_t>(std::ostringstream& stream, const int64_t& val)
+    {
+        stream << val;
+    }
+
+    template<> void EncodeToStream<std::string>(std::ostringstream& stream, const std::string& val)
+    {
+        stream << "\"" << boost::property_tree::json_parser::create_escapes(val) << "\"";
+    }
+
+    template<typename T> std::string JsonStringFromVector(const std::vector<T>& vector)
+    {
+        std::ostringstream stream;
+        stream << "[";
+        bool first = true;
+        for (const T& v : vector)
+        {
+            if (!first)
+                stream << ",";
+            EncodeToStream(stream, v);
+            first = false;
+        }
+        stream << "]";
+
+        return stream.str();
+    }
+
+    template<typename T> bool VectorToString(const std::vector<float>&, T&)
+    {
+        return false;
+    }
+
+    template<> bool VectorToString<std::string>(const std::vector<float>& val, std::string& result)
+    {
+        result = JsonStringFromVector(val);
+        return true;
+    }
+
+    template<typename T> bool StringToVector(const T&, const size_t, GenericRecord*)
+    {
+        return false;
+    }
+
+    template<> bool StringToVector<std::string>(const std::string& str, const size_t index, GenericRecord* gr)
+    {
+        std::vector<float> result;
+        VectorFromJsonString(result, str);
+        gr->setAsVector(index, result);
+        return true;
+    }
+
     GenericRecord::GenericRecord(const Type& type) :
         m_type(type)
     {
@@ -111,21 +200,59 @@ namespace gpudb
         return isNull(m_type.getColumnIndex(name));
     }
 
+    // For "float", also try to getAsVector
+    template<> void GenericRecord::getAsArray<float>(const size_t index, std::vector<float>& result) const
+    {
+        const Type::Column& column = m_type.getColumn(index);
+        Type::Column::ColumnType type = column.getType();
+        if (type == Type::Column::STRING)
+            VectorFromJsonString(result, getAsString(index));
+        else if ((type == Type::Column::BYTES) && column.isVector())
+            getAsVector(index, result);
+        else
+            throw std::bad_cast();
+    }
+
+    template<typename T> void GenericRecord::getAsArray(const size_t index, std::vector<T>& result) const
+    {
+        const Type::Column& column = m_type.getColumn(index);
+        Type::Column::ColumnType type = column.getType();
+        if (type == Type::Column::STRING)
+            VectorFromJsonString(result, getAsString(index));
+        else
+            throw std::bad_cast();
+    }
+
+    template<typename T> void GenericRecord::getAsArray(const std::string& name, std::vector<T>& result) const
+    {
+        getAsArray(m_type.getColumnIndex(name), result);
+    }
+
+    template<typename T> std::vector<T> GenericRecord::getAsArray(const size_t index) const
+    {
+        std::vector<T> result;
+        getAsArray(index, result);
+        return result;
+    }
+
+    template<typename T> std::vector<T> GenericRecord::getAsArray(const std::string& name) const
+    {
+        std::vector<T> result;
+        getAsArray(name, result);
+        return result;
+    }
+
     void GenericRecord::getAsBytes(const size_t index, std::vector<uint8_t>& result) const
     {
         const Type::Column& column = m_type.getColumn(index);
-
-        switch (column.getType())
+        if (column.getType() == Type::Column::BYTES)
         {
-            case Type::Column::BYTES:
-                result = column.isNullable()
-                    ? *value<boost::optional<std::vector<uint8_t> > >(index)
-                    : value<std::vector<uint8_t> >(index);
-                break;
-
-            default:
-                throw std::bad_cast();
+            result = column.isNullable()
+                ? *value<boost::optional<std::vector<uint8_t> > >(index)
+                : value<std::vector<uint8_t> >(index);
         }
+        else
+            throw std::bad_cast();
     }
 
     void GenericRecord::getAsBytes(const std::string& name, std::vector<uint8_t>& result) const
@@ -144,6 +271,45 @@ namespace gpudb
     {
         std::vector<uint8_t> result;
         getAsBytes(name, result);
+        return result;
+    }
+
+    void GenericRecord::getAsVector(const size_t index, std::vector<float>& result) const
+    {
+        const Type::Column& column = m_type.getColumn(index);
+        Type::Column::ColumnType type = column.getType();
+        if (type == Type::Column::BYTES)
+        {
+            std::vector<uint8_t> data;
+            getAsBytes(index, data);
+            result.resize(data.size() / sizeof(float));
+            memcpy(result.data(), data.data(), data.size());
+        }
+        else if ((type == Type::Column::STRING) && column.isArray() &&
+                 (column.getArrayType() == "float"))
+        {
+            getAsArray(index, result);
+        }
+        else
+            throw std::bad_cast();
+    }
+
+    void GenericRecord::getAsVector(const std::string& name, std::vector<float>& result) const
+    {
+        getAsVector(m_type.getColumnIndex(name), result);
+    }
+
+    std::vector<float> GenericRecord::getAsVector(const size_t index) const
+    {
+        std::vector<float> result;
+        getAsVector(index, result);
+        return result;
+    }
+
+    std::vector<float> GenericRecord::getAsVector(const std::string& name) const
+    {
+        std::vector<float> result;
+        getAsVector(name, result);
         return result;
     }
 
@@ -181,6 +347,10 @@ namespace gpudb
                 CASE_CAST_TO_NON_NULLABLE(int32_t, INT, T, CF) \
                 CASE_CAST_TO_NON_NULLABLE(int64_t, LONG, T, CF) \
                 CASE_CAST_TO_NON_NULLABLE(std::string, STRING, T, SCF) \
+                case Type::Column::BYTES: \
+                    if (column.isVector() && VectorToString(getAsVector(index), result)) \
+                        break; \
+                    throw std::bad_cast(); \
                 default: throw std::bad_cast(); \
             } \
         } \
@@ -288,6 +458,18 @@ namespace gpudb
                 CASE_CAST_TO_NULLABLE(int32_t, INT, T, CF) \
                 CASE_CAST_TO_NULLABLE(int64_t, LONG, T, CF) \
                 CASE_CAST_TO_NULLABLE(std::string, STRING, T, SCF) \
+                case Type::Column::BYTES: \
+                    if (column.isVector()) \
+                    { \
+                        if (isNull(index)) \
+                        { \
+                            result = boost::none; \
+                            break; \
+                        } \
+                        if (VectorToString(getAsVector(index), result)) \
+                            break; \
+                    } \
+                    throw std::bad_cast(); \
                 default: throw std::bad_cast(); \
             } \
         } \
@@ -342,6 +524,29 @@ namespace gpudb
         setNull(m_type.getColumnIndex(name));
     }
 
+    // For "float", also try to setAsVector
+    template<> void GenericRecord::setAsArray<float>(const size_t index, const std::vector<float>& newValue)
+    {
+        const Type::Column& column = m_type.getColumn(index);
+        Type::Column::ColumnType type = column.getType();
+        if (type == Type::Column::STRING)
+            setAsString(index, JsonStringFromVector(newValue));
+        else if (type == Type::Column::BYTES)
+            setAsVector(index, newValue);
+        else
+            throw std::bad_cast();
+    }
+
+    template<typename T> void GenericRecord::setAsArray(const size_t index, const std::vector<T>& newValue)
+    {
+        setAsString(index, JsonStringFromVector(newValue));
+    }
+
+    template<typename T> void GenericRecord::setAsArray(const std::string& name, const std::vector<T>& newValue)
+    {
+        setAsArray(m_type.getColumnIndex(name), newValue);
+    }
+
     void GenericRecord::setAsBytes(const size_t index, const std::vector<uint8_t>& newValue)
     {
         const Type::Column& column = m_type.getColumn(index);
@@ -370,6 +575,28 @@ namespace gpudb
         setAsBytes(m_type.getColumnIndex(name), newValue);
     }
 
+    void GenericRecord::setAsVector(const size_t index, const std::vector<float>& newValue)
+    {
+        const Type::Column& column = m_type.getColumn(index);
+        Type::Column::ColumnType type = column.getType();
+        if (type == Type::Column::BYTES)
+        {
+            std::vector<uint8_t> data(newValue.size() * sizeof(float));
+            memcpy(data.data(), newValue.data(), newValue.size() * sizeof(float));
+
+            setAsBytes(index, data);
+        }
+        else if (type == Type::Column::STRING)
+            setAsArray(index, newValue);
+        else
+            throw std::bad_cast();
+    }
+
+    void GenericRecord::setAsVector(const std::string& name, const std::vector<float>& newValue)
+    {
+        setAsVector(m_type.getColumnIndex(name), newValue);
+    }
+
     #define CASE_SET_NON_NULLABLE(CT, CTN, CF) \
         case Type::Column::CTN: \
             if (column.isNullable()) \
@@ -395,6 +622,12 @@ namespace gpudb
                 CASE_SET_NON_NULLABLE(int32_t, INT, CF) \
                 CASE_SET_NON_NULLABLE(int64_t, LONG, CF) \
                 CASE_SET_NON_NULLABLE(std::string, STRING, SCF) \
+                case Type::Column::BYTES: \
+                { \
+                    if (column.isVector() && StringToVector(newValue, index, this)) \
+                        break; \
+                    throw std::bad_cast(); \
+                } \
                 default: throw std::bad_cast(); \
             } \
         } \
@@ -478,6 +711,18 @@ namespace gpudb
                 CASE_SET_NULLABLE(int32_t, INT, CF) \
                 CASE_SET_NULLABLE(int64_t, LONG, CF) \
                 CASE_SET_NULLABLE(std::string, STRING, SCF) \
+                case Type::Column::BYTES: \
+                    if (column.isVector()) \
+                    { \
+                        if (!newValue) \
+                        { \
+                            setNull(index); \
+                            break; \
+                        } \
+                        if (StringToVector(newValue, index, this)) \
+                            break; \
+                    } \
+                    throw std::bad_cast(); \
                 default: throw std::bad_cast(); \
             } \
         } \
@@ -529,15 +774,15 @@ namespace gpudb
                 {
                     const boost::optional<std::vector<uint8_t> >& temp = value<boost::optional<std::vector<uint8_t> > >(index);
 
-                    if (temp)
-                    {
-                        ::toString(*temp, result);
-                    }
-                    else
-                    {
+                    if (!temp)
                         result = "";
-                    }
+                    else if (column.isVector())
+                        result = JsonStringFromVector(getAsVector(index));
+                    else
+                        ::toString(*temp, result);
                 }
+                else if (column.isVector())
+                    result = JsonStringFromVector(getAsVector(index));
                 else
                 {
                     ::toString(value<std::vector<uint8_t> >(index), result);
@@ -816,7 +1061,7 @@ namespace gpudb
                 columnProperties.push_back(ColumnProperty::NULLABLE);
             }
 
-            if (type == ColumnProperty::BOOLEAN
+            if (   type == ColumnProperty::BOOLEAN
                 || type == ColumnProperty::CHAR1
                 || type == ColumnProperty::CHAR2
                 || type == ColumnProperty::CHAR4
@@ -837,10 +1082,13 @@ namespace gpudb
                 || type == ColumnProperty::TIMESTAMP
                 || type == ColumnProperty::ULONG
                 || type == ColumnProperty::UUID
-                || type == ColumnProperty::WKT)
+                || type == ColumnProperty::WKT
+                || boost::starts_with(type, ColumnProperty::ARRAY)
+                || boost::starts_with(type, ColumnProperty::VECTOR))
             {
                 columnProperties.push_back(type);
-            } else if ( type == "geometry" )
+            }
+            else if ( type == "geometry" )
             {   // "wkt" can be sent back as "geometry"; in that case,
                 // include both the WKT property and the string "geometry"
                 columnProperties.push_back(type);
@@ -1038,8 +1286,21 @@ namespace gpudb
 
         return os;
     }  // << overload
-    
 
+#define DECLARE_ARRAY_TYPES(x)  \
+    template void GenericRecord::getAsArray(const size_t index, std::vector<x>& result) const;     \
+    template void GenericRecord::getAsArray(const std::string& name, std::vector<x>& result) const;\
+    template std::vector<x> GenericRecord::getAsArray(const size_t index) const;                   \
+    template std::vector<x> GenericRecord::getAsArray(const std::string& name) const;              \
+    template void GenericRecord::setAsArray(const size_t index, const std::vector<x>& newValue);   \
+    template void GenericRecord::setAsArray(const std::string& name, const std::vector<x>& newValue);
+
+    DECLARE_ARRAY_TYPES(bool)
+    DECLARE_ARRAY_TYPES(int32_t)
+    DECLARE_ARRAY_TYPES(int64_t)
+    DECLARE_ARRAY_TYPES(float)
+    DECLARE_ARRAY_TYPES(double)
+    DECLARE_ARRAY_TYPES(std::string)
 
 } // namespace gpudb
 

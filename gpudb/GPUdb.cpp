@@ -1,5 +1,6 @@
 #include "gpudb/GPUdb.hpp"
 
+#include "gpudb/GenericRecord.hpp"
 #include "gpudb/utils/Utils.h"
 
 #include <boost/lexical_cast.hpp>
@@ -691,7 +692,55 @@ namespace gpudb {
         return m_username;
     }
 
+    long GPUdb::execute(const std::string& sql)
+    {
+        std::string parameters;
+        return execute(sql, parameters);
+    }
 
+    long GPUdb::execute(const std::string& sql, const std::string& parameters)
+    {
+        std::map<std::string, std::string> options;
+        return execute(sql, parameters, options);
+    }
+
+    long GPUdb::execute(const std::string& sql, const std::string& parameters,
+                        const std::map<std::string, std::string>& options)
+    {
+        std::map<std::string, std::string> sql_options = options; // Make a copy to add to
+        if (!parameters.empty())
+            sql_options[execute_sql_query_parameters] = parameters;
+
+        std::vector<std::vector<uint8_t> > data;
+        ExecuteSqlResponse response = executeSql(sql, 0, 1, "", data, sql_options);
+
+        return response.countAffected;
+    }
+
+    template<typename T> long GPUdb::execute(const std::string& sql, const std::vector<T>& parameters)
+    {
+        std::map<std::string, std::string> options;
+        return execute(sql, parameters, options);
+    }
+
+    template<typename T> long GPUdb::execute(const std::string& sql, const std::vector<T>& parameters,
+                                             const std::map<std::string, std::string>& options)
+    {
+        std::string json_params = JsonStringFromVector(parameters);
+        return execute(sql, json_params, options);
+    }
+
+#define DECLARE_ARRAY_TYPES(x)  \
+    template long GPUdb::execute(const std::string& sql, const std::vector<x>& parameters); \
+    template long GPUdb::execute(const std::string& sql, const std::vector<x>& parameters, \
+                                 const std::map<std::string, std::string>& options);
+
+    DECLARE_ARRAY_TYPES(bool)
+    DECLARE_ARRAY_TYPES(int32_t)
+    DECLARE_ARRAY_TYPES(int64_t)
+    DECLARE_ARRAY_TYPES(float)
+    DECLARE_ARRAY_TYPES(double)
+    DECLARE_ARRAY_TYPES(std::string)
 
     /**
      * Sets the high-availability synchronization mode which will override

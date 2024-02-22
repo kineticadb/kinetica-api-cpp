@@ -16,9 +16,10 @@
 
 namespace gpudb
 {
-
     typedef boost::shared_ptr<Type> gpudb_type_ptr_t;
-    
+
+    template<typename T> std::string JsonStringFromVector(const std::vector<T>& vector); 
+
     class GenericRecord
     {
         friend class GPUdb;
@@ -123,6 +124,11 @@ namespace gpudb
             bool isNull(const size_t index) const;
             bool isNull(const std::string& name) const;
 
+            template<typename T> void getAsArray(const size_t index, std::vector<T>& result) const;
+            template<typename T> void getAsArray(const std::string& name, std::vector<T>& result) const;
+            template<typename T> std::vector<T> getAsArray(const size_t index) const;
+            template<typename T> std::vector<T> getAsArray(const std::string& name) const;
+
             void getAsBytes(const size_t index, std::vector<uint8_t>& result) const;
             void getAsBytes(const std::string& name, std::vector<uint8_t>& result) const;
             std::vector<uint8_t> getAsBytes(const size_t index) const;
@@ -152,6 +158,11 @@ namespace gpudb
             void getAsString(const std::string& name, std::string& result) const;
             std::string getAsString(const size_t index) const;
             std::string getAsString(const std::string& name) const;
+
+            void getAsVector(const size_t index, std::vector<float>& result) const;
+            void getAsVector(const std::string& name, std::vector<float>& result) const;
+            std::vector<float> getAsVector(const size_t index) const;
+            std::vector<float> getAsVector(const std::string& name) const;
 
             void getAsNullableBytes(const size_t index, boost::optional<std::vector<uint8_t> >& result) const;
             void getAsNullableBytes(const std::string& name, boost::optional<std::vector<uint8_t> >& result) const;
@@ -186,6 +197,9 @@ namespace gpudb
             void setNull(const size_t index);
             void setNull(const std::string& name);
 
+            template<typename T> void setAsArray(const size_t index, const std::vector<T>& newValue);
+            template<typename T> void setAsArray(const std::string& name, const std::vector<T>& newValue);
+
             void setAsBytes(const size_t index, const std::vector<uint8_t>& newValue);
             void setAsBytes(const std::string& name, const std::vector<uint8_t>& newValue);
 
@@ -203,6 +217,9 @@ namespace gpudb
 
             void setAsString(const size_t index, const std::string& newValue);
             void setAsString(const std::string& name, const std::string& newValue);
+
+            void setAsVector(const size_t index, const std::vector<float>& newValue);
+            void setAsVector(const std::string& name, const std::vector<float>& newValue);
 
             void setAsNullableBytes(const size_t index, const boost::optional<std::vector<uint8_t> >& newValue);
             void setAsNullableBytes(const std::string& name, const boost::optional<std::vector<uint8_t> >& newValue);

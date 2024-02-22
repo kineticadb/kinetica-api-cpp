@@ -87,8 +87,8 @@ inline std::string generate_date()
     const int days_per_month[] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
     int day = ( ( std::rand() % days_per_month[ month - 1 ] ) + 1);
 
-    char buf[ 11 ];
-    sprintf( buf, "%d-%02d-%02d", year, month, day );
+    char buf[ 30 ];
+    sprintf( buf, "%4d-%02d-%02d", year, month, day );
     return std::string( buf );
 }  // end generate_date
 
@@ -114,11 +114,12 @@ inline std::string generate_datetime( int chance_percentage_has_time, int chance
     const int days_per_month[] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
     int day = ( ( std::rand() % days_per_month[ month - 1 ] ) + 1);
 
+    char buf[ 60 ];
+
     // If no time is to be included, return just the date
     if ( PERFORM_ACTION( chance_percentage_has_time ) )
     {
-        char buf[ 11 ];
-        sprintf( buf, "%d-%02d-%02d", year, month, day );
+        sprintf( buf, "%4d-%02d-%02d", year, month, day );
         return std::string( buf );
     }
     // else, need to generate a time component:
@@ -128,8 +129,6 @@ inline std::string generate_datetime( int chance_percentage_has_time, int chance
     int hour   = ( std::rand() % 24 );  // within [0, 23]
     int minute = ( std::rand() % 60 );  // within [0, 59]
     int second = ( std::rand() % 60 );  // within [0, 59]
-
-    char buf[ 30 ];
 
     // Get a random millisecond, if any
     if ( PERFORM_ACTION( chance_percentage_has_ms ) )
@@ -160,17 +159,17 @@ inline std::string generate_datetime( int chance_percentage_has_time, int chance
 
         // 50% of the time we get hours less than 10, pad with zero
         if ( (hour < 10) && ((std::rand() % 2) == 1) )
-            sprintf( buf, "%d-%02d-%02d %02d:%02d:%02d.%d", year, month, day, hour, minute, second, ms );
+            sprintf( buf, "%4d-%02d-%02d %02d:%02d:%02d.%03d", year, month, day, hour, minute, second, ms );
         else  // no padding for small hour
-            sprintf( buf, "%d-%02d-%02d %d:%02d:%02d.%d", year, month, day, hour, minute, second, ms );
+            sprintf( buf, "%4d-%02d-%02d %2d:%02d:%02d.%03d", year, month, day, hour, minute, second, ms );
     }
     else  // generate a time without any milliseconds
     {
         // 50% of the time we get hours less than 10, pad with zero
         if ( (hour < 10) && ((std::rand() % 2) == 1) )
-            sprintf( buf, "%d-%02d-%02d %02d:%02d:%02d", year, month, day, hour, minute, second );
+            sprintf( buf, "%4d-%02d-%02d %02d:%02d:%02d", year, month, day, hour, minute, second );
         else  // no padding for small hour
-            sprintf( buf, "%d-%02d-%02d %d:%02d:%02d", year, month, day, hour, minute, second );
+            sprintf( buf, "%4d-%02d-%02d %2d:%02d:%02d", year, month, day, hour, minute, second );
     }
 
     return std::string( buf );
@@ -190,7 +189,7 @@ inline std::string generate_time( int chance_percentage_has_ms )
     int minute = ( std::rand() % 60 );  // within [0, 59]
     int second = ( std::rand() % 60 );  // within [0, 59]
 
-    char buf[ 15 ];
+    char buf[ 20 ];
 
     // Get a random millisecond, if any
     if ( PERFORM_ACTION( chance_percentage_has_ms ) )
@@ -212,9 +211,9 @@ inline std::string generate_time( int chance_percentage_has_ms )
 
         // 50% of the time we get hours less than 10, pad with zero
         if ( (hour < 10) && ((std::rand() % 2) == 1) )
-            sprintf( buf, "%02d:%02d:%02d.%d", hour, minute, second, ms );
+            sprintf( buf, "%02d:%02d:%02d.%03d", hour, minute, second, ms );
         else  // no padding for small hour
-            sprintf( buf, "%d:%02d:%02d.%d", hour, minute, second, ms );
+            sprintf( buf, "%2d:%02d:%02d.%03d", hour, minute, second, ms );
     }
     else  // generate a time without any milliseconds
     {

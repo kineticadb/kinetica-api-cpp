@@ -3,7 +3,9 @@
 #include "gpudb/GPUdb.hpp"
 
 #include <algorithm> // for sort and set_symmetric_difference
+#include <sstream>   // for istringstream
 
+#include <boost/algorithm/string.hpp> // starts_with and to_lower_copy
 #include <boost/lexical_cast.hpp>
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/json_parser.hpp>
@@ -73,9 +75,71 @@ namespace gpudb
         return m_isNullable;
     }
 
+    bool Type::Column::isArray() const
+    {
+        for (const std::string& prop : m_properties)
+            if (boost::starts_with(prop, ColumnProperty::ARRAY))
+                return true;
+        
+        return false;
+    }
+
+    std::string Type::Column::getArrayType() const
+    {
+        for (const std::string& prop : m_properties)
+            if (boost::starts_with(prop, ColumnProperty::ARRAY))
+            {
+                int open_index = prop.find('(');
+                int close_index = prop.find(')');
+                if ((open_index >=0 ) && (close_index > open_index))
+                {
+                    int comma_index = prop.find(',', open_index);
+                    if ((comma_index > open_index) && (comma_index < close_index))
+                        close_index = comma_index;
+                    std::string sub_type = boost::to_lower_copy(prop.substr(open_index + 1, close_index - open_index - 1));
+                    if (boost::starts_with(sub_type, "bool"))
+                        return gpudb::create_type_boolean;
+                    else if (boost::starts_with(sub_type, "int"))
+                        return "int";
+                    else
+                        return sub_type;
+                }
+            }
+
+        return std::string();
+    }
+
     const std::vector<std::string>& Type::Column::getProperties() const
     {
         return m_properties;
+    }
+
+    bool Type::Column::isVector() const
+    {
+        for (const std::string& prop : m_properties)
+            if (boost::starts_with(prop, ColumnProperty::VECTOR))
+                return true;
+        
+        return false;
+    }
+
+    int Type::Column::getVectorDimensions() const
+    {
+        for (const std::string& prop : m_properties)
+            if (boost::starts_with(prop, ColumnProperty::VECTOR))
+            {
+                int open_index = prop.find('(');
+                int close_index = prop.find(')');
+                if ((open_index >=0 ) && (close_index > open_index))
+                {
+                    int dims;
+                    std::istringstream ss(prop.substr(open_index + 1, close_index - open_index - 1));
+                    if (!(ss >> dims).fail())
+                        return dims;
+                }
+            }
+
+        return -1;
     }
 
     // Return whether this column has the given property
@@ -322,7 +386,6 @@ namespace gpudb
         createFromSchema(typeSchema, properties);
         createSchema();
     }
-
 
     const std::string& Type::getLabel() const
     {
