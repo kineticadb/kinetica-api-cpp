@@ -111,15 +111,14 @@ namespace gpudb
          *                                      this value (default is 0). If
          *                                      both minimum and maximum are
          *                                      provided, minimum must be less
-         *                                      than or equal to max. Value
-         *                                      needs to be within [0, 200].
-         *                                      If the min is outside the
-         *                                      accepted ranges for strings
-         *                                      columns and 'x' and 'y' columns
-         *                                      for point/shape/track, then
-         *                                      those parameters will not be
-         *                                      set; however, an error will not
-         *                                      be thrown in such a case. It is
+         *                                      than or equal to max.  If the
+         *                                      min is outside the accepted
+         *                                      ranges for strings columns and
+         *                                      'x' and 'y' columns for
+         *                                      point/shape/track, then those
+         *                                      parameters will not be set;
+         *                                      however, an error will not be
+         *                                      thrown in such a case. It is
          *                                      the responsibility of the user
          *                                      to use the @ref
          *                                      gpudb::insert_records_random_all
@@ -139,16 +138,13 @@ namespace gpudb
          *                                      these columns in such cases are
          *                                      180.0 and 90.0.  For string
          *                                      columns, the maximum length of
-         *                                      the randomly generated strings
-         *                                      is set to this value (default
-         *                                      is 200). If both minimum and
-         *                                      maximum are provided, *max*
-         *                                      must be greater than or equal
-         *                                      to *min*. Value needs to be
-         *                                      within [0, 200].  If the *max*
-         *                                      is outside the accepted ranges
-         *                                      for strings columns and 'x' and
-         *                                      'y' columns for
+         *                                      the randomly generated strings.
+         *                                      If both minimum and maximum are
+         *                                      provided, *max* must be greater
+         *                                      than or equal to *min*.  If the
+         *                                      *max* is outside the accepted
+         *                                      ranges for strings columns and
+         *                                      'x' and 'y' columns for
          *                                      point/shape/track, then those
          *                                      parameters will not be set;
          *                                      however, an error will not be
@@ -244,15 +240,14 @@ namespace gpudb
          *                                      this value (default is 0). If
          *                                      both minimum and maximum are
          *                                      provided, minimum must be less
-         *                                      than or equal to max. Value
-         *                                      needs to be within [0, 200].
-         *                                      If the min is outside the
-         *                                      accepted ranges for strings
-         *                                      columns and 'x' and 'y' columns
-         *                                      for point/shape/track, then
-         *                                      those parameters will not be
-         *                                      set; however, an error will not
-         *                                      be thrown in such a case. It is
+         *                                      than or equal to max.  If the
+         *                                      min is outside the accepted
+         *                                      ranges for strings columns and
+         *                                      'x' and 'y' columns for
+         *                                      point/shape/track, then those
+         *                                      parameters will not be set;
+         *                                      however, an error will not be
+         *                                      thrown in such a case. It is
          *                                      the responsibility of the user
          *                                      to use the @ref
          *                                      gpudb::insert_records_random_all
@@ -272,16 +267,13 @@ namespace gpudb
          *                                      these columns in such cases are
          *                                      180.0 and 90.0.  For string
          *                                      columns, the maximum length of
-         *                                      the randomly generated strings
-         *                                      is set to this value (default
-         *                                      is 200). If both minimum and
-         *                                      maximum are provided, *max*
-         *                                      must be greater than or equal
-         *                                      to *min*. Value needs to be
-         *                                      within [0, 200].  If the *max*
-         *                                      is outside the accepted ranges
-         *                                      for strings columns and 'x' and
-         *                                      'y' columns for
+         *                                      the randomly generated strings.
+         *                                      If both minimum and maximum are
+         *                                      provided, *max* must be greater
+         *                                      than or equal to *min*.  If the
+         *                                      *max* is outside the accepted
+         *                                      ranges for strings columns and
+         *                                      'x' and 'y' columns for
          *                                      point/shape/track, then those
          *                                      parameters will not be set;
          *                                      however, an error will not be
@@ -445,15 +437,14 @@ namespace gpudb
          *                 columns, the minimum length of the randomly
          *                 generated strings is set to this value (default is
          *                 0). If both minimum and maximum are provided,
-         *                 minimum must be less than or equal to max. Value
-         *                 needs to be within [0, 200].  If the min is outside
-         *                 the accepted ranges for strings columns and 'x' and
-         *                 'y' columns for point/shape/track, then those
-         *                 parameters will not be set; however, an error will
-         *                 not be thrown in such a case. It is the
-         *                 responsibility of the user to use the @ref
-         *                 gpudb::insert_records_random_all "all" parameter
-         *                 judiciously.
+         *                 minimum must be less than or equal to max.  If the
+         *                 min is outside the accepted ranges for strings
+         *                 columns and 'x' and 'y' columns for
+         *                 point/shape/track, then those parameters will not be
+         *                 set; however, an error will not be thrown in such a
+         *                 case. It is the responsibility of the user to use
+         *                 the @ref gpudb::insert_records_random_all "all"
+         *                 parameter judiciously.
          *             <li>@ref gpudb::insert_records_random_max
          *                 "insert_records_random_max": For numerical columns,
          *                 the maximum of the generated values is set to this
@@ -463,17 +454,16 @@ namespace gpudb
          *                 respectively. The default minimum possible values
          *                 for these columns in such cases are 180.0 and 90.0.
          *                 For string columns, the maximum length of the
-         *                 randomly generated strings is set to this value
-         *                 (default is 200). If both minimum and maximum are
-         *                 provided, *max* must be greater than or equal to
-         *                 *min*. Value needs to be within [0, 200].  If the
-         *                 *max* is outside the accepted ranges for strings
-         *                 columns and 'x' and 'y' columns for
-         *                 point/shape/track, then those parameters will not be
-         *                 set; however, an error will not be thrown in such a
-         *                 case. It is the responsibility of the user to use
-         *                 the @ref gpudb::insert_records_random_all "all"
-         *                 parameter judiciously.
+         *                 randomly generated strings. If both minimum and
+         *                 maximum are provided, *max* must be greater than or
+         *                 equal to *min*.  If the *max* is outside the
+         *                 accepted ranges for strings columns and 'x' and 'y'
+         *                 columns for point/shape/track, then those parameters
+         *                 will not be set; however, an error will not be
+         *                 thrown in such a case. It is the responsibility of
+         *                 the user to use the @ref
+         *                 gpudb::insert_records_random_all "all" parameter
+         *                 judiciously.
          *             <li>@ref gpudb::insert_records_random_interval
          *                 "insert_records_random_interval": If specified,
          *                 generate values for all columns evenly spaced with
@@ -525,15 +515,14 @@ namespace gpudb
          *                 columns, the minimum length of the randomly
          *                 generated strings is set to this value (default is
          *                 0). If both minimum and maximum are provided,
-         *                 minimum must be less than or equal to max. Value
-         *                 needs to be within [0, 200].  If the min is outside
-         *                 the accepted ranges for strings columns and 'x' and
-         *                 'y' columns for point/shape/track, then those
-         *                 parameters will not be set; however, an error will
-         *                 not be thrown in such a case. It is the
-         *                 responsibility of the user to use the @ref
-         *                 gpudb::insert_records_random_all "all" parameter
-         *                 judiciously.
+         *                 minimum must be less than or equal to max.  If the
+         *                 min is outside the accepted ranges for strings
+         *                 columns and 'x' and 'y' columns for
+         *                 point/shape/track, then those parameters will not be
+         *                 set; however, an error will not be thrown in such a
+         *                 case. It is the responsibility of the user to use
+         *                 the @ref gpudb::insert_records_random_all "all"
+         *                 parameter judiciously.
          *             <li>@ref gpudb::insert_records_random_max
          *                 "insert_records_random_max": For numerical columns,
          *                 the maximum of the generated values is set to this
@@ -543,17 +532,16 @@ namespace gpudb
          *                 respectively. The default minimum possible values
          *                 for these columns in such cases are 180.0 and 90.0.
          *                 For string columns, the maximum length of the
-         *                 randomly generated strings is set to this value
-         *                 (default is 200). If both minimum and maximum are
-         *                 provided, *max* must be greater than or equal to
-         *                 *min*. Value needs to be within [0, 200].  If the
-         *                 *max* is outside the accepted ranges for strings
-         *                 columns and 'x' and 'y' columns for
-         *                 point/shape/track, then those parameters will not be
-         *                 set; however, an error will not be thrown in such a
-         *                 case. It is the responsibility of the user to use
-         *                 the @ref gpudb::insert_records_random_all "all"
-         *                 parameter judiciously.
+         *                 randomly generated strings. If both minimum and
+         *                 maximum are provided, *max* must be greater than or
+         *                 equal to *min*.  If the *max* is outside the
+         *                 accepted ranges for strings columns and 'x' and 'y'
+         *                 columns for point/shape/track, then those parameters
+         *                 will not be set; however, an error will not be
+         *                 thrown in such a case. It is the responsibility of
+         *                 the user to use the @ref
+         *                 gpudb::insert_records_random_all "all" parameter
+         *                 judiciously.
          *             <li>@ref gpudb::insert_records_random_interval
          *                 "insert_records_random_interval": If specified,
          *                 generate values for all columns evenly spaced with

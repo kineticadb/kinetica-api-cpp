@@ -13,7 +13,7 @@ namespace gpudb
      * GPUdb::exportRecordsToTable(const ExportRecordsToTableRequest&) const
      * "GPUdb::exportRecordsToTable".
      *
-     * Exports records from source table to  specified target table in an
+     * Exports records from source table to the specified target table in an
      * external database
      */
     struct ExportRecordsToTableRequest
@@ -40,20 +40,76 @@ namespace gpudb
          *                        href="../../../concepts/tables/#table-name-resolution"
          *                        target="_top">name resolution rules</a>.
          * @param[in] remoteQuery_  Parameterized insert query to export gpudb
-         *                          table data into remote database
+         *                          table data into remote database. The
+         *                          default value is ''.
          * @param[in] options_  Optional parameters.
          *                      <ul>
          *                          <li>@ref
          *                              gpudb::export_records_to_table_batch_size
          *                              "export_records_to_table_batch_size":
          *                              Batch size, which determines how many
-         *                              rows to export per round trip.
+         *                              rows to export per round trip. The
+         *                              default value is '200000'.
          *                          <li>@ref
          *                              gpudb::export_records_to_table_datasink_name
          *                              "export_records_to_table_datasink_name":
          *                              Name of an existing external data sink
          *                              to which table name specified in @a
          *                              tableName_ will be exported
+         *                          <li>@ref
+         *                              gpudb::export_records_to_table_jdbc_session_init_statement
+         *                              "export_records_to_table_jdbc_session_init_statement":
+         *                              Executes the statement per each jdbc
+         *                              session before doing actual load. The
+         *                              default value is ''.
+         *                          <li>@ref
+         *                              gpudb::export_records_to_table_jdbc_connection_init_statement
+         *                              "export_records_to_table_jdbc_connection_init_statement":
+         *                              Executes the statement once before
+         *                              doing actual load. The default value is
+         *                              ''.
+         *                          <li>@ref
+         *                              gpudb::export_records_to_table_remote_table
+         *                              "export_records_to_table_remote_table":
+         *                              Name of the target table to which
+         *                              source table is exported. When this
+         *                              option is specified remote_query cannot
+         *                              be specified. The default value is ''.
+         *                          <li>@ref
+         *                              gpudb::export_records_to_table_use_st_geomfrom_casts
+         *                              "export_records_to_table_use_st_geomfrom_casts":
+         *                              Wraps parametrized variables with
+         *                              st_geomfromtext or st_geomfromwkb based
+         *                              on source column type.
+         *                              Supported values:
+         *                              <ul>
+         *                                  <li>@ref
+         *                                      gpudb::export_records_to_table_true
+         *                                      "export_records_to_table_true"
+         *                                  <li>@ref
+         *                                      gpudb::export_records_to_table_false
+         *                                      "export_records_to_table_false"
+         *                              </ul>
+         *                              The default value is @ref
+         *                              gpudb::export_records_to_table_false
+         *                              "export_records_to_table_false".
+         *                          <li>@ref
+         *                              gpudb::export_records_to_table_use_indexed_parameters
+         *                              "export_records_to_table_use_indexed_parameters":
+         *                              Uses $n style syntax when generating
+         *                              insert query for remote_table option.
+         *                              Supported values:
+         *                              <ul>
+         *                                  <li>@ref
+         *                                      gpudb::export_records_to_table_true
+         *                                      "export_records_to_table_true"
+         *                                  <li>@ref
+         *                                      gpudb::export_records_to_table_false
+         *                                      "export_records_to_table_false"
+         *                              </ul>
+         *                              The default value is @ref
+         *                              gpudb::export_records_to_table_true
+         *                              "export_records_to_table_true".
          *                      </ul>
          *                      The default value is an empty map.
          */
@@ -74,7 +130,7 @@ namespace gpudb
 
         /**
          * Parameterized insert query to export gpudb table data into remote
-         * database
+         * database. The default value is ''.
          */
         std::string remoteQuery;
 
@@ -83,11 +139,55 @@ namespace gpudb
          * <ul>
          *     <li>@ref gpudb::export_records_to_table_batch_size
          *         "export_records_to_table_batch_size": Batch size, which
-         *         determines how many rows to export per round trip.
+         *         determines how many rows to export per round trip. The
+         *         default value is '200000'.
          *     <li>@ref gpudb::export_records_to_table_datasink_name
          *         "export_records_to_table_datasink_name": Name of an existing
          *         external data sink to which table name specified in @ref
          *         tableName will be exported
+         *     <li>@ref
+         *         gpudb::export_records_to_table_jdbc_session_init_statement
+         *         "export_records_to_table_jdbc_session_init_statement":
+         *         Executes the statement per each jdbc session before doing
+         *         actual load. The default value is ''.
+         *     <li>@ref
+         *         gpudb::export_records_to_table_jdbc_connection_init_statement
+         *         "export_records_to_table_jdbc_connection_init_statement":
+         *         Executes the statement once before doing actual load. The
+         *         default value is ''.
+         *     <li>@ref gpudb::export_records_to_table_remote_table
+         *         "export_records_to_table_remote_table": Name of the target
+         *         table to which source table is exported. When this option is
+         *         specified remote_query cannot be specified. The default
+         *         value is ''.
+         *     <li>@ref gpudb::export_records_to_table_use_st_geomfrom_casts
+         *         "export_records_to_table_use_st_geomfrom_casts": Wraps
+         *         parametrized variables with st_geomfromtext or
+         *         st_geomfromwkb based on source column type.
+         *         Supported values:
+         *         <ul>
+         *             <li>@ref gpudb::export_records_to_table_true
+         *                 "export_records_to_table_true"
+         *             <li>@ref gpudb::export_records_to_table_false
+         *                 "export_records_to_table_false"
+         *         </ul>
+         *         The default value is @ref
+         *         gpudb::export_records_to_table_false
+         *         "export_records_to_table_false".
+         *     <li>@ref gpudb::export_records_to_table_use_indexed_parameters
+         *         "export_records_to_table_use_indexed_parameters": Uses $n
+         *         style syntax when generating insert query for remote_table
+         *         option.
+         *         Supported values:
+         *         <ul>
+         *             <li>@ref gpudb::export_records_to_table_true
+         *                 "export_records_to_table_true"
+         *             <li>@ref gpudb::export_records_to_table_false
+         *                 "export_records_to_table_false"
+         *         </ul>
+         *         The default value is @ref
+         *         gpudb::export_records_to_table_true
+         *         "export_records_to_table_true".
          * </ul>
          * The default value is an empty map.
          */

@@ -290,6 +290,11 @@ namespace gpudb
          *                              "create_datasource_schema_registry_credential":
          *                              Confluent Schema registry Credential
          *                              object name.
+         *                          <li>@ref
+         *                              gpudb::create_datasource_schema_registry_port
+         *                              "create_datasource_schema_registry_port":
+         *                              Confluent Schema registry port
+         *                              (optional).
          *                      </ul>
          *                      The default value is an empty map.
          */
@@ -495,6 +500,9 @@ namespace gpudb
          *     <li>@ref gpudb::create_datasource_schema_registry_credential
          *         "create_datasource_schema_registry_credential": Confluent
          *         Schema registry Credential object name.
+         *     <li>@ref gpudb::create_datasource_schema_registry_port
+         *         "create_datasource_schema_registry_port": Confluent Schema
+         *         registry port (optional).
          * </ul>
          * The default value is an empty map.
          */

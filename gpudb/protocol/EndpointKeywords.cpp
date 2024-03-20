@@ -420,6 +420,7 @@ namespace gpudb
     const std::string alter_table_add_comment                   ( "add_comment"                    );
     const std::string alter_table_add_partition                 ( "add_partition"                  );
     const std::string alter_table_allow_homogeneous_tables      ( "allow_homogeneous_tables"       );
+    const std::string alter_table_cagra                         ( "cagra"                          );
     const std::string alter_table_cancel_datasource_subscription( "cancel_datasource_subscription" );
     const std::string alter_table_change_column                 ( "change_column"                  );
     const std::string alter_table_change_owner                  ( "change_owner"                   );
@@ -439,6 +440,7 @@ namespace gpudb
     const std::string alter_table_delete_partition              ( "delete_partition"               );
     const std::string alter_table_false                         ( "false"                          );
     const std::string alter_table_geospatial                    ( "geospatial"                     );
+    const std::string alter_table_index_options                 ( "index_options"                  );
     const std::string alter_table_index_type                    ( "index_type"                     );
     const std::string alter_table_lz4                           ( "lz4"                            );
     const std::string alter_table_lz4hc                         ( "lz4hc"                          );
@@ -448,6 +450,7 @@ namespace gpudb
     const std::string alter_table_pause_datasource_subscription ( "pause_datasource_subscription"  );
     const std::string alter_table_protected                     ( "protected"                      );
     const std::string alter_table_refresh                       ( "refresh"                        );
+    const std::string alter_table_refresh_index                 ( "refresh_index"                  );
     const std::string alter_table_remove_partition              ( "remove_partition"               );
     const std::string alter_table_remove_shard_keys             ( "remove_shard_keys"              );
     const std::string alter_table_remove_text_search_attributes ( "remove_text_search_attributes"  );
@@ -617,6 +620,7 @@ namespace gpudb
     const std::string create_datasource_s3_use_virtual_addressing       ( "s3_use_virtual_addressing"        );
     const std::string create_datasource_schema_registry_credential      ( "schema_registry_credential"       );
     const std::string create_datasource_schema_registry_location        ( "schema_registry_location"         );
+    const std::string create_datasource_schema_registry_port            ( "schema_registry_port"             );
     const std::string create_datasource_skip_validation                 ( "skip_validation"                  );
     const std::string create_datasource_true                            ( "true"                             );
     const std::string create_datasource_use_https                       ( "use_https"                        );
@@ -1149,8 +1153,15 @@ namespace gpudb
     const std::string export_records_to_files_uncompressed             ( "uncompressed"              );
 
     // Keywords for /export/records/totable request
-    const std::string export_records_to_table_batch_size   ( "batch_size"    );
-    const std::string export_records_to_table_datasink_name( "datasink_name" );
+    const std::string export_records_to_table_batch_size                    ( "batch_size"                     );
+    const std::string export_records_to_table_datasink_name                 ( "datasink_name"                  );
+    const std::string export_records_to_table_false                         ( "false"                          );
+    const std::string export_records_to_table_jdbc_connection_init_statement( "jdbc_connection_init_statement" );
+    const std::string export_records_to_table_jdbc_session_init_statement   ( "jdbc_session_init_statement"    );
+    const std::string export_records_to_table_remote_table                  ( "remote_table"                   );
+    const std::string export_records_to_table_true                          ( "true"                           );
+    const std::string export_records_to_table_use_indexed_parameters        ( "use_indexed_parameters"         );
+    const std::string export_records_to_table_use_st_geomfrom_casts         ( "use_st_geomfrom_casts"          );
 
     // Keywords for /filter request
     const std::string filter_collection_name  ( "collection_name"   );
@@ -1737,6 +1748,7 @@ namespace gpudb
     const std::string insert_records_from_query_strategy_definition           ( "strategy_definition"            );
     const std::string insert_records_from_query_subscribe                     ( "subscribe"                      );
     const std::string insert_records_from_query_true                          ( "true"                           );
+    const std::string insert_records_from_query_truncate_strings              ( "truncate_strings"               );
     const std::string insert_records_from_query_truncate_table                ( "truncate_table"                 );
     const std::string insert_records_from_query_ttl                           ( "ttl"                            );
     const std::string insert_records_from_query_type_id                       ( "type_id"                        );

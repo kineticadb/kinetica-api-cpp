@@ -66,6 +66,7 @@ public:
 
 #ifndef GPUDB_NO_HTTPS
         boost::asio::ssl::context* getSslContext() const;
+        bool getBypassSslCertCheck() const;
 #endif
 
         std::string getUsername() const;
@@ -84,9 +85,12 @@ public:
 
         size_t getTimeout() const;
         uint16_t getHostManagerPort() const;
+        bool getDisableFailover() const;
+        bool getDisableAutoDiscovery() const;
 
 #ifndef GPUDB_NO_HTTPS
         Options& setSslContext(boost::asio::ssl::context* value);
+        Options& setBypassSslCertCheck(const bool value);
 #endif
 
         Options& setUsername(const std::string& value);
@@ -100,17 +104,22 @@ public:
         Options& addHttpHeader(const std::string& header, const std::string& value);
         Options& setTimeout(const size_t value);
         Options& setHostManagerPort(const uint16_t value);
+        Options& setDisableFailover(const bool value);
+        Options& setDisableAutoDiscovery(const bool value);
 
     private:
 
 #ifndef GPUDB_NO_HTTPS
         boost::asio::ssl::context* m_sslContext;
+        bool m_bypassSslCertCheck;
 #endif
 
         std::string m_username;
         std::string m_password;
         std::string m_primaryUrl;
         bool m_useSnappy;
+        bool m_disableFailover;
+        bool m_disableAutoDiscovery;
         size_t m_threadCount;
         avro::ExecutorPtr m_executor;
         std::map<std::string, std::string> m_httpHeaders;
@@ -239,6 +248,7 @@ public:
 
 #ifndef GPUDB_NO_HTTPS
     boost::asio::ssl::context* getSslContext() const;
+    bool getBypassSslCertCheck() const;
 #endif
 
     const std::string& getUsername() const;
@@ -552,6 +562,9 @@ private:
     std::string m_password;
     std::string m_authorization;
     bool m_useSnappy;
+    bool m_disableFailover;
+    bool m_bypassSslCertCheck;
+    bool m_disableAutoDiscovery;
     size_t m_threadCount;
     avro::ExecutorPtr m_executor;
     std::map<std::string, std::string> m_httpHeaders;
@@ -572,7 +585,7 @@ private:
     void handlePrimaryURL();
 
     // Update the URLs with the available HA ring information
-    void getHAringHeadNodeAdresses();
+    void getHAringHeadNodeAddresses();
 
     /// Host manager related methods
     void updateHostManagerUrls();

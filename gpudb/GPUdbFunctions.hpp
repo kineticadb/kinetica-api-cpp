@@ -7604,7 +7604,8 @@ AlterEnvironmentResponse& alterEnvironment( const AlterEnvironmentRequest& reque
  *                    <ul>
  *                        <li>@ref gpudb::alter_environment_install_package
  *                            "alter_environment_install_package": Install a
- *                            python package
+ *                            python package from PyPI, an external data source
+ *                            or KiFS
  *                        <li>@ref
  *                            gpudb::alter_environment_install_requirements
  *                            "alter_environment_install_requirements": Install
@@ -7668,7 +7669,8 @@ AlterEnvironmentResponse alterEnvironment( const std::string& environmentName,
  *                    <ul>
  *                        <li>@ref gpudb::alter_environment_install_package
  *                            "alter_environment_install_package": Install a
- *                            python package
+ *                            python package from PyPI, an external data source
+ *                            or KiFS
  *                        <li>@ref
  *                            gpudb::alter_environment_install_requirements
  *                            "alter_environment_install_requirements": Install
@@ -8369,8 +8371,10 @@ AlterSystemPropertiesResponse& alterSystemProperties( const AlterSystemPropertie
  *                                        Flushes any changes to any tables to
  *                                        the persistent store.  These changes
  *                                        include updates to the vector store,
- *                                        object store, and text search store,
- *                                        Value string is ignored
+ *                                        object store, and text search store.
+ *                                        Value string can be 'true', 'false'
+ *                                        or 'text_search' to flush the text
+ *                                        search store only.
  *                                    <li>@ref
  *                                        gpudb::alter_system_properties_clear_cache
  *                                        "alter_system_properties_clear_cache":
@@ -8385,7 +8389,7 @@ AlterSystemPropertiesResponse& alterSystemProperties( const AlterSystemPropertie
  *                                        "alter_system_properties_communicator_test":
  *                                        Invoke the communicator test and
  *                                        report timing results. Value string
- *                                        is is a semicolon separated list of
+ *                                        is a semicolon separated list of
  *                                        [key]=[value] expressions.
  *                                        Expressions are:
  *                                        num_transactions=[num] where num is
@@ -8742,8 +8746,10 @@ AlterSystemPropertiesResponse alterSystemProperties( const std::map<std::string,
  *                                        Flushes any changes to any tables to
  *                                        the persistent store.  These changes
  *                                        include updates to the vector store,
- *                                        object store, and text search store,
- *                                        Value string is ignored
+ *                                        object store, and text search store.
+ *                                        Value string can be 'true', 'false'
+ *                                        or 'text_search' to flush the text
+ *                                        search store only.
  *                                    <li>@ref
  *                                        gpudb::alter_system_properties_clear_cache
  *                                        "alter_system_properties_clear_cache":
@@ -8758,7 +8764,7 @@ AlterSystemPropertiesResponse alterSystemProperties( const std::map<std::string,
  *                                        "alter_system_properties_communicator_test":
  *                                        Invoke the communicator test and
  *                                        report timing results. Value string
- *                                        is is a semicolon separated list of
+ *                                        is a semicolon separated list of
  *                                        [key]=[value] expressions.
  *                                        Expressions are:
  *                                        num_transactions=[num] where num is
@@ -9027,10 +9033,15 @@ AlterSystemPropertiesResponse& alterSystemProperties( const std::map<std::string
  *
  * External tables cannot be modified except for their refresh method.
  *
- * Create or delete an <a href="../../../concepts/indexes/#column-index"
- * target="_top">index</a> on a particular column. This can speed up certain
- * operations when using expressions containing equality or relational
- * operators on indexed columns. This only applies to tables.
+ * Create or delete a <a href="../../../concepts/indexes/#column-index"
+ * target="_top">column</a>, <a
+ * href="../../../concepts/indexes/#chunk-skip-index" target="_top">chunk
+ * skip</a>, <a href="../../../concepts/indexes/#geospatial-index"
+ * target="_top">geospatial</a>, or <a
+ * href="../../../concepts/indexes/#cagra-index" target="_top">CAGRA</a> index.
+ * This can speed up certain operations when using expressions containing
+ * equality or relational operators on indexed columns. This only applies to
+ * tables.
  *
  * Create or delete a <a href="../../../concepts/tables/#foreign-key"
  * target="_top">foreign key</a> on a particular column.
@@ -9076,10 +9087,15 @@ AlterTableResponse alterTable( const AlterTableRequest& request_ ) const;
  *
  * External tables cannot be modified except for their refresh method.
  *
- * Create or delete an <a href="../../../concepts/indexes/#column-index"
- * target="_top">index</a> on a particular column. This can speed up certain
- * operations when using expressions containing equality or relational
- * operators on indexed columns. This only applies to tables.
+ * Create or delete a <a href="../../../concepts/indexes/#column-index"
+ * target="_top">column</a>, <a
+ * href="../../../concepts/indexes/#chunk-skip-index" target="_top">chunk
+ * skip</a>, <a href="../../../concepts/indexes/#geospatial-index"
+ * target="_top">geospatial</a>, or <a
+ * href="../../../concepts/indexes/#cagra-index" target="_top">CAGRA</a> index.
+ * This can speed up certain operations when using expressions containing
+ * equality or relational operators on indexed columns. This only applies to
+ * tables.
  *
  * Create or delete a <a href="../../../concepts/tables/#foreign-key"
  * target="_top">foreign key</a> on a particular column.
@@ -9128,10 +9144,15 @@ AlterTableResponse& alterTable( const AlterTableRequest& request_,
  *
  * External tables cannot be modified except for their refresh method.
  *
- * Create or delete an <a href="../../../concepts/indexes/#column-index"
- * target="_top">index</a> on a particular column. This can speed up certain
- * operations when using expressions containing equality or relational
- * operators on indexed columns. This only applies to tables.
+ * Create or delete a <a href="../../../concepts/indexes/#column-index"
+ * target="_top">column</a>, <a
+ * href="../../../concepts/indexes/#chunk-skip-index" target="_top">chunk
+ * skip</a>, <a href="../../../concepts/indexes/#geospatial-index"
+ * target="_top">geospatial</a>, or <a
+ * href="../../../concepts/indexes/#cagra-index" target="_top">CAGRA</a> index.
+ * This can speed up certain operations when using expressions containing
+ * equality or relational operators on indexed columns. This only applies to
+ * tables.
  *
  * Create or delete a <a href="../../../concepts/tables/#foreign-key"
  * target="_top">foreign key</a> on a particular column.
@@ -9160,7 +9181,7 @@ AlterTableResponse& alterTable( const AlterTableRequest& request_,
  * @param[in] tableName  Table on which the operation will be performed, in
  *                       [schema_name.]table_name format, using standard <a
  *                       href="../../../concepts/tables/#table-name-resolution"
- *                       target="_top">name resolution rules</a>.  Must be an
+ *                       target="_top">name resolution rules</a>. Must be an
  *                       existing table or view.
  * @param[in] action  Modification operation to be applied.
  *                    Supported values:
@@ -9169,23 +9190,37 @@ AlterTableResponse& alterTable( const AlterTableRequest& request_,
  *                            "alter_table_allow_homogeneous_tables": No longer
  *                            supported; action will be ignored.
  *                        <li>@ref gpudb::alter_table_create_index
- *                            "alter_table_create_index": Creates either a <a
+ *                            "alter_table_create_index": Creates a <a
  *                            href="../../../concepts/indexes/#column-index"
- *                            target="_top">column (attribute) index</a> or <a
+ *                            target="_top">column (attribute) index</a>, <a
  *                            href="../../../concepts/indexes/#chunk-skip-index"
- *                            target="_top">chunk skip index</a>, depending on
- *                            the specified @ref gpudb::alter_table_index_type
- *                            "index_type", on the column name specified in @a
+ *                            target="_top">chunk skip index</a>, <a
+ *                            href="../../../concepts/indexes/#geospatial-index"
+ *                            target="_top">geospatial index</a>, or <a
+ *                            href="../../../concepts/indexes/#cagra-index"
+ *                            target="_top">CAGRA index</a> (depending on the
+ *                            specified @ref gpudb::alter_table_index_type
+ *                            "index_type"), on the column name specified in @a
  *                            value. If this column already has the specified
  *                            index, an error will be returned.
- *                        <li>@ref gpudb::alter_table_delete_index
- *                            "alter_table_delete_index": Deletes either a <a
- *                            href="../../../concepts/indexes/#column-index"
- *                            target="_top">column (attribute) index</a> or <a
- *                            href="../../../concepts/indexes/#chunk-skip-index"
- *                            target="_top">chunk skip index</a>, depending on
- *                            the specified @ref gpudb::alter_table_index_type
+ *                        <li>@ref gpudb::alter_table_refresh_index
+ *                            "alter_table_refresh_index": Refreshes an index
+ *                            identified by @ref gpudb::alter_table_index_type
  *                            "index_type", on the column name specified in @a
+ *                            value. Currently applicable only to CAGRA
+ *                            indices.
+ *                        <li>@ref gpudb::alter_table_delete_index
+ *                            "alter_table_delete_index": Deletes a <a
+ *                            href="../../../concepts/indexes/#column-index"
+ *                            target="_top">column (attribute) index</a>, <a
+ *                            href="../../../concepts/indexes/#chunk-skip-index"
+ *                            target="_top">chunk skip index</a>, <a
+ *                            href="../../../concepts/indexes/#geospatial-index"
+ *                            target="_top">geospatial index</a>, or <a
+ *                            href="../../../concepts/indexes/#cagra-index"
+ *                            target="_top">CAGRA index</a> (depending on the
+ *                            specified @ref gpudb::alter_table_index_type
+ *                            "index_type"), on the column name specified in @a
  *                            value. If this column does not have the specified
  *                            index, an error will be returned.
  *                        <li>@ref gpudb::alter_table_move_to_collection
@@ -9200,7 +9235,7 @@ AlterTableResponse& alterTable( const AlterTableRequest& request_,
  *                            non-existent, it will be automatically created.
  *                        <li>@ref gpudb::alter_table_move_to_schema
  *                            "alter_table_move_to_schema": Moves a table or
- *                            view into a schema named @a value.  If the schema
+ *                            view into a schema named @a value. If the schema
  *                            provided is nonexistent, an error will be thrown.
  *                            If @a value is empty, then the table or view will
  *                            be placed in the user's default schema.
@@ -9222,13 +9257,13 @@ AlterTableResponse& alterTable( const AlterTableRequest& request_,
  *                        <li>@ref gpudb::alter_table_add_comment
  *                            "alter_table_add_comment": Adds the comment
  *                            specified in @a value to the table specified in
- *                            @a tableName.  Use @ref
+ *                            @a tableName. Use @ref
  *                            gpudb::alter_table_column_name "column_name" to
  *                            set the comment for a column.
  *                        <li>@ref gpudb::alter_table_add_column
  *                            "alter_table_add_column": Adds the column
  *                            specified in @a value to the table specified in
- *                            @a tableName.  Use @ref
+ *                            @a tableName. Use @ref
  *                            gpudb::alter_table_column_type "column_type" and
  *                            @ref gpudb::alter_table_column_properties
  *                            "column_properties" in @a options to set the
@@ -9380,24 +9415,24 @@ AlterTableResponse& alterTable( const AlterTableRequest& request_,
  *                            "alter_table_cancel_datasource_subscription":
  *                            Permanently unsubscribe a data source that is
  *                            loading continuously as a stream. The data source
- *                            can be kafka / S3 / Azure.
+ *                            can be Kafka / S3 / Azure.
  *                        <li>@ref
  *                            gpudb::alter_table_pause_datasource_subscription
  *                            "alter_table_pause_datasource_subscription":
  *                            Temporarily unsubscribe a data source that is
  *                            loading continuously as a stream. The data source
- *                            can be kafka / S3 / Azure.
+ *                            can be Kafka / S3 / Azure.
  *                        <li>@ref
  *                            gpudb::alter_table_resume_datasource_subscription
  *                            "alter_table_resume_datasource_subscription":
  *                            Resubscribe to a paused data source subscription.
- *                            The data source can be kafka / S3 / Azure.
+ *                            The data source can be Kafka / S3 / Azure.
  *                        <li>@ref gpudb::alter_table_change_owner
  *                            "alter_table_change_owner": Change the owner
  *                            resource group of the table.
  *                    </ul>
- * @param[in] value  The value of the modification, depending on @a action.
- *                   For example, if @a action is @ref
+ * @param[in] value  The value of the modification, depending on @a action. For
+ *                   example, if @a action is @ref
  *                   gpudb::alter_table_add_column "add_column", this would be
  *                   the column name; while the column's definition would be
  *                   covered by the @ref gpudb::alter_table_column_type
@@ -9406,7 +9441,7 @@ AlterTableResponse& alterTable( const AlterTableRequest& request_,
  *                   gpudb::alter_table_column_default_value
  *                   "column_default_value", and @ref
  *                   gpudb::alter_table_add_column_expression
- *                   "add_column_expression" in @a options.  If @a action is
+ *                   "add_column_expression" in @a options. If @a action is
  *                   @ref gpudb::alter_table_ttl "ttl", it would be the number
  *                   of minutes for the new TTL. If @a action is @ref
  *                   gpudb::alter_table_refresh "refresh", this field would be
@@ -9512,9 +9547,12 @@ AlterTableResponse& alterTable( const AlterTableRequest& request_,
  *                         <li>@ref gpudb::alter_table_index_type
  *                             "alter_table_index_type": Type of index to
  *                             create, when @a action is @ref
- *                             gpudb::alter_table_create_index "create_index",
- *                             or to delete, when @a action is @ref
- *                             gpudb::alter_table_delete_index "delete_index".
+ *                             gpudb::alter_table_create_index "create_index";
+ *                             to refresh, when @a action is @ref
+ *                             gpudb::alter_table_refresh_index
+ *                             "refresh_index"; or to delete, when @a action is
+ *                             @ref gpudb::alter_table_delete_index
+ *                             "delete_index".
  *                             Supported values:
  *                             <ul>
  *                                 <li>@ref gpudb::alter_table_column
@@ -9530,10 +9568,24 @@ AlterTableResponse& alterTable( const AlterTableRequest& request_,
  *                                     target="_top">chunk skip index</a>.
  *                                 <li>@ref gpudb::alter_table_geospatial
  *                                     "alter_table_geospatial": Create or
- *                                     delete a geospatial index
+ *                                     delete a <a
+ *                                     href="../../../concepts/indexes/#geospatial-index"
+ *                                     target="_top">geospatial index</a>
+ *                                 <li>@ref gpudb::alter_table_cagra
+ *                                     "alter_table_cagra": Create or delete a
+ *                                     <a
+ *                                     href="../../../concepts/indexes/#cagra-index"
+ *                                     target="_top">CAGRA index</a> on a <a
+ *                                     href="../../../vector_search/#vector-type"
+ *                                     target="_top">vector column</a>
  *                             </ul>
  *                             The default value is @ref
  *                             gpudb::alter_table_column "alter_table_column".
+ *                         <li>@ref gpudb::alter_table_index_options
+ *                             "alter_table_index_options": Options to use when
+ *                             creating an index, in the format "key: value [,
+ *                             key: value [, ...]]". Valid options vary by
+ *                             index type.
  *                     </ul>
  *                     The default value is an empty map.
  *
@@ -9557,10 +9609,15 @@ AlterTableResponse alterTable( const std::string& tableName,
  *
  * External tables cannot be modified except for their refresh method.
  *
- * Create or delete an <a href="../../../concepts/indexes/#column-index"
- * target="_top">index</a> on a particular column. This can speed up certain
- * operations when using expressions containing equality or relational
- * operators on indexed columns. This only applies to tables.
+ * Create or delete a <a href="../../../concepts/indexes/#column-index"
+ * target="_top">column</a>, <a
+ * href="../../../concepts/indexes/#chunk-skip-index" target="_top">chunk
+ * skip</a>, <a href="../../../concepts/indexes/#geospatial-index"
+ * target="_top">geospatial</a>, or <a
+ * href="../../../concepts/indexes/#cagra-index" target="_top">CAGRA</a> index.
+ * This can speed up certain operations when using expressions containing
+ * equality or relational operators on indexed columns. This only applies to
+ * tables.
  *
  * Create or delete a <a href="../../../concepts/tables/#foreign-key"
  * target="_top">foreign key</a> on a particular column.
@@ -9589,7 +9646,7 @@ AlterTableResponse alterTable( const std::string& tableName,
  * @param[in] tableName  Table on which the operation will be performed, in
  *                       [schema_name.]table_name format, using standard <a
  *                       href="../../../concepts/tables/#table-name-resolution"
- *                       target="_top">name resolution rules</a>.  Must be an
+ *                       target="_top">name resolution rules</a>. Must be an
  *                       existing table or view.
  * @param[in] action  Modification operation to be applied.
  *                    Supported values:
@@ -9598,23 +9655,37 @@ AlterTableResponse alterTable( const std::string& tableName,
  *                            "alter_table_allow_homogeneous_tables": No longer
  *                            supported; action will be ignored.
  *                        <li>@ref gpudb::alter_table_create_index
- *                            "alter_table_create_index": Creates either a <a
+ *                            "alter_table_create_index": Creates a <a
  *                            href="../../../concepts/indexes/#column-index"
- *                            target="_top">column (attribute) index</a> or <a
+ *                            target="_top">column (attribute) index</a>, <a
  *                            href="../../../concepts/indexes/#chunk-skip-index"
- *                            target="_top">chunk skip index</a>, depending on
- *                            the specified @ref gpudb::alter_table_index_type
- *                            "index_type", on the column name specified in @a
+ *                            target="_top">chunk skip index</a>, <a
+ *                            href="../../../concepts/indexes/#geospatial-index"
+ *                            target="_top">geospatial index</a>, or <a
+ *                            href="../../../concepts/indexes/#cagra-index"
+ *                            target="_top">CAGRA index</a> (depending on the
+ *                            specified @ref gpudb::alter_table_index_type
+ *                            "index_type"), on the column name specified in @a
  *                            value. If this column already has the specified
  *                            index, an error will be returned.
- *                        <li>@ref gpudb::alter_table_delete_index
- *                            "alter_table_delete_index": Deletes either a <a
- *                            href="../../../concepts/indexes/#column-index"
- *                            target="_top">column (attribute) index</a> or <a
- *                            href="../../../concepts/indexes/#chunk-skip-index"
- *                            target="_top">chunk skip index</a>, depending on
- *                            the specified @ref gpudb::alter_table_index_type
+ *                        <li>@ref gpudb::alter_table_refresh_index
+ *                            "alter_table_refresh_index": Refreshes an index
+ *                            identified by @ref gpudb::alter_table_index_type
  *                            "index_type", on the column name specified in @a
+ *                            value. Currently applicable only to CAGRA
+ *                            indices.
+ *                        <li>@ref gpudb::alter_table_delete_index
+ *                            "alter_table_delete_index": Deletes a <a
+ *                            href="../../../concepts/indexes/#column-index"
+ *                            target="_top">column (attribute) index</a>, <a
+ *                            href="../../../concepts/indexes/#chunk-skip-index"
+ *                            target="_top">chunk skip index</a>, <a
+ *                            href="../../../concepts/indexes/#geospatial-index"
+ *                            target="_top">geospatial index</a>, or <a
+ *                            href="../../../concepts/indexes/#cagra-index"
+ *                            target="_top">CAGRA index</a> (depending on the
+ *                            specified @ref gpudb::alter_table_index_type
+ *                            "index_type"), on the column name specified in @a
  *                            value. If this column does not have the specified
  *                            index, an error will be returned.
  *                        <li>@ref gpudb::alter_table_move_to_collection
@@ -9629,7 +9700,7 @@ AlterTableResponse alterTable( const std::string& tableName,
  *                            non-existent, it will be automatically created.
  *                        <li>@ref gpudb::alter_table_move_to_schema
  *                            "alter_table_move_to_schema": Moves a table or
- *                            view into a schema named @a value.  If the schema
+ *                            view into a schema named @a value. If the schema
  *                            provided is nonexistent, an error will be thrown.
  *                            If @a value is empty, then the table or view will
  *                            be placed in the user's default schema.
@@ -9651,13 +9722,13 @@ AlterTableResponse alterTable( const std::string& tableName,
  *                        <li>@ref gpudb::alter_table_add_comment
  *                            "alter_table_add_comment": Adds the comment
  *                            specified in @a value to the table specified in
- *                            @a tableName.  Use @ref
+ *                            @a tableName. Use @ref
  *                            gpudb::alter_table_column_name "column_name" to
  *                            set the comment for a column.
  *                        <li>@ref gpudb::alter_table_add_column
  *                            "alter_table_add_column": Adds the column
  *                            specified in @a value to the table specified in
- *                            @a tableName.  Use @ref
+ *                            @a tableName. Use @ref
  *                            gpudb::alter_table_column_type "column_type" and
  *                            @ref gpudb::alter_table_column_properties
  *                            "column_properties" in @a options to set the
@@ -9809,24 +9880,24 @@ AlterTableResponse alterTable( const std::string& tableName,
  *                            "alter_table_cancel_datasource_subscription":
  *                            Permanently unsubscribe a data source that is
  *                            loading continuously as a stream. The data source
- *                            can be kafka / S3 / Azure.
+ *                            can be Kafka / S3 / Azure.
  *                        <li>@ref
  *                            gpudb::alter_table_pause_datasource_subscription
  *                            "alter_table_pause_datasource_subscription":
  *                            Temporarily unsubscribe a data source that is
  *                            loading continuously as a stream. The data source
- *                            can be kafka / S3 / Azure.
+ *                            can be Kafka / S3 / Azure.
  *                        <li>@ref
  *                            gpudb::alter_table_resume_datasource_subscription
  *                            "alter_table_resume_datasource_subscription":
  *                            Resubscribe to a paused data source subscription.
- *                            The data source can be kafka / S3 / Azure.
+ *                            The data source can be Kafka / S3 / Azure.
  *                        <li>@ref gpudb::alter_table_change_owner
  *                            "alter_table_change_owner": Change the owner
  *                            resource group of the table.
  *                    </ul>
- * @param[in] value  The value of the modification, depending on @a action.
- *                   For example, if @a action is @ref
+ * @param[in] value  The value of the modification, depending on @a action. For
+ *                   example, if @a action is @ref
  *                   gpudb::alter_table_add_column "add_column", this would be
  *                   the column name; while the column's definition would be
  *                   covered by the @ref gpudb::alter_table_column_type
@@ -9835,7 +9906,7 @@ AlterTableResponse alterTable( const std::string& tableName,
  *                   gpudb::alter_table_column_default_value
  *                   "column_default_value", and @ref
  *                   gpudb::alter_table_add_column_expression
- *                   "add_column_expression" in @a options.  If @a action is
+ *                   "add_column_expression" in @a options. If @a action is
  *                   @ref gpudb::alter_table_ttl "ttl", it would be the number
  *                   of minutes for the new TTL. If @a action is @ref
  *                   gpudb::alter_table_refresh "refresh", this field would be
@@ -9941,9 +10012,12 @@ AlterTableResponse alterTable( const std::string& tableName,
  *                         <li>@ref gpudb::alter_table_index_type
  *                             "alter_table_index_type": Type of index to
  *                             create, when @a action is @ref
- *                             gpudb::alter_table_create_index "create_index",
- *                             or to delete, when @a action is @ref
- *                             gpudb::alter_table_delete_index "delete_index".
+ *                             gpudb::alter_table_create_index "create_index";
+ *                             to refresh, when @a action is @ref
+ *                             gpudb::alter_table_refresh_index
+ *                             "refresh_index"; or to delete, when @a action is
+ *                             @ref gpudb::alter_table_delete_index
+ *                             "delete_index".
  *                             Supported values:
  *                             <ul>
  *                                 <li>@ref gpudb::alter_table_column
@@ -9959,10 +10033,24 @@ AlterTableResponse alterTable( const std::string& tableName,
  *                                     target="_top">chunk skip index</a>.
  *                                 <li>@ref gpudb::alter_table_geospatial
  *                                     "alter_table_geospatial": Create or
- *                                     delete a geospatial index
+ *                                     delete a <a
+ *                                     href="../../../concepts/indexes/#geospatial-index"
+ *                                     target="_top">geospatial index</a>
+ *                                 <li>@ref gpudb::alter_table_cagra
+ *                                     "alter_table_cagra": Create or delete a
+ *                                     <a
+ *                                     href="../../../concepts/indexes/#cagra-index"
+ *                                     target="_top">CAGRA index</a> on a <a
+ *                                     href="../../../vector_search/#vector-type"
+ *                                     target="_top">vector column</a>
  *                             </ul>
  *                             The default value is @ref
  *                             gpudb::alter_table_column "alter_table_column".
+ *                         <li>@ref gpudb::alter_table_index_options
+ *                             "alter_table_index_options": Options to use when
+ *                             creating an index, in the format "key: value [,
+ *                             key: value [, ...]]". Valid options vary by
+ *                             index type.
  *                     </ul>
  *                     The default value is an empty map.
  * @param[out] response_  @ref gpudb::AlterTableResponse "Response" object
@@ -12541,6 +12629,10 @@ CreateDatasourceResponse& createDatasource( const CreateDatasourceRequest& reque
  *                             "create_datasource_schema_registry_credential":
  *                             Confluent Schema registry Credential object
  *                             name.
+ *                         <li>@ref
+ *                             gpudb::create_datasource_schema_registry_port
+ *                             "create_datasource_schema_registry_port":
+ *                             Confluent Schema registry port (optional).
  *                     </ul>
  *                     The default value is an empty map.
  *
@@ -12768,6 +12860,10 @@ CreateDatasourceResponse createDatasource( const std::string& name,
  *                             "create_datasource_schema_registry_credential":
  *                             Confluent Schema registry Credential object
  *                             name.
+ *                         <li>@ref
+ *                             gpudb::create_datasource_schema_registry_port
+ *                             "create_datasource_schema_registry_port":
+ *                             Confluent Schema registry port (optional).
  *                     </ul>
  *                     The default value is an empty map.
  * @param[out] response_  @ref gpudb::CreateDatasourceResponse "Response"
@@ -18523,9 +18619,8 @@ CreateTableMonitorResponse& createTableMonitor( const CreateTableMonitorRequest&
  *                             gpudb::create_table_monitor_insert
  *                             "create_table_monitor_insert".
  *                         <li>@ref gpudb::create_table_monitor_monitor_id
- *                             "create_table_monitor_monitor_id": ID to to use
- *                             for this monitor instead of a randomly generated
- *                             one
+ *                             "create_table_monitor_monitor_id": ID to use for
+ *                             this monitor instead of a randomly generated one
  *                         <li>@ref gpudb::create_table_monitor_datasink_name
  *                             "create_table_monitor_datasink_name": Name of an
  *                             existing <a href="../../../concepts/data_sinks/"
@@ -18649,9 +18744,8 @@ CreateTableMonitorResponse createTableMonitor( const std::string& tableName,
  *                             gpudb::create_table_monitor_insert
  *                             "create_table_monitor_insert".
  *                         <li>@ref gpudb::create_table_monitor_monitor_id
- *                             "create_table_monitor_monitor_id": ID to to use
- *                             for this monitor instead of a randomly generated
- *                             one
+ *                             "create_table_monitor_monitor_id": ID to use for
+ *                             this monitor instead of a randomly generated one
  *                         <li>@ref gpudb::create_table_monitor_datasink_name
  *                             "create_table_monitor_datasink_name": Name of an
  *                             existing <a href="../../../concepts/data_sinks/"
@@ -24013,8 +24107,8 @@ ExportRecordsToFilesResponse& exportRecordsToFiles( const std::string& tableName
                                                     ExportRecordsToFilesResponse& response_ ) const;
 
 /**
- * Exports records from source table to  specified target table in an external
- * database
+ * Exports records from source table to the specified target table in an
+ * external database
  *
  * @param[in] request_  @ref gpudb::ExportRecordsToTableRequest "Request"
  *                      object containing the parameters for the operation.
@@ -24025,8 +24119,8 @@ ExportRecordsToFilesResponse& exportRecordsToFiles( const std::string& tableName
 ExportRecordsToTableResponse exportRecordsToTable( const ExportRecordsToTableRequest& request_ ) const;
 
 /**
- * Exports records from source table to  specified target table in an external
- * database
+ * Exports records from source table to the specified target table in an
+ * external database
  *
  * @param[in] request_  @ref gpudb::ExportRecordsToTableRequest "Request"
  *                      object containing the parameters for the operation.
@@ -24041,8 +24135,8 @@ ExportRecordsToTableResponse& exportRecordsToTable( const ExportRecordsToTableRe
                                                     ExportRecordsToTableResponse& response_ ) const;
 
 /**
- * Exports records from source table to  specified target table in an external
- * database
+ * Exports records from source table to the specified target table in an
+ * external database
  *
  * @param[in] tableName  Name of the table from which the data will be exported
  *                       to remote database, in [schema_name.]table_name
@@ -24050,18 +24144,68 @@ ExportRecordsToTableResponse& exportRecordsToTable( const ExportRecordsToTableRe
  *                       href="../../../concepts/tables/#table-name-resolution"
  *                       target="_top">name resolution rules</a>.
  * @param[in] remoteQuery  Parameterized insert query to export gpudb table
- *                         data into remote database
+ *                         data into remote database. The default value is ''.
  * @param[in] options  Optional parameters.
  *                     <ul>
  *                         <li>@ref gpudb::export_records_to_table_batch_size
  *                             "export_records_to_table_batch_size": Batch
  *                             size, which determines how many rows to export
- *                             per round trip.
+ *                             per round trip. The default value is '200000'.
  *                         <li>@ref
  *                             gpudb::export_records_to_table_datasink_name
  *                             "export_records_to_table_datasink_name": Name of
  *                             an existing external data sink to which table
  *                             name specified in @a tableName will be exported
+ *                         <li>@ref
+ *                             gpudb::export_records_to_table_jdbc_session_init_statement
+ *                             "export_records_to_table_jdbc_session_init_statement":
+ *                             Executes the statement per each jdbc session
+ *                             before doing actual load. The default value is
+ *                             ''.
+ *                         <li>@ref
+ *                             gpudb::export_records_to_table_jdbc_connection_init_statement
+ *                             "export_records_to_table_jdbc_connection_init_statement":
+ *                             Executes the statement once before doing actual
+ *                             load. The default value is ''.
+ *                         <li>@ref gpudb::export_records_to_table_remote_table
+ *                             "export_records_to_table_remote_table": Name of
+ *                             the target table to which source table is
+ *                             exported. When this option is specified
+ *                             remote_query cannot be specified. The default
+ *                             value is ''.
+ *                         <li>@ref
+ *                             gpudb::export_records_to_table_use_st_geomfrom_casts
+ *                             "export_records_to_table_use_st_geomfrom_casts":
+ *                             Wraps parametrized variables with
+ *                             st_geomfromtext or st_geomfromwkb based on
+ *                             source column type.
+ *                             Supported values:
+ *                             <ul>
+ *                                 <li>@ref gpudb::export_records_to_table_true
+ *                                     "export_records_to_table_true"
+ *                                 <li>@ref
+ *                                     gpudb::export_records_to_table_false
+ *                                     "export_records_to_table_false"
+ *                             </ul>
+ *                             The default value is @ref
+ *                             gpudb::export_records_to_table_false
+ *                             "export_records_to_table_false".
+ *                         <li>@ref
+ *                             gpudb::export_records_to_table_use_indexed_parameters
+ *                             "export_records_to_table_use_indexed_parameters":
+ *                             Uses $n style syntax when generating insert
+ *                             query for remote_table option.
+ *                             Supported values:
+ *                             <ul>
+ *                                 <li>@ref gpudb::export_records_to_table_true
+ *                                     "export_records_to_table_true"
+ *                                 <li>@ref
+ *                                     gpudb::export_records_to_table_false
+ *                                     "export_records_to_table_false"
+ *                             </ul>
+ *                             The default value is @ref
+ *                             gpudb::export_records_to_table_true
+ *                             "export_records_to_table_true".
  *                     </ul>
  *                     The default value is an empty map.
  *
@@ -24073,8 +24217,8 @@ ExportRecordsToTableResponse exportRecordsToTable( const std::string& tableName,
                                                    const std::map<std::string, std::string>& options ) const;
 
 /**
- * Exports records from source table to  specified target table in an external
- * database
+ * Exports records from source table to the specified target table in an
+ * external database
  *
  * @param[in] tableName  Name of the table from which the data will be exported
  *                       to remote database, in [schema_name.]table_name
@@ -24082,18 +24226,68 @@ ExportRecordsToTableResponse exportRecordsToTable( const std::string& tableName,
  *                       href="../../../concepts/tables/#table-name-resolution"
  *                       target="_top">name resolution rules</a>.
  * @param[in] remoteQuery  Parameterized insert query to export gpudb table
- *                         data into remote database
+ *                         data into remote database. The default value is ''.
  * @param[in] options  Optional parameters.
  *                     <ul>
  *                         <li>@ref gpudb::export_records_to_table_batch_size
  *                             "export_records_to_table_batch_size": Batch
  *                             size, which determines how many rows to export
- *                             per round trip.
+ *                             per round trip. The default value is '200000'.
  *                         <li>@ref
  *                             gpudb::export_records_to_table_datasink_name
  *                             "export_records_to_table_datasink_name": Name of
  *                             an existing external data sink to which table
  *                             name specified in @a tableName will be exported
+ *                         <li>@ref
+ *                             gpudb::export_records_to_table_jdbc_session_init_statement
+ *                             "export_records_to_table_jdbc_session_init_statement":
+ *                             Executes the statement per each jdbc session
+ *                             before doing actual load. The default value is
+ *                             ''.
+ *                         <li>@ref
+ *                             gpudb::export_records_to_table_jdbc_connection_init_statement
+ *                             "export_records_to_table_jdbc_connection_init_statement":
+ *                             Executes the statement once before doing actual
+ *                             load. The default value is ''.
+ *                         <li>@ref gpudb::export_records_to_table_remote_table
+ *                             "export_records_to_table_remote_table": Name of
+ *                             the target table to which source table is
+ *                             exported. When this option is specified
+ *                             remote_query cannot be specified. The default
+ *                             value is ''.
+ *                         <li>@ref
+ *                             gpudb::export_records_to_table_use_st_geomfrom_casts
+ *                             "export_records_to_table_use_st_geomfrom_casts":
+ *                             Wraps parametrized variables with
+ *                             st_geomfromtext or st_geomfromwkb based on
+ *                             source column type.
+ *                             Supported values:
+ *                             <ul>
+ *                                 <li>@ref gpudb::export_records_to_table_true
+ *                                     "export_records_to_table_true"
+ *                                 <li>@ref
+ *                                     gpudb::export_records_to_table_false
+ *                                     "export_records_to_table_false"
+ *                             </ul>
+ *                             The default value is @ref
+ *                             gpudb::export_records_to_table_false
+ *                             "export_records_to_table_false".
+ *                         <li>@ref
+ *                             gpudb::export_records_to_table_use_indexed_parameters
+ *                             "export_records_to_table_use_indexed_parameters":
+ *                             Uses $n style syntax when generating insert
+ *                             query for remote_table option.
+ *                             Supported values:
+ *                             <ul>
+ *                                 <li>@ref gpudb::export_records_to_table_true
+ *                                     "export_records_to_table_true"
+ *                                 <li>@ref
+ *                                     gpudb::export_records_to_table_false
+ *                                     "export_records_to_table_false"
+ *                             </ul>
+ *                             The default value is @ref
+ *                             gpudb::export_records_to_table_true
+ *                             "export_records_to_table_true".
  *                     </ul>
  *                     The default value is an empty map.
  * @param[out] response_  @ref gpudb::ExportRecordsToTableResponse "Response"
@@ -37360,6 +37554,25 @@ InsertRecordsFromQueryResponse& insertRecordsFromQuery( const InsertRecordsFromQ
  *                             Alias name for remote_query_filter_column. The
  *                             default value is ''.
  *                         <li>@ref
+ *                             gpudb::insert_records_from_query_truncate_strings
+ *                             "insert_records_from_query_truncate_strings": If
+ *                             set to @ref
+ *                             gpudb::insert_records_from_query_true "true",
+ *                             truncate string values that are longer than the
+ *                             column's type size.
+ *                             Supported values:
+ *                             <ul>
+ *                                 <li>@ref
+ *                                     gpudb::insert_records_from_query_true
+ *                                     "insert_records_from_query_true"
+ *                                 <li>@ref
+ *                                     gpudb::insert_records_from_query_false
+ *                                     "insert_records_from_query_false"
+ *                             </ul>
+ *                             The default value is @ref
+ *                             gpudb::insert_records_from_query_false
+ *                             "insert_records_from_query_false".
+ *                         <li>@ref
  *                             gpudb::insert_records_from_query_update_on_existing_pk
  *                             "insert_records_from_query_update_on_existing_pk":
  *                             Specifies the record collision policy for
@@ -37898,6 +38111,25 @@ InsertRecordsFromQueryResponse insertRecordsFromQuery( const std::string& tableN
  *                             Alias name for remote_query_filter_column. The
  *                             default value is ''.
  *                         <li>@ref
+ *                             gpudb::insert_records_from_query_truncate_strings
+ *                             "insert_records_from_query_truncate_strings": If
+ *                             set to @ref
+ *                             gpudb::insert_records_from_query_true "true",
+ *                             truncate string values that are longer than the
+ *                             column's type size.
+ *                             Supported values:
+ *                             <ul>
+ *                                 <li>@ref
+ *                                     gpudb::insert_records_from_query_true
+ *                                     "insert_records_from_query_true"
+ *                                 <li>@ref
+ *                                     gpudb::insert_records_from_query_false
+ *                                     "insert_records_from_query_false"
+ *                             </ul>
+ *                             The default value is @ref
+ *                             gpudb::insert_records_from_query_false
+ *                             "insert_records_from_query_false".
+ *                         <li>@ref
  *                             gpudb::insert_records_from_query_update_on_existing_pk
  *                             "insert_records_from_query_update_on_existing_pk":
  *                             Specifies the record collision policy for
@@ -38064,8 +38296,7 @@ InsertRecordsRandomResponse& insertRecordsRandom( const InsertRecordsRandomReque
  *                                     strings is set to this value (default is
  *                                     0). If both minimum and maximum are
  *                                     provided, minimum must be less than or
- *                                     equal to max. Value needs to be within
- *                                     [0, 200].  If the min is outside the
+ *                                     equal to max.  If the min is outside the
  *                                     accepted ranges for strings columns and
  *                                     'x' and 'y' columns for
  *                                     point/shape/track, then those parameters
@@ -38086,13 +38317,11 @@ InsertRecordsRandomResponse& insertRecordsRandom( const InsertRecordsRandomReque
  *                                     these columns in such cases are 180.0
  *                                     and 90.0.  For string columns, the
  *                                     maximum length of the randomly generated
- *                                     strings is set to this value (default is
- *                                     200). If both minimum and maximum are
+ *                                     strings. If both minimum and maximum are
  *                                     provided, *max* must be greater than or
- *                                     equal to *min*. Value needs to be within
- *                                     [0, 200].  If the *max* is outside the
- *                                     accepted ranges for strings columns and
- *                                     'x' and 'y' columns for
+ *                                     equal to *min*.  If the *max* is outside
+ *                                     the accepted ranges for strings columns
+ *                                     and 'x' and 'y' columns for
  *                                     point/shape/track, then those parameters
  *                                     will not be set; however, an error will
  *                                     not be thrown in such a case. It is the
@@ -38166,8 +38395,7 @@ InsertRecordsRandomResponse& insertRecordsRandom( const InsertRecordsRandomReque
  *                                     strings is set to this value (default is
  *                                     0). If both minimum and maximum are
  *                                     provided, minimum must be less than or
- *                                     equal to max. Value needs to be within
- *                                     [0, 200].  If the min is outside the
+ *                                     equal to max.  If the min is outside the
  *                                     accepted ranges for strings columns and
  *                                     'x' and 'y' columns for
  *                                     point/shape/track, then those parameters
@@ -38188,13 +38416,11 @@ InsertRecordsRandomResponse& insertRecordsRandom( const InsertRecordsRandomReque
  *                                     these columns in such cases are 180.0
  *                                     and 90.0.  For string columns, the
  *                                     maximum length of the randomly generated
- *                                     strings is set to this value (default is
- *                                     200). If both minimum and maximum are
+ *                                     strings. If both minimum and maximum are
  *                                     provided, *max* must be greater than or
- *                                     equal to *min*. Value needs to be within
- *                                     [0, 200].  If the *max* is outside the
- *                                     accepted ranges for strings columns and
- *                                     'x' and 'y' columns for
+ *                                     equal to *min*.  If the *max* is outside
+ *                                     the accepted ranges for strings columns
+ *                                     and 'x' and 'y' columns for
  *                                     point/shape/track, then those parameters
  *                                     will not be set; however, an error will
  *                                     not be thrown in such a case. It is the
@@ -38350,8 +38576,7 @@ InsertRecordsRandomResponse insertRecordsRandom( const std::string& tableName,
  *                                     strings is set to this value (default is
  *                                     0). If both minimum and maximum are
  *                                     provided, minimum must be less than or
- *                                     equal to max. Value needs to be within
- *                                     [0, 200].  If the min is outside the
+ *                                     equal to max.  If the min is outside the
  *                                     accepted ranges for strings columns and
  *                                     'x' and 'y' columns for
  *                                     point/shape/track, then those parameters
@@ -38372,13 +38597,11 @@ InsertRecordsRandomResponse insertRecordsRandom( const std::string& tableName,
  *                                     these columns in such cases are 180.0
  *                                     and 90.0.  For string columns, the
  *                                     maximum length of the randomly generated
- *                                     strings is set to this value (default is
- *                                     200). If both minimum and maximum are
+ *                                     strings. If both minimum and maximum are
  *                                     provided, *max* must be greater than or
- *                                     equal to *min*. Value needs to be within
- *                                     [0, 200].  If the *max* is outside the
- *                                     accepted ranges for strings columns and
- *                                     'x' and 'y' columns for
+ *                                     equal to *min*.  If the *max* is outside
+ *                                     the accepted ranges for strings columns
+ *                                     and 'x' and 'y' columns for
  *                                     point/shape/track, then those parameters
  *                                     will not be set; however, an error will
  *                                     not be thrown in such a case. It is the
@@ -38452,8 +38675,7 @@ InsertRecordsRandomResponse insertRecordsRandom( const std::string& tableName,
  *                                     strings is set to this value (default is
  *                                     0). If both minimum and maximum are
  *                                     provided, minimum must be less than or
- *                                     equal to max. Value needs to be within
- *                                     [0, 200].  If the min is outside the
+ *                                     equal to max.  If the min is outside the
  *                                     accepted ranges for strings columns and
  *                                     'x' and 'y' columns for
  *                                     point/shape/track, then those parameters
@@ -38474,13 +38696,11 @@ InsertRecordsRandomResponse insertRecordsRandom( const std::string& tableName,
  *                                     these columns in such cases are 180.0
  *                                     and 90.0.  For string columns, the
  *                                     maximum length of the randomly generated
- *                                     strings is set to this value (default is
- *                                     200). If both minimum and maximum are
+ *                                     strings. If both minimum and maximum are
  *                                     provided, *max* must be greater than or
- *                                     equal to *min*. Value needs to be within
- *                                     [0, 200].  If the *max* is outside the
- *                                     accepted ranges for strings columns and
- *                                     'x' and 'y' columns for
+ *                                     equal to *min*.  If the *max* is outside
+ *                                     the accepted ranges for strings columns
+ *                                     and 'x' and 'y' columns for
  *                                     point/shape/track, then those parameters
  *                                     will not be set; however, an error will
  *                                     not be thrown in such a case. It is the

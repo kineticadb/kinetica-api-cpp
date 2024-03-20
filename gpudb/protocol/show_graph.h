@@ -174,7 +174,7 @@ namespace gpudb
         }
 
         /**
-         * Indicates a success. This call will fails of the graph specified in
+         * Indicates a success. This call will fail if the graph specified in
          * the request does not exist.
          */
         bool result;
@@ -201,12 +201,12 @@ namespace gpudb
         std::vector<int32_t> graphServerIds;
 
         /**
-         * Owner the graph(s) and associated solution table(s).
+         * Owner of the graph(s) and associated solution table(s).
          */
         std::vector<std::string> graphOwnerUserNames;
 
         /**
-         * Owner resource groups(s) of the graph(s).
+         * Owner of the resource groups(s) of the graph(s).
          */
         std::vector<std::string> graphOwnerResourceGroups;
 
@@ -246,7 +246,7 @@ namespace gpudb
         std::vector<bool> isPersisted;
 
         /**
-         * Indicated if the graph data data is distributed across all available
+         * Indicates if the graph data is distributed across all available
          * servers.
          */
         std::vector<bool> isPartitioned;

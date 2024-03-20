@@ -2,6 +2,15 @@
 
 ## Version 7.2
 
+### Version 7.2.0.2 - 2024-03-20
+
+#### Added
+-   Support for disabling auto-discovery, failover, and certificate checking
+
+#### Notes
+-   Check CHANGELOG-FUNCTIONS.md for endpoint related changes.
+
+
 ### Version 7.2.0.1 - 2024-02-22
 
 #### Added
@@ -17,7 +26,17 @@
 -   Check CHANGELOG-FUNCTIONS.md for endpoint related changes.
 
 
+
 ## Version 7.1
+
+### Version 7.1.9.2 - 2024-01-22
+
+#### Added
+-   Support for disabling auto-discovery, failover, and certificate checking
+
+#### Notes
+-   Check CHANGELOG-FUNCTIONS.md for endpoint related changes.
+
 
 ### Version 7.1.9.1 - 2023-06-23
 
@@ -95,6 +114,7 @@
 #### Note
 -   Check CHANGELOG-FUNCTIONS.md for endpoint related changes.
 
+
 ### Version 7.1.0.0 - 2020-08-18
 
 #### Changed
@@ -104,13 +124,36 @@
     -   SYNCHRONOUS (the server replicates all endpoints synchronously)
     -   ASYNCHRONOUS (the server replicates all endpoints asynchronously)
 
-
 #### Note
 -   Check CHANGELOG-FUNCTIONS.md for endpoint related changes.
 
 
 
 ## Version 7.0
+
+### Version 7.0.20.0 - 2020-11-25
+
+#### Note
+-   Check CHANGELOG-FUNCTIONS.md for endpoint related changes.
+
+
+### Version 7.0.19.0 - 2020-08-24
+
+#### Note
+-   Check CHANGELOG-FUNCTIONS.md for endpoint related changes.
+
+
+### Version 7.0.18.0 - 2020-07-30
+
+#### Note
+-   Check CHANGELOG-FUNCTIONS.md for endpoint related changes.
+
+
+### Version 7.0.17.0 - 2020-07-06
+
+#### Note
+-   Check CHANGELOG-FUNCTIONS.md for endpoint related changes.
+
 
 ### Version 7.0.16.0 - 2020-05-28
 
@@ -130,12 +173,10 @@
 -   Check CHANGELOG-FUNCTIONS.md for endpoint related changes.
 
 
-
 ### Version 7.0.13.0 - 2020-03-10
 
 #### Note
 -   Check CHANGELOG-FUNCTIONS.md for endpoint related changes.
-
 
 
 ### Version 7.0.12.0 - 2020-01-17
@@ -165,7 +206,6 @@
 -   GPUdb constructor behavior--if a single URL is used and no primary URL
     is specified via the options, the given single URL will be treated as
     the primary URL.
-
 
 
 ### Version 7.0.7.0 - 2019-08-21
@@ -204,6 +244,7 @@
     properties when parsing dynamically generated responses (by endpoints
     like /get/records/bycolumn, for example).
 
+
 ### Version 7.0.5.0 - 2019-06-26
 
 #### Added
@@ -224,17 +265,21 @@
 
 
 #### Version 7.0.3.0 - 2019-05-13
+
 ##### Changed
 -   /query/graph parameters: removed `restrictions` and added
     `edgeToNode`, `edgeOrNodeIntIds`, `edgeOrNodeStringIds`, and
     `edgeOrNodeWktIds`.
 
+
 #### Version 7.0.2.0 - 2019-04-24
+
 ##### Added
 -   Support for selecting a primary host for the GPUdb class
 
 
 ### Version 7.0.0.1 - 2019-02-22
+
 ##### Added
 -   Support for high availability (HA) failover logic to the
     GPUdb class
@@ -245,7 +290,22 @@
 -   Version release
 
 
+
 ## Version 6.2
+
+### Version 6.2.0.3 - 2019-07-18
+
+#### Fixed
+-   GenericRecord now correctly parses 'datetime' and 'wkt'/'geometry'
+    properties when parsing dynamically generated responses (by endpoints
+    like /get/records/bycolumn, for example).
+
+
+### Version 6.2.0.2 - 2019-05-29
+
+#### Added
+-   A getter method for the insertion options to the GPUdbIngestor class
+
 
 ### Version 6.2.0.1 - 2018-10-05
 
@@ -256,6 +316,7 @@
     -   AggregateUniqueResponse
     -   AggregateUnpivotResponse
     -   GetRecordsByColumnResponse
+
 
 ### Version 6.2.0.0 - 2018-03-24
 
@@ -269,12 +330,14 @@
     -   WorkerQueue
 
 
+
 ## Version 6.1.0 - 2017-12-11
 
 -   Added support for the 'datetime' property
 -   Added multi-head ingestion support
 -   Added == overloaded operator for Type and Type::Column
 -   Added << (ostream) overloaded operator for Type::Column
+
 
 
 ## Version 6.0.0 - 2017-01-24

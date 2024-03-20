@@ -568,6 +568,25 @@ namespace gpudb
          *                              remote_query_filter_column. The default
          *                              value is ''.
          *                          <li>@ref
+         *                              gpudb::insert_records_from_query_truncate_strings
+         *                              "insert_records_from_query_truncate_strings":
+         *                              If set to @ref
+         *                              gpudb::insert_records_from_query_true
+         *                              "true", truncate string values that are
+         *                              longer than the column's type size.
+         *                              Supported values:
+         *                              <ul>
+         *                                  <li>@ref
+         *                                      gpudb::insert_records_from_query_true
+         *                                      "insert_records_from_query_true"
+         *                                  <li>@ref
+         *                                      gpudb::insert_records_from_query_false
+         *                                      "insert_records_from_query_false"
+         *                              </ul>
+         *                              The default value is @ref
+         *                              gpudb::insert_records_from_query_false
+         *                              "insert_records_from_query_false".
+         *                          <li>@ref
          *                              gpudb::insert_records_from_query_update_on_existing_pk
          *                              "insert_records_from_query_update_on_existing_pk":
          *                              Specifies the record collision policy
@@ -1001,6 +1020,20 @@ namespace gpudb
          *         "insert_records_from_query_remote_query_partition_column":
          *         Alias name for remote_query_filter_column. The default value
          *         is ''.
+         *     <li>@ref gpudb::insert_records_from_query_truncate_strings
+         *         "insert_records_from_query_truncate_strings": If set to @ref
+         *         gpudb::insert_records_from_query_true "true", truncate
+         *         string values that are longer than the column's type size.
+         *         Supported values:
+         *         <ul>
+         *             <li>@ref gpudb::insert_records_from_query_true
+         *                 "insert_records_from_query_true"
+         *             <li>@ref gpudb::insert_records_from_query_false
+         *                 "insert_records_from_query_false"
+         *         </ul>
+         *         The default value is @ref
+         *         gpudb::insert_records_from_query_false
+         *         "insert_records_from_query_false".
          *     <li>@ref gpudb::insert_records_from_query_update_on_existing_pk
          *         "insert_records_from_query_update_on_existing_pk": Specifies
          *         the record collision policy for inserting into a table with

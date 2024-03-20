@@ -366,7 +366,7 @@ namespace gpudb
          * gpudb::show_table_true "true", then this array is populated with the
          * names of all tables and views in the given schema; if @ref
          * gpudb::show_table_show_children "show_children" is @ref
-         * gpudb::show_table_false "false" then this array will only include
+         * gpudb::show_table_false "false", then this array will only include
          * the schema name itself. If @ref gpudb::ShowTableRequest::tableName
          * "tableName" is an empty string, then the array contains the names of
          * all tables in the user's default schema.
@@ -539,16 +539,21 @@ namespace gpudb
          *         partitions. The default value is ''.
          *     <li>@ref gpudb::show_table_attribute_indexes
          *         "show_table_attribute_indexes": Semicolon-separated list of
-         *         columns that have <a
+         *         indexes. For <a
          *         href="../../../concepts/indexes/#column-index"
-         *         target="_top">indexes</a>. Not present for schemas. The
-         *         default value is ''.
+         *         target="_top">column (attribute) indexes</a>, only the
+         *         indexed column name will be listed. For other index types,
+         *         the index type will be listed with the colon-delimited
+         *         indexed column(s) and the comma-delimited index option(s)
+         *         using the form:
+         *         &lt;index_type&gt;@&lt;column_list&gt;@&lt;column_options&gt;.
+         *         Not present for schemas. The default value is ''.
          *     <li>@ref gpudb::show_table_compressed_columns
          *         "show_table_compressed_columns": No longer supported. The
          *         default value is ''.
          *     <li>@ref gpudb::show_table_column_info "show_table_column_info":
          *         JSON-encoded string representing a map of column name to
-         *         information including memory usage if if the @ref
+         *         information including memory usage if the @ref
          *         gpudb::show_table_get_column_info "get_column_info" option
          *         is @ref gpudb::show_table_true "true". The default value is
          *         ''.

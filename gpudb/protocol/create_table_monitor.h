@@ -90,7 +90,7 @@ namespace gpudb
          *                          <li>@ref
          *                              gpudb::create_table_monitor_monitor_id
          *                              "create_table_monitor_monitor_id": ID
-         *                              to to use for this monitor instead of a
+         *                              to use for this monitor instead of a
          *                              randomly generated one
          *                          <li>@ref
          *                              gpudb::create_table_monitor_datasink_name
@@ -210,7 +210,7 @@ namespace gpudb
          *         The default value is @ref gpudb::create_table_monitor_insert
          *         "create_table_monitor_insert".
          *     <li>@ref gpudb::create_table_monitor_monitor_id
-         *         "create_table_monitor_monitor_id": ID to to use for this
+         *         "create_table_monitor_monitor_id": ID to use for this
          *         monitor instead of a randomly generated one
          *     <li>@ref gpudb::create_table_monitor_datasink_name
          *         "create_table_monitor_datasink_name": Name of an existing <a

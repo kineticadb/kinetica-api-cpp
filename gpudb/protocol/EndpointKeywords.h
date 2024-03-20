@@ -422,6 +422,7 @@ namespace gpudb
     extern const std::string alter_table_add_comment;
     extern const std::string alter_table_add_partition;
     extern const std::string alter_table_allow_homogeneous_tables;
+    extern const std::string alter_table_cagra;
     extern const std::string alter_table_cancel_datasource_subscription;
     extern const std::string alter_table_change_column;
     extern const std::string alter_table_change_owner;
@@ -441,6 +442,7 @@ namespace gpudb
     extern const std::string alter_table_delete_partition;
     extern const std::string alter_table_false;
     extern const std::string alter_table_geospatial;
+    extern const std::string alter_table_index_options;
     extern const std::string alter_table_index_type;
     extern const std::string alter_table_lz4;
     extern const std::string alter_table_lz4hc;
@@ -450,6 +452,7 @@ namespace gpudb
     extern const std::string alter_table_pause_datasource_subscription;
     extern const std::string alter_table_protected;
     extern const std::string alter_table_refresh;
+    extern const std::string alter_table_refresh_index;
     extern const std::string alter_table_remove_partition;
     extern const std::string alter_table_remove_shard_keys;
     extern const std::string alter_table_remove_text_search_attributes;
@@ -619,6 +622,7 @@ namespace gpudb
     extern const std::string create_datasource_s3_use_virtual_addressing;
     extern const std::string create_datasource_schema_registry_credential;
     extern const std::string create_datasource_schema_registry_location;
+    extern const std::string create_datasource_schema_registry_port;
     extern const std::string create_datasource_skip_validation;
     extern const std::string create_datasource_true;
     extern const std::string create_datasource_use_https;
@@ -1153,6 +1157,13 @@ namespace gpudb
     // Keywords for /export/records/totable request
     extern const std::string export_records_to_table_batch_size;
     extern const std::string export_records_to_table_datasink_name;
+    extern const std::string export_records_to_table_false;
+    extern const std::string export_records_to_table_jdbc_connection_init_statement;
+    extern const std::string export_records_to_table_jdbc_session_init_statement;
+    extern const std::string export_records_to_table_remote_table;
+    extern const std::string export_records_to_table_true;
+    extern const std::string export_records_to_table_use_indexed_parameters;
+    extern const std::string export_records_to_table_use_st_geomfrom_casts;
 
     // Keywords for /filter request
     extern const std::string filter_collection_name;
@@ -1739,6 +1750,7 @@ namespace gpudb
     extern const std::string insert_records_from_query_strategy_definition;
     extern const std::string insert_records_from_query_subscribe;
     extern const std::string insert_records_from_query_true;
+    extern const std::string insert_records_from_query_truncate_strings;
     extern const std::string insert_records_from_query_truncate_table;
     extern const std::string insert_records_from_query_ttl;
     extern const std::string insert_records_from_query_type_id;

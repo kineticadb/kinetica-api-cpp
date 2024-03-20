@@ -23,10 +23,15 @@ namespace gpudb
      *
      * External tables cannot be modified except for their refresh method.
      *
-     * Create or delete an <a href="../../../concepts/indexes/#column-index"
-     * target="_top">index</a> on a particular column. This can speed up
-     * certain operations when using expressions containing equality or
-     * relational operators on indexed columns. This only applies to tables.
+     * Create or delete a <a href="../../../concepts/indexes/#column-index"
+     * target="_top">column</a>, <a
+     * href="../../../concepts/indexes/#chunk-skip-index" target="_top">chunk
+     * skip</a>, <a href="../../../concepts/indexes/#geospatial-index"
+     * target="_top">geospatial</a>, or <a
+     * href="../../../concepts/indexes/#cagra-index" target="_top">CAGRA</a>
+     * index. This can speed up certain operations when using expressions
+     * containing equality or relational operators on indexed columns. This
+     * only applies to tables.
      *
      * Create or delete a <a href="../../../concepts/tables/#foreign-key"
      * target="_top">foreign key</a> on a particular column.
@@ -74,8 +79,8 @@ namespace gpudb
          *                        performed, in [schema_name.]table_name
          *                        format, using standard <a
          *                        href="../../../concepts/tables/#table-name-resolution"
-         *                        target="_top">name resolution rules</a>.
-         *                        Must be an existing table or view.
+         *                        target="_top">name resolution rules</a>. Must
+         *                        be an existing table or view.
          * @param[in] action_  Modification operation to be applied.
          *                     Supported values:
          *                     <ul>
@@ -85,30 +90,45 @@ namespace gpudb
          *                             No longer supported; action will be
          *                             ignored.
          *                         <li>@ref gpudb::alter_table_create_index
-         *                             "alter_table_create_index": Creates
-         *                             either a <a
+         *                             "alter_table_create_index": Creates a <a
          *                             href="../../../concepts/indexes/#column-index"
          *                             target="_top">column (attribute)
-         *                             index</a> or <a
+         *                             index</a>, <a
          *                             href="../../../concepts/indexes/#chunk-skip-index"
-         *                             target="_top">chunk skip index</a>,
-         *                             depending on the specified @ref
+         *                             target="_top">chunk skip index</a>, <a
+         *                             href="../../../concepts/indexes/#geospatial-index"
+         *                             target="_top">geospatial index</a>, or
+         *                             <a
+         *                             href="../../../concepts/indexes/#cagra-index"
+         *                             target="_top">CAGRA index</a> (depending
+         *                             on the specified @ref
          *                             gpudb::alter_table_index_type
-         *                             "index_type", on the column name
+         *                             "index_type"), on the column name
          *                             specified in @a value_. If this column
          *                             already has the specified index, an
          *                             error will be returned.
-         *                         <li>@ref gpudb::alter_table_delete_index
-         *                             "alter_table_delete_index": Deletes
-         *                             either a <a
-         *                             href="../../../concepts/indexes/#column-index"
-         *                             target="_top">column (attribute)
-         *                             index</a> or <a
-         *                             href="../../../concepts/indexes/#chunk-skip-index"
-         *                             target="_top">chunk skip index</a>,
-         *                             depending on the specified @ref
+         *                         <li>@ref gpudb::alter_table_refresh_index
+         *                             "alter_table_refresh_index": Refreshes
+         *                             an index identified by @ref
          *                             gpudb::alter_table_index_type
          *                             "index_type", on the column name
+         *                             specified in @a value_. Currently
+         *                             applicable only to CAGRA indices.
+         *                         <li>@ref gpudb::alter_table_delete_index
+         *                             "alter_table_delete_index": Deletes a <a
+         *                             href="../../../concepts/indexes/#column-index"
+         *                             target="_top">column (attribute)
+         *                             index</a>, <a
+         *                             href="../../../concepts/indexes/#chunk-skip-index"
+         *                             target="_top">chunk skip index</a>, <a
+         *                             href="../../../concepts/indexes/#geospatial-index"
+         *                             target="_top">geospatial index</a>, or
+         *                             <a
+         *                             href="../../../concepts/indexes/#cagra-index"
+         *                             target="_top">CAGRA index</a> (depending
+         *                             on the specified @ref
+         *                             gpudb::alter_table_index_type
+         *                             "index_type"), on the column name
          *                             specified in @a value_. If this column
          *                             does not have the specified index, an
          *                             error will be returned.
@@ -127,7 +147,7 @@ namespace gpudb
          *                         <li>@ref gpudb::alter_table_move_to_schema
          *                             "alter_table_move_to_schema": Moves a
          *                             table or view into a schema named @a
-         *                             value_.  If the schema provided is
+         *                             value_. If the schema provided is
          *                             nonexistent, an error will be thrown. If
          *                             @a value_ is empty, then the table or
          *                             view will be placed in the user's
@@ -154,14 +174,14 @@ namespace gpudb
          *                         <li>@ref gpudb::alter_table_add_comment
          *                             "alter_table_add_comment": Adds the
          *                             comment specified in @a value_ to the
-         *                             table specified in @a tableName_.  Use
+         *                             table specified in @a tableName_. Use
          *                             @ref gpudb::alter_table_column_name
          *                             "column_name" to set the comment for a
          *                             column.
          *                         <li>@ref gpudb::alter_table_add_column
          *                             "alter_table_add_column": Adds the
          *                             column specified in @a value_ to the
-         *                             table specified in @a tableName_.  Use
+         *                             table specified in @a tableName_. Use
          *                             @ref gpudb::alter_table_column_type
          *                             "column_type" and @ref
          *                             gpudb::alter_table_column_properties
@@ -171,7 +191,7 @@ namespace gpudb
          *                         <li>@ref gpudb::alter_table_change_column
          *                             "alter_table_change_column": Changes
          *                             type and properties of the column
-         *                             specified in @a value_.  Use @ref
+         *                             specified in @a value_. Use @ref
          *                             gpudb::alter_table_column_type
          *                             "column_type" and @ref
          *                             gpudb::alter_table_column_properties
@@ -351,27 +371,27 @@ namespace gpudb
          *                             "alter_table_cancel_datasource_subscription":
          *                             Permanently unsubscribe a data source
          *                             that is loading continuously as a
-         *                             stream. The data source can be kafka /
+         *                             stream. The data source can be Kafka /
          *                             S3 / Azure.
          *                         <li>@ref
          *                             gpudb::alter_table_pause_datasource_subscription
          *                             "alter_table_pause_datasource_subscription":
          *                             Temporarily unsubscribe a data source
          *                             that is loading continuously as a
-         *                             stream. The data source can be kafka /
+         *                             stream. The data source can be Kafka /
          *                             S3 / Azure.
          *                         <li>@ref
          *                             gpudb::alter_table_resume_datasource_subscription
          *                             "alter_table_resume_datasource_subscription":
          *                             Resubscribe to a paused data source
          *                             subscription. The data source can be
-         *                             kafka / S3 / Azure.
+         *                             Kafka / S3 / Azure.
          *                         <li>@ref gpudb::alter_table_change_owner
          *                             "alter_table_change_owner": Change the
          *                             owner resource group of the table.
          *                     </ul>
          * @param[in] value_  The value of the modification, depending on @a
-         *                    action_.  For example, if @a action_ is @ref
+         *                    action_. For example, if @a action_ is @ref
          *                    gpudb::alter_table_add_column "add_column", this
          *                    would be the column name; while the column's
          *                    definition would be covered by the @ref
@@ -381,7 +401,7 @@ namespace gpudb
          *                    gpudb::alter_table_column_default_value
          *                    "column_default_value", and @ref
          *                    gpudb::alter_table_add_column_expression
-         *                    "add_column_expression" in @a options_.  If @a
+         *                    "add_column_expression" in @a options_. If @a
          *                    action_ is @ref gpudb::alter_table_ttl "ttl", it
          *                    would be the number of minutes for the new TTL.
          *                    If @a action_ is @ref gpudb::alter_table_refresh
@@ -512,7 +532,10 @@ namespace gpudb
          *                              "alter_table_index_type": Type of index
          *                              to create, when @a action_ is @ref
          *                              gpudb::alter_table_create_index
-         *                              "create_index", or to delete, when @a
+         *                              "create_index"; to refresh, when @a
+         *                              action_ is @ref
+         *                              gpudb::alter_table_refresh_index
+         *                              "refresh_index"; or to delete, when @a
          *                              action_ is @ref
          *                              gpudb::alter_table_delete_index
          *                              "delete_index".
@@ -534,12 +557,28 @@ namespace gpudb
          *                                  <li>@ref
          *                                      gpudb::alter_table_geospatial
          *                                      "alter_table_geospatial":
-         *                                      Create or delete a geospatial
-         *                                      index
+         *                                      Create or delete a <a
+         *                                      href="../../../concepts/indexes/#geospatial-index"
+         *                                      target="_top">geospatial
+         *                                      index</a>
+         *                                  <li>@ref gpudb::alter_table_cagra
+         *                                      "alter_table_cagra": Create or
+         *                                      delete a <a
+         *                                      href="../../../concepts/indexes/#cagra-index"
+         *                                      target="_top">CAGRA index</a>
+         *                                      on a <a
+         *                                      href="../../../vector_search/#vector-type"
+         *                                      target="_top">vector column</a>
          *                              </ul>
          *                              The default value is @ref
          *                              gpudb::alter_table_column
          *                              "alter_table_column".
+         *                          <li>@ref gpudb::alter_table_index_options
+         *                              "alter_table_index_options": Options to
+         *                              use when creating an index, in the
+         *                              format "key: value [, key: value [,
+         *                              ...]]". Valid options vary by index
+         *                              type.
          *                      </ul>
          *                      The default value is an empty map.
          */
@@ -555,7 +594,7 @@ namespace gpudb
          * Table on which the operation will be performed, in [ schema_name.\
          * ]table_name format, using standard <a
          * href="../../../concepts/tables/#table-name-resolution"
-         * target="_top">name resolution rules</a>.  Must be an existing table
+         * target="_top">name resolution rules</a>. Must be an existing table
          * or view.
          */
         std::string tableName;
@@ -568,24 +607,36 @@ namespace gpudb
          *         "alter_table_allow_homogeneous_tables": No longer supported;
          *         action will be ignored.
          *     <li>@ref gpudb::alter_table_create_index
-         *         "alter_table_create_index": Creates either a <a
+         *         "alter_table_create_index": Creates a <a
          *         href="../../../concepts/indexes/#column-index"
-         *         target="_top">column (attribute) index</a> or <a
+         *         target="_top">column (attribute) index</a>, <a
          *         href="../../../concepts/indexes/#chunk-skip-index"
-         *         target="_top">chunk skip index</a>, depending on the
-         *         specified @ref gpudb::alter_table_index_type "index_type",
-         *         on the column name specified in @ref value. If this column
-         *         already has the specified index, an error will be returned.
+         *         target="_top">chunk skip index</a>, <a
+         *         href="../../../concepts/indexes/#geospatial-index"
+         *         target="_top">geospatial index</a>, or <a
+         *         href="../../../concepts/indexes/#cagra-index"
+         *         target="_top">CAGRA index</a> (depending on the specified
+         *         @ref gpudb::alter_table_index_type "index_type"), on the
+         *         column name specified in @ref value. If this column already
+         *         has the specified index, an error will be returned.
+         *     <li>@ref gpudb::alter_table_refresh_index
+         *         "alter_table_refresh_index": Refreshes an index identified
+         *         by @ref gpudb::alter_table_index_type "index_type", on the
+         *         column name specified in @ref value. Currently applicable
+         *         only to CAGRA indices.
          *     <li>@ref gpudb::alter_table_delete_index
-         *         "alter_table_delete_index": Deletes either a <a
+         *         "alter_table_delete_index": Deletes a <a
          *         href="../../../concepts/indexes/#column-index"
-         *         target="_top">column (attribute) index</a> or <a
+         *         target="_top">column (attribute) index</a>, <a
          *         href="../../../concepts/indexes/#chunk-skip-index"
-         *         target="_top">chunk skip index</a>, depending on the
-         *         specified @ref gpudb::alter_table_index_type "index_type",
-         *         on the column name specified in @ref value. If this column
-         *         does not have the specified index, an error will be
-         *         returned.
+         *         target="_top">chunk skip index</a>, <a
+         *         href="../../../concepts/indexes/#geospatial-index"
+         *         target="_top">geospatial index</a>, or <a
+         *         href="../../../concepts/indexes/#cagra-index"
+         *         target="_top">CAGRA index</a> (depending on the specified
+         *         @ref gpudb::alter_table_index_type "index_type"), on the
+         *         column name specified in @ref value. If this column does not
+         *         have the specified index, an error will be returned.
          *     <li>@ref gpudb::alter_table_move_to_collection
          *         "alter_table_move_to_collection": [DEPRECATED--please use
          *         @ref gpudb::alter_table_move_to_schema "move_to_schema" and
@@ -597,7 +648,7 @@ namespace gpudb
          *         automatically created.
          *     <li>@ref gpudb::alter_table_move_to_schema
          *         "alter_table_move_to_schema": Moves a table or view into a
-         *         schema named @ref value.  If the schema provided is
+         *         schema named @ref value. If the schema provided is
          *         nonexistent, an error will be thrown. If @ref value is
          *         empty, then the table or view will be placed in the user's
          *         default schema.
@@ -615,19 +666,19 @@ namespace gpudb
          *         in minutes of the table or view specified in @ref tableName.
          *     <li>@ref gpudb::alter_table_add_comment
          *         "alter_table_add_comment": Adds the comment specified in
-         *         @ref value to the table specified in @ref tableName.  Use
+         *         @ref value to the table specified in @ref tableName. Use
          *         @ref gpudb::alter_table_column_name "column_name" to set the
          *         comment for a column.
          *     <li>@ref gpudb::alter_table_add_column "alter_table_add_column":
          *         Adds the column specified in @ref value to the table
-         *         specified in @ref tableName.  Use @ref
+         *         specified in @ref tableName. Use @ref
          *         gpudb::alter_table_column_type "column_type" and @ref
          *         gpudb::alter_table_column_properties "column_properties" in
          *         @ref options to set the column's type and properties,
          *         respectively.
          *     <li>@ref gpudb::alter_table_change_column
          *         "alter_table_change_column": Changes type and properties of
-         *         the column specified in @ref value.  Use @ref
+         *         the column specified in @ref value. Use @ref
          *         gpudb::alter_table_column_type "column_type" and @ref
          *         gpudb::alter_table_column_properties "column_properties" in
          *         @ref options to set the column's type and properties,
@@ -749,15 +800,15 @@ namespace gpudb
          *     <li>@ref gpudb::alter_table_cancel_datasource_subscription
          *         "alter_table_cancel_datasource_subscription": Permanently
          *         unsubscribe a data source that is loading continuously as a
-         *         stream. The data source can be kafka / S3 / Azure.
+         *         stream. The data source can be Kafka / S3 / Azure.
          *     <li>@ref gpudb::alter_table_pause_datasource_subscription
          *         "alter_table_pause_datasource_subscription": Temporarily
          *         unsubscribe a data source that is loading continuously as a
-         *         stream. The data source can be kafka / S3 / Azure.
+         *         stream. The data source can be Kafka / S3 / Azure.
          *     <li>@ref gpudb::alter_table_resume_datasource_subscription
          *         "alter_table_resume_datasource_subscription": Resubscribe to
          *         a paused data source subscription. The data source can be
-         *         kafka / S3 / Azure.
+         *         Kafka / S3 / Azure.
          *     <li>@ref gpudb::alter_table_change_owner
          *         "alter_table_change_owner": Change the owner resource group
          *         of the table.
@@ -766,7 +817,7 @@ namespace gpudb
         std::string action;
 
         /**
-         * The value of the modification, depending on @ref action.  For
+         * The value of the modification, depending on @ref action. For
          * example, if @ref action is @ref gpudb::alter_table_add_column
          * "add_column", this would be the column name; while the column's
          * definition would be covered by the @ref
@@ -774,7 +825,7 @@ namespace gpudb
          * gpudb::alter_table_column_properties "column_properties", @ref
          * gpudb::alter_table_column_default_value "column_default_value", and
          * @ref gpudb::alter_table_add_column_expression
-         * "add_column_expression" in @ref options.  If @ref action is @ref
+         * "add_column_expression" in @ref options. If @ref action is @ref
          * gpudb::alter_table_ttl "ttl", it would be the number of minutes for
          * the new TTL. If @ref action is @ref gpudb::alter_table_refresh
          * "refresh", this field would be blank.
@@ -867,8 +918,9 @@ namespace gpudb
          *         strategy in its entirety.
          *     <li>@ref gpudb::alter_table_index_type "alter_table_index_type":
          *         Type of index to create, when @ref action is @ref
-         *         gpudb::alter_table_create_index "create_index", or to
-         *         delete, when @ref action is @ref
+         *         gpudb::alter_table_create_index "create_index"; to refresh,
+         *         when @ref action is @ref gpudb::alter_table_refresh_index
+         *         "refresh_index"; or to delete, when @ref action is @ref
          *         gpudb::alter_table_delete_index "delete_index".
          *         Supported values:
          *         <ul>
@@ -881,11 +933,22 @@ namespace gpudb
          *                 href="../../../concepts/indexes/#chunk-skip-index"
          *                 target="_top">chunk skip index</a>.
          *             <li>@ref gpudb::alter_table_geospatial
-         *                 "alter_table_geospatial": Create or delete a
-         *                 geospatial index
+         *                 "alter_table_geospatial": Create or delete a <a
+         *                 href="../../../concepts/indexes/#geospatial-index"
+         *                 target="_top">geospatial index</a>
+         *             <li>@ref gpudb::alter_table_cagra "alter_table_cagra":
+         *                 Create or delete a <a
+         *                 href="../../../concepts/indexes/#cagra-index"
+         *                 target="_top">CAGRA index</a> on a <a
+         *                 href="../../../vector_search/#vector-type"
+         *                 target="_top">vector column</a>
          *         </ul>
          *         The default value is @ref gpudb::alter_table_column
          *         "alter_table_column".
+         *     <li>@ref gpudb::alter_table_index_options
+         *         "alter_table_index_options": Options to use when creating an
+         *         index, in the format "key: value [, key: value [, ...]]".
+         *         Valid options vary by index type.
          * </ul>
          * The default value is an empty map.
          */

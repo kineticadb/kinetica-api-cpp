@@ -149,8 +149,11 @@ namespace gpudb
          *                                         store.  These changes
          *                                         include updates to the
          *                                         vector store, object store,
-         *                                         and text search store, Value
-         *                                         string is ignored
+         *                                         and text search store.
+         *                                         Value string can be 'true',
+         *                                         'false' or 'text_search' to
+         *                                         flush the text search store
+         *                                         only.
          *                                     <li>@ref
          *                                         gpudb::alter_system_properties_clear_cache
          *                                         "alter_system_properties_clear_cache":
@@ -167,8 +170,8 @@ namespace gpudb
          *                                         "alter_system_properties_communicator_test":
          *                                         Invoke the communicator test
          *                                         and report timing results.
-         *                                         Value string is is a
-         *                                         semicolon separated list of
+         *                                         Value string is a semicolon
+         *                                         separated list of
          *                                         [key]=[value] expressions.
          *                                         Expressions are:
          *                                         num_transactions=[num] where
@@ -522,7 +525,8 @@ namespace gpudb
          *         "alter_system_properties_flush_to_disk": Flushes any changes
          *         to any tables to the persistent store.  These changes
          *         include updates to the vector store, object store, and text
-         *         search store, Value string is ignored
+         *         search store.  Value string can be 'true', 'false' or
+         *         'text_search' to flush the text search store only.
          *     <li>@ref gpudb::alter_system_properties_clear_cache
          *         "alter_system_properties_clear_cache": Clears cached
          *         results.  Useful to allow repeated timing of endpoints.
@@ -532,7 +536,7 @@ namespace gpudb
          *     <li>@ref gpudb::alter_system_properties_communicator_test
          *         "alter_system_properties_communicator_test": Invoke the
          *         communicator test and report timing results. Value string is
-         *         is a semicolon separated list of [key]=[value] expressions.
+         *         a semicolon separated list of [key]=[value] expressions.
          *         Expressions are: num_transactions=[num] where num is the
          *         number of request reply transactions to invoke per test;
          *         message_size=[bytes] where bytes is the size in bytes of the
