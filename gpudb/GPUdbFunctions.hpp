@@ -1798,6 +1798,13 @@ AdminShowJobsResponse& adminShowJobs( const AdminShowJobsRequest& request_,
  *                         <li> gpudb::admin_show_jobs_false
  *                 </ul>
  *                 The default value is gpudb::admin_show_jobs_false.
+ *                         <li> gpudb::admin_show_jobs_show_worker_info: If @a
+ *                 true, then information is also returned from worker ranks.
+ *                 By default only status from the head rank is returned.
+ *                 <ul>
+ *                         <li> gpudb::admin_show_jobs_true
+ *                         <li> gpudb::admin_show_jobs_false
+ *                 </ul>
  *                 </ul>
  * 
  * @return Response object containing the result of the operation.
@@ -1820,6 +1827,13 @@ AdminShowJobsResponse adminShowJobs( const std::map<std::string, std::string>& o
  *                         <li> gpudb::admin_show_jobs_false
  *                 </ul>
  *                 The default value is gpudb::admin_show_jobs_false.
+ *                         <li> gpudb::admin_show_jobs_show_worker_info: If @a
+ *                 true, then information is also returned from worker ranks.
+ *                 By default only status from the head rank is returned.
+ *                 <ul>
+ *                         <li> gpudb::admin_show_jobs_true
+ *                         <li> gpudb::admin_show_jobs_false
+ *                 </ul>
  *                 </ul>
  * @param[out] response_  Response object containing the results of the
  *                        operation.
@@ -6230,7 +6244,8 @@ AlterEnvironmentResponse& alterEnvironment( const AlterEnvironmentRequest& reque
  * @param action  Modification operation to be applied
  *                <ul>
  *                        <li> gpudb::alter_environment_install_package:
- *                Install a python package
+ *                Install a python package from PyPI, an external data source
+ *                or KiFS
  *                        <li> gpudb::alter_environment_install_requirements:
  *                Install packages from a requirements file
  *                        <li> gpudb::alter_environment_uninstall_package:
@@ -6278,7 +6293,8 @@ AlterEnvironmentResponse alterEnvironment( const std::string& environmentName,
  * @param action  Modification operation to be applied
  *                <ul>
  *                        <li> gpudb::alter_environment_install_package:
- *                Install a python package
+ *                Install a python package from PyPI, an external data source
+ *                or KiFS
  *                        <li> gpudb::alter_environment_install_requirements:
  *                Install packages from a requirements file
  *                        <li> gpudb::alter_environment_uninstall_package:
@@ -6977,7 +6993,7 @@ AlterSystemPropertiesResponse& alterSystemProperties( const AlterSystemPropertie
  *                                    <li>
  *                            gpudb::alter_system_properties_communicator_test:
  *                            Invoke the communicator test and report timing
- *                            results. Value string is is a semicolon separated
+ *                            results. Value string is a semicolon separated
  *                            list of [key]=[value] expressions.  Expressions
  *                            are: num_transactions=[num] where num is the
  *                            number of request reply transactions to invoke
@@ -7098,6 +7114,13 @@ AlterSystemPropertiesResponse& alterSystemProperties( const AlterSystemPropertie
  *                                    <li>
  *                            gpudb::alter_system_properties_ai_api_connection_timeout:
  *                            AI API connection timeout in seconds
+ *                                    <li>
+ *                            gpudb::alter_system_properties_postgres_proxy_idle_connection_timeout:
+ *                            Idle connection timeout in seconds
+ *                                    <li>
+ *                            gpudb::alter_system_properties_postgres_proxy_keep_alive:
+ *                            Enable  postgres proxy keep alive.  The default
+ *                            value is 'false'.
  *                            </ul>
  * @param options  Optional parameters.
  *                 <ul>
@@ -7204,7 +7227,7 @@ AlterSystemPropertiesResponse alterSystemProperties( const std::map<std::string,
  *                                    <li>
  *                            gpudb::alter_system_properties_communicator_test:
  *                            Invoke the communicator test and report timing
- *                            results. Value string is is a semicolon separated
+ *                            results. Value string is a semicolon separated
  *                            list of [key]=[value] expressions.  Expressions
  *                            are: num_transactions=[num] where num is the
  *                            number of request reply transactions to invoke
@@ -7325,6 +7348,13 @@ AlterSystemPropertiesResponse alterSystemProperties( const std::map<std::string,
  *                                    <li>
  *                            gpudb::alter_system_properties_ai_api_connection_timeout:
  *                            AI API connection timeout in seconds
+ *                                    <li>
+ *                            gpudb::alter_system_properties_postgres_proxy_idle_connection_timeout:
+ *                            Idle connection timeout in seconds
+ *                                    <li>
+ *                            gpudb::alter_system_properties_postgres_proxy_keep_alive:
+ *                            Enable  postgres proxy keep alive.  The default
+ *                            value is 'false'.
  *                            </ul>
  * @param options  Optional parameters.
  *                 <ul>
@@ -7370,12 +7400,14 @@ AlterSystemPropertiesResponse& alterSystemProperties( const std::map<std::string
  * <p>
  * External tables cannot be modified except for their refresh method.
  * <p>
- * Create or delete an <a href="../../../concepts/indexes/#column-index"
- * target="_top">index</a> on a
- * particular column. This can speed up certain operations when using
- * expressions
- * containing equality or relational operators on indexed columns. This only
- * applies to tables.
+ * Create or delete a <a href="../../../concepts/indexes/#column-index"
+ * target="_top">column</a>,
+ * <a href="../../../concepts/indexes/#chunk-skip-index" target="_top">chunk
+ * skip</a>, or
+ * <a href="../../../concepts/indexes/#geospatial-index"
+ * target="_top">geospatial</a> index. This can speed up
+ * certain operations when using expressions containing equality or relational
+ * operators on indexed columns. This only applies to tables.
  * <p>
  * Create or delete a <a href="../../../concepts/tables/#foreign-key"
  * target="_top">foreign key</a>
@@ -7431,12 +7463,14 @@ AlterTableResponse alterTable( const AlterTableRequest& request_ ) const;
  * <p>
  * External tables cannot be modified except for their refresh method.
  * <p>
- * Create or delete an <a href="../../../concepts/indexes/#column-index"
- * target="_top">index</a> on a
- * particular column. This can speed up certain operations when using
- * expressions
- * containing equality or relational operators on indexed columns. This only
- * applies to tables.
+ * Create or delete a <a href="../../../concepts/indexes/#column-index"
+ * target="_top">column</a>,
+ * <a href="../../../concepts/indexes/#chunk-skip-index" target="_top">chunk
+ * skip</a>, or
+ * <a href="../../../concepts/indexes/#geospatial-index"
+ * target="_top">geospatial</a> index. This can speed up
+ * certain operations when using expressions containing equality or relational
+ * operators on indexed columns. This only applies to tables.
  * <p>
  * Create or delete a <a href="../../../concepts/tables/#foreign-key"
  * target="_top">foreign key</a>
@@ -7496,12 +7530,14 @@ AlterTableResponse& alterTable( const AlterTableRequest& request_,
  * <p>
  * External tables cannot be modified except for their refresh method.
  * <p>
- * Create or delete an <a href="../../../concepts/indexes/#column-index"
- * target="_top">index</a> on a
- * particular column. This can speed up certain operations when using
- * expressions
- * containing equality or relational operators on indexed columns. This only
- * applies to tables.
+ * Create or delete a <a href="../../../concepts/indexes/#column-index"
+ * target="_top">column</a>,
+ * <a href="../../../concepts/indexes/#chunk-skip-index" target="_top">chunk
+ * skip</a>, or
+ * <a href="../../../concepts/indexes/#geospatial-index"
+ * target="_top">geospatial</a> index. This can speed up
+ * certain operations when using expressions containing equality or relational
+ * operators on indexed columns. This only applies to tables.
  * <p>
  * Create or delete a <a href="../../../concepts/tables/#foreign-key"
  * target="_top">foreign key</a>
@@ -7537,40 +7573,48 @@ AlterTableResponse& alterTable( const AlterTableRequest& request_,
  * can be set to read-only, write-only, read/write, and no access.
  * 
  * @param tableName  Table on which the operation will be performed, in
- *                   [schema_name.]table_name format, using standard <a
+ *                   [schema_name.]table_name format,
+ *                   using standard <a
  *                   href="../../../concepts/tables/#table-name-resolution"
- *                   target="_top">name resolution rules</a>.  Must be an
- *                   existing table or view.
+ *                   target="_top">name resolution rules</a>.
+ *                   Must be an existing table or view.
  * @param action  Modification operation to be applied
  *                <ul>
  *                        <li> gpudb::alter_table_allow_homogeneous_tables: No
  *                longer supported; action will be ignored.
- *                        <li> gpudb::alter_table_create_index: Creates either
- *                a <a href="../../../concepts/indexes/#column-index"
- *                target="_top">column (attribute) index</a> or <a
- *                href="../../../concepts/indexes/#chunk-skip-index"
- *                target="_top">chunk skip index</a>, depending on the
- *                specified @a index_type, on the column name specified in @a
- *                value. If this column already has the specified index, an
- *                error will be returned.
- *                        <li> gpudb::alter_table_delete_index: Deletes either
- *                a <a href="../../../concepts/indexes/#column-index"
- *                target="_top">column (attribute) index</a> or <a
- *                href="../../../concepts/indexes/#chunk-skip-index"
- *                target="_top">chunk skip index</a>, depending on the
- *                specified @a index_type, on the column name specified in @a
- *                value. If this column does not have the specified index, an
- *                error will be returned.
+ *                        <li> gpudb::alter_table_create_index: Creates a <a
+ *                href="../../../concepts/indexes/#column-index"
+ *                target="_top">column (attribute) index</a>,
+ *                <a href="../../../concepts/indexes/#chunk-skip-index"
+ *                target="_top">chunk skip index</a>, or
+ *                <a href="../../../concepts/indexes/#geospatial-index"
+ *                target="_top">geospatial index</a>
+ *                (depending on the specified @a index_type), on the column
+ *                name specified in @a value.
+ *                If this column already has the specified index, an error will
+ *                be returned.
+ *                        <li> gpudb::alter_table_delete_index: Deletes a <a
+ *                href="../../../concepts/indexes/#column-index"
+ *                target="_top">column (attribute) index</a>,
+ *                <a href="../../../concepts/indexes/#chunk-skip-index"
+ *                target="_top">chunk skip index</a>, or
+ *                <a href="../../../concepts/indexes/#geospatial-index"
+ *                target="_top">geospatial index</a>
+ *                (depending on the specified @a index_type), on the column
+ *                name specified in @a value.
+ *                If this column does not have the specified index, an error
+ *                will be returned.
  *                        <li> gpudb::alter_table_move_to_collection:
  *                [DEPRECATED--please use @a move_to_schema and use
  *                /create/schema to create the schema if non-existent]  Moves a
  *                table or view into a schema named @a value.  If the schema
  *                provided is non-existent, it will be automatically created.
  *                        <li> gpudb::alter_table_move_to_schema: Moves a table
- *                or view into a schema named @a value.  If the schema provided
- *                is nonexistent, an error will be thrown. If @a value is
- *                empty, then the table or view will be placed in the user's
- *                default schema.
+ *                or view into a schema named @a value.
+ *                If the schema provided is nonexistent, an error will be
+ *                thrown.
+ *                If @a value is empty, then the table or view will be placed
+ *                in the user's default schema.
  *                        <li> gpudb::alter_table_protected: No longer used.
  *                Previously set whether the given @a tableName should be
  *                protected or not. The @a value would have been either 'true'
@@ -7584,17 +7628,18 @@ AlterTableResponse& alterTable( const AlterTableRequest& request_,
  *                in minutes of the table or view specified in @a tableName.
  *                        <li> gpudb::alter_table_add_column: Adds the column
  *                specified in @a value to the table specified in @a tableName.
- *                Use @a column_type and @a column_properties in @a options to
- *                set the column's type and properties, respectively.
+ *                Use @a column_type and @a column_properties in @a options
+ *                to set the column's type and properties, respectively.
  *                        <li> gpudb::alter_table_change_column: Changes type
- *                and properties of the column specified in @a value.  Use @a
- *                column_type and @a column_properties in @a options to set the
- *                column's type and properties, respectively. Note that primary
- *                key and/or shard key columns cannot be changed. All
- *                unchanging column properties must be listed for the change to
- *                take place, e.g., to add dictionary encoding to an existing
- *                'char4' column, both 'char4' and 'dict' must be specified in
- *                the @a options map.
+ *                and properties of the column specified in @a value.
+ *                Use @a column_type and @a column_properties in @a options to
+ *                set
+ *                the column's type and properties, respectively. Note that
+ *                primary key and/or shard key columns cannot be changed.
+ *                All unchanging column properties must be listed for the
+ *                change to take place, e.g., to add dictionary encoding to
+ *                an existing 'char4' column, both 'char4' and 'dict' must be
+ *                specified in the @a options map.
  *                        <li> gpudb::alter_table_set_column_compression: No
  *                longer supported; action will be ignored.
  *                        <li> gpudb::alter_table_delete_column: Deletes the
@@ -7695,27 +7740,29 @@ AlterTableResponse& alterTable( const AlterTableRequest& request_,
  *                        <li>
  *                gpudb::alter_table_cancel_datasource_subscription:
  *                Permanently unsubscribe a data source that is loading
- *                continuously as a stream. The data source can be kafka / S3 /
+ *                continuously as a stream. The data source can be Kafka / S3 /
  *                Azure.
  *                        <li>
  *                gpudb::alter_table_pause_datasource_subscription: Temporarily
  *                unsubscribe a data source that is loading continuously as a
- *                stream. The data source can be kafka / S3 / Azure.
+ *                stream. The data source can be Kafka / S3 / Azure.
  *                        <li>
  *                gpudb::alter_table_resume_datasource_subscription:
  *                Resubscribe to a paused data source subscription. The data
- *                source can be kafka / S3 / Azure.
+ *                source can be Kafka / S3 / Azure.
  *                        <li> gpudb::alter_table_change_owner: Change the
  *                owner resource group of the table.
  *                </ul>
- * @param value  The value of the modification, depending on @a action.  For
- *               example, if @a action is @a add_column, this would be the
- *               column name; while the column's definition would be covered by
- *               the @a column_type, @a column_properties, @a
- *               column_default_value, and @a add_column_expression in @a
- *               options.  If @a action is @a ttl, it would be the number of
- *               minutes for the new TTL. If @a action is @a refresh, this
- *               field would be blank.
+ * @param value  The value of the modification, depending on @a action.
+ *               For example, if @a action is @a add_column, this would be the
+ *               column name;
+ *               while the column's definition would be covered by the @a
+ *               column_type,
+ *               @a column_properties, @a column_default_value,
+ *               and @a add_column_expression in @a options.
+ *               If @a action is @a ttl, it would be the number of minutes for
+ *               the new TTL.
+ *               If @a action is @a refresh, this field would be blank.
  * @param options  Optional parameters.
  *                 <ul>
  *                         <li> gpudb::alter_table_action
@@ -7780,8 +7827,8 @@ AlterTableResponse& alterTable( const AlterTableRequest& request_,
  *                 columns when @a action is @a set_strategy_definition,
  *                 replacing the existing tier strategy in its entirety.
  *                         <li> gpudb::alter_table_index_type: Type of index to
- *                 create, when @a action is @a create_index, or to delete,
- *                 when @a action is @a delete_index.
+ *                 create, when @a action is @a create_index,
+ *                 or to delete, when @a action is @a delete_index.
  *                 <ul>
  *                         <li> gpudb::alter_table_column: Create or delete a
  *                 <a href="../../../concepts/indexes/#column-index"
@@ -7816,12 +7863,14 @@ AlterTableResponse alterTable( const std::string& tableName,
  * <p>
  * External tables cannot be modified except for their refresh method.
  * <p>
- * Create or delete an <a href="../../../concepts/indexes/#column-index"
- * target="_top">index</a> on a
- * particular column. This can speed up certain operations when using
- * expressions
- * containing equality or relational operators on indexed columns. This only
- * applies to tables.
+ * Create or delete a <a href="../../../concepts/indexes/#column-index"
+ * target="_top">column</a>,
+ * <a href="../../../concepts/indexes/#chunk-skip-index" target="_top">chunk
+ * skip</a>, or
+ * <a href="../../../concepts/indexes/#geospatial-index"
+ * target="_top">geospatial</a> index. This can speed up
+ * certain operations when using expressions containing equality or relational
+ * operators on indexed columns. This only applies to tables.
  * <p>
  * Create or delete a <a href="../../../concepts/tables/#foreign-key"
  * target="_top">foreign key</a>
@@ -7857,40 +7906,48 @@ AlterTableResponse alterTable( const std::string& tableName,
  * can be set to read-only, write-only, read/write, and no access.
  * 
  * @param tableName  Table on which the operation will be performed, in
- *                   [schema_name.]table_name format, using standard <a
+ *                   [schema_name.]table_name format,
+ *                   using standard <a
  *                   href="../../../concepts/tables/#table-name-resolution"
- *                   target="_top">name resolution rules</a>.  Must be an
- *                   existing table or view.
+ *                   target="_top">name resolution rules</a>.
+ *                   Must be an existing table or view.
  * @param action  Modification operation to be applied
  *                <ul>
  *                        <li> gpudb::alter_table_allow_homogeneous_tables: No
  *                longer supported; action will be ignored.
- *                        <li> gpudb::alter_table_create_index: Creates either
- *                a <a href="../../../concepts/indexes/#column-index"
- *                target="_top">column (attribute) index</a> or <a
- *                href="../../../concepts/indexes/#chunk-skip-index"
- *                target="_top">chunk skip index</a>, depending on the
- *                specified @a index_type, on the column name specified in @a
- *                value. If this column already has the specified index, an
- *                error will be returned.
- *                        <li> gpudb::alter_table_delete_index: Deletes either
- *                a <a href="../../../concepts/indexes/#column-index"
- *                target="_top">column (attribute) index</a> or <a
- *                href="../../../concepts/indexes/#chunk-skip-index"
- *                target="_top">chunk skip index</a>, depending on the
- *                specified @a index_type, on the column name specified in @a
- *                value. If this column does not have the specified index, an
- *                error will be returned.
+ *                        <li> gpudb::alter_table_create_index: Creates a <a
+ *                href="../../../concepts/indexes/#column-index"
+ *                target="_top">column (attribute) index</a>,
+ *                <a href="../../../concepts/indexes/#chunk-skip-index"
+ *                target="_top">chunk skip index</a>, or
+ *                <a href="../../../concepts/indexes/#geospatial-index"
+ *                target="_top">geospatial index</a>
+ *                (depending on the specified @a index_type), on the column
+ *                name specified in @a value.
+ *                If this column already has the specified index, an error will
+ *                be returned.
+ *                        <li> gpudb::alter_table_delete_index: Deletes a <a
+ *                href="../../../concepts/indexes/#column-index"
+ *                target="_top">column (attribute) index</a>,
+ *                <a href="../../../concepts/indexes/#chunk-skip-index"
+ *                target="_top">chunk skip index</a>, or
+ *                <a href="../../../concepts/indexes/#geospatial-index"
+ *                target="_top">geospatial index</a>
+ *                (depending on the specified @a index_type), on the column
+ *                name specified in @a value.
+ *                If this column does not have the specified index, an error
+ *                will be returned.
  *                        <li> gpudb::alter_table_move_to_collection:
  *                [DEPRECATED--please use @a move_to_schema and use
  *                /create/schema to create the schema if non-existent]  Moves a
  *                table or view into a schema named @a value.  If the schema
  *                provided is non-existent, it will be automatically created.
  *                        <li> gpudb::alter_table_move_to_schema: Moves a table
- *                or view into a schema named @a value.  If the schema provided
- *                is nonexistent, an error will be thrown. If @a value is
- *                empty, then the table or view will be placed in the user's
- *                default schema.
+ *                or view into a schema named @a value.
+ *                If the schema provided is nonexistent, an error will be
+ *                thrown.
+ *                If @a value is empty, then the table or view will be placed
+ *                in the user's default schema.
  *                        <li> gpudb::alter_table_protected: No longer used.
  *                Previously set whether the given @a tableName should be
  *                protected or not. The @a value would have been either 'true'
@@ -7904,17 +7961,18 @@ AlterTableResponse alterTable( const std::string& tableName,
  *                in minutes of the table or view specified in @a tableName.
  *                        <li> gpudb::alter_table_add_column: Adds the column
  *                specified in @a value to the table specified in @a tableName.
- *                Use @a column_type and @a column_properties in @a options to
- *                set the column's type and properties, respectively.
+ *                Use @a column_type and @a column_properties in @a options
+ *                to set the column's type and properties, respectively.
  *                        <li> gpudb::alter_table_change_column: Changes type
- *                and properties of the column specified in @a value.  Use @a
- *                column_type and @a column_properties in @a options to set the
- *                column's type and properties, respectively. Note that primary
- *                key and/or shard key columns cannot be changed. All
- *                unchanging column properties must be listed for the change to
- *                take place, e.g., to add dictionary encoding to an existing
- *                'char4' column, both 'char4' and 'dict' must be specified in
- *                the @a options map.
+ *                and properties of the column specified in @a value.
+ *                Use @a column_type and @a column_properties in @a options to
+ *                set
+ *                the column's type and properties, respectively. Note that
+ *                primary key and/or shard key columns cannot be changed.
+ *                All unchanging column properties must be listed for the
+ *                change to take place, e.g., to add dictionary encoding to
+ *                an existing 'char4' column, both 'char4' and 'dict' must be
+ *                specified in the @a options map.
  *                        <li> gpudb::alter_table_set_column_compression: No
  *                longer supported; action will be ignored.
  *                        <li> gpudb::alter_table_delete_column: Deletes the
@@ -8015,27 +8073,29 @@ AlterTableResponse alterTable( const std::string& tableName,
  *                        <li>
  *                gpudb::alter_table_cancel_datasource_subscription:
  *                Permanently unsubscribe a data source that is loading
- *                continuously as a stream. The data source can be kafka / S3 /
+ *                continuously as a stream. The data source can be Kafka / S3 /
  *                Azure.
  *                        <li>
  *                gpudb::alter_table_pause_datasource_subscription: Temporarily
  *                unsubscribe a data source that is loading continuously as a
- *                stream. The data source can be kafka / S3 / Azure.
+ *                stream. The data source can be Kafka / S3 / Azure.
  *                        <li>
  *                gpudb::alter_table_resume_datasource_subscription:
  *                Resubscribe to a paused data source subscription. The data
- *                source can be kafka / S3 / Azure.
+ *                source can be Kafka / S3 / Azure.
  *                        <li> gpudb::alter_table_change_owner: Change the
  *                owner resource group of the table.
  *                </ul>
- * @param value  The value of the modification, depending on @a action.  For
- *               example, if @a action is @a add_column, this would be the
- *               column name; while the column's definition would be covered by
- *               the @a column_type, @a column_properties, @a
- *               column_default_value, and @a add_column_expression in @a
- *               options.  If @a action is @a ttl, it would be the number of
- *               minutes for the new TTL. If @a action is @a refresh, this
- *               field would be blank.
+ * @param value  The value of the modification, depending on @a action.
+ *               For example, if @a action is @a add_column, this would be the
+ *               column name;
+ *               while the column's definition would be covered by the @a
+ *               column_type,
+ *               @a column_properties, @a column_default_value,
+ *               and @a add_column_expression in @a options.
+ *               If @a action is @a ttl, it would be the number of minutes for
+ *               the new TTL.
+ *               If @a action is @a refresh, this field would be blank.
  * @param options  Optional parameters.
  *                 <ul>
  *                         <li> gpudb::alter_table_action
@@ -8100,8 +8160,8 @@ AlterTableResponse alterTable( const std::string& tableName,
  *                 columns when @a action is @a set_strategy_definition,
  *                 replacing the existing tier strategy in its entirety.
  *                         <li> gpudb::alter_table_index_type: Type of index to
- *                 create, when @a action is @a create_index, or to delete,
- *                 when @a action is @a delete_index.
+ *                 create, when @a action is @a create_index,
+ *                 or to delete, when @a action is @a delete_index.
  *                 <ul>
  *                         <li> gpudb::alter_table_column: Create or delete a
  *                 <a href="../../../concepts/indexes/#column-index"
@@ -10152,6 +10212,8 @@ CreateDatasourceResponse& createDatasource( const CreateDatasourceRequest& reque
  *                         <li>
  *                 gpudb::create_datasource_schema_registry_credential:
  *                 Confluent Schema registry Credential object name.
+ *                         <li> gpudb::create_datasource_schema_registry_port:
+ *                 Confluent Schema registry port (optional).
  *                 </ul>
  * 
  * @return Response object containing the result of the operation.
@@ -10298,6 +10360,8 @@ CreateDatasourceResponse createDatasource( const std::string& name,
  *                         <li>
  *                 gpudb::create_datasource_schema_registry_credential:
  *                 Confluent Schema registry Credential object name.
+ *                         <li> gpudb::create_datasource_schema_registry_port:
+ *                 Confluent Schema registry port (optional).
  *                 </ul>
  * @param[out] response_  Response object containing the results of the
  *                        operation.
@@ -10782,6 +10846,15 @@ CreateGraphResponse& createGraph( const CreateGraphRequest& request_,
  *                 provided the label string will be split according to this
  *                 delimiter and each sub-string will be applied as a separate
  *                 label onto the specified edge.  The default value is ''.
+ *                         <li> gpudb::create_graph_allow_multiple_edges:
+ *                 Multigraph choice; allowing multiple edges with the same
+ *                 node pairs if set to true, otherwise, new edges with
+ *                 existing same node pairs will not be inserted.
+ *                 <ul>
+ *                         <li> gpudb::create_graph_true
+ *                         <li> gpudb::create_graph_false
+ *                 </ul>
+ *                 The default value is gpudb::create_graph_true.
  *                 </ul>
  * 
  * @return Response object containing the result of the operation.
@@ -10977,6 +11050,15 @@ CreateGraphResponse createGraph( const std::string& graphName,
  *                 provided the label string will be split according to this
  *                 delimiter and each sub-string will be applied as a separate
  *                 label onto the specified edge.  The default value is ''.
+ *                         <li> gpudb::create_graph_allow_multiple_edges:
+ *                 Multigraph choice; allowing multiple edges with the same
+ *                 node pairs if set to true, otherwise, new edges with
+ *                 existing same node pairs will not be inserted.
+ *                 <ul>
+ *                         <li> gpudb::create_graph_true
+ *                         <li> gpudb::create_graph_false
+ *                 </ul>
+ *                 The default value is gpudb::create_graph_true.
  *                 </ul>
  * @param[out] response_  Response object containing the results of the
  *                        operation.
@@ -13695,8 +13777,7 @@ CreateTableExternalResponse& createTableExternal( const CreateTableExternalReque
  *                 no data strictly accessible to the head
  *                 node will be loaded.
  *                 </ul>
- *                 The default value is
- *                 gpudb::create_table_external_distributed_shared.
+ *                 The default value is gpudb::create_table_external_head.
  *                         <li> gpudb::create_table_external_local_time_offset:
  *                 For Avro local timestamp columns
  *                         <li>
@@ -14431,8 +14512,7 @@ CreateTableExternalResponse createTableExternal( const std::string& tableName,
  *                 no data strictly accessible to the head
  *                 node will be loaded.
  *                 </ul>
- *                 The default value is
- *                 gpudb::create_table_external_distributed_shared.
+ *                 The default value is gpudb::create_table_external_head.
  *                         <li> gpudb::create_table_external_local_time_offset:
  *                 For Avro local timestamp columns
  *                         <li>
@@ -14756,7 +14836,7 @@ CreateTableMonitorResponse& createTableMonitor( const CreateTableMonitorRequest&
  *                 </ul>
  *                 The default value is gpudb::create_table_monitor_insert.
  *                         <li> gpudb::create_table_monitor_monitor_id: ID to
- *                 to use for this monitor instead of a randomly generated one
+ *                 use for this monitor instead of a randomly generated one
  *                         <li> gpudb::create_table_monitor_datasink_name: Name
  *                 of an existing <a href="../../../concepts/data_sinks/"
  *                 target="_top">data sink</a> to send change data
@@ -14840,7 +14920,7 @@ CreateTableMonitorResponse createTableMonitor( const std::string& tableName,
  *                 </ul>
  *                 The default value is gpudb::create_table_monitor_insert.
  *                         <li> gpudb::create_table_monitor_monitor_id: ID to
- *                 to use for this monitor instead of a randomly generated one
+ *                 use for this monitor instead of a randomly generated one
  *                         <li> gpudb::create_table_monitor_datasink_name: Name
  *                 of an existing <a href="../../../concepts/data_sinks/"
  *                 target="_top">data sink</a> to send change data
@@ -19316,8 +19396,8 @@ ExportRecordsToFilesResponse& exportRecordsToFiles( const std::string& tableName
                                                     ExportRecordsToFilesResponse& response_ ) const;
 
 /**
- * Exports records from source table to  specified target table in an external
- * database
+ * Exports records from source table to the specified target table in an
+ * external database
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -19329,8 +19409,8 @@ ExportRecordsToFilesResponse& exportRecordsToFiles( const std::string& tableName
 ExportRecordsToTableResponse exportRecordsToTable( const ExportRecordsToTableRequest& request_ ) const;
 
 /**
- * Exports records from source table to  specified target table in an external
- * database
+ * Exports records from source table to the specified target table in an
+ * external database
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -19346,8 +19426,8 @@ ExportRecordsToTableResponse& exportRecordsToTable( const ExportRecordsToTableRe
                                                     ExportRecordsToTableResponse& response_ ) const;
 
 /**
- * Exports records from source table to  specified target table in an external
- * database
+ * Exports records from source table to the specified target table in an
+ * external database
  * 
  * @param tableName  Name of the table from which the data will be exported to
  *                   remote database, in
@@ -19360,7 +19440,7 @@ ExportRecordsToTableResponse& exportRecordsToTable( const ExportRecordsToTableRe
  *                 <ul>
  *                         <li> gpudb::export_records_to_table_batch_size:
  *                 Batch size, which determines how many rows to export per
- *                 round trip.
+ *                 round trip.  The default value is '200000'.
  *                         <li> gpudb::export_records_to_table_datasink_name:
  *                 Name of an existing external data sink to which table name
  *                 specified in @a tableName will be exported
@@ -19405,8 +19485,8 @@ ExportRecordsToTableResponse exportRecordsToTable( const std::string& tableName,
                                                    const std::map<std::string, std::string>& options ) const;
 
 /**
- * Exports records from source table to  specified target table in an external
- * database
+ * Exports records from source table to the specified target table in an
+ * external database
  * 
  * @param tableName  Name of the table from which the data will be exported to
  *                   remote database, in
@@ -19419,7 +19499,7 @@ ExportRecordsToTableResponse exportRecordsToTable( const std::string& tableName,
  *                 <ul>
  *                         <li> gpudb::export_records_to_table_batch_size:
  *                 Batch size, which determines how many rows to export per
- *                 round trip.
+ *                 round trip.  The default value is '200000'.
  *                         <li> gpudb::export_records_to_table_datasink_name:
  *                 Name of an existing external data sink to which table name
  *                 specified in @a tableName will be exported
@@ -27913,8 +27993,7 @@ InsertRecordsFromFilesResponse& insertRecordsFromFiles( const InsertRecordsFromF
  *                 no data strictly accessible to the head
  *                 node will be loaded.
  *                 </ul>
- *                 The default value is
- *                 gpudb::insert_records_from_files_distributed_shared.
+ *                 The default value is gpudb::insert_records_from_files_head.
  *                         <li>
  *                 gpudb::insert_records_from_files_local_time_offset: For Avro
  *                 local timestamp columns
@@ -28639,8 +28718,7 @@ InsertRecordsFromFilesResponse insertRecordsFromFiles( const std::string& tableN
  *                 no data strictly accessible to the head
  *                 node will be loaded.
  *                 </ul>
- *                 The default value is
- *                 gpudb::insert_records_from_files_distributed_shared.
+ *                 The default value is gpudb::insert_records_from_files_head.
  *                         <li>
  *                 gpudb::insert_records_from_files_local_time_offset: For Avro
  *                 local timestamp columns
@@ -30586,6 +30664,15 @@ InsertRecordsFromQueryResponse& insertRecordsFromQuery( const InsertRecordsFromQ
  *                 Alias name for remote_query_filter_column.  The default
  *                 value is ''.
  *                         <li>
+ *                 gpudb::insert_records_from_query_truncate_strings: If set to
+ *                 @a true, truncate string values that are longer than the
+ *                 column's type size.
+ *                 <ul>
+ *                         <li> gpudb::insert_records_from_query_true
+ *                         <li> gpudb::insert_records_from_query_false
+ *                 </ul>
+ *                 The default value is gpudb::insert_records_from_query_false.
+ *                         <li>
  *                 gpudb::insert_records_from_query_update_on_existing_pk:
  *                 Specifies the record collision policy for inserting into a
  *                 table
@@ -30944,6 +31031,15 @@ InsertRecordsFromQueryResponse insertRecordsFromQuery( const std::string& tableN
  *                 gpudb::insert_records_from_query_remote_query_partition_column:
  *                 Alias name for remote_query_filter_column.  The default
  *                 value is ''.
+ *                         <li>
+ *                 gpudb::insert_records_from_query_truncate_strings: If set to
+ *                 @a true, truncate string values that are longer than the
+ *                 column's type size.
+ *                 <ul>
+ *                         <li> gpudb::insert_records_from_query_true
+ *                         <li> gpudb::insert_records_from_query_false
+ *                 </ul>
+ *                 The default value is gpudb::insert_records_from_query_false.
  *                         <li>
  *                 gpudb::insert_records_from_query_update_on_existing_pk:
  *                 Specifies the record collision policy for inserting into a
@@ -31857,7 +31953,7 @@ LockTableResponse& lockTable( const std::string& tableName,
  * <a href="../../../guides/graph_rest_guide/" target="_top">Graph REST
  * Tutorial</a>,
  * and/or some
- * <a href="../../../guide-tags/graph-match/" target="_top">/match/graph
+ * <a href="../../../guide-tags/graph---match/" target="_top">/match/graph
  * examples</a>
  * before using this endpoint.
  * 
@@ -31883,7 +31979,7 @@ MatchGraphResponse matchGraph( const MatchGraphRequest& request_ ) const;
  * <a href="../../../guides/graph_rest_guide/" target="_top">Graph REST
  * Tutorial</a>,
  * and/or some
- * <a href="../../../guide-tags/graph-match/" target="_top">/match/graph
+ * <a href="../../../guide-tags/graph---match/" target="_top">/match/graph
  * examples</a>
  * before using this endpoint.
  * 
@@ -31913,7 +32009,7 @@ MatchGraphResponse& matchGraph( const MatchGraphRequest& request_,
  * <a href="../../../guides/graph_rest_guide/" target="_top">Graph REST
  * Tutorial</a>,
  * and/or some
- * <a href="../../../guide-tags/graph-match/" target="_top">/match/graph
+ * <a href="../../../guide-tags/graph---match/" target="_top">/match/graph
  * examples</a>
  * before using this endpoint.
  * 
@@ -31973,6 +32069,8 @@ MatchGraphResponse& matchGraph( const MatchGraphRequest& request_,
  *                             <li> gpudb::match_graph_match_clusters: Matches
  *                     the graph nodes with a cluster index using Louvain
  *                     clustering algorithm
+ *                             <li> gpudb::match_graph_match_pattern: Matches a
+ *                     pattern in the graph
  *                     </ul>
  *                     The default value is gpudb::match_graph_markov_chain.
  * @param solutionTable  The name of the table used to store the results, in
@@ -32283,6 +32381,14 @@ MatchGraphResponse& matchGraph( const MatchGraphRequest& request_,
  *                         <li> gpudb::match_graph_false
  *                 </ul>
  *                 The default value is gpudb::match_graph_true.
+ *                         <li> gpudb::match_graph_force_undirected: For the @a
+ *                 match_pattern solver only. Pattern matching will be using
+ *                 both pattern and graph as undirected if set to true.
+ *                 <ul>
+ *                         <li> gpudb::match_graph_true
+ *                         <li> gpudb::match_graph_false
+ *                 </ul>
+ *                 The default value is gpudb::match_graph_false.
  *                 </ul>
  * 
  * @return Response object containing the result of the operation.
@@ -32308,7 +32414,7 @@ MatchGraphResponse matchGraph( const std::string& graphName,
  * <a href="../../../guides/graph_rest_guide/" target="_top">Graph REST
  * Tutorial</a>,
  * and/or some
- * <a href="../../../guide-tags/graph-match/" target="_top">/match/graph
+ * <a href="../../../guide-tags/graph---match/" target="_top">/match/graph
  * examples</a>
  * before using this endpoint.
  * 
@@ -32368,6 +32474,8 @@ MatchGraphResponse matchGraph( const std::string& graphName,
  *                             <li> gpudb::match_graph_match_clusters: Matches
  *                     the graph nodes with a cluster index using Louvain
  *                     clustering algorithm
+ *                             <li> gpudb::match_graph_match_pattern: Matches a
+ *                     pattern in the graph
  *                     </ul>
  *                     The default value is gpudb::match_graph_markov_chain.
  * @param solutionTable  The name of the table used to store the results, in
@@ -32678,6 +32786,14 @@ MatchGraphResponse matchGraph( const std::string& graphName,
  *                         <li> gpudb::match_graph_false
  *                 </ul>
  *                 The default value is gpudb::match_graph_true.
+ *                         <li> gpudb::match_graph_force_undirected: For the @a
+ *                 match_pattern solver only. Pattern matching will be using
+ *                 both pattern and graph as undirected if set to true.
+ *                 <ul>
+ *                         <li> gpudb::match_graph_true
+ *                         <li> gpudb::match_graph_false
+ *                 </ul>
+ *                 The default value is gpudb::match_graph_false.
  *                 </ul>
  * @param[out] response_  Response object containing the results of the
  *                        operation.
@@ -32965,11 +33081,11 @@ MergeRecordsResponse& mergeRecords( const std::string& tableName,
 /**
  * Update an existing graph network using given nodes, edges, weights,
  * restrictions, and options.
- * <p>
+
  * IMPORTANT: It's highly recommended that you review the
  * <a href="../../../graph_solver/network_graph_solver/" target="_top">Network
  * Graphs & Solvers</a>
- * concepts documentation and
+ * concepts documentation, and
  * <a href="../../../guides/graph_rest_guide/" target="_top">Graph REST
  * Tutorial</a>
  * before using this endpoint.
@@ -32986,11 +33102,11 @@ ModifyGraphResponse modifyGraph( const ModifyGraphRequest& request_ ) const;
 /**
  * Update an existing graph network using given nodes, edges, weights,
  * restrictions, and options.
- * <p>
+
  * IMPORTANT: It's highly recommended that you review the
  * <a href="../../../graph_solver/network_graph_solver/" target="_top">Network
  * Graphs & Solvers</a>
- * concepts documentation and
+ * concepts documentation, and
  * <a href="../../../guides/graph_rest_guide/" target="_top">Graph REST
  * Tutorial</a>
  * before using this endpoint.
@@ -33011,11 +33127,11 @@ ModifyGraphResponse& modifyGraph( const ModifyGraphRequest& request_,
 /**
  * Update an existing graph network using given nodes, edges, weights,
  * restrictions, and options.
- * <p>
+
  * IMPORTANT: It's highly recommended that you review the
  * <a href="../../../graph_solver/network_graph_solver/" target="_top">Network
  * Graphs & Solvers</a>
- * concepts documentation and
+ * concepts documentation, and
  * <a href="../../../guides/graph_rest_guide/" target="_top">Graph REST
  * Tutorial</a>
  * before using this endpoint.
@@ -33194,6 +33310,19 @@ ModifyGraphResponse& modifyGraph( const ModifyGraphRequest& request_,
  *                         <li> gpudb::modify_graph_false
  *                 </ul>
  *                 The default value is gpudb::modify_graph_true.
+ *                         <li> gpudb::modify_graph_label_delimiter: If
+ *                 provided the label string will be split according to this
+ *                 delimiter and each sub-string will be applied as a separate
+ *                 label onto the specified edge.  The default value is ''.
+ *                         <li> gpudb::modify_graph_allow_multiple_edges:
+ *                 Multigraph choice; allowing multiple edges with the same
+ *                 node pairs if set to true, otherwise, new edges with
+ *                 existing same node pairs will not be inserted.
+ *                 <ul>
+ *                         <li> gpudb::modify_graph_true
+ *                         <li> gpudb::modify_graph_false
+ *                 </ul>
+ *                 The default value is gpudb::modify_graph_true.
  *                 </ul>
  * 
  * @return Response object containing the result of the operation.
@@ -33210,11 +33339,11 @@ ModifyGraphResponse modifyGraph( const std::string& graphName,
 /**
  * Update an existing graph network using given nodes, edges, weights,
  * restrictions, and options.
- * <p>
+
  * IMPORTANT: It's highly recommended that you review the
  * <a href="../../../graph_solver/network_graph_solver/" target="_top">Network
  * Graphs & Solvers</a>
- * concepts documentation and
+ * concepts documentation, and
  * <a href="../../../guides/graph_rest_guide/" target="_top">Graph REST
  * Tutorial</a>
  * before using this endpoint.
@@ -33388,6 +33517,19 @@ ModifyGraphResponse modifyGraph( const std::string& graphName,
  *                         <li> gpudb::modify_graph_use_rtree: Use an range
  *                 tree structure to accelerate and improve the accuracy of
  *                 snapping, especially to edges.
+ *                 <ul>
+ *                         <li> gpudb::modify_graph_true
+ *                         <li> gpudb::modify_graph_false
+ *                 </ul>
+ *                 The default value is gpudb::modify_graph_true.
+ *                         <li> gpudb::modify_graph_label_delimiter: If
+ *                 provided the label string will be split according to this
+ *                 delimiter and each sub-string will be applied as a separate
+ *                 label onto the specified edge.  The default value is ''.
+ *                         <li> gpudb::modify_graph_allow_multiple_edges:
+ *                 Multigraph choice; allowing multiple edges with the same
+ *                 node pairs if set to true, otherwise, new edges with
+ *                 existing same node pairs will not be inserted.
  *                 <ul>
  *                         <li> gpudb::modify_graph_true
  *                         <li> gpudb::modify_graph_false
@@ -33436,7 +33578,7 @@ ModifyGraphResponse& modifyGraph( const std::string& graphName,
  * <a href="../../../guides/graph_rest_guide/" target="_top">Graph REST
  * Tutorial</a>,
  * and/or some
- * <a href="../../../guide-tags/graph-query" target="_top">/match/graph
+ * <a href="../../../guide-tags/graph---query" target="_top">/match/graph
  * examples</a>
  * before using this endpoint.
  * 
@@ -33476,7 +33618,7 @@ QueryGraphResponse queryGraph( const QueryGraphRequest& request_ ) const;
  * <a href="../../../guides/graph_rest_guide/" target="_top">Graph REST
  * Tutorial</a>,
  * and/or some
- * <a href="../../../guide-tags/graph-query" target="_top">/match/graph
+ * <a href="../../../guide-tags/graph---query" target="_top">/match/graph
  * examples</a>
  * before using this endpoint.
  * 
@@ -33520,7 +33662,7 @@ QueryGraphResponse& queryGraph( const QueryGraphRequest& request_,
  * <a href="../../../guides/graph_rest_guide/" target="_top">Graph REST
  * Tutorial</a>,
  * and/or some
- * <a href="../../../guide-tags/graph-query" target="_top">/match/graph
+ * <a href="../../../guide-tags/graph---query" target="_top">/match/graph
  * examples</a>
  * before using this endpoint.
  * 
@@ -33613,6 +33755,20 @@ QueryGraphResponse& queryGraph( const QueryGraphRequest& request_,
  *                 graph server(s) to send the request to. Default is to send
  *                 to the server, amongst those containing the corresponding
  *                 graph, that has the most computational bandwidth.
+ *                         <li> gpudb::query_graph_output_charn_length: When
+ *                 specified (>0 and <=256), limits the number of char length
+ *                 on the output tables for string based nodes. The default
+ *                 length is 64.  The default value is '64'.
+ *                         <li> gpudb::query_graph_find_common_labels: If set
+ *                 to true, for many-to-many queries or multi-level traversals,
+ *                 it lists the common labels between the source and target
+ *                 nodes and edge labels in each path. Otherwise (zero rings),
+ *                 it'll list all labels of the node(s) queried.
+ *                 <ul>
+ *                         <li> gpudb::query_graph_true
+ *                         <li> gpudb::query_graph_false
+ *                 </ul>
+ *                 The default value is gpudb::query_graph_false.
  *                 </ul>
  * 
  * @return Response object containing the result of the operation.
@@ -33653,7 +33809,7 @@ QueryGraphResponse queryGraph( const std::string& graphName,
  * <a href="../../../guides/graph_rest_guide/" target="_top">Graph REST
  * Tutorial</a>,
  * and/or some
- * <a href="../../../guide-tags/graph-query" target="_top">/match/graph
+ * <a href="../../../guide-tags/graph---query" target="_top">/match/graph
  * examples</a>
  * before using this endpoint.
  * 
@@ -33746,6 +33902,20 @@ QueryGraphResponse queryGraph( const std::string& graphName,
  *                 graph server(s) to send the request to. Default is to send
  *                 to the server, amongst those containing the corresponding
  *                 graph, that has the most computational bandwidth.
+ *                         <li> gpudb::query_graph_output_charn_length: When
+ *                 specified (>0 and <=256), limits the number of char length
+ *                 on the output tables for string based nodes. The default
+ *                 length is 64.  The default value is '64'.
+ *                         <li> gpudb::query_graph_find_common_labels: If set
+ *                 to true, for many-to-many queries or multi-level traversals,
+ *                 it lists the common labels between the source and target
+ *                 nodes and edge labels in each path. Otherwise (zero rings),
+ *                 it'll list all labels of the node(s) queried.
+ *                 <ul>
+ *                         <li> gpudb::query_graph_true
+ *                         <li> gpudb::query_graph_false
+ *                 </ul>
+ *                 The default value is gpudb::query_graph_false.
  *                 </ul>
  * @param[out] response_  Response object containing the results of the
  *                        operation.
@@ -36294,6 +36464,16 @@ ShowSecurityResponse& showSecurity( const ShowSecurityRequest& request_,
  *               information is requested. If none are provided, information
  *               about all users and roles will be returned.
  * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li> gpudb::show_security_show_current_user: If @a
+ *                 true, returns only security information for the current
+ *                 user.
+ *                 <ul>
+ *                         <li> gpudb::show_security_true
+ *                         <li> gpudb::show_security_false
+ *                 </ul>
+ *                 The default value is gpudb::show_security_false.
+ *                 </ul>
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -36311,6 +36491,16 @@ ShowSecurityResponse showSecurity( const std::vector<std::string>& names,
  *               information is requested. If none are provided, information
  *               about all users and roles will be returned.
  * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li> gpudb::show_security_show_current_user: If @a
+ *                 true, returns only security information for the current
+ *                 user.
+ *                 <ul>
+ *                         <li> gpudb::show_security_true
+ *                         <li> gpudb::show_security_false
+ *                 </ul>
+ *                 The default value is gpudb::show_security_false.
+ *                 </ul>
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -37375,7 +37565,7 @@ ShowVideoResponse& showVideo( const std::vector<std::string>& paths,
  * <a href="../../../guides/graph_rest_guide/" target="_top">Graph REST
  * Tutorial</a>,
  * and/or some
- * <a href="../../../guide-tags/graph-solve" target="_top">/solve/graph
+ * <a href="../../../guide-tags/graph---solve" target="_top">/solve/graph
  * examples</a>
  * before using this endpoint.
  * 
@@ -37401,7 +37591,7 @@ SolveGraphResponse solveGraph( const SolveGraphRequest& request_ ) const;
  * <a href="../../../guides/graph_rest_guide/" target="_top">Graph REST
  * Tutorial</a>,
  * and/or some
- * <a href="../../../guide-tags/graph-solve" target="_top">/solve/graph
+ * <a href="../../../guide-tags/graph---solve" target="_top">/solve/graph
  * examples</a>
  * before using this endpoint.
  * 
@@ -37431,7 +37621,7 @@ SolveGraphResponse& solveGraph( const SolveGraphRequest& request_,
  * <a href="../../../guides/graph_rest_guide/" target="_top">Graph REST
  * Tutorial</a>,
  * and/or some
- * <a href="../../../guide-tags/graph-solve" target="_top">/solve/graph
+ * <a href="../../../guide-tags/graph---solve" target="_top">/solve/graph
  * examples</a>
  * before using this endpoint.
  * 
@@ -37693,7 +37883,7 @@ SolveGraphResponse solveGraph( const std::string& graphName,
  * <a href="../../../guides/graph_rest_guide/" target="_top">Graph REST
  * Tutorial</a>,
  * and/or some
- * <a href="../../../guide-tags/graph-solve" target="_top">/solve/graph
+ * <a href="../../../guide-tags/graph---solve" target="_top">/solve/graph
  * examples</a>
  * before using this endpoint.
  * 

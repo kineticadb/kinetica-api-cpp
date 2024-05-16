@@ -25,7 +25,7 @@ namespace gpudb
      * <a href="../../../guides/graph_rest_guide/" target="_top">Graph REST
      * Tutorial</a>,
      * and/or some
-     * <a href="../../../guide-tags/graph-match/" target="_top">/match/graph
+     * <a href="../../../guide-tags/graph---match/" target="_top">/match/graph
      * examples</a>
      * before using this endpoint.
      */
@@ -127,6 +127,9 @@ namespace gpudb
          *                          gpudb::match_graph_match_clusters: Matches
          *                          the graph nodes with a cluster index using
          *                          Louvain clustering algorithm
+         *                                  <li>
+         *                          gpudb::match_graph_match_pattern: Matches a
+         *                          pattern in the graph
          *                          </ul>
          *                          The default value is
          *                          gpudb::match_graph_markov_chain.
@@ -529,6 +532,16 @@ namespace gpudb
          *                              <li> gpudb::match_graph_false
          *                      </ul>
          *                      The default value is gpudb::match_graph_true.
+         *                              <li>
+         *                      gpudb::match_graph_force_undirected: For the @a
+         *                      match_pattern solver only. Pattern matching
+         *                      will be using both pattern and graph as
+         *                      undirected if set to true.
+         *                      <ul>
+         *                              <li> gpudb::match_graph_true
+         *                              <li> gpudb::match_graph_false
+         *                      </ul>
+         *                      The default value is gpudb::match_graph_false.
          *                      </ul>
          * 
          */
@@ -628,7 +641,7 @@ namespace gpudb
      * <a href="../../../guides/graph_rest_guide/" target="_top">Graph REST
      * Tutorial</a>,
      * and/or some
-     * <a href="../../../guide-tags/graph-match/" target="_top">/match/graph
+     * <a href="../../../guide-tags/graph---match/" target="_top">/match/graph
      * examples</a>
      * before using this endpoint.
      */

@@ -39,6 +39,18 @@ namespace gpudb
          *                    provided, information about all users and roles
          *                    will be returned.
          * @param[in] options_  Optional parameters.
+         *                      <ul>
+         *                              <li>
+         *                      gpudb::show_security_show_current_user: If @a
+         *                      true, returns only security information for the
+         *                      current user.
+         *                      <ul>
+         *                              <li> gpudb::show_security_true
+         *                              <li> gpudb::show_security_false
+         *                      </ul>
+         *                      The default value is
+         *                      gpudb::show_security_false.
+         *                      </ul>
          * 
          */
         ShowSecurityRequest(const std::vector<std::string>& names_, const std::map<std::string, std::string>& options_):

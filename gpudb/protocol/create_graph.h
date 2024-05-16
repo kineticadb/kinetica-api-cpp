@@ -245,6 +245,17 @@ namespace gpudb
          *                      according to this delimiter and each sub-string
          *                      will be applied as a separate label onto the
          *                      specified edge.  The default value is ''.
+         *                              <li>
+         *                      gpudb::create_graph_allow_multiple_edges:
+         *                      Multigraph choice; allowing multiple edges with
+         *                      the same node pairs if set to true, otherwise,
+         *                      new edges with existing same node pairs will
+         *                      not be inserted.
+         *                      <ul>
+         *                              <li> gpudb::create_graph_true
+         *                              <li> gpudb::create_graph_false
+         *                      </ul>
+         *                      The default value is gpudb::create_graph_true.
          *                      </ul>
          * 
          */

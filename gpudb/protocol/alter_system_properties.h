@@ -121,7 +121,7 @@ namespace gpudb
          *                                 gpudb::alter_system_properties_communicator_test:
          *                                 Invoke the communicator test and
          *                                 report timing results. Value string
-         *                                 is is a semicolon separated list of
+         *                                 is a semicolon separated list of
          *                                 [key]=[value] expressions.
          *                                 Expressions are:
          *                                 num_transactions=[num] where num is
@@ -264,6 +264,13 @@ namespace gpudb
          *                                         <li>
          *                                 gpudb::alter_system_properties_ai_api_connection_timeout:
          *                                 AI API connection timeout in seconds
+         *                                         <li>
+         *                                 gpudb::alter_system_properties_postgres_proxy_idle_connection_timeout:
+         *                                 Idle connection timeout in seconds
+         *                                         <li>
+         *                                 gpudb::alter_system_properties_postgres_proxy_keep_alive:
+         *                                 Enable  postgres proxy keep alive.
+         *                                 The default value is 'false'.
          *                                 </ul>
          * @param[in] options_  Optional parameters.
          *                      <ul>

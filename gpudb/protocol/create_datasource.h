@@ -215,6 +215,9 @@ namespace gpudb
          *                      gpudb::create_datasource_schema_registry_credential:
          *                      Confluent Schema registry Credential object
          *                      name.
+         *                              <li>
+         *                      gpudb::create_datasource_schema_registry_port:
+         *                      Confluent Schema registry port (optional).
          *                      </ul>
          * 
          */

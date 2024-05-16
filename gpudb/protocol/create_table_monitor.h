@@ -80,7 +80,7 @@ namespace gpudb
          *                      gpudb::create_table_monitor_insert.
          *                              <li>
          *                      gpudb::create_table_monitor_monitor_id: ID to
-         *                      to use for this monitor instead of a randomly
+         *                      use for this monitor instead of a randomly
          *                      generated one
          *                              <li>
          *                      gpudb::create_table_monitor_datasink_name: Name

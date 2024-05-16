@@ -13,7 +13,7 @@ namespace gpudb
      * A set of input parameters for {@link
      * #exportRecordsToTable(const ExportRecordsToTableRequest&) const}.
      * <p>
-     * Exports records from source table to  specified target table in an
+     * Exports records from source table to the specified target table in an
      * external database
      */
     struct ExportRecordsToTableRequest
@@ -48,7 +48,8 @@ namespace gpudb
          *                              <li>
          *                      gpudb::export_records_to_table_batch_size:
          *                      Batch size, which determines how many rows to
-         *                      export per round trip.
+         *                      export per round trip.  The default value is
+         *                      '200000'.
          *                              <li>
          *                      gpudb::export_records_to_table_datasink_name:
          *                      Name of an existing external data sink to which
@@ -165,7 +166,7 @@ namespace gpudb
      * A set of output parameters for {@link
      * #exportRecordsToTable(const ExportRecordsToTableRequest&) const}.
      * <p>
-     * Exports records from source table to  specified target table in an
+     * Exports records from source table to the specified target table in an
      * external database
      */
     struct ExportRecordsToTableResponse

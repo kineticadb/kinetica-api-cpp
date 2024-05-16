@@ -41,7 +41,8 @@ namespace gpudb
          *                     <ul>
          *                             <li>
          *                     gpudb::alter_environment_install_package:
-         *                     Install a python package
+         *                     Install a python package from PyPI, an external
+         *                     data source or KiFS
          *                             <li>
          *                     gpudb::alter_environment_install_requirements:
          *                     Install packages from a requirements file

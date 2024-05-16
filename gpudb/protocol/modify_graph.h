@@ -15,11 +15,11 @@ namespace gpudb
      * <p>
      * Update an existing graph network using given nodes, edges, weights,
      * restrictions, and options.
-     * <p>
+
      * IMPORTANT: It's highly recommended that you review the
      * <a href="../../../graph_solver/network_graph_solver/"
      * target="_top">Network Graphs & Solvers</a>
-     * concepts documentation and
+     * concepts documentation, and
      * <a href="../../../guides/graph_rest_guide/" target="_top">Graph REST
      * Tutorial</a>
      * before using this endpoint.
@@ -256,6 +256,23 @@ namespace gpudb
          *                              <li> gpudb::modify_graph_false
          *                      </ul>
          *                      The default value is gpudb::modify_graph_true.
+         *                              <li>
+         *                      gpudb::modify_graph_label_delimiter: If
+         *                      provided the label string will be split
+         *                      according to this delimiter and each sub-string
+         *                      will be applied as a separate label onto the
+         *                      specified edge.  The default value is ''.
+         *                              <li>
+         *                      gpudb::modify_graph_allow_multiple_edges:
+         *                      Multigraph choice; allowing multiple edges with
+         *                      the same node pairs if set to true, otherwise,
+         *                      new edges with existing same node pairs will
+         *                      not be inserted.
+         *                      <ul>
+         *                              <li> gpudb::modify_graph_true
+         *                              <li> gpudb::modify_graph_false
+         *                      </ul>
+         *                      The default value is gpudb::modify_graph_true.
          *                      </ul>
          * 
          */
@@ -353,11 +370,11 @@ namespace gpudb
      * <p>
      * Update an existing graph network using given nodes, edges, weights,
      * restrictions, and options.
-     * <p>
+
      * IMPORTANT: It's highly recommended that you review the
      * <a href="../../../graph_solver/network_graph_solver/"
      * target="_top">Network Graphs & Solvers</a>
-     * concepts documentation and
+     * concepts documentation, and
      * <a href="../../../guides/graph_rest_guide/" target="_top">Graph REST
      * Tutorial</a>
      * before using this endpoint.

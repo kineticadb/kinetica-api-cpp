@@ -45,6 +45,15 @@ namespace gpudb
          *                      </ul>
          *                      The default value is
          *                      gpudb::admin_show_jobs_false.
+         *                              <li>
+         *                      gpudb::admin_show_jobs_show_worker_info: If @a
+         *                      true, then information is also returned from
+         *                      worker ranks. By default only status from the
+         *                      head rank is returned.
+         *                      <ul>
+         *                              <li> gpudb::admin_show_jobs_true
+         *                              <li> gpudb::admin_show_jobs_false
+         *                      </ul>
          *                      </ul>
          * 
          */

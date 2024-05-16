@@ -698,7 +698,7 @@ namespace gpudb
          *                      node will be loaded.
          *                      </ul>
          *                      The default value is
-         *                      gpudb::create_table_external_distributed_shared.
+         *                      gpudb::create_table_external_head.
          *                              <li>
          *                      gpudb::create_table_external_local_time_offset:
          *                      For Avro local timestamp columns

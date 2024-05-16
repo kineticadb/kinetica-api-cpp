@@ -432,6 +432,18 @@ namespace gpudb
          *                      Alias name for remote_query_filter_column.  The
          *                      default value is ''.
          *                              <li>
+         *                      gpudb::insert_records_from_query_truncate_strings:
+         *                      If set to @a true, truncate string values that
+         *                      are longer than the column's type size.
+         *                      <ul>
+         *                              <li>
+         *                      gpudb::insert_records_from_query_true
+         *                              <li>
+         *                      gpudb::insert_records_from_query_false
+         *                      </ul>
+         *                      The default value is
+         *                      gpudb::insert_records_from_query_false.
+         *                              <li>
          *                      gpudb::insert_records_from_query_update_on_existing_pk:
          *                      Specifies the record collision policy for
          *                      inserting into a table

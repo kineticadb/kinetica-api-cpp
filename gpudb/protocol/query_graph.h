@@ -42,7 +42,7 @@ namespace gpudb
      * <a href="../../../guides/graph_rest_guide/" target="_top">Graph REST
      * Tutorial</a>,
      * and/or some
-     * <a href="../../../guide-tags/graph-query" target="_top">/match/graph
+     * <a href="../../../guide-tags/graph---query" target="_top">/match/graph
      * examples</a>
      * before using this endpoint.
      */
@@ -176,6 +176,25 @@ namespace gpudb
          *                      amongst those containing the corresponding
          *                      graph, that has the most computational
          *                      bandwidth.
+         *                              <li>
+         *                      gpudb::query_graph_output_charn_length: When
+         *                      specified (>0 and <=256), limits the number of
+         *                      char length on the output tables for string
+         *                      based nodes. The default length is 64.  The
+         *                      default value is '64'.
+         *                              <li>
+         *                      gpudb::query_graph_find_common_labels: If set
+         *                      to true, for many-to-many queries or
+         *                      multi-level traversals, it lists the common
+         *                      labels between the source and target nodes and
+         *                      edge labels in each path. Otherwise (zero
+         *                      rings), it'll list all labels of the node(s)
+         *                      queried.
+         *                      <ul>
+         *                              <li> gpudb::query_graph_true
+         *                              <li> gpudb::query_graph_false
+         *                      </ul>
+         *                      The default value is gpudb::query_graph_false.
          *                      </ul>
          * 
          */
@@ -300,7 +319,7 @@ namespace gpudb
      * <a href="../../../guides/graph_rest_guide/" target="_top">Graph REST
      * Tutorial</a>,
      * and/or some
-     * <a href="../../../guide-tags/graph-query" target="_top">/match/graph
+     * <a href="../../../guide-tags/graph---query" target="_top">/match/graph
      * examples</a>
      * before using this endpoint.
      */

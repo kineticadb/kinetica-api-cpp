@@ -696,7 +696,7 @@ namespace gpudb
          *                      node will be loaded.
          *                      </ul>
          *                      The default value is
-         *                      gpudb::insert_records_from_files_distributed_shared.
+         *                      gpudb::insert_records_from_files_head.
          *                              <li>
          *                      gpudb::insert_records_from_files_local_time_offset:
          *                      For Avro local timestamp columns
