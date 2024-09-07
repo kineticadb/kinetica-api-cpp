@@ -103,9 +103,7 @@ namespace gpudb {
 
         m_username( options.getUsername() ),
         m_password( options.getPassword() ),
-        m_authorization( ( !options.getUsername().empty() || !options.getPassword().empty() )
-                        ? base64Encode(options.getUsername() + ":" + options.getPassword() )
-                        : ""),
+        m_oauthToken( options.getOauthToken()),
         m_useSnappy( options.getUseSnappy() ),
         m_disableFailover( options.getDisableFailover() ),
 
@@ -126,6 +124,8 @@ namespace gpudb {
         // Head node URLs
         m_urls.push_back(url);
 
+        m_authorization = createAuthorizationHeader();
+
         init();
     }
 
@@ -138,9 +138,7 @@ namespace gpudb {
 
         m_username(options.getUsername()),
         m_password(options.getPassword()),
-        m_authorization((!options.getUsername().empty() || !options.getPassword().empty())
-                        ? base64Encode(options.getUsername() + ":" + options.getPassword())
-                        : ""),
+        m_oauthToken( options.getOauthToken()),
         m_useSnappy(options.getUseSnappy()),
         m_disableFailover( options.getDisableFailover() ),
 
@@ -180,6 +178,8 @@ namespace gpudb {
             m_urls.push_back( url_ );
         }
 
+        m_authorization = createAuthorizationHeader();
+
         init();
     }
 
@@ -193,9 +193,7 @@ namespace gpudb {
 
         m_username(options.getUsername()),
         m_password(options.getPassword()),
-        m_authorization((!options.getUsername().empty() || !options.getPassword().empty())
-                        ? base64Encode(options.getUsername() + ":" + options.getPassword())
-                        : ""),
+        m_oauthToken( options.getOauthToken()),
         m_useSnappy(options.getUseSnappy()),
         m_disableFailover( options.getDisableFailover() ),
 
@@ -218,6 +216,8 @@ namespace gpudb {
             throw std::invalid_argument("At least one URL must be specified.");
         }
 
+        m_authorization = createAuthorizationHeader();
+
         init();
     }
 
@@ -230,9 +230,7 @@ namespace gpudb {
 
         m_username(options.getUsername()),
         m_password(options.getPassword()),
-        m_authorization((!options.getUsername().empty() || !options.getPassword().empty())
-                        ? base64Encode(options.getUsername() + ":" + options.getPassword())
-                        : ""),
+        m_oauthToken( options.getOauthToken()),
         m_useSnappy(options.getUseSnappy()),
         m_disableFailover( options.getDisableFailover() ),
 
@@ -257,6 +255,8 @@ namespace gpudb {
 
         m_urls.reserve(urls.size());
         m_urls.insert(m_urls.end(), urls.begin(), urls.end());
+
+        m_authorization = createAuthorizationHeader();
 
         init();
     }
@@ -387,6 +387,17 @@ namespace gpudb {
         return;
     }   // end handlePrimaryUrl
 
+    const std::string GPUdb::createAuthorizationHeader()
+    {
+        if( !m_options.getOauthToken().empty()) {
+            return "Bearer " + m_options.getOauthToken();
+        } else if ( !m_options.getUsername().empty() || !m_options.getPassword().empty() ) {
+            return "Basic " + base64Encode( m_options.getUsername() + ":" + m_options.getPassword() );
+        } else {
+            return "";
+        }
+
+    }
 
     /**
      * Update the URLs with the available HA ring information
@@ -637,6 +648,11 @@ namespace gpudb {
     const std::string& GPUdb::getPassword() const
     {
         return m_password;
+    }
+
+    const std::string& GPUdb::getOauthToken() const
+    {
+        return m_oauthToken;
     }
 
     const std::string& GPUdb::getPrimaryURL() const
@@ -897,8 +913,7 @@ namespace gpudb {
 
         if (!m_authorization.empty())
         {
-            httpRequest.addRequestHeader( HEADER_AUTHORIZATION,
-                                          "Basic " + m_authorization );
+            httpRequest.addRequestHeader( HEADER_AUTHORIZATION, m_authorization );
         }
     }
 
@@ -1381,6 +1396,11 @@ namespace gpudb {
         return m_password;
     }
 
+    std::string GPUdb::Options::getOauthToken() const
+    {
+        return m_oauthToken;
+    }
+
     std::string GPUdb::Options::getPrimaryUrl() const
     {
         return m_primaryUrl;
@@ -1448,6 +1468,12 @@ namespace gpudb {
     GPUdb::Options& GPUdb::Options::setPassword(const std::string& value)
     {
         m_password = value;
+        return *this;
+    }
+
+    GPUdb::Options& GPUdb::Options::setOauthToken(const std::string &value)
+    {
+        m_oauthToken = value;
         return *this;
     }
 
@@ -1519,4 +1545,5 @@ namespace gpudb {
     }
 
 #include "gpudb/GPUdbFunctions.cpp"
+#include "GPUdb.hpp"
 }

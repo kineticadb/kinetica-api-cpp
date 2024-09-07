@@ -67,6 +67,25 @@ namespace gpudb
          *                              the Amazon S3 region where the given
          *                              bucket is located
          *                          <li>@ref
+         *                              gpudb::create_datasink_s3_verify_ssl
+         *                              "create_datasink_s3_verify_ssl": Set to
+         *                              false for testing purposes or when
+         *                              necessary to bypass TLS errors (e.g.
+         *                              self-signed certificates). This value
+         *                              is true by default.
+         *                              Supported values:
+         *                              <ul>
+         *                                  <li>@ref
+         *                                      gpudb::create_datasink_true
+         *                                      "create_datasink_true"
+         *                                  <li>@ref
+         *                                      gpudb::create_datasink_false
+         *                                      "create_datasink_false"
+         *                              </ul>
+         *                              The default value is @ref
+         *                              gpudb::create_datasink_true
+         *                              "create_datasink_true".
+         *                          <li>@ref
          *                              gpudb::create_datasink_s3_use_virtual_addressing
          *                              "create_datasink_s3_use_virtual_addressing":
          *                              When true (default), the requests URI
@@ -313,6 +332,19 @@ namespace gpudb
          *     <li>@ref gpudb::create_datasink_s3_region
          *         "create_datasink_s3_region": Name of the Amazon S3 region
          *         where the given bucket is located
+         *     <li>@ref gpudb::create_datasink_s3_verify_ssl
+         *         "create_datasink_s3_verify_ssl": Set to false for testing
+         *         purposes or when necessary to bypass TLS errors (e.g.
+         *         self-signed certificates). This value is true by default.
+         *         Supported values:
+         *         <ul>
+         *             <li>@ref gpudb::create_datasink_true
+         *                 "create_datasink_true"
+         *             <li>@ref gpudb::create_datasink_false
+         *                 "create_datasink_false"
+         *         </ul>
+         *         The default value is @ref gpudb::create_datasink_true
+         *         "create_datasink_true".
          *     <li>@ref gpudb::create_datasink_s3_use_virtual_addressing
          *         "create_datasink_s3_use_virtual_addressing": When true
          *         (default), the requests URI should be specified in

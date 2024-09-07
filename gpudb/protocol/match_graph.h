@@ -17,10 +17,10 @@ namespace gpudb
      * solution type.
      *
      * IMPORTANT: It's highly recommended that you review the <a
-     * href="../../../graph_solver/network_graph_solver/" target="_top">Network
-     * Graphs & Solvers</a> concepts documentation, the <a
+     * href="../../../graph_solver/network_graph_solver/" target="_top">Graphs
+     * & Solvers</a> concepts documentation, the <a
      * href="../../../guides/graph_rest_guide/" target="_top">Graph REST
-     * Tutorial</a>, and/or some <a href="../../../guide-tags/graph-match/"
+     * Tutorial</a>, and/or some <a href="../../../guide-tags/graph---match/"
      * target="_top">/match/graph examples</a> before using this endpoint.
      */
     struct MatchGraphRequest
@@ -145,6 +145,10 @@ namespace gpudb
          *                                  gpudb::match_graph_match_pattern
          *                                  "match_graph_match_pattern":
          *                                  Matches a pattern in the graph
+         *                              <li>@ref
+         *                                  gpudb::match_graph_match_embedding
+         *                                  "match_graph_match_embedding":
+         *                                  Creates vector node embeddings
          *                          </ul>
          *                          The default value is @ref
          *                          gpudb::match_graph_markov_chain
@@ -546,7 +550,9 @@ namespace gpudb
          *                              "match_graph_num_loops_per_cycle": For
          *                              the @ref
          *                              gpudb::match_graph_match_clusters
-         *                              "match_clusters" solver only.
+         *                              "match_clusters" and @ref
+         *                              gpudb::match_graph_match_embedding
+         *                              "match_embedding" solvers only.
          *                              Terminates the cluster exchanges within
          *                              the first step iterations of a cycle
          *                              (inner loop) unless convergence is
@@ -565,10 +571,13 @@ namespace gpudb
          *                              gpudb::match_graph_max_num_clusters
          *                              "match_graph_max_num_clusters": For the
          *                              @ref gpudb::match_graph_match_clusters
-         *                              "match_clusters" solver only. If set
+         *                              "match_clusters" and @ref
+         *                              gpudb::match_graph_match_embedding
+         *                              "match_embedding" solvers only. If set
          *                              (value greater than zero), it
          *                              terminates when the number of clusters
-         *                              goes below than this number. The
+         *                              goes below than this number. For
+         *                              embedding solver the default is 8. The
          *                              default value is '0'.
          *                          <li>@ref
          *                              gpudb::match_graph_cluster_quality_metric
@@ -712,7 +721,9 @@ namespace gpudb
          *                          <li>@ref gpudb::match_graph_max_hops
          *                              "match_graph_max_hops": For the @ref
          *                              gpudb::match_graph_match_similarity
-         *                              "match_similarity" solver only.
+         *                              "match_similarity" and @ref
+         *                              gpudb::match_graph_match_embedding
+         *                              "match_embedding" solvers only.
          *                              Searches within this maximum hops for
          *                              source and target node pairs to compute
          *                              the Jaccard scores. The default value
@@ -750,7 +761,9 @@ namespace gpudb
          *                              gpudb::match_graph_force_undirected
          *                              "match_graph_force_undirected": For the
          *                              @ref gpudb::match_graph_match_pattern
-         *                              "match_pattern" solver only. Pattern
+         *                              "match_pattern" and @ref
+         *                              gpudb::match_graph_match_embedding
+         *                              "match_embedding" solvers only. Pattern
          *                              matching will be using both pattern and
          *                              graph as undirected if set to true.
          *                              Supported values:
@@ -763,6 +776,94 @@ namespace gpudb
          *                              The default value is @ref
          *                              gpudb::match_graph_false
          *                              "match_graph_false".
+         *                          <li>@ref
+         *                              gpudb::match_graph_max_vector_dimension
+         *                              "match_graph_max_vector_dimension": For
+         *                              the @ref
+         *                              gpudb::match_graph_match_embedding
+         *                              "match_embedding" solver only. Limits
+         *                              the number of dimensions in node vector
+         *                              embeddings. The default value is
+         *                              '1000'.
+         *                          <li>@ref
+         *                              gpudb::match_graph_optimize_embedding_weights
+         *                              "match_graph_optimize_embedding_weights":
+         *                              For the @ref
+         *                              gpudb::match_graph_match_embedding
+         *                              "match_embedding" solvers only. Solves
+         *                              to find the optimal weights per sub
+         *                              feature in vector emdeddings.
+         *                              Supported values:
+         *                              <ul>
+         *                                  <li>@ref gpudb::match_graph_true
+         *                                      "match_graph_true"
+         *                                  <li>@ref gpudb::match_graph_false
+         *                                      "match_graph_false"
+         *                              </ul>
+         *                              The default value is @ref
+         *                              gpudb::match_graph_false
+         *                              "match_graph_false".
+         *                          <li>@ref
+         *                              gpudb::match_graph_embedding_weights
+         *                              "match_graph_embedding_weights": For
+         *                              the @ref
+         *                              gpudb::match_graph_match_embedding
+         *                              "match_embedding" solver only. User
+         *                              specified weights per sub feature in
+         *                              vector embeddings.  The string contains
+         *                              the comma separated float values for
+         *                              each sub-feature in the vector space.
+         *                              These values will ONLY be used if
+         *                              'optimize_embedding_weights' is false.
+         *                              The default value is '1.0,1.0,1.0,1.0'.
+         *                          <li>@ref
+         *                              gpudb::match_graph_optimization_sampling_size
+         *                              "match_graph_optimization_sampling_size":
+         *                              For the @ref
+         *                              gpudb::match_graph_match_embedding
+         *                              "match_embedding" solver only. Sets the
+         *                              number of random nodes from the graph
+         *                              for solving the weights using
+         *                              stochastic gradient descent. The
+         *                              default value is '1000'.
+         *                          <li>@ref
+         *                              gpudb::match_graph_optimization_max_iterations
+         *                              "match_graph_optimization_max_iterations":
+         *                              For the @ref
+         *                              gpudb::match_graph_match_embedding
+         *                              "match_embedding" solver only. When the
+         *                              iterations (epochs) for the convergence
+         *                              of the stochastic gradient descent
+         *                              algorithm  reaches this number it bails
+         *                              out unless relative error between
+         *                              consecutive iterations is below the
+         *                              'optimization_error_tolerance' option.
+         *                              The default value is '1000'.
+         *                          <li>@ref
+         *                              gpudb::match_graph_optimization_error_tolerance
+         *                              "match_graph_optimization_error_tolerance":
+         *                              For the @ref
+         *                              gpudb::match_graph_match_embedding
+         *                              "match_embedding" solver only. When the
+         *                              relative error between all of the
+         *                              weights' consecutive iterations falls
+         *                              below this threshold  the optimization
+         *                              cycle is interrupted unless the number
+         *                              of iterations reaches the limit set by
+         *                              the option
+         *                              'max_optimization_iterations'. The
+         *                              default value is '0.001'.
+         *                          <li>@ref
+         *                              gpudb::match_graph_optimization_iteration_rate
+         *                              "match_graph_optimization_iteration_rate":
+         *                              For the @ref
+         *                              gpudb::match_graph_match_embedding
+         *                              "match_embedding" solver only. It is
+         *                              otherwise known as the learning rate,
+         *                              which is the proportionality constant
+         *                              in fornt of the gradient term in
+         *                              successive iterations. The default
+         *                              value is '0.3'.
          *                      </ul>
          *                      The default value is an empty map.
          */
@@ -848,6 +949,9 @@ namespace gpudb
          *         cluster index using Louvain clustering algorithm
          *     <li>@ref gpudb::match_graph_match_pattern
          *         "match_graph_match_pattern": Matches a pattern in the graph
+         *     <li>@ref gpudb::match_graph_match_embedding
+         *         "match_graph_match_embedding": Creates vector node
+         *         embeddings
          * </ul>
          * The default value is @ref gpudb::match_graph_markov_chain
          * "match_graph_markov_chain".
@@ -1121,7 +1225,8 @@ namespace gpudb
          *         value is '10'.
          *     <li>@ref gpudb::match_graph_num_loops_per_cycle
          *         "match_graph_num_loops_per_cycle": For the @ref
-         *         gpudb::match_graph_match_clusters "match_clusters" solver
+         *         gpudb::match_graph_match_clusters "match_clusters" and @ref
+         *         gpudb::match_graph_match_embedding "match_embedding" solvers
          *         only. Terminates the cluster exchanges within the first step
          *         iterations of a cycle (inner loop) unless convergence is
          *         reached. The default value is '10'.
@@ -1133,10 +1238,11 @@ namespace gpudb
          *         clusters. The default value is '0'.
          *     <li>@ref gpudb::match_graph_max_num_clusters
          *         "match_graph_max_num_clusters": For the @ref
-         *         gpudb::match_graph_match_clusters "match_clusters" solver
+         *         gpudb::match_graph_match_clusters "match_clusters" and @ref
+         *         gpudb::match_graph_match_embedding "match_embedding" solvers
          *         only. If set (value greater than zero), it terminates when
-         *         the number of clusters goes below than this number. The
-         *         default value is '0'.
+         *         the number of clusters goes below than this number. For
+         *         embedding solver the default is 8. The default value is '0'.
          *     <li>@ref gpudb::match_graph_cluster_quality_metric
          *         "match_graph_cluster_quality_metric": For the @ref
          *         gpudb::match_graph_match_clusters "match_clusters" solver
@@ -1235,9 +1341,11 @@ namespace gpudb
          *         for full charging. The default value is '30000.0'.
          *     <li>@ref gpudb::match_graph_max_hops "match_graph_max_hops": For
          *         the @ref gpudb::match_graph_match_similarity
-         *         "match_similarity" solver only. Searches within this maximum
-         *         hops for source and target node pairs to compute the Jaccard
-         *         scores. The default value is '3'.
+         *         "match_similarity" and @ref
+         *         gpudb::match_graph_match_embedding "match_embedding" solvers
+         *         only. Searches within this maximum hops for source and
+         *         target node pairs to compute the Jaccard scores. The default
+         *         value is '3'.
          *     <li>@ref gpudb::match_graph_traversal_node_limit
          *         "match_graph_traversal_node_limit": For the @ref
          *         gpudb::match_graph_match_similarity "match_similarity"
@@ -1258,7 +1366,8 @@ namespace gpudb
          *         "match_graph_true".
          *     <li>@ref gpudb::match_graph_force_undirected
          *         "match_graph_force_undirected": For the @ref
-         *         gpudb::match_graph_match_pattern "match_pattern" solver
+         *         gpudb::match_graph_match_pattern "match_pattern" and @ref
+         *         gpudb::match_graph_match_embedding "match_embedding" solvers
          *         only. Pattern matching will be using both pattern and graph
          *         as undirected if set to true.
          *         Supported values:
@@ -1268,6 +1377,60 @@ namespace gpudb
          *         </ul>
          *         The default value is @ref gpudb::match_graph_false
          *         "match_graph_false".
+         *     <li>@ref gpudb::match_graph_max_vector_dimension
+         *         "match_graph_max_vector_dimension": For the @ref
+         *         gpudb::match_graph_match_embedding "match_embedding" solver
+         *         only. Limits the number of dimensions in node vector
+         *         embeddings. The default value is '1000'.
+         *     <li>@ref gpudb::match_graph_optimize_embedding_weights
+         *         "match_graph_optimize_embedding_weights": For the @ref
+         *         gpudb::match_graph_match_embedding "match_embedding" solvers
+         *         only. Solves to find the optimal weights per sub feature in
+         *         vector emdeddings.
+         *         Supported values:
+         *         <ul>
+         *             <li>@ref gpudb::match_graph_true "match_graph_true"
+         *             <li>@ref gpudb::match_graph_false "match_graph_false"
+         *         </ul>
+         *         The default value is @ref gpudb::match_graph_false
+         *         "match_graph_false".
+         *     <li>@ref gpudb::match_graph_embedding_weights
+         *         "match_graph_embedding_weights": For the @ref
+         *         gpudb::match_graph_match_embedding "match_embedding" solver
+         *         only. User specified weights per sub feature in vector
+         *         embeddings.  The string contains the comma separated float
+         *         values for each sub-feature in the vector space. These
+         *         values will ONLY be used if 'optimize_embedding_weights' is
+         *         false. The default value is '1.0,1.0,1.0,1.0'.
+         *     <li>@ref gpudb::match_graph_optimization_sampling_size
+         *         "match_graph_optimization_sampling_size": For the @ref
+         *         gpudb::match_graph_match_embedding "match_embedding" solver
+         *         only. Sets the number of random nodes from the graph for
+         *         solving the weights using stochastic gradient descent. The
+         *         default value is '1000'.
+         *     <li>@ref gpudb::match_graph_optimization_max_iterations
+         *         "match_graph_optimization_max_iterations": For the @ref
+         *         gpudb::match_graph_match_embedding "match_embedding" solver
+         *         only. When the iterations (epochs) for the convergence of
+         *         the stochastic gradient descent algorithm  reaches this
+         *         number it bails out unless relative error between
+         *         consecutive iterations is below the
+         *         'optimization_error_tolerance' option. The default value is
+         *         '1000'.
+         *     <li>@ref gpudb::match_graph_optimization_error_tolerance
+         *         "match_graph_optimization_error_tolerance": For the @ref
+         *         gpudb::match_graph_match_embedding "match_embedding" solver
+         *         only. When the relative error between all of the weights'
+         *         consecutive iterations falls below this threshold  the
+         *         optimization cycle is interrupted unless the number of
+         *         iterations reaches the limit set by the option
+         *         'max_optimization_iterations'. The default value is '0.001'.
+         *     <li>@ref gpudb::match_graph_optimization_iteration_rate
+         *         "match_graph_optimization_iteration_rate": For the @ref
+         *         gpudb::match_graph_match_embedding "match_embedding" solver
+         *         only. It is otherwise known as the learning rate, which is
+         *         the proportionality constant in fornt of the gradient term
+         *         in successive iterations. The default value is '0.3'.
          * </ul>
          * The default value is an empty map.
          */

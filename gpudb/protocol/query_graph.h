@@ -12,12 +12,11 @@ namespace gpudb
      * A set of parameters for @ref
      * GPUdb::queryGraph(const QueryGraphRequest&) const "GPUdb::queryGraph".
      *
-     * Employs a topological query on a network graph generated a-priori by
-     * @ref GPUdb::createGraph(const CreateGraphRequest&) const
-     * "GPUdb::createGraph" and returns a list of adjacent edge(s) or node(s),
-     * also known as an adjacency list, depending on what's been provided to
-     * the endpoint; providing edges will return nodes and providing nodes will
-     * return edges.
+     * Employs a topological query on a graph generated a-priori by @ref
+     * GPUdb::createGraph(const CreateGraphRequest&) const "GPUdb::createGraph"
+     * and returns a list of adjacent edge(s) or node(s), also known as an
+     * adjacency list, depending on what's been provided to the endpoint;
+     * providing edges will return nodes and providing nodes will return edges.
      *
      * To determine the node(s) or edge(s) adjacent to a value from a given
      * column, provide a list of values to @ref queries. This field can be
@@ -30,10 +29,10 @@ namespace gpudb
      * empty.
      *
      * IMPORTANT: It's highly recommended that you review the <a
-     * href="../../../graph_solver/network_graph_solver/" target="_top">Network
-     * Graphs & Solvers</a> concepts documentation, the <a
+     * href="../../../graph_solver/network_graph_solver/" target="_top">Graphs
+     * & Solvers</a> concepts documentation, the <a
      * href="../../../guides/graph_rest_guide/" target="_top">Graph REST
-     * Tutorial</a>, and/or some <a href="../../../guide-tags/graph-query"
+     * Tutorial</a>, and/or some <a href="../../../guide-tags/graph---query"
      * target="_top">/match/graph examples</a> before using this endpoint.
      */
     struct QueryGraphRequest
@@ -198,6 +197,25 @@ namespace gpudb
          *                              tables for string based nodes. The
          *                              default length is 64. The default value
          *                              is '64'.
+         *                          <li>@ref
+         *                              gpudb::query_graph_find_common_labels
+         *                              "query_graph_find_common_labels": If
+         *                              set to true, for many-to-many queries
+         *                              or multi-level traversals, it lists the
+         *                              common labels between the source and
+         *                              target nodes and edge labels in each
+         *                              path. Otherwise (zero rings), it'll
+         *                              list all labels of the node(s) queried.
+         *                              Supported values:
+         *                              <ul>
+         *                                  <li>@ref gpudb::query_graph_true
+         *                                      "query_graph_true"
+         *                                  <li>@ref gpudb::query_graph_false
+         *                                      "query_graph_false"
+         *                              </ul>
+         *                              The default value is @ref
+         *                              gpudb::query_graph_false
+         *                              "query_graph_false".
          *                      </ul>
          *                      The default value is an empty map.
          */
@@ -334,6 +352,19 @@ namespace gpudb
          *         &lt;=256), limits the number of char length on the output
          *         tables for string based nodes. The default length is 64. The
          *         default value is '64'.
+         *     <li>@ref gpudb::query_graph_find_common_labels
+         *         "query_graph_find_common_labels": If set to true, for
+         *         many-to-many queries or multi-level traversals, it lists the
+         *         common labels between the source and target nodes and edge
+         *         labels in each path. Otherwise (zero rings), it'll list all
+         *         labels of the node(s) queried.
+         *         Supported values:
+         *         <ul>
+         *             <li>@ref gpudb::query_graph_true "query_graph_true"
+         *             <li>@ref gpudb::query_graph_false "query_graph_false"
+         *         </ul>
+         *         The default value is @ref gpudb::query_graph_false
+         *         "query_graph_false".
          * </ul>
          * The default value is an empty map.
          */

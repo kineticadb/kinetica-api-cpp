@@ -69,6 +69,9 @@
     <ClCompile Include="..\..\gpudb\utils\Utils.h">
       <Filter>Header Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\gpudb\RecordRetriever.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\gpudb\Avro.hpp">

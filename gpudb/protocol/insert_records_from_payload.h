@@ -611,6 +611,26 @@ namespace gpudb
          *                              gpudb::insert_records_from_payload_delimited_text
          *                              "insert_records_from_payload_delimited_text".
          *                          <li>@ref
+         *                              gpudb::insert_records_from_payload_flatten_columns
+         *                              "insert_records_from_payload_flatten_columns":
+         *                              Specifies how to handle nested columns.
+         *                              Supported values:
+         *                              <ul>
+         *                                  <li>@ref
+         *                                      gpudb::insert_records_from_payload_true
+         *                                      "insert_records_from_payload_true":
+         *                                      Break up nested columns to
+         *                                      multiple columns
+         *                                  <li>@ref
+         *                                      gpudb::insert_records_from_payload_false
+         *                                      "insert_records_from_payload_false":
+         *                                      Treat nested columns as json
+         *                                      columns instead of flattening
+         *                              </ul>
+         *                              The default value is @ref
+         *                              gpudb::insert_records_from_payload_false
+         *                              "insert_records_from_payload_false".
+         *                          <li>@ref
          *                              gpudb::insert_records_from_payload_gdal_configuration_options
          *                              "insert_records_from_payload_gdal_configuration_options":
          *                              Comma separated list of gdal conf
@@ -1533,6 +1553,21 @@ namespace gpudb
          *         The default value is @ref
          *         gpudb::insert_records_from_payload_delimited_text
          *         "insert_records_from_payload_delimited_text".
+         *     <li>@ref gpudb::insert_records_from_payload_flatten_columns
+         *         "insert_records_from_payload_flatten_columns": Specifies how
+         *         to handle nested columns.
+         *         Supported values:
+         *         <ul>
+         *             <li>@ref gpudb::insert_records_from_payload_true
+         *                 "insert_records_from_payload_true": Break up nested
+         *                 columns to multiple columns
+         *             <li>@ref gpudb::insert_records_from_payload_false
+         *                 "insert_records_from_payload_false": Treat nested
+         *                 columns as json columns instead of flattening
+         *         </ul>
+         *         The default value is @ref
+         *         gpudb::insert_records_from_payload_false
+         *         "insert_records_from_payload_false".
          *     <li>@ref
          *         gpudb::insert_records_from_payload_gdal_configuration_options
          *         "insert_records_from_payload_gdal_configuration_options":

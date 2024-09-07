@@ -52,6 +52,23 @@ namespace gpudb
          *                              The default value is @ref
          *                              gpudb::admin_show_jobs_false
          *                              "admin_show_jobs_false".
+         *                          <li>@ref
+         *                              gpudb::admin_show_jobs_show_worker_info
+         *                              "admin_show_jobs_show_worker_info": If
+         *                              @ref gpudb::admin_show_jobs_true
+         *                              "true", then information is also
+         *                              returned from worker ranks. By default
+         *                              only status from the head rank is
+         *                              returned.
+         *                              Supported values:
+         *                              <ul>
+         *                                  <li>@ref
+         *                                      gpudb::admin_show_jobs_true
+         *                                      "admin_show_jobs_true"
+         *                                  <li>@ref
+         *                                      gpudb::admin_show_jobs_false
+         *                                      "admin_show_jobs_false"
+         *                              </ul>
          *                      </ul>
          *                      The default value is an empty map.
          */
@@ -78,6 +95,18 @@ namespace gpudb
          *         </ul>
          *         The default value is @ref gpudb::admin_show_jobs_false
          *         "admin_show_jobs_false".
+         *     <li>@ref gpudb::admin_show_jobs_show_worker_info
+         *         "admin_show_jobs_show_worker_info": If @ref
+         *         gpudb::admin_show_jobs_true "true", then information is also
+         *         returned from worker ranks. By default only status from the
+         *         head rank is returned.
+         *         Supported values:
+         *         <ul>
+         *             <li>@ref gpudb::admin_show_jobs_true
+         *                 "admin_show_jobs_true"
+         *             <li>@ref gpudb::admin_show_jobs_false
+         *                 "admin_show_jobs_false"
+         *         </ul>
          * </ul>
          * The default value is an empty map.
          */
@@ -140,6 +169,7 @@ namespace gpudb
             timeReceived(std::vector<int64_t>()),
             authId(std::vector<std::string>()),
             sourceIp(std::vector<std::string>()),
+            queryText(std::vector<std::string>()),
             userData(std::vector<std::string>()),
             flags(std::vector<std::string>()),
             info(std::map<std::string, std::string>())
@@ -152,6 +182,7 @@ namespace gpudb
         std::vector<int64_t> timeReceived;
         std::vector<std::string> authId;
         std::vector<std::string> sourceIp;
+        std::vector<std::string> queryText;
         std::vector<std::string> userData;
         std::vector<std::string> flags;
 
@@ -162,6 +193,9 @@ namespace gpudb
          *         "admin_show_jobs_job_tag": The job tag specified by the user
          *         or if unspecified by user, an internally generated unique
          *         identifier for the job across clusters.
+         *     <li>@ref gpudb::admin_show_jobs_worker_info
+         *         "admin_show_jobs_worker_info": Worker job information as
+         *         json
          * </ul>
          * The default value is an empty map.
          */
@@ -181,6 +215,7 @@ namespace avro
             ::avro::encode(e, v.timeReceived);
             ::avro::encode(e, v.authId);
             ::avro::encode(e, v.sourceIp);
+            ::avro::encode(e, v.queryText);
             ::avro::encode(e, v.userData);
             ::avro::encode(e, v.flags);
             ::avro::encode(e, v.info);
@@ -221,14 +256,18 @@ namespace avro
                             break;
 
                         case 6:
-                            ::avro::decode(d, v.userData);
+                            ::avro::decode(d, v.queryText);
                             break;
 
                         case 7:
-                            ::avro::decode(d, v.flags);
+                            ::avro::decode(d, v.userData);
                             break;
 
                         case 8:
+                            ::avro::decode(d, v.flags);
+                            break;
+
+                        case 9:
                             ::avro::decode(d, v.info);
                             break;
 
@@ -245,6 +284,7 @@ namespace avro
                 ::avro::decode(d, v.timeReceived);
                 ::avro::decode(d, v.authId);
                 ::avro::decode(d, v.sourceIp);
+                ::avro::decode(d, v.queryText);
                 ::avro::decode(d, v.userData);
                 ::avro::decode(d, v.flags);
                 ::avro::decode(d, v.info);

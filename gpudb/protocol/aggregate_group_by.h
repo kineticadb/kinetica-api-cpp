@@ -244,6 +244,12 @@ namespace gpudb
          *                              The default value is @ref
          *                              gpudb::aggregate_group_by_value
          *                              "aggregate_group_by_value".
+         *                          <li>@ref gpudb::aggregate_group_by_order_by
+         *                              "aggregate_group_by_order_by":
+         *                              Comma-separated list of the columns to
+         *                              be sorted by as well as the sort
+         *                              direction, e.g., 'timestamp asc, x
+         *                              desc'. The default value is ''.
          *                          <li>@ref
          *                              gpudb::aggregate_group_by_strategy_definition
          *                              "aggregate_group_by_strategy_definition":
@@ -416,6 +422,16 @@ namespace gpudb
          *                              "aggregate_group_by_cube": This option
          *                              is used to specify the multidimensional
          *                              aggregates.
+         *                          <li>@ref
+         *                              gpudb::aggregate_group_by_shard_key
+         *                              "aggregate_group_by_shard_key":
+         *                              Comma-separated list of the columns to
+         *                              be sharded on; e.g. 'column1, column2'.
+         *                              The columns specified must be present
+         *                              in @a columnNames_.  If any alias is
+         *                              given for any column name, the alias
+         *                              must be used, rather than the original
+         *                              column name. The default value is ''.
          *                      </ul>
          *                      The default value is an empty map.
          */
@@ -589,6 +605,12 @@ namespace gpudb
          *                              The default value is @ref
          *                              gpudb::aggregate_group_by_value
          *                              "aggregate_group_by_value".
+         *                          <li>@ref gpudb::aggregate_group_by_order_by
+         *                              "aggregate_group_by_order_by":
+         *                              Comma-separated list of the columns to
+         *                              be sorted by as well as the sort
+         *                              direction, e.g., 'timestamp asc, x
+         *                              desc'. The default value is ''.
          *                          <li>@ref
          *                              gpudb::aggregate_group_by_strategy_definition
          *                              "aggregate_group_by_strategy_definition":
@@ -761,6 +783,16 @@ namespace gpudb
          *                              "aggregate_group_by_cube": This option
          *                              is used to specify the multidimensional
          *                              aggregates.
+         *                          <li>@ref
+         *                              gpudb::aggregate_group_by_shard_key
+         *                              "aggregate_group_by_shard_key":
+         *                              Comma-separated list of the columns to
+         *                              be sharded on; e.g. 'column1, column2'.
+         *                              The columns specified must be present
+         *                              in @a columnNames_.  If any alias is
+         *                              given for any column name, the alias
+         *                              must be used, rather than the original
+         *                              column name. The default value is ''.
          *                      </ul>
          *                      The default value is an empty map.
          */
@@ -908,6 +940,10 @@ namespace gpudb
          *         </ul>
          *         The default value is @ref gpudb::aggregate_group_by_value
          *         "aggregate_group_by_value".
+         *     <li>@ref gpudb::aggregate_group_by_order_by
+         *         "aggregate_group_by_order_by": Comma-separated list of the
+         *         columns to be sorted by as well as the sort direction, e.g.,
+         *         'timestamp asc, x desc'. The default value is ''.
          *     <li>@ref gpudb::aggregate_group_by_strategy_definition
          *         "aggregate_group_by_strategy_definition": The <a
          *         href="../../../rm/concepts/#tier-strategies"
@@ -1025,6 +1061,13 @@ namespace gpudb
          *     <li>@ref gpudb::aggregate_group_by_cube
          *         "aggregate_group_by_cube": This option is used to specify
          *         the multidimensional aggregates.
+         *     <li>@ref gpudb::aggregate_group_by_shard_key
+         *         "aggregate_group_by_shard_key": Comma-separated list of the
+         *         columns to be sharded on; e.g. 'column1, column2'.  The
+         *         columns specified must be present in @ref columnNames.  If
+         *         any alias is given for any column name, the alias must be
+         *         used, rather than the original column name. The default
+         *         value is ''.
          * </ul>
          * The default value is an empty map.
          */

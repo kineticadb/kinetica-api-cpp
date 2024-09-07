@@ -42,20 +42,6 @@ namespace gpudb
          *                                 empty.
          *                                 <ul>
          *                                     <li>@ref
-         *                                         gpudb::alter_system_properties_sm_omp_threads
-         *                                         "alter_system_properties_sm_omp_threads":
-         *                                         Set the number of OpenMP
-         *                                         threads that will be used to
-         *                                         service filter & aggregation
-         *                                         requests to the specified
-         *                                         integer value.
-         *                                     <li>@ref
-         *                                         gpudb::alter_system_properties_kernel_omp_threads
-         *                                         "alter_system_properties_kernel_omp_threads":
-         *                                         Set the number of kernel
-         *                                         OpenMP threads to the
-         *                                         specified integer value.
-         *                                     <li>@ref
          *                                         gpudb::alter_system_properties_concurrent_kernel_execution
          *                                         "alter_system_properties_concurrent_kernel_execution":
          *                                         Enables concurrent kernel
@@ -350,10 +336,10 @@ namespace gpudb
          *                                         allow saving to a single
          *                                         file. May be overridden by
          *                                         target limitations. The
-         *                                         default value is '100'. The
-         *                                         minimum allowed value is
+         *                                         default value is '10000'.
+         *                                         The minimum allowed value is
          *                                         '1'. The maximum allowed
-         *                                         value is '200'.
+         *                                         value is '200000'.
          *                                     <li>@ref
          *                                         gpudb::alter_system_properties_max_concurrent_kernels
          *                                         "alter_system_properties_max_concurrent_kernels":
@@ -405,10 +391,25 @@ namespace gpudb
          *                                         AI API connection timeout in
          *                                         seconds
          *                                     <li>@ref
+         *                                         gpudb::alter_system_properties_ai_api_embeddings_model
+         *                                         "alter_system_properties_ai_api_embeddings_model":
+         *                                         AI API model name
+         *                                     <li>@ref
          *                                         gpudb::alter_system_properties_telm_persist_query_metrics
          *                                         "alter_system_properties_telm_persist_query_metrics":
          *                                         Enable or disable persisting
          *                                         of query metrics.
+         *                                     <li>@ref
+         *                                         gpudb::alter_system_properties_postgres_proxy_idle_connection_timeout
+         *                                         "alter_system_properties_postgres_proxy_idle_connection_timeout":
+         *                                         Idle connection timeout in
+         *                                         seconds
+         *                                     <li>@ref
+         *                                         gpudb::alter_system_properties_postgres_proxy_keep_alive
+         *                                         "alter_system_properties_postgres_proxy_keep_alive":
+         *                                         Enable  postgres proxy keep
+         *                                         alive. The default value is
+         *                                         'false'.
          *                                 </ul>
          * @param[in] options_  Optional parameters.
          *                      <ul>
@@ -465,13 +466,6 @@ namespace gpudb
          * Map containing the properties of the system to be updated. Error if
          * empty.
          * <ul>
-         *     <li>@ref gpudb::alter_system_properties_sm_omp_threads
-         *         "alter_system_properties_sm_omp_threads": Set the number of
-         *         OpenMP threads that will be used to service filter &
-         *         aggregation requests to the specified integer value.
-         *     <li>@ref gpudb::alter_system_properties_kernel_omp_threads
-         *         "alter_system_properties_kernel_omp_threads": Set the number
-         *         of kernel OpenMP threads to the specified integer value.
          *     <li>@ref
          *         gpudb::alter_system_properties_concurrent_kernel_execution
          *         "alter_system_properties_concurrent_kernel_execution":
@@ -641,8 +635,8 @@ namespace gpudb
          *         "alter_system_properties_egress_single_file_max_size": Max
          *         file size (in MB) to allow saving to a single file. May be
          *         overridden by target limitations. The default value is
-         *         '100'. The minimum allowed value is '1'. The maximum allowed
-         *         value is '200'.
+         *         '10000'. The minimum allowed value is '1'. The maximum
+         *         allowed value is '200000'.
          *     <li>@ref gpudb::alter_system_properties_max_concurrent_kernels
          *         "alter_system_properties_max_concurrent_kernels": Sets the
          *         max_concurrent_kernels value of the conf. The minimum
@@ -671,10 +665,21 @@ namespace gpudb
          *         gpudb::alter_system_properties_ai_api_connection_timeout
          *         "alter_system_properties_ai_api_connection_timeout": AI API
          *         connection timeout in seconds
+         *     <li>@ref gpudb::alter_system_properties_ai_api_embeddings_model
+         *         "alter_system_properties_ai_api_embeddings_model": AI API
+         *         model name
          *     <li>@ref
          *         gpudb::alter_system_properties_telm_persist_query_metrics
          *         "alter_system_properties_telm_persist_query_metrics": Enable
          *         or disable persisting of query metrics.
+         *     <li>@ref
+         *         gpudb::alter_system_properties_postgres_proxy_idle_connection_timeout
+         *         "alter_system_properties_postgres_proxy_idle_connection_timeout":
+         *         Idle connection timeout in seconds
+         *     <li>@ref
+         *         gpudb::alter_system_properties_postgres_proxy_keep_alive
+         *         "alter_system_properties_postgres_proxy_keep_alive": Enable
+         *         postgres proxy keep alive. The default value is 'false'.
          * </ul>
          */
         std::map<std::string, std::string> propertyUpdatesMap;

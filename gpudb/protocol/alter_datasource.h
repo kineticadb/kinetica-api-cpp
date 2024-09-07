@@ -93,7 +93,9 @@ namespace gpudb
          *                                       <li>@ref
          *                                           gpudb::alter_datasource_credential
          *                                           "alter_datasource_credential":
-         *                                           Name of the Credential
+         *                                           Name of the <a
+         *                                           href="../../../concepts/credentials"
+         *                                           target="_top">credential</a>
          *                                           object to be used in data
          *                                           source
          *                                       <li>@ref
@@ -185,7 +187,7 @@ namespace gpudb
          *                                       <li>@ref
          *                                           gpudb::alter_datasource_azure_oauth_token
          *                                           "alter_datasource_azure_oauth_token":
-         *                                           Oauth token to access
+         *                                           OAuth token to access
          *                                           given storage container
          *                                       <li>@ref
          *                                           gpudb::alter_datasource_gcs_bucket_name
@@ -210,7 +212,7 @@ namespace gpudb
          *                                           gpudb::alter_datasource_kafka_url
          *                                           "alter_datasource_kafka_url":
          *                                           The publicly-accessible
-         *                                           full path URL to the kafka
+         *                                           full path URL to the Kafka
          *                                           broker, e.g.,
          *                                           'http://172.123.45.67:9300'.
          *                                       <li>@ref
@@ -354,8 +356,10 @@ namespace gpudb
          *         "alter_datasource_wait_timeout": Timeout in seconds for
          *         reading from this storage provider
          *     <li>@ref gpudb::alter_datasource_credential
-         *         "alter_datasource_credential": Name of the Credential object
-         *         to be used in data source
+         *         "alter_datasource_credential": Name of the <a
+         *         href="../../../concepts/credentials"
+         *         target="_top">credential</a> object to be used in data
+         *         source
          *     <li>@ref gpudb::alter_datasource_s3_bucket_name
          *         "alter_datasource_s3_bucket_name": Name of the Amazon S3
          *         bucket to use as the data source
@@ -406,7 +410,7 @@ namespace gpudb
          *         "alter_datasource_azure_sas_token": Shared access signature
          *         token for Azure storage account to use as the data source
          *     <li>@ref gpudb::alter_datasource_azure_oauth_token
-         *         "alter_datasource_azure_oauth_token": Oauth token to access
+         *         "alter_datasource_azure_oauth_token": OAuth token to access
          *         given storage container
          *     <li>@ref gpudb::alter_datasource_gcs_bucket_name
          *         "alter_datasource_gcs_bucket_name": Name of the Google Cloud
@@ -420,7 +424,7 @@ namespace gpudb
          *         source
          *     <li>@ref gpudb::alter_datasource_kafka_url
          *         "alter_datasource_kafka_url": The publicly-accessible full
-         *         path URL to the kafka broker, e.g.,
+         *         path URL to the Kafka broker, e.g.,
          *         'http://172.123.45.67:9300'.
          *     <li>@ref gpudb::alter_datasource_kafka_topic_name
          *         "alter_datasource_kafka_topic_name": Name of the Kafka topic

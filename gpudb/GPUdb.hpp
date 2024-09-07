@@ -71,6 +71,7 @@ public:
 
         std::string getUsername() const;
         std::string getPassword() const;
+        std::string getOauthToken() const;
         /// Return the URL of the primary cluster, if any (empty string
         /// delineates that none was set)
         std::string getPrimaryUrl() const;
@@ -95,6 +96,7 @@ public:
 
         Options& setUsername(const std::string& value);
         Options& setPassword(const std::string& value);
+        Options& setOauthToken(const std::string& value);
         /// Set the URL for the primary cluster
         Options& setPrimaryUrl(const std::string& value);
         Options& setUseSnappy(const bool value);
@@ -116,6 +118,7 @@ public:
 
         std::string m_username;
         std::string m_password;
+        std::string m_oauthToken;
         std::string m_primaryUrl;
         bool m_useSnappy;
         bool m_disableFailover;
@@ -253,6 +256,7 @@ public:
 
     const std::string& getUsername() const;
     const std::string& getPassword() const;
+    const std::string& getOauthToken() const;
 
     /// Return a string containing the URL for the primary cluster; empty
     /// string otherwise
@@ -560,6 +564,7 @@ private:
 
     std::string m_username;
     std::string m_password;
+    std::string m_oauthToken;
     std::string m_authorization;
     bool m_useSnappy;
     bool m_disableFailover;
@@ -583,6 +588,8 @@ private:
 
     // Handle the primary host URL, if any is given via options
     void handlePrimaryURL();
+
+    const std::string createAuthorizationHeader();
 
     // Update the URLs with the available HA ring information
     void getHAringHeadNodeAddresses();

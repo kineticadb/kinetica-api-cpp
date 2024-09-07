@@ -91,6 +91,9 @@ namespace gpudb
          *                                 "has_permission_connect": Connect
          *                                 access on the given data source or
          *                                 data sink.
+         *                             <li>@ref gpudb::has_permission_create
+         *                                 "has_permission_create": Ability to
+         *                                 create new objects of this type.
          *                             <li>@ref gpudb::has_permission_delete
          *                                 "has_permission_delete": Delete rows
          *                                 from tables.
@@ -206,6 +209,8 @@ namespace gpudb
          *         Full read/write and administrative access on the object.
          *     <li>@ref gpudb::has_permission_connect "has_permission_connect":
          *         Connect access on the given data source or data sink.
+         *     <li>@ref gpudb::has_permission_create "has_permission_create":
+         *         Ability to create new objects of this type.
          *     <li>@ref gpudb::has_permission_delete "has_permission_delete":
          *         Delete rows from tables.
          *     <li>@ref gpudb::has_permission_execute "has_permission_execute":

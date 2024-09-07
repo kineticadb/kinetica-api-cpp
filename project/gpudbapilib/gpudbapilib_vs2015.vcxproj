@@ -166,6 +166,7 @@
     <ClCompile Include="..\..\gpudb\GPUdbIngestor.cpp" />
     <ClCompile Include="..\..\gpudb\Http.cpp" />
     <ClCompile Include="..\..\gpudb\protocol\EndpointKeywords.cpp" />
+    <ClCompile Include="..\..\gpudb\RecordRetriever.cpp" />
     <ClCompile Include="..\..\gpudb\Type.cpp" />
     <ClCompile Include="..\..\gpudb\utils\GPUdbMultiHeadIOUtils.cpp" />
     <ClCompile Include="..\..\gpudb\utils\MurmurHash3.cpp" />

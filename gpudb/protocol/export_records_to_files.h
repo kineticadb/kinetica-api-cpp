@@ -275,6 +275,13 @@ namespace gpudb
          *                              gpudb::export_records_to_files_true
          *                              "export_records_to_files_true".
          *                          <li>@ref
+         *                              gpudb::export_records_to_files_single_file_max_size
+         *                              "export_records_to_files_single_file_max_size":
+         *                              Max file size (in MB) to allow saving
+         *                              to a single file. May be overridden by
+         *                              target limitations. The default value
+         *                              is ''.
+         *                          <li>@ref
          *                              gpudb::export_records_to_files_text_delimiter
          *                              "export_records_to_files_text_delimiter":
          *                              Specifies the character to write out to
@@ -488,6 +495,10 @@ namespace gpudb
          *         The default value is @ref
          *         gpudb::export_records_to_files_true
          *         "export_records_to_files_true".
+         *     <li>@ref gpudb::export_records_to_files_single_file_max_size
+         *         "export_records_to_files_single_file_max_size": Max file
+         *         size (in MB) to allow saving to a single file. May be
+         *         overridden by target limitations. The default value is ''.
          *     <li>@ref gpudb::export_records_to_files_text_delimiter
          *         "export_records_to_files_text_delimiter": Specifies the
          *         character to write out to delimit field values and field

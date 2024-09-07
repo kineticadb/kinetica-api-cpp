@@ -168,6 +168,12 @@ namespace gpudb
          *                              The default value is @ref
          *                              gpudb::aggregate_unique_ascending
          *                              "aggregate_unique_ascending".
+         *                          <li>@ref gpudb::aggregate_unique_order_by
+         *                              "aggregate_unique_order_by":
+         *                              Comma-separated list of the columns to
+         *                              be sorted by as well as the sort
+         *                              direction, e.g., 'timestamp asc, x
+         *                              desc'. The default value is ''.
          *                          <li>@ref
          *                              gpudb::aggregate_unique_result_table
          *                              "aggregate_unique_result_table": The
@@ -417,6 +423,12 @@ namespace gpudb
          *                              The default value is @ref
          *                              gpudb::aggregate_unique_ascending
          *                              "aggregate_unique_ascending".
+         *                          <li>@ref gpudb::aggregate_unique_order_by
+         *                              "aggregate_unique_order_by":
+         *                              Comma-separated list of the columns to
+         *                              be sorted by as well as the sort
+         *                              direction, e.g., 'timestamp asc, x
+         *                              desc'. The default value is ''.
          *                          <li>@ref
          *                              gpudb::aggregate_unique_result_table
          *                              "aggregate_unique_result_table": The
@@ -653,6 +665,10 @@ namespace gpudb
          *         </ul>
          *         The default value is @ref gpudb::aggregate_unique_ascending
          *         "aggregate_unique_ascending".
+         *     <li>@ref gpudb::aggregate_unique_order_by
+         *         "aggregate_unique_order_by": Comma-separated list of the
+         *         columns to be sorted by as well as the sort direction, e.g.,
+         *         'timestamp asc, x desc'. The default value is ''.
          *     <li>@ref gpudb::aggregate_unique_result_table
          *         "aggregate_unique_result_table": The name of the table used
          *         to store the results, in [schema_name.]table_name format,

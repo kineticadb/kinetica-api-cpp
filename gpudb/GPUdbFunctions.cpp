@@ -5,7 +5,7 @@
  */
 
 // GPUdb Version
-const std::string GPUdb::API_VERSION( "7.2.0.2" );
+const std::string GPUdb::API_VERSION( "7.2.1.0" );
 
 AdminAddHostResponse GPUdb::adminAddHost( const AdminAddHostRequest& request_ ) const
 {

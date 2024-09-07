@@ -163,6 +163,12 @@ namespace gpudb
          *                              number of records per joined-chunk for
          *                              this table. Defaults to the gpudb.conf
          *                              file chunk size
+         *                          <li>@ref
+         *                              gpudb::create_join_table_enable_virtual_chunking
+         *                              "create_join_table_enable_virtual_chunking":
+         *                              Collect chunks with accumulated size
+         *                              less than chunk_size into a single
+         *                              chunk. The default value is 'false'.
          *                      </ul>
          *                      The default value is an empty map.
          */
@@ -280,6 +286,10 @@ namespace gpudb
          *         "create_join_table_chunk_size": Maximum number of records
          *         per joined-chunk for this table. Defaults to the gpudb.conf
          *         file chunk size
+         *     <li>@ref gpudb::create_join_table_enable_virtual_chunking
+         *         "create_join_table_enable_virtual_chunking": Collect chunks
+         *         with accumulated size less than chunk_size into a single
+         *         chunk. The default value is 'false'.
          * </ul>
          * The default value is an empty map.
          */

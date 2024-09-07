@@ -108,8 +108,8 @@ namespace gpudb
          *                                      "export_records_to_table_false"
          *                              </ul>
          *                              The default value is @ref
-         *                              gpudb::export_records_to_table_true
-         *                              "export_records_to_table_true".
+         *                              gpudb::export_records_to_table_false
+         *                              "export_records_to_table_false".
          *                      </ul>
          *                      The default value is an empty map.
          */
@@ -186,8 +186,8 @@ namespace gpudb
          *                 "export_records_to_table_false"
          *         </ul>
          *         The default value is @ref
-         *         gpudb::export_records_to_table_true
-         *         "export_records_to_table_true".
+         *         gpudb::export_records_to_table_false
+         *         "export_records_to_table_false".
          * </ul>
          * The default value is an empty map.
          */

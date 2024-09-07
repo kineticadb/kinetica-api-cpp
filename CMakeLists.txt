@@ -407,7 +407,7 @@ ADD_LIBRARY_FULL( gpudb_api_cpp_lib_${STATIC_OR_SHARED} ${STATIC_OR_SHARED}
     LINK_LIBRARIES
         ${GPUDB_API_CPP_LINK_LIBRARIES}
     PROPERTIES FOLDER "Library"
-    PROPERTIES COMPILE_FLAGS "-std=c++0x"
+    PROPERTIES COMPILE_FLAGS "-std=c++14"
     PROPERTIES OUTPUT_NAME "gpudb_api_cpp"
     PROPERTIES VERSION "${GPUDB_API_CPP_VERSION}"
     PROPERTIES SOVERSION "${API_CPP_VERSION_MAJOR}.${API_CPP_VERSION_MINOR}"
@@ -428,7 +428,7 @@ ADD_EXECUTABLE_FULL( gpudb-api-example
     LINK_LIBRARIES
         gpudb_api_cpp_lib_STATIC
         ${GPUDB_API_CPP_LINK_LIBRARIES}
-    PROPERTIES COMPILE_FLAGS "-std=c++0x"
+    PROPERTIES COMPILE_FLAGS "-std=c++14"
     PROPERTIES FOLDER "Example"
     PROPERTIES OUTPUT_NAME "gpudb-api-example"
 )
@@ -449,7 +449,7 @@ ADD_EXECUTABLE_FULL( test_multihead_ingest
     LINK_LIBRARIES
         gpudb_api_cpp_lib_STATIC
         ${GPUDB_API_CPP_LINK_LIBRARIES}
-    PROPERTIES COMPILE_FLAGS "-std=c++0x"
+    PROPERTIES COMPILE_FLAGS "-std=c++14"
     PROPERTIES FOLDER "Example"
     PROPERTIES OUTPUT_NAME "test_multihead_ingest"
 )
@@ -465,7 +465,7 @@ ADD_EXECUTABLE_FULL( test_multihead_ingest_no_clientside_pk_validations
     LINK_LIBRARIES
         gpudb_api_cpp_lib_STATIC
         ${GPUDB_API_CPP_LINK_LIBRARIES}
-    PROPERTIES COMPILE_FLAGS "-std=c++0x"
+    PROPERTIES COMPILE_FLAGS "-std=c++14"
     PROPERTIES FOLDER "Example"
     PROPERTIES OUTPUT_NAME "test_multihead_ingest_no_clientside_pk_validations"
 )

@@ -56,6 +56,8 @@ namespace gpudb
          *                       <li>@ref
          *                           gpudb::create_credential_azure_storage_key
          *                           "create_credential_azure_storage_key"
+         *                       <li>@ref gpudb::create_credential_confluent
+         *                           "create_credential_confluent"
          *                       <li>@ref gpudb::create_credential_docker
          *                           "create_credential_docker"
          *                       <li>@ref
@@ -70,8 +72,12 @@ namespace gpudb
          *                           "create_credential_jdbc"
          *                       <li>@ref gpudb::create_credential_kafka
          *                           "create_credential_kafka"
-         *                       <li>@ref gpudb::create_credential_confluent
-         *                           "create_credential_confluent"
+         *                       <li>@ref
+         *                           gpudb::create_credential_nvidia_api_key
+         *                           "create_credential_nvidia_api_key"
+         *                       <li>@ref
+         *                           gpudb::create_credential_openai_api_key
+         *                           "create_credential_openai_api_key"
          *                   </ul>
          * @param[in] identity_  User of the credential to be created.
          * @param[in] secret_  Password of the credential to be created.
@@ -110,6 +116,8 @@ namespace gpudb
          *         "create_credential_azure_sas"
          *     <li>@ref gpudb::create_credential_azure_storage_key
          *         "create_credential_azure_storage_key"
+         *     <li>@ref gpudb::create_credential_confluent
+         *         "create_credential_confluent"
          *     <li>@ref gpudb::create_credential_docker
          *         "create_credential_docker"
          *     <li>@ref gpudb::create_credential_gcs_service_account_id
@@ -120,8 +128,10 @@ namespace gpudb
          *     <li>@ref gpudb::create_credential_jdbc "create_credential_jdbc"
          *     <li>@ref gpudb::create_credential_kafka
          *         "create_credential_kafka"
-         *     <li>@ref gpudb::create_credential_confluent
-         *         "create_credential_confluent"
+         *     <li>@ref gpudb::create_credential_nvidia_api_key
+         *         "create_credential_nvidia_api_key"
+         *     <li>@ref gpudb::create_credential_openai_api_key
+         *         "create_credential_openai_api_key"
          * </ul>
          */
         std::string type;

@@ -636,6 +636,9 @@ namespace gpudb
          *         "show_table_datasource_subscriptions": Semicolon-separated
          *         list of datasource names the table has subscribed to. The
          *         default value is ''.
+         *     <li>@ref gpudb::show_table_null_modifying_columns
+         *         "show_table_null_modifying_columns": Comma-separated list of
+         *         null modifying column names. The default value is ''.
          * </ul>
          */
         std::vector<std::map<std::string, std::string> > additionalInfo;

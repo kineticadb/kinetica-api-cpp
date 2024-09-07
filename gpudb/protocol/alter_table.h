@@ -27,11 +27,12 @@ namespace gpudb
      * target="_top">column</a>, <a
      * href="../../../concepts/indexes/#chunk-skip-index" target="_top">chunk
      * skip</a>, <a href="../../../concepts/indexes/#geospatial-index"
-     * target="_top">geospatial</a>, or <a
-     * href="../../../concepts/indexes/#cagra-index" target="_top">CAGRA</a>
-     * index. This can speed up certain operations when using expressions
-     * containing equality or relational operators on indexed columns. This
-     * only applies to tables.
+     * target="_top">geospatial</a>, <a
+     * href="../../../concepts/indexes/#cagra-index" target="_top">CAGRA</a>,
+     * or <a href="../../../concepts/indexes/#hnsw-index"
+     * target="_top">HNSW</a> index. This can speed up certain operations when
+     * using expressions containing equality or relational operators on indexed
+     * columns. This only applies to tables.
      *
      * Create or delete a <a href="../../../concepts/tables/#foreign-key"
      * target="_top">foreign key</a> on a particular column.
@@ -97,10 +98,11 @@ namespace gpudb
          *                             href="../../../concepts/indexes/#chunk-skip-index"
          *                             target="_top">chunk skip index</a>, <a
          *                             href="../../../concepts/indexes/#geospatial-index"
-         *                             target="_top">geospatial index</a>, or
-         *                             <a
+         *                             target="_top">geospatial index</a>, <a
          *                             href="../../../concepts/indexes/#cagra-index"
-         *                             target="_top">CAGRA index</a> (depending
+         *                             target="_top">CAGRA index</a>, or <a
+         *                             href="../../../concepts/indexes/#hnsw-index"
+         *                             target="_top">HNSW index</a> (depending
          *                             on the specified @ref
          *                             gpudb::alter_table_index_type
          *                             "index_type"), on the column name
@@ -122,10 +124,11 @@ namespace gpudb
          *                             href="../../../concepts/indexes/#chunk-skip-index"
          *                             target="_top">chunk skip index</a>, <a
          *                             href="../../../concepts/indexes/#geospatial-index"
-         *                             target="_top">geospatial index</a>, or
-         *                             <a
+         *                             target="_top">geospatial index</a>, <a
          *                             href="../../../concepts/indexes/#cagra-index"
-         *                             target="_top">CAGRA index</a> (depending
+         *                             target="_top">CAGRA index</a>, or <a
+         *                             href="../../../concepts/indexes/#hnsw-index"
+         *                             target="_top">HNSW index</a> (depending
          *                             on the specified @ref
          *                             gpudb::alter_table_index_type
          *                             "index_type"), on the column name
@@ -160,9 +163,8 @@ namespace gpudb
          *                             'true' or 'false'.
          *                         <li>@ref gpudb::alter_table_rename_table
          *                             "alter_table_rename_table": Renames a
-         *                             table or view within its current schema
-         *                             to @a value_. Has the same naming
-         *                             restrictions as <a
+         *                             table or view to @a value_. Has the same
+         *                             naming restrictions as <a
          *                             href="../../../concepts/tables/"
          *                             target="_top">tables</a>.
          *                         <li>@ref gpudb::alter_table_ttl
@@ -569,6 +571,14 @@ namespace gpudb
          *                                      on a <a
          *                                      href="../../../vector_search/#vector-type"
          *                                      target="_top">vector column</a>
+         *                                  <li>@ref gpudb::alter_table_hnsw
+         *                                      "alter_table_hnsw": Create or
+         *                                      delete an <a
+         *                                      href="../../../concepts/indexes/#hnsw-index"
+         *                                      target="_top">HNSW index</a> on
+         *                                      a <a
+         *                                      href="../../../vector_search/#vector-type"
+         *                                      target="_top">vector column</a>
          *                              </ul>
          *                              The default value is @ref
          *                              gpudb::alter_table_column
@@ -613,9 +623,11 @@ namespace gpudb
          *         href="../../../concepts/indexes/#chunk-skip-index"
          *         target="_top">chunk skip index</a>, <a
          *         href="../../../concepts/indexes/#geospatial-index"
-         *         target="_top">geospatial index</a>, or <a
+         *         target="_top">geospatial index</a>, <a
          *         href="../../../concepts/indexes/#cagra-index"
-         *         target="_top">CAGRA index</a> (depending on the specified
+         *         target="_top">CAGRA index</a>, or <a
+         *         href="../../../concepts/indexes/#hnsw-index"
+         *         target="_top">HNSW index</a> (depending on the specified
          *         @ref gpudb::alter_table_index_type "index_type"), on the
          *         column name specified in @ref value. If this column already
          *         has the specified index, an error will be returned.
@@ -631,9 +643,11 @@ namespace gpudb
          *         href="../../../concepts/indexes/#chunk-skip-index"
          *         target="_top">chunk skip index</a>, <a
          *         href="../../../concepts/indexes/#geospatial-index"
-         *         target="_top">geospatial index</a>, or <a
+         *         target="_top">geospatial index</a>, <a
          *         href="../../../concepts/indexes/#cagra-index"
-         *         target="_top">CAGRA index</a> (depending on the specified
+         *         target="_top">CAGRA index</a>, or <a
+         *         href="../../../concepts/indexes/#hnsw-index"
+         *         target="_top">HNSW index</a> (depending on the specified
          *         @ref gpudb::alter_table_index_type "index_type"), on the
          *         column name specified in @ref value. If this column does not
          *         have the specified index, an error will be returned.
@@ -657,10 +671,9 @@ namespace gpudb
          *         tableName should be protected or not. The @ref value would
          *         have been either 'true' or 'false'.
          *     <li>@ref gpudb::alter_table_rename_table
-         *         "alter_table_rename_table": Renames a table or view within
-         *         its current schema to @ref value. Has the same naming
-         *         restrictions as <a href="../../../concepts/tables/"
-         *         target="_top">tables</a>.
+         *         "alter_table_rename_table": Renames a table or view to @ref
+         *         value. Has the same naming restrictions as <a
+         *         href="../../../concepts/tables/" target="_top">tables</a>.
          *     <li>@ref gpudb::alter_table_ttl "alter_table_ttl": Sets the <a
          *         href="../../../concepts/ttl/" target="_top">time-to-live</a>
          *         in minutes of the table or view specified in @ref tableName.
@@ -940,6 +953,12 @@ namespace gpudb
          *                 Create or delete a <a
          *                 href="../../../concepts/indexes/#cagra-index"
          *                 target="_top">CAGRA index</a> on a <a
+         *                 href="../../../vector_search/#vector-type"
+         *                 target="_top">vector column</a>
+         *             <li>@ref gpudb::alter_table_hnsw "alter_table_hnsw":
+         *                 Create or delete an <a
+         *                 href="../../../concepts/indexes/#hnsw-index"
+         *                 target="_top">HNSW index</a> on a <a
          *                 href="../../../vector_search/#vector-type"
          *                 target="_top">vector column</a>
          *         </ul>

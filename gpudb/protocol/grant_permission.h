@@ -95,6 +95,9 @@ namespace gpudb
          *                                 "grant_permission_connect": Connect
          *                                 access on the given data source or
          *                                 data sink.
+         *                             <li>@ref gpudb::grant_permission_create
+         *                                 "grant_permission_create": Ability
+         *                                 to create new objects of this type.
          *                             <li>@ref gpudb::grant_permission_delete
          *                                 "grant_permission_delete": Delete
          *                                 rows from tables.
@@ -199,6 +202,9 @@ namespace gpudb
          *     <li>@ref gpudb::grant_permission_connect
          *         "grant_permission_connect": Connect access on the given data
          *         source or data sink.
+         *     <li>@ref gpudb::grant_permission_create
+         *         "grant_permission_create": Ability to create new objects of
+         *         this type.
          *     <li>@ref gpudb::grant_permission_delete
          *         "grant_permission_delete": Delete rows from tables.
          *     <li>@ref gpudb::grant_permission_execute

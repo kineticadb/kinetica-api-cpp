@@ -77,8 +77,10 @@ namespace gpudb
          *                          <li>@ref
          *                              gpudb::create_datasource_credential
          *                              "create_datasource_credential": Name of
-         *                              the Credential object to be used in
-         *                              data source
+         *                              the <a
+         *                              href="../../../concepts/credentials"
+         *                              target="_top">credential</a> object to
+         *                              be used in data source
          *                          <li>@ref
          *                              gpudb::create_datasource_s3_bucket_name
          *                              "create_datasource_s3_bucket_name":
@@ -89,14 +91,12 @@ namespace gpudb
          *                              the Amazon S3 region where the given
          *                              bucket is located
          *                          <li>@ref
-         *                              gpudb::create_datasource_s3_use_virtual_addressing
-         *                              "create_datasource_s3_use_virtual_addressing":
-         *                              When true (default), the requests URI
-         *                              should be specified in
-         *                              virtual-hosted-style format where the
-         *                              bucket name is part of the domain name
-         *                              in the URL.   Otherwise set to false to
-         *                              use path-style URI for requests.
+         *                              gpudb::create_datasource_s3_verify_ssl
+         *                              "create_datasource_s3_verify_ssl": Set
+         *                              to false for testing purposes or when
+         *                              necessary to bypass TLS errors (e.g.
+         *                              self-signed certificates). This value
+         *                              is true by default.
          *                              Supported values:
          *                              <ul>
          *                                  <li>@ref
@@ -105,6 +105,29 @@ namespace gpudb
          *                                  <li>@ref
          *                                      gpudb::create_datasource_false
          *                                      "create_datasource_false"
+         *                              </ul>
+         *                              The default value is @ref
+         *                              gpudb::create_datasource_true
+         *                              "create_datasource_true".
+         *                          <li>@ref
+         *                              gpudb::create_datasource_s3_use_virtual_addressing
+         *                              "create_datasource_s3_use_virtual_addressing":
+         *                              Whether to use virtual addressing when
+         *                              referencing the Amazon S3 source.
+         *                              Supported values:
+         *                              <ul>
+         *                                  <li>@ref
+         *                                      gpudb::create_datasource_true
+         *                                      "create_datasource_true": The
+         *                                      requests URI should be
+         *                                      specified in
+         *                                      virtual-hosted-style format
+         *                                      where the bucket name is part
+         *                                      of the domain name in the URL.
+         *                                  <li>@ref
+         *                                      gpudb::create_datasource_false
+         *                                      "create_datasource_false": Use
+         *                                      path-style URI for requests.
          *                              </ul>
          *                              The default value is @ref
          *                              gpudb::create_datasource_true
@@ -178,7 +201,7 @@ namespace gpudb
          *                          <li>@ref
          *                              gpudb::create_datasource_azure_oauth_token
          *                              "create_datasource_azure_oauth_token":
-         *                              Oauth token to access given storage
+         *                              OAuth token to access given storage
          *                              container
          *                          <li>@ref
          *                              gpudb::create_datasource_gcs_bucket_name
@@ -282,18 +305,20 @@ namespace gpudb
          *                          <li>@ref
          *                              gpudb::create_datasource_schema_registry_location
          *                              "create_datasource_schema_registry_location":
-         *                              Location of Confluent Schema registry
+         *                              Location of Confluent Schema Registry
          *                              in '[storage_path[:storage_port]]'
          *                              format.
          *                          <li>@ref
          *                              gpudb::create_datasource_schema_registry_credential
          *                              "create_datasource_schema_registry_credential":
-         *                              Confluent Schema registry Credential
-         *                              object name.
+         *                              Confluent Schema Registry <a
+         *                              href="../../../concepts/credentials"
+         *                              target="_top">credential</a> object
+         *                              name.
          *                          <li>@ref
          *                              gpudb::create_datasource_schema_registry_port
          *                              "create_datasource_schema_registry_port":
-         *                              Confluent Schema registry port
+         *                              Confluent Schema Registry port
          *                              (optional).
          *                      </ul>
          *                      The default value is an empty map.
@@ -353,26 +378,42 @@ namespace gpudb
          *         "create_datasource_wait_timeout": Timeout in seconds for
          *         reading from this storage provider
          *     <li>@ref gpudb::create_datasource_credential
-         *         "create_datasource_credential": Name of the Credential
-         *         object to be used in data source
+         *         "create_datasource_credential": Name of the <a
+         *         href="../../../concepts/credentials"
+         *         target="_top">credential</a> object to be used in data
+         *         source
          *     <li>@ref gpudb::create_datasource_s3_bucket_name
          *         "create_datasource_s3_bucket_name": Name of the Amazon S3
          *         bucket to use as the data source
          *     <li>@ref gpudb::create_datasource_s3_region
          *         "create_datasource_s3_region": Name of the Amazon S3 region
          *         where the given bucket is located
-         *     <li>@ref gpudb::create_datasource_s3_use_virtual_addressing
-         *         "create_datasource_s3_use_virtual_addressing": When true
-         *         (default), the requests URI should be specified in
-         *         virtual-hosted-style format where the bucket name is part of
-         *         the domain name in the URL.   Otherwise set to false to use
-         *         path-style URI for requests.
+         *     <li>@ref gpudb::create_datasource_s3_verify_ssl
+         *         "create_datasource_s3_verify_ssl": Set to false for testing
+         *         purposes or when necessary to bypass TLS errors (e.g.
+         *         self-signed certificates). This value is true by default.
          *         Supported values:
          *         <ul>
          *             <li>@ref gpudb::create_datasource_true
          *                 "create_datasource_true"
          *             <li>@ref gpudb::create_datasource_false
          *                 "create_datasource_false"
+         *         </ul>
+         *         The default value is @ref gpudb::create_datasource_true
+         *         "create_datasource_true".
+         *     <li>@ref gpudb::create_datasource_s3_use_virtual_addressing
+         *         "create_datasource_s3_use_virtual_addressing": Whether to
+         *         use virtual addressing when referencing the Amazon S3
+         *         source.
+         *         Supported values:
+         *         <ul>
+         *             <li>@ref gpudb::create_datasource_true
+         *                 "create_datasource_true": The requests URI should be
+         *                 specified in virtual-hosted-style format where the
+         *                 bucket name is part of the domain name in the URL.
+         *             <li>@ref gpudb::create_datasource_false
+         *                 "create_datasource_false": Use path-style URI for
+         *                 requests.
          *         </ul>
          *         The default value is @ref gpudb::create_datasource_true
          *         "create_datasource_true".
@@ -420,7 +461,7 @@ namespace gpudb
          *         "create_datasource_azure_sas_token": Shared access signature
          *         token for Azure storage account to use as the data source
          *     <li>@ref gpudb::create_datasource_azure_oauth_token
-         *         "create_datasource_azure_oauth_token": Oauth token to access
+         *         "create_datasource_azure_oauth_token": OAuth token to access
          *         given storage container
          *     <li>@ref gpudb::create_datasource_gcs_bucket_name
          *         "create_datasource_gcs_bucket_name": Name of the Google
@@ -495,14 +536,15 @@ namespace gpudb
          *         "create_datasource_true".
          *     <li>@ref gpudb::create_datasource_schema_registry_location
          *         "create_datasource_schema_registry_location": Location of
-         *         Confluent Schema registry in '[storage_path[:storage_port]]'
+         *         Confluent Schema Registry in '[storage_path[:storage_port]]'
          *         format.
          *     <li>@ref gpudb::create_datasource_schema_registry_credential
          *         "create_datasource_schema_registry_credential": Confluent
-         *         Schema registry Credential object name.
+         *         Schema Registry <a href="../../../concepts/credentials"
+         *         target="_top">credential</a> object name.
          *     <li>@ref gpudb::create_datasource_schema_registry_port
          *         "create_datasource_schema_registry_port": Confluent Schema
-         *         registry port (optional).
+         *         Registry port (optional).
          * </ul>
          * The default value is an empty map.
          */

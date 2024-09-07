@@ -97,6 +97,9 @@ namespace gpudb
          *                                 "revoke_permission_connect": Connect
          *                                 access on the given data source or
          *                                 data sink.
+         *                             <li>@ref gpudb::revoke_permission_create
+         *                                 "revoke_permission_create": Ability
+         *                                 to create new objects of this type.
          *                             <li>@ref gpudb::revoke_permission_delete
          *                                 "revoke_permission_delete": Delete
          *                                 rows from tables.
@@ -196,6 +199,9 @@ namespace gpudb
          *     <li>@ref gpudb::revoke_permission_connect
          *         "revoke_permission_connect": Connect access on the given
          *         data source or data sink.
+         *     <li>@ref gpudb::revoke_permission_create
+         *         "revoke_permission_create": Ability to create new objects of
+         *         this type.
          *     <li>@ref gpudb::revoke_permission_delete
          *         "revoke_permission_delete": Delete rows from tables.
          *     <li>@ref gpudb::revoke_permission_execute
