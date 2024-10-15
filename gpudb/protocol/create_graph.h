@@ -54,14 +54,10 @@ namespace gpudb
          *                            more details.
          *                            Supported values:
          *                            <ul>
-         *                                <li>@ref gpudb::create_graph_true
-         *                                    "create_graph_true"
-         *                                <li>@ref gpudb::create_graph_false
-         *                                    "create_graph_false"
+         *                                <li>true
+         *                                <li>false
          *                            </ul>
-         *                            The default value is @ref
-         *                            gpudb::create_graph_true
-         *                            "create_graph_true".
+         *                            The default value is true.
          * @param[in] nodes_  Nodes represent fundamental topological units of
          *                    a graph. Nodes must be specified using <a
          *                    href="../../../graph_solver/network_graph_solver/#identifiers"
@@ -334,11 +330,10 @@ namespace gpudb
          * target="_top">Directed Graphs</a> for more details.
          * Supported values:
          * <ul>
-         *     <li>@ref gpudb::create_graph_true "create_graph_true"
-         *     <li>@ref gpudb::create_graph_false "create_graph_false"
+         *     <li>true
+         *     <li>false
          * </ul>
-         * The default value is @ref gpudb::create_graph_true
-         * "create_graph_true".
+         * The default value is true.
          */
         bool directedGraph;
 

@@ -169,6 +169,11 @@ namespace gpudb
          *                              Collect chunks with accumulated size
          *                              less than chunk_size into a single
          *                              chunk. The default value is 'false'.
+         *                          <li>@ref
+         *                              gpudb::create_join_table_enable_pk_equi_join
+         *                              "create_join_table_enable_pk_equi_join":
+         *                              Use equi-join to do primary key joins
+         *                              rather than using primary-key-index
          *                      </ul>
          *                      The default value is an empty map.
          */
@@ -290,6 +295,9 @@ namespace gpudb
          *         "create_join_table_enable_virtual_chunking": Collect chunks
          *         with accumulated size less than chunk_size into a single
          *         chunk. The default value is 'false'.
+         *     <li>@ref gpudb::create_join_table_enable_pk_equi_join
+         *         "create_join_table_enable_pk_equi_join": Use equi-join to do
+         *         primary key joins rather than using primary-key-index
          * </ul>
          * The default value is an empty map.
          */

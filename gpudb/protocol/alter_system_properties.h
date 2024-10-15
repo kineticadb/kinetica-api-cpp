@@ -374,6 +374,11 @@ namespace gpudb
          *                                         maximum allowed value is
          *                                         '8192'.
          *                                     <li>@ref
+         *                                         gpudb::alter_system_properties_ai_enable_rag
+         *                                         "alter_system_properties_ai_enable_rag":
+         *                                         Enable RAG. The default
+         *                                         value is 'false'.
+         *                                     <li>@ref
          *                                         gpudb::alter_system_properties_ai_api_provider
          *                                         "alter_system_properties_ai_api_provider":
          *                                         AI API provider type
@@ -654,6 +659,9 @@ namespace gpudb
          *         "alter_system_properties_tps_per_tom": Sets the tps_per_tom
          *         value of the conf. The minimum allowed value is '2'. The
          *         maximum allowed value is '8192'.
+         *     <li>@ref gpudb::alter_system_properties_ai_enable_rag
+         *         "alter_system_properties_ai_enable_rag": Enable RAG. The
+         *         default value is 'false'.
          *     <li>@ref gpudb::alter_system_properties_ai_api_provider
          *         "alter_system_properties_ai_api_provider": AI API provider
          *         type

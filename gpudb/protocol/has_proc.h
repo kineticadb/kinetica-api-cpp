@@ -119,8 +119,8 @@ namespace gpudb
          * Indicates whether the proc exists or not.
          * Supported values:
          * <ul>
-         *     <li>@ref gpudb::has_proc_true "has_proc_true"
-         *     <li>@ref gpudb::has_proc_false "has_proc_false"
+         *     <li>true
+         *     <li>false
          * </ul>
          */
         bool procExists;

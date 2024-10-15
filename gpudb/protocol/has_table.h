@@ -126,8 +126,8 @@ namespace gpudb
          * Indicates whether the table exists or not.
          * Supported values:
          * <ul>
-         *     <li>@ref gpudb::has_table_true "has_table_true"
-         *     <li>@ref gpudb::has_table_false "has_table_false"
+         *     <li>true
+         *     <li>false
          * </ul>
          */
         bool tableExists;

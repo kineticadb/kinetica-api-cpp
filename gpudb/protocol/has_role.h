@@ -214,10 +214,8 @@ namespace gpudb
          * target @ref gpudb::HasRoleRequest::role "role".
          * Supported values:
          * <ul>
-         *     <li>@ref gpudb::has_role_true "has_role_true": User has
-         *         membership in the role
-         *     <li>@ref gpudb::has_role_false "has_role_false": User does not
-         *         have membership in the role
+         *     <li>true: User has membership in the role
+         *     <li>false: User does not have membership in the role
          * </ul>
          */
         bool hasRole;

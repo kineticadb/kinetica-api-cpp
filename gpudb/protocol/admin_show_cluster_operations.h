@@ -166,10 +166,8 @@ namespace gpudb
          * Whether this cluster operation is currently in progress or not.
          * Supported values:
          * <ul>
-         *     <li>@ref gpudb::admin_show_cluster_operations_true
-         *         "admin_show_cluster_operations_true"
-         *     <li>@ref gpudb::admin_show_cluster_operations_false
-         *         "admin_show_cluster_operations_false"
+         *     <li>true
+         *     <li>false
          * </ul>
          */
         bool inProgress;
@@ -214,10 +212,8 @@ namespace gpudb
          * progress.
          * Supported values:
          * <ul>
-         *     <li>@ref gpudb::admin_show_cluster_operations_true
-         *         "admin_show_cluster_operations_true"
-         *     <li>@ref gpudb::admin_show_cluster_operations_false
-         *         "admin_show_cluster_operations_false"
+         *     <li>true
+         *     <li>false
          * </ul>
          */
         bool userStopped;
@@ -231,10 +227,8 @@ namespace gpudb
          * Whether this operation was a dry run.
          * Supported values:
          * <ul>
-         *     <li>@ref gpudb::admin_show_cluster_operations_true
-         *         "admin_show_cluster_operations_true"
-         *     <li>@ref gpudb::admin_show_cluster_operations_false
-         *         "admin_show_cluster_operations_false"
+         *     <li>true
+         *     <li>false
          * </ul>
          */
         bool dryRun;
@@ -248,10 +242,8 @@ namespace gpudb
          * Whether adding ranks is (or was) part of this operation.
          * Supported values:
          * <ul>
-         *     <li>@ref gpudb::admin_show_cluster_operations_true
-         *         "admin_show_cluster_operations_true"
-         *     <li>@ref gpudb::admin_show_cluster_operations_false
-         *         "admin_show_cluster_operations_false"
+         *     <li>true
+         *     <li>false
          * </ul>
          */
         bool addRanks;
@@ -296,10 +288,8 @@ namespace gpudb
          * Whether removing ranks is (or was) part of this operation.
          * Supported values:
          * <ul>
-         *     <li>@ref gpudb::admin_show_cluster_operations_true
-         *         "admin_show_cluster_operations_true"
-         *     <li>@ref gpudb::admin_show_cluster_operations_false
-         *         "admin_show_cluster_operations_false"
+         *     <li>true
+         *     <li>false
          * </ul>
          */
         bool removeRanks;
@@ -339,10 +329,8 @@ namespace gpudb
          * operation.
          * Supported values:
          * <ul>
-         *     <li>@ref gpudb::admin_show_cluster_operations_true
-         *         "admin_show_cluster_operations_true"
-         *     <li>@ref gpudb::admin_show_cluster_operations_false
-         *         "admin_show_cluster_operations_false"
+         *     <li>true
+         *     <li>false
          * </ul>
          */
         bool rebalance;
@@ -352,10 +340,8 @@ namespace gpudb
          * operation.
          * Supported values:
          * <ul>
-         *     <li>@ref gpudb::admin_show_cluster_operations_true
-         *         "admin_show_cluster_operations_true"
-         *     <li>@ref gpudb::admin_show_cluster_operations_false
-         *         "admin_show_cluster_operations_false"
+         *     <li>true
+         *     <li>false
          * </ul>
          */
         bool rebalanceUnshardedData;
@@ -390,10 +376,8 @@ namespace gpudb
          * operation.
          * Supported values:
          * <ul>
-         *     <li>@ref gpudb::admin_show_cluster_operations_true
-         *         "admin_show_cluster_operations_true"
-         *     <li>@ref gpudb::admin_show_cluster_operations_false
-         *         "admin_show_cluster_operations_false"
+         *     <li>true
+         *     <li>false
          * </ul>
          */
         bool rebalanceShardedData;

@@ -123,8 +123,8 @@ namespace gpudb
          * Indicates whether the type exists or not.
          * Supported values:
          * <ul>
-         *     <li>@ref gpudb::has_type_true "has_type_true"
-         *     <li>@ref gpudb::has_type_false "has_type_false"
+         *     <li>true
+         *     <li>false
          * </ul>
          */
         bool typeExists;

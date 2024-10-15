@@ -111,6 +111,56 @@ namespace gpudb
          *                                           region where the given
          *                                           bucket is located
          *                                       <li>@ref
+         *                                           gpudb::alter_datasource_s3_verify_ssl
+         *                                           "alter_datasource_s3_verify_ssl":
+         *                                           Set to false for testing
+         *                                           purposes or when necessary
+         *                                           to bypass TLS errors (e.g.
+         *                                           self-signed certificates).
+         *                                           This value is true by
+         *                                           default.
+         *                                           Supported values:
+         *                                           <ul>
+         *                                               <li>@ref
+         *                                                   gpudb::alter_datasource_true
+         *                                                   "alter_datasource_true"
+         *                                               <li>@ref
+         *                                                   gpudb::alter_datasource_false
+         *                                                   "alter_datasource_false"
+         *                                           </ul>
+         *                                           The default value is @ref
+         *                                           gpudb::alter_datasource_true
+         *                                           "alter_datasource_true".
+         *                                       <li>@ref
+         *                                           gpudb::alter_datasource_s3_use_virtual_addressing
+         *                                           "alter_datasource_s3_use_virtual_addressing":
+         *                                           Whether to use virtual
+         *                                           addressing when
+         *                                           referencing the Amazon S3
+         *                                           source.
+         *                                           Supported values:
+         *                                           <ul>
+         *                                               <li>@ref
+         *                                                   gpudb::alter_datasource_true
+         *                                                   "alter_datasource_true":
+         *                                                   The requests URI
+         *                                                   should be
+         *                                                   specified in
+         *                                                   virtual-hosted-style
+         *                                                   format where the
+         *                                                   bucket name is
+         *                                                   part of the domain
+         *                                                   name in the URL.
+         *                                               <li>@ref
+         *                                                   gpudb::alter_datasource_false
+         *                                                   "alter_datasource_false":
+         *                                                   Use path-style URI
+         *                                                   for requests.
+         *                                           </ul>
+         *                                           The default value is @ref
+         *                                           gpudb::alter_datasource_true
+         *                                           "alter_datasource_true".
+         *                                       <li>@ref
          *                                           gpudb::alter_datasource_s3_aws_role_arn
          *                                           "alter_datasource_s3_aws_role_arn":
          *                                           Amazon IAM Role ARN which
@@ -306,6 +356,26 @@ namespace gpudb
          *                                           "schema_name" is empty,
          *                                           then the user's default
          *                                           schema will be used.
+         *                                       <li>@ref
+         *                                           gpudb::alter_datasource_schema_registry_location
+         *                                           "alter_datasource_schema_registry_location":
+         *                                           Location of Confluent
+         *                                           Schema Registry in
+         *                                           '[storage_path[:storage_port]]'
+         *                                           format.
+         *                                       <li>@ref
+         *                                           gpudb::alter_datasource_schema_registry_credential
+         *                                           "alter_datasource_schema_registry_credential":
+         *                                           Confluent Schema Registry
+         *                                           <a
+         *                                           href="../../../concepts/credentials"
+         *                                           target="_top">credential</a>
+         *                                           object name.
+         *                                       <li>@ref
+         *                                           gpudb::alter_datasource_schema_registry_port
+         *                                           "alter_datasource_schema_registry_port":
+         *                                           Confluent Schema Registry
+         *                                           port (optional).
          *                                   </ul>
          * @param[in] options_  Optional parameters.
          */
@@ -366,6 +436,34 @@ namespace gpudb
          *     <li>@ref gpudb::alter_datasource_s3_region
          *         "alter_datasource_s3_region": Name of the Amazon S3 region
          *         where the given bucket is located
+         *     <li>@ref gpudb::alter_datasource_s3_verify_ssl
+         *         "alter_datasource_s3_verify_ssl": Set to false for testing
+         *         purposes or when necessary to bypass TLS errors (e.g.
+         *         self-signed certificates). This value is true by default.
+         *         Supported values:
+         *         <ul>
+         *             <li>@ref gpudb::alter_datasource_true
+         *                 "alter_datasource_true"
+         *             <li>@ref gpudb::alter_datasource_false
+         *                 "alter_datasource_false"
+         *         </ul>
+         *         The default value is @ref gpudb::alter_datasource_true
+         *         "alter_datasource_true".
+         *     <li>@ref gpudb::alter_datasource_s3_use_virtual_addressing
+         *         "alter_datasource_s3_use_virtual_addressing": Whether to use
+         *         virtual addressing when referencing the Amazon S3 source.
+         *         Supported values:
+         *         <ul>
+         *             <li>@ref gpudb::alter_datasource_true
+         *                 "alter_datasource_true": The requests URI should be
+         *                 specified in virtual-hosted-style format where the
+         *                 bucket name is part of the domain name in the URL.
+         *             <li>@ref gpudb::alter_datasource_false
+         *                 "alter_datasource_false": Use path-style URI for
+         *                 requests.
+         *         </ul>
+         *         The default value is @ref gpudb::alter_datasource_true
+         *         "alter_datasource_true".
          *     <li>@ref gpudb::alter_datasource_s3_aws_role_arn
          *         "alter_datasource_s3_aws_role_arn": Amazon IAM Role ARN
          *         which has required S3 permissions that can be assumed for
@@ -481,6 +579,17 @@ namespace gpudb
          *         doesn't exist, an error will be thrown. If @ref
          *         gpudb::alter_datasource_schema_name "schema_name" is empty,
          *         then the user's default schema will be used.
+         *     <li>@ref gpudb::alter_datasource_schema_registry_location
+         *         "alter_datasource_schema_registry_location": Location of
+         *         Confluent Schema Registry in '[storage_path[:storage_port]]'
+         *         format.
+         *     <li>@ref gpudb::alter_datasource_schema_registry_credential
+         *         "alter_datasource_schema_registry_credential": Confluent
+         *         Schema Registry <a href="../../../concepts/credentials"
+         *         target="_top">credential</a> object name.
+         *     <li>@ref gpudb::alter_datasource_schema_registry_port
+         *         "alter_datasource_schema_registry_port": Confluent Schema
+         *         Registry port (optional).
          * </ul>
          */
         std::map<std::string, std::string> datasourceUpdatesMap;

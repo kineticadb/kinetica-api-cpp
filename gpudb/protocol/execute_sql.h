@@ -1216,8 +1216,8 @@ namespace gpudb
          * Too many records. Returned a partial set.
          * Supported values:
          * <ul>
-         *     <li>@ref gpudb::execute_sql_true "execute_sql_true"
-         *     <li>@ref gpudb::execute_sql_false "execute_sql_false"
+         *     <li>true
+         *     <li>false
          * </ul>
          */
         bool hasMoreRecords;
@@ -1366,8 +1366,8 @@ namespace gpudb
          * Too many records. Returned a partial set.
          * Supported values:
          * <ul>
-         *     <li>@ref gpudb::execute_sql_true "execute_sql_true"
-         *     <li>@ref gpudb::execute_sql_false "execute_sql_false"
+         *     <li>true
+         *     <li>false
          * </ul>
          */
         bool hasMoreRecords;

@@ -78,12 +78,76 @@ namespace gpudb
          *                                         where the given bucket is
          *                                         located
          *                                     <li>@ref
+         *                                         gpudb::alter_datasink_s3_verify_ssl
+         *                                         "alter_datasink_s3_verify_ssl":
+         *                                         Set to false for testing
+         *                                         purposes or when necessary
+         *                                         to bypass TLS errors (e.g.
+         *                                         self-signed certificates).
+         *                                         This value is true by
+         *                                         default.
+         *                                         Supported values:
+         *                                         <ul>
+         *                                             <li>@ref
+         *                                                 gpudb::alter_datasink_true
+         *                                                 "alter_datasink_true"
+         *                                             <li>@ref
+         *                                                 gpudb::alter_datasink_false
+         *                                                 "alter_datasink_false"
+         *                                         </ul>
+         *                                         The default value is @ref
+         *                                         gpudb::alter_datasink_true
+         *                                         "alter_datasink_true".
+         *                                     <li>@ref
+         *                                         gpudb::alter_datasink_s3_use_virtual_addressing
+         *                                         "alter_datasink_s3_use_virtual_addressing":
+         *                                         When true (default), the
+         *                                         requests URI should be
+         *                                         specified in
+         *                                         virtual-hosted-style format
+         *                                         where the bucket name is
+         *                                         part of the domain name in
+         *                                         the URL.   Otherwise set to
+         *                                         false to use path-style URI
+         *                                         for requests.
+         *                                         Supported values:
+         *                                         <ul>
+         *                                             <li>@ref
+         *                                                 gpudb::alter_datasink_true
+         *                                                 "alter_datasink_true"
+         *                                             <li>@ref
+         *                                                 gpudb::alter_datasink_false
+         *                                                 "alter_datasink_false"
+         *                                         </ul>
+         *                                         The default value is @ref
+         *                                         gpudb::alter_datasink_true
+         *                                         "alter_datasink_true".
+         *                                     <li>@ref
          *                                         gpudb::alter_datasink_s3_aws_role_arn
          *                                         "alter_datasink_s3_aws_role_arn":
          *                                         Amazon IAM Role ARN which
          *                                         has required S3 permissions
          *                                         that can be assumed for the
          *                                         given S3 IAM user
+         *                                     <li>@ref
+         *                                         gpudb::alter_datasink_s3_encryption_customer_algorithm
+         *                                         "alter_datasink_s3_encryption_customer_algorithm":
+         *                                         Customer encryption
+         *                                         algorithm used encrypting
+         *                                         data
+         *                                     <li>@ref
+         *                                         gpudb::alter_datasink_s3_encryption_customer_key
+         *                                         "alter_datasink_s3_encryption_customer_key":
+         *                                         Customer encryption key to
+         *                                         encrypt or decrypt data
+         *                                     <li>@ref
+         *                                         gpudb::alter_datasink_s3_encryption_type
+         *                                         "alter_datasink_s3_encryption_type":
+         *                                         Server side encryption type
+         *                                     <li>@ref
+         *                                         gpudb::alter_datasink_s3_kms_key_id
+         *                                         "alter_datasink_s3_kms_key_id":
+         *                                         KMS key
          *                                     <li>@ref
          *                                         gpudb::alter_datasink_hdfs_kerberos_keytab
          *                                         "alter_datasink_hdfs_kerberos_keytab":
@@ -341,10 +405,49 @@ namespace gpudb
          *     <li>@ref gpudb::alter_datasink_s3_region
          *         "alter_datasink_s3_region": Name of the Amazon S3 region
          *         where the given bucket is located
+         *     <li>@ref gpudb::alter_datasink_s3_verify_ssl
+         *         "alter_datasink_s3_verify_ssl": Set to false for testing
+         *         purposes or when necessary to bypass TLS errors (e.g.
+         *         self-signed certificates). This value is true by default.
+         *         Supported values:
+         *         <ul>
+         *             <li>@ref gpudb::alter_datasink_true
+         *                 "alter_datasink_true"
+         *             <li>@ref gpudb::alter_datasink_false
+         *                 "alter_datasink_false"
+         *         </ul>
+         *         The default value is @ref gpudb::alter_datasink_true
+         *         "alter_datasink_true".
+         *     <li>@ref gpudb::alter_datasink_s3_use_virtual_addressing
+         *         "alter_datasink_s3_use_virtual_addressing": When true
+         *         (default), the requests URI should be specified in
+         *         virtual-hosted-style format where the bucket name is part of
+         *         the domain name in the URL.   Otherwise set to false to use
+         *         path-style URI for requests.
+         *         Supported values:
+         *         <ul>
+         *             <li>@ref gpudb::alter_datasink_true
+         *                 "alter_datasink_true"
+         *             <li>@ref gpudb::alter_datasink_false
+         *                 "alter_datasink_false"
+         *         </ul>
+         *         The default value is @ref gpudb::alter_datasink_true
+         *         "alter_datasink_true".
          *     <li>@ref gpudb::alter_datasink_s3_aws_role_arn
          *         "alter_datasink_s3_aws_role_arn": Amazon IAM Role ARN which
          *         has required S3 permissions that can be assumed for the
          *         given S3 IAM user
+         *     <li>@ref gpudb::alter_datasink_s3_encryption_customer_algorithm
+         *         "alter_datasink_s3_encryption_customer_algorithm": Customer
+         *         encryption algorithm used encrypting data
+         *     <li>@ref gpudb::alter_datasink_s3_encryption_customer_key
+         *         "alter_datasink_s3_encryption_customer_key": Customer
+         *         encryption key to encrypt or decrypt data
+         *     <li>@ref gpudb::alter_datasink_s3_encryption_type
+         *         "alter_datasink_s3_encryption_type": Server side encryption
+         *         type
+         *     <li>@ref gpudb::alter_datasink_s3_kms_key_id
+         *         "alter_datasink_s3_kms_key_id": KMS key
          *     <li>@ref gpudb::alter_datasink_hdfs_kerberos_keytab
          *         "alter_datasink_hdfs_kerberos_keytab": Kerberos keytab file
          *         location for the given HDFS user.  This may be a KIFS file.

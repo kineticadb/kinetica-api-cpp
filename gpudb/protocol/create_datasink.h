@@ -123,6 +123,14 @@ namespace gpudb
          *                              Customer encryption key to encrypt or
          *                              decrypt data
          *                          <li>@ref
+         *                              gpudb::create_datasink_s3_encryption_type
+         *                              "create_datasink_s3_encryption_type":
+         *                              Server side encryption type
+         *                          <li>@ref
+         *                              gpudb::create_datasink_s3_kms_key_id
+         *                              "create_datasink_s3_kms_key_id": KMS
+         *                              key
+         *                          <li>@ref
          *                              gpudb::create_datasink_hdfs_kerberos_keytab
          *                              "create_datasink_hdfs_kerberos_keytab":
          *                              Kerberos keytab file location for the
@@ -370,6 +378,11 @@ namespace gpudb
          *     <li>@ref gpudb::create_datasink_s3_encryption_customer_key
          *         "create_datasink_s3_encryption_customer_key": Customer
          *         encryption key to encrypt or decrypt data
+         *     <li>@ref gpudb::create_datasink_s3_encryption_type
+         *         "create_datasink_s3_encryption_type": Server side encryption
+         *         type
+         *     <li>@ref gpudb::create_datasink_s3_kms_key_id
+         *         "create_datasink_s3_kms_key_id": KMS key
          *     <li>@ref gpudb::create_datasink_hdfs_kerberos_keytab
          *         "create_datasink_hdfs_kerberos_keytab": Kerberos keytab file
          *         location for the given HDFS user.  This may be a KIFS file.

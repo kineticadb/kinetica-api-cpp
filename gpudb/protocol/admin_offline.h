@@ -34,10 +34,8 @@ namespace gpudb
          * @param[in] offline_  Set to true if desired state is offline.
          *                      Supported values:
          *                      <ul>
-         *                          <li>@ref gpudb::admin_offline_true
-         *                              "admin_offline_true"
-         *                          <li>@ref gpudb::admin_offline_false
-         *                              "admin_offline_false"
+         *                          <li>true
+         *                          <li>false
          *                      </ul>
          * @param[in] options_  Optional parameters.
          *                      <ul>
@@ -64,8 +62,8 @@ namespace gpudb
          * Set to true if desired state is offline.
          * Supported values:
          * <ul>
-         *     <li>@ref gpudb::admin_offline_true "admin_offline_true"
-         *     <li>@ref gpudb::admin_offline_false "admin_offline_false"
+         *     <li>true
+         *     <li>false
          * </ul>
          */
         bool offline;

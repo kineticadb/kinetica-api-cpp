@@ -124,8 +124,8 @@ namespace gpudb
          * Indicates whether the schema exists or not.
          * Supported values:
          * <ul>
-         *     <li>@ref gpudb::has_schema_true "has_schema_true"
-         *     <li>@ref gpudb::has_schema_false "has_schema_false"
+         *     <li>true
+         *     <li>false
          * </ul>
          */
         bool schemaExists;

@@ -353,9 +353,8 @@ namespace gpudb
          *                                      range [1, 500]. If both min and
          *                                      max are specified, min must be
          *                                      less than or equal to max. The
-         *                                      minimum allowed value is '1'.
-         *                                      The maximum allowed value is
-         *                                      '500'.
+         *                                      minimum allowed value is 1. The
+         *                                      maximum allowed value is 500.
          *                                  <li>@ref
          *                                      gpudb::insert_records_random_max
          *                                      "insert_records_random_max":
@@ -366,9 +365,9 @@ namespace gpudb
          *                                      range [1, 500]. If both min and
          *                                      max are specified, max must be
          *                                      greater than or equal to min.
-         *                                      The minimum allowed value is
-         *                                      '1'. The maximum allowed value
-         *                                      is '500'.
+         *                                      The minimum allowed value is 1.
+         *                                      The maximum allowed value is
+         *                                      500.
          *                              </ul>
          *                      </ul>
          *                      The default value is an empty map.
@@ -585,16 +584,16 @@ namespace gpudb
          *                 series. Must be an integral value within the range
          *                 [1, 500]. If both min and max are specified, min
          *                 must be less than or equal to max. The minimum
-         *                 allowed value is '1'. The maximum allowed value is
-         *                 '500'.
+         *                 allowed value is 1. The maximum allowed value is
+         *                 500.
          *             <li>@ref gpudb::insert_records_random_max
          *                 "insert_records_random_max": Maximum possible length
          *                 for generated series; default is 500 records per
          *                 series. Must be an integral value within the range
          *                 [1, 500]. If both min and max are specified, max
          *                 must be greater than or equal to min. The minimum
-         *                 allowed value is '1'. The maximum allowed value is
-         *                 '500'.
+         *                 allowed value is 1. The maximum allowed value is
+         *                 500.
          *         </ul>
          * </ul>
          * The default value is an empty map.

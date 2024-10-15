@@ -108,16 +108,10 @@ namespace gpudb
          *                            in the response.
          *                            Supported values:
          *                            <ul>
-         *                                <li>@ref
-         *                                    gpudb::visualize_isochrone_true
-         *                                    "visualize_isochrone_true"
-         *                                <li>@ref
-         *                                    gpudb::visualize_isochrone_false
-         *                                    "visualize_isochrone_false"
+         *                                <li>true
+         *                                <li>false
          *                            </ul>
-         *                            The default value is @ref
-         *                            gpudb::visualize_isochrone_true
-         *                            "visualize_isochrone_true".
+         *                            The default value is true.
          * @param[in] levelsTable_  Name of the table to output the isochrones
          *                          to, in [schema_name.]table_name format,
          *                          using standard <a
@@ -864,13 +858,10 @@ namespace gpudb
          * PNG image of the isochrones in the response.
          * Supported values:
          * <ul>
-         *     <li>@ref gpudb::visualize_isochrone_true
-         *         "visualize_isochrone_true"
-         *     <li>@ref gpudb::visualize_isochrone_false
-         *         "visualize_isochrone_false"
+         *     <li>true
+         *     <li>false
          * </ul>
-         * The default value is @ref gpudb::visualize_isochrone_true
-         * "visualize_isochrone_true".
+         * The default value is true.
          */
         bool generateImage;
 

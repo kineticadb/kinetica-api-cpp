@@ -904,10 +904,8 @@ AdminOfflineResponse& adminOffline( const AdminOfflineRequest& request_,
  * @param[in] offline  Set to true if desired state is offline.
  *                     Supported values:
  *                     <ul>
- *                         <li>@ref gpudb::admin_offline_true
- *                             "admin_offline_true"
- *                         <li>@ref gpudb::admin_offline_false
- *                             "admin_offline_false"
+ *                         <li>true
+ *                         <li>false
  *                     </ul>
  * @param[in] options  Optional parameters.
  *                     <ul>
@@ -937,10 +935,8 @@ AdminOfflineResponse adminOffline( const bool offline,
  * @param[in] offline  Set to true if desired state is offline.
  *                     Supported values:
  *                     <ul>
- *                         <li>@ref gpudb::admin_offline_true
- *                             "admin_offline_true"
- *                         <li>@ref gpudb::admin_offline_false
- *                             "admin_offline_false"
+ *                         <li>true
+ *                         <li>false
  *                     </ul>
  * @param[in] options  Optional parameters.
  *                     <ul>
@@ -6547,11 +6543,70 @@ AlterDatasinkResponse& alterDatasink( const AlterDatasinkRequest& request_,
  *                                        the Amazon S3 region where the given
  *                                        bucket is located
  *                                    <li>@ref
+ *                                        gpudb::alter_datasink_s3_verify_ssl
+ *                                        "alter_datasink_s3_verify_ssl": Set
+ *                                        to false for testing purposes or when
+ *                                        necessary to bypass TLS errors (e.g.
+ *                                        self-signed certificates). This value
+ *                                        is true by default.
+ *                                        Supported values:
+ *                                        <ul>
+ *                                            <li>@ref
+ *                                                gpudb::alter_datasink_true
+ *                                                "alter_datasink_true"
+ *                                            <li>@ref
+ *                                                gpudb::alter_datasink_false
+ *                                                "alter_datasink_false"
+ *                                        </ul>
+ *                                        The default value is @ref
+ *                                        gpudb::alter_datasink_true
+ *                                        "alter_datasink_true".
+ *                                    <li>@ref
+ *                                        gpudb::alter_datasink_s3_use_virtual_addressing
+ *                                        "alter_datasink_s3_use_virtual_addressing":
+ *                                        When true (default), the requests URI
+ *                                        should be specified in
+ *                                        virtual-hosted-style format where the
+ *                                        bucket name is part of the domain
+ *                                        name in the URL.   Otherwise set to
+ *                                        false to use path-style URI for
+ *                                        requests.
+ *                                        Supported values:
+ *                                        <ul>
+ *                                            <li>@ref
+ *                                                gpudb::alter_datasink_true
+ *                                                "alter_datasink_true"
+ *                                            <li>@ref
+ *                                                gpudb::alter_datasink_false
+ *                                                "alter_datasink_false"
+ *                                        </ul>
+ *                                        The default value is @ref
+ *                                        gpudb::alter_datasink_true
+ *                                        "alter_datasink_true".
+ *                                    <li>@ref
  *                                        gpudb::alter_datasink_s3_aws_role_arn
  *                                        "alter_datasink_s3_aws_role_arn":
  *                                        Amazon IAM Role ARN which has
  *                                        required S3 permissions that can be
  *                                        assumed for the given S3 IAM user
+ *                                    <li>@ref
+ *                                        gpudb::alter_datasink_s3_encryption_customer_algorithm
+ *                                        "alter_datasink_s3_encryption_customer_algorithm":
+ *                                        Customer encryption algorithm used
+ *                                        encrypting data
+ *                                    <li>@ref
+ *                                        gpudb::alter_datasink_s3_encryption_customer_key
+ *                                        "alter_datasink_s3_encryption_customer_key":
+ *                                        Customer encryption key to encrypt or
+ *                                        decrypt data
+ *                                    <li>@ref
+ *                                        gpudb::alter_datasink_s3_encryption_type
+ *                                        "alter_datasink_s3_encryption_type":
+ *                                        Server side encryption type
+ *                                    <li>@ref
+ *                                        gpudb::alter_datasink_s3_kms_key_id
+ *                                        "alter_datasink_s3_kms_key_id": KMS
+ *                                        key
  *                                    <li>@ref
  *                                        gpudb::alter_datasink_hdfs_kerberos_keytab
  *                                        "alter_datasink_hdfs_kerberos_keytab":
@@ -6800,11 +6855,70 @@ AlterDatasinkResponse alterDatasink( const std::string& name,
  *                                        the Amazon S3 region where the given
  *                                        bucket is located
  *                                    <li>@ref
+ *                                        gpudb::alter_datasink_s3_verify_ssl
+ *                                        "alter_datasink_s3_verify_ssl": Set
+ *                                        to false for testing purposes or when
+ *                                        necessary to bypass TLS errors (e.g.
+ *                                        self-signed certificates). This value
+ *                                        is true by default.
+ *                                        Supported values:
+ *                                        <ul>
+ *                                            <li>@ref
+ *                                                gpudb::alter_datasink_true
+ *                                                "alter_datasink_true"
+ *                                            <li>@ref
+ *                                                gpudb::alter_datasink_false
+ *                                                "alter_datasink_false"
+ *                                        </ul>
+ *                                        The default value is @ref
+ *                                        gpudb::alter_datasink_true
+ *                                        "alter_datasink_true".
+ *                                    <li>@ref
+ *                                        gpudb::alter_datasink_s3_use_virtual_addressing
+ *                                        "alter_datasink_s3_use_virtual_addressing":
+ *                                        When true (default), the requests URI
+ *                                        should be specified in
+ *                                        virtual-hosted-style format where the
+ *                                        bucket name is part of the domain
+ *                                        name in the URL.   Otherwise set to
+ *                                        false to use path-style URI for
+ *                                        requests.
+ *                                        Supported values:
+ *                                        <ul>
+ *                                            <li>@ref
+ *                                                gpudb::alter_datasink_true
+ *                                                "alter_datasink_true"
+ *                                            <li>@ref
+ *                                                gpudb::alter_datasink_false
+ *                                                "alter_datasink_false"
+ *                                        </ul>
+ *                                        The default value is @ref
+ *                                        gpudb::alter_datasink_true
+ *                                        "alter_datasink_true".
+ *                                    <li>@ref
  *                                        gpudb::alter_datasink_s3_aws_role_arn
  *                                        "alter_datasink_s3_aws_role_arn":
  *                                        Amazon IAM Role ARN which has
  *                                        required S3 permissions that can be
  *                                        assumed for the given S3 IAM user
+ *                                    <li>@ref
+ *                                        gpudb::alter_datasink_s3_encryption_customer_algorithm
+ *                                        "alter_datasink_s3_encryption_customer_algorithm":
+ *                                        Customer encryption algorithm used
+ *                                        encrypting data
+ *                                    <li>@ref
+ *                                        gpudb::alter_datasink_s3_encryption_customer_key
+ *                                        "alter_datasink_s3_encryption_customer_key":
+ *                                        Customer encryption key to encrypt or
+ *                                        decrypt data
+ *                                    <li>@ref
+ *                                        gpudb::alter_datasink_s3_encryption_type
+ *                                        "alter_datasink_s3_encryption_type":
+ *                                        Server side encryption type
+ *                                    <li>@ref
+ *                                        gpudb::alter_datasink_s3_kms_key_id
+ *                                        "alter_datasink_s3_kms_key_id": KMS
+ *                                        key
  *                                    <li>@ref
  *                                        gpudb::alter_datasink_hdfs_kerberos_keytab
  *                                        "alter_datasink_hdfs_kerberos_keytab":
@@ -7113,6 +7227,52 @@ AlterDatasourceResponse& alterDatasource( const AlterDatasourceRequest& request_
  *                                          of the Amazon S3 region where the
  *                                          given bucket is located
  *                                      <li>@ref
+ *                                          gpudb::alter_datasource_s3_verify_ssl
+ *                                          "alter_datasource_s3_verify_ssl":
+ *                                          Set to false for testing purposes
+ *                                          or when necessary to bypass TLS
+ *                                          errors (e.g. self-signed
+ *                                          certificates). This value is true
+ *                                          by default.
+ *                                          Supported values:
+ *                                          <ul>
+ *                                              <li>@ref
+ *                                                  gpudb::alter_datasource_true
+ *                                                  "alter_datasource_true"
+ *                                              <li>@ref
+ *                                                  gpudb::alter_datasource_false
+ *                                                  "alter_datasource_false"
+ *                                          </ul>
+ *                                          The default value is @ref
+ *                                          gpudb::alter_datasource_true
+ *                                          "alter_datasource_true".
+ *                                      <li>@ref
+ *                                          gpudb::alter_datasource_s3_use_virtual_addressing
+ *                                          "alter_datasource_s3_use_virtual_addressing":
+ *                                          Whether to use virtual addressing
+ *                                          when referencing the Amazon S3
+ *                                          source.
+ *                                          Supported values:
+ *                                          <ul>
+ *                                              <li>@ref
+ *                                                  gpudb::alter_datasource_true
+ *                                                  "alter_datasource_true":
+ *                                                  The requests URI should be
+ *                                                  specified in
+ *                                                  virtual-hosted-style format
+ *                                                  where the bucket name is
+ *                                                  part of the domain name in
+ *                                                  the URL.
+ *                                              <li>@ref
+ *                                                  gpudb::alter_datasource_false
+ *                                                  "alter_datasource_false":
+ *                                                  Use path-style URI for
+ *                                                  requests.
+ *                                          </ul>
+ *                                          The default value is @ref
+ *                                          gpudb::alter_datasource_true
+ *                                          "alter_datasource_true".
+ *                                      <li>@ref
  *                                          gpudb::alter_datasource_s3_aws_role_arn
  *                                          "alter_datasource_s3_aws_role_arn":
  *                                          Amazon IAM Role ARN which has
@@ -7286,6 +7446,25 @@ AlterDatasourceResponse& alterDatasource( const AlterDatasourceRequest& request_
  *                                          gpudb::alter_datasource_schema_name
  *                                          "schema_name" is empty, then the
  *                                          user's default schema will be used.
+ *                                      <li>@ref
+ *                                          gpudb::alter_datasource_schema_registry_location
+ *                                          "alter_datasource_schema_registry_location":
+ *                                          Location of Confluent Schema
+ *                                          Registry in
+ *                                          '[storage_path[:storage_port]]'
+ *                                          format.
+ *                                      <li>@ref
+ *                                          gpudb::alter_datasource_schema_registry_credential
+ *                                          "alter_datasource_schema_registry_credential":
+ *                                          Confluent Schema Registry <a
+ *                                          href="../../../concepts/credentials"
+ *                                          target="_top">credential</a> object
+ *                                          name.
+ *                                      <li>@ref
+ *                                          gpudb::alter_datasource_schema_registry_port
+ *                                          "alter_datasource_schema_registry_port":
+ *                                          Confluent Schema Registry port
+ *                                          (optional).
  *                                  </ul>
  * @param[in] options  Optional parameters.
  *
@@ -7369,6 +7548,52 @@ AlterDatasourceResponse alterDatasource( const std::string& name,
  *                                          of the Amazon S3 region where the
  *                                          given bucket is located
  *                                      <li>@ref
+ *                                          gpudb::alter_datasource_s3_verify_ssl
+ *                                          "alter_datasource_s3_verify_ssl":
+ *                                          Set to false for testing purposes
+ *                                          or when necessary to bypass TLS
+ *                                          errors (e.g. self-signed
+ *                                          certificates). This value is true
+ *                                          by default.
+ *                                          Supported values:
+ *                                          <ul>
+ *                                              <li>@ref
+ *                                                  gpudb::alter_datasource_true
+ *                                                  "alter_datasource_true"
+ *                                              <li>@ref
+ *                                                  gpudb::alter_datasource_false
+ *                                                  "alter_datasource_false"
+ *                                          </ul>
+ *                                          The default value is @ref
+ *                                          gpudb::alter_datasource_true
+ *                                          "alter_datasource_true".
+ *                                      <li>@ref
+ *                                          gpudb::alter_datasource_s3_use_virtual_addressing
+ *                                          "alter_datasource_s3_use_virtual_addressing":
+ *                                          Whether to use virtual addressing
+ *                                          when referencing the Amazon S3
+ *                                          source.
+ *                                          Supported values:
+ *                                          <ul>
+ *                                              <li>@ref
+ *                                                  gpudb::alter_datasource_true
+ *                                                  "alter_datasource_true":
+ *                                                  The requests URI should be
+ *                                                  specified in
+ *                                                  virtual-hosted-style format
+ *                                                  where the bucket name is
+ *                                                  part of the domain name in
+ *                                                  the URL.
+ *                                              <li>@ref
+ *                                                  gpudb::alter_datasource_false
+ *                                                  "alter_datasource_false":
+ *                                                  Use path-style URI for
+ *                                                  requests.
+ *                                          </ul>
+ *                                          The default value is @ref
+ *                                          gpudb::alter_datasource_true
+ *                                          "alter_datasource_true".
+ *                                      <li>@ref
  *                                          gpudb::alter_datasource_s3_aws_role_arn
  *                                          "alter_datasource_s3_aws_role_arn":
  *                                          Amazon IAM Role ARN which has
@@ -7542,6 +7767,25 @@ AlterDatasourceResponse alterDatasource( const std::string& name,
  *                                          gpudb::alter_datasource_schema_name
  *                                          "schema_name" is empty, then the
  *                                          user's default schema will be used.
+ *                                      <li>@ref
+ *                                          gpudb::alter_datasource_schema_registry_location
+ *                                          "alter_datasource_schema_registry_location":
+ *                                          Location of Confluent Schema
+ *                                          Registry in
+ *                                          '[storage_path[:storage_port]]'
+ *                                          format.
+ *                                      <li>@ref
+ *                                          gpudb::alter_datasource_schema_registry_credential
+ *                                          "alter_datasource_schema_registry_credential":
+ *                                          Confluent Schema Registry <a
+ *                                          href="../../../concepts/credentials"
+ *                                          target="_top">credential</a> object
+ *                                          name.
+ *                                      <li>@ref
+ *                                          gpudb::alter_datasource_schema_registry_port
+ *                                          "alter_datasource_schema_registry_port":
+ *                                          Confluent Schema Registry port
+ *                                          (optional).
  *                                  </ul>
  * @param[in] options  Optional parameters.
  * @param[out] response_  @ref gpudb::AlterDatasourceResponse "Response" object
@@ -8630,6 +8874,11 @@ AlterSystemPropertiesResponse& alterSystemProperties( const AlterSystemPropertie
  *                                        '2'. The maximum allowed value is
  *                                        '8192'.
  *                                    <li>@ref
+ *                                        gpudb::alter_system_properties_ai_enable_rag
+ *                                        "alter_system_properties_ai_enable_rag":
+ *                                        Enable RAG. The default value is
+ *                                        'false'.
+ *                                    <li>@ref
  *                                        gpudb::alter_system_properties_ai_api_provider
  *                                        "alter_system_properties_ai_api_provider":
  *                                        AI API provider type
@@ -9004,6 +9253,11 @@ AlterSystemPropertiesResponse alterSystemProperties( const std::map<std::string,
  *                                        conf. The minimum allowed value is
  *                                        '2'. The maximum allowed value is
  *                                        '8192'.
+ *                                    <li>@ref
+ *                                        gpudb::alter_system_properties_ai_enable_rag
+ *                                        "alter_system_properties_ai_enable_rag":
+ *                                        Enable RAG. The default value is
+ *                                        'false'.
  *                                    <li>@ref
  *                                        gpudb::alter_system_properties_ai_api_provider
  *                                        "alter_system_properties_ai_api_provider":
@@ -12153,6 +12407,11 @@ CreateDatasinkResponse& createDatasink( const CreateDatasinkRequest& request_,
  *                             "create_datasink_s3_encryption_customer_key":
  *                             Customer encryption key to encrypt or decrypt
  *                             data
+ *                         <li>@ref gpudb::create_datasink_s3_encryption_type
+ *                             "create_datasink_s3_encryption_type": Server
+ *                             side encryption type
+ *                         <li>@ref gpudb::create_datasink_s3_kms_key_id
+ *                             "create_datasink_s3_kms_key_id": KMS key
  *                         <li>@ref gpudb::create_datasink_hdfs_kerberos_keytab
  *                             "create_datasink_hdfs_kerberos_keytab": Kerberos
  *                             keytab file location for the given HDFS user.
@@ -12371,6 +12630,11 @@ CreateDatasinkResponse createDatasink( const std::string& name,
  *                             "create_datasink_s3_encryption_customer_key":
  *                             Customer encryption key to encrypt or decrypt
  *                             data
+ *                         <li>@ref gpudb::create_datasink_s3_encryption_type
+ *                             "create_datasink_s3_encryption_type": Server
+ *                             side encryption type
+ *                         <li>@ref gpudb::create_datasink_s3_kms_key_id
+ *                             "create_datasink_s3_kms_key_id": KMS key
  *                         <li>@ref gpudb::create_datasink_hdfs_kerberos_keytab
  *                             "create_datasink_hdfs_kerberos_keytab": Kerberos
  *                             keytab file location for the given HDFS user.
@@ -13313,13 +13577,10 @@ CreateGraphResponse& createGraph( const CreateGraphRequest& request_,
  *                           details.
  *                           Supported values:
  *                           <ul>
- *                               <li>@ref gpudb::create_graph_true
- *                                   "create_graph_true"
- *                               <li>@ref gpudb::create_graph_false
- *                                   "create_graph_false"
+ *                               <li>true
+ *                               <li>false
  *                           </ul>
- *                           The default value is @ref gpudb::create_graph_true
- *                           "create_graph_true".
+ *                           The default value is true.
  * @param[in] nodes  Nodes represent fundamental topological units of a graph.
  *                   Nodes must be specified using <a
  *                   href="../../../graph_solver/network_graph_solver/#identifiers"
@@ -13563,13 +13824,10 @@ CreateGraphResponse createGraph( const std::string& graphName,
  *                           details.
  *                           Supported values:
  *                           <ul>
- *                               <li>@ref gpudb::create_graph_true
- *                                   "create_graph_true"
- *                               <li>@ref gpudb::create_graph_false
- *                                   "create_graph_false"
+ *                               <li>true
+ *                               <li>false
  *                           </ul>
- *                           The default value is @ref gpudb::create_graph_true
- *                           "create_graph_true".
+ *                           The default value is true.
  * @param[in] nodes  Nodes represent fundamental topological units of a graph.
  *                   Nodes must be specified using <a
  *                   href="../../../graph_solver/network_graph_solver/#identifiers"
@@ -14111,6 +14369,11 @@ CreateJoinTableResponse& createJoinTable( const CreateJoinTableRequest& request_
  *                             Collect chunks with accumulated size less than
  *                             chunk_size into a single chunk. The default
  *                             value is 'false'.
+ *                         <li>@ref
+ *                             gpudb::create_join_table_enable_pk_equi_join
+ *                             "create_join_table_enable_pk_equi_join": Use
+ *                             equi-join to do primary key joins rather than
+ *                             using primary-key-index
  *                     </ul>
  *                     The default value is an empty map.
  *
@@ -14240,6 +14503,11 @@ CreateJoinTableResponse createJoinTable( const std::string& joinTableName,
  *                             Collect chunks with accumulated size less than
  *                             chunk_size into a single chunk. The default
  *                             value is 'false'.
+ *                         <li>@ref
+ *                             gpudb::create_join_table_enable_pk_equi_join
+ *                             "create_join_table_enable_pk_equi_join": Use
+ *                             equi-join to do primary key joins rather than
+ *                             using primary-key-index
  *                     </ul>
  *                     The default value is an empty map.
  * @param[out] response_  @ref gpudb::CreateJoinTableResponse "Response" object
@@ -38865,8 +39133,7 @@ InsertRecordsRandomResponse& insertRecordsRandom( const InsertRecordsRandomReque
  *                                     [1, 500]. If both min and max are
  *                                     specified, min must be less than or
  *                                     equal to max. The minimum allowed value
- *                                     is '1'. The maximum allowed value is
- *                                     '500'.
+ *                                     is 1. The maximum allowed value is 500.
  *                                 <li>@ref gpudb::insert_records_random_max
  *                                     "insert_records_random_max": Maximum
  *                                     possible length for generated series;
@@ -38875,8 +39142,7 @@ InsertRecordsRandomResponse& insertRecordsRandom( const InsertRecordsRandomReque
  *                                     [1, 500]. If both min and max are
  *                                     specified, max must be greater than or
  *                                     equal to min. The minimum allowed value
- *                                     is '1'. The maximum allowed value is
- *                                     '500'.
+ *                                     is 1. The maximum allowed value is 500.
  *                             </ul>
  *                     </ul>
  *                     The default value is an empty map.
@@ -39145,8 +39411,7 @@ InsertRecordsRandomResponse insertRecordsRandom( const std::string& tableName,
  *                                     [1, 500]. If both min and max are
  *                                     specified, min must be less than or
  *                                     equal to max. The minimum allowed value
- *                                     is '1'. The maximum allowed value is
- *                                     '500'.
+ *                                     is 1. The maximum allowed value is 500.
  *                                 <li>@ref gpudb::insert_records_random_max
  *                                     "insert_records_random_max": Maximum
  *                                     possible length for generated series;
@@ -39155,8 +39420,7 @@ InsertRecordsRandomResponse insertRecordsRandom( const std::string& tableName,
  *                                     [1, 500]. If both min and max are
  *                                     specified, max must be greater than or
  *                                     equal to min. The minimum allowed value
- *                                     is '1'. The maximum allowed value is
- *                                     '500'.
+ *                                     is 1. The maximum allowed value is 500.
  *                             </ul>
  *                     </ul>
  *                     The default value is an empty map.
@@ -49207,14 +49471,10 @@ VisualizeIsochroneResponse& visualizeIsochrone( const VisualizeIsochroneRequest&
  *                           the response.
  *                           Supported values:
  *                           <ul>
- *                               <li>@ref gpudb::visualize_isochrone_true
- *                                   "visualize_isochrone_true"
- *                               <li>@ref gpudb::visualize_isochrone_false
- *                                   "visualize_isochrone_false"
+ *                               <li>true
+ *                               <li>false
  *                           </ul>
- *                           The default value is @ref
- *                           gpudb::visualize_isochrone_true
- *                           "visualize_isochrone_true".
+ *                           The default value is true.
  * @param[in] levelsTable  Name of the table to output the isochrones to, in
  *                         [schema_name.]table_name format, using standard <a
  *                         href="../../../concepts/tables/#table-name-resolution"
@@ -49886,14 +50146,10 @@ VisualizeIsochroneResponse visualizeIsochrone( const std::string& graphName,
  *                           the response.
  *                           Supported values:
  *                           <ul>
- *                               <li>@ref gpudb::visualize_isochrone_true
- *                                   "visualize_isochrone_true"
- *                               <li>@ref gpudb::visualize_isochrone_false
- *                                   "visualize_isochrone_false"
+ *                               <li>true
+ *                               <li>false
  *                           </ul>
- *                           The default value is @ref
- *                           gpudb::visualize_isochrone_true
- *                           "visualize_isochrone_true".
+ *                           The default value is true.
  * @param[in] levelsTable  Name of the table to output the isochrones to, in
  *                         [schema_name.]table_name format, using standard <a
  *                         href="../../../concepts/tables/#table-name-resolution"

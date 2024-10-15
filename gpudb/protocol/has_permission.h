@@ -365,10 +365,8 @@ namespace gpudb
          * the specified target.
          * Supported values:
          * <ul>
-         *     <li>@ref gpudb::has_permission_true "has_permission_true": User
-         *         has the effective queried permission
-         *     <li>@ref gpudb::has_permission_false "has_permission_false":
-         *         User does not have the queried permission
+         *     <li>true: User has the effective queried permission
+         *     <li>false: User does not have the queried permission
          * </ul>
          */
         bool hasPermission;

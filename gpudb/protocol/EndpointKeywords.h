@@ -274,7 +274,13 @@ namespace gpudb
     extern const std::string alter_datasink_nested;
     extern const std::string alter_datasink_s3_aws_role_arn;
     extern const std::string alter_datasink_s3_bucket_name;
+    extern const std::string alter_datasink_s3_encryption_customer_algorithm;
+    extern const std::string alter_datasink_s3_encryption_customer_key;
+    extern const std::string alter_datasink_s3_encryption_type;
+    extern const std::string alter_datasink_s3_kms_key_id;
     extern const std::string alter_datasink_s3_region;
+    extern const std::string alter_datasink_s3_use_virtual_addressing;
+    extern const std::string alter_datasink_s3_verify_ssl;
     extern const std::string alter_datasink_schema_name;
     extern const std::string alter_datasink_skip_validation;
     extern const std::string alter_datasink_true;
@@ -309,7 +315,12 @@ namespace gpudb
     extern const std::string alter_datasource_s3_encryption_customer_algorithm;
     extern const std::string alter_datasource_s3_encryption_customer_key;
     extern const std::string alter_datasource_s3_region;
+    extern const std::string alter_datasource_s3_use_virtual_addressing;
+    extern const std::string alter_datasource_s3_verify_ssl;
     extern const std::string alter_datasource_schema_name;
+    extern const std::string alter_datasource_schema_registry_credential;
+    extern const std::string alter_datasource_schema_registry_location;
+    extern const std::string alter_datasource_schema_registry_port;
     extern const std::string alter_datasource_skip_validation;
     extern const std::string alter_datasource_true;
     extern const std::string alter_datasource_use_https;
@@ -382,6 +393,7 @@ namespace gpudb
     extern const std::string alter_system_properties_ai_api_key;
     extern const std::string alter_system_properties_ai_api_provider;
     extern const std::string alter_system_properties_ai_api_url;
+    extern const std::string alter_system_properties_ai_enable_rag;
     extern const std::string alter_system_properties_audit_body;
     extern const std::string alter_system_properties_audit_data;
     extern const std::string alter_system_properties_audit_headers;
@@ -600,6 +612,8 @@ namespace gpudb
     extern const std::string create_datasink_s3_bucket_name;
     extern const std::string create_datasink_s3_encryption_customer_algorithm;
     extern const std::string create_datasink_s3_encryption_customer_key;
+    extern const std::string create_datasink_s3_encryption_type;
+    extern const std::string create_datasink_s3_kms_key_id;
     extern const std::string create_datasink_s3_region;
     extern const std::string create_datasink_s3_use_virtual_addressing;
     extern const std::string create_datasink_s3_verify_ssl;
@@ -683,6 +697,7 @@ namespace gpudb
     extern const std::string create_join_table_chunk_size;
     extern const std::string create_join_table_collection_name;
     extern const std::string create_join_table_create_temp_table;
+    extern const std::string create_join_table_enable_pk_equi_join;
     extern const std::string create_join_table_enable_virtual_chunking;
     extern const std::string create_join_table_false;
     extern const std::string create_join_table_max_query_dimensions;
