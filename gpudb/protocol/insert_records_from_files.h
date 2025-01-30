@@ -955,6 +955,12 @@ namespace gpudb
          *                              Skip number of lines from begining of
          *                              file.
          *                          <li>@ref
+         *                              gpudb::insert_records_from_files_start_offsets
+         *                              "insert_records_from_files_start_offsets":
+         *                              Starting offsets by partition to fetch
+         *                              from kafka. A comma separated list of
+         *                              partition:offset pairs.
+         *                          <li>@ref
          *                              gpudb::insert_records_from_files_subscribe
          *                              "insert_records_from_files_subscribe":
          *                              Continuously poll the data source to
@@ -1882,6 +1888,10 @@ namespace gpudb
          *     <li>@ref gpudb::insert_records_from_files_skip_lines
          *         "insert_records_from_files_skip_lines": Skip number of lines
          *         from begining of file.
+         *     <li>@ref gpudb::insert_records_from_files_start_offsets
+         *         "insert_records_from_files_start_offsets": Starting offsets
+         *         by partition to fetch from kafka. A comma separated list of
+         *         partition:offset pairs.
          *     <li>@ref gpudb::insert_records_from_files_subscribe
          *         "insert_records_from_files_subscribe": Continuously poll the
          *         data source to check for new data and load it into the

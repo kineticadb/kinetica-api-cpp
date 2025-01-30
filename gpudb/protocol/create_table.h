@@ -339,10 +339,6 @@ namespace gpudb
          *                              href="../../../rm/concepts/#tier-strategies"
          *                              target="_top">tier strategy</a> for the
          *                              table and its columns.
-         *                          <li>@ref
-         *                              gpudb::create_table_is_virtual_union
-         *                              "create_table_is_virtual_union":
-         *                              &lt;DEVELOPER&gt;
          *                      </ul>
          *                      The default value is an empty map.
          */
@@ -570,8 +566,6 @@ namespace gpudb
          *         href="../../../rm/concepts/#tier-strategies"
          *         target="_top">tier strategy</a> for the table and its
          *         columns.
-         *     <li>@ref gpudb::create_table_is_virtual_union
-         *         "create_table_is_virtual_union": &lt;DEVELOPER&gt;
          * </ul>
          * The default value is an empty map.
          */

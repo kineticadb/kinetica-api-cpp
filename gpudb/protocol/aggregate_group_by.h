@@ -183,15 +183,33 @@ namespace gpudb
          *                              "aggregate_group_by_expression": Filter
          *                              expression to apply to the table prior
          *                              to computing the aggregate group by.
+         *                          <li>@ref
+         *                              gpudb::aggregate_group_by_chunked_expression_evaluation
+         *                              "aggregate_group_by_chunked_expression_evaluation":
+         *                              evaluate the filter expression during
+         *                              group-by chunk processing.
+         *                              Supported values:
+         *                              <ul>
+         *                                  <li>@ref
+         *                                      gpudb::aggregate_group_by_true
+         *                                      "aggregate_group_by_true"
+         *                                  <li>@ref
+         *                                      gpudb::aggregate_group_by_false
+         *                                      "aggregate_group_by_false"
+         *                              </ul>
+         *                              The default value is @ref
+         *                              gpudb::aggregate_group_by_false
+         *                              "aggregate_group_by_false".
          *                          <li>@ref gpudb::aggregate_group_by_having
          *                              "aggregate_group_by_having": Filter
          *                              expression to apply to the aggregated
          *                              results.
          *                          <li>@ref
          *                              gpudb::aggregate_group_by_sort_order
-         *                              "aggregate_group_by_sort_order": String
-         *                              indicating how the returned values
-         *                              should be sorted - ascending or
+         *                              "aggregate_group_by_sort_order":
+         *                              [DEPRECATED--use order_by instead]
+         *                              String indicating how the returned
+         *                              values should be sorted - ascending or
          *                              descending.
          *                              Supported values:
          *                              <ul>
@@ -212,8 +230,10 @@ namespace gpudb
          *                              gpudb::aggregate_group_by_ascending
          *                              "aggregate_group_by_ascending".
          *                          <li>@ref gpudb::aggregate_group_by_sort_by
-         *                              "aggregate_group_by_sort_by": String
-         *                              determining how the results are sorted.
+         *                              "aggregate_group_by_sort_by":
+         *                              [DEPRECATED--use order_by instead]
+         *                              String determining how the results are
+         *                              sorted.
          *                              Supported values:
          *                              <ul>
          *                                  <li>@ref
@@ -544,15 +564,33 @@ namespace gpudb
          *                              "aggregate_group_by_expression": Filter
          *                              expression to apply to the table prior
          *                              to computing the aggregate group by.
+         *                          <li>@ref
+         *                              gpudb::aggregate_group_by_chunked_expression_evaluation
+         *                              "aggregate_group_by_chunked_expression_evaluation":
+         *                              evaluate the filter expression during
+         *                              group-by chunk processing.
+         *                              Supported values:
+         *                              <ul>
+         *                                  <li>@ref
+         *                                      gpudb::aggregate_group_by_true
+         *                                      "aggregate_group_by_true"
+         *                                  <li>@ref
+         *                                      gpudb::aggregate_group_by_false
+         *                                      "aggregate_group_by_false"
+         *                              </ul>
+         *                              The default value is @ref
+         *                              gpudb::aggregate_group_by_false
+         *                              "aggregate_group_by_false".
          *                          <li>@ref gpudb::aggregate_group_by_having
          *                              "aggregate_group_by_having": Filter
          *                              expression to apply to the aggregated
          *                              results.
          *                          <li>@ref
          *                              gpudb::aggregate_group_by_sort_order
-         *                              "aggregate_group_by_sort_order": String
-         *                              indicating how the returned values
-         *                              should be sorted - ascending or
+         *                              "aggregate_group_by_sort_order":
+         *                              [DEPRECATED--use order_by instead]
+         *                              String indicating how the returned
+         *                              values should be sorted - ascending or
          *                              descending.
          *                              Supported values:
          *                              <ul>
@@ -573,8 +611,10 @@ namespace gpudb
          *                              gpudb::aggregate_group_by_ascending
          *                              "aggregate_group_by_ascending".
          *                          <li>@ref gpudb::aggregate_group_by_sort_by
-         *                              "aggregate_group_by_sort_by": String
-         *                              determining how the results are sorted.
+         *                              "aggregate_group_by_sort_by":
+         *                              [DEPRECATED--use order_by instead]
+         *                              String determining how the results are
+         *                              sorted.
          *                              Supported values:
          *                              <ul>
          *                                  <li>@ref
@@ -899,12 +939,25 @@ namespace gpudb
          *     <li>@ref gpudb::aggregate_group_by_expression
          *         "aggregate_group_by_expression": Filter expression to apply
          *         to the table prior to computing the aggregate group by.
+         *     <li>@ref gpudb::aggregate_group_by_chunked_expression_evaluation
+         *         "aggregate_group_by_chunked_expression_evaluation": evaluate
+         *         the filter expression during group-by chunk processing.
+         *         Supported values:
+         *         <ul>
+         *             <li>@ref gpudb::aggregate_group_by_true
+         *                 "aggregate_group_by_true"
+         *             <li>@ref gpudb::aggregate_group_by_false
+         *                 "aggregate_group_by_false"
+         *         </ul>
+         *         The default value is @ref gpudb::aggregate_group_by_false
+         *         "aggregate_group_by_false".
          *     <li>@ref gpudb::aggregate_group_by_having
          *         "aggregate_group_by_having": Filter expression to apply to
          *         the aggregated results.
          *     <li>@ref gpudb::aggregate_group_by_sort_order
-         *         "aggregate_group_by_sort_order": String indicating how the
-         *         returned values should be sorted - ascending or descending.
+         *         "aggregate_group_by_sort_order": [DEPRECATED--use order_by
+         *         instead] String indicating how the returned values should be
+         *         sorted - ascending or descending.
          *         Supported values:
          *         <ul>
          *             <li>@ref gpudb::aggregate_group_by_ascending
@@ -919,8 +972,8 @@ namespace gpudb
          *         gpudb::aggregate_group_by_ascending
          *         "aggregate_group_by_ascending".
          *     <li>@ref gpudb::aggregate_group_by_sort_by
-         *         "aggregate_group_by_sort_by": String determining how the
-         *         results are sorted.
+         *         "aggregate_group_by_sort_by": [DEPRECATED--use order_by
+         *         instead] String determining how the results are sorted.
          *         Supported values:
          *         <ul>
          *             <li>@ref gpudb::aggregate_group_by_key
@@ -1181,7 +1234,9 @@ namespace gpudb
         std::string jsonEncodedResponse;
 
         /**
-         * Total/Filtered number of records.
+         * Total/Filtered number of records.  This may be an over-estimate if a
+         * limit was applied and there are additional records (i.e., when @ref
+         * hasMoreRecords is true).
          */
         int64_t totalNumberOfRecords;
 
@@ -1304,7 +1359,9 @@ namespace gpudb
         std::vector<gpudb::GenericRecord> data;
 
         /**
-         * Total/Filtered number of records.
+         * Total/Filtered number of records.  This may be an over-estimate if a
+         * limit was applied and there are additional records (i.e., when @ref
+         * hasMoreRecords is true).
          */
         int64_t totalNumberOfRecords;
 

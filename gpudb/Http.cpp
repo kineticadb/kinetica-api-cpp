@@ -29,11 +29,19 @@ namespace gpudb
         void connect(boost::function<void()> handler)
         {
             setTimeout();
+            #if BOOST_VERSION >= 108700
+            m_resolver.async_resolve(m_host, m_service,
+                                     boost::bind(&TcpSocketBase::onResolved, this,
+                                                 boost::asio::placeholders::error,
+                                                 boost::asio::placeholders::iterator,
+                                                 handler));
+            #else
             m_resolver.async_resolve(boost::asio::ip::tcp::resolver::query(m_host, m_service),
                                      boost::bind(&TcpSocketBase::onResolved, this,
                                                  boost::asio::placeholders::error,
                                                  boost::asio::placeholders::iterator,
                                                  handler));
+            #endif
 
             if (m_timeout > 0)
             {
@@ -41,16 +49,6 @@ namespace gpudb
             }
 
             m_ioService.run();
-        }
-
-        template<typename AsyncReadStream>
-        void read(AsyncReadStream& stream, boost::function<void(bool)> handler)
-        {
-            setTimeout();
-            boost::asio::async_read(getSocket(), stream,
-                                    boost::bind(&TcpSocketBase::onRead, this,
-                                                boost::asio::placeholders::error,
-                                                handler));
         }
 
         template<typename AsyncReadStream, typename CompletionCondition>
@@ -102,62 +100,46 @@ namespace gpudb
         {
         }
 
-        boost::asio::io_service& getIoService()
+        auto& getIoService()
         {
             return m_ioService;
         }
 
-        virtual void connectSocket(boost::asio::ip::tcp::resolver::iterator iterator,
-                                   boost::function<void(const boost::system::error_code&)> handler) = 0;
         virtual TSocket& getSocket() = 0;
         virtual bool isSocketOpen() = 0;
         virtual void closeSocket() = 0;
 
         void handleConnectEvent(const boost::system::error_code& error,
-                                boost::asio::ip::tcp::resolver::iterator iterator,
-                                boost::function<void()> finalHandler,
-                                boost::function<void()> nextHandler)
+                                boost::function<void()> handler)
         {
             if (!isSocketOpen())
             {
-                if (++iterator == boost::asio::ip::tcp::resolver::iterator())
-                {
-                    m_error = boost::asio::error::timed_out;
-                    m_deadline.cancel();
-                }
-                else
-                {
-                    doConnect(iterator, finalHandler);
-                }
+                m_error = boost::asio::error::timed_out;
+                m_deadline.cancel();
             }
             else if (error)
             {
                 closeSocket();
-
-                if (++iterator == boost::asio::ip::tcp::resolver::iterator())
-                {
-                    checkError(error);
-                }
-                else
-                {
-                    doConnect(iterator, finalHandler);
-                }
+                checkError(error);
             }
             else
             {
-                nextHandler();
+                handler();
             }
         }
 
         virtual void onConnected(const boost::system::error_code& error,
-                                 boost::asio::ip::tcp::resolver::iterator iterator,
                                  boost::function<void()> handler) = 0;
 
     private:
         std::string m_host;
         std::string m_service;
         size_t m_timeout;
+        #if BOOST_VERSION >= 108700
+        boost::asio::io_context m_ioService;
+        #else
         boost::asio::io_service m_ioService;
+        #endif
         boost::asio::ip::tcp::resolver m_resolver;
         boost::asio::deadline_timer m_deadline;
         boost::system::error_code m_error;
@@ -186,7 +168,11 @@ namespace gpudb
         }
 
         void onResolved(const boost::system::error_code& error,
-                        boost::asio::ip::tcp::resolver::iterator iterator,
+                        #if BOOST_VERSION >= 108700
+                        const boost::asio::ip::tcp::resolver::results_type& endpoints,
+                        #else
+                        boost::asio::ip::tcp::resolver::iterator endpoints,
+                        #endif
                         boost::function<void()> handler)
         {
             if (checkError(error))
@@ -194,17 +180,11 @@ namespace gpudb
                 return;
             }
 
-            doConnect(iterator, handler);
-        }
-
-        void doConnect(boost::asio::ip::tcp::resolver::iterator iterator,
-                       boost::function<void()> handler)
-        {
             setTimeout();
-            connectSocket(iterator,
-                          boost::bind(&TcpSocketBase::onConnected, this,
-                                      boost::asio::placeholders::error,
-                                      iterator, handler));
+            boost::asio::async_connect(getSocket().lowest_layer(), endpoints,
+                                       boost::bind(&TcpSocketBase::onConnected, this,
+                                                   boost::asio::placeholders::error,
+                                                   handler));
         }
 
         void onRead(const boost::system::error_code& error,
@@ -277,12 +257,6 @@ namespace gpudb
         }
 
     protected:
-        virtual void connectSocket(boost::asio::ip::tcp::resolver::iterator iterator,
-                                   boost::function<void(const boost::system::error_code&)> handler)
-        {
-            m_socket.async_connect(iterator->endpoint(), handler);
-        }
-
         virtual boost::asio::ip::tcp::socket& getSocket()
         {
             return m_socket;
@@ -299,10 +273,9 @@ namespace gpudb
         }
 
         virtual void onConnected(const boost::system::error_code& error,
-                                 boost::asio::ip::tcp::resolver::iterator iterator,
                                  boost::function<void()> handler)
         {
-            handleConnectEvent(error, iterator, handler, handler);
+            handleConnectEvent(error, handler);
         };
 
     private:
@@ -325,12 +298,6 @@ namespace gpudb
         }
 
     protected:
-        virtual void connectSocket(boost::asio::ip::tcp::resolver::iterator iterator,
-                                   boost::function<void(const boost::system::error_code&)> handler)
-        {
-            m_socket.lowest_layer().async_connect(iterator->endpoint(), handler);
-        }
-
         virtual boost::asio::ssl::stream<boost::asio::ip::tcp::socket>& getSocket()
         {
             return m_socket;
@@ -347,31 +314,28 @@ namespace gpudb
         }
 
         virtual void onConnected(const boost::system::error_code& error,
-                                 boost::asio::ip::tcp::resolver::iterator iterator,
                                  boost::function<void()> handler)
         {
-            handleConnectEvent(error, iterator, handler,
+            handleConnectEvent(error,
                                boost::bind(&SslTcpSocket::handshake, this,
-                                           iterator, handler));
+                                           handler));
         }
 
     private:
         boost::asio::ssl::stream<boost::asio::ip::tcp::socket> m_socket;
 
-        void handshake(boost::asio::ip::tcp::resolver::iterator iterator,
-                       boost::function<void()> handler)
+        void handshake(boost::function<void()> handler)
         {
             m_socket.async_handshake(boost::asio::ssl::stream_base::client,
                                      boost::bind(&SslTcpSocket::onHandshake, this,
                                                  boost::asio::placeholders::error,
-                                                 iterator, handler));
+                                                 handler));
         }
 
         void onHandshake(const boost::system::error_code& error,
-                         boost::asio::ip::tcp::resolver::iterator iterator,
                          boost::function<void()> handler)
         {
-            handleConnectEvent(error, iterator, handler, handler);
+            handleConnectEvent(error, handler);
         }
     };
     #endif
@@ -787,7 +751,13 @@ namespace gpudb
             headerStream << "\r\n";
             std::vector<boost::asio::const_buffer> request;
             boost::asio::streambuf::const_buffers_type headerBuffers = headers.data();
+            #if BOOST_VERSION >= 108700
+            request.insert(request.end(),
+                boost::asio::buffer_sequence_begin(headerBuffers),
+                boost::asio::buffer_sequence_end(headerBuffers));
+            #else
             request.insert(request.end(), headerBuffers.begin(), headerBuffers.end());
+            #endif
 
             const void* requestBody;
             size_t requestBodyLength;
@@ -919,11 +889,21 @@ namespace gpudb
             boost::asio::streambuf::const_buffers_type data = m_responseStream.data();
             size_t totalRead = 0;
 
+            #if BOOST_VERSION >= 108700
+            for (auto it = boost::asio::buffer_sequence_begin(data);
+                 it != boost::asio::buffer_sequence_end(data); ++it)
+            #else
             for (boost::asio::streambuf::const_buffers_type::const_iterator it = data.begin();
                  it != data.end(); ++it)
+            #endif
             {
+                #if BOOST_VERSION >= 108700
+                const void* buffer = it->data();
+                size_t read = it->size();
+                #else
                 const void* buffer = boost::asio::buffer_cast<const void*>(*it);
                 size_t read = boost::asio::buffer_size(*it);
+                #endif
                 m_response.write(buffer, read);
                 totalRead += read;
             }
@@ -1033,14 +1013,19 @@ namespace gpudb
 
             if (!m_sslContext)
             {
-                tempSslContext.reset(new boost::asio::ssl::context(boost::asio::ssl::context::sslv23));
+                tempSslContext.reset(new boost::asio::ssl::context(boost::asio::ssl::context::tls_client));
+                tempSslContext->set_options(boost::asio::ssl::context::no_tlsv1 |
+                                            boost::asio::ssl::context::no_tlsv1_1);
                 tempSslContext->set_default_verify_paths();
-                int verifyCert = m_bypassSslCertCheck;
                 tempSslContext->set_verify_mode(m_bypassSslCertCheck ? boost::asio::ssl::verify_none : boost::asio::ssl::verify_peer);
 
                 if( !m_bypassSslCertCheck )
                 {
+                    #if BOOST_VERSION >= 108700
+                    tempSslContext->set_verify_callback(boost::asio::ssl::host_name_verification(m_url.getHost()));
+                    #else
                     tempSslContext->set_verify_callback(boost::asio::ssl::rfc2818_verification(m_url.getHost()));
+                    #endif
                 }
             }
 

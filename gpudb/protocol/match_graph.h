@@ -149,6 +149,11 @@ namespace gpudb
          *                                  gpudb::match_graph_match_embedding
          *                                  "match_graph_match_embedding":
          *                                  Creates vector node embeddings
+         *                              <li>@ref
+         *                                  gpudb::match_graph_match_isochrone
+         *                                  "match_graph_match_isochrone":
+         *                                  Solves for isochrones for a set of
+         *                                  input sources
          *                          </ul>
          *                          The default value is @ref
          *                          gpudb::match_graph_markov_chain
@@ -864,6 +869,13 @@ namespace gpudb
          *                              in fornt of the gradient term in
          *                              successive iterations. The default
          *                              value is '0.3'.
+         *                          <li>@ref gpudb::match_graph_max_radius
+         *                              "match_graph_max_radius": For the @ref
+         *                              gpudb::match_graph_match_isochrone
+         *                              "match_isochrone" solver only. Sets the
+         *                              maximal reachability limmit for
+         *                              computing isochrones. Zero means no
+         *                              limit. The default value is '0.0'.
          *                      </ul>
          *                      The default value is an empty map.
          */
@@ -952,6 +964,9 @@ namespace gpudb
          *     <li>@ref gpudb::match_graph_match_embedding
          *         "match_graph_match_embedding": Creates vector node
          *         embeddings
+         *     <li>@ref gpudb::match_graph_match_isochrone
+         *         "match_graph_match_isochrone": Solves for isochrones for a
+         *         set of input sources
          * </ul>
          * The default value is @ref gpudb::match_graph_markov_chain
          * "match_graph_markov_chain".
@@ -1431,6 +1446,11 @@ namespace gpudb
          *         only. It is otherwise known as the learning rate, which is
          *         the proportionality constant in fornt of the gradient term
          *         in successive iterations. The default value is '0.3'.
+         *     <li>@ref gpudb::match_graph_max_radius "match_graph_max_radius":
+         *         For the @ref gpudb::match_graph_match_isochrone
+         *         "match_isochrone" solver only. Sets the maximal reachability
+         *         limmit for computing isochrones. Zero means no limit. The
+         *         default value is '0.0'.
          * </ul>
          * The default value is an empty map.
          */

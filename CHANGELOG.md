@@ -2,6 +2,15 @@
 
 ## Version 7.2
 
+### Version 7.2.2.1 - 2025-01-30
+
+#### Added
+-   Boost 1.87+ support
+
+#### Notes
+-   Check CHANGELOG-FUNCTIONS.md for endpoint related changes.
+
+
 ### Version 7.2.2.0 - 2024-10-15
 
 #### Notes

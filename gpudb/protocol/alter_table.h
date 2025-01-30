@@ -25,6 +25,8 @@ namespace gpudb
      *
      * Create or delete a <a href="../../../concepts/indexes/#column-index"
      * target="_top">column</a>, <a
+     * href="../../../concepts/indexes/#low-cardinality-index"
+     * target="_top">low-cardinality index</a>, <a
      * href="../../../concepts/indexes/#chunk-skip-index" target="_top">chunk
      * skip</a>, <a href="../../../concepts/indexes/#geospatial-index"
      * target="_top">geospatial</a>, <a
@@ -95,6 +97,9 @@ namespace gpudb
          *                             href="../../../concepts/indexes/#column-index"
          *                             target="_top">column (attribute)
          *                             index</a>, <a
+         *                             href="../../../concepts/indexes/#low-cardinality-index"
+         *                             target="_top">low-cardinality index</a>,
+         *                             <a
          *                             href="../../../concepts/indexes/#chunk-skip-index"
          *                             target="_top">chunk skip index</a>, <a
          *                             href="../../../concepts/indexes/#geospatial-index"
@@ -121,6 +126,9 @@ namespace gpudb
          *                             href="../../../concepts/indexes/#column-index"
          *                             target="_top">column (attribute)
          *                             index</a>, <a
+         *                             href="../../../concepts/indexes/#low-cardinality-index"
+         *                             target="_top">low-cardinality index</a>,
+         *                             <a
          *                             href="../../../concepts/indexes/#chunk-skip-index"
          *                             target="_top">chunk skip index</a>, <a
          *                             href="../../../concepts/indexes/#geospatial-index"
@@ -550,6 +558,13 @@ namespace gpudb
          *                                      target="_top">column
          *                                      (attribute) index</a>.
          *                                  <li>@ref
+         *                                      gpudb::alter_table_low_cardinality
+         *                                      "alter_table_low_cardinality":
+         *                                      Create a <a
+         *                                      href="../../../concepts/indexes/#low-cardinality-index"
+         *                                      target="_top">low-cardinality
+         *                                      column (attribute) index</a>.
+         *                                  <li>@ref
          *                                      gpudb::alter_table_chunk_skip
          *                                      "alter_table_chunk_skip":
          *                                      Create or delete a <a
@@ -620,6 +635,8 @@ namespace gpudb
          *         "alter_table_create_index": Creates a <a
          *         href="../../../concepts/indexes/#column-index"
          *         target="_top">column (attribute) index</a>, <a
+         *         href="../../../concepts/indexes/#low-cardinality-index"
+         *         target="_top">low-cardinality index</a>, <a
          *         href="../../../concepts/indexes/#chunk-skip-index"
          *         target="_top">chunk skip index</a>, <a
          *         href="../../../concepts/indexes/#geospatial-index"
@@ -640,6 +657,8 @@ namespace gpudb
          *         "alter_table_delete_index": Deletes a <a
          *         href="../../../concepts/indexes/#column-index"
          *         target="_top">column (attribute) index</a>, <a
+         *         href="../../../concepts/indexes/#low-cardinality-index"
+         *         target="_top">low-cardinality index</a>, <a
          *         href="../../../concepts/indexes/#chunk-skip-index"
          *         target="_top">chunk skip index</a>, <a
          *         href="../../../concepts/indexes/#geospatial-index"
@@ -941,6 +960,11 @@ namespace gpudb
          *                 Create or delete a <a
          *                 href="../../../concepts/indexes/#column-index"
          *                 target="_top">column (attribute) index</a>.
+         *             <li>@ref gpudb::alter_table_low_cardinality
+         *                 "alter_table_low_cardinality": Create a <a
+         *                 href="../../../concepts/indexes/#low-cardinality-index"
+         *                 target="_top">low-cardinality column (attribute)
+         *                 index</a>.
          *             <li>@ref gpudb::alter_table_chunk_skip
          *                 "alter_table_chunk_skip": Create or delete a <a
          *                 href="../../../concepts/indexes/#chunk-skip-index"

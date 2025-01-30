@@ -64,6 +64,19 @@ namespace gpudb
          *                        tables and views.
          * @param[in] options_  Optional parameters.
          *                      <ul>
+         *                          <li>@ref gpudb::show_table_dependencies
+         *                              "show_table_dependencies": Include view
+         *                              dependencies in the output.
+         *                              Supported values:
+         *                              <ul>
+         *                                  <li>@ref gpudb::show_table_true
+         *                                      "show_table_true"
+         *                                  <li>@ref gpudb::show_table_false
+         *                                      "show_table_false"
+         *                              </ul>
+         *                              The default value is @ref
+         *                              gpudb::show_table_false
+         *                              "show_table_false".
          *                          <li>@ref
          *                              gpudb::show_table_force_synchronous
          *                              "show_table_force_synchronous": If @ref
@@ -80,6 +93,25 @@ namespace gpudb
          *                              The default value is @ref
          *                              gpudb::show_table_true
          *                              "show_table_true".
+         *                          <li>@ref gpudb::show_table_get_cached_sizes
+         *                              "show_table_get_cached_sizes": If @ref
+         *                              gpudb::show_table_true "true" then the
+         *                              number of records in each table, along
+         *                              with a cumulative count, will be
+         *                              returned; blank, otherwise. This
+         *                              version will return the sizes cached at
+         *                              rank 0, which may be stale if there is
+         *                              a multihead insert occuring.
+         *                              Supported values:
+         *                              <ul>
+         *                                  <li>@ref gpudb::show_table_true
+         *                                      "show_table_true"
+         *                                  <li>@ref gpudb::show_table_false
+         *                                      "show_table_false"
+         *                              </ul>
+         *                              The default value is @ref
+         *                              gpudb::show_table_false
+         *                              "show_table_false".
          *                          <li>@ref gpudb::show_table_get_sizes
          *                              "show_table_get_sizes": If @ref
          *                              gpudb::show_table_true "true" then the
@@ -96,15 +128,14 @@ namespace gpudb
          *                              The default value is @ref
          *                              gpudb::show_table_false
          *                              "show_table_false".
-         *                          <li>@ref gpudb::show_table_get_cached_sizes
-         *                              "show_table_get_cached_sizes": If @ref
-         *                              gpudb::show_table_true "true" then the
-         *                              number of records in each table, along
-         *                              with a cumulative count, will be
-         *                              returned; blank, otherwise. This
-         *                              version will return the sizes cached at
-         *                              rank 0, which may be stale if there is
-         *                              a multihead insert occuring.
+         *                          <li>@ref
+         *                              gpudb::show_table_no_error_if_not_exists
+         *                              "show_table_no_error_if_not_exists": If
+         *                              @ref gpudb::show_table_false "false"
+         *                              will return an error if the provided @a
+         *                              tableName_ does not exist. If @ref
+         *                              gpudb::show_table_true "true" then it
+         *                              will return an empty result.
          *                              Supported values:
          *                              <ul>
          *                                  <li>@ref gpudb::show_table_true
@@ -142,24 +173,6 @@ namespace gpudb
          *                              The default value is @ref
          *                              gpudb::show_table_true
          *                              "show_table_true".
-         *                          <li>@ref
-         *                              gpudb::show_table_no_error_if_not_exists
-         *                              "show_table_no_error_if_not_exists": If
-         *                              @ref gpudb::show_table_false "false"
-         *                              will return an error if the provided @a
-         *                              tableName_ does not exist. If @ref
-         *                              gpudb::show_table_true "true" then it
-         *                              will return an empty result.
-         *                              Supported values:
-         *                              <ul>
-         *                                  <li>@ref gpudb::show_table_true
-         *                                      "show_table_true"
-         *                                  <li>@ref gpudb::show_table_false
-         *                                      "show_table_false"
-         *                              </ul>
-         *                              The default value is @ref
-         *                              gpudb::show_table_false
-         *                              "show_table_false".
          *                          <li>@ref gpudb::show_table_get_column_info
          *                              "show_table_get_column_info": If @ref
          *                              gpudb::show_table_true "true" then
@@ -196,6 +209,16 @@ namespace gpudb
         /**
          * Optional parameters.
          * <ul>
+         *     <li>@ref gpudb::show_table_dependencies
+         *         "show_table_dependencies": Include view dependencies in the
+         *         output.
+         *         Supported values:
+         *         <ul>
+         *             <li>@ref gpudb::show_table_true "show_table_true"
+         *             <li>@ref gpudb::show_table_false "show_table_false"
+         *         </ul>
+         *         The default value is @ref gpudb::show_table_false
+         *         "show_table_false".
          *     <li>@ref gpudb::show_table_force_synchronous
          *         "show_table_force_synchronous": If @ref
          *         gpudb::show_table_true "true" then the table sizes will wait
@@ -207,6 +230,20 @@ namespace gpudb
          *         </ul>
          *         The default value is @ref gpudb::show_table_true
          *         "show_table_true".
+         *     <li>@ref gpudb::show_table_get_cached_sizes
+         *         "show_table_get_cached_sizes": If @ref
+         *         gpudb::show_table_true "true" then the number of records in
+         *         each table, along with a cumulative count, will be returned;
+         *         blank, otherwise. This version will return the sizes cached
+         *         at rank 0, which may be stale if there is a multihead insert
+         *         occuring.
+         *         Supported values:
+         *         <ul>
+         *             <li>@ref gpudb::show_table_true "show_table_true"
+         *             <li>@ref gpudb::show_table_false "show_table_false"
+         *         </ul>
+         *         The default value is @ref gpudb::show_table_false
+         *         "show_table_false".
          *     <li>@ref gpudb::show_table_get_sizes "show_table_get_sizes": If
          *         @ref gpudb::show_table_true "true" then the number of
          *         records in each table, along with a cumulative count, will
@@ -218,13 +255,12 @@ namespace gpudb
          *         </ul>
          *         The default value is @ref gpudb::show_table_false
          *         "show_table_false".
-         *     <li>@ref gpudb::show_table_get_cached_sizes
-         *         "show_table_get_cached_sizes": If @ref
-         *         gpudb::show_table_true "true" then the number of records in
-         *         each table, along with a cumulative count, will be returned;
-         *         blank, otherwise. This version will return the sizes cached
-         *         at rank 0, which may be stale if there is a multihead insert
-         *         occuring.
+         *     <li>@ref gpudb::show_table_no_error_if_not_exists
+         *         "show_table_no_error_if_not_exists": If @ref
+         *         gpudb::show_table_false "false" will return an error if the
+         *         provided @ref tableName does not exist. If @ref
+         *         gpudb::show_table_true "true" then it will return an empty
+         *         result.
          *         Supported values:
          *         <ul>
          *             <li>@ref gpudb::show_table_true "show_table_true"
@@ -250,19 +286,6 @@ namespace gpudb
          *         </ul>
          *         The default value is @ref gpudb::show_table_true
          *         "show_table_true".
-         *     <li>@ref gpudb::show_table_no_error_if_not_exists
-         *         "show_table_no_error_if_not_exists": If @ref
-         *         gpudb::show_table_false "false" will return an error if the
-         *         provided @ref tableName does not exist. If @ref
-         *         gpudb::show_table_true "true" then it will return an empty
-         *         result.
-         *         Supported values:
-         *         <ul>
-         *             <li>@ref gpudb::show_table_true "show_table_true"
-         *             <li>@ref gpudb::show_table_false "show_table_false"
-         *         </ul>
-         *         The default value is @ref gpudb::show_table_false
-         *         "show_table_false".
          *     <li>@ref gpudb::show_table_get_column_info
          *         "show_table_get_column_info": If @ref gpudb::show_table_true
          *         "true" then column info (memory usage, etc) will be

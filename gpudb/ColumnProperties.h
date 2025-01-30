@@ -242,6 +242,13 @@ namespace gpudb
 
         /**
          * This property indicates that this column will be part of (or the
+         * entire) <a href="../../../concepts/tables/#soft-primary-keys"
+         * target="_top">soft primary key</a>.
+         */
+        extern const std::string SOFT_PRIMARY_KEY;
+
+        /**
+         * This property indicates that this column will be part of (or the
          * entire) <a href="../../../concepts/tables/#shard-keys"
          * target="_top">shard key</a>.
          */
@@ -286,6 +293,12 @@ namespace gpudb
          * randomly-generated UUIDs upon insert.
          */
         extern const std::string INIT_WITH_UUID;
+
+        /**
+         * For 'date', 'time', 'datetime', or 'timestamp' column types, always
+         * update the field with 'NOW()' upon any update.
+         */
+        extern const std::string UPDATE_WITH_NOW;
     } // end namespace ColumnProperty
 } // end namespace gpudb
 

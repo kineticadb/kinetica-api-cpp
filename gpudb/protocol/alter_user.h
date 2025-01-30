@@ -36,9 +36,22 @@ namespace gpudb
          *                     user.
          *                     Supported values:
          *                     <ul>
+         *                         <li>@ref gpudb::alter_user_set_activated
+         *                             "alter_user_set_activated": Is the user
+         *                             allowed to login.
+         *                         <li>@ref gpudb::alter_user_true
+         *                             "alter_user_true": User may login
+         *                         <li>@ref gpudb::alter_user_false
+         *                             "alter_user_false": User may not login
          *                         <li>@ref gpudb::alter_user_set_comment
          *                             "alter_user_set_comment": Sets the
          *                             comment for an internal user.
+         *                         <li>@ref
+         *                             gpudb::alter_user_set_default_schema
+         *                             "alter_user_set_default_schema": Set the
+         *                             default_schema for an internal user. An
+         *                             empty string means the user will have no
+         *                             default schema.
          *                         <li>@ref gpudb::alter_user_set_password
          *                             "alter_user_set_password": Sets the
          *                             password of the user. The user must be
@@ -50,12 +63,6 @@ namespace gpudb
          *                             The resource group must exist,
          *                             otherwise, an empty string assigns the
          *                             user to the default resource group.
-         *                         <li>@ref
-         *                             gpudb::alter_user_set_default_schema
-         *                             "alter_user_set_default_schema": Set the
-         *                             default_schema for an internal user. An
-         *                             empty string means the user will have no
-         *                             default schema.
          *                     </ul>
          * @param[in] value_  The value of the modification, depending on @a
          *                    action_.
@@ -79,8 +86,18 @@ namespace gpudb
          * Modification operation to be applied to the user.
          * Supported values:
          * <ul>
+         *     <li>@ref gpudb::alter_user_set_activated
+         *         "alter_user_set_activated": Is the user allowed to login.
+         *     <li>@ref gpudb::alter_user_true "alter_user_true": User may
+         *         login
+         *     <li>@ref gpudb::alter_user_false "alter_user_false": User may
+         *         not login
          *     <li>@ref gpudb::alter_user_set_comment "alter_user_set_comment":
          *         Sets the comment for an internal user.
+         *     <li>@ref gpudb::alter_user_set_default_schema
+         *         "alter_user_set_default_schema": Set the default_schema for
+         *         an internal user. An empty string means the user will have
+         *         no default schema.
          *     <li>@ref gpudb::alter_user_set_password
          *         "alter_user_set_password": Sets the password of the user.
          *         The user must be an internal user.
@@ -89,10 +106,6 @@ namespace gpudb
          *         an internal user. The resource group must exist, otherwise,
          *         an empty string assigns the user to the default resource
          *         group.
-         *     <li>@ref gpudb::alter_user_set_default_schema
-         *         "alter_user_set_default_schema": Set the default_schema for
-         *         an internal user. An empty string means the user will have
-         *         no default schema.
          * </ul>
          */
         std::string action;

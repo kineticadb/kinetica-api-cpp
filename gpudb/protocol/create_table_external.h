@@ -994,6 +994,12 @@ namespace gpudb
          *                              Skip number of lines from begining of
          *                              file.
          *                          <li>@ref
+         *                              gpudb::create_table_external_start_offsets
+         *                              "create_table_external_start_offsets":
+         *                              Starting offsets by partition to fetch
+         *                              from kafka. A comma separated list of
+         *                              partition:offset pairs.
+         *                          <li>@ref
          *                              gpudb::create_table_external_subscribe
          *                              "create_table_external_subscribe":
          *                              Continuously poll the data source to
@@ -1959,6 +1965,10 @@ namespace gpudb
          *     <li>@ref gpudb::create_table_external_skip_lines
          *         "create_table_external_skip_lines": Skip number of lines
          *         from begining of file.
+         *     <li>@ref gpudb::create_table_external_start_offsets
+         *         "create_table_external_start_offsets": Starting offsets by
+         *         partition to fetch from kafka. A comma separated list of
+         *         partition:offset pairs.
          *     <li>@ref gpudb::create_table_external_subscribe
          *         "create_table_external_subscribe": Continuously poll the
          *         data source to check for new data and load it into the

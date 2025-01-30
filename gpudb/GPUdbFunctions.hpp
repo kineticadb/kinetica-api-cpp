@@ -3249,11 +3249,27 @@ AggregateGroupByResponse& aggregateGroupBy( const AggregateGroupByRequest& reque
  *                             "aggregate_group_by_expression": Filter
  *                             expression to apply to the table prior to
  *                             computing the aggregate group by.
+ *                         <li>@ref
+ *                             gpudb::aggregate_group_by_chunked_expression_evaluation
+ *                             "aggregate_group_by_chunked_expression_evaluation":
+ *                             evaluate the filter expression during group-by
+ *                             chunk processing.
+ *                             Supported values:
+ *                             <ul>
+ *                                 <li>@ref gpudb::aggregate_group_by_true
+ *                                     "aggregate_group_by_true"
+ *                                 <li>@ref gpudb::aggregate_group_by_false
+ *                                     "aggregate_group_by_false"
+ *                             </ul>
+ *                             The default value is @ref
+ *                             gpudb::aggregate_group_by_false
+ *                             "aggregate_group_by_false".
  *                         <li>@ref gpudb::aggregate_group_by_having
  *                             "aggregate_group_by_having": Filter expression
  *                             to apply to the aggregated results.
  *                         <li>@ref gpudb::aggregate_group_by_sort_order
- *                             "aggregate_group_by_sort_order": String
+ *                             "aggregate_group_by_sort_order":
+ *                             [DEPRECATED--use order_by instead] String
  *                             indicating how the returned values should be
  *                             sorted - ascending or descending.
  *                             Supported values:
@@ -3272,8 +3288,9 @@ AggregateGroupByResponse& aggregateGroupBy( const AggregateGroupByRequest& reque
  *                             gpudb::aggregate_group_by_ascending
  *                             "aggregate_group_by_ascending".
  *                         <li>@ref gpudb::aggregate_group_by_sort_by
- *                             "aggregate_group_by_sort_by": String determining
- *                             how the results are sorted.
+ *                             "aggregate_group_by_sort_by": [DEPRECATED--use
+ *                             order_by instead] String determining how the
+ *                             results are sorted.
  *                             Supported values:
  *                             <ul>
  *                                 <li>@ref gpudb::aggregate_group_by_key
@@ -3599,11 +3616,27 @@ AggregateGroupByResponse aggregateGroupBy( const std::string& tableName,
  *                             "aggregate_group_by_expression": Filter
  *                             expression to apply to the table prior to
  *                             computing the aggregate group by.
+ *                         <li>@ref
+ *                             gpudb::aggregate_group_by_chunked_expression_evaluation
+ *                             "aggregate_group_by_chunked_expression_evaluation":
+ *                             evaluate the filter expression during group-by
+ *                             chunk processing.
+ *                             Supported values:
+ *                             <ul>
+ *                                 <li>@ref gpudb::aggregate_group_by_true
+ *                                     "aggregate_group_by_true"
+ *                                 <li>@ref gpudb::aggregate_group_by_false
+ *                                     "aggregate_group_by_false"
+ *                             </ul>
+ *                             The default value is @ref
+ *                             gpudb::aggregate_group_by_false
+ *                             "aggregate_group_by_false".
  *                         <li>@ref gpudb::aggregate_group_by_having
  *                             "aggregate_group_by_having": Filter expression
  *                             to apply to the aggregated results.
  *                         <li>@ref gpudb::aggregate_group_by_sort_order
- *                             "aggregate_group_by_sort_order": String
+ *                             "aggregate_group_by_sort_order":
+ *                             [DEPRECATED--use order_by instead] String
  *                             indicating how the returned values should be
  *                             sorted - ascending or descending.
  *                             Supported values:
@@ -3622,8 +3655,9 @@ AggregateGroupByResponse aggregateGroupBy( const std::string& tableName,
  *                             gpudb::aggregate_group_by_ascending
  *                             "aggregate_group_by_ascending".
  *                         <li>@ref gpudb::aggregate_group_by_sort_by
- *                             "aggregate_group_by_sort_by": String determining
- *                             how the results are sorted.
+ *                             "aggregate_group_by_sort_by": [DEPRECATED--use
+ *                             order_by instead] String determining how the
+ *                             results are sorted.
  *                             Supported values:
  *                             <ul>
  *                                 <li>@ref gpudb::aggregate_group_by_key
@@ -8794,6 +8828,12 @@ AlterSystemPropertiesResponse& alterSystemProperties( const AlterSystemPropertie
  *                                        Enable overlapped-equi-join filter.
  *                                        The default value is 'true'.
  *                                    <li>@ref
+ *                                        gpudb::alter_system_properties_enable_one_step_compound_equi_join
+ *                                        "alter_system_properties_enable_one_step_compound_equi_join":
+ *                                        Enable the one_step
+ *                                        compound-equi-join algorithm. The
+ *                                        default value is 'true'.
+ *                                    <li>@ref
  *                                        gpudb::alter_system_properties_kafka_batch_size
  *                                        "alter_system_properties_kafka_batch_size":
  *                                        Maximum number of records to be
@@ -8912,6 +8952,13 @@ AlterSystemPropertiesResponse& alterSystemProperties( const AlterSystemPropertie
  *                                        "alter_system_properties_postgres_proxy_keep_alive":
  *                                        Enable  postgres proxy keep alive.
  *                                        The default value is 'false'.
+ *                                    <li>@ref
+ *                                        gpudb::alter_system_properties_kifs_directory_data_limit
+ *                                        "alter_system_properties_kifs_directory_data_limit":
+ *                                        The default maximum capacity to apply
+ *                                        when creating a KiFS directory
+ *                                        (bytes). The minimum allowed value is
+ *                                        '-1'.
  *                                </ul>
  * @param[in] options  Optional parameters.
  *                     <ul>
@@ -9174,6 +9221,12 @@ AlterSystemPropertiesResponse alterSystemProperties( const std::map<std::string,
  *                                        Enable overlapped-equi-join filter.
  *                                        The default value is 'true'.
  *                                    <li>@ref
+ *                                        gpudb::alter_system_properties_enable_one_step_compound_equi_join
+ *                                        "alter_system_properties_enable_one_step_compound_equi_join":
+ *                                        Enable the one_step
+ *                                        compound-equi-join algorithm. The
+ *                                        default value is 'true'.
+ *                                    <li>@ref
  *                                        gpudb::alter_system_properties_kafka_batch_size
  *                                        "alter_system_properties_kafka_batch_size":
  *                                        Maximum number of records to be
@@ -9292,6 +9345,13 @@ AlterSystemPropertiesResponse alterSystemProperties( const std::map<std::string,
  *                                        "alter_system_properties_postgres_proxy_keep_alive":
  *                                        Enable  postgres proxy keep alive.
  *                                        The default value is 'false'.
+ *                                    <li>@ref
+ *                                        gpudb::alter_system_properties_kifs_directory_data_limit
+ *                                        "alter_system_properties_kifs_directory_data_limit":
+ *                                        The default maximum capacity to apply
+ *                                        when creating a KiFS directory
+ *                                        (bytes). The minimum allowed value is
+ *                                        '-1'.
  *                                </ul>
  * @param[in] options  Optional parameters.
  *                     <ul>
@@ -9355,6 +9415,8 @@ AlterSystemPropertiesResponse& alterSystemProperties( const std::map<std::string
  *
  * Create or delete a <a href="../../../concepts/indexes/#column-index"
  * target="_top">column</a>, <a
+ * href="../../../concepts/indexes/#low-cardinality-index"
+ * target="_top">low-cardinality index</a>, <a
  * href="../../../concepts/indexes/#chunk-skip-index" target="_top">chunk
  * skip</a>, <a href="../../../concepts/indexes/#geospatial-index"
  * target="_top">geospatial</a>, <a
@@ -9410,6 +9472,8 @@ AlterTableResponse alterTable( const AlterTableRequest& request_ ) const;
  *
  * Create or delete a <a href="../../../concepts/indexes/#column-index"
  * target="_top">column</a>, <a
+ * href="../../../concepts/indexes/#low-cardinality-index"
+ * target="_top">low-cardinality index</a>, <a
  * href="../../../concepts/indexes/#chunk-skip-index" target="_top">chunk
  * skip</a>, <a href="../../../concepts/indexes/#geospatial-index"
  * target="_top">geospatial</a>, <a
@@ -9468,6 +9532,8 @@ AlterTableResponse& alterTable( const AlterTableRequest& request_,
  *
  * Create or delete a <a href="../../../concepts/indexes/#column-index"
  * target="_top">column</a>, <a
+ * href="../../../concepts/indexes/#low-cardinality-index"
+ * target="_top">low-cardinality index</a>, <a
  * href="../../../concepts/indexes/#chunk-skip-index" target="_top">chunk
  * skip</a>, <a href="../../../concepts/indexes/#geospatial-index"
  * target="_top">geospatial</a>, <a
@@ -9516,6 +9582,8 @@ AlterTableResponse& alterTable( const AlterTableRequest& request_,
  *                            "alter_table_create_index": Creates a <a
  *                            href="../../../concepts/indexes/#column-index"
  *                            target="_top">column (attribute) index</a>, <a
+ *                            href="../../../concepts/indexes/#low-cardinality-index"
+ *                            target="_top">low-cardinality index</a>, <a
  *                            href="../../../concepts/indexes/#chunk-skip-index"
  *                            target="_top">chunk skip index</a>, <a
  *                            href="../../../concepts/indexes/#geospatial-index"
@@ -9538,6 +9606,8 @@ AlterTableResponse& alterTable( const AlterTableRequest& request_,
  *                            "alter_table_delete_index": Deletes a <a
  *                            href="../../../concepts/indexes/#column-index"
  *                            target="_top">column (attribute) index</a>, <a
+ *                            href="../../../concepts/indexes/#low-cardinality-index"
+ *                            target="_top">low-cardinality index</a>, <a
  *                            href="../../../concepts/indexes/#chunk-skip-index"
  *                            target="_top">chunk skip index</a>, <a
  *                            href="../../../concepts/indexes/#geospatial-index"
@@ -9888,6 +9958,12 @@ AlterTableResponse& alterTable( const AlterTableRequest& request_,
  *                                     href="../../../concepts/indexes/#column-index"
  *                                     target="_top">column (attribute)
  *                                     index</a>.
+ *                                 <li>@ref gpudb::alter_table_low_cardinality
+ *                                     "alter_table_low_cardinality": Create a
+ *                                     <a
+ *                                     href="../../../concepts/indexes/#low-cardinality-index"
+ *                                     target="_top">low-cardinality column
+ *                                     (attribute) index</a>.
  *                                 <li>@ref gpudb::alter_table_chunk_skip
  *                                     "alter_table_chunk_skip": Create or
  *                                     delete a <a
@@ -9945,6 +10021,8 @@ AlterTableResponse alterTable( const std::string& tableName,
  *
  * Create or delete a <a href="../../../concepts/indexes/#column-index"
  * target="_top">column</a>, <a
+ * href="../../../concepts/indexes/#low-cardinality-index"
+ * target="_top">low-cardinality index</a>, <a
  * href="../../../concepts/indexes/#chunk-skip-index" target="_top">chunk
  * skip</a>, <a href="../../../concepts/indexes/#geospatial-index"
  * target="_top">geospatial</a>, <a
@@ -9993,6 +10071,8 @@ AlterTableResponse alterTable( const std::string& tableName,
  *                            "alter_table_create_index": Creates a <a
  *                            href="../../../concepts/indexes/#column-index"
  *                            target="_top">column (attribute) index</a>, <a
+ *                            href="../../../concepts/indexes/#low-cardinality-index"
+ *                            target="_top">low-cardinality index</a>, <a
  *                            href="../../../concepts/indexes/#chunk-skip-index"
  *                            target="_top">chunk skip index</a>, <a
  *                            href="../../../concepts/indexes/#geospatial-index"
@@ -10015,6 +10095,8 @@ AlterTableResponse alterTable( const std::string& tableName,
  *                            "alter_table_delete_index": Deletes a <a
  *                            href="../../../concepts/indexes/#column-index"
  *                            target="_top">column (attribute) index</a>, <a
+ *                            href="../../../concepts/indexes/#low-cardinality-index"
+ *                            target="_top">low-cardinality index</a>, <a
  *                            href="../../../concepts/indexes/#chunk-skip-index"
  *                            target="_top">chunk skip index</a>, <a
  *                            href="../../../concepts/indexes/#geospatial-index"
@@ -10365,6 +10447,12 @@ AlterTableResponse alterTable( const std::string& tableName,
  *                                     href="../../../concepts/indexes/#column-index"
  *                                     target="_top">column (attribute)
  *                                     index</a>.
+ *                                 <li>@ref gpudb::alter_table_low_cardinality
+ *                                     "alter_table_low_cardinality": Create a
+ *                                     <a
+ *                                     href="../../../concepts/indexes/#low-cardinality-index"
+ *                                     target="_top">low-cardinality column
+ *                                     (attribute) index</a>.
  *                                 <li>@ref gpudb::alter_table_chunk_skip
  *                                     "alter_table_chunk_skip": Create or
  *                                     delete a <a
@@ -10929,9 +11017,21 @@ AlterUserResponse& alterUser( const AlterUserRequest& request_,
  * @param[in] action  Modification operation to be applied to the user.
  *                    Supported values:
  *                    <ul>
+ *                        <li>@ref gpudb::alter_user_set_activated
+ *                            "alter_user_set_activated": Is the user allowed
+ *                            to login.
+ *                        <li>@ref gpudb::alter_user_true "alter_user_true":
+ *                            User may login
+ *                        <li>@ref gpudb::alter_user_false "alter_user_false":
+ *                            User may not login
  *                        <li>@ref gpudb::alter_user_set_comment
  *                            "alter_user_set_comment": Sets the comment for an
  *                            internal user.
+ *                        <li>@ref gpudb::alter_user_set_default_schema
+ *                            "alter_user_set_default_schema": Set the
+ *                            default_schema for an internal user. An empty
+ *                            string means the user will have no default
+ *                            schema.
  *                        <li>@ref gpudb::alter_user_set_password
  *                            "alter_user_set_password": Sets the password of
  *                            the user. The user must be an internal user.
@@ -10940,11 +11040,6 @@ AlterUserResponse& alterUser( const AlterUserRequest& request_,
  *                            resource group for an internal user. The resource
  *                            group must exist, otherwise, an empty string
  *                            assigns the user to the default resource group.
- *                        <li>@ref gpudb::alter_user_set_default_schema
- *                            "alter_user_set_default_schema": Set the
- *                            default_schema for an internal user. An empty
- *                            string means the user will have no default
- *                            schema.
  *                    </ul>
  * @param[in] value  The value of the modification, depending on @a action.
  * @param[in] options  Optional parameters. The default value is an empty map.
@@ -10964,9 +11059,21 @@ AlterUserResponse alterUser( const std::string& name,
  * @param[in] action  Modification operation to be applied to the user.
  *                    Supported values:
  *                    <ul>
+ *                        <li>@ref gpudb::alter_user_set_activated
+ *                            "alter_user_set_activated": Is the user allowed
+ *                            to login.
+ *                        <li>@ref gpudb::alter_user_true "alter_user_true":
+ *                            User may login
+ *                        <li>@ref gpudb::alter_user_false "alter_user_false":
+ *                            User may not login
  *                        <li>@ref gpudb::alter_user_set_comment
  *                            "alter_user_set_comment": Sets the comment for an
  *                            internal user.
+ *                        <li>@ref gpudb::alter_user_set_default_schema
+ *                            "alter_user_set_default_schema": Set the
+ *                            default_schema for an internal user. An empty
+ *                            string means the user will have no default
+ *                            schema.
  *                        <li>@ref gpudb::alter_user_set_password
  *                            "alter_user_set_password": Sets the password of
  *                            the user. The user must be an internal user.
@@ -10975,11 +11082,6 @@ AlterUserResponse alterUser( const std::string& name,
  *                            resource group for an internal user. The resource
  *                            group must exist, otherwise, an empty string
  *                            assigns the user to the default resource group.
- *                        <li>@ref gpudb::alter_user_set_default_schema
- *                            "alter_user_set_default_schema": Set the
- *                            default_schema for an internal user. An empty
- *                            string means the user will have no default
- *                            schema.
  *                    </ul>
  * @param[in] value  The value of the modification, depending on @a action.
  * @param[in] options  Optional parameters. The default value is an empty map.
@@ -16512,9 +16614,6 @@ CreateTableResponse& createTable( const CreateTableRequest& request_,
  *                             href="../../../rm/concepts/#tier-strategies"
  *                             target="_top">tier strategy</a> for the table
  *                             and its columns.
- *                         <li>@ref gpudb::create_table_is_virtual_union
- *                             "create_table_is_virtual_union":
- *                             &lt;DEVELOPER&gt;
  *                     </ul>
  *                     The default value is an empty map.
  *
@@ -16785,9 +16884,6 @@ CreateTableResponse createTable( const std::string& tableName,
  *                             href="../../../rm/concepts/#tier-strategies"
  *                             target="_top">tier strategy</a> for the table
  *                             and its columns.
- *                         <li>@ref gpudb::create_table_is_virtual_union
- *                             "create_table_is_virtual_union":
- *                             &lt;DEVELOPER&gt;
  *                     </ul>
  *                     The default value is an empty map.
  * @param[out] response_  @ref gpudb::CreateTableResponse "Response" object
@@ -17672,6 +17768,10 @@ CreateTableExternalResponse& createTableExternal( const CreateTableExternalReque
  *                         <li>@ref gpudb::create_table_external_skip_lines
  *                             "create_table_external_skip_lines": Skip number
  *                             of lines from begining of file.
+ *                         <li>@ref gpudb::create_table_external_start_offsets
+ *                             "create_table_external_start_offsets": Starting
+ *                             offsets by partition to fetch from kafka. A
+ *                             comma separated list of partition:offset pairs.
  *                         <li>@ref gpudb::create_table_external_subscribe
  *                             "create_table_external_subscribe": Continuously
  *                             poll the data source to check for new data and
@@ -18769,6 +18869,10 @@ CreateTableExternalResponse createTableExternal( const std::string& tableName,
  *                         <li>@ref gpudb::create_table_external_skip_lines
  *                             "create_table_external_skip_lines": Skip number
  *                             of lines from begining of file.
+ *                         <li>@ref gpudb::create_table_external_start_offsets
+ *                             "create_table_external_start_offsets": Starting
+ *                             offsets by partition to fetch from kafka. A
+ *                             comma separated list of partition:offset pairs.
  *                         <li>@ref gpudb::create_table_external_subscribe
  *                             "create_table_external_subscribe": Continuously
  *                             poll the data source to check for new data and
@@ -20039,6 +20143,12 @@ CreateTypeResponse& createType( const CreateTypeRequest& request_,
  *                                (or the entire) <a
  *                                href="../../../concepts/tables/#primary-keys"
  *                                target="_top">primary key</a>.
+ *                            <li>@ref gpudb::create_type_soft_primary_key
+ *                                "create_type_soft_primary_key": This property
+ *                                indicates that this column will be part of
+ *                                (or the entire) <a
+ *                                href="../../../concepts/tables/#soft-primary-keys"
+ *                                target="_top">soft primary key</a>.
  *                            <li>@ref gpudb::create_type_shard_key
  *                                "create_type_shard_key": This property
  *                                indicates that this column will be part of
@@ -20083,6 +20193,11 @@ CreateTypeResponse& createType( const CreateTypeRequest& request_,
  *                                type, replace empty strings and invalid UUID
  *                                values with randomly-generated UUIDs upon
  *                                insert.
+ *                            <li>@ref gpudb::create_type_update_with_now
+ *                                "create_type_update_with_now": For 'date',
+ *                                'time', 'datetime', or 'timestamp' column
+ *                                types, always update the field with 'NOW()'
+ *                                upon any update.
  *                        </ul>
  *                        The default value is an empty map.
  * @param[in] options  Optional parameters. The default value is an empty map.
@@ -20364,6 +20479,12 @@ CreateTypeResponse createType( const std::string& typeDefinition,
  *                                (or the entire) <a
  *                                href="../../../concepts/tables/#primary-keys"
  *                                target="_top">primary key</a>.
+ *                            <li>@ref gpudb::create_type_soft_primary_key
+ *                                "create_type_soft_primary_key": This property
+ *                                indicates that this column will be part of
+ *                                (or the entire) <a
+ *                                href="../../../concepts/tables/#soft-primary-keys"
+ *                                target="_top">soft primary key</a>.
  *                            <li>@ref gpudb::create_type_shard_key
  *                                "create_type_shard_key": This property
  *                                indicates that this column will be part of
@@ -20408,6 +20529,11 @@ CreateTypeResponse createType( const std::string& typeDefinition,
  *                                type, replace empty strings and invalid UUID
  *                                values with randomly-generated UUIDs upon
  *                                insert.
+ *                            <li>@ref gpudb::create_type_update_with_now
+ *                                "create_type_update_with_now": For 'date',
+ *                                'time', 'datetime', or 'timestamp' column
+ *                                types, always update the field with 'NOW()'
+ *                                upon any update.
  *                        </ul>
  *                        The default value is an empty map.
  * @param[in] options  Optional parameters. The default value is an empty map.
@@ -20979,13 +21105,21 @@ CreateUserExternalResponse& createUserExternal( const CreateUserExternalRequest&
  *                  not be the same name as an existing user.
  * @param[in] options  Optional parameters.
  *                     <ul>
- *                         <li>@ref gpudb::create_user_external_resource_group
- *                             "create_user_external_resource_group": Name of
- *                             an existing resource group to associate with
- *                             this user
- *                         <li>@ref gpudb::create_user_external_default_schema
- *                             "create_user_external_default_schema": Default
- *                             schema to associate with this user
+ *                         <li>@ref gpudb::create_user_external_activated
+ *                             "create_user_external_activated": Is the user
+ *                             allowed to login.
+ *                             Supported values:
+ *                             <ul>
+ *                                 <li>@ref gpudb::create_user_external_true
+ *                                     "create_user_external_true": User may
+ *                                     login
+ *                                 <li>@ref gpudb::create_user_external_false
+ *                                     "create_user_external_false": User may
+ *                                     not login
+ *                             </ul>
+ *                             The default value is @ref
+ *                             gpudb::create_user_external_true
+ *                             "create_user_external_true".
  *                         <li>@ref
  *                             gpudb::create_user_external_create_home_directory
  *                             "create_user_external_create_home_directory":
@@ -21002,6 +21136,9 @@ CreateUserExternalResponse& createUserExternal( const CreateUserExternalRequest&
  *                             The default value is @ref
  *                             gpudb::create_user_external_true
  *                             "create_user_external_true".
+ *                         <li>@ref gpudb::create_user_external_default_schema
+ *                             "create_user_external_default_schema": Default
+ *                             schema to associate with this user
  *                         <li>@ref
  *                             gpudb::create_user_external_directory_data_limit
  *                             "create_user_external_directory_data_limit": The
@@ -21012,6 +21149,10 @@ CreateUserExternalResponse& createUserExternal( const CreateUserExternalRequest&
  *                             gpudb::create_user_external_true "true". Set to
  *                             -1 to indicate no upper limit. If empty, the
  *                             system default limit is applied.
+ *                         <li>@ref gpudb::create_user_external_resource_group
+ *                             "create_user_external_resource_group": Name of
+ *                             an existing resource group to associate with
+ *                             this user
  *                     </ul>
  *                     The default value is an empty map.
  *
@@ -21032,13 +21173,21 @@ CreateUserExternalResponse createUserExternal( const std::string& name,
  *                  not be the same name as an existing user.
  * @param[in] options  Optional parameters.
  *                     <ul>
- *                         <li>@ref gpudb::create_user_external_resource_group
- *                             "create_user_external_resource_group": Name of
- *                             an existing resource group to associate with
- *                             this user
- *                         <li>@ref gpudb::create_user_external_default_schema
- *                             "create_user_external_default_schema": Default
- *                             schema to associate with this user
+ *                         <li>@ref gpudb::create_user_external_activated
+ *                             "create_user_external_activated": Is the user
+ *                             allowed to login.
+ *                             Supported values:
+ *                             <ul>
+ *                                 <li>@ref gpudb::create_user_external_true
+ *                                     "create_user_external_true": User may
+ *                                     login
+ *                                 <li>@ref gpudb::create_user_external_false
+ *                                     "create_user_external_false": User may
+ *                                     not login
+ *                             </ul>
+ *                             The default value is @ref
+ *                             gpudb::create_user_external_true
+ *                             "create_user_external_true".
  *                         <li>@ref
  *                             gpudb::create_user_external_create_home_directory
  *                             "create_user_external_create_home_directory":
@@ -21055,6 +21204,9 @@ CreateUserExternalResponse createUserExternal( const std::string& name,
  *                             The default value is @ref
  *                             gpudb::create_user_external_true
  *                             "create_user_external_true".
+ *                         <li>@ref gpudb::create_user_external_default_schema
+ *                             "create_user_external_default_schema": Default
+ *                             schema to associate with this user
  *                         <li>@ref
  *                             gpudb::create_user_external_directory_data_limit
  *                             "create_user_external_directory_data_limit": The
@@ -21065,6 +21217,10 @@ CreateUserExternalResponse createUserExternal( const std::string& name,
  *                             gpudb::create_user_external_true "true". Set to
  *                             -1 to indicate no upper limit. If empty, the
  *                             system default limit is applied.
+ *                         <li>@ref gpudb::create_user_external_resource_group
+ *                             "create_user_external_resource_group": Name of
+ *                             an existing resource group to associate with
+ *                             this user
  *                     </ul>
  *                     The default value is an empty map.
  * @param[out] response_  @ref gpudb::CreateUserExternalResponse "Response"
@@ -21116,13 +21272,21 @@ CreateUserInternalResponse& createUserInternal( const CreateUserInternalRequest&
  *                      empty string for no password.
  * @param[in] options  Optional parameters.
  *                     <ul>
- *                         <li>@ref gpudb::create_user_internal_resource_group
- *                             "create_user_internal_resource_group": Name of
- *                             an existing resource group to associate with
- *                             this user
- *                         <li>@ref gpudb::create_user_internal_default_schema
- *                             "create_user_internal_default_schema": Default
- *                             schema to associate with this user
+ *                         <li>@ref gpudb::create_user_internal_activated
+ *                             "create_user_internal_activated": Is the user
+ *                             allowed to login.
+ *                             Supported values:
+ *                             <ul>
+ *                                 <li>@ref gpudb::create_user_internal_true
+ *                                     "create_user_internal_true": User may
+ *                                     login
+ *                                 <li>@ref gpudb::create_user_internal_false
+ *                                     "create_user_internal_false": User may
+ *                                     not login
+ *                             </ul>
+ *                             The default value is @ref
+ *                             gpudb::create_user_internal_true
+ *                             "create_user_internal_true".
  *                         <li>@ref
  *                             gpudb::create_user_internal_create_home_directory
  *                             "create_user_internal_create_home_directory":
@@ -21139,6 +21303,9 @@ CreateUserInternalResponse& createUserInternal( const CreateUserInternalRequest&
  *                             The default value is @ref
  *                             gpudb::create_user_internal_true
  *                             "create_user_internal_true".
+ *                         <li>@ref gpudb::create_user_internal_default_schema
+ *                             "create_user_internal_default_schema": Default
+ *                             schema to associate with this user
  *                         <li>@ref
  *                             gpudb::create_user_internal_directory_data_limit
  *                             "create_user_internal_directory_data_limit": The
@@ -21149,6 +21316,10 @@ CreateUserInternalResponse& createUserInternal( const CreateUserInternalRequest&
  *                             gpudb::create_user_internal_true "true". Set to
  *                             -1 to indicate no upper limit. If empty, the
  *                             system default limit is applied.
+ *                         <li>@ref gpudb::create_user_internal_resource_group
+ *                             "create_user_internal_resource_group": Name of
+ *                             an existing resource group to associate with
+ *                             this user
  *                     </ul>
  *                     The default value is an empty map.
  *
@@ -21171,13 +21342,21 @@ CreateUserInternalResponse createUserInternal( const std::string& name,
  *                      empty string for no password.
  * @param[in] options  Optional parameters.
  *                     <ul>
- *                         <li>@ref gpudb::create_user_internal_resource_group
- *                             "create_user_internal_resource_group": Name of
- *                             an existing resource group to associate with
- *                             this user
- *                         <li>@ref gpudb::create_user_internal_default_schema
- *                             "create_user_internal_default_schema": Default
- *                             schema to associate with this user
+ *                         <li>@ref gpudb::create_user_internal_activated
+ *                             "create_user_internal_activated": Is the user
+ *                             allowed to login.
+ *                             Supported values:
+ *                             <ul>
+ *                                 <li>@ref gpudb::create_user_internal_true
+ *                                     "create_user_internal_true": User may
+ *                                     login
+ *                                 <li>@ref gpudb::create_user_internal_false
+ *                                     "create_user_internal_false": User may
+ *                                     not login
+ *                             </ul>
+ *                             The default value is @ref
+ *                             gpudb::create_user_internal_true
+ *                             "create_user_internal_true".
  *                         <li>@ref
  *                             gpudb::create_user_internal_create_home_directory
  *                             "create_user_internal_create_home_directory":
@@ -21194,6 +21373,9 @@ CreateUserInternalResponse createUserInternal( const std::string& name,
  *                             The default value is @ref
  *                             gpudb::create_user_internal_true
  *                             "create_user_internal_true".
+ *                         <li>@ref gpudb::create_user_internal_default_schema
+ *                             "create_user_internal_default_schema": Default
+ *                             schema to associate with this user
  *                         <li>@ref
  *                             gpudb::create_user_internal_directory_data_limit
  *                             "create_user_internal_directory_data_limit": The
@@ -21204,6 +21386,10 @@ CreateUserInternalResponse createUserInternal( const std::string& name,
  *                             gpudb::create_user_internal_true "true". Set to
  *                             -1 to indicate no upper limit. If empty, the
  *                             system default limit is applied.
+ *                         <li>@ref gpudb::create_user_internal_resource_group
+ *                             "create_user_internal_resource_group": Name of
+ *                             an existing resource group to associate with
+ *                             this user
  *                     </ul>
  *                     The default value is an empty map.
  * @param[out] response_  @ref gpudb::CreateUserInternalResponse "Response"
@@ -29385,6 +29571,11 @@ GetRecordsByColumnResponse& getRecordsByColumn( const GetRecordsByColumnRequest&
  *                             The default value is @ref
  *                             gpudb::get_records_by_column_false
  *                             "get_records_by_column_false".
+ *                         <li>@ref gpudb::get_records_by_column_route_to_tom
+ *                             "get_records_by_column_route_to_tom": For
+ *                             multihead record retrieval without shard key
+ *                             expression - specifies from which tom to
+ *                             retrieve data.
  *                     </ul>
  *                     The default value is an empty map.
  *
@@ -29514,6 +29705,11 @@ GetRecordsByColumnResponse getRecordsByColumn( const std::string& tableName,
  *                             The default value is @ref
  *                             gpudb::get_records_by_column_false
  *                             "get_records_by_column_false".
+ *                         <li>@ref gpudb::get_records_by_column_route_to_tom
+ *                             "get_records_by_column_route_to_tom": For
+ *                             multihead record retrieval without shard key
+ *                             expression - specifies from which tom to
+ *                             retrieve data.
  *                     </ul>
  *                     The default value is an empty map.
  * @param[out] response_  @ref gpudb::GetRecordsByColumnResponse "Response"
@@ -31354,6 +31550,20 @@ GrantPermissionResponse& grantPermission( const GrantPermissionRequest& request_
  *                             filter expression to apply to this grant.  Only
  *                             rows that match the filter will be affected. The
  *                             default value is ''.
+ *                         <li>@ref gpudb::grant_permission_with_grant_option
+ *                             "grant_permission_with_grant_option": Allow the
+ *                             recipient to grant the same permission (or
+ *                             subset) to others.
+ *                             Supported values:
+ *                             <ul>
+ *                                 <li>@ref gpudb::grant_permission_true
+ *                                     "grant_permission_true"
+ *                                 <li>@ref gpudb::grant_permission_false
+ *                                     "grant_permission_false"
+ *                             </ul>
+ *                             The default value is @ref
+ *                             gpudb::grant_permission_false
+ *                             "grant_permission_false".
  *                     </ul>
  *                     The default value is an empty map.
  *
@@ -31451,6 +31661,20 @@ GrantPermissionResponse grantPermission( const std::string& principal,
  *                             filter expression to apply to this grant.  Only
  *                             rows that match the filter will be affected. The
  *                             default value is ''.
+ *                         <li>@ref gpudb::grant_permission_with_grant_option
+ *                             "grant_permission_with_grant_option": Allow the
+ *                             recipient to grant the same permission (or
+ *                             subset) to others.
+ *                             Supported values:
+ *                             <ul>
+ *                                 <li>@ref gpudb::grant_permission_true
+ *                                     "grant_permission_true"
+ *                                 <li>@ref gpudb::grant_permission_false
+ *                                     "grant_permission_false"
+ *                             </ul>
+ *                             The default value is @ref
+ *                             gpudb::grant_permission_false
+ *                             "grant_permission_false".
  *                     </ul>
  *                     The default value is an empty map.
  * @param[out] response_  @ref gpudb::GrantPermissionResponse "Response" object
@@ -34256,6 +34480,12 @@ InsertRecordsFromFilesResponse& insertRecordsFromFiles( const InsertRecordsFromF
  *                         <li>@ref gpudb::insert_records_from_files_skip_lines
  *                             "insert_records_from_files_skip_lines": Skip
  *                             number of lines from begining of file.
+ *                         <li>@ref
+ *                             gpudb::insert_records_from_files_start_offsets
+ *                             "insert_records_from_files_start_offsets":
+ *                             Starting offsets by partition to fetch from
+ *                             kafka. A comma separated list of
+ *                             partition:offset pairs.
  *                         <li>@ref gpudb::insert_records_from_files_subscribe
  *                             "insert_records_from_files_subscribe":
  *                             Continuously poll the data source to check for
@@ -35348,6 +35578,12 @@ InsertRecordsFromFilesResponse insertRecordsFromFiles( const std::string& tableN
  *                         <li>@ref gpudb::insert_records_from_files_skip_lines
  *                             "insert_records_from_files_skip_lines": Skip
  *                             number of lines from begining of file.
+ *                         <li>@ref
+ *                             gpudb::insert_records_from_files_start_offsets
+ *                             "insert_records_from_files_start_offsets":
+ *                             Starting offsets by partition to fetch from
+ *                             kafka. A comma separated list of
+ *                             partition:offset pairs.
  *                         <li>@ref gpudb::insert_records_from_files_subscribe
  *                             "insert_records_from_files_subscribe":
  *                             Continuously poll the data source to check for
@@ -40005,6 +40241,9 @@ MatchGraphResponse& matchGraph( const MatchGraphRequest& request_,
  *                             <li>@ref gpudb::match_graph_match_embedding
  *                                 "match_graph_match_embedding": Creates
  *                                 vector node embeddings
+ *                             <li>@ref gpudb::match_graph_match_isochrone
+ *                                 "match_graph_match_isochrone": Solves for
+ *                                 isochrones for a set of input sources
  *                         </ul>
  *                         The default value is @ref
  *                         gpudb::match_graph_markov_chain
@@ -40585,6 +40824,12 @@ MatchGraphResponse& matchGraph( const MatchGraphRequest& request_,
  *                             proportionality constant in fornt of the
  *                             gradient term in successive iterations. The
  *                             default value is '0.3'.
+ *                         <li>@ref gpudb::match_graph_max_radius
+ *                             "match_graph_max_radius": For the @ref
+ *                             gpudb::match_graph_match_isochrone
+ *                             "match_isochrone" solver only. Sets the maximal
+ *                             reachability limmit for computing isochrones.
+ *                             Zero means no limit. The default value is '0.0'.
  *                     </ul>
  *                     The default value is an empty map.
  *
@@ -40694,6 +40939,9 @@ MatchGraphResponse matchGraph( const std::string& graphName,
  *                             <li>@ref gpudb::match_graph_match_embedding
  *                                 "match_graph_match_embedding": Creates
  *                                 vector node embeddings
+ *                             <li>@ref gpudb::match_graph_match_isochrone
+ *                                 "match_graph_match_isochrone": Solves for
+ *                                 isochrones for a set of input sources
  *                         </ul>
  *                         The default value is @ref
  *                         gpudb::match_graph_markov_chain
@@ -41274,6 +41522,12 @@ MatchGraphResponse matchGraph( const std::string& graphName,
  *                             proportionality constant in fornt of the
  *                             gradient term in successive iterations. The
  *                             default value is '0.3'.
+ *                         <li>@ref gpudb::match_graph_max_radius
+ *                             "match_graph_max_radius": For the @ref
+ *                             gpudb::match_graph_match_isochrone
+ *                             "match_isochrone" solver only. Sets the maximal
+ *                             reachability limmit for computing isochrones.
+ *                             Zero means no limit. The default value is '0.0'.
  *                     </ul>
  *                     The default value is an empty map.
  * @param[out] response_  @ref gpudb::MatchGraphResponse "Response" object
@@ -45681,6 +45935,18 @@ ShowTableResponse& showTable( const ShowTableRequest& request_,
  *                       then returns information about all tables and views.
  * @param[in] options  Optional parameters.
  *                     <ul>
+ *                         <li>@ref gpudb::show_table_dependencies
+ *                             "show_table_dependencies": Include view
+ *                             dependencies in the output.
+ *                             Supported values:
+ *                             <ul>
+ *                                 <li>@ref gpudb::show_table_true
+ *                                     "show_table_true"
+ *                                 <li>@ref gpudb::show_table_false
+ *                                     "show_table_false"
+ *                             </ul>
+ *                             The default value is @ref
+ *                             gpudb::show_table_false "show_table_false".
  *                         <li>@ref gpudb::show_table_force_synchronous
  *                             "show_table_force_synchronous": If @ref
  *                             gpudb::show_table_true "true" then the table
@@ -45694,6 +45960,23 @@ ShowTableResponse& showTable( const ShowTableRequest& request_,
  *                             </ul>
  *                             The default value is @ref gpudb::show_table_true
  *                             "show_table_true".
+ *                         <li>@ref gpudb::show_table_get_cached_sizes
+ *                             "show_table_get_cached_sizes": If @ref
+ *                             gpudb::show_table_true "true" then the number of
+ *                             records in each table, along with a cumulative
+ *                             count, will be returned; blank, otherwise. This
+ *                             version will return the sizes cached at rank 0,
+ *                             which may be stale if there is a multihead
+ *                             insert occuring.
+ *                             Supported values:
+ *                             <ul>
+ *                                 <li>@ref gpudb::show_table_true
+ *                                     "show_table_true"
+ *                                 <li>@ref gpudb::show_table_false
+ *                                     "show_table_false"
+ *                             </ul>
+ *                             The default value is @ref
+ *                             gpudb::show_table_false "show_table_false".
  *                         <li>@ref gpudb::show_table_get_sizes
  *                             "show_table_get_sizes": If @ref
  *                             gpudb::show_table_true "true" then the number of
@@ -45708,14 +45991,12 @@ ShowTableResponse& showTable( const ShowTableRequest& request_,
  *                             </ul>
  *                             The default value is @ref
  *                             gpudb::show_table_false "show_table_false".
- *                         <li>@ref gpudb::show_table_get_cached_sizes
- *                             "show_table_get_cached_sizes": If @ref
- *                             gpudb::show_table_true "true" then the number of
- *                             records in each table, along with a cumulative
- *                             count, will be returned; blank, otherwise. This
- *                             version will return the sizes cached at rank 0,
- *                             which may be stale if there is a multihead
- *                             insert occuring.
+ *                         <li>@ref gpudb::show_table_no_error_if_not_exists
+ *                             "show_table_no_error_if_not_exists": If @ref
+ *                             gpudb::show_table_false "false" will return an
+ *                             error if the provided @a tableName does not
+ *                             exist. If @ref gpudb::show_table_true "true"
+ *                             then it will return an empty result.
  *                             Supported values:
  *                             <ul>
  *                                 <li>@ref gpudb::show_table_true
@@ -45747,21 +46028,6 @@ ShowTableResponse& showTable( const ShowTableRequest& request_,
  *                             </ul>
  *                             The default value is @ref gpudb::show_table_true
  *                             "show_table_true".
- *                         <li>@ref gpudb::show_table_no_error_if_not_exists
- *                             "show_table_no_error_if_not_exists": If @ref
- *                             gpudb::show_table_false "false" will return an
- *                             error if the provided @a tableName does not
- *                             exist. If @ref gpudb::show_table_true "true"
- *                             then it will return an empty result.
- *                             Supported values:
- *                             <ul>
- *                                 <li>@ref gpudb::show_table_true
- *                                     "show_table_true"
- *                                 <li>@ref gpudb::show_table_false
- *                                     "show_table_false"
- *                             </ul>
- *                             The default value is @ref
- *                             gpudb::show_table_false "show_table_false".
  *                         <li>@ref gpudb::show_table_get_column_info
  *                             "show_table_get_column_info": If @ref
  *                             gpudb::show_table_true "true" then column info
@@ -45821,6 +46087,18 @@ ShowTableResponse showTable( const std::string& tableName,
  *                       then returns information about all tables and views.
  * @param[in] options  Optional parameters.
  *                     <ul>
+ *                         <li>@ref gpudb::show_table_dependencies
+ *                             "show_table_dependencies": Include view
+ *                             dependencies in the output.
+ *                             Supported values:
+ *                             <ul>
+ *                                 <li>@ref gpudb::show_table_true
+ *                                     "show_table_true"
+ *                                 <li>@ref gpudb::show_table_false
+ *                                     "show_table_false"
+ *                             </ul>
+ *                             The default value is @ref
+ *                             gpudb::show_table_false "show_table_false".
  *                         <li>@ref gpudb::show_table_force_synchronous
  *                             "show_table_force_synchronous": If @ref
  *                             gpudb::show_table_true "true" then the table
@@ -45834,6 +46112,23 @@ ShowTableResponse showTable( const std::string& tableName,
  *                             </ul>
  *                             The default value is @ref gpudb::show_table_true
  *                             "show_table_true".
+ *                         <li>@ref gpudb::show_table_get_cached_sizes
+ *                             "show_table_get_cached_sizes": If @ref
+ *                             gpudb::show_table_true "true" then the number of
+ *                             records in each table, along with a cumulative
+ *                             count, will be returned; blank, otherwise. This
+ *                             version will return the sizes cached at rank 0,
+ *                             which may be stale if there is a multihead
+ *                             insert occuring.
+ *                             Supported values:
+ *                             <ul>
+ *                                 <li>@ref gpudb::show_table_true
+ *                                     "show_table_true"
+ *                                 <li>@ref gpudb::show_table_false
+ *                                     "show_table_false"
+ *                             </ul>
+ *                             The default value is @ref
+ *                             gpudb::show_table_false "show_table_false".
  *                         <li>@ref gpudb::show_table_get_sizes
  *                             "show_table_get_sizes": If @ref
  *                             gpudb::show_table_true "true" then the number of
@@ -45848,14 +46143,12 @@ ShowTableResponse showTable( const std::string& tableName,
  *                             </ul>
  *                             The default value is @ref
  *                             gpudb::show_table_false "show_table_false".
- *                         <li>@ref gpudb::show_table_get_cached_sizes
- *                             "show_table_get_cached_sizes": If @ref
- *                             gpudb::show_table_true "true" then the number of
- *                             records in each table, along with a cumulative
- *                             count, will be returned; blank, otherwise. This
- *                             version will return the sizes cached at rank 0,
- *                             which may be stale if there is a multihead
- *                             insert occuring.
+ *                         <li>@ref gpudb::show_table_no_error_if_not_exists
+ *                             "show_table_no_error_if_not_exists": If @ref
+ *                             gpudb::show_table_false "false" will return an
+ *                             error if the provided @a tableName does not
+ *                             exist. If @ref gpudb::show_table_true "true"
+ *                             then it will return an empty result.
  *                             Supported values:
  *                             <ul>
  *                                 <li>@ref gpudb::show_table_true
@@ -45887,21 +46180,6 @@ ShowTableResponse showTable( const std::string& tableName,
  *                             </ul>
  *                             The default value is @ref gpudb::show_table_true
  *                             "show_table_true".
- *                         <li>@ref gpudb::show_table_no_error_if_not_exists
- *                             "show_table_no_error_if_not_exists": If @ref
- *                             gpudb::show_table_false "false" will return an
- *                             error if the provided @a tableName does not
- *                             exist. If @ref gpudb::show_table_true "true"
- *                             then it will return an empty result.
- *                             Supported values:
- *                             <ul>
- *                                 <li>@ref gpudb::show_table_true
- *                                     "show_table_true"
- *                                 <li>@ref gpudb::show_table_false
- *                                     "show_table_false"
- *                             </ul>
- *                             The default value is @ref
- *                             gpudb::show_table_false "show_table_false".
  *                         <li>@ref gpudb::show_table_get_column_info
  *                             "show_table_get_column_info": If @ref
  *                             gpudb::show_table_true "true" then column info

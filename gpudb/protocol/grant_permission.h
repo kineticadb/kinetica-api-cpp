@@ -137,6 +137,23 @@ namespace gpudb
          *                              this grant.  Only rows that match the
          *                              filter will be affected. The default
          *                              value is ''.
+         *                          <li>@ref
+         *                              gpudb::grant_permission_with_grant_option
+         *                              "grant_permission_with_grant_option":
+         *                              Allow the recipient to grant the same
+         *                              permission (or subset) to others.
+         *                              Supported values:
+         *                              <ul>
+         *                                  <li>@ref
+         *                                      gpudb::grant_permission_true
+         *                                      "grant_permission_true"
+         *                                  <li>@ref
+         *                                      gpudb::grant_permission_false
+         *                                      "grant_permission_false"
+         *                              </ul>
+         *                              The default value is @ref
+         *                              gpudb::grant_permission_false
+         *                              "grant_permission_false".
          *                      </ul>
          *                      The default value is an empty map.
          */
@@ -235,6 +252,18 @@ namespace gpudb
          *         "grant_permission_filter_expression": Optional filter
          *         expression to apply to this grant.  Only rows that match the
          *         filter will be affected. The default value is ''.
+         *     <li>@ref gpudb::grant_permission_with_grant_option
+         *         "grant_permission_with_grant_option": Allow the recipient to
+         *         grant the same permission (or subset) to others.
+         *         Supported values:
+         *         <ul>
+         *             <li>@ref gpudb::grant_permission_true
+         *                 "grant_permission_true"
+         *             <li>@ref gpudb::grant_permission_false
+         *                 "grant_permission_false"
+         *         </ul>
+         *         The default value is @ref gpudb::grant_permission_false
+         *         "grant_permission_false".
          * </ul>
          * The default value is an empty map.
          */

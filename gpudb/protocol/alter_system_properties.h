@@ -281,6 +281,13 @@ namespace gpudb
          *                                         filter. The default value is
          *                                         'true'.
          *                                     <li>@ref
+         *                                         gpudb::alter_system_properties_enable_one_step_compound_equi_join
+         *                                         "alter_system_properties_enable_one_step_compound_equi_join":
+         *                                         Enable the one_step
+         *                                         compound-equi-join
+         *                                         algorithm. The default value
+         *                                         is 'true'.
+         *                                     <li>@ref
          *                                         gpudb::alter_system_properties_kafka_batch_size
          *                                         "alter_system_properties_kafka_batch_size":
          *                                         Maximum number of records to
@@ -415,6 +422,14 @@ namespace gpudb
          *                                         Enable  postgres proxy keep
          *                                         alive. The default value is
          *                                         'false'.
+         *                                     <li>@ref
+         *                                         gpudb::alter_system_properties_kifs_directory_data_limit
+         *                                         "alter_system_properties_kifs_directory_data_limit":
+         *                                         The default maximum capacity
+         *                                         to apply when creating a
+         *                                         KiFS directory (bytes). The
+         *                                         minimum allowed value is
+         *                                         '-1'.
          *                                 </ul>
          * @param[in] options_  Optional parameters.
          *                      <ul>
@@ -604,6 +619,11 @@ namespace gpudb
          *         "alter_system_properties_enable_overlapped_equi_join":
          *         Enable overlapped-equi-join filter. The default value is
          *         'true'.
+         *     <li>@ref
+         *         gpudb::alter_system_properties_enable_one_step_compound_equi_join
+         *         "alter_system_properties_enable_one_step_compound_equi_join":
+         *         Enable the one_step compound-equi-join algorithm. The
+         *         default value is 'true'.
          *     <li>@ref gpudb::alter_system_properties_kafka_batch_size
          *         "alter_system_properties_kafka_batch_size": Maximum number
          *         of records to be ingested in a single batch. The default
@@ -688,6 +708,11 @@ namespace gpudb
          *         gpudb::alter_system_properties_postgres_proxy_keep_alive
          *         "alter_system_properties_postgres_proxy_keep_alive": Enable
          *         postgres proxy keep alive. The default value is 'false'.
+         *     <li>@ref
+         *         gpudb::alter_system_properties_kifs_directory_data_limit
+         *         "alter_system_properties_kifs_directory_data_limit": The
+         *         default maximum capacity to apply when creating a KiFS
+         *         directory (bytes). The minimum allowed value is '-1'.
          * </ul>
          */
         std::map<std::string, std::string> propertyUpdatesMap;

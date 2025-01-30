@@ -167,6 +167,12 @@ namespace gpudb
          *                              The default value is @ref
          *                              gpudb::get_records_by_column_false
          *                              "get_records_by_column_false".
+         *                          <li>@ref
+         *                              gpudb::get_records_by_column_route_to_tom
+         *                              "get_records_by_column_route_to_tom":
+         *                              For multihead record retrieval without
+         *                              shard key expression - specifies from
+         *                              which tom to retrieve data.
          *                      </ul>
          *                      The default value is an empty map.
          */
@@ -302,6 +308,12 @@ namespace gpudb
          *                              The default value is @ref
          *                              gpudb::get_records_by_column_false
          *                              "get_records_by_column_false".
+         *                          <li>@ref
+         *                              gpudb::get_records_by_column_route_to_tom
+         *                              "get_records_by_column_route_to_tom":
+         *                              For multihead record retrieval without
+         *                              shard key expression - specifies from
+         *                              which tom to retrieve data.
          *                      </ul>
          *                      The default value is an empty map.
          */
@@ -418,6 +430,10 @@ namespace gpudb
          *         </ul>
          *         The default value is @ref gpudb::get_records_by_column_false
          *         "get_records_by_column_false".
+         *     <li>@ref gpudb::get_records_by_column_route_to_tom
+         *         "get_records_by_column_route_to_tom": For multihead record
+         *         retrieval without shard key expression - specifies from
+         *         which tom to retrieve data.
          * </ul>
          * The default value is an empty map.
          */

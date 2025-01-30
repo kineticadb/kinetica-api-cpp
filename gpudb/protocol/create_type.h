@@ -333,6 +333,13 @@ namespace gpudb
          *                                 will be part of (or the entire) <a
          *                                 href="../../../concepts/tables/#primary-keys"
          *                                 target="_top">primary key</a>.
+         *                             <li>@ref
+         *                                 gpudb::create_type_soft_primary_key
+         *                                 "create_type_soft_primary_key": This
+         *                                 property indicates that this column
+         *                                 will be part of (or the entire) <a
+         *                                 href="../../../concepts/tables/#soft-primary-keys"
+         *                                 target="_top">soft primary key</a>.
          *                             <li>@ref gpudb::create_type_shard_key
          *                                 "create_type_shard_key": This
          *                                 property indicates that this column
@@ -388,6 +395,13 @@ namespace gpudb
          *                                 and invalid UUID values with
          *                                 randomly-generated UUIDs upon
          *                                 insert.
+         *                             <li>@ref
+         *                                 gpudb::create_type_update_with_now
+         *                                 "create_type_update_with_now": For
+         *                                 'date', 'time', 'datetime', or
+         *                                 'timestamp' column types, always
+         *                                 update the field with 'NOW()' upon
+         *                                 any update.
          *                         </ul>
          *                         The default value is an empty map.
          * @param[in] options_  Optional parameters. The default value is an
@@ -573,6 +587,11 @@ namespace gpudb
          *         column will be part of (or the entire) <a
          *         href="../../../concepts/tables/#primary-keys"
          *         target="_top">primary key</a>.
+         *     <li>@ref gpudb::create_type_soft_primary_key
+         *         "create_type_soft_primary_key": This property indicates that
+         *         this column will be part of (or the entire) <a
+         *         href="../../../concepts/tables/#soft-primary-keys"
+         *         target="_top">soft primary key</a>.
          *     <li>@ref gpudb::create_type_shard_key "create_type_shard_key":
          *         This property indicates that this column will be part of (or
          *         the entire) <a href="../../../concepts/tables/#shard-keys"
@@ -606,6 +625,10 @@ namespace gpudb
          *         "create_type_init_with_uuid": For 'uuid' type, replace empty
          *         strings and invalid UUID values with randomly-generated
          *         UUIDs upon insert.
+         *     <li>@ref gpudb::create_type_update_with_now
+         *         "create_type_update_with_now": For 'date', 'time',
+         *         'datetime', or 'timestamp' column types, always update the
+         *         field with 'NOW()' upon any update.
          * </ul>
          * The default value is an empty map.
          */

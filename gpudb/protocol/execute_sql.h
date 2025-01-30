@@ -1225,7 +1225,6 @@ namespace gpudb
         /**
          * Name of the table that has the result records of the query. Valid,
          * when @ref hasMoreRecords is @ref gpudb::execute_sql_true "true"
-         * (Subject to config.paging_tables_enabled)
          */
         std::string pagingTable;
 
@@ -1375,7 +1374,6 @@ namespace gpudb
         /**
          * Name of the table that has the result records of the query. Valid,
          * when @ref hasMoreRecords is @ref gpudb::execute_sql_true "true"
-         * (Subject to config.paging_tables_enabled)
          */
         std::string pagingTable;
 
