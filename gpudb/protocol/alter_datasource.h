@@ -46,8 +46,9 @@ namespace gpudb
          *                                           'storage_provider_type://[storage_path[:storage_port]]'
          *                                           format.  Supported storage
          *                                           provider types are
-         *                                           'azure','gcs','hdfs','kafka'
-         *                                           and 's3'.
+         *                                           'azure', 'gcs', 'hdfs',
+         *                                           'jdbc', 'kafka',
+         *                                           'confluent', and 's3'.
          *                                       <li>@ref
          *                                           gpudb::alter_datasource_user_name
          *                                           "alter_datasource_user_name":
@@ -113,20 +114,26 @@ namespace gpudb
          *                                       <li>@ref
          *                                           gpudb::alter_datasource_s3_verify_ssl
          *                                           "alter_datasource_s3_verify_ssl":
-         *                                           Set to false for testing
-         *                                           purposes or when necessary
-         *                                           to bypass TLS errors (e.g.
-         *                                           self-signed certificates).
-         *                                           This value is true by
-         *                                           default.
+         *                                           Whether to verify SSL
+         *                                           connections.
          *                                           Supported values:
          *                                           <ul>
          *                                               <li>@ref
          *                                                   gpudb::alter_datasource_true
-         *                                                   "alter_datasource_true"
+         *                                                   "alter_datasource_true":
+         *                                                   Connect with SSL
+         *                                                   verification
          *                                               <li>@ref
          *                                                   gpudb::alter_datasource_false
-         *                                                   "alter_datasource_false"
+         *                                                   "alter_datasource_false":
+         *                                                   Connect without
+         *                                                   verifying the SSL
+         *                                                   connection; for
+         *                                                   testing purposes,
+         *                                                   bypassing TLS
+         *                                                   errors,
+         *                                                   self-signed
+         *                                                   certificates, etc.
          *                                           </ul>
          *                                           The default value is @ref
          *                                           gpudb::alter_datasource_true
@@ -259,6 +266,17 @@ namespace gpudb
          *                                           authenticating the data
          *                                           source
          *                                       <li>@ref
+         *                                           gpudb::alter_datasource_jdbc_driver_jar_path
+         *                                           "alter_datasource_jdbc_driver_jar_path":
+         *                                           JDBC driver jar file
+         *                                           location.  This may be a
+         *                                           KIFS file.
+         *                                       <li>@ref
+         *                                           gpudb::alter_datasource_jdbc_driver_class_name
+         *                                           "alter_datasource_jdbc_driver_class_name":
+         *                                           Name of the JDBC driver
+         *                                           class
+         *                                       <li>@ref
          *                                           gpudb::alter_datasource_kafka_url
          *                                           "alter_datasource_kafka_url":
          *                                           The publicly-accessible
@@ -270,17 +288,6 @@ namespace gpudb
          *                                           "alter_datasource_kafka_topic_name":
          *                                           Name of the Kafka topic to
          *                                           use as the data source
-         *                                       <li>@ref
-         *                                           gpudb::alter_datasource_jdbc_driver_jar_path
-         *                                           "alter_datasource_jdbc_driver_jar_path":
-         *                                           JDBC driver jar file
-         *                                           location.  This may be a
-         *                                           KIFS file.
-         *                                       <li>@ref
-         *                                           gpudb::alter_datasource_jdbc_driver_class_name
-         *                                           "alter_datasource_jdbc_driver_class_name":
-         *                                           Name of the JDBC driver
-         *                                           class
          *                                       <li>@ref
          *                                           gpudb::alter_datasource_anonymous
          *                                           "alter_datasource_anonymous":
@@ -399,8 +406,8 @@ namespace gpudb
          *     <li>@ref gpudb::alter_datasource_location
          *         "alter_datasource_location": Location of the remote storage
          *         in 'storage_provider_type://[storage_path[:storage_port]]'
-         *         format.  Supported storage provider types are
-         *         'azure','gcs','hdfs','kafka' and 's3'.
+         *         format.  Supported storage provider types are 'azure',
+         *         'gcs', 'hdfs', 'jdbc', 'kafka', 'confluent', and 's3'.
          *     <li>@ref gpudb::alter_datasource_user_name
          *         "alter_datasource_user_name": Name of the remote system
          *         user; may be an empty string
@@ -437,15 +444,17 @@ namespace gpudb
          *         "alter_datasource_s3_region": Name of the Amazon S3 region
          *         where the given bucket is located
          *     <li>@ref gpudb::alter_datasource_s3_verify_ssl
-         *         "alter_datasource_s3_verify_ssl": Set to false for testing
-         *         purposes or when necessary to bypass TLS errors (e.g.
-         *         self-signed certificates). This value is true by default.
+         *         "alter_datasource_s3_verify_ssl": Whether to verify SSL
+         *         connections.
          *         Supported values:
          *         <ul>
          *             <li>@ref gpudb::alter_datasource_true
-         *                 "alter_datasource_true"
+         *                 "alter_datasource_true": Connect with SSL
+         *                 verification
          *             <li>@ref gpudb::alter_datasource_false
-         *                 "alter_datasource_false"
+         *                 "alter_datasource_false": Connect without verifying
+         *                 the SSL connection; for testing purposes, bypassing
+         *                 TLS errors, self-signed certificates, etc.
          *         </ul>
          *         The default value is @ref gpudb::alter_datasource_true
          *         "alter_datasource_true".
@@ -520,6 +529,12 @@ namespace gpudb
          *         "alter_datasource_gcs_service_account_keys": Google Cloud
          *         service account keys to use for authenticating the data
          *         source
+         *     <li>@ref gpudb::alter_datasource_jdbc_driver_jar_path
+         *         "alter_datasource_jdbc_driver_jar_path": JDBC driver jar
+         *         file location.  This may be a KIFS file.
+         *     <li>@ref gpudb::alter_datasource_jdbc_driver_class_name
+         *         "alter_datasource_jdbc_driver_class_name": Name of the JDBC
+         *         driver class
          *     <li>@ref gpudb::alter_datasource_kafka_url
          *         "alter_datasource_kafka_url": The publicly-accessible full
          *         path URL to the Kafka broker, e.g.,
@@ -527,12 +542,6 @@ namespace gpudb
          *     <li>@ref gpudb::alter_datasource_kafka_topic_name
          *         "alter_datasource_kafka_topic_name": Name of the Kafka topic
          *         to use as the data source
-         *     <li>@ref gpudb::alter_datasource_jdbc_driver_jar_path
-         *         "alter_datasource_jdbc_driver_jar_path": JDBC driver jar
-         *         file location.  This may be a KIFS file.
-         *     <li>@ref gpudb::alter_datasource_jdbc_driver_class_name
-         *         "alter_datasource_jdbc_driver_class_name": Name of the JDBC
-         *         driver class
          *     <li>@ref gpudb::alter_datasource_anonymous
          *         "alter_datasource_anonymous": Create an anonymous connection
          *         to the storage provider--DEPRECATED: this is now the

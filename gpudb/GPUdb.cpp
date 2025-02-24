@@ -55,7 +55,9 @@ namespace gpudb {
         "default",
         "REPL_NONE",
         "REPL_SYNC",
-        "REPL_ASYNC"
+        "REPL_SYNC_PARALLEL",
+        "REPL_ASYNC",
+        "REPL_ASYNC_PARALLEL"
     };
     
     std::string base64Encode(const std::string& value)
@@ -915,6 +917,11 @@ namespace gpudb {
         {
             httpRequest.addRequestHeader( HEADER_AUTHORIZATION, m_authorization );
         }
+
+        if (m_haSyncMode != HASynchronicityMode::DEFAULT)
+        {
+            httpRequest.addRequestHeader( HEADER_HA_SYNC_MODE, HA_SYNCHRONICITY_MODE_VALUES[m_haSyncMode] );
+        }
     }
 
 
@@ -1218,7 +1225,9 @@ namespace gpudb {
             if (enableCompression && m_useSnappy)
             {
                 StringHttpRequest httpRequest(url);
-                httpRequest.setBypassSslCertCheck(this->getBypassSslCertCheck());
+                #ifndef GPUDB_NO_HTTPS                
+                    httpRequest.setBypassSslCertCheck(this->getBypassSslCertCheck());
+                #endif
                 initHttpRequest(httpRequest);
                 std::string compressedRequest;
                 snappy::Compress((char*)&request[0], request.size(), &compressedRequest);
@@ -1231,7 +1240,9 @@ namespace gpudb {
             else
             {
                 BinaryHttpRequest httpRequest(url);
-                httpRequest.setBypassSslCertCheck(this->getBypassSslCertCheck());
+                #ifndef GPUDB_NO_HTTPS
+                    httpRequest.setBypassSslCertCheck(this->getBypassSslCertCheck());
+                #endif
                 initHttpRequest(httpRequest);
                 httpRequest.addRequestHeader( HEADER_CONTENT_TYPE, "application/octet-stream" );
                 httpRequest.addRequestHeader( HEADER_CONTENT_LENGTH,

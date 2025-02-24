@@ -267,6 +267,8 @@ namespace gpudb
     extern const std::string alter_datasink_hdfs_delegation_token;
     extern const std::string alter_datasink_hdfs_kerberos_keytab;
     extern const std::string alter_datasink_hdfs_use_kerberos;
+    extern const std::string alter_datasink_jdbc_driver_class_name;
+    extern const std::string alter_datasink_jdbc_driver_jar_path;
     extern const std::string alter_datasink_json_format;
     extern const std::string alter_datasink_kafka_topic_name;
     extern const std::string alter_datasink_kafka_url;
@@ -448,6 +450,7 @@ namespace gpudb
     extern const std::string alter_table_add_comment;
     extern const std::string alter_table_add_partition;
     extern const std::string alter_table_allow_homogeneous_tables;
+    extern const std::string alter_table_always;
     extern const std::string alter_table_cagra;
     extern const std::string alter_table_cancel_datasource_subscription;
     extern const std::string alter_table_change_column;
@@ -471,12 +474,14 @@ namespace gpudb
     extern const std::string alter_table_hnsw;
     extern const std::string alter_table_index_options;
     extern const std::string alter_table_index_type;
+    extern const std::string alter_table_lazy;
     extern const std::string alter_table_low_cardinality;
     extern const std::string alter_table_lz4;
     extern const std::string alter_table_lz4hc;
     extern const std::string alter_table_move_to_collection;
     extern const std::string alter_table_move_to_schema;
     extern const std::string alter_table_none;
+    extern const std::string alter_table_on_demand;
     extern const std::string alter_table_pause_datasource_subscription;
     extern const std::string alter_table_protected;
     extern const std::string alter_table_refresh;
@@ -487,8 +492,11 @@ namespace gpudb
     extern const std::string alter_table_rename_column;
     extern const std::string alter_table_rename_table;
     extern const std::string alter_table_resume_datasource_subscription;
+    extern const std::string alter_table_set_build_materialized_view_policy;
+    extern const std::string alter_table_set_build_pk_index_policy;
     extern const std::string alter_table_set_column_compression;
     extern const std::string alter_table_set_global_access_mode;
+    extern const std::string alter_table_set_load_vectors_policy;
     extern const std::string alter_table_set_refresh_execute_as;
     extern const std::string alter_table_set_refresh_method;
     extern const std::string alter_table_set_refresh_period;
@@ -498,6 +506,7 @@ namespace gpudb
     extern const std::string alter_table_set_strategy_definition;
     extern const std::string alter_table_snappy;
     extern const std::string alter_table_strategy_definition;
+    extern const std::string alter_table_system;
     extern const std::string alter_table_table_name;
     extern const std::string alter_table_true;
     extern const std::string alter_table_ttl;
@@ -719,11 +728,15 @@ namespace gpudb
     extern const std::string create_join_table_qualified_join_table_name;
 
     // Keywords for /create/materializedview request
+    extern const std::string create_materialized_view_always;
+    extern const std::string create_materialized_view_build_materialized_view_policy;
     extern const std::string create_materialized_view_collection_name;
     extern const std::string create_materialized_view_execute_as;
     extern const std::string create_materialized_view_false;
+    extern const std::string create_materialized_view_lazy;
     extern const std::string create_materialized_view_manual;
     extern const std::string create_materialized_view_on_change;
+    extern const std::string create_materialized_view_on_demand;
     extern const std::string create_materialized_view_on_query;
     extern const std::string create_materialized_view_periodic;
     extern const std::string create_materialized_view_persist;
@@ -732,6 +745,7 @@ namespace gpudb
     extern const std::string create_materialized_view_refresh_span;
     extern const std::string create_materialized_view_refresh_start_time;
     extern const std::string create_materialized_view_refresh_stop_time;
+    extern const std::string create_materialized_view_system;
     extern const std::string create_materialized_view_true;
     extern const std::string create_materialized_view_ttl;
 
@@ -806,6 +820,8 @@ namespace gpudb
     extern const std::string create_table_LIST;
     extern const std::string create_table_RANGE;
     extern const std::string create_table_SERIES;
+    extern const std::string create_table_always;
+    extern const std::string create_table_build_pk_index_policy;
     extern const std::string create_table_chunk_column_max_memory;
     extern const std::string create_table_chunk_max_memory;
     extern const std::string create_table_chunk_size;
@@ -819,11 +835,15 @@ namespace gpudb
     extern const std::string create_table_is_collection;
     extern const std::string create_table_is_replicated;
     extern const std::string create_table_is_result_table;
+    extern const std::string create_table_lazy;
+    extern const std::string create_table_load_vectors_policy;
     extern const std::string create_table_no_error_if_exists;
+    extern const std::string create_table_on_demand;
     extern const std::string create_table_partition_definitions;
     extern const std::string create_table_partition_keys;
     extern const std::string create_table_partition_type;
     extern const std::string create_table_strategy_definition;
+    extern const std::string create_table_system;
     extern const std::string create_table_true;
     extern const std::string create_table_ttl;
 

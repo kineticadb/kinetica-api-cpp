@@ -38,7 +38,7 @@ namespace gpudb
          *                          'storage_provider_type://path[:port]'.
          *                          Supported storage provider types are
          *                          'azure', 'gcs', 'hdfs', 'http', 'https',
-         *                          'jdbc', 'kafka' and 's3'.
+         *                          'jdbc', 'kafka', and 's3'.
          * @param[in] options_  Optional parameters.
          *                      <ul>
          *                          <li>@ref
@@ -68,19 +68,21 @@ namespace gpudb
          *                              bucket is located
          *                          <li>@ref
          *                              gpudb::create_datasink_s3_verify_ssl
-         *                              "create_datasink_s3_verify_ssl": Set to
-         *                              false for testing purposes or when
-         *                              necessary to bypass TLS errors (e.g.
-         *                              self-signed certificates). This value
-         *                              is true by default.
+         *                              "create_datasink_s3_verify_ssl":
+         *                              Whether to verify SSL connections.
          *                              Supported values:
          *                              <ul>
          *                                  <li>@ref
          *                                      gpudb::create_datasink_true
-         *                                      "create_datasink_true"
+         *                                      "create_datasink_true": Connect
+         *                                      with SSL verification
          *                                  <li>@ref
          *                                      gpudb::create_datasink_false
-         *                                      "create_datasink_false"
+         *                                      "create_datasink_false":
+         *                                      Connect without verifying the
+         *                                      SSL connection; for testing
+         *                                      purposes, bypassing TLS errors,
+         *                                      self-signed certificates, etc.
          *                              </ul>
          *                              The default value is @ref
          *                              gpudb::create_datasink_true
@@ -88,20 +90,22 @@ namespace gpudb
          *                          <li>@ref
          *                              gpudb::create_datasink_s3_use_virtual_addressing
          *                              "create_datasink_s3_use_virtual_addressing":
-         *                              When true (default), the requests URI
-         *                              should be specified in
-         *                              virtual-hosted-style format where the
-         *                              bucket name is part of the domain name
-         *                              in the URL.   Otherwise set to false to
-         *                              use path-style URI for requests.
+         *                              Whether to use virtual addressing when
+         *                              referencing the Amazon S3 sink.
          *                              Supported values:
          *                              <ul>
          *                                  <li>@ref
          *                                      gpudb::create_datasink_true
-         *                                      "create_datasink_true"
+         *                                      "create_datasink_true": The
+         *                                      requests URI should be
+         *                                      specified in
+         *                                      virtual-hosted-style format
+         *                                      where the bucket name is part
+         *                                      of the domain name in the URL.
          *                                  <li>@ref
          *                                      gpudb::create_datasink_false
-         *                                      "create_datasink_false"
+         *                                      "create_datasink_false": Use
+         *                                      path-style URI for requests.
          *                              </ul>
          *                              The default value is @ref
          *                              gpudb::create_datasink_true
@@ -227,19 +231,19 @@ namespace gpudb
          *                          <li>@ref gpudb::create_datasink_json_format
          *                              "create_datasink_json_format": The
          *                              desired format of JSON encoded
-         *                              notifications message.   If @ref
-         *                              gpudb::create_datasink_nested "nested",
-         *                              records are returned as an array.
-         *                              Otherwise, only a single record per
-         *                              messages is returned.
+         *                              notifications message.
          *                              Supported values:
          *                              <ul>
          *                                  <li>@ref
          *                                      gpudb::create_datasink_flat
-         *                                      "create_datasink_flat"
+         *                                      "create_datasink_flat": A
+         *                                      single record is returned per
+         *                                      message
          *                                  <li>@ref
          *                                      gpudb::create_datasink_nested
-         *                                      "create_datasink_nested"
+         *                                      "create_datasink_nested":
+         *                                      Records are returned as an
+         *                                      array per message
          *                              </ul>
          *                              The default value is @ref
          *                              gpudb::create_datasink_flat
@@ -316,7 +320,7 @@ namespace gpudb
          * 'storage_provider_type://path[:port]'.
          *
          * Supported storage provider types are 'azure', 'gcs', 'hdfs', 'http',
-         * 'https', 'jdbc', 'kafka' and 's3'.
+         * 'https', 'jdbc', 'kafka', and 's3'.
          */
         std::string destination;
 
@@ -341,30 +345,32 @@ namespace gpudb
          *         "create_datasink_s3_region": Name of the Amazon S3 region
          *         where the given bucket is located
          *     <li>@ref gpudb::create_datasink_s3_verify_ssl
-         *         "create_datasink_s3_verify_ssl": Set to false for testing
-         *         purposes or when necessary to bypass TLS errors (e.g.
-         *         self-signed certificates). This value is true by default.
+         *         "create_datasink_s3_verify_ssl": Whether to verify SSL
+         *         connections.
          *         Supported values:
          *         <ul>
          *             <li>@ref gpudb::create_datasink_true
-         *                 "create_datasink_true"
+         *                 "create_datasink_true": Connect with SSL
+         *                 verification
          *             <li>@ref gpudb::create_datasink_false
-         *                 "create_datasink_false"
+         *                 "create_datasink_false": Connect without verifying
+         *                 the SSL connection; for testing purposes, bypassing
+         *                 TLS errors, self-signed certificates, etc.
          *         </ul>
          *         The default value is @ref gpudb::create_datasink_true
          *         "create_datasink_true".
          *     <li>@ref gpudb::create_datasink_s3_use_virtual_addressing
-         *         "create_datasink_s3_use_virtual_addressing": When true
-         *         (default), the requests URI should be specified in
-         *         virtual-hosted-style format where the bucket name is part of
-         *         the domain name in the URL.   Otherwise set to false to use
-         *         path-style URI for requests.
+         *         "create_datasink_s3_use_virtual_addressing": Whether to use
+         *         virtual addressing when referencing the Amazon S3 sink.
          *         Supported values:
          *         <ul>
          *             <li>@ref gpudb::create_datasink_true
-         *                 "create_datasink_true"
+         *                 "create_datasink_true": The requests URI should be
+         *                 specified in virtual-hosted-style format where the
+         *                 bucket name is part of the domain name in the URL.
          *             <li>@ref gpudb::create_datasink_false
-         *                 "create_datasink_false"
+         *                 "create_datasink_false": Use path-style URI for
+         *                 requests.
          *         </ul>
          *         The default value is @ref gpudb::create_datasink_true
          *         "create_datasink_true".
@@ -443,16 +449,15 @@ namespace gpudb
          *         each notification message. The default value is '1000000'.
          *     <li>@ref gpudb::create_datasink_json_format
          *         "create_datasink_json_format": The desired format of JSON
-         *         encoded notifications message.   If @ref
-         *         gpudb::create_datasink_nested "nested", records are returned
-         *         as an array. Otherwise, only a single record per messages is
-         *         returned.
+         *         encoded notifications message.
          *         Supported values:
          *         <ul>
          *             <li>@ref gpudb::create_datasink_flat
-         *                 "create_datasink_flat"
+         *                 "create_datasink_flat": A single record is returned
+         *                 per message
          *             <li>@ref gpudb::create_datasink_nested
-         *                 "create_datasink_nested"
+         *                 "create_datasink_nested": Records are returned as an
+         *                 array per message
          *         </ul>
          *         The default value is @ref gpudb::create_datasink_flat
          *         "create_datasink_flat".

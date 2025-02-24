@@ -6550,7 +6550,8 @@ AlterDatasinkResponse& alterDatasink( const AlterDatasinkRequest& request_,
  *                                        format
  *                                        'destination_type://path[:port]'.
  *                                        Supported destination types are
- *                                        'http', 'https' and 'kafka'.
+ *                                        'azure', 'gcs', 'hdfs', 'http',
+ *                                        'https', 'jdbc', 'kafka', and 's3'.
  *                                    <li>@ref
  *                                        gpudb::alter_datasink_connection_timeout
  *                                        "alter_datasink_connection_timeout":
@@ -6578,19 +6579,22 @@ AlterDatasinkResponse& alterDatasink( const AlterDatasinkRequest& request_,
  *                                        bucket is located
  *                                    <li>@ref
  *                                        gpudb::alter_datasink_s3_verify_ssl
- *                                        "alter_datasink_s3_verify_ssl": Set
- *                                        to false for testing purposes or when
- *                                        necessary to bypass TLS errors (e.g.
- *                                        self-signed certificates). This value
- *                                        is true by default.
+ *                                        "alter_datasink_s3_verify_ssl":
+ *                                        Whether to verify SSL connections.
  *                                        Supported values:
  *                                        <ul>
  *                                            <li>@ref
  *                                                gpudb::alter_datasink_true
- *                                                "alter_datasink_true"
+ *                                                "alter_datasink_true":
+ *                                                Connect with SSL verification
  *                                            <li>@ref
  *                                                gpudb::alter_datasink_false
- *                                                "alter_datasink_false"
+ *                                                "alter_datasink_false":
+ *                                                Connect without verifying the
+ *                                                SSL connection; for testing
+ *                                                purposes, bypassing TLS
+ *                                                errors, self-signed
+ *                                                certificates, etc.
  *                                        </ul>
  *                                        The default value is @ref
  *                                        gpudb::alter_datasink_true
@@ -6598,21 +6602,23 @@ AlterDatasinkResponse& alterDatasink( const AlterDatasinkRequest& request_,
  *                                    <li>@ref
  *                                        gpudb::alter_datasink_s3_use_virtual_addressing
  *                                        "alter_datasink_s3_use_virtual_addressing":
- *                                        When true (default), the requests URI
- *                                        should be specified in
- *                                        virtual-hosted-style format where the
- *                                        bucket name is part of the domain
- *                                        name in the URL.   Otherwise set to
- *                                        false to use path-style URI for
- *                                        requests.
+ *                                        Whether to use virtual addressing
+ *                                        when referencing the Amazon S3 sink.
  *                                        Supported values:
  *                                        <ul>
  *                                            <li>@ref
  *                                                gpudb::alter_datasink_true
- *                                                "alter_datasink_true"
+ *                                                "alter_datasink_true": The
+ *                                                requests URI should be
+ *                                                specified in
+ *                                                virtual-hosted-style format
+ *                                                where the bucket name is part
+ *                                                of the domain name in the
+ *                                                URL.
  *                                            <li>@ref
  *                                                gpudb::alter_datasink_false
- *                                                "alter_datasink_false"
+ *                                                "alter_datasink_false": Use
+ *                                                path-style URI for requests.
  *                                        </ul>
  *                                        The default value is @ref
  *                                        gpudb::alter_datasink_true
@@ -6711,6 +6717,15 @@ AlterDatasinkResponse& alterDatasink( const AlterDatasinkRequest& request_,
  *                                        "alter_datasink_gcs_service_account_keys":
  *                                        Google Cloud service account keys to
  *                                        use for authenticating the data sink
+ *                                    <li>@ref
+ *                                        gpudb::alter_datasink_jdbc_driver_jar_path
+ *                                        "alter_datasink_jdbc_driver_jar_path":
+ *                                        JDBC driver jar file location.  This
+ *                                        may be a KIFS file.
+ *                                    <li>@ref
+ *                                        gpudb::alter_datasink_jdbc_driver_class_name
+ *                                        "alter_datasink_jdbc_driver_class_name":
+ *                                        Name of the JDBC driver class
  *                                    <li>@ref gpudb::alter_datasink_kafka_url
  *                                        "alter_datasink_kafka_url": The
  *                                        publicly-accessible full path URL to
@@ -6792,19 +6807,19 @@ AlterDatasinkResponse& alterDatasink( const AlterDatasinkRequest& request_,
  *                                        gpudb::alter_datasink_json_format
  *                                        "alter_datasink_json_format": The
  *                                        desired format of JSON encoded
- *                                        notifications message.   If @ref
- *                                        gpudb::alter_datasink_nested
- *                                        "nested", records are returned as an
- *                                        array. Otherwise, only a single
- *                                        record per messages is returned.
+ *                                        notifications message.
  *                                        Supported values:
  *                                        <ul>
  *                                            <li>@ref
  *                                                gpudb::alter_datasink_flat
- *                                                "alter_datasink_flat"
+ *                                                "alter_datasink_flat": A
+ *                                                single record is returned per
+ *                                                message
  *                                            <li>@ref
  *                                                gpudb::alter_datasink_nested
- *                                                "alter_datasink_nested"
+ *                                                "alter_datasink_nested":
+ *                                                Records are returned as an
+ *                                                array per message
  *                                        </ul>
  *                                        The default value is @ref
  *                                        gpudb::alter_datasink_flat
@@ -6862,7 +6877,8 @@ AlterDatasinkResponse alterDatasink( const std::string& name,
  *                                        format
  *                                        'destination_type://path[:port]'.
  *                                        Supported destination types are
- *                                        'http', 'https' and 'kafka'.
+ *                                        'azure', 'gcs', 'hdfs', 'http',
+ *                                        'https', 'jdbc', 'kafka', and 's3'.
  *                                    <li>@ref
  *                                        gpudb::alter_datasink_connection_timeout
  *                                        "alter_datasink_connection_timeout":
@@ -6890,19 +6906,22 @@ AlterDatasinkResponse alterDatasink( const std::string& name,
  *                                        bucket is located
  *                                    <li>@ref
  *                                        gpudb::alter_datasink_s3_verify_ssl
- *                                        "alter_datasink_s3_verify_ssl": Set
- *                                        to false for testing purposes or when
- *                                        necessary to bypass TLS errors (e.g.
- *                                        self-signed certificates). This value
- *                                        is true by default.
+ *                                        "alter_datasink_s3_verify_ssl":
+ *                                        Whether to verify SSL connections.
  *                                        Supported values:
  *                                        <ul>
  *                                            <li>@ref
  *                                                gpudb::alter_datasink_true
- *                                                "alter_datasink_true"
+ *                                                "alter_datasink_true":
+ *                                                Connect with SSL verification
  *                                            <li>@ref
  *                                                gpudb::alter_datasink_false
- *                                                "alter_datasink_false"
+ *                                                "alter_datasink_false":
+ *                                                Connect without verifying the
+ *                                                SSL connection; for testing
+ *                                                purposes, bypassing TLS
+ *                                                errors, self-signed
+ *                                                certificates, etc.
  *                                        </ul>
  *                                        The default value is @ref
  *                                        gpudb::alter_datasink_true
@@ -6910,21 +6929,23 @@ AlterDatasinkResponse alterDatasink( const std::string& name,
  *                                    <li>@ref
  *                                        gpudb::alter_datasink_s3_use_virtual_addressing
  *                                        "alter_datasink_s3_use_virtual_addressing":
- *                                        When true (default), the requests URI
- *                                        should be specified in
- *                                        virtual-hosted-style format where the
- *                                        bucket name is part of the domain
- *                                        name in the URL.   Otherwise set to
- *                                        false to use path-style URI for
- *                                        requests.
+ *                                        Whether to use virtual addressing
+ *                                        when referencing the Amazon S3 sink.
  *                                        Supported values:
  *                                        <ul>
  *                                            <li>@ref
  *                                                gpudb::alter_datasink_true
- *                                                "alter_datasink_true"
+ *                                                "alter_datasink_true": The
+ *                                                requests URI should be
+ *                                                specified in
+ *                                                virtual-hosted-style format
+ *                                                where the bucket name is part
+ *                                                of the domain name in the
+ *                                                URL.
  *                                            <li>@ref
  *                                                gpudb::alter_datasink_false
- *                                                "alter_datasink_false"
+ *                                                "alter_datasink_false": Use
+ *                                                path-style URI for requests.
  *                                        </ul>
  *                                        The default value is @ref
  *                                        gpudb::alter_datasink_true
@@ -7023,6 +7044,15 @@ AlterDatasinkResponse alterDatasink( const std::string& name,
  *                                        "alter_datasink_gcs_service_account_keys":
  *                                        Google Cloud service account keys to
  *                                        use for authenticating the data sink
+ *                                    <li>@ref
+ *                                        gpudb::alter_datasink_jdbc_driver_jar_path
+ *                                        "alter_datasink_jdbc_driver_jar_path":
+ *                                        JDBC driver jar file location.  This
+ *                                        may be a KIFS file.
+ *                                    <li>@ref
+ *                                        gpudb::alter_datasink_jdbc_driver_class_name
+ *                                        "alter_datasink_jdbc_driver_class_name":
+ *                                        Name of the JDBC driver class
  *                                    <li>@ref gpudb::alter_datasink_kafka_url
  *                                        "alter_datasink_kafka_url": The
  *                                        publicly-accessible full path URL to
@@ -7104,19 +7134,19 @@ AlterDatasinkResponse alterDatasink( const std::string& name,
  *                                        gpudb::alter_datasink_json_format
  *                                        "alter_datasink_json_format": The
  *                                        desired format of JSON encoded
- *                                        notifications message.   If @ref
- *                                        gpudb::alter_datasink_nested
- *                                        "nested", records are returned as an
- *                                        array. Otherwise, only a single
- *                                        record per messages is returned.
+ *                                        notifications message.
  *                                        Supported values:
  *                                        <ul>
  *                                            <li>@ref
  *                                                gpudb::alter_datasink_flat
- *                                                "alter_datasink_flat"
+ *                                                "alter_datasink_flat": A
+ *                                                single record is returned per
+ *                                                message
  *                                            <li>@ref
  *                                                gpudb::alter_datasink_nested
- *                                                "alter_datasink_nested"
+ *                                                "alter_datasink_nested":
+ *                                                Records are returned as an
+ *                                                array per message
  *                                        </ul>
  *                                        The default value is @ref
  *                                        gpudb::alter_datasink_flat
@@ -7203,8 +7233,8 @@ AlterDatasourceResponse& alterDatasource( const AlterDatasourceRequest& request_
  *                                          Location of the remote storage in
  *                                          'storage_provider_type://[storage_path[:storage_port]]'
  *                                          format.  Supported storage provider
- *                                          types are
- *                                          'azure','gcs','hdfs','kafka' and
+ *                                          types are 'azure', 'gcs', 'hdfs',
+ *                                          'jdbc', 'kafka', 'confluent', and
  *                                          's3'.
  *                                      <li>@ref
  *                                          gpudb::alter_datasource_user_name
@@ -7263,19 +7293,22 @@ AlterDatasourceResponse& alterDatasource( const AlterDatasourceRequest& request_
  *                                      <li>@ref
  *                                          gpudb::alter_datasource_s3_verify_ssl
  *                                          "alter_datasource_s3_verify_ssl":
- *                                          Set to false for testing purposes
- *                                          or when necessary to bypass TLS
- *                                          errors (e.g. self-signed
- *                                          certificates). This value is true
- *                                          by default.
+ *                                          Whether to verify SSL connections.
  *                                          Supported values:
  *                                          <ul>
  *                                              <li>@ref
  *                                                  gpudb::alter_datasource_true
- *                                                  "alter_datasource_true"
+ *                                                  "alter_datasource_true":
+ *                                                  Connect with SSL
+ *                                                  verification
  *                                              <li>@ref
  *                                                  gpudb::alter_datasource_false
- *                                                  "alter_datasource_false"
+ *                                                  "alter_datasource_false":
+ *                                                  Connect without verifying
+ *                                                  the SSL connection; for
+ *                                                  testing purposes, bypassing
+ *                                                  TLS errors, self-signed
+ *                                                  certificates, etc.
  *                                          </ul>
  *                                          The default value is @ref
  *                                          gpudb::alter_datasource_true
@@ -7395,6 +7428,15 @@ AlterDatasourceResponse& alterDatasource( const AlterDatasourceRequest& request_
  *                                          to use for authenticating the data
  *                                          source
  *                                      <li>@ref
+ *                                          gpudb::alter_datasource_jdbc_driver_jar_path
+ *                                          "alter_datasource_jdbc_driver_jar_path":
+ *                                          JDBC driver jar file location.
+ *                                          This may be a KIFS file.
+ *                                      <li>@ref
+ *                                          gpudb::alter_datasource_jdbc_driver_class_name
+ *                                          "alter_datasource_jdbc_driver_class_name":
+ *                                          Name of the JDBC driver class
+ *                                      <li>@ref
  *                                          gpudb::alter_datasource_kafka_url
  *                                          "alter_datasource_kafka_url": The
  *                                          publicly-accessible full path URL
@@ -7405,15 +7447,6 @@ AlterDatasourceResponse& alterDatasource( const AlterDatasourceRequest& request_
  *                                          "alter_datasource_kafka_topic_name":
  *                                          Name of the Kafka topic to use as
  *                                          the data source
- *                                      <li>@ref
- *                                          gpudb::alter_datasource_jdbc_driver_jar_path
- *                                          "alter_datasource_jdbc_driver_jar_path":
- *                                          JDBC driver jar file location.
- *                                          This may be a KIFS file.
- *                                      <li>@ref
- *                                          gpudb::alter_datasource_jdbc_driver_class_name
- *                                          "alter_datasource_jdbc_driver_class_name":
- *                                          Name of the JDBC driver class
  *                                      <li>@ref
  *                                          gpudb::alter_datasource_anonymous
  *                                          "alter_datasource_anonymous":
@@ -7524,8 +7557,8 @@ AlterDatasourceResponse alterDatasource( const std::string& name,
  *                                          Location of the remote storage in
  *                                          'storage_provider_type://[storage_path[:storage_port]]'
  *                                          format.  Supported storage provider
- *                                          types are
- *                                          'azure','gcs','hdfs','kafka' and
+ *                                          types are 'azure', 'gcs', 'hdfs',
+ *                                          'jdbc', 'kafka', 'confluent', and
  *                                          's3'.
  *                                      <li>@ref
  *                                          gpudb::alter_datasource_user_name
@@ -7584,19 +7617,22 @@ AlterDatasourceResponse alterDatasource( const std::string& name,
  *                                      <li>@ref
  *                                          gpudb::alter_datasource_s3_verify_ssl
  *                                          "alter_datasource_s3_verify_ssl":
- *                                          Set to false for testing purposes
- *                                          or when necessary to bypass TLS
- *                                          errors (e.g. self-signed
- *                                          certificates). This value is true
- *                                          by default.
+ *                                          Whether to verify SSL connections.
  *                                          Supported values:
  *                                          <ul>
  *                                              <li>@ref
  *                                                  gpudb::alter_datasource_true
- *                                                  "alter_datasource_true"
+ *                                                  "alter_datasource_true":
+ *                                                  Connect with SSL
+ *                                                  verification
  *                                              <li>@ref
  *                                                  gpudb::alter_datasource_false
- *                                                  "alter_datasource_false"
+ *                                                  "alter_datasource_false":
+ *                                                  Connect without verifying
+ *                                                  the SSL connection; for
+ *                                                  testing purposes, bypassing
+ *                                                  TLS errors, self-signed
+ *                                                  certificates, etc.
  *                                          </ul>
  *                                          The default value is @ref
  *                                          gpudb::alter_datasource_true
@@ -7716,6 +7752,15 @@ AlterDatasourceResponse alterDatasource( const std::string& name,
  *                                          to use for authenticating the data
  *                                          source
  *                                      <li>@ref
+ *                                          gpudb::alter_datasource_jdbc_driver_jar_path
+ *                                          "alter_datasource_jdbc_driver_jar_path":
+ *                                          JDBC driver jar file location.
+ *                                          This may be a KIFS file.
+ *                                      <li>@ref
+ *                                          gpudb::alter_datasource_jdbc_driver_class_name
+ *                                          "alter_datasource_jdbc_driver_class_name":
+ *                                          Name of the JDBC driver class
+ *                                      <li>@ref
  *                                          gpudb::alter_datasource_kafka_url
  *                                          "alter_datasource_kafka_url": The
  *                                          publicly-accessible full path URL
@@ -7726,15 +7771,6 @@ AlterDatasourceResponse alterDatasource( const std::string& name,
  *                                          "alter_datasource_kafka_topic_name":
  *                                          Name of the Kafka topic to use as
  *                                          the data source
- *                                      <li>@ref
- *                                          gpudb::alter_datasource_jdbc_driver_jar_path
- *                                          "alter_datasource_jdbc_driver_jar_path":
- *                                          JDBC driver jar file location.
- *                                          This may be a KIFS file.
- *                                      <li>@ref
- *                                          gpudb::alter_datasource_jdbc_driver_class_name
- *                                          "alter_datasource_jdbc_driver_class_name":
- *                                          Name of the JDBC driver class
  *                                      <li>@ref
  *                                          gpudb::alter_datasource_anonymous
  *                                          "alter_datasource_anonymous":
@@ -9827,7 +9863,28 @@ AlterTableResponse& alterTable( const AlterTableRequest& request_,
  *                        <li>@ref gpudb::alter_table_change_owner
  *                            "alter_table_change_owner": Change the owner
  *                            resource group of the table.
+ *                        <li>@ref gpudb::alter_table_set_load_vectors_policy
+ *                            "alter_table_set_load_vectors_policy": Set
+ *                            startup data loading scheme for the table
+ *                        <li>@ref gpudb::alter_table_always
+ *                            "alter_table_always"
+ *                        <li>@ref gpudb::alter_table_lazy "alter_table_lazy"
+ *                        <li>@ref gpudb::alter_table_on_demand
+ *                            "alter_table_on_demand"
+ *                        <li>@ref gpudb::alter_table_system
+ *                            "alter_table_system"
+ *                        <li>@ref gpudb::alter_table_set_build_pk_index_policy
+ *                            "alter_table_set_build_pk_index_policy": Set
+ *                            startup primary key generation scheme for the
+ *                            table
+ *                        <li>@ref
+ *                            gpudb::alter_table_set_build_materialized_view_policy
+ *                            "alter_table_set_build_materialized_view_policy":
+ *                            Set startup rebuild scheme for the materialized
+ *                            view
  *                    </ul>
+ *                    The default value is @ref gpudb::alter_table_empty_string
+ *                    "alter_table_empty_string".
  * @param[in] value  The value of the modification, depending on @a action. For
  *                   example, if @a action is @ref
  *                   gpudb::alter_table_add_column "add_column", this would be
@@ -10316,7 +10373,28 @@ AlterTableResponse alterTable( const std::string& tableName,
  *                        <li>@ref gpudb::alter_table_change_owner
  *                            "alter_table_change_owner": Change the owner
  *                            resource group of the table.
+ *                        <li>@ref gpudb::alter_table_set_load_vectors_policy
+ *                            "alter_table_set_load_vectors_policy": Set
+ *                            startup data loading scheme for the table
+ *                        <li>@ref gpudb::alter_table_always
+ *                            "alter_table_always"
+ *                        <li>@ref gpudb::alter_table_lazy "alter_table_lazy"
+ *                        <li>@ref gpudb::alter_table_on_demand
+ *                            "alter_table_on_demand"
+ *                        <li>@ref gpudb::alter_table_system
+ *                            "alter_table_system"
+ *                        <li>@ref gpudb::alter_table_set_build_pk_index_policy
+ *                            "alter_table_set_build_pk_index_policy": Set
+ *                            startup primary key generation scheme for the
+ *                            table
+ *                        <li>@ref
+ *                            gpudb::alter_table_set_build_materialized_view_policy
+ *                            "alter_table_set_build_materialized_view_policy":
+ *                            Set startup rebuild scheme for the materialized
+ *                            view
  *                    </ul>
+ *                    The default value is @ref gpudb::alter_table_empty_string
+ *                    "alter_table_empty_string".
  * @param[in] value  The value of the modification, depending on @a action. For
  *                   example, if @a action is @ref
  *                   gpudb::alter_table_add_column "add_column", this would be
@@ -12441,7 +12519,7 @@ CreateDatasinkResponse& createDatasink( const CreateDatasinkRequest& request_,
  * @param[in] destination  Destination for the output data in format
  *                         'storage_provider_type://path[:port]'.  Supported
  *                         storage provider types are 'azure', 'gcs', 'hdfs',
- *                         'http', 'https', 'jdbc', 'kafka' and 's3'.
+ *                         'http', 'https', 'jdbc', 'kafka', and 's3'.
  * @param[in] options  Optional parameters.
  *                     <ul>
  *                         <li>@ref gpudb::create_datasink_connection_timeout
@@ -12463,16 +12541,18 @@ CreateDatasinkResponse& createDatasink( const CreateDatasinkRequest& request_,
  *                             "create_datasink_s3_region": Name of the Amazon
  *                             S3 region where the given bucket is located
  *                         <li>@ref gpudb::create_datasink_s3_verify_ssl
- *                             "create_datasink_s3_verify_ssl": Set to false
- *                             for testing purposes or when necessary to bypass
- *                             TLS errors (e.g. self-signed certificates). This
- *                             value is true by default.
+ *                             "create_datasink_s3_verify_ssl": Whether to
+ *                             verify SSL connections.
  *                             Supported values:
  *                             <ul>
  *                                 <li>@ref gpudb::create_datasink_true
- *                                     "create_datasink_true"
+ *                                     "create_datasink_true": Connect with SSL
+ *                                     verification
  *                                 <li>@ref gpudb::create_datasink_false
- *                                     "create_datasink_false"
+ *                                     "create_datasink_false": Connect without
+ *                                     verifying the SSL connection; for
+ *                                     testing purposes, bypassing TLS errors,
+ *                                     self-signed certificates, etc.
  *                             </ul>
  *                             The default value is @ref
  *                             gpudb::create_datasink_true
@@ -12480,17 +12560,19 @@ CreateDatasinkResponse& createDatasink( const CreateDatasinkRequest& request_,
  *                         <li>@ref
  *                             gpudb::create_datasink_s3_use_virtual_addressing
  *                             "create_datasink_s3_use_virtual_addressing":
- *                             When true (default), the requests URI should be
- *                             specified in virtual-hosted-style format where
- *                             the bucket name is part of the domain name in
- *                             the URL.   Otherwise set to false to use
- *                             path-style URI for requests.
+ *                             Whether to use virtual addressing when
+ *                             referencing the Amazon S3 sink.
  *                             Supported values:
  *                             <ul>
  *                                 <li>@ref gpudb::create_datasink_true
- *                                     "create_datasink_true"
+ *                                     "create_datasink_true": The requests URI
+ *                                     should be specified in
+ *                                     virtual-hosted-style format where the
+ *                                     bucket name is part of the domain name
+ *                                     in the URL.
  *                                 <li>@ref gpudb::create_datasink_false
- *                                     "create_datasink_false"
+ *                                     "create_datasink_false": Use path-style
+ *                                     URI for requests.
  *                             </ul>
  *                             The default value is @ref
  *                             gpudb::create_datasink_true
@@ -12590,15 +12672,14 @@ CreateDatasinkResponse& createDatasink( const CreateDatasinkRequest& request_,
  *                         <li>@ref gpudb::create_datasink_json_format
  *                             "create_datasink_json_format": The desired
  *                             format of JSON encoded notifications message.
- *                             If @ref gpudb::create_datasink_nested "nested",
- *                             records are returned as an array. Otherwise,
- *                             only a single record per messages is returned.
  *                             Supported values:
  *                             <ul>
  *                                 <li>@ref gpudb::create_datasink_flat
- *                                     "create_datasink_flat"
+ *                                     "create_datasink_flat": A single record
+ *                                     is returned per message
  *                                 <li>@ref gpudb::create_datasink_nested
- *                                     "create_datasink_nested"
+ *                                     "create_datasink_nested": Records are
+ *                                     returned as an array per message
  *                             </ul>
  *                             The default value is @ref
  *                             gpudb::create_datasink_flat
@@ -12664,7 +12745,7 @@ CreateDatasinkResponse createDatasink( const std::string& name,
  * @param[in] destination  Destination for the output data in format
  *                         'storage_provider_type://path[:port]'.  Supported
  *                         storage provider types are 'azure', 'gcs', 'hdfs',
- *                         'http', 'https', 'jdbc', 'kafka' and 's3'.
+ *                         'http', 'https', 'jdbc', 'kafka', and 's3'.
  * @param[in] options  Optional parameters.
  *                     <ul>
  *                         <li>@ref gpudb::create_datasink_connection_timeout
@@ -12686,16 +12767,18 @@ CreateDatasinkResponse createDatasink( const std::string& name,
  *                             "create_datasink_s3_region": Name of the Amazon
  *                             S3 region where the given bucket is located
  *                         <li>@ref gpudb::create_datasink_s3_verify_ssl
- *                             "create_datasink_s3_verify_ssl": Set to false
- *                             for testing purposes or when necessary to bypass
- *                             TLS errors (e.g. self-signed certificates). This
- *                             value is true by default.
+ *                             "create_datasink_s3_verify_ssl": Whether to
+ *                             verify SSL connections.
  *                             Supported values:
  *                             <ul>
  *                                 <li>@ref gpudb::create_datasink_true
- *                                     "create_datasink_true"
+ *                                     "create_datasink_true": Connect with SSL
+ *                                     verification
  *                                 <li>@ref gpudb::create_datasink_false
- *                                     "create_datasink_false"
+ *                                     "create_datasink_false": Connect without
+ *                                     verifying the SSL connection; for
+ *                                     testing purposes, bypassing TLS errors,
+ *                                     self-signed certificates, etc.
  *                             </ul>
  *                             The default value is @ref
  *                             gpudb::create_datasink_true
@@ -12703,17 +12786,19 @@ CreateDatasinkResponse createDatasink( const std::string& name,
  *                         <li>@ref
  *                             gpudb::create_datasink_s3_use_virtual_addressing
  *                             "create_datasink_s3_use_virtual_addressing":
- *                             When true (default), the requests URI should be
- *                             specified in virtual-hosted-style format where
- *                             the bucket name is part of the domain name in
- *                             the URL.   Otherwise set to false to use
- *                             path-style URI for requests.
+ *                             Whether to use virtual addressing when
+ *                             referencing the Amazon S3 sink.
  *                             Supported values:
  *                             <ul>
  *                                 <li>@ref gpudb::create_datasink_true
- *                                     "create_datasink_true"
+ *                                     "create_datasink_true": The requests URI
+ *                                     should be specified in
+ *                                     virtual-hosted-style format where the
+ *                                     bucket name is part of the domain name
+ *                                     in the URL.
  *                                 <li>@ref gpudb::create_datasink_false
- *                                     "create_datasink_false"
+ *                                     "create_datasink_false": Use path-style
+ *                                     URI for requests.
  *                             </ul>
  *                             The default value is @ref
  *                             gpudb::create_datasink_true
@@ -12813,15 +12898,14 @@ CreateDatasinkResponse createDatasink( const std::string& name,
  *                         <li>@ref gpudb::create_datasink_json_format
  *                             "create_datasink_json_format": The desired
  *                             format of JSON encoded notifications message.
- *                             If @ref gpudb::create_datasink_nested "nested",
- *                             records are returned as an array. Otherwise,
- *                             only a single record per messages is returned.
  *                             Supported values:
  *                             <ul>
  *                                 <li>@ref gpudb::create_datasink_flat
- *                                     "create_datasink_flat"
+ *                                     "create_datasink_flat": A single record
+ *                                     is returned per message
  *                                 <li>@ref gpudb::create_datasink_nested
- *                                     "create_datasink_nested"
+ *                                     "create_datasink_nested": Records are
+ *                                     returned as an array per message
  *                             </ul>
  *                             The default value is @ref
  *                             gpudb::create_datasink_flat
@@ -12918,9 +13002,8 @@ CreateDatasourceResponse& createDatasource( const CreateDatasourceRequest& reque
  * @param[in] name  Name of the data source to be created.
  * @param[in] location  Location of the remote storage in
  *                      'storage_provider_type://[storage_path[:storage_port]]'
- *                      format.  Supported storage provider types are
- *                      'azure','gcs','hdfs','jdbc','kafka', 'confluent' and
- *                      's3'.
+ *                      format.  Supported storage provider types are 'azure',
+ *                      'gcs', 'hdfs', 'jdbc', 'kafka', 'confluent', and 's3'.
  * @param[in] userName  Name of the remote system user; may be an empty string
  * @param[in] password  Password for the remote system user; may be an empty
  *                      string
@@ -12959,16 +13042,18 @@ CreateDatasourceResponse& createDatasource( const CreateDatasourceRequest& reque
  *                             Amazon S3 region where the given bucket is
  *                             located
  *                         <li>@ref gpudb::create_datasource_s3_verify_ssl
- *                             "create_datasource_s3_verify_ssl": Set to false
- *                             for testing purposes or when necessary to bypass
- *                             TLS errors (e.g. self-signed certificates). This
- *                             value is true by default.
+ *                             "create_datasource_s3_verify_ssl": Whether to
+ *                             verify SSL connections.
  *                             Supported values:
  *                             <ul>
  *                                 <li>@ref gpudb::create_datasource_true
- *                                     "create_datasource_true"
+ *                                     "create_datasource_true": Connect with
+ *                                     SSL verification
  *                                 <li>@ref gpudb::create_datasource_false
- *                                     "create_datasource_false"
+ *                                     "create_datasource_false": Connect
+ *                                     without verifying the SSL connection;
+ *                                     for testing purposes, bypassing TLS
+ *                                     errors, self-signed certificates, etc.
  *                             </ul>
  *                             The default value is @ref
  *                             gpudb::create_datasource_true
@@ -13169,9 +13254,8 @@ CreateDatasourceResponse createDatasource( const std::string& name,
  * @param[in] name  Name of the data source to be created.
  * @param[in] location  Location of the remote storage in
  *                      'storage_provider_type://[storage_path[:storage_port]]'
- *                      format.  Supported storage provider types are
- *                      'azure','gcs','hdfs','jdbc','kafka', 'confluent' and
- *                      's3'.
+ *                      format.  Supported storage provider types are 'azure',
+ *                      'gcs', 'hdfs', 'jdbc', 'kafka', 'confluent', and 's3'.
  * @param[in] userName  Name of the remote system user; may be an empty string
  * @param[in] password  Password for the remote system user; may be an empty
  *                      string
@@ -13210,16 +13294,18 @@ CreateDatasourceResponse createDatasource( const std::string& name,
  *                             Amazon S3 region where the given bucket is
  *                             located
  *                         <li>@ref gpudb::create_datasource_s3_verify_ssl
- *                             "create_datasource_s3_verify_ssl": Set to false
- *                             for testing purposes or when necessary to bypass
- *                             TLS errors (e.g. self-signed certificates). This
- *                             value is true by default.
+ *                             "create_datasource_s3_verify_ssl": Whether to
+ *                             verify SSL connections.
  *                             Supported values:
  *                             <ul>
  *                                 <li>@ref gpudb::create_datasource_true
- *                                     "create_datasource_true"
+ *                                     "create_datasource_true": Connect with
+ *                                     SSL verification
  *                                 <li>@ref gpudb::create_datasource_false
- *                                     "create_datasource_false"
+ *                                     "create_datasource_false": Connect
+ *                                     without verifying the SSL connection;
+ *                                     for testing purposes, bypassing TLS
+ *                                     errors, self-signed certificates, etc.
  *                             </ul>
  *                             The default value is @ref
  *                             gpudb::create_datasource_true
@@ -14705,6 +14791,28 @@ CreateMaterializedViewResponse& createMaterializedView( const CreateMaterialized
  *                         <li>@ref gpudb::create_materialized_view_execute_as
  *                             "create_materialized_view_execute_as": User name
  *                             to use to run the refresh job
+ *                         <li>@ref
+ *                             gpudb::create_materialized_view_build_materialized_view_policy
+ *                             "create_materialized_view_build_materialized_view_policy":
+ *                             Sets startup materialized view rebuild scheme.
+ *                             Supported values:
+ *                             <ul>
+ *                                 <li>@ref
+ *                                     gpudb::create_materialized_view_always
+ *                                     "create_materialized_view_always"
+ *                                 <li>@ref
+ *                                     gpudb::create_materialized_view_lazy
+ *                                     "create_materialized_view_lazy"
+ *                                 <li>@ref
+ *                                     gpudb::create_materialized_view_on_demand
+ *                                     "create_materialized_view_on_demand"
+ *                                 <li>@ref
+ *                                     gpudb::create_materialized_view_system
+ *                                     "create_materialized_view_system"
+ *                             </ul>
+ *                             The default value is @ref
+ *                             gpudb::create_materialized_view_empty_string
+ *                             "create_materialized_view_empty_string".
  *                         <li>@ref gpudb::create_materialized_view_persist
  *                             "create_materialized_view_persist": If @ref
  *                             gpudb::create_materialized_view_true "true",
@@ -14855,6 +14963,28 @@ CreateMaterializedViewResponse createMaterializedView( const std::string& tableN
  *                         <li>@ref gpudb::create_materialized_view_execute_as
  *                             "create_materialized_view_execute_as": User name
  *                             to use to run the refresh job
+ *                         <li>@ref
+ *                             gpudb::create_materialized_view_build_materialized_view_policy
+ *                             "create_materialized_view_build_materialized_view_policy":
+ *                             Sets startup materialized view rebuild scheme.
+ *                             Supported values:
+ *                             <ul>
+ *                                 <li>@ref
+ *                                     gpudb::create_materialized_view_always
+ *                                     "create_materialized_view_always"
+ *                                 <li>@ref
+ *                                     gpudb::create_materialized_view_lazy
+ *                                     "create_materialized_view_lazy"
+ *                                 <li>@ref
+ *                                     gpudb::create_materialized_view_on_demand
+ *                                     "create_materialized_view_on_demand"
+ *                                 <li>@ref
+ *                                     gpudb::create_materialized_view_system
+ *                                     "create_materialized_view_system"
+ *                             </ul>
+ *                             The default value is @ref
+ *                             gpudb::create_materialized_view_empty_string
+ *                             "create_materialized_view_empty_string".
  *                         <li>@ref gpudb::create_materialized_view_persist
  *                             "create_materialized_view_persist": If @ref
  *                             gpudb::create_materialized_view_true "true",
@@ -16614,6 +16744,41 @@ CreateTableResponse& createTable( const CreateTableRequest& request_,
  *                             href="../../../rm/concepts/#tier-strategies"
  *                             target="_top">tier strategy</a> for the table
  *                             and its columns.
+ *                         <li>@ref gpudb::create_table_load_vectors_policy
+ *                             "create_table_load_vectors_policy": Set startup
+ *                             data loading scheme for the table.
+ *                             Supported values:
+ *                             <ul>
+ *                                 <li>@ref gpudb::create_table_always
+ *                                     "create_table_always"
+ *                                 <li>@ref gpudb::create_table_lazy
+ *                                     "create_table_lazy"
+ *                                 <li>@ref gpudb::create_table_on_demand
+ *                                     "create_table_on_demand"
+ *                                 <li>@ref gpudb::create_table_system
+ *                                     "create_table_system"
+ *                             </ul>
+ *                             The default value is @ref
+ *                             gpudb::create_table_empty_string
+ *                             "create_table_empty_string".
+ *                         <li>@ref gpudb::create_table_build_pk_index_policy
+ *                             "create_table_build_pk_index_policy": Set
+ *                             startup primary-key index generation scheme for
+ *                             the table.
+ *                             Supported values:
+ *                             <ul>
+ *                                 <li>@ref gpudb::create_table_always
+ *                                     "create_table_always"
+ *                                 <li>@ref gpudb::create_table_lazy
+ *                                     "create_table_lazy"
+ *                                 <li>@ref gpudb::create_table_on_demand
+ *                                     "create_table_on_demand"
+ *                                 <li>@ref gpudb::create_table_system
+ *                                     "create_table_system"
+ *                             </ul>
+ *                             The default value is @ref
+ *                             gpudb::create_table_empty_string
+ *                             "create_table_empty_string".
  *                     </ul>
  *                     The default value is an empty map.
  *
@@ -16884,6 +17049,41 @@ CreateTableResponse createTable( const std::string& tableName,
  *                             href="../../../rm/concepts/#tier-strategies"
  *                             target="_top">tier strategy</a> for the table
  *                             and its columns.
+ *                         <li>@ref gpudb::create_table_load_vectors_policy
+ *                             "create_table_load_vectors_policy": Set startup
+ *                             data loading scheme for the table.
+ *                             Supported values:
+ *                             <ul>
+ *                                 <li>@ref gpudb::create_table_always
+ *                                     "create_table_always"
+ *                                 <li>@ref gpudb::create_table_lazy
+ *                                     "create_table_lazy"
+ *                                 <li>@ref gpudb::create_table_on_demand
+ *                                     "create_table_on_demand"
+ *                                 <li>@ref gpudb::create_table_system
+ *                                     "create_table_system"
+ *                             </ul>
+ *                             The default value is @ref
+ *                             gpudb::create_table_empty_string
+ *                             "create_table_empty_string".
+ *                         <li>@ref gpudb::create_table_build_pk_index_policy
+ *                             "create_table_build_pk_index_policy": Set
+ *                             startup primary-key index generation scheme for
+ *                             the table.
+ *                             Supported values:
+ *                             <ul>
+ *                                 <li>@ref gpudb::create_table_always
+ *                                     "create_table_always"
+ *                                 <li>@ref gpudb::create_table_lazy
+ *                                     "create_table_lazy"
+ *                                 <li>@ref gpudb::create_table_on_demand
+ *                                     "create_table_on_demand"
+ *                                 <li>@ref gpudb::create_table_system
+ *                                     "create_table_system"
+ *                             </ul>
+ *                             The default value is @ref
+ *                             gpudb::create_table_empty_string
+ *                             "create_table_empty_string".
  *                     </ul>
  *                     The default value is an empty map.
  * @param[out] response_  @ref gpudb::CreateTableResponse "Response" object

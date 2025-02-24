@@ -71,6 +71,29 @@ namespace gpudb
          *                              "create_materialized_view_execute_as":
          *                              User name to use to run the refresh job
          *                          <li>@ref
+         *                              gpudb::create_materialized_view_build_materialized_view_policy
+         *                              "create_materialized_view_build_materialized_view_policy":
+         *                              Sets startup materialized view rebuild
+         *                              scheme.
+         *                              Supported values:
+         *                              <ul>
+         *                                  <li>@ref
+         *                                      gpudb::create_materialized_view_always
+         *                                      "create_materialized_view_always"
+         *                                  <li>@ref
+         *                                      gpudb::create_materialized_view_lazy
+         *                                      "create_materialized_view_lazy"
+         *                                  <li>@ref
+         *                                      gpudb::create_materialized_view_on_demand
+         *                                      "create_materialized_view_on_demand"
+         *                                  <li>@ref
+         *                                      gpudb::create_materialized_view_system
+         *                                      "create_materialized_view_system"
+         *                              </ul>
+         *                              The default value is @ref
+         *                              gpudb::create_materialized_view_empty_string
+         *                              "create_materialized_view_empty_string".
+         *                          <li>@ref
          *                              gpudb::create_materialized_view_persist
          *                              "create_materialized_view_persist": If
          *                              @ref
@@ -219,6 +242,24 @@ namespace gpudb
          *     <li>@ref gpudb::create_materialized_view_execute_as
          *         "create_materialized_view_execute_as": User name to use to
          *         run the refresh job
+         *     <li>@ref
+         *         gpudb::create_materialized_view_build_materialized_view_policy
+         *         "create_materialized_view_build_materialized_view_policy":
+         *         Sets startup materialized view rebuild scheme.
+         *         Supported values:
+         *         <ul>
+         *             <li>@ref gpudb::create_materialized_view_always
+         *                 "create_materialized_view_always"
+         *             <li>@ref gpudb::create_materialized_view_lazy
+         *                 "create_materialized_view_lazy"
+         *             <li>@ref gpudb::create_materialized_view_on_demand
+         *                 "create_materialized_view_on_demand"
+         *             <li>@ref gpudb::create_materialized_view_system
+         *                 "create_materialized_view_system"
+         *         </ul>
+         *         The default value is @ref
+         *         gpudb::create_materialized_view_empty_string
+         *         "create_materialized_view_empty_string".
          *     <li>@ref gpudb::create_materialized_view_persist
          *         "create_materialized_view_persist": If @ref
          *         gpudb::create_materialized_view_true "true", then the

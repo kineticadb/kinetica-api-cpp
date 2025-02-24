@@ -2,6 +2,15 @@
 
 ## Version 7.2
 
+### Version 7.2.2.2 - 2025-02-24
+
+#### Added
+-   Support for parallel HA modes
+
+#### Notes
+-   Check CHANGELOG-FUNCTIONS.md for endpoint related changes.
+
+
 ### Version 7.2.2.1 - 2025-01-30
 
 #### Added

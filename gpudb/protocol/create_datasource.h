@@ -39,8 +39,8 @@ namespace gpudb
          * @param[in] location_  Location of the remote storage in
          *                       'storage_provider_type://[storage_path[:storage_port]]'
          *                       format.  Supported storage provider types are
-         *                       'azure','gcs','hdfs','jdbc','kafka',
-         *                       'confluent' and 's3'.
+         *                       'azure', 'gcs', 'hdfs', 'jdbc', 'kafka',
+         *                       'confluent', and 's3'.
          * @param[in] userName_  Name of the remote system user; may be an
          *                       empty string
          * @param[in] password_  Password for the remote system user; may be an
@@ -92,19 +92,21 @@ namespace gpudb
          *                              bucket is located
          *                          <li>@ref
          *                              gpudb::create_datasource_s3_verify_ssl
-         *                              "create_datasource_s3_verify_ssl": Set
-         *                              to false for testing purposes or when
-         *                              necessary to bypass TLS errors (e.g.
-         *                              self-signed certificates). This value
-         *                              is true by default.
+         *                              "create_datasource_s3_verify_ssl":
+         *                              Whether to verify SSL connections.
          *                              Supported values:
          *                              <ul>
          *                                  <li>@ref
          *                                      gpudb::create_datasource_true
-         *                                      "create_datasource_true"
+         *                                      "create_datasource_true":
+         *                                      Connect with SSL verification
          *                                  <li>@ref
          *                                      gpudb::create_datasource_false
-         *                                      "create_datasource_false"
+         *                                      "create_datasource_false":
+         *                                      Connect without verifying the
+         *                                      SSL connection; for testing
+         *                                      purposes, bypassing TLS errors,
+         *                                      self-signed certificates, etc.
          *                              </ul>
          *                              The default value is @ref
          *                              gpudb::create_datasource_true
@@ -341,8 +343,8 @@ namespace gpudb
          * Location of the remote storage in
          * 'storage_provider_type://[storage_path[:storage_port]]' format.
          *
-         * Supported storage provider types are
-         * 'azure','gcs','hdfs','jdbc','kafka', 'confluent' and 's3'.
+         * Supported storage provider types are 'azure', 'gcs', 'hdfs', 'jdbc',
+         * 'kafka', 'confluent', and 's3'.
          */
         std::string location;
 
@@ -389,15 +391,17 @@ namespace gpudb
          *         "create_datasource_s3_region": Name of the Amazon S3 region
          *         where the given bucket is located
          *     <li>@ref gpudb::create_datasource_s3_verify_ssl
-         *         "create_datasource_s3_verify_ssl": Set to false for testing
-         *         purposes or when necessary to bypass TLS errors (e.g.
-         *         self-signed certificates). This value is true by default.
+         *         "create_datasource_s3_verify_ssl": Whether to verify SSL
+         *         connections.
          *         Supported values:
          *         <ul>
          *             <li>@ref gpudb::create_datasource_true
-         *                 "create_datasource_true"
+         *                 "create_datasource_true": Connect with SSL
+         *                 verification
          *             <li>@ref gpudb::create_datasource_false
-         *                 "create_datasource_false"
+         *                 "create_datasource_false": Connect without verifying
+         *                 the SSL connection; for testing purposes, bypassing
+         *                 TLS errors, self-signed certificates, etc.
          *         </ul>
          *         The default value is @ref gpudb::create_datasource_true
          *         "create_datasource_true".

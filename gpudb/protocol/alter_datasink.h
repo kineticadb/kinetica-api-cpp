@@ -45,8 +45,9 @@ namespace gpudb
          *                                         data in format
          *                                         'destination_type://path[:port]'.
          *                                         Supported destination types
-         *                                         are 'http', 'https' and
-         *                                         'kafka'.
+         *                                         are 'azure', 'gcs', 'hdfs',
+         *                                         'http', 'https', 'jdbc',
+         *                                         'kafka', and 's3'.
          *                                     <li>@ref
          *                                         gpudb::alter_datasink_connection_timeout
          *                                         "alter_datasink_connection_timeout":
@@ -80,20 +81,25 @@ namespace gpudb
          *                                     <li>@ref
          *                                         gpudb::alter_datasink_s3_verify_ssl
          *                                         "alter_datasink_s3_verify_ssl":
-         *                                         Set to false for testing
-         *                                         purposes or when necessary
-         *                                         to bypass TLS errors (e.g.
-         *                                         self-signed certificates).
-         *                                         This value is true by
-         *                                         default.
+         *                                         Whether to verify SSL
+         *                                         connections.
          *                                         Supported values:
          *                                         <ul>
          *                                             <li>@ref
          *                                                 gpudb::alter_datasink_true
-         *                                                 "alter_datasink_true"
+         *                                                 "alter_datasink_true":
+         *                                                 Connect with SSL
+         *                                                 verification
          *                                             <li>@ref
          *                                                 gpudb::alter_datasink_false
-         *                                                 "alter_datasink_false"
+         *                                                 "alter_datasink_false":
+         *                                                 Connect without
+         *                                                 verifying the SSL
+         *                                                 connection; for
+         *                                                 testing purposes,
+         *                                                 bypassing TLS
+         *                                                 errors, self-signed
+         *                                                 certificates, etc.
          *                                         </ul>
          *                                         The default value is @ref
          *                                         gpudb::alter_datasink_true
@@ -101,23 +107,27 @@ namespace gpudb
          *                                     <li>@ref
          *                                         gpudb::alter_datasink_s3_use_virtual_addressing
          *                                         "alter_datasink_s3_use_virtual_addressing":
-         *                                         When true (default), the
-         *                                         requests URI should be
-         *                                         specified in
-         *                                         virtual-hosted-style format
-         *                                         where the bucket name is
-         *                                         part of the domain name in
-         *                                         the URL.   Otherwise set to
-         *                                         false to use path-style URI
-         *                                         for requests.
+         *                                         Whether to use virtual
+         *                                         addressing when referencing
+         *                                         the Amazon S3 sink.
          *                                         Supported values:
          *                                         <ul>
          *                                             <li>@ref
          *                                                 gpudb::alter_datasink_true
-         *                                                 "alter_datasink_true"
+         *                                                 "alter_datasink_true":
+         *                                                 The requests URI
+         *                                                 should be specified
+         *                                                 in
+         *                                                 virtual-hosted-style
+         *                                                 format where the
+         *                                                 bucket name is part
+         *                                                 of the domain name
+         *                                                 in the URL.
          *                                             <li>@ref
          *                                                 gpudb::alter_datasink_false
-         *                                                 "alter_datasink_false"
+         *                                                 "alter_datasink_false":
+         *                                                 Use path-style URI
+         *                                                 for requests.
          *                                         </ul>
          *                                         The default value is @ref
          *                                         gpudb::alter_datasink_true
@@ -226,6 +236,17 @@ namespace gpudb
          *                                         keys to use for
          *                                         authenticating the data sink
          *                                     <li>@ref
+         *                                         gpudb::alter_datasink_jdbc_driver_jar_path
+         *                                         "alter_datasink_jdbc_driver_jar_path":
+         *                                         JDBC driver jar file
+         *                                         location.  This may be a
+         *                                         KIFS file.
+         *                                     <li>@ref
+         *                                         gpudb::alter_datasink_jdbc_driver_class_name
+         *                                         "alter_datasink_jdbc_driver_class_name":
+         *                                         Name of the JDBC driver
+         *                                         class
+         *                                     <li>@ref
          *                                         gpudb::alter_datasink_kafka_url
          *                                         "alter_datasink_kafka_url":
          *                                         The publicly-accessible full
@@ -315,21 +336,20 @@ namespace gpudb
          *                                         "alter_datasink_json_format":
          *                                         The desired format of JSON
          *                                         encoded notifications
-         *                                         message.   If @ref
-         *                                         gpudb::alter_datasink_nested
-         *                                         "nested", records are
-         *                                         returned as an array.
-         *                                         Otherwise, only a single
-         *                                         record per messages is
-         *                                         returned.
+         *                                         message.
          *                                         Supported values:
          *                                         <ul>
          *                                             <li>@ref
          *                                                 gpudb::alter_datasink_flat
-         *                                                 "alter_datasink_flat"
+         *                                                 "alter_datasink_flat":
+         *                                                 A single record is
+         *                                                 returned per message
          *                                             <li>@ref
          *                                                 gpudb::alter_datasink_nested
-         *                                                 "alter_datasink_nested"
+         *                                                 "alter_datasink_nested":
+         *                                                 Records are returned
+         *                                                 as an array per
+         *                                                 message
          *                                         </ul>
          *                                         The default value is @ref
          *                                         gpudb::alter_datasink_flat
@@ -387,7 +407,8 @@ namespace gpudb
          *     <li>@ref gpudb::alter_datasink_destination
          *         "alter_datasink_destination": Destination for the output
          *         data in format 'destination_type://path[:port]'.  Supported
-         *         destination types are 'http', 'https' and 'kafka'.
+         *         destination types are 'azure', 'gcs', 'hdfs', 'http',
+         *         'https', 'jdbc', 'kafka', and 's3'.
          *     <li>@ref gpudb::alter_datasink_connection_timeout
          *         "alter_datasink_connection_timeout": Timeout in seconds for
          *         connecting to this sink
@@ -406,30 +427,31 @@ namespace gpudb
          *         "alter_datasink_s3_region": Name of the Amazon S3 region
          *         where the given bucket is located
          *     <li>@ref gpudb::alter_datasink_s3_verify_ssl
-         *         "alter_datasink_s3_verify_ssl": Set to false for testing
-         *         purposes or when necessary to bypass TLS errors (e.g.
-         *         self-signed certificates). This value is true by default.
+         *         "alter_datasink_s3_verify_ssl": Whether to verify SSL
+         *         connections.
          *         Supported values:
          *         <ul>
          *             <li>@ref gpudb::alter_datasink_true
-         *                 "alter_datasink_true"
+         *                 "alter_datasink_true": Connect with SSL verification
          *             <li>@ref gpudb::alter_datasink_false
-         *                 "alter_datasink_false"
+         *                 "alter_datasink_false": Connect without verifying
+         *                 the SSL connection; for testing purposes, bypassing
+         *                 TLS errors, self-signed certificates, etc.
          *         </ul>
          *         The default value is @ref gpudb::alter_datasink_true
          *         "alter_datasink_true".
          *     <li>@ref gpudb::alter_datasink_s3_use_virtual_addressing
-         *         "alter_datasink_s3_use_virtual_addressing": When true
-         *         (default), the requests URI should be specified in
-         *         virtual-hosted-style format where the bucket name is part of
-         *         the domain name in the URL.   Otherwise set to false to use
-         *         path-style URI for requests.
+         *         "alter_datasink_s3_use_virtual_addressing": Whether to use
+         *         virtual addressing when referencing the Amazon S3 sink.
          *         Supported values:
          *         <ul>
          *             <li>@ref gpudb::alter_datasink_true
-         *                 "alter_datasink_true"
+         *                 "alter_datasink_true": The requests URI should be
+         *                 specified in virtual-hosted-style format where the
+         *                 bucket name is part of the domain name in the URL.
          *             <li>@ref gpudb::alter_datasink_false
-         *                 "alter_datasink_false"
+         *                 "alter_datasink_false": Use path-style URI for
+         *                 requests.
          *         </ul>
          *         The default value is @ref gpudb::alter_datasink_true
          *         "alter_datasink_true".
@@ -491,6 +513,12 @@ namespace gpudb
          *     <li>@ref gpudb::alter_datasink_gcs_service_account_keys
          *         "alter_datasink_gcs_service_account_keys": Google Cloud
          *         service account keys to use for authenticating the data sink
+         *     <li>@ref gpudb::alter_datasink_jdbc_driver_jar_path
+         *         "alter_datasink_jdbc_driver_jar_path": JDBC driver jar file
+         *         location.  This may be a KIFS file.
+         *     <li>@ref gpudb::alter_datasink_jdbc_driver_class_name
+         *         "alter_datasink_jdbc_driver_class_name": Name of the JDBC
+         *         driver class
          *     <li>@ref gpudb::alter_datasink_kafka_url
          *         "alter_datasink_kafka_url": The publicly-accessible full
          *         path URL to the kafka broker, e.g.,
@@ -546,16 +574,15 @@ namespace gpudb
          *         each notification message. The default value is '1000000'.
          *     <li>@ref gpudb::alter_datasink_json_format
          *         "alter_datasink_json_format": The desired format of JSON
-         *         encoded notifications message.   If @ref
-         *         gpudb::alter_datasink_nested "nested", records are returned
-         *         as an array. Otherwise, only a single record per messages is
-         *         returned.
+         *         encoded notifications message.
          *         Supported values:
          *         <ul>
          *             <li>@ref gpudb::alter_datasink_flat
-         *                 "alter_datasink_flat"
+         *                 "alter_datasink_flat": A single record is returned
+         *                 per message
          *             <li>@ref gpudb::alter_datasink_nested
-         *                 "alter_datasink_nested"
+         *                 "alter_datasink_nested": Records are returned as an
+         *                 array per message
          *         </ul>
          *         The default value is @ref gpudb::alter_datasink_flat
          *         "alter_datasink_flat".

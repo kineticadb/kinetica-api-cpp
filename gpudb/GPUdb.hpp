@@ -147,8 +147,13 @@ public:
         NONE,         // maps to 'REPL_NONE'
         // Synchronize all endpoint calls
         SYNCHRONOUS,  // maps to 'REPL_SYNC'
+        // Sends a http request directly to each cluster, executes the query locally,
+        // and waits for the response from each cluster
+        SYNCHRONOUS_PARALLEL, // maps to 'REPL_SYNC_PARALLEL'
         // Do NOT synchronize any endpoint call
-        ASYNCHRONOUS  // maps to 'REPL_ASYNC'
+        ASYNCHRONOUS,  // maps to 'REPL_ASYNC'
+        // Queues a request to RMQ for each cluster, executes the query locally, and returns to the user
+        ASYNCHRONOUS_PARALLEL // maps to 'REPL_ASYNC_PARALLEL'
     };
 
 

@@ -339,6 +339,46 @@ namespace gpudb
          *                              href="../../../rm/concepts/#tier-strategies"
          *                              target="_top">tier strategy</a> for the
          *                              table and its columns.
+         *                          <li>@ref
+         *                              gpudb::create_table_load_vectors_policy
+         *                              "create_table_load_vectors_policy": Set
+         *                              startup data loading scheme for the
+         *                              table.
+         *                              Supported values:
+         *                              <ul>
+         *                                  <li>@ref gpudb::create_table_always
+         *                                      "create_table_always"
+         *                                  <li>@ref gpudb::create_table_lazy
+         *                                      "create_table_lazy"
+         *                                  <li>@ref
+         *                                      gpudb::create_table_on_demand
+         *                                      "create_table_on_demand"
+         *                                  <li>@ref gpudb::create_table_system
+         *                                      "create_table_system"
+         *                              </ul>
+         *                              The default value is @ref
+         *                              gpudb::create_table_empty_string
+         *                              "create_table_empty_string".
+         *                          <li>@ref
+         *                              gpudb::create_table_build_pk_index_policy
+         *                              "create_table_build_pk_index_policy":
+         *                              Set startup primary-key index
+         *                              generation scheme for the table.
+         *                              Supported values:
+         *                              <ul>
+         *                                  <li>@ref gpudb::create_table_always
+         *                                      "create_table_always"
+         *                                  <li>@ref gpudb::create_table_lazy
+         *                                      "create_table_lazy"
+         *                                  <li>@ref
+         *                                      gpudb::create_table_on_demand
+         *                                      "create_table_on_demand"
+         *                                  <li>@ref gpudb::create_table_system
+         *                                      "create_table_system"
+         *                              </ul>
+         *                              The default value is @ref
+         *                              gpudb::create_table_empty_string
+         *                              "create_table_empty_string".
          *                      </ul>
          *                      The default value is an empty map.
          */
@@ -566,6 +606,36 @@ namespace gpudb
          *         href="../../../rm/concepts/#tier-strategies"
          *         target="_top">tier strategy</a> for the table and its
          *         columns.
+         *     <li>@ref gpudb::create_table_load_vectors_policy
+         *         "create_table_load_vectors_policy": Set startup data loading
+         *         scheme for the table.
+         *         Supported values:
+         *         <ul>
+         *             <li>@ref gpudb::create_table_always
+         *                 "create_table_always"
+         *             <li>@ref gpudb::create_table_lazy "create_table_lazy"
+         *             <li>@ref gpudb::create_table_on_demand
+         *                 "create_table_on_demand"
+         *             <li>@ref gpudb::create_table_system
+         *                 "create_table_system"
+         *         </ul>
+         *         The default value is @ref gpudb::create_table_empty_string
+         *         "create_table_empty_string".
+         *     <li>@ref gpudb::create_table_build_pk_index_policy
+         *         "create_table_build_pk_index_policy": Set startup
+         *         primary-key index generation scheme for the table.
+         *         Supported values:
+         *         <ul>
+         *             <li>@ref gpudb::create_table_always
+         *                 "create_table_always"
+         *             <li>@ref gpudb::create_table_lazy "create_table_lazy"
+         *             <li>@ref gpudb::create_table_on_demand
+         *                 "create_table_on_demand"
+         *             <li>@ref gpudb::create_table_system
+         *                 "create_table_system"
+         *         </ul>
+         *         The default value is @ref gpudb::create_table_empty_string
+         *         "create_table_empty_string".
          * </ul>
          * The default value is an empty map.
          */
