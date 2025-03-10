@@ -347,18 +347,26 @@ namespace gpudb
          *                              Supported values:
          *                              <ul>
          *                                  <li>@ref gpudb::create_table_always
-         *                                      "create_table_always"
+         *                                      "create_table_always": Load as
+         *                                      much vector data as possible
+         *                                      into memory before accepting
+         *                                      requests.
          *                                  <li>@ref gpudb::create_table_lazy
-         *                                      "create_table_lazy"
+         *                                      "create_table_lazy": Load the
+         *                                      necessary vector data at start,
+         *                                      and load the remainder lazily.
          *                                  <li>@ref
          *                                      gpudb::create_table_on_demand
-         *                                      "create_table_on_demand"
+         *                                      "create_table_on_demand": Load
+         *                                      vector data as requests use it.
          *                                  <li>@ref gpudb::create_table_system
-         *                                      "create_table_system"
+         *                                      "create_table_system": Load
+         *                                      vector data using the
+         *                                      system-configured default.
          *                              </ul>
          *                              The default value is @ref
-         *                              gpudb::create_table_empty_string
-         *                              "create_table_empty_string".
+         *                              gpudb::create_table_system
+         *                              "create_table_system".
          *                          <li>@ref
          *                              gpudb::create_table_build_pk_index_policy
          *                              "create_table_build_pk_index_policy":
@@ -367,18 +375,28 @@ namespace gpudb
          *                              Supported values:
          *                              <ul>
          *                                  <li>@ref gpudb::create_table_always
-         *                                      "create_table_always"
+         *                                      "create_table_always": Generate
+         *                                      as much primary key index data
+         *                                      as possible before accepting
+         *                                      requests.
          *                                  <li>@ref gpudb::create_table_lazy
-         *                                      "create_table_lazy"
+         *                                      "create_table_lazy": Generate
+         *                                      the necessary primary key index
+         *                                      data at start, and load the
+         *                                      remainder lazily.
          *                                  <li>@ref
          *                                      gpudb::create_table_on_demand
-         *                                      "create_table_on_demand"
+         *                                      "create_table_on_demand":
+         *                                      Generate primary key index data
+         *                                      as requests use it.
          *                                  <li>@ref gpudb::create_table_system
-         *                                      "create_table_system"
+         *                                      "create_table_system": Generate
+         *                                      primary key index data using
+         *                                      the system-configured default.
          *                              </ul>
          *                              The default value is @ref
-         *                              gpudb::create_table_empty_string
-         *                              "create_table_empty_string".
+         *                              gpudb::create_table_system
+         *                              "create_table_system".
          *                      </ul>
          *                      The default value is an empty map.
          */
@@ -612,30 +630,40 @@ namespace gpudb
          *         Supported values:
          *         <ul>
          *             <li>@ref gpudb::create_table_always
-         *                 "create_table_always"
-         *             <li>@ref gpudb::create_table_lazy "create_table_lazy"
+         *                 "create_table_always": Load as much vector data as
+         *                 possible into memory before accepting requests.
+         *             <li>@ref gpudb::create_table_lazy "create_table_lazy":
+         *                 Load the necessary vector data at start, and load
+         *                 the remainder lazily.
          *             <li>@ref gpudb::create_table_on_demand
-         *                 "create_table_on_demand"
+         *                 "create_table_on_demand": Load vector data as
+         *                 requests use it.
          *             <li>@ref gpudb::create_table_system
-         *                 "create_table_system"
+         *                 "create_table_system": Load vector data using the
+         *                 system-configured default.
          *         </ul>
-         *         The default value is @ref gpudb::create_table_empty_string
-         *         "create_table_empty_string".
+         *         The default value is @ref gpudb::create_table_system
+         *         "create_table_system".
          *     <li>@ref gpudb::create_table_build_pk_index_policy
          *         "create_table_build_pk_index_policy": Set startup
          *         primary-key index generation scheme for the table.
          *         Supported values:
          *         <ul>
          *             <li>@ref gpudb::create_table_always
-         *                 "create_table_always"
-         *             <li>@ref gpudb::create_table_lazy "create_table_lazy"
+         *                 "create_table_always": Generate as much primary key
+         *                 index data as possible before accepting requests.
+         *             <li>@ref gpudb::create_table_lazy "create_table_lazy":
+         *                 Generate the necessary primary key index data at
+         *                 start, and load the remainder lazily.
          *             <li>@ref gpudb::create_table_on_demand
-         *                 "create_table_on_demand"
+         *                 "create_table_on_demand": Generate primary key index
+         *                 data as requests use it.
          *             <li>@ref gpudb::create_table_system
-         *                 "create_table_system"
+         *                 "create_table_system": Generate primary key index
+         *                 data using the system-configured default.
          *         </ul>
-         *         The default value is @ref gpudb::create_table_empty_string
-         *         "create_table_empty_string".
+         *         The default value is @ref gpudb::create_table_system
+         *         "create_table_system".
          * </ul>
          * The default value is an empty map.
          */

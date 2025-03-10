@@ -1864,6 +1864,23 @@ AdminRepairTableResponse& adminRepairTable( const AdminRepairTableRequest& reque
  *                                     "admin_repair_table_replay_wal":
  *                                     Manually invokes wal replay on the table
  *                             </ul>
+ *                         <li>@ref gpudb::admin_repair_table_verify_all
+ *                             "admin_repair_table_verify_all": If @ref
+ *                             gpudb::admin_repair_table_false "false" only
+ *                             table chunk data already known to be corrupted
+ *                             will be repaired. Otherwise the database will
+ *                             perform a full table scan to check for
+ *                             correctness.
+ *                             Supported values:
+ *                             <ul>
+ *                                 <li>@ref gpudb::admin_repair_table_true
+ *                                     "admin_repair_table_true"
+ *                                 <li>@ref gpudb::admin_repair_table_false
+ *                                     "admin_repair_table_false"
+ *                             </ul>
+ *                             The default value is @ref
+ *                             gpudb::admin_repair_table_false
+ *                             "admin_repair_table_false".
  *                     </ul>
  *                     The default value is an empty map.
  *
@@ -1900,6 +1917,23 @@ AdminRepairTableResponse adminRepairTable( const std::vector<std::string>& table
  *                                     "admin_repair_table_replay_wal":
  *                                     Manually invokes wal replay on the table
  *                             </ul>
+ *                         <li>@ref gpudb::admin_repair_table_verify_all
+ *                             "admin_repair_table_verify_all": If @ref
+ *                             gpudb::admin_repair_table_false "false" only
+ *                             table chunk data already known to be corrupted
+ *                             will be repaired. Otherwise the database will
+ *                             perform a full table scan to check for
+ *                             correctness.
+ *                             Supported values:
+ *                             <ul>
+ *                                 <li>@ref gpudb::admin_repair_table_true
+ *                                     "admin_repair_table_true"
+ *                                 <li>@ref gpudb::admin_repair_table_false
+ *                                     "admin_repair_table_false"
+ *                             </ul>
+ *                             The default value is @ref
+ *                             gpudb::admin_repair_table_false
+ *                             "admin_repair_table_false".
  *                     </ul>
  *                     The default value is an empty map.
  * @param[out] response_  @ref gpudb::AdminRepairTableResponse "Response"
@@ -9865,26 +9899,27 @@ AlterTableResponse& alterTable( const AlterTableRequest& request_,
  *                            resource group of the table.
  *                        <li>@ref gpudb::alter_table_set_load_vectors_policy
  *                            "alter_table_set_load_vectors_policy": Set
- *                            startup data loading scheme for the table
- *                        <li>@ref gpudb::alter_table_always
- *                            "alter_table_always"
- *                        <li>@ref gpudb::alter_table_lazy "alter_table_lazy"
- *                        <li>@ref gpudb::alter_table_on_demand
- *                            "alter_table_on_demand"
- *                        <li>@ref gpudb::alter_table_system
- *                            "alter_table_system"
+ *                            startup data loading scheme for the table; see
+ *                            description of 'load_vectors_policy' in @ref
+ *                            createTable(const std::string&, const std::string&, const std::map<std::string, std::string>&) const
+ *                            "createTable" for possible values for @a value
  *                        <li>@ref gpudb::alter_table_set_build_pk_index_policy
  *                            "alter_table_set_build_pk_index_policy": Set
  *                            startup primary key generation scheme for the
- *                            table
+ *                            table; see description of 'build_pk_index_policy'
+ *                            in @ref
+ *                            createTable(const std::string&, const std::string&, const std::map<std::string, std::string>&) const
+ *                            "createTable" for possible values for @a value
  *                        <li>@ref
  *                            gpudb::alter_table_set_build_materialized_view_policy
  *                            "alter_table_set_build_materialized_view_policy":
- *                            Set startup rebuild scheme for the materialized
- *                            view
+ *                            Set startup rebuilding scheme for the
+ *                            materialized view; see description of
+ *                            'build_materialized_view_policy' in @ref
+ *                            createMaterializedView(const std::string&, const std::map<std::string, std::string>&) const
+ *                            "createMaterializedView" for possible values for
+ *                            @a value
  *                    </ul>
- *                    The default value is @ref gpudb::alter_table_empty_string
- *                    "alter_table_empty_string".
  * @param[in] value  The value of the modification, depending on @a action. For
  *                   example, if @a action is @ref
  *                   gpudb::alter_table_add_column "add_column", this would be
@@ -10375,26 +10410,27 @@ AlterTableResponse alterTable( const std::string& tableName,
  *                            resource group of the table.
  *                        <li>@ref gpudb::alter_table_set_load_vectors_policy
  *                            "alter_table_set_load_vectors_policy": Set
- *                            startup data loading scheme for the table
- *                        <li>@ref gpudb::alter_table_always
- *                            "alter_table_always"
- *                        <li>@ref gpudb::alter_table_lazy "alter_table_lazy"
- *                        <li>@ref gpudb::alter_table_on_demand
- *                            "alter_table_on_demand"
- *                        <li>@ref gpudb::alter_table_system
- *                            "alter_table_system"
+ *                            startup data loading scheme for the table; see
+ *                            description of 'load_vectors_policy' in @ref
+ *                            createTable(const std::string&, const std::string&, const std::map<std::string, std::string>&) const
+ *                            "createTable" for possible values for @a value
  *                        <li>@ref gpudb::alter_table_set_build_pk_index_policy
  *                            "alter_table_set_build_pk_index_policy": Set
  *                            startup primary key generation scheme for the
- *                            table
+ *                            table; see description of 'build_pk_index_policy'
+ *                            in @ref
+ *                            createTable(const std::string&, const std::string&, const std::map<std::string, std::string>&) const
+ *                            "createTable" for possible values for @a value
  *                        <li>@ref
  *                            gpudb::alter_table_set_build_materialized_view_policy
  *                            "alter_table_set_build_materialized_view_policy":
- *                            Set startup rebuild scheme for the materialized
- *                            view
+ *                            Set startup rebuilding scheme for the
+ *                            materialized view; see description of
+ *                            'build_materialized_view_policy' in @ref
+ *                            createMaterializedView(const std::string&, const std::map<std::string, std::string>&) const
+ *                            "createMaterializedView" for possible values for
+ *                            @a value
  *                    </ul>
- *                    The default value is @ref gpudb::alter_table_empty_string
- *                    "alter_table_empty_string".
  * @param[in] value  The value of the modification, depending on @a action. For
  *                   example, if @a action is @ref
  *                   gpudb::alter_table_add_column "add_column", this would be
@@ -14799,20 +14835,28 @@ CreateMaterializedViewResponse& createMaterializedView( const CreateMaterialized
  *                             <ul>
  *                                 <li>@ref
  *                                     gpudb::create_materialized_view_always
- *                                     "create_materialized_view_always"
+ *                                     "create_materialized_view_always":
+ *                                     Rebuild as many materialized views as
+ *                                     possible before accepting requests.
  *                                 <li>@ref
  *                                     gpudb::create_materialized_view_lazy
- *                                     "create_materialized_view_lazy"
+ *                                     "create_materialized_view_lazy": Rebuild
+ *                                     the necessary materialized views at
+ *                                     start, and load the remainder lazily.
  *                                 <li>@ref
  *                                     gpudb::create_materialized_view_on_demand
- *                                     "create_materialized_view_on_demand"
+ *                                     "create_materialized_view_on_demand":
+ *                                     Rebuild materialized views as requests
+ *                                     use them.
  *                                 <li>@ref
  *                                     gpudb::create_materialized_view_system
- *                                     "create_materialized_view_system"
+ *                                     "create_materialized_view_system":
+ *                                     Rebuild materialized views using the
+ *                                     system-configured default.
  *                             </ul>
  *                             The default value is @ref
- *                             gpudb::create_materialized_view_empty_string
- *                             "create_materialized_view_empty_string".
+ *                             gpudb::create_materialized_view_system
+ *                             "create_materialized_view_system".
  *                         <li>@ref gpudb::create_materialized_view_persist
  *                             "create_materialized_view_persist": If @ref
  *                             gpudb::create_materialized_view_true "true",
@@ -14971,20 +15015,28 @@ CreateMaterializedViewResponse createMaterializedView( const std::string& tableN
  *                             <ul>
  *                                 <li>@ref
  *                                     gpudb::create_materialized_view_always
- *                                     "create_materialized_view_always"
+ *                                     "create_materialized_view_always":
+ *                                     Rebuild as many materialized views as
+ *                                     possible before accepting requests.
  *                                 <li>@ref
  *                                     gpudb::create_materialized_view_lazy
- *                                     "create_materialized_view_lazy"
+ *                                     "create_materialized_view_lazy": Rebuild
+ *                                     the necessary materialized views at
+ *                                     start, and load the remainder lazily.
  *                                 <li>@ref
  *                                     gpudb::create_materialized_view_on_demand
- *                                     "create_materialized_view_on_demand"
+ *                                     "create_materialized_view_on_demand":
+ *                                     Rebuild materialized views as requests
+ *                                     use them.
  *                                 <li>@ref
  *                                     gpudb::create_materialized_view_system
- *                                     "create_materialized_view_system"
+ *                                     "create_materialized_view_system":
+ *                                     Rebuild materialized views using the
+ *                                     system-configured default.
  *                             </ul>
  *                             The default value is @ref
- *                             gpudb::create_materialized_view_empty_string
- *                             "create_materialized_view_empty_string".
+ *                             gpudb::create_materialized_view_system
+ *                             "create_materialized_view_system".
  *                         <li>@ref gpudb::create_materialized_view_persist
  *                             "create_materialized_view_persist": If @ref
  *                             gpudb::create_materialized_view_true "true",
@@ -16750,17 +16802,23 @@ CreateTableResponse& createTable( const CreateTableRequest& request_,
  *                             Supported values:
  *                             <ul>
  *                                 <li>@ref gpudb::create_table_always
- *                                     "create_table_always"
+ *                                     "create_table_always": Load as much
+ *                                     vector data as possible into memory
+ *                                     before accepting requests.
  *                                 <li>@ref gpudb::create_table_lazy
- *                                     "create_table_lazy"
+ *                                     "create_table_lazy": Load the necessary
+ *                                     vector data at start, and load the
+ *                                     remainder lazily.
  *                                 <li>@ref gpudb::create_table_on_demand
- *                                     "create_table_on_demand"
+ *                                     "create_table_on_demand": Load vector
+ *                                     data as requests use it.
  *                                 <li>@ref gpudb::create_table_system
- *                                     "create_table_system"
+ *                                     "create_table_system": Load vector data
+ *                                     using the system-configured default.
  *                             </ul>
  *                             The default value is @ref
- *                             gpudb::create_table_empty_string
- *                             "create_table_empty_string".
+ *                             gpudb::create_table_system
+ *                             "create_table_system".
  *                         <li>@ref gpudb::create_table_build_pk_index_policy
  *                             "create_table_build_pk_index_policy": Set
  *                             startup primary-key index generation scheme for
@@ -16768,17 +16826,25 @@ CreateTableResponse& createTable( const CreateTableRequest& request_,
  *                             Supported values:
  *                             <ul>
  *                                 <li>@ref gpudb::create_table_always
- *                                     "create_table_always"
+ *                                     "create_table_always": Generate as much
+ *                                     primary key index data as possible
+ *                                     before accepting requests.
  *                                 <li>@ref gpudb::create_table_lazy
- *                                     "create_table_lazy"
+ *                                     "create_table_lazy": Generate the
+ *                                     necessary primary key index data at
+ *                                     start, and load the remainder lazily.
  *                                 <li>@ref gpudb::create_table_on_demand
- *                                     "create_table_on_demand"
+ *                                     "create_table_on_demand": Generate
+ *                                     primary key index data as requests use
+ *                                     it.
  *                                 <li>@ref gpudb::create_table_system
- *                                     "create_table_system"
+ *                                     "create_table_system": Generate primary
+ *                                     key index data using the
+ *                                     system-configured default.
  *                             </ul>
  *                             The default value is @ref
- *                             gpudb::create_table_empty_string
- *                             "create_table_empty_string".
+ *                             gpudb::create_table_system
+ *                             "create_table_system".
  *                     </ul>
  *                     The default value is an empty map.
  *
@@ -17055,17 +17121,23 @@ CreateTableResponse createTable( const std::string& tableName,
  *                             Supported values:
  *                             <ul>
  *                                 <li>@ref gpudb::create_table_always
- *                                     "create_table_always"
+ *                                     "create_table_always": Load as much
+ *                                     vector data as possible into memory
+ *                                     before accepting requests.
  *                                 <li>@ref gpudb::create_table_lazy
- *                                     "create_table_lazy"
+ *                                     "create_table_lazy": Load the necessary
+ *                                     vector data at start, and load the
+ *                                     remainder lazily.
  *                                 <li>@ref gpudb::create_table_on_demand
- *                                     "create_table_on_demand"
+ *                                     "create_table_on_demand": Load vector
+ *                                     data as requests use it.
  *                                 <li>@ref gpudb::create_table_system
- *                                     "create_table_system"
+ *                                     "create_table_system": Load vector data
+ *                                     using the system-configured default.
  *                             </ul>
  *                             The default value is @ref
- *                             gpudb::create_table_empty_string
- *                             "create_table_empty_string".
+ *                             gpudb::create_table_system
+ *                             "create_table_system".
  *                         <li>@ref gpudb::create_table_build_pk_index_policy
  *                             "create_table_build_pk_index_policy": Set
  *                             startup primary-key index generation scheme for
@@ -17073,17 +17145,25 @@ CreateTableResponse createTable( const std::string& tableName,
  *                             Supported values:
  *                             <ul>
  *                                 <li>@ref gpudb::create_table_always
- *                                     "create_table_always"
+ *                                     "create_table_always": Generate as much
+ *                                     primary key index data as possible
+ *                                     before accepting requests.
  *                                 <li>@ref gpudb::create_table_lazy
- *                                     "create_table_lazy"
+ *                                     "create_table_lazy": Generate the
+ *                                     necessary primary key index data at
+ *                                     start, and load the remainder lazily.
  *                                 <li>@ref gpudb::create_table_on_demand
- *                                     "create_table_on_demand"
+ *                                     "create_table_on_demand": Generate
+ *                                     primary key index data as requests use
+ *                                     it.
  *                                 <li>@ref gpudb::create_table_system
- *                                     "create_table_system"
+ *                                     "create_table_system": Generate primary
+ *                                     key index data using the
+ *                                     system-configured default.
  *                             </ul>
  *                             The default value is @ref
- *                             gpudb::create_table_empty_string
- *                             "create_table_empty_string".
+ *                             gpudb::create_table_system
+ *                             "create_table_system".
  *                     </ul>
  *                     The default value is an empty map.
  * @param[out] response_  @ref gpudb::CreateTableResponse "Response" object

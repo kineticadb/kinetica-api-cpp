@@ -65,9 +65,12 @@ namespace gpudb
 
     // Keywords for /admin/repair/table request
     extern const std::string admin_repair_table_delete_chunks;
+    extern const std::string admin_repair_table_false;
     extern const std::string admin_repair_table_repair_policy;
     extern const std::string admin_repair_table_replay_wal;
     extern const std::string admin_repair_table_shrink_columns;
+    extern const std::string admin_repair_table_true;
+    extern const std::string admin_repair_table_verify_all;
 
     // Keywords for /admin/show/cluster/operations response
     extern const std::string admin_show_cluster_operations_COMPLETED_OK;
@@ -450,7 +453,6 @@ namespace gpudb
     extern const std::string alter_table_add_comment;
     extern const std::string alter_table_add_partition;
     extern const std::string alter_table_allow_homogeneous_tables;
-    extern const std::string alter_table_always;
     extern const std::string alter_table_cagra;
     extern const std::string alter_table_cancel_datasource_subscription;
     extern const std::string alter_table_change_column;
@@ -474,14 +476,12 @@ namespace gpudb
     extern const std::string alter_table_hnsw;
     extern const std::string alter_table_index_options;
     extern const std::string alter_table_index_type;
-    extern const std::string alter_table_lazy;
     extern const std::string alter_table_low_cardinality;
     extern const std::string alter_table_lz4;
     extern const std::string alter_table_lz4hc;
     extern const std::string alter_table_move_to_collection;
     extern const std::string alter_table_move_to_schema;
     extern const std::string alter_table_none;
-    extern const std::string alter_table_on_demand;
     extern const std::string alter_table_pause_datasource_subscription;
     extern const std::string alter_table_protected;
     extern const std::string alter_table_refresh;
@@ -506,7 +506,6 @@ namespace gpudb
     extern const std::string alter_table_set_strategy_definition;
     extern const std::string alter_table_snappy;
     extern const std::string alter_table_strategy_definition;
-    extern const std::string alter_table_system;
     extern const std::string alter_table_table_name;
     extern const std::string alter_table_true;
     extern const std::string alter_table_ttl;

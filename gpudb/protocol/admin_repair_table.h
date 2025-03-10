@@ -57,6 +57,27 @@ namespace gpudb
          *                                      Manually invokes wal replay on
          *                                      the table
          *                              </ul>
+         *                          <li>@ref
+         *                              gpudb::admin_repair_table_verify_all
+         *                              "admin_repair_table_verify_all": If
+         *                              @ref gpudb::admin_repair_table_false
+         *                              "false" only table chunk data already
+         *                              known to be corrupted will be repaired.
+         *                              Otherwise the database will perform a
+         *                              full table scan to check for
+         *                              correctness.
+         *                              Supported values:
+         *                              <ul>
+         *                                  <li>@ref
+         *                                      gpudb::admin_repair_table_true
+         *                                      "admin_repair_table_true"
+         *                                  <li>@ref
+         *                                      gpudb::admin_repair_table_false
+         *                                      "admin_repair_table_false"
+         *                              </ul>
+         *                              The default value is @ref
+         *                              gpudb::admin_repair_table_false
+         *                              "admin_repair_table_false".
          *                      </ul>
          *                      The default value is an empty map.
          */
@@ -89,6 +110,21 @@ namespace gpudb
          *                 "admin_repair_table_replay_wal": Manually invokes
          *                 wal replay on the table
          *         </ul>
+         *     <li>@ref gpudb::admin_repair_table_verify_all
+         *         "admin_repair_table_verify_all": If @ref
+         *         gpudb::admin_repair_table_false "false" only table chunk
+         *         data already known to be corrupted will be repaired.
+         *         Otherwise the database will perform a full table scan to
+         *         check for correctness.
+         *         Supported values:
+         *         <ul>
+         *             <li>@ref gpudb::admin_repair_table_true
+         *                 "admin_repair_table_true"
+         *             <li>@ref gpudb::admin_repair_table_false
+         *                 "admin_repair_table_false"
+         *         </ul>
+         *         The default value is @ref gpudb::admin_repair_table_false
+         *         "admin_repair_table_false".
          * </ul>
          * The default value is an empty map.
          */

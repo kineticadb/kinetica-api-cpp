@@ -1,7 +1,11 @@
 # Kinetica REST API Changelog
 
 
-## Version 7.2
+## Version 7.2.2.12
+
+##### Non-breaking changes
+
+-   Added ``verify_all`` option to ``/admin/repair/table``
 
 
 ### Version 7.2.2.11 -- 2025-02-14

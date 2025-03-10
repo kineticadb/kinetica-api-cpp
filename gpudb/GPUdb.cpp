@@ -822,8 +822,6 @@ namespace gpudb {
     {
         m_haSyncMode = mode;
 
-        // Add the sync mode to the list of headers (overriding it if extant)
-        m_httpHeaders[ HEADER_HA_SYNC_MODE ] = getHASynchronicityModeValue( m_haSyncMode );
     }
 
 
@@ -881,7 +879,7 @@ namespace gpudb {
      */
     void GPUdb::removeHttpHeader( const std::string& header )
     {
-        // Ensure that the given header is not a protecte header
+        // Ensure that the given header is not a protected header
         size_t num_protected_headers = sizeof(PROTECTED_HEADERS)/sizeof(PROTECTED_HEADERS[0]);
         for ( size_t i = 0; i < num_protected_headers; ++i )
         {

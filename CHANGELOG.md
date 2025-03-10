@@ -2,6 +2,15 @@
 
 ## Version 7.2
 
+### Version 7.2.2.3 - 2025-03-10
+
+#### Fixed
+-   Issue with duplicated HA headers
+
+#### Notes
+-   Check CHANGELOG-FUNCTIONS.md for endpoint related changes.
+
+
 ### Version 7.2.2.2 - 2025-02-24
 
 #### Added

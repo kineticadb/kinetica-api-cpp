@@ -63,9 +63,12 @@ namespace gpudb
 
     // Keywords for /admin/repair/table request
     const std::string admin_repair_table_delete_chunks ( "delete_chunks"  );
+    const std::string admin_repair_table_false         ( "false"          );
     const std::string admin_repair_table_repair_policy ( "repair_policy"  );
     const std::string admin_repair_table_replay_wal    ( "replay_wal"     );
     const std::string admin_repair_table_shrink_columns( "shrink_columns" );
+    const std::string admin_repair_table_true          ( "true"           );
+    const std::string admin_repair_table_verify_all    ( "verify_all"     );
 
     // Keywords for /admin/show/cluster/operations response
     const std::string admin_show_cluster_operations_COMPLETED_OK( "COMPLETED_OK" );
@@ -448,7 +451,6 @@ namespace gpudb
     const std::string alter_table_add_comment                       ( "add_comment"                        );
     const std::string alter_table_add_partition                     ( "add_partition"                      );
     const std::string alter_table_allow_homogeneous_tables          ( "allow_homogeneous_tables"           );
-    const std::string alter_table_always                            ( "always"                             );
     const std::string alter_table_cagra                             ( "cagra"                              );
     const std::string alter_table_cancel_datasource_subscription    ( "cancel_datasource_subscription"     );
     const std::string alter_table_change_column                     ( "change_column"                      );
@@ -472,14 +474,12 @@ namespace gpudb
     const std::string alter_table_hnsw                              ( "hnsw"                               );
     const std::string alter_table_index_options                     ( "index_options"                      );
     const std::string alter_table_index_type                        ( "index_type"                         );
-    const std::string alter_table_lazy                              ( "lazy"                               );
     const std::string alter_table_low_cardinality                   ( "low_cardinality"                    );
     const std::string alter_table_lz4                               ( "lz4"                                );
     const std::string alter_table_lz4hc                             ( "lz4hc"                              );
     const std::string alter_table_move_to_collection                ( "move_to_collection"                 );
     const std::string alter_table_move_to_schema                    ( "move_to_schema"                     );
     const std::string alter_table_none                              ( "none"                               );
-    const std::string alter_table_on_demand                         ( "on_demand"                          );
     const std::string alter_table_pause_datasource_subscription     ( "pause_datasource_subscription"      );
     const std::string alter_table_protected                         ( "protected"                          );
     const std::string alter_table_refresh                           ( "refresh"                            );
@@ -504,7 +504,6 @@ namespace gpudb
     const std::string alter_table_set_strategy_definition           ( "set_strategy_definition"            );
     const std::string alter_table_snappy                            ( "snappy"                             );
     const std::string alter_table_strategy_definition               ( "strategy_definition"                );
-    const std::string alter_table_system                            ( "system"                             );
     const std::string alter_table_table_name                        ( "table_name"                         );
     const std::string alter_table_true                              ( "true"                               );
     const std::string alter_table_ttl                               ( "ttl"                                );

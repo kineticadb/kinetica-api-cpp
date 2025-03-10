@@ -403,29 +403,30 @@ namespace gpudb
          *                             gpudb::alter_table_set_load_vectors_policy
          *                             "alter_table_set_load_vectors_policy":
          *                             Set startup data loading scheme for the
-         *                             table
-         *                         <li>@ref gpudb::alter_table_always
-         *                             "alter_table_always"
-         *                         <li>@ref gpudb::alter_table_lazy
-         *                             "alter_table_lazy"
-         *                         <li>@ref gpudb::alter_table_on_demand
-         *                             "alter_table_on_demand"
-         *                         <li>@ref gpudb::alter_table_system
-         *                             "alter_table_system"
+         *                             table; see description of
+         *                             'load_vectors_policy' in @ref
+         *                             GPUdb::createTable(const CreateTableRequest&) const
+         *                             "GPUdb::createTable" for possible values
+         *                             for @a value_
          *                         <li>@ref
          *                             gpudb::alter_table_set_build_pk_index_policy
          *                             "alter_table_set_build_pk_index_policy":
          *                             Set startup primary key generation
-         *                             scheme for the table
+         *                             scheme for the table; see description of
+         *                             'build_pk_index_policy' in @ref
+         *                             GPUdb::createTable(const CreateTableRequest&) const
+         *                             "GPUdb::createTable" for possible values
+         *                             for @a value_
          *                         <li>@ref
          *                             gpudb::alter_table_set_build_materialized_view_policy
          *                             "alter_table_set_build_materialized_view_policy":
-         *                             Set startup rebuild scheme for the
-         *                             materialized view
+         *                             Set startup rebuilding scheme for the
+         *                             materialized view; see description of
+         *                             'build_materialized_view_policy' in @ref
+         *                             GPUdb::createMaterializedView(const CreateMaterializedViewRequest&) const
+         *                             "GPUdb::createMaterializedView" for
+         *                             possible values for @a value_
          *                     </ul>
-         *                     The default value is @ref
-         *                     gpudb::alter_table_empty_string
-         *                     "alter_table_empty_string".
          * @param[in] value_  The value of the modification, depending on @a
          *                    action_. For example, if @a action_ is @ref
          *                    gpudb::alter_table_add_column "add_column", this
@@ -872,20 +873,24 @@ namespace gpudb
          *         of the table.
          *     <li>@ref gpudb::alter_table_set_load_vectors_policy
          *         "alter_table_set_load_vectors_policy": Set startup data
-         *         loading scheme for the table
-         *     <li>@ref gpudb::alter_table_always "alter_table_always"
-         *     <li>@ref gpudb::alter_table_lazy "alter_table_lazy"
-         *     <li>@ref gpudb::alter_table_on_demand "alter_table_on_demand"
-         *     <li>@ref gpudb::alter_table_system "alter_table_system"
+         *         loading scheme for the table; see description of
+         *         'load_vectors_policy' in @ref
+         *         GPUdb::createTable(const CreateTableRequest&) const
+         *         "GPUdb::createTable" for possible values for @ref value
          *     <li>@ref gpudb::alter_table_set_build_pk_index_policy
          *         "alter_table_set_build_pk_index_policy": Set startup primary
-         *         key generation scheme for the table
+         *         key generation scheme for the table; see description of
+         *         'build_pk_index_policy' in @ref
+         *         GPUdb::createTable(const CreateTableRequest&) const
+         *         "GPUdb::createTable" for possible values for @ref value
          *     <li>@ref gpudb::alter_table_set_build_materialized_view_policy
          *         "alter_table_set_build_materialized_view_policy": Set
-         *         startup rebuild scheme for the materialized view
+         *         startup rebuilding scheme for the materialized view; see
+         *         description of 'build_materialized_view_policy' in @ref
+         *         GPUdb::createMaterializedView(const CreateMaterializedViewRequest&) const
+         *         "GPUdb::createMaterializedView" for possible values for @ref
+         *         value
          * </ul>
-         * The default value is @ref gpudb::alter_table_empty_string
-         * "alter_table_empty_string".
          */
         std::string action;
 

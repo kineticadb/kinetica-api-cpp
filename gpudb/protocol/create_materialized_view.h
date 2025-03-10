@@ -79,20 +79,31 @@ namespace gpudb
          *                              <ul>
          *                                  <li>@ref
          *                                      gpudb::create_materialized_view_always
-         *                                      "create_materialized_view_always"
+         *                                      "create_materialized_view_always":
+         *                                      Rebuild as many materialized
+         *                                      views as possible before
+         *                                      accepting requests.
          *                                  <li>@ref
          *                                      gpudb::create_materialized_view_lazy
-         *                                      "create_materialized_view_lazy"
+         *                                      "create_materialized_view_lazy":
+         *                                      Rebuild the necessary
+         *                                      materialized views at start,
+         *                                      and load the remainder lazily.
          *                                  <li>@ref
          *                                      gpudb::create_materialized_view_on_demand
-         *                                      "create_materialized_view_on_demand"
+         *                                      "create_materialized_view_on_demand":
+         *                                      Rebuild materialized views as
+         *                                      requests use them.
          *                                  <li>@ref
          *                                      gpudb::create_materialized_view_system
-         *                                      "create_materialized_view_system"
+         *                                      "create_materialized_view_system":
+         *                                      Rebuild materialized views
+         *                                      using the system-configured
+         *                                      default.
          *                              </ul>
          *                              The default value is @ref
-         *                              gpudb::create_materialized_view_empty_string
-         *                              "create_materialized_view_empty_string".
+         *                              gpudb::create_materialized_view_system
+         *                              "create_materialized_view_system".
          *                          <li>@ref
          *                              gpudb::create_materialized_view_persist
          *                              "create_materialized_view_persist": If
@@ -249,17 +260,24 @@ namespace gpudb
          *         Supported values:
          *         <ul>
          *             <li>@ref gpudb::create_materialized_view_always
-         *                 "create_materialized_view_always"
+         *                 "create_materialized_view_always": Rebuild as many
+         *                 materialized views as possible before accepting
+         *                 requests.
          *             <li>@ref gpudb::create_materialized_view_lazy
-         *                 "create_materialized_view_lazy"
+         *                 "create_materialized_view_lazy": Rebuild the
+         *                 necessary materialized views at start, and load the
+         *                 remainder lazily.
          *             <li>@ref gpudb::create_materialized_view_on_demand
-         *                 "create_materialized_view_on_demand"
+         *                 "create_materialized_view_on_demand": Rebuild
+         *                 materialized views as requests use them.
          *             <li>@ref gpudb::create_materialized_view_system
-         *                 "create_materialized_view_system"
+         *                 "create_materialized_view_system": Rebuild
+         *                 materialized views using the system-configured
+         *                 default.
          *         </ul>
          *         The default value is @ref
-         *         gpudb::create_materialized_view_empty_string
-         *         "create_materialized_view_empty_string".
+         *         gpudb::create_materialized_view_system
+         *         "create_materialized_view_system".
          *     <li>@ref gpudb::create_materialized_view_persist
          *         "create_materialized_view_persist": If @ref
          *         gpudb::create_materialized_view_true "true", then the
