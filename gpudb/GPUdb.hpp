@@ -591,10 +591,17 @@ private:
     /// Initialize the GPUdb object
     void init();
 
+    void removeProtectedHttpHeaders();
+
     // Handle the primary host URL, if any is given via options
     void handlePrimaryURL();
 
-    const std::string createAuthorizationHeader();
+    const std::string createAuthorizationHeader() const;
+
+    void getAuthorizationFromHttpHeaders();
+
+    gpudb::GPUdb::HASynchronicityMode createHASyncModeHeader() const;
+    static HASynchronicityMode findHASyncModeByValue(const std::vector<std::string>& values, const std::string value);
 
     // Update the URLs with the available HA ring information
     void getHAringHeadNodeAddresses();

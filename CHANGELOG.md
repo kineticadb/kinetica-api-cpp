@@ -2,6 +2,12 @@
 
 ## Version 7.2
 
+### Version 7.2.2.4 - 2025-03-27
+
+#### Fixed
+-   Potential for protected headers to be added twice
+
+
 ### Version 7.2.2.3 - 2025-03-10
 
 #### Fixed

@@ -5,6 +5,7 @@
 
 #include <boost/lexical_cast.hpp>
 #include <boost/random.hpp>
+#include <boost/algorithm/string.hpp>
 #include <snappy.h>
 
 #include <algorithm>  // for std::random_shuffle, std::iter_swap
@@ -13,10 +14,15 @@
 #include <map>
 #include <stdexcept>  // for std::out_of_range
 #include <vector>
+#include <unordered_map>
 
 
 namespace gpudb {
-    static const char base64Chars[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+    // static const char base64Chars[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+    static const std::string base64Chars =
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+    "abcdefghijklmnopqrstuvwxyz"
+    "0123456789+/";
 
     /// Special error messages indicating that a connection failure happened
     /// (generally should trigger a high-availability failover if applicable)
@@ -88,6 +94,40 @@ namespace gpudb {
         return result;
     }
 
+    std::string base64Decode(const std::string &encoded) {
+        if (encoded.empty()) return "";
+    
+        std::unordered_map<char, unsigned char> base64Map;
+        for (size_t i = 0; i < base64Chars.size(); ++i) {
+            base64Map[base64Chars[i]] = static_cast<unsigned char>(i);
+        }
+    
+        size_t padding = 0;
+        if (encoded.length() >= 2) {
+            if (encoded[encoded.length() - 1] == '=') padding++;
+            if (encoded[encoded.length() - 2] == '=') padding++;
+        }
+    
+        size_t blocks = (encoded.length() / 4);
+        std::string result;
+        result.reserve(blocks * 3);
+    
+        for (size_t i = 0; i < blocks; ++i) {
+            size_t start = i * 4;
+    
+            unsigned char c0 = base64Map[encoded[start]];
+            unsigned char c1 = base64Map[encoded[start + 1]];
+            unsigned char c2 = (encoded[start + 2] == '=' ? 0 : base64Map[encoded[start + 2]]);
+            unsigned char c3 = (encoded[start + 3] == '=' ? 0 : base64Map[encoded[start + 3]]);
+    
+            result.push_back((c0 << 2) | ((c1 & 0x30) >> 4));
+            if (encoded[start + 2] != '=') result.push_back(((c1 & 0x0F) << 4) | ((c2 & 0x3C) >> 2));
+            if (encoded[start + 3] != '=') result.push_back(((c2 & 0x03) << 6) | c3);
+        }
+    
+        return result;
+    }
+
     size_t randomItem(size_t max)
     {
         boost::mt19937 engine;
@@ -126,7 +166,10 @@ namespace gpudb {
         // Head node URLs
         m_urls.push_back(url);
 
+        getAuthorizationFromHttpHeaders();
+
         m_authorization = createAuthorizationHeader();
+        m_haSyncMode = createHASyncModeHeader();
 
         init();
     }
@@ -180,7 +223,10 @@ namespace gpudb {
             m_urls.push_back( url_ );
         }
 
+        getAuthorizationFromHttpHeaders();
+
         m_authorization = createAuthorizationHeader();
+        m_haSyncMode = createHASyncModeHeader();
 
         init();
     }
@@ -218,7 +264,10 @@ namespace gpudb {
             throw std::invalid_argument("At least one URL must be specified.");
         }
 
+        getAuthorizationFromHttpHeaders();
+
         m_authorization = createAuthorizationHeader();
+        m_haSyncMode = createHASyncModeHeader();
 
         init();
     }
@@ -258,7 +307,10 @@ namespace gpudb {
         m_urls.reserve(urls.size());
         m_urls.insert(m_urls.end(), urls.begin(), urls.end());
 
+        getAuthorizationFromHttpHeaders();
+
         m_authorization = createAuthorizationHeader();
+        m_haSyncMode = createHASyncModeHeader();
 
         init();
     }
@@ -272,10 +324,23 @@ namespace gpudb {
             delete m_primaryUrlPtr;
         }
     }
+
+    void GPUdb::removeProtectedHttpHeaders() 
+    {
+        // Remove the protected HTTP headers keys
+        for (const auto& key :PROTECTED_HEADERS ) {
+            m_httpHeaders.erase(key);
+        }
     
+    }
     
     void GPUdb::init()
     {
+        // If protected HTTP headers have been set in options, remove them.
+        // At this point, 'm_httpHeaders' can only be populated through ctor assignment
+        // from 'options.getHttpHeaders()'.
+        removeProtectedHttpHeaders();
+
         if ( m_urls.empty() )
         {
             throw std::invalid_argument("At least one URL must be specified.");
@@ -389,16 +454,62 @@ namespace gpudb {
         return;
     }   // end handlePrimaryUrl
 
-    const std::string GPUdb::createAuthorizationHeader()
+    void GPUdb::getAuthorizationFromHttpHeaders() {
+        if(m_httpHeaders.find(HEADER_AUTHORIZATION) != m_httpHeaders.end()) {
+            auto headerValue = *(m_httpHeaders.find(HEADER_AUTHORIZATION));
+            if (headerValue.second.size() > 6 && headerValue.second.substr(0, 6) == "Bearer") {
+                // Form "Bearer <token>"
+                std::vector<std::string> strs;
+                boost::split(strs, headerValue.second, boost::is_any_of(" "));
+                m_oauthToken = strs.size() == 2 && !strs[1].empty() ? strs[1] : "";
+            }
+            if (headerValue.second.size() > 5 && headerValue.second.substr(0, 5) == "Basic") {
+                // Form "Basic <encoded string>"
+                std::vector<std::string> strs;
+                boost::split(strs, headerValue.second, boost::is_any_of(" "));
+                if( strs.size() == 2 && !strs[1].empty()) {
+                    std::string decodedCredentials = base64Decode(strs[1]);
+                    std::vector<std::string> userPassword;
+                    boost::split(userPassword, decodedCredentials, boost::is_any_of(":"));
+                    m_username = userPassword[0];
+                    m_password = userPassword[1];
+                }
+            }
+        } 
+    }
+
+    const std::string GPUdb::createAuthorizationHeader() const
     {
-        if( !m_options.getOauthToken().empty()) {
-            return "Bearer " + m_options.getOauthToken();
-        } else if ( !m_options.getUsername().empty() || !m_options.getPassword().empty() ) {
-            return "Basic " + base64Encode( m_options.getUsername() + ":" + m_options.getPassword() );
+        if( !m_oauthToken.empty()) {
+            return "Bearer " + m_oauthToken;
+        } 
+        else if ( !m_username.empty() || !m_password.empty() ) {
+            return "Basic " + base64Encode( m_username + ":" + m_password );
         } else {
             return "";
         }
 
+    }
+
+    gpudb::GPUdb::HASynchronicityMode GPUdb::createHASyncModeHeader() const {
+        // GPUdb::Options options = m_options;
+        // options.addHttpHeader( HEADER_HA_SYNC_MODE, HA_SYNCHRONICITY_MODE_VALUES[m_haSyncMode] );
+        if( m_httpHeaders.find(HEADER_HA_SYNC_MODE) != m_httpHeaders.end() ) {
+            auto headerValue = *(m_httpHeaders.find(HEADER_HA_SYNC_MODE));
+            std::vector<std::string> vec(std::begin(HA_SYNCHRONICITY_MODE_VALUES), std::end(HA_SYNCHRONICITY_MODE_VALUES));
+            auto haSyncMode = findHASyncModeByValue(vec, headerValue.second);
+            return haSyncMode;
+        }
+        return gpudb::GPUdb::HASynchronicityMode::DEFAULT;
+    }
+
+    gpudb::GPUdb::HASynchronicityMode GPUdb::findHASyncModeByValue(const std::vector<std::string>& values, const std::string value) {
+        for (size_t i = 0; i < values.size(); ++i) {
+            if (values[i] == value) {
+                return static_cast<HASynchronicityMode>(i); // Return the found enum value
+            }
+        }
+        return HASynchronicityMode::DEFAULT; 
     }
 
     /**
