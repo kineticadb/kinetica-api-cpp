@@ -377,6 +377,7 @@ ADD_LIBRARY_FULL( gpudb_api_cpp_lib_${STATIC_OR_SHARED} ${STATIC_OR_SHARED}
     HEADERS
         Avro.hpp
         ColumnProperties.h
+        FailbackPollerService.hpp
         GenericRecord.hpp
         GPUdbException.hpp
         GPUdb.hpp
@@ -394,6 +395,7 @@ ADD_LIBRARY_FULL( gpudb_api_cpp_lib_${STATIC_OR_SHARED} ${STATIC_OR_SHARED}
     SOURCES
         Avro.cpp
         ColumnProperties.cpp
+        FailbackPollerService.cpp
         GenericRecord.cpp
         GPUdb.cpp
         GPUdbException.cpp
@@ -434,43 +436,6 @@ ADD_EXECUTABLE_FULL( gpudb-api-example
 )
 
 endfunction( gpudb_api_cpp_example_TARGETS )
-
-
-# ---------------------------------------------------------------------------
-# test executables
-# ---------------------------------------------------------------------------
-
-function( gpudb_api_cpp_multihead_ingest_TARGETS )
-
-ADD_EXECUTABLE_FULL( test_multihead_ingest
-    HEADERS
-    SOURCES
-        test_multihead_ingest.cpp
-    LINK_LIBRARIES
-        gpudb_api_cpp_lib_STATIC
-        ${GPUDB_API_CPP_LINK_LIBRARIES}
-    PROPERTIES COMPILE_FLAGS "-std=c++14"
-    PROPERTIES FOLDER "Example"
-    PROPERTIES OUTPUT_NAME "test_multihead_ingest"
-)
-
-endfunction( gpudb_api_cpp_multihead_ingest_TARGETS )
-
-function( gpudb_api_cpp_multihead_ingest_no_clientside_pk_vaidations_TARGETS )
-
-ADD_EXECUTABLE_FULL( test_multihead_ingest_no_clientside_pk_validations
-    HEADERS
-    SOURCES
-        test_multihead_ingest_no_clientside_pk_validations.cpp
-    LINK_LIBRARIES
-        gpudb_api_cpp_lib_STATIC
-        ${GPUDB_API_CPP_LINK_LIBRARIES}
-    PROPERTIES COMPILE_FLAGS "-std=c++14"
-    PROPERTIES FOLDER "Example"
-    PROPERTIES OUTPUT_NAME "test_multihead_ingest_no_clientside_pk_validations"
-)
-
-endfunction( gpudb_api_cpp_multihead_ingest_no_clientside_pk_vaidations_TARGETS )
 
 # ===========================================================================
 # Add the subdirectories with their projects in them

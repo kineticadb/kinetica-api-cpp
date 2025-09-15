@@ -54,8 +54,8 @@ namespace gpudb
          *                                  <li>@ref
          *                                      gpudb::admin_repair_table_replay_wal
          *                                      "admin_repair_table_replay_wal":
-         *                                      Manually invokes wal replay on
-         *                                      the table
+         *                                      Manually invokes write-ahead
+         *                                      log (WAL) replay on the table
          *                              </ul>
          *                          <li>@ref
          *                              gpudb::admin_repair_table_verify_all
@@ -108,7 +108,7 @@ namespace gpudb
          *                 corrupted chunks to the shortest column
          *             <li>@ref gpudb::admin_repair_table_replay_wal
          *                 "admin_repair_table_replay_wal": Manually invokes
-         *                 wal replay on the table
+         *                 write-ahead log (WAL) replay on the table
          *         </ul>
          *     <li>@ref gpudb::admin_repair_table_verify_all
          *         "admin_repair_table_verify_all": If @ref

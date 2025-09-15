@@ -12,8 +12,8 @@ namespace gpudb
      * A set of parameters for @ref GPUdb::showWal(const ShowWalRequest&) const
      * "GPUdb::showWal".
      *
-     * Requests table wal properties.
-     * Returns information about the requested table wal entries.
+     * Requests table write-ahead log (WAL) properties.
+     * Returns information about the requested table WAL entries.
      */
     struct ShowWalRequest
     {
@@ -36,7 +36,7 @@ namespace gpudb
          *                          <li>@ref gpudb::show_wal_show_settings
          *                              "show_wal_show_settings": If @ref
          *                              gpudb::show_wal_true "true" include a
-         *                              map of the wal settings for the
+         *                              map of the WAL settings for the
          *                              requested tables.
          *                              Supported values:
          *                              <ul>
@@ -65,7 +65,7 @@ namespace gpudb
          * Optional parameters.
          * <ul>
          *     <li>@ref gpudb::show_wal_show_settings "show_wal_show_settings":
-         *         If @ref gpudb::show_wal_true "true" include a map of the wal
+         *         If @ref gpudb::show_wal_true "true" include a map of the WAL
          *         settings for the requested tables.
          *         Supported values:
          *         <ul>
@@ -150,12 +150,12 @@ namespace gpudb
         std::vector<std::string> tableNames;
 
         /**
-         * List of current wal usage.
+         * List of current WAL usage.
          */
         std::vector<std::vector<int64_t> > sizes;
 
         /**
-         * List of wal capacities.
+         * List of WAL capacities.
          */
         std::vector<int64_t> capacities;
 
@@ -165,7 +165,7 @@ namespace gpudb
         std::vector<std::vector<int64_t> > uncommitted;
 
         /**
-         * List of table wal settings.
+         * List of table WAL settings.
          */
         std::vector<std::map<std::string, std::string> > settings;
 

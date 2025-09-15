@@ -21,7 +21,7 @@ namespace gpudb
      * GPUdb::showDirectories(const ShowDirectoriesRequest&) const
      * "GPUdb::showDirectories". The user must have write permission on the
      * directory. Nested directories are permitted in file name paths.
-     * Directories are deliniated with the directory separator of '/'.  For
+     * Directories are delineated with the directory separator of '/'.  For
      * example, given the file path '/a/b/c/d.txt', 'a' must be a KiFS
      * directory.
      *

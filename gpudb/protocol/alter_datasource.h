@@ -364,12 +364,17 @@ namespace gpudb
          *                                           then the user's default
          *                                           schema will be used.
          *                                       <li>@ref
-         *                                           gpudb::alter_datasource_schema_registry_location
-         *                                           "alter_datasource_schema_registry_location":
-         *                                           Location of Confluent
-         *                                           Schema Registry in
-         *                                           '[storage_path[:storage_port]]'
-         *                                           format.
+         *                                           gpudb::alter_datasource_schema_registry_connection_retries
+         *                                           "alter_datasource_schema_registry_connection_retries":
+         *                                           Confluent Schema registry
+         *                                           connection timeout (in
+         *                                           Secs)
+         *                                       <li>@ref
+         *                                           gpudb::alter_datasource_schema_registry_connection_timeout
+         *                                           "alter_datasource_schema_registry_connection_timeout":
+         *                                           Confluent Schema registry
+         *                                           connection timeout (in
+         *                                           Secs)
          *                                       <li>@ref
          *                                           gpudb::alter_datasource_schema_registry_credential
          *                                           "alter_datasource_schema_registry_credential":
@@ -378,6 +383,13 @@ namespace gpudb
          *                                           href="../../../concepts/credentials"
          *                                           target="_top">credential</a>
          *                                           object name.
+         *                                       <li>@ref
+         *                                           gpudb::alter_datasource_schema_registry_location
+         *                                           "alter_datasource_schema_registry_location":
+         *                                           Location of Confluent
+         *                                           Schema Registry in
+         *                                           '[storage_path[:storage_port]]'
+         *                                           format.
          *                                       <li>@ref
          *                                           gpudb::alter_datasource_schema_registry_port
          *                                           "alter_datasource_schema_registry_port":
@@ -588,14 +600,22 @@ namespace gpudb
          *         doesn't exist, an error will be thrown. If @ref
          *         gpudb::alter_datasource_schema_name "schema_name" is empty,
          *         then the user's default schema will be used.
-         *     <li>@ref gpudb::alter_datasource_schema_registry_location
-         *         "alter_datasource_schema_registry_location": Location of
-         *         Confluent Schema Registry in '[storage_path[:storage_port]]'
-         *         format.
+         *     <li>@ref
+         *         gpudb::alter_datasource_schema_registry_connection_retries
+         *         "alter_datasource_schema_registry_connection_retries":
+         *         Confluent Schema registry connection timeout (in Secs)
+         *     <li>@ref
+         *         gpudb::alter_datasource_schema_registry_connection_timeout
+         *         "alter_datasource_schema_registry_connection_timeout":
+         *         Confluent Schema registry connection timeout (in Secs)
          *     <li>@ref gpudb::alter_datasource_schema_registry_credential
          *         "alter_datasource_schema_registry_credential": Confluent
          *         Schema Registry <a href="../../../concepts/credentials"
          *         target="_top">credential</a> object name.
+         *     <li>@ref gpudb::alter_datasource_schema_registry_location
+         *         "alter_datasource_schema_registry_location": Location of
+         *         Confluent Schema Registry in '[storage_path[:storage_port]]'
+         *         format.
          *     <li>@ref gpudb::alter_datasource_schema_registry_port
          *         "alter_datasource_schema_registry_port": Confluent Schema
          *         Registry port (optional).

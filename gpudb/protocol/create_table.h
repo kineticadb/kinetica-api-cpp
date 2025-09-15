@@ -13,10 +13,38 @@ namespace gpudb
      * GPUdb::createTable(const CreateTableRequest&) const
      * "GPUdb::createTable".
      *
-     * Creates a new table. If a new table is being created, the type of the
-     * table is given by @ref typeId, which must be the ID of a currently
-     * registered type (i.e. one created via @ref
-     * GPUdb::createType(const CreateTypeRequest&) const "GPUdb::createType").
+     * Creates a new table with the given type (definition of columns).  The
+     * type is specified in @ref typeId as either a numerical type ID (as
+     * returned by @ref GPUdb::createType(const CreateTypeRequest&) const
+     * "GPUdb::createType") or as a list of columns, each specified as a list
+     * of the column name, data type, and any column attributes.
+     *
+     * Example of a type definition with some parameters:
+     * @code
+     *
+     *     [
+     *         ["id", "int8", "primary_key"],
+     *         ["dept_id", "int8", "primary_key", "shard_key"],
+     *         ["manager_id", "int8", "nullable"],
+     *         ["first_name", "char32"],
+     *         ["last_name", "char64"],
+     *         ["salary", "decimal"],
+     *         ["hire_date", "date"]
+     *     ]
+     *
+     * @endcode
+     * Each column definition consists of the column name (which should meet
+     * the standard <a href="../../../concepts/tables/#table-naming-criteria"
+     * target="_top">column naming criteria</a>), the column's <a
+     * href="../../../concepts/types/#types-chart" target="_top">specific
+     * type</a> (int, long, float, double, string, bytes, or any of the
+     * properties map values from @ref
+     * GPUdb::createType(const CreateTypeRequest&) const "GPUdb::createType"),
+     * and any <a href="../../../concepts/types/#types-data-handling"
+     * target="_top">data handling</a>, <a
+     * href="../../../concepts/types/#types-data-keys" target="_top">data
+     * key</a>, or <a href="../../../concepts/types/#types-data-replace"
+     * target="_top">data replacement</a> properties.
      *
      * A table may optionally be designated to use a <a
      * href="../../../concepts/tables/#replication"
@@ -57,9 +85,12 @@ namespace gpudb
          *                        using the @ref
          *                        gpudb::create_table_no_error_if_exists
          *                        "no_error_if_exists" option.
-         * @param[in] typeId_  ID of a currently registered type. All objects
-         *                     added to the newly created table will be of this
-         *                     type.
+         * @param[in] typeId_  The type for the table, specified as either an
+         *                     existing table's numerical type ID (as returned
+         *                     by @ref
+         *                     GPUdb::createType(const CreateTypeRequest&) const
+         *                     "GPUdb::createType") or a type definition (as
+         *                     described above).
          * @param[in] options_  Optional parameters.
          *                      <ul>
          *                          <li>@ref
@@ -127,21 +158,6 @@ namespace gpudb
          *                              "GPUdb::createSchema" to create a
          *                              schema instead]  Indicates whether to
          *                              create a schema instead of a table.
-         *                              Supported values:
-         *                              <ul>
-         *                                  <li>@ref gpudb::create_table_true
-         *                                      "create_table_true"
-         *                                  <li>@ref gpudb::create_table_false
-         *                                      "create_table_false"
-         *                              </ul>
-         *                              The default value is @ref
-         *                              gpudb::create_table_false
-         *                              "create_table_false".
-         *                          <li>@ref
-         *                              gpudb::create_table_disallow_homogeneous_tables
-         *                              "create_table_disallow_homogeneous_tables":
-         *                              No longer supported; value will be
-         *                              ignored.
          *                              Supported values:
          *                              <ul>
          *                                  <li>@ref gpudb::create_table_true
@@ -314,14 +330,11 @@ namespace gpudb
          *                              href="../../../concepts/tables_memory_only/"
          *                              target="_top">memory-only table</a>. A
          *                              result table cannot contain columns
-         *                              with store_only or text_search <a
+         *                              with text_search <a
          *                              href="../../../concepts/types/#data-handling"
-         *                              target="_top">data-handling</a> or that
-         *                              are <a
-         *                              href="../../../concepts/types/#primitive-types"
-         *                              target="_top">non-charN strings</a>,
-         *                              and it will not be retained if the
-         *                              server is restarted.
+         *                              target="_top">data-handling</a>, and it
+         *                              will not be retained if the server is
+         *                              restarted.
          *                              Supported values:
          *                              <ul>
          *                                  <li>@ref gpudb::create_table_true
@@ -339,6 +352,13 @@ namespace gpudb
          *                              href="../../../rm/concepts/#tier-strategies"
          *                              target="_top">tier strategy</a> for the
          *                              table and its columns.
+         *                          <li>@ref
+         *                              gpudb::create_table_compression_codec
+         *                              "create_table_compression_codec": The
+         *                              default <a
+         *                              href="../../../concepts/column_compression/"
+         *                              target="_top">compression codec</a> for
+         *                              this table's columns.
          *                          <li>@ref
          *                              gpudb::create_table_load_vectors_policy
          *                              "create_table_load_vectors_policy": Set
@@ -421,8 +441,10 @@ namespace gpudb
         std::string tableName;
 
         /**
-         * ID of a currently registered type. All objects added to the newly
-         * created table will be of this type.
+         * The type for the table, specified as either an existing table's
+         * numerical type ID (as returned by @ref
+         * GPUdb::createType(const CreateTypeRequest&) const
+         * "GPUdb::createType") or a type definition (as described above).
          */
         std::string typeId;
 
@@ -473,16 +495,6 @@ namespace gpudb
          *         GPUdb::createSchema(const CreateSchemaRequest&) const
          *         "GPUdb::createSchema" to create a schema instead]  Indicates
          *         whether to create a schema instead of a table.
-         *         Supported values:
-         *         <ul>
-         *             <li>@ref gpudb::create_table_true "create_table_true"
-         *             <li>@ref gpudb::create_table_false "create_table_false"
-         *         </ul>
-         *         The default value is @ref gpudb::create_table_false
-         *         "create_table_false".
-         *     <li>@ref gpudb::create_table_disallow_homogeneous_tables
-         *         "create_table_disallow_homogeneous_tables": No longer
-         *         supported; value will be ignored.
          *         Supported values:
          *         <ul>
          *             <li>@ref gpudb::create_table_true "create_table_true"
@@ -606,12 +618,10 @@ namespace gpudb
          *         "create_table_is_result_table": Indicates whether the table
          *         is a <a href="../../../concepts/tables_memory_only/"
          *         target="_top">memory-only table</a>. A result table cannot
-         *         contain columns with store_only or text_search <a
+         *         contain columns with text_search <a
          *         href="../../../concepts/types/#data-handling"
-         *         target="_top">data-handling</a> or that are <a
-         *         href="../../../concepts/types/#primitive-types"
-         *         target="_top">non-charN strings</a>, and it will not be
-         *         retained if the server is restarted.
+         *         target="_top">data-handling</a>, and it will not be retained
+         *         if the server is restarted.
          *         Supported values:
          *         <ul>
          *             <li>@ref gpudb::create_table_true "create_table_true"
@@ -623,6 +633,11 @@ namespace gpudb
          *         "create_table_strategy_definition": The <a
          *         href="../../../rm/concepts/#tier-strategies"
          *         target="_top">tier strategy</a> for the table and its
+         *         columns.
+         *     <li>@ref gpudb::create_table_compression_codec
+         *         "create_table_compression_codec": The default <a
+         *         href="../../../concepts/column_compression/"
+         *         target="_top">compression codec</a> for this table's
          *         columns.
          *     <li>@ref gpudb::create_table_load_vectors_policy
          *         "create_table_load_vectors_policy": Set startup data loading

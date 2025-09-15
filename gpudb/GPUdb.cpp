@@ -2,6 +2,7 @@
 
 #include "gpudb/GenericRecord.hpp"
 #include "gpudb/utils/Utils.h"
+#include "gpudb/FailbackPollerService.hpp"
 
 #include <boost/lexical_cast.hpp>
 #include <boost/random.hpp>
@@ -18,7 +19,6 @@
 
 
 namespace gpudb {
-    // static const char base64Chars[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
     static const std::string base64Chars =
     "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
     "abcdefghijklmnopqrstuvwxyz"
@@ -127,7 +127,7 @@ namespace gpudb {
     
         return result;
     }
-
+    
     size_t randomItem(size_t max)
     {
         boost::mt19937 engine;
@@ -161,7 +161,8 @@ namespace gpudb {
         m_httpHeaders( options.getHttpHeaders() ),
         m_timeout( options.getTimeout() ),
         m_haSyncMode( HASynchronicityMode::DEFAULT ),
-        m_options( options )
+        m_options( options ),
+        pollerService( nullptr )
     {
         // Head node URLs
         m_urls.push_back(url);
@@ -199,7 +200,8 @@ namespace gpudb {
         m_httpHeaders(options.getHttpHeaders()),
         m_timeout(options.getTimeout()),
         m_haSyncMode( HASynchronicityMode::DEFAULT ),
-        m_options( options )
+        m_options( options ),
+        pollerService( nullptr )
     {
         // Split on commas, if any
         char comma = ',';
@@ -212,6 +214,7 @@ namespace gpudb {
             while ( std::getline( iss, token, comma ) )
             {
                 // Parse a single URL
+                boost::algorithm::trim(token);
                 HttpUrl url_ = HttpUrl( token );
                 m_urls.push_back( url_ );
             }
@@ -257,7 +260,8 @@ namespace gpudb {
         m_httpHeaders(options.getHttpHeaders()),
         m_timeout(options.getTimeout()),
         m_haSyncMode( HASynchronicityMode::DEFAULT ),
-        m_options( options )
+        m_options( options ),
+        pollerService( nullptr )
     {
         if (urls.empty())
         {
@@ -297,7 +301,8 @@ namespace gpudb {
         m_httpHeaders(options.getHttpHeaders()),
         m_timeout(options.getTimeout()),
         m_haSyncMode( HASynchronicityMode::DEFAULT ),
-        m_options( options )
+        m_options( options ),
+        pollerService( nullptr )
     {
         if (urls.empty())
         {
@@ -319,6 +324,10 @@ namespace gpudb {
     GPUdb::~GPUdb()
     {
         // Release resources
+        if( pollerService ) {
+            pollerService.reset();
+        }
+
         if ( m_primaryUrlPtr != NULL )
         {
             delete m_primaryUrlPtr;
@@ -614,6 +623,20 @@ namespace gpudb {
         }
     }   // end getHAringHeadNodeAdresses
 
+    bool GPUdb::isKineticaRunning(const std::string& primaryURL) const {
+        // Get the system properties to find out about the HA ring nodes
+        ShowSystemStatusRequest  request;
+        ShowSystemStatusResponse response;
+        try {
+            HttpUrl url( primaryURL, "/show/system/status" );
+            response = submitRequest( url, request, response );
+            return true;
+        } catch (const GPUdbException&) {
+
+            return false;
+        }
+
+    }
 
     /**
      * Randomly shuffles the list of high availability URL indices so that HA
@@ -1421,27 +1444,40 @@ namespace gpudb {
         {
             throw GPUdbHAUnavailableException( "GPUdb unavailable (no backup cluster exists); ", m_urls );
         }
-        // Increment the index by one (mod url list length)
-        m_currentUrl = (m_currentUrl + 1) % m_urls.size();
-        
-        // If we've circled back; shuffle the indices again so that future
-        // requests go to a different randomly selected cluster, but also
-        // let the caller know that we've circled back
-        if (&m_urls[ m_urlIndices[ m_currentUrl ] ] == oldUrl)
-        {
-            // Release the lock since randomizeURLs() uses it, too
-            lock.unlock();
-            // Re-shuffle and set the index counter to zero
-            randomizeURLs();
 
-            // Let the user know that we've circled back
-            throw GPUdbHAUnavailableException( "GPUdb unavailable (backup clusters exist, but all failed); ", m_urls );
+        while( !isKineticaRunning(m_urls[ m_urlIndices[ m_currentUrl ] ].getUrl())) {
+            // Increment the index by one (mod url list length)
+            m_currentUrl = (m_currentUrl + 1) % m_urls.size();
+            
+            // If we've circled back; shuffle the indices again so that future
+            // requests go to a different randomly selected cluster, but also
+            // let the caller know that we've circled back
+            if (&m_urls[ m_urlIndices[ m_currentUrl ] ] == oldUrl)
+            {
+                // Release the lock since randomizeURLs() uses it, too
+                lock.unlock();
+                // Re-shuffle and set the index counter to zero
+                randomizeURLs();
+
+                // Let the user know that we've circled back
+                throw GPUdbHAUnavailableException( "GPUdb unavailable (backup clusters exist, but all failed); ", m_urls );
+            }
+        }
+
+        if( checkFailbackConditions()) {
+            if( !pollerService ) {
+                pollerService = std::make_unique<FailbackPollerService>( *this, FailbackPollerService::DEFAULT_POLLING_INTERVAL );
+            }
+            pollerService->start();
         }
 
         // Haven't circled back to the old URL; so return the new one
         return &m_urls[ m_urlIndices[ m_currentUrl ] ];
     }
 
+    bool GPUdb::checkFailbackConditions() const {
+        return !getPrimaryURL().empty() && m_urls.size() > 1;
+    }
 
     const HttpUrl* GPUdb::switchHmUrl(const HttpUrl* oldUrl) const
     {

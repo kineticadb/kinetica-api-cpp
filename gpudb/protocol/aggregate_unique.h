@@ -291,6 +291,13 @@ namespace gpudb
          *                              combination with the @ref
          *                              gpudb::aggregate_unique_result_table
          *                              "result_table" option.
+         *                          <li>@ref
+         *                              gpudb::aggregate_unique_compression_codec
+         *                              "aggregate_unique_compression_codec":
+         *                              The default <a
+         *                              href="../../../concepts/column_compression/"
+         *                              target="_top">compression codec</a> for
+         *                              the result table's columns.
          *                          <li>@ref gpudb::aggregate_unique_view_id
          *                              "aggregate_unique_view_id": ID of view
          *                              of which the result table will be a
@@ -546,6 +553,13 @@ namespace gpudb
          *                              combination with the @ref
          *                              gpudb::aggregate_unique_result_table
          *                              "result_table" option.
+         *                          <li>@ref
+         *                              gpudb::aggregate_unique_compression_codec
+         *                              "aggregate_unique_compression_codec":
+         *                              The default <a
+         *                              href="../../../concepts/column_compression/"
+         *                              target="_top">compression codec</a> for
+         *                              the result table's columns.
          *                          <li>@ref gpudb::aggregate_unique_view_id
          *                              "aggregate_unique_view_id": ID of view
          *                              of which the result table will be a
@@ -747,6 +761,11 @@ namespace gpudb
          *         maximum data size for all columns in a chunk to be used for
          *         the result table. Must be used in combination with the @ref
          *         gpudb::aggregate_unique_result_table "result_table" option.
+         *     <li>@ref gpudb::aggregate_unique_compression_codec
+         *         "aggregate_unique_compression_codec": The default <a
+         *         href="../../../concepts/column_compression/"
+         *         target="_top">compression codec</a> for the result table's
+         *         columns.
          *     <li>@ref gpudb::aggregate_unique_view_id
          *         "aggregate_unique_view_id": ID of view of which the result
          *         table will be a member. The default value is ''.

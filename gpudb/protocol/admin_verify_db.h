@@ -139,11 +139,7 @@ namespace gpudb
          *                              "true", orphaned table directories
          *                              found on workers for which there is no
          *                              corresponding metadata will be deleted.
-         *                              Must set @ref
-         *                              gpudb::admin_verify_db_verify_persist
-         *                              "verify_persist" in @a options_ to @ref
-         *                              gpudb::admin_verify_db_true "true". It
-         *                              is recommended to run this while the
+         *                              It is recommended to run this while the
          *                              database is offline OR set @ref
          *                              gpudb::admin_verify_db_concurrent_safe
          *                              "concurrent_safe" in @a options_ to
@@ -167,7 +163,8 @@ namespace gpudb
          *                              If @ref gpudb::admin_verify_db_true
          *                              "true", only the presence of orphaned
          *                              table directories will be checked, all
-         *                              persistence checks will be skipped.
+         *                              persistence and table consistency
+         *                              checks will be skipped.
          *                              Supported values:
          *                              <ul>
          *                                  <li>@ref
@@ -180,6 +177,24 @@ namespace gpudb
          *                              The default value is @ref
          *                              gpudb::admin_verify_db_false
          *                              "admin_verify_db_false".
+         *                          <li>@ref
+         *                              gpudb::admin_verify_db_table_includes
+         *                              "admin_verify_db_table_includes":
+         *                              Comma-separated list of table names to
+         *                              include when verifying table
+         *                              consistency on wokers. Cannot be used
+         *                              simultaneously with @ref
+         *                              gpudb::admin_verify_db_table_excludes
+         *                              "table_excludes".
+         *                          <li>@ref
+         *                              gpudb::admin_verify_db_table_excludes
+         *                              "admin_verify_db_table_excludes":
+         *                              Comma-separated list of table names to
+         *                              exclude when verifying table
+         *                              consistency on wokers. Cannot be used
+         *                              simultaneously with @ref
+         *                              gpudb::admin_verify_db_table_includes
+         *                              "table_includes".
          *                      </ul>
          *                      The default value is an empty map.
          */
@@ -265,13 +280,10 @@ namespace gpudb
          *         "admin_verify_db_delete_orphaned_tables": If @ref
          *         gpudb::admin_verify_db_true "true", orphaned table
          *         directories found on workers for which there is no
-         *         corresponding metadata will be deleted. Must set @ref
-         *         gpudb::admin_verify_db_verify_persist "verify_persist" in
-         *         @ref options to @ref gpudb::admin_verify_db_true "true". It
-         *         is recommended to run this while the database is offline OR
-         *         set @ref gpudb::admin_verify_db_concurrent_safe
-         *         "concurrent_safe" in @ref options to @ref
-         *         gpudb::admin_verify_db_true "true".
+         *         corresponding metadata will be deleted. It is recommended to
+         *         run this while the database is offline OR set @ref
+         *         gpudb::admin_verify_db_concurrent_safe "concurrent_safe" in
+         *         @ref options to @ref gpudb::admin_verify_db_true "true".
          *         Supported values:
          *         <ul>
          *             <li>@ref gpudb::admin_verify_db_true
@@ -285,7 +297,7 @@ namespace gpudb
          *         "admin_verify_db_verify_orphaned_tables_only": If @ref
          *         gpudb::admin_verify_db_true "true", only the presence of
          *         orphaned table directories will be checked, all persistence
-         *         checks will be skipped.
+         *         and table consistency checks will be skipped.
          *         Supported values:
          *         <ul>
          *             <li>@ref gpudb::admin_verify_db_true
@@ -295,6 +307,16 @@ namespace gpudb
          *         </ul>
          *         The default value is @ref gpudb::admin_verify_db_false
          *         "admin_verify_db_false".
+         *     <li>@ref gpudb::admin_verify_db_table_includes
+         *         "admin_verify_db_table_includes": Comma-separated list of
+         *         table names to include when verifying table consistency on
+         *         wokers. Cannot be used simultaneously with @ref
+         *         gpudb::admin_verify_db_table_excludes "table_excludes".
+         *     <li>@ref gpudb::admin_verify_db_table_excludes
+         *         "admin_verify_db_table_excludes": Comma-separated list of
+         *         table names to exclude when verifying table consistency on
+         *         wokers. Cannot be used simultaneously with @ref
+         *         gpudb::admin_verify_db_table_includes "table_includes".
          * </ul>
          * The default value is an empty map.
          */

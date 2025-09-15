@@ -89,9 +89,10 @@ public:
 
 
     /**
-     * Retrieves records for a given shard key, optionally further limited by an
-     * additional expression. All records matching the key and satisfying the
-     * expression will be returned, up to the system-defined limit. For
+     * Retrieves records for a shard key, based on the shard key values
+     * populated in the given {@link GenericRecord}; optionally, further limited
+     * by an additional expression. All records matching the key and satisfying
+     * the expression will be returned, up to the system-defined limit. For
      * multi-head mode the request will be sent directly to the appropriate
      * worker.
      * <p>
@@ -101,7 +102,8 @@ public:
      * to basic equality and inequality comparisons that can be evaluated using
      * the attribute indexes.
      *
-     * @param[in] key_values  A vector of shard column values
+     * @param[in] record      A {@link GenericRecord} containing a mapping of
+     *                        the shard column values to use in the lookup.
      * @param[in] expression  An optional expression.  Default is an empty string.
      *
      * @return

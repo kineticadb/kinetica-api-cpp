@@ -12,7 +12,7 @@ namespace gpudb
      * A set of parameters for @ref
      * GPUdb::alterTier(const AlterTierRequest&) const "GPUdb::alterTier".
      *
-     * Alters properties of an exisiting <a
+     * Alters properties of an existing <a
      * href="../../../rm/concepts/#storage-tiers" target="_top">tier</a> to
      * facilitate <a href="../../../rm/concepts/" target="_top">resource
      * management</a>.
@@ -37,12 +37,14 @@ namespace gpudb
          * Constructs an AlterTierRequest object with the specified parameters.
          *
          * @param[in] name_  Name of the tier to be altered. Must be an
-         *                   existing tier group name.
+         *                   existing tier group name:  vram, ram, disk[n],
+         *                   persist, cold[n].
          * @param[in] options_  Optional parameters.
          *                      <ul>
          *                          <li>@ref gpudb::alter_tier_capacity
          *                              "alter_tier_capacity": Maximum size in
-         *                              bytes this tier may hold at once.
+         *                              bytes this tier may hold at once, per
+         *                              rank.
          *                          <li>@ref gpudb::alter_tier_high_watermark
          *                              "alter_tier_high_watermark": Threshold
          *                              of usage of this tier's resource that
@@ -97,7 +99,8 @@ namespace gpudb
         }
 
         /**
-         * Name of the tier to be altered. Must be an existing tier group name.
+         * Name of the tier to be altered. Must be an existing tier group name:
+         * vram, ram, disk[n], persist, cold[n].
          */
         std::string name;
 
@@ -105,7 +108,7 @@ namespace gpudb
          * Optional parameters.
          * <ul>
          *     <li>@ref gpudb::alter_tier_capacity "alter_tier_capacity":
-         *         Maximum size in bytes this tier may hold at once.
+         *         Maximum size in bytes this tier may hold at once, per rank.
          *     <li>@ref gpudb::alter_tier_high_watermark
          *         "alter_tier_high_watermark": Threshold of usage of this
          *         tier's resource that once exceeded, will trigger

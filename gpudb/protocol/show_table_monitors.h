@@ -121,6 +121,9 @@ namespace gpudb
             events(std::vector<std::string>()),
             increasingColumns(std::vector<std::string>()),
             filterExpressions(std::vector<std::string>()),
+            joinTableNames(std::vector<std::string>()),
+            joinColumnNames(std::vector<std::string>()),
+            joinExpressions(std::vector<std::string>()),
             refreshMethod(std::vector<std::string>()),
             refreshPeriod(std::vector<std::string>()),
             refreshStartTime(std::vector<std::string>()),
@@ -157,6 +160,21 @@ namespace gpudb
          * tableNames to limit records for notifications.
          */
         std::vector<std::string> filterExpressions;
+
+        /**
+         * List of join_table_names.
+         */
+        std::vector<std::string> joinTableNames;
+
+        /**
+         * List of join_column_names
+         */
+        std::vector<std::string> joinColumnNames;
+
+        /**
+         * List of join expressions.
+         */
+        std::vector<std::string> joinExpressions;
 
         /**
          * List of refresh methods used on the respective tables in @ref
@@ -231,6 +249,9 @@ namespace avro
             ::avro::encode(e, v.events);
             ::avro::encode(e, v.increasingColumns);
             ::avro::encode(e, v.filterExpressions);
+            ::avro::encode(e, v.joinTableNames);
+            ::avro::encode(e, v.joinColumnNames);
+            ::avro::encode(e, v.joinExpressions);
             ::avro::encode(e, v.refreshMethod);
             ::avro::encode(e, v.refreshPeriod);
             ::avro::encode(e, v.refreshStartTime);
@@ -270,26 +291,38 @@ namespace avro
                             break;
 
                         case 5:
-                            ::avro::decode(d, v.refreshMethod);
+                            ::avro::decode(d, v.joinTableNames);
                             break;
 
                         case 6:
-                            ::avro::decode(d, v.refreshPeriod);
+                            ::avro::decode(d, v.joinColumnNames);
                             break;
 
                         case 7:
-                            ::avro::decode(d, v.refreshStartTime);
+                            ::avro::decode(d, v.joinExpressions);
                             break;
 
                         case 8:
-                            ::avro::decode(d, v.datasinkNames);
+                            ::avro::decode(d, v.refreshMethod);
                             break;
 
                         case 9:
-                            ::avro::decode(d, v.additionalInfo);
+                            ::avro::decode(d, v.refreshPeriod);
                             break;
 
                         case 10:
+                            ::avro::decode(d, v.refreshStartTime);
+                            break;
+
+                        case 11:
+                            ::avro::decode(d, v.datasinkNames);
+                            break;
+
+                        case 12:
+                            ::avro::decode(d, v.additionalInfo);
+                            break;
+
+                        case 13:
                             ::avro::decode(d, v.info);
                             break;
 
@@ -305,6 +338,9 @@ namespace avro
                 ::avro::decode(d, v.events);
                 ::avro::decode(d, v.increasingColumns);
                 ::avro::decode(d, v.filterExpressions);
+                ::avro::decode(d, v.joinTableNames);
+                ::avro::decode(d, v.joinColumnNames);
+                ::avro::decode(d, v.joinExpressions);
                 ::avro::decode(d, v.refreshMethod);
                 ::avro::decode(d, v.refreshPeriod);
                 ::avro::decode(d, v.refreshStartTime);

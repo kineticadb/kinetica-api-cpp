@@ -164,7 +164,7 @@ namespace gpudb
          *                                      randomly generated between min
          *                                      and max and decimated down to
          *                                      the interval. If no max is
-         *                                      provided the data is linerally
+         *                                      provided the data is linearly
          *                                      generated starting at the
          *                                      minimum value (instead of
          *                                      generating random data). For
@@ -178,7 +178,7 @@ namespace gpudb
          *                                      an underscore and a running
          *                                      counter (starting at 0). For
          *                                      string types with limited size
-         *                                      (eg char4) the prefix is
+         *                                      (e.g. char4) the prefix is
          *                                      dropped. No nulls will be
          *                                      generated for nullable columns.
          *                                  <li>@ref
@@ -293,7 +293,7 @@ namespace gpudb
          *                                      randomly generated between min
          *                                      and max and decimated down to
          *                                      the interval. If no max is
-         *                                      provided the data is linerally
+         *                                      provided the data is linearly
          *                                      generated starting at the
          *                                      minimum value (instead of
          *                                      generating random data). For
@@ -307,7 +307,7 @@ namespace gpudb
          *                                      an underscore and a running
          *                                      counter (starting at 0). For
          *                                      string types with limited size
-         *                                      (eg char4) the prefix is
+         *                                      (e.g. char4) the prefix is
          *                                      dropped. No nulls will be
          *                                      generated for nullable columns.
          *                                  <li>@ref
@@ -470,15 +470,16 @@ namespace gpudb
          *                 specified for a given column the data is randomly
          *                 generated between min and max and decimated down to
          *                 the interval. If no max is provided the data is
-         *                 linerally generated starting at the minimum value
+         *                 linearly generated starting at the minimum value
          *                 (instead of generating random data). For
          *                 non-decimated string-type columns the interval value
          *                 is ignored. Instead the values are generated
          *                 following the pattern: 'attrname_creationIndex#',
          *                 i.e. the column name suffixed with an underscore and
          *                 a running counter (starting at 0). For string types
-         *                 with limited size (eg char4) the prefix is dropped.
-         *                 No nulls will be generated for nullable columns.
+         *                 with limited size (e.g. char4) the prefix is
+         *                 dropped. No nulls will be generated for nullable
+         *                 columns.
          *             <li>@ref gpudb::insert_records_random_null_percentage
          *                 "insert_records_random_null_percentage": If
          *                 specified, then generate the given percentage of the
@@ -548,15 +549,16 @@ namespace gpudb
          *                 specified for a given column the data is randomly
          *                 generated between min and max and decimated down to
          *                 the interval. If no max is provided the data is
-         *                 linerally generated starting at the minimum value
+         *                 linearly generated starting at the minimum value
          *                 (instead of generating random data). For
          *                 non-decimated string-type columns the interval value
          *                 is ignored. Instead the values are generated
          *                 following the pattern: 'attrname_creationIndex#',
          *                 i.e. the column name suffixed with an underscore and
          *                 a running counter (starting at 0). For string types
-         *                 with limited size (eg char4) the prefix is dropped.
-         *                 No nulls will be generated for nullable columns.
+         *                 with limited size (e.g. char4) the prefix is
+         *                 dropped. No nulls will be generated for nullable
+         *                 columns.
          *             <li>@ref gpudb::insert_records_random_null_percentage
          *                 "insert_records_random_null_percentage": If
          *                 specified and if this column is nullable, then

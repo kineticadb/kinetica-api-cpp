@@ -87,11 +87,6 @@ namespace gpudb
          * @param[in] action_  Modification operation to be applied.
          *                     Supported values:
          *                     <ul>
-         *                         <li>@ref
-         *                             gpudb::alter_table_allow_homogeneous_tables
-         *                             "alter_table_allow_homogeneous_tables":
-         *                             No longer supported; action will be
-         *                             ignored.
          *                         <li>@ref gpudb::alter_table_create_index
          *                             "alter_table_create_index": Creates a <a
          *                             href="../../../concepts/indexes/#column-index"
@@ -215,11 +210,6 @@ namespace gpudb
          *                             encoding to an existing 'char4' column,
          *                             both 'char4' and 'dict' must be
          *                             specified in the @a options_ map.
-         *                         <li>@ref
-         *                             gpudb::alter_table_set_column_compression
-         *                             "alter_table_set_column_compression": No
-         *                             longer supported; action will be
-         *                             ignored.
          *                         <li>@ref gpudb::alter_table_delete_column
          *                             "alter_table_delete_column": Deletes the
          *                             column specified in @a value_ from the
@@ -463,32 +453,13 @@ namespace gpudb
          *                              "alter_table_column_properties": When
          *                              adding or changing a column, set the
          *                              column properties (strings, separated
-         *                              by a comma: data, store_only,
-         *                              text_search, char8, int8 etc).
+         *                              by a comma: data, text_search, char8,
+         *                              int8 etc).
          *                          <li>@ref gpudb::alter_table_column_type
          *                              "alter_table_column_type": When adding
          *                              or changing a column, set the column
          *                              type (strings, separated by a comma:
          *                              int, double, string, null etc).
-         *                          <li>@ref
-         *                              gpudb::alter_table_compression_type
-         *                              "alter_table_compression_type": No
-         *                              longer supported; option will be
-         *                              ignored.
-         *                              Supported values:
-         *                              <ul>
-         *                                  <li>@ref gpudb::alter_table_none
-         *                                      "alter_table_none"
-         *                                  <li>@ref gpudb::alter_table_snappy
-         *                                      "alter_table_snappy"
-         *                                  <li>@ref gpudb::alter_table_lz4
-         *                                      "alter_table_lz4"
-         *                                  <li>@ref gpudb::alter_table_lz4hc
-         *                                      "alter_table_lz4hc"
-         *                              </ul>
-         *                              The default value is @ref
-         *                              gpudb::alter_table_snappy
-         *                              "alter_table_snappy".
          *                          <li>@ref
          *                              gpudb::alter_table_copy_values_from_column
          *                              "alter_table_copy_values_from_column":
@@ -655,9 +626,6 @@ namespace gpudb
          * Modification operation to be applied.
          * Supported values:
          * <ul>
-         *     <li>@ref gpudb::alter_table_allow_homogeneous_tables
-         *         "alter_table_allow_homogeneous_tables": No longer supported;
-         *         action will be ignored.
          *     <li>@ref gpudb::alter_table_create_index
          *         "alter_table_create_index": Creates a <a
          *         href="../../../concepts/indexes/#column-index"
@@ -746,9 +714,6 @@ namespace gpudb
          *         listed for the change to take place, e.g., to add dictionary
          *         encoding to an existing 'char4' column, both 'char4' and
          *         'dict' must be specified in the @ref options map.
-         *     <li>@ref gpudb::alter_table_set_column_compression
-         *         "alter_table_set_column_compression": No longer supported;
-         *         action will be ignored.
          *     <li>@ref gpudb::alter_table_delete_column
          *         "alter_table_delete_column": Deletes the column specified in
          *         @ref value from the table specified in @ref tableName.
@@ -925,23 +890,11 @@ namespace gpudb
          *     <li>@ref gpudb::alter_table_column_properties
          *         "alter_table_column_properties": When adding or changing a
          *         column, set the column properties (strings, separated by a
-         *         comma: data, store_only, text_search, char8, int8 etc).
+         *         comma: data, text_search, char8, int8 etc).
          *     <li>@ref gpudb::alter_table_column_type
          *         "alter_table_column_type": When adding or changing a column,
          *         set the column type (strings, separated by a comma: int,
          *         double, string, null etc).
-         *     <li>@ref gpudb::alter_table_compression_type
-         *         "alter_table_compression_type": No longer supported; option
-         *         will be ignored.
-         *         Supported values:
-         *         <ul>
-         *             <li>@ref gpudb::alter_table_none "alter_table_none"
-         *             <li>@ref gpudb::alter_table_snappy "alter_table_snappy"
-         *             <li>@ref gpudb::alter_table_lz4 "alter_table_lz4"
-         *             <li>@ref gpudb::alter_table_lz4hc "alter_table_lz4hc"
-         *         </ul>
-         *         The default value is @ref gpudb::alter_table_snappy
-         *         "alter_table_snappy".
          *     <li>@ref gpudb::alter_table_copy_values_from_column
          *         "alter_table_copy_values_from_column": [DEPRECATED--please
          *         use @ref gpudb::alter_table_add_column_expression

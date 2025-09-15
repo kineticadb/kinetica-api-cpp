@@ -59,7 +59,7 @@ namespace gpudb
          *                          <li>@ref
          *                              gpudb::export_records_to_table_jdbc_session_init_statement
          *                              "export_records_to_table_jdbc_session_init_statement":
-         *                              Executes the statement per each jdbc
+         *                              Executes the statement per each JDBC
          *                              session before doing actual load. The
          *                              default value is ''.
          *                          <li>@ref
@@ -78,7 +78,7 @@ namespace gpudb
          *                          <li>@ref
          *                              gpudb::export_records_to_table_use_st_geomfrom_casts
          *                              "export_records_to_table_use_st_geomfrom_casts":
-         *                              Wraps parametrized variables with
+         *                              Wraps parameterized variables with
          *                              st_geomfromtext or st_geomfromwkb based
          *                              on source column type.
          *                              Supported values:
@@ -148,7 +148,7 @@ namespace gpudb
          *     <li>@ref
          *         gpudb::export_records_to_table_jdbc_session_init_statement
          *         "export_records_to_table_jdbc_session_init_statement":
-         *         Executes the statement per each jdbc session before doing
+         *         Executes the statement per each JDBC session before doing
          *         actual load. The default value is ''.
          *     <li>@ref
          *         gpudb::export_records_to_table_jdbc_connection_init_statement
@@ -162,7 +162,7 @@ namespace gpudb
          *         value is ''.
          *     <li>@ref gpudb::export_records_to_table_use_st_geomfrom_casts
          *         "export_records_to_table_use_st_geomfrom_casts": Wraps
-         *         parametrized variables with st_geomfromtext or
+         *         parameterized variables with st_geomfromtext or
          *         st_geomfromwkb based on source column type.
          *         Supported values:
          *         <ul>

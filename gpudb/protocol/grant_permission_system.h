@@ -56,6 +56,10 @@ namespace gpudb
          *                                 gpudb::grant_permission_system_system_read
          *                                 "grant_permission_system_system_read":
          *                                 Read-only access to all tables.
+         *                             <li>@ref
+         *                                 gpudb::grant_permission_system_system_send_alert
+         *                                 "grant_permission_system_system_send_alert":
+         *                                 Send system alerts.
          *                         </ul>
          * @param[in] options_  Optional parameters. The default value is an
          *                      empty map.
@@ -90,6 +94,9 @@ namespace gpudb
          *     <li>@ref gpudb::grant_permission_system_system_read
          *         "grant_permission_system_system_read": Read-only access to
          *         all tables.
+         *     <li>@ref gpudb::grant_permission_system_system_send_alert
+         *         "grant_permission_system_system_send_alert": Send system
+         *         alerts.
          * </ul>
          */
         std::string permission;

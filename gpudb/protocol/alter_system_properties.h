@@ -69,7 +69,7 @@ namespace gpudb
          *                                         allocated to a given
          *                                         request, on each rank. Note
          *                                         that thread allocation may
-         *                                         also be limted by resource
+         *                                         also be limited by resource
          *                                         group limits and/or system
          *                                         load.
          *                                     <li>@ref
@@ -93,22 +93,6 @@ namespace gpudb
          *                                         a chunk to be used for all
          *                                         new tables.
          *                                     <li>@ref
-         *                                         gpudb::alter_system_properties_evict_columns
-         *                                         "alter_system_properties_evict_columns":
-         *                                         Attempts to evict columns
-         *                                         from memory to the
-         *                                         persistent store.  Value
-         *                                         string is a semicolon
-         *                                         separated list of entries,
-         *                                         each entry being a table
-         *                                         name optionally followed by
-         *                                         a comma and a comma
-         *                                         separated list of column
-         *                                         names to attempt to evict.
-         *                                         An empty value string will
-         *                                         attempt to evict all tables
-         *                                         and columns.
-         *                                     <li>@ref
          *                                         gpudb::alter_system_properties_execution_mode
          *                                         "alter_system_properties_execution_mode":
          *                                         Sets the execution_mode for
@@ -127,73 +111,6 @@ namespace gpudb
          *                                         files are accessed from.
          *                                         Path must exist on the head
          *                                         node
-         *                                     <li>@ref
-         *                                         gpudb::alter_system_properties_flush_to_disk
-         *                                         "alter_system_properties_flush_to_disk":
-         *                                         Flushes any changes to any
-         *                                         tables to the persistent
-         *                                         store.  These changes
-         *                                         include updates to the
-         *                                         vector store, object store,
-         *                                         and text search store.
-         *                                         Value string can be 'true',
-         *                                         'false' or 'text_search' to
-         *                                         flush the text search store
-         *                                         only.
-         *                                     <li>@ref
-         *                                         gpudb::alter_system_properties_clear_cache
-         *                                         "alter_system_properties_clear_cache":
-         *                                         Clears cached results.
-         *                                         Useful to allow repeated
-         *                                         timing of endpoints.  Value
-         *                                         string is the name of the
-         *                                         table for which to clear the
-         *                                         cached results, or an empty
-         *                                         string to clear the cached
-         *                                         results for all tables.
-         *                                     <li>@ref
-         *                                         gpudb::alter_system_properties_communicator_test
-         *                                         "alter_system_properties_communicator_test":
-         *                                         Invoke the communicator test
-         *                                         and report timing results.
-         *                                         Value string is a semicolon
-         *                                         separated list of
-         *                                         [key]=[value] expressions.
-         *                                         Expressions are:
-         *                                         num_transactions=[num] where
-         *                                         num is the number of request
-         *                                         reply transactions to invoke
-         *                                         per test;
-         *                                         message_size=[bytes] where
-         *                                         bytes is the size in bytes
-         *                                         of the messages to send;
-         *                                         check_values=[enabled] where
-         *                                         if enabled is true the value
-         *                                         of the messages received are
-         *                                         verified.
-         *                                     <li>@ref
-         *                                         gpudb::alter_system_properties_network_speed
-         *                                         "alter_system_properties_network_speed":
-         *                                         Invoke the network speed
-         *                                         test and report timing
-         *                                         results. Value string is a
-         *                                         semicolon-separated list of
-         *                                         [key]=[value] expressions.
-         *                                         Valid expressions are:
-         *                                         seconds=[time] where time is
-         *                                         the time in seconds to run
-         *                                         the test; data_size=[bytes]
-         *                                         where bytes is the size in
-         *                                         bytes of the block to be
-         *                                         transferred; threads=[number
-         *                                         of threads];
-         *                                         to_ranks=[space-separated
-         *                                         list of ranks] where the
-         *                                         list of ranks is the ranks
-         *                                         that rank 0 will send data
-         *                                         to and get data from. If
-         *                                         to_ranks is unspecified then
-         *                                         all worker ranks are used.
          *                                     <li>@ref
          *                                         gpudb::alter_system_properties_request_timeout
          *                                         "alter_system_properties_request_timeout":
@@ -220,10 +137,6 @@ namespace gpudb
          *                                         minimum allowed value is
          *                                         '0'. The maximum allowed
          *                                         value is '1000000'.
-         *                                     <li>@ref
-         *                                         gpudb::alter_system_properties_max_grbc_batch_size
-         *                                         "alter_system_properties_max_grbc_batch_size":
-         *                                         &lt;DEVELOPER&gt;
          *                                     <li>@ref
          *                                         gpudb::alter_system_properties_enable_audit
          *                                         "alter_system_properties_enable_audit":
@@ -266,14 +179,6 @@ namespace gpudb
          *                                         The minimum allowed value is
          *                                         '0'. The maximum allowed
          *                                         value is '2147483647'.
-         *                                     <li>@ref
-         *                                         gpudb::alter_system_properties_synchronous_compression
-         *                                         "alter_system_properties_synchronous_compression":
-         *                                         compress vector on
-         *                                         set_compression (instead of
-         *                                         waiting for background
-         *                                         thread). The default value
-         *                                         is 'false'.
          *                                     <li>@ref
          *                                         gpudb::alter_system_properties_enable_overlapped_equi_join
          *                                         "alter_system_properties_enable_overlapped_equi_join":
@@ -367,19 +272,54 @@ namespace gpudb
          *                                     <li>@ref
          *                                         gpudb::alter_system_properties_tcs_per_tom
          *                                         "alter_system_properties_tcs_per_tom":
-         *                                         Sets the tcs_per_tom value
-         *                                         of the conf. The minimum
-         *                                         allowed value is '2'. The
-         *                                         maximum allowed value is
-         *                                         '8192'.
+         *                                         Size of the worker rank data
+         *                                         calculation thread pool.
+         *                                         This is primarily used for
+         *                                         computation-based operations
+         *                                         such as aggregates and
+         *                                         record retrieval. The
+         *                                         minimum allowed value is
+         *                                         '2'. The maximum allowed
+         *                                         value is '8192'.
          *                                     <li>@ref
          *                                         gpudb::alter_system_properties_tps_per_tom
          *                                         "alter_system_properties_tps_per_tom":
-         *                                         Sets the tps_per_tom value
-         *                                         of the conf. The minimum
-         *                                         allowed value is '2'. The
-         *                                         maximum allowed value is
-         *                                         '8192'.
+         *                                         Size of the worker rank data
+         *                                         processing thread pool.
+         *                                         This includes operations
+         *                                         such as inserts, updates, &
+         *                                         deletes on table data.
+         *                                         Multi-head inserts are not
+         *                                         affected by this limit. The
+         *                                         minimum allowed value is
+         *                                         '2'. The maximum allowed
+         *                                         value is '8192'.
+         *                                     <li>@ref
+         *                                         gpudb::alter_system_properties_background_worker_threads
+         *                                         "alter_system_properties_background_worker_threads":
+         *                                         Size of the worker rank
+         *                                         background thread pool. This
+         *                                         includes background
+         *                                         operations such as watermark
+         *                                         evictions catalog table
+         *                                         updates. The minimum allowed
+         *                                         value is '1'. The maximum
+         *                                         allowed value is '8192'.
+         *                                     <li>@ref
+         *                                         gpudb::alter_system_properties_log_debug_job_info
+         *                                         "alter_system_properties_log_debug_job_info":
+         *                                         Outputs various job-related
+         *                                         information to the rank
+         *                                         logs. Used for
+         *                                         troubleshooting.
+         *                                     <li>@ref
+         *                                         gpudb::alter_system_properties_enable_thread_hang_logging
+         *                                         "alter_system_properties_enable_thread_hang_logging":
+         *                                         Log a stack trace for any
+         *                                         thread that runs longer than
+         *                                         a defined threshold. Used
+         *                                         for troubleshooting. The
+         *                                         default value is 'true'.
          *                                     <li>@ref
          *                                         gpudb::alter_system_properties_ai_enable_rag
          *                                         "alter_system_properties_ai_enable_rag":
@@ -430,6 +370,36 @@ namespace gpudb
          *                                         KiFS directory (bytes). The
          *                                         minimum allowed value is
          *                                         '-1'.
+         *                                     <li>@ref
+         *                                         gpudb::alter_system_properties_compression_codec
+         *                                         "alter_system_properties_compression_codec":
+         *                                         The default <a
+         *                                         href="../../../concepts/column_compression/"
+         *                                         target="_top">compression
+         *                                         algorithm</a> applied to any
+         *                                         column without a
+         *                                         column-level or table-level
+         *                                         default compression
+         *                                         specified at the time it was
+         *                                         created
+         *                                     <li>@ref
+         *                                         gpudb::alter_system_properties_disk_auto_optimize_timeout
+         *                                         "alter_system_properties_disk_auto_optimize_timeout":
+         *                                         Time interval in seconds
+         *                                         after which the database
+         *                                         will apply
+         *                                         optimizations/transformations
+         *                                         to persisted data, such as
+         *                                         compression. The minimum
+         *                                         allowed value is '0'.
+         *                                     <li>@ref
+         *                                         gpudb::alter_system_properties_ha_consumer_replay_offset
+         *                                         "alter_system_properties_ha_consumer_replay_offset":
+         *                                         Initializes HA replay from
+         *                                         the given timestamp (as
+         *                                         milliseconds since unix
+         *                                         epoch). The minimum allowed
+         *                                         value is '-1'.
          *                                 </ul>
          * @param[in] options_  Optional parameters.
          *                      <ul>
@@ -505,7 +475,7 @@ namespace gpudb
          *         "alter_system_properties_subtask_concurrency_limit": Sets
          *         the maximum number of simultaneous threads allocated to a
          *         given request, on each rank. Note that thread allocation may
-         *         also be limted by resource group limits and/or system load.
+         *         also be limited by resource group limits and/or system load.
          *     <li>@ref gpudb::alter_system_properties_chunk_size
          *         "alter_system_properties_chunk_size": Sets the number of
          *         records per chunk to be used for all new tables.
@@ -517,14 +487,6 @@ namespace gpudb
          *         "alter_system_properties_chunk_max_memory": Indicates the
          *         target maximum data size for all columns in a chunk to be
          *         used for all new tables.
-         *     <li>@ref gpudb::alter_system_properties_evict_columns
-         *         "alter_system_properties_evict_columns": Attempts to evict
-         *         columns from memory to the persistent store.  Value string
-         *         is a semicolon separated list of entries, each entry being a
-         *         table name optionally followed by a comma and a comma
-         *         separated list of column names to attempt to evict.  An
-         *         empty value string will attempt to evict all tables and
-         *         columns.
          *     <li>@ref gpudb::alter_system_properties_execution_mode
          *         "alter_system_properties_execution_mode": Sets the
          *         execution_mode for kernel executions to the specified string
@@ -535,38 +497,6 @@ namespace gpudb
          *         "alter_system_properties_external_files_directory": Sets the
          *         root directory path where external table data files are
          *         accessed from.  Path must exist on the head node
-         *     <li>@ref gpudb::alter_system_properties_flush_to_disk
-         *         "alter_system_properties_flush_to_disk": Flushes any changes
-         *         to any tables to the persistent store.  These changes
-         *         include updates to the vector store, object store, and text
-         *         search store.  Value string can be 'true', 'false' or
-         *         'text_search' to flush the text search store only.
-         *     <li>@ref gpudb::alter_system_properties_clear_cache
-         *         "alter_system_properties_clear_cache": Clears cached
-         *         results.  Useful to allow repeated timing of endpoints.
-         *         Value string is the name of the table for which to clear the
-         *         cached results, or an empty string to clear the cached
-         *         results for all tables.
-         *     <li>@ref gpudb::alter_system_properties_communicator_test
-         *         "alter_system_properties_communicator_test": Invoke the
-         *         communicator test and report timing results. Value string is
-         *         a semicolon separated list of [key]=[value] expressions.
-         *         Expressions are: num_transactions=[num] where num is the
-         *         number of request reply transactions to invoke per test;
-         *         message_size=[bytes] where bytes is the size in bytes of the
-         *         messages to send; check_values=[enabled] where if enabled is
-         *         true the value of the messages received are verified.
-         *     <li>@ref gpudb::alter_system_properties_network_speed
-         *         "alter_system_properties_network_speed": Invoke the network
-         *         speed test and report timing results. Value string is a
-         *         semicolon-separated list of [key]=[value] expressions.
-         *         Valid expressions are: seconds=[time] where time is the time
-         *         in seconds to run the test; data_size=[bytes] where bytes is
-         *         the size in bytes of the block to be transferred;
-         *         threads=[number of threads]; to_ranks=[space-separated list
-         *         of ranks] where the list of ranks is the ranks that rank 0
-         *         will send data to and get data from. If to_ranks is
-         *         unspecified then all worker ranks are used.
          *     <li>@ref gpudb::alter_system_properties_request_timeout
          *         "alter_system_properties_request_timeout": Number of minutes
          *         after which filtering (e.g., @ref
@@ -582,9 +512,6 @@ namespace gpudb
          *         retrieval call. The default value is '20000'. The minimum
          *         allowed value is '0'. The maximum allowed value is
          *         '1000000'.
-         *     <li>@ref gpudb::alter_system_properties_max_grbc_batch_size
-         *         "alter_system_properties_max_grbc_batch_size":
-         *         &lt;DEVELOPER&gt;
          *     <li>@ref gpudb::alter_system_properties_enable_audit
          *         "alter_system_properties_enable_audit": Enable or disable
          *         auditing.
@@ -610,10 +537,6 @@ namespace gpudb
          *         shadow filter chunk cache in bytes. The default value is
          *         '10000000'. The minimum allowed value is '0'. The maximum
          *         allowed value is '2147483647'.
-         *     <li>@ref gpudb::alter_system_properties_synchronous_compression
-         *         "alter_system_properties_synchronous_compression": compress
-         *         vector on set_compression (instead of waiting for background
-         *         thread). The default value is 'false'.
          *     <li>@ref
          *         gpudb::alter_system_properties_enable_overlapped_equi_join
          *         "alter_system_properties_enable_overlapped_equi_join":
@@ -672,13 +595,35 @@ namespace gpudb
          *         Sets the system_metadata.retention_period value of the conf.
          *         The minimum allowed value is '1'.
          *     <li>@ref gpudb::alter_system_properties_tcs_per_tom
-         *         "alter_system_properties_tcs_per_tom": Sets the tcs_per_tom
-         *         value of the conf. The minimum allowed value is '2'. The
+         *         "alter_system_properties_tcs_per_tom": Size of the worker
+         *         rank data calculation thread pool.  This is primarily used
+         *         for computation-based operations such as aggregates and
+         *         record retrieval. The minimum allowed value is '2'. The
          *         maximum allowed value is '8192'.
          *     <li>@ref gpudb::alter_system_properties_tps_per_tom
-         *         "alter_system_properties_tps_per_tom": Sets the tps_per_tom
-         *         value of the conf. The minimum allowed value is '2'. The
-         *         maximum allowed value is '8192'.
+         *         "alter_system_properties_tps_per_tom": Size of the worker
+         *         rank data processing thread pool.  This includes operations
+         *         such as inserts, updates, & deletes on table data.
+         *         Multi-head inserts are not affected by this limit. The
+         *         minimum allowed value is '2'. The maximum allowed value is
+         *         '8192'.
+         *     <li>@ref
+         *         gpudb::alter_system_properties_background_worker_threads
+         *         "alter_system_properties_background_worker_threads": Size of
+         *         the worker rank background thread pool. This includes
+         *         background operations such as watermark evictions catalog
+         *         table updates. The minimum allowed value is '1'. The maximum
+         *         allowed value is '8192'.
+         *     <li>@ref gpudb::alter_system_properties_log_debug_job_info
+         *         "alter_system_properties_log_debug_job_info": Outputs
+         *         various job-related information to the rank logs. Used for
+         *         troubleshooting.
+         *     <li>@ref
+         *         gpudb::alter_system_properties_enable_thread_hang_logging
+         *         "alter_system_properties_enable_thread_hang_logging": Log a
+         *         stack trace for any thread that runs longer than a defined
+         *         threshold. Used for troubleshooting. The default value is
+         *         'true'.
          *     <li>@ref gpudb::alter_system_properties_ai_enable_rag
          *         "alter_system_properties_ai_enable_rag": Enable RAG. The
          *         default value is 'false'.
@@ -713,6 +658,24 @@ namespace gpudb
          *         "alter_system_properties_kifs_directory_data_limit": The
          *         default maximum capacity to apply when creating a KiFS
          *         directory (bytes). The minimum allowed value is '-1'.
+         *     <li>@ref gpudb::alter_system_properties_compression_codec
+         *         "alter_system_properties_compression_codec": The default <a
+         *         href="../../../concepts/column_compression/"
+         *         target="_top">compression algorithm</a> applied to any
+         *         column without a column-level or table-level default
+         *         compression specified at the time it was created
+         *     <li>@ref
+         *         gpudb::alter_system_properties_disk_auto_optimize_timeout
+         *         "alter_system_properties_disk_auto_optimize_timeout": Time
+         *         interval in seconds after which the database will apply
+         *         optimizations/transformations to persisted data, such as
+         *         compression. The minimum allowed value is '0'.
+         *     <li>@ref
+         *         gpudb::alter_system_properties_ha_consumer_replay_offset
+         *         "alter_system_properties_ha_consumer_replay_offset":
+         *         Initializes HA replay from the given timestamp (as
+         *         milliseconds since unix epoch). The minimum allowed value is
+         *         '-1'.
          * </ul>
          */
         std::map<std::string, std::string> propertyUpdatesMap;

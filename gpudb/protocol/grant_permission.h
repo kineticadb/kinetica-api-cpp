@@ -110,6 +110,10 @@ namespace gpudb
          *                             <li>@ref gpudb::grant_permission_read
          *                                 "grant_permission_read": Ability to
          *                                 read, list and use the object.
+         *                             <li>@ref
+         *                                 gpudb::grant_permission_send_alert
+         *                                 "grant_permission_send_alert":
+         *                                 Ability to send system alerts.
          *                             <li>@ref gpudb::grant_permission_update
          *                                 "grant_permission_update": Update
          *                                 access to the table.
@@ -231,6 +235,9 @@ namespace gpudb
          *         "grant_permission_insert": Insert access to tables.
          *     <li>@ref gpudb::grant_permission_read "grant_permission_read":
          *         Ability to read, list and use the object.
+         *     <li>@ref gpudb::grant_permission_send_alert
+         *         "grant_permission_send_alert": Ability to send system
+         *         alerts.
          *     <li>@ref gpudb::grant_permission_update
          *         "grant_permission_update": Update access to the table.
          *     <li>@ref gpudb::grant_permission_user_admin

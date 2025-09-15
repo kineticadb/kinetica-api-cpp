@@ -226,8 +226,6 @@ namespace gpudb
 
         // Now erase the properties that we're ignoring
         uncommon_properties.erase( gpudb::ColumnProperty::DATA );
-        uncommon_properties.erase( gpudb::ColumnProperty::DISK_OPTIMIZED );
-        uncommon_properties.erase( gpudb::ColumnProperty::STORE_ONLY);
         uncommon_properties.erase( gpudb::ColumnProperty::TEXT_SEARCH );
 
         // If are no more uncommon property, then the columns are compatible

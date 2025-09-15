@@ -322,6 +322,16 @@ namespace gpudb
          *                              "create_datasource_schema_registry_port":
          *                              Confluent Schema Registry port
          *                              (optional).
+         *                          <li>@ref
+         *                              gpudb::create_datasource_schema_registry_connection_retries
+         *                              "create_datasource_schema_registry_connection_retries":
+         *                              Confluent Schema registry connection
+         *                              timeout (in Secs)
+         *                          <li>@ref
+         *                              gpudb::create_datasource_schema_registry_connection_timeout
+         *                              "create_datasource_schema_registry_connection_timeout":
+         *                              Confluent Schema registry connection
+         *                              timeout (in Secs)
          *                      </ul>
          *                      The default value is an empty map.
          */
@@ -549,6 +559,14 @@ namespace gpudb
          *     <li>@ref gpudb::create_datasource_schema_registry_port
          *         "create_datasource_schema_registry_port": Confluent Schema
          *         Registry port (optional).
+         *     <li>@ref
+         *         gpudb::create_datasource_schema_registry_connection_retries
+         *         "create_datasource_schema_registry_connection_retries":
+         *         Confluent Schema registry connection timeout (in Secs)
+         *     <li>@ref
+         *         gpudb::create_datasource_schema_registry_connection_timeout
+         *         "create_datasource_schema_registry_connection_timeout":
+         *         Confluent Schema registry connection timeout (in Secs)
          * </ul>
          * The default value is an empty map.
          */

@@ -1,7 +1,49 @@
 # Kinetica REST API Changelog
 
+## Version 7.2.3.1
+#### Changed Endpoints
+-   Added new option ``ha_consumer_replay_offset`` to ``/alter/system/properties`` request
 
-## Version 7.2.2.12
+## Version 7.2.3
+
+#### Added
+-   Added new endpoints to support incremental database backups
+    -   ``/alter/backup``
+    -   ``/create/backup``
+    -   ``/restore/backup``
+    -   ``/show/backup``
+-   Added ``/clear/tables`` endpoint to clear multiple tables in one request
+-   /show/table now returns information about when a table was last read or written in `additional_info`, when `get_access_data` option is specified in the request
+
+#### Changed Endpoints
+-   Added new options ``skip_additional_info`` and ``skip_temp_schemas`` to ``/show/table`` request
+-   Added new options ``background_worker_threads`` to ``/alter/system/properties`` endpoint
+-   Added new options ``compression_codec`` and ``disk_auto_optimize_timeout`` to ``/alter/system/properties`` request
+-   Added new option ``compression_codec`` to ``/create/table`` request
+-   Added new option ``compression_codec`` to ``/create/type`` request
+-   Added optional field ``compression_codec`` to ``/show/table`` response
+-   Removed ``synchronous_compression`` option from ``/alter/system/properties`` request
+
+### Version 7.2.2.24
+-   Added new options ``enable_thread_hang_logging`` to ``/alter/system/properties`` endpoint
+
+### Version 7.2.2.21
+-   Added new options ``log_debug_job_info`` to ``/alter/system/properties`` endpoint
+
+### Version 7.2.2.20
+-   Added ``/admin/send/alert``
+
+#### Changed Endpoints
+-   Added ``/admin/ha/offline``
+
+### Version 7.2.2.18
+
+#### Changed Endpoints
+-   Added ``/admin/ha/offline``
+
+### Version 7.2.2.12
+
+#### Changed Endpoints
 
 ##### Non-breaking changes
 
@@ -9,6 +51,8 @@
 
 
 ### Version 7.2.2.11 -- 2025-02-14
+
+#### Changed Endpoints
 
 ##### Non-breaking changes
 
@@ -19,12 +63,16 @@
 
 ### Version 7.2.2.7 -- 2025-01-01
 
+#### Changed Endpoints
+
 ##### Non-breaking changes
 
 -   Added ``update_with_now`` column property to ``/create/type``
 
 
 ### Version 7.2.2.5 -- 2024-12-10
+
+#### Changed Endpoints
 
 ##### Non-breaking changes
 
@@ -34,12 +82,16 @@
 
 ### Version 7.2.2.3 -- 2024-10-11
 
+#### Changed Endpoints
+
 ##### Non-breaking changes
 
 -   Added ``low_cardinality`` to ``index_type`` option in ``/alter/table``
 
 
 ### Version 7.2.1.0
+
+#### Changed Endpoints
 
 ##### Non-breaking changes
 
@@ -51,6 +103,8 @@
 #### Changed Endpoints
 -   Removed ``sm_omp_threads`` and ``kernel_omp_threads`` options from ``/alter/system/properties`` request
 -   Added option ``show_worker_info`` to ``/admin/show/jobs`` endpoint
+
+#### Changed Endpoints
 
 ##### Non-breaking changes
 

@@ -12,8 +12,6 @@ namespace gpudb
     {
         const std::string DATA            ( "data"             );
         const std::string TEXT_SEARCH     ( "text_search"      );
-        const std::string STORE_ONLY      ( "store_only"       );
-        const std::string DISK_OPTIMIZED  ( "disk_optimized"   );
         const std::string TIMESTAMP       ( "timestamp"        );
         const std::string ULONG           ( "ulong"            );
         const std::string UUID            ( "uuid"             );
@@ -42,6 +40,7 @@ namespace gpudb
         const std::string SOFT_PRIMARY_KEY( "soft_primary_key" );
         const std::string SHARD_KEY       ( "shard_key"        );
         const std::string NULLABLE        ( "nullable"         );
+        const std::string COMPRESS        ( "compress"         );
         const std::string DICT            ( "dict"             );
         const std::string INIT_WITH_NOW   ( "init_with_now"    );
         const std::string INIT_WITH_UUID  ( "init_with_uuid"   );

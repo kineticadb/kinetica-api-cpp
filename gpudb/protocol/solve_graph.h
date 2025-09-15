@@ -13,7 +13,7 @@ namespace gpudb
      * GPUdb::solveGraph(const SolveGraphRequest&) const "GPUdb::solveGraph".
      *
      * Solves an existing graph for a type of problem (e.g., shortest path,
-     * page rank, travelling salesman, etc.) using source nodes, destination
+     * page rank, traveling salesman, etc.) using source nodes, destination
      * nodes, and additional, optional weights and restrictions.
      *
      * IMPORTANT: It's highly recommended that you review the <a
@@ -135,8 +135,8 @@ namespace gpudb
          *                                 starting from the given source and
          *                                 visiting each given destination node
          *                                 once then returning to the source.
-         *                                 Also known as the travelling
-         *                                 salesman problem.
+         *                                 Also known as the traveling salesman
+         *                                 problem.
          *                             <li>@ref
          *                                 gpudb::solve_graph_INVERSE_SHORTEST_PATH
          *                                 "solve_graph_INVERSE_SHORTEST_PATH":
@@ -157,7 +157,7 @@ namespace gpudb
          *                                 max and min solution radia - Make
          *                                 sure to limit by the
          *                                 'max_solution_targets' option. Min
-         *                                 cost shoudl be &gt;= shortest_path
+         *                                 cost should be &gt;= shortest_path
          *                                 cost.
          *                             <li>@ref gpudb::solve_graph_STATS_ALL
          *                                 "solve_graph_STATS_ALL": Solves for
@@ -255,8 +255,8 @@ namespace gpudb
          *                          <li>@ref
          *                              gpudb::solve_graph_left_turn_penalty
          *                              "solve_graph_left_turn_penalty": This
-         *                              will add an additonal weight over the
-         *                              edges labelled as 'left turn' if the
+         *                              will add an additional weight over the
+         *                              edges labeled as 'left turn' if the
          *                              'add_turn' option parameter of the @ref
          *                              GPUdb::createGraph(const CreateGraphRequest&) const
          *                              "GPUdb::createGraph" was invoked at
@@ -265,8 +265,8 @@ namespace gpudb
          *                          <li>@ref
          *                              gpudb::solve_graph_right_turn_penalty
          *                              "solve_graph_right_turn_penalty": This
-         *                              will add an additonal weight over the
-         *                              edges labelled as' right turn' if the
+         *                              will add an additional weight over the
+         *                              edges labeled as' right turn' if the
          *                              'add_turn' option parameter of the @ref
          *                              GPUdb::createGraph(const CreateGraphRequest&) const
          *                              "GPUdb::createGraph" was invoked at
@@ -275,8 +275,8 @@ namespace gpudb
          *                          <li>@ref
          *                              gpudb::solve_graph_intersection_penalty
          *                              "solve_graph_intersection_penalty":
-         *                              This will add an additonal weight over
-         *                              the edges labelled as 'intersection' if
+         *                              This will add an additional weight over
+         *                              the edges labeled as 'intersection' if
          *                              the 'add_turn' option parameter of the
          *                              @ref
          *                              GPUdb::createGraph(const CreateGraphRequest&) const
@@ -286,8 +286,8 @@ namespace gpudb
          *                          <li>@ref
          *                              gpudb::solve_graph_sharp_turn_penalty
          *                              "solve_graph_sharp_turn_penalty": This
-         *                              will add an additonal weight over the
-         *                              edges labelled as 'sharp turn' or
+         *                              will add an additional weight over the
+         *                              edges labeled as 'sharp turn' or
          *                              'u-turn' if the 'add_turn' option
          *                              parameter of the @ref
          *                              GPUdb::createGraph(const CreateGraphRequest&) const
@@ -319,7 +319,7 @@ namespace gpudb
          *                          <li>@ref
          *                              gpudb::solve_graph_output_edge_path
          *                              "solve_graph_output_edge_path": If true
-         *                              then concatenated edge ids will be
+         *                              then concatenated edge IDs will be
          *                              added as the EDGE path column of the
          *                              solution table for each source and
          *                              target pair in shortest path solves.
@@ -364,8 +364,8 @@ namespace gpudb
          *                              "solve_graph_convergence_limit": For
          *                              @ref gpudb::solve_graph_PAGE_RANK
          *                              "PAGE_RANK" solvers only; Maximum
-         *                              percent relative threshold on the
-         *                              pagerank scores of each node between
+         *                              percent relative threshold on the page
+         *                              rank scores of each node between
          *                              consecutive iterations to satisfy
          *                              convergence. Default value is 1 (one)
          *                              percent. The default value is '1.0'.
@@ -373,7 +373,7 @@ namespace gpudb
          *                              "solve_graph_max_iterations": For @ref
          *                              gpudb::solve_graph_PAGE_RANK
          *                              "PAGE_RANK" solvers only; Maximum
-         *                              number of pagerank iterations for
+         *                              number of page rank iterations for
          *                              satisfying convergence. Default value
          *                              is 100. The default value is '100'.
          *                          <li>@ref gpudb::solve_graph_max_runs
@@ -518,7 +518,7 @@ namespace gpudb
          *         minimum cost cumulative path for a round-trip starting from
          *         the given source and visiting each given destination node
          *         once then returning to the source. Also known as the
-         *         travelling salesman problem.
+         *         traveling salesman problem.
          *     <li>@ref gpudb::solve_graph_INVERSE_SHORTEST_PATH
          *         "solve_graph_INVERSE_SHORTEST_PATH": Solves for finding the
          *         optimal path cost for each destination node to route to the
@@ -531,7 +531,7 @@ namespace gpudb
          *     <li>@ref gpudb::solve_graph_ALLPATHS "solve_graph_ALLPATHS":
          *         Solves for paths that would give costs between max and min
          *         solution radia - Make sure to limit by the
-         *         'max_solution_targets' option. Min cost shoudl be &gt;=
+         *         'max_solution_targets' option. Min cost should be &gt;=
          *         shortest_path cost.
          *     <li>@ref gpudb::solve_graph_STATS_ALL "solve_graph_STATS_ALL":
          *         Solves for graph statistics such as graph diameter, longest
@@ -613,30 +613,30 @@ namespace gpudb
          *         given value to all the edges in the graph. Note that weights
          *         provided in @ref weightsOnEdges will override this value.
          *     <li>@ref gpudb::solve_graph_left_turn_penalty
-         *         "solve_graph_left_turn_penalty": This will add an additonal
-         *         weight over the edges labelled as 'left turn' if the
+         *         "solve_graph_left_turn_penalty": This will add an additional
+         *         weight over the edges labeled as 'left turn' if the
          *         'add_turn' option parameter of the @ref
          *         GPUdb::createGraph(const CreateGraphRequest&) const
          *         "GPUdb::createGraph" was invoked at graph creation. The
          *         default value is '0.0'.
          *     <li>@ref gpudb::solve_graph_right_turn_penalty
-         *         "solve_graph_right_turn_penalty": This will add an additonal
-         *         weight over the edges labelled as' right turn' if the
-         *         'add_turn' option parameter of the @ref
+         *         "solve_graph_right_turn_penalty": This will add an
+         *         additional weight over the edges labeled as' right turn' if
+         *         the 'add_turn' option parameter of the @ref
          *         GPUdb::createGraph(const CreateGraphRequest&) const
          *         "GPUdb::createGraph" was invoked at graph creation. The
          *         default value is '0.0'.
          *     <li>@ref gpudb::solve_graph_intersection_penalty
          *         "solve_graph_intersection_penalty": This will add an
-         *         additonal weight over the edges labelled as 'intersection'
+         *         additional weight over the edges labeled as 'intersection'
          *         if the 'add_turn' option parameter of the @ref
          *         GPUdb::createGraph(const CreateGraphRequest&) const
          *         "GPUdb::createGraph" was invoked at graph creation. The
          *         default value is '0.0'.
          *     <li>@ref gpudb::solve_graph_sharp_turn_penalty
-         *         "solve_graph_sharp_turn_penalty": This will add an additonal
-         *         weight over the edges labelled as 'sharp turn' or 'u-turn'
-         *         if the 'add_turn' option parameter of the @ref
+         *         "solve_graph_sharp_turn_penalty": This will add an
+         *         additional weight over the edges labeled as 'sharp turn' or
+         *         'u-turn' if the 'add_turn' option parameter of the @ref
          *         GPUdb::createGraph(const CreateGraphRequest&) const
          *         "GPUdb::createGraph" was invoked at graph creation. The
          *         default value is '0.0'.
@@ -657,7 +657,7 @@ namespace gpudb
          *         the solver. The default value is '2000000'.
          *     <li>@ref gpudb::solve_graph_output_edge_path
          *         "solve_graph_output_edge_path": If true then concatenated
-         *         edge ids will be added as the EDGE path column of the
+         *         edge IDs will be added as the EDGE path column of the
          *         solution table for each source and target pair in shortest
          *         path solves.
          *         Supported values:
@@ -688,14 +688,14 @@ namespace gpudb
          *     <li>@ref gpudb::solve_graph_convergence_limit
          *         "solve_graph_convergence_limit": For @ref
          *         gpudb::solve_graph_PAGE_RANK "PAGE_RANK" solvers only;
-         *         Maximum percent relative threshold on the pagerank scores of
-         *         each node between consecutive iterations to satisfy
+         *         Maximum percent relative threshold on the page rank scores
+         *         of each node between consecutive iterations to satisfy
          *         convergence. Default value is 1 (one) percent. The default
          *         value is '1.0'.
          *     <li>@ref gpudb::solve_graph_max_iterations
          *         "solve_graph_max_iterations": For @ref
          *         gpudb::solve_graph_PAGE_RANK "PAGE_RANK" solvers only;
-         *         Maximum number of pagerank iterations for satisfying
+         *         Maximum number of page rank iterations for satisfying
          *         convergence. Default value is 100. The default value is
          *         '100'.
          *     <li>@ref gpudb::solve_graph_max_runs "solve_graph_max_runs": For
@@ -849,7 +849,7 @@ namespace gpudb
         bool result;
 
         /**
-         * Cost or Pagerank (based on solver type) for each destination node
+         * Cost or page rank (based on solver type) for each destination node
          * requested. Only populated if 'export_solve_results' option is set to
          * true.
          */

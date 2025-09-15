@@ -33,7 +33,7 @@ namespace gpudb
          * @param[in] paths_  File paths to show. Each path can be a KiFS
          *                    directory name, or a full path to a KiFS file.
          *                    File paths may contain wildcard characters after
-         *                    the KiFS directory delimeter.  Accepted wildcard
+         *                    the KiFS directory delimiter.  Accepted wildcard
          *                    characters are asterisk (*) to represent any
          *                    string of zero or more characters, and question
          *                    mark (?) to indicate a single character.
@@ -49,7 +49,7 @@ namespace gpudb
         /**
          * File paths to show. Each path can be a KiFS directory name, or a
          * full path to a KiFS file. File paths may contain wildcard characters
-         * after the KiFS directory delimeter.
+         * after the KiFS directory delimiter.
          *
          * Accepted wildcard characters are asterisk (*) to represent any
          * string of zero or more characters, and question mark (?) to indicate

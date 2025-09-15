@@ -2,6 +2,15 @@
 
 ## Version 7.2
 
+### Version 7.2.3.0 - 2025-09-14
+
+#### Added
+-   Fail back to a primary cluster after failing over to a secondary cluster
+
+#### Notes
+-   Check CHANGELOG-FUNCTIONS.md for endpoint related changes.
+
+
 ### Version 7.2.2.4 - 2025-03-27
 
 #### Fixed

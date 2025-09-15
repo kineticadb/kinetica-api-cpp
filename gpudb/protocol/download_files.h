@@ -36,7 +36,7 @@ namespace gpudb
          * @param[in] fileNames_  An array of the file names to download from
          *                        KiFS. File paths may contain wildcard
          *                        characters after the KiFS directory
-         *                        delimeter.  Accepted wildcard characters are
+         *                        delimiter.  Accepted wildcard characters are
          *                        asterisk (*) to represent any string of zero
          *                        or more characters, and question mark (?) to
          *                        indicate a single character.
@@ -91,7 +91,7 @@ namespace gpudb
 
         /**
          * An array of the file names to download from KiFS. File paths may
-         * contain wildcard characters after the KiFS directory delimeter.
+         * contain wildcard characters after the KiFS directory delimiter.
          *
          * Accepted wildcard characters are asterisk (*) to represent any
          * string of zero or more characters, and question mark (?) to indicate

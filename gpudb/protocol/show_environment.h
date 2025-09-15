@@ -65,6 +65,25 @@ namespace gpudb
          *                              The default value is @ref
          *                              gpudb::show_environment_false
          *                              "show_environment_false".
+         *                          <li>@ref
+         *                              gpudb::show_environment_show_names_only
+         *                              "show_environment_show_names_only": If
+         *                              @ref gpudb::show_environment_true
+         *                              "true" only return the names of the
+         *                              installed environments and omit package
+         *                              listing.
+         *                              Supported values:
+         *                              <ul>
+         *                                  <li>@ref
+         *                                      gpudb::show_environment_true
+         *                                      "show_environment_true"
+         *                                  <li>@ref
+         *                                      gpudb::show_environment_false
+         *                                      "show_environment_false"
+         *                              </ul>
+         *                              The default value is @ref
+         *                              gpudb::show_environment_false
+         *                              "show_environment_false".
          *                      </ul>
          *                      The default value is an empty map.
          */
@@ -92,6 +111,19 @@ namespace gpudb
          *         is returned. If @ref gpudb::show_environment_false "false"
          *         and if the environment specified in @ref environmentName
          *         does not exist, then an error is returned.
+         *         Supported values:
+         *         <ul>
+         *             <li>@ref gpudb::show_environment_true
+         *                 "show_environment_true"
+         *             <li>@ref gpudb::show_environment_false
+         *                 "show_environment_false"
+         *         </ul>
+         *         The default value is @ref gpudb::show_environment_false
+         *         "show_environment_false".
+         *     <li>@ref gpudb::show_environment_show_names_only
+         *         "show_environment_show_names_only": If @ref
+         *         gpudb::show_environment_true "true" only return the names of
+         *         the installed environments and omit package listing.
          *         Supported values:
          *         <ul>
          *             <li>@ref gpudb::show_environment_true
@@ -170,7 +202,7 @@ namespace gpudb
         }
 
         /**
-         * A list of all credential names.
+         * A list of all environment names.
          */
         std::vector<std::string> environmentNames;
 

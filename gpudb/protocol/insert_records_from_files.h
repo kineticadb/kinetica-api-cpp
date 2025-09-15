@@ -79,7 +79,7 @@ namespace gpudb
          * @param[in] filepaths_  A list of file paths from which data will be
          *                        sourced;  For paths in <a
          *                        href="../../../tools/kifs/"
-         *                        target="_top">KiFS</a>, use the uri prefix of
+         *                        target="_top">KiFS</a>, use the URI prefix of
          *                        kifs:// followed by the path to a file or
          *                        directory. File matching by prefix is
          *                        supported, e.g. kifs://dir/file would match
@@ -385,6 +385,14 @@ namespace gpudb
          *                                         target="_top">tier
          *                                         strategy</a> for the table
          *                                         and its columns.
+         *                                     <li>@ref
+         *                                         gpudb::insert_records_from_files_compression_codec
+         *                                         "insert_records_from_files_compression_codec":
+         *                                         The default <a
+         *                                         href="../../../concepts/column_compression/"
+         *                                         target="_top">compression
+         *                                         codec</a> for this table's
+         *                                         columns.
          *                                 </ul>
          *                                 The default value is an empty map.
          * @param[in] options_  Optional parameters.
@@ -670,7 +678,7 @@ namespace gpudb
          *                              gpudb::insert_records_from_files_gdal_configuration_options
          *                              "insert_records_from_files_gdal_configuration_options":
          *                              Comma separated list of gdal conf
-         *                              options, for the specific requets:
+         *                              options, for the specific requests:
          *                              key=value
          *                          <li>@ref
          *                              gpudb::insert_records_from_files_ignore_existing_pk
@@ -938,6 +946,26 @@ namespace gpudb
          *                              set as primary keys, when not specified
          *                              in the type.
          *                          <li>@ref
+         *                              gpudb::insert_records_from_files_schema_registry_connection_retries
+         *                              "insert_records_from_files_schema_registry_connection_retries":
+         *                              Confluent Schema registry connection
+         *                              timeout (in Secs)
+         *                          <li>@ref
+         *                              gpudb::insert_records_from_files_schema_registry_connection_timeout
+         *                              "insert_records_from_files_schema_registry_connection_timeout":
+         *                              Confluent Schema registry connection
+         *                              timeout (in Secs)
+         *                          <li>@ref
+         *                              gpudb::insert_records_from_files_schema_registry_max_consecutive_connection_failures
+         *                              "insert_records_from_files_schema_registry_max_consecutive_connection_failures":
+         *                              Max records to skip due to SR
+         *                              connection failures, before failing
+         *                          <li>@ref
+         *                              gpudb::insert_records_from_files_max_consecutive_invalid_schema_failure
+         *                              "insert_records_from_files_max_consecutive_invalid_schema_failure":
+         *                              Max records to skip due to schema
+         *                              related errors, before failing
+         *                          <li>@ref
          *                              gpudb::insert_records_from_files_schema_registry_schema_name
          *                              "insert_records_from_files_schema_registry_schema_name":
          *                              Name of the Avro schema in the schema
@@ -952,8 +980,8 @@ namespace gpudb
          *                          <li>@ref
          *                              gpudb::insert_records_from_files_skip_lines
          *                              "insert_records_from_files_skip_lines":
-         *                              Skip number of lines from begining of
-         *                              file.
+         *                              Skip a number of lines from the
+         *                              beginning of the file.
          *                          <li>@ref
          *                              gpudb::insert_records_from_files_start_offsets
          *                              "insert_records_from_files_start_offsets":
@@ -1121,7 +1149,7 @@ namespace gpudb
          *                              "insert_records_from_files_text_search_columns":
          *                              Add 'text_search' property to
          *                              internally inferenced string columns.
-         *                              Comma seperated list of column names or
+         *                              Comma separated list of column names or
          *                              '*' for all columns. To add
          *                              'text_search' property only to string
          *                              columns greater than or equal to a
@@ -1175,6 +1203,9 @@ namespace gpudb
          *                              The default value is @ref
          *                              gpudb::insert_records_from_files_false
          *                              "insert_records_from_files_false".
+         *                          <li>@ref
+         *                              gpudb::insert_records_from_files_type_inference_max_records_read
+         *                              "insert_records_from_files_type_inference_max_records_read"
          *                          <li>@ref
          *                              gpudb::insert_records_from_files_type_inference_mode
          *                              "insert_records_from_files_type_inference_mode":
@@ -1272,7 +1303,7 @@ namespace gpudb
          * A list of file paths from which data will be sourced;
          *
          * For paths in <a href="../../../tools/kifs/" target="_top">KiFS</a>,
-         * use the uri prefix of kifs:// followed by the path to a file or
+         * use the URI prefix of kifs:// followed by the path to a file or
          * directory. File matching by prefix is supported, e.g.\
          * kifs://dir/file would match dir/file_1 and dir/file_2. When prefix
          * matching is used, the path must start with a full, valid KiFS
@@ -1480,6 +1511,11 @@ namespace gpudb
          *         href="../../../rm/concepts/#tier-strategies"
          *         target="_top">tier strategy</a> for the table and its
          *         columns.
+         *     <li>@ref gpudb::insert_records_from_files_compression_codec
+         *         "insert_records_from_files_compression_codec": The default
+         *         <a href="../../../concepts/column_compression/"
+         *         target="_top">compression codec</a> for this table's
+         *         columns.
          * </ul>
          * The default value is an empty map.
          */
@@ -1685,7 +1721,7 @@ namespace gpudb
          *         gpudb::insert_records_from_files_gdal_configuration_options
          *         "insert_records_from_files_gdal_configuration_options":
          *         Comma separated list of gdal conf options, for the specific
-         *         requets: key=value
+         *         requests: key=value
          *     <li>@ref gpudb::insert_records_from_files_ignore_existing_pk
          *         "insert_records_from_files_ignore_existing_pk": Specifies
          *         the record collision error-suppression policy for inserting
@@ -1877,6 +1913,24 @@ namespace gpudb
          *         list of column names to set as primary keys, when not
          *         specified in the type.
          *     <li>@ref
+         *         gpudb::insert_records_from_files_schema_registry_connection_retries
+         *         "insert_records_from_files_schema_registry_connection_retries":
+         *         Confluent Schema registry connection timeout (in Secs)
+         *     <li>@ref
+         *         gpudb::insert_records_from_files_schema_registry_connection_timeout
+         *         "insert_records_from_files_schema_registry_connection_timeout":
+         *         Confluent Schema registry connection timeout (in Secs)
+         *     <li>@ref
+         *         gpudb::insert_records_from_files_schema_registry_max_consecutive_connection_failures
+         *         "insert_records_from_files_schema_registry_max_consecutive_connection_failures":
+         *         Max records to skip due to SR connection failures, before
+         *         failing
+         *     <li>@ref
+         *         gpudb::insert_records_from_files_max_consecutive_invalid_schema_failure
+         *         "insert_records_from_files_max_consecutive_invalid_schema_failure":
+         *         Max records to skip due to schema related errors, before
+         *         failing
+         *     <li>@ref
          *         gpudb::insert_records_from_files_schema_registry_schema_name
          *         "insert_records_from_files_schema_registry_schema_name":
          *         Name of the Avro schema in the schema registry to use when
@@ -1886,8 +1940,8 @@ namespace gpudb
          *         of column names to set as shard keys, when not specified in
          *         the type.
          *     <li>@ref gpudb::insert_records_from_files_skip_lines
-         *         "insert_records_from_files_skip_lines": Skip number of lines
-         *         from begining of file.
+         *         "insert_records_from_files_skip_lines": Skip a number of
+         *         lines from the beginning of the file.
          *     <li>@ref gpudb::insert_records_from_files_start_offsets
          *         "insert_records_from_files_start_offsets": Starting offsets
          *         by partition to fetch from kafka. A comma separated list of
@@ -2009,7 +2063,7 @@ namespace gpudb
          *     <li>@ref gpudb::insert_records_from_files_text_search_columns
          *         "insert_records_from_files_text_search_columns": Add
          *         'text_search' property to internally inferenced string
-         *         columns. Comma seperated list of column names or '*' for all
+         *         columns. Comma separated list of column names or '*' for all
          *         columns. To add 'text_search' property only to string
          *         columns greater than or equal to a minimum size, also set
          *         the @ref
@@ -2051,6 +2105,9 @@ namespace gpudb
          *         The default value is @ref
          *         gpudb::insert_records_from_files_false
          *         "insert_records_from_files_false".
+         *     <li>@ref
+         *         gpudb::insert_records_from_files_type_inference_max_records_read
+         *         "insert_records_from_files_type_inference_max_records_read"
          *     <li>@ref gpudb::insert_records_from_files_type_inference_mode
          *         "insert_records_from_files_type_inference_mode": Optimize
          *         type inferencing for either speed or accuracy.

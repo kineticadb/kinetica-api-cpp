@@ -184,10 +184,10 @@ namespace gpudb
          *                              expression to apply to the table prior
          *                              to computing the aggregate group by.
          *                          <li>@ref
-         *                              gpudb::aggregate_group_by_chunked_expression_evaluation
-         *                              "aggregate_group_by_chunked_expression_evaluation":
-         *                              evaluate the filter expression during
-         *                              group-by chunk processing.
+         *                              gpudb::aggregate_group_by_pipelined_expression_evaluation
+         *                              "aggregate_group_by_pipelined_expression_evaluation":
+         *                              evaluate the group-by during last
+         *                              JoinedSet filter plan step.
          *                              Supported values:
          *                              <ul>
          *                                  <li>@ref
@@ -278,6 +278,13 @@ namespace gpudb
          *                              target="_top">tier strategy</a> for the
          *                              table and its columns.
          *                          <li>@ref
+         *                              gpudb::aggregate_group_by_compression_codec
+         *                              "aggregate_group_by_compression_codec":
+         *                              The default <a
+         *                              href="../../../concepts/column_compression/"
+         *                              target="_top">compression codec</a> for
+         *                              the result table's columns.
+         *                          <li>@ref
          *                              gpudb::aggregate_group_by_result_table
          *                              "aggregate_group_by_result_table": The
          *                              name of a table used to store the
@@ -367,6 +374,27 @@ namespace gpudb
          *                              The default value is @ref
          *                              gpudb::aggregate_group_by_false
          *                              "aggregate_group_by_false".
+         *                          <li>@ref
+         *                              gpudb::aggregate_group_by_result_table_generate_soft_pk
+         *                              "aggregate_group_by_result_table_generate_soft_pk":
+         *                              If @ref gpudb::aggregate_group_by_true
+         *                              "true" then set a soft primary key for
+         *                              the result table. Must be used in
+         *                              combination with the @ref
+         *                              gpudb::aggregate_group_by_result_table
+         *                              "result_table" option.
+         *                              Supported values:
+         *                              <ul>
+         *                                  <li>@ref
+         *                                      gpudb::aggregate_group_by_true
+         *                                      "aggregate_group_by_true"
+         *                                  <li>@ref
+         *                                      gpudb::aggregate_group_by_false
+         *                                      "aggregate_group_by_false"
+         *                              </ul>
+         *                              The default value is @ref
+         *                              gpudb::aggregate_group_by_false
+         *                              "aggregate_group_by_false".
          *                          <li>@ref gpudb::aggregate_group_by_ttl
          *                              "aggregate_group_by_ttl": Sets the <a
          *                              href="../../../concepts/ttl/"
@@ -428,12 +456,12 @@ namespace gpudb
          *                              "aggregate_group_by_grouping_sets":
          *                              Customize the grouping attribute sets
          *                              to compute the aggregates. These sets
-         *                              can include ROLLUP or CUBE operartors.
+         *                              can include ROLLUP or CUBE operators.
          *                              The attribute sets should be enclosed
-         *                              in paranthesis and can include
+         *                              in parentheses and can include
          *                              composite attributes. All attributes
          *                              specified in the grouping sets must
-         *                              present in the groupby attributes.
+         *                              present in the group-by attributes.
          *                          <li>@ref gpudb::aggregate_group_by_rollup
          *                              "aggregate_group_by_rollup": This
          *                              option is used to specify the
@@ -565,10 +593,10 @@ namespace gpudb
          *                              expression to apply to the table prior
          *                              to computing the aggregate group by.
          *                          <li>@ref
-         *                              gpudb::aggregate_group_by_chunked_expression_evaluation
-         *                              "aggregate_group_by_chunked_expression_evaluation":
-         *                              evaluate the filter expression during
-         *                              group-by chunk processing.
+         *                              gpudb::aggregate_group_by_pipelined_expression_evaluation
+         *                              "aggregate_group_by_pipelined_expression_evaluation":
+         *                              evaluate the group-by during last
+         *                              JoinedSet filter plan step.
          *                              Supported values:
          *                              <ul>
          *                                  <li>@ref
@@ -659,6 +687,13 @@ namespace gpudb
          *                              target="_top">tier strategy</a> for the
          *                              table and its columns.
          *                          <li>@ref
+         *                              gpudb::aggregate_group_by_compression_codec
+         *                              "aggregate_group_by_compression_codec":
+         *                              The default <a
+         *                              href="../../../concepts/column_compression/"
+         *                              target="_top">compression codec</a> for
+         *                              the result table's columns.
+         *                          <li>@ref
          *                              gpudb::aggregate_group_by_result_table
          *                              "aggregate_group_by_result_table": The
          *                              name of a table used to store the
@@ -748,6 +783,27 @@ namespace gpudb
          *                              The default value is @ref
          *                              gpudb::aggregate_group_by_false
          *                              "aggregate_group_by_false".
+         *                          <li>@ref
+         *                              gpudb::aggregate_group_by_result_table_generate_soft_pk
+         *                              "aggregate_group_by_result_table_generate_soft_pk":
+         *                              If @ref gpudb::aggregate_group_by_true
+         *                              "true" then set a soft primary key for
+         *                              the result table. Must be used in
+         *                              combination with the @ref
+         *                              gpudb::aggregate_group_by_result_table
+         *                              "result_table" option.
+         *                              Supported values:
+         *                              <ul>
+         *                                  <li>@ref
+         *                                      gpudb::aggregate_group_by_true
+         *                                      "aggregate_group_by_true"
+         *                                  <li>@ref
+         *                                      gpudb::aggregate_group_by_false
+         *                                      "aggregate_group_by_false"
+         *                              </ul>
+         *                              The default value is @ref
+         *                              gpudb::aggregate_group_by_false
+         *                              "aggregate_group_by_false".
          *                          <li>@ref gpudb::aggregate_group_by_ttl
          *                              "aggregate_group_by_ttl": Sets the <a
          *                              href="../../../concepts/ttl/"
@@ -809,12 +865,12 @@ namespace gpudb
          *                              "aggregate_group_by_grouping_sets":
          *                              Customize the grouping attribute sets
          *                              to compute the aggregates. These sets
-         *                              can include ROLLUP or CUBE operartors.
+         *                              can include ROLLUP or CUBE operators.
          *                              The attribute sets should be enclosed
-         *                              in paranthesis and can include
+         *                              in parentheses and can include
          *                              composite attributes. All attributes
          *                              specified in the grouping sets must
-         *                              present in the groupby attributes.
+         *                              present in the group-by attributes.
          *                          <li>@ref gpudb::aggregate_group_by_rollup
          *                              "aggregate_group_by_rollup": This
          *                              option is used to specify the
@@ -939,9 +995,11 @@ namespace gpudb
          *     <li>@ref gpudb::aggregate_group_by_expression
          *         "aggregate_group_by_expression": Filter expression to apply
          *         to the table prior to computing the aggregate group by.
-         *     <li>@ref gpudb::aggregate_group_by_chunked_expression_evaluation
-         *         "aggregate_group_by_chunked_expression_evaluation": evaluate
-         *         the filter expression during group-by chunk processing.
+         *     <li>@ref
+         *         gpudb::aggregate_group_by_pipelined_expression_evaluation
+         *         "aggregate_group_by_pipelined_expression_evaluation":
+         *         evaluate the group-by during last JoinedSet filter plan
+         *         step.
          *         Supported values:
          *         <ul>
          *             <li>@ref gpudb::aggregate_group_by_true
@@ -1001,6 +1059,11 @@ namespace gpudb
          *         "aggregate_group_by_strategy_definition": The <a
          *         href="../../../rm/concepts/#tier-strategies"
          *         target="_top">tier strategy</a> for the table and its
+         *         columns.
+         *     <li>@ref gpudb::aggregate_group_by_compression_codec
+         *         "aggregate_group_by_compression_codec": The default <a
+         *         href="../../../concepts/column_compression/"
+         *         target="_top">compression codec</a> for the result table's
          *         columns.
          *     <li>@ref gpudb::aggregate_group_by_result_table
          *         "aggregate_group_by_result_table": The name of a table used
@@ -1064,6 +1127,22 @@ namespace gpudb
          *         </ul>
          *         The default value is @ref gpudb::aggregate_group_by_false
          *         "aggregate_group_by_false".
+         *     <li>@ref gpudb::aggregate_group_by_result_table_generate_soft_pk
+         *         "aggregate_group_by_result_table_generate_soft_pk": If @ref
+         *         gpudb::aggregate_group_by_true "true" then set a soft
+         *         primary key for the result table. Must be used in
+         *         combination with the @ref
+         *         gpudb::aggregate_group_by_result_table "result_table"
+         *         option.
+         *         Supported values:
+         *         <ul>
+         *             <li>@ref gpudb::aggregate_group_by_true
+         *                 "aggregate_group_by_true"
+         *             <li>@ref gpudb::aggregate_group_by_false
+         *                 "aggregate_group_by_false"
+         *         </ul>
+         *         The default value is @ref gpudb::aggregate_group_by_false
+         *         "aggregate_group_by_false".
          *     <li>@ref gpudb::aggregate_group_by_ttl "aggregate_group_by_ttl":
          *         Sets the <a href="../../../concepts/ttl/"
          *         target="_top">TTL</a> of the table specified in @ref
@@ -1104,10 +1183,10 @@ namespace gpudb
          *     <li>@ref gpudb::aggregate_group_by_grouping_sets
          *         "aggregate_group_by_grouping_sets": Customize the grouping
          *         attribute sets to compute the aggregates. These sets can
-         *         include ROLLUP or CUBE operartors. The attribute sets should
-         *         be enclosed in paranthesis and can include composite
+         *         include ROLLUP or CUBE operators. The attribute sets should
+         *         be enclosed in parentheses and can include composite
          *         attributes. All attributes specified in the grouping sets
-         *         must present in the groupby attributes.
+         *         must present in the group-by attributes.
          *     <li>@ref gpudb::aggregate_group_by_rollup
          *         "aggregate_group_by_rollup": This option is used to specify
          *         the multilevel aggregates.

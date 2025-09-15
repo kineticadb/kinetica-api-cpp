@@ -159,6 +159,18 @@ namespace gpudb
          *                              gpudb::insert_records_false
          *                              "insert_records_false".
          *                          <li>@ref
+         *                              gpudb::insert_records_pk_conflict_predicate_higher
+         *                              "insert_records_pk_conflict_predicate_higher":
+         *                              The record with higher value for the
+         *                              column resolves the primary-key insert
+         *                              conflict. The default value is ''.
+         *                          <li>@ref
+         *                              gpudb::insert_records_pk_conflict_predicate_lower
+         *                              "insert_records_pk_conflict_predicate_lower":
+         *                              The record with lower value for the
+         *                              column resolves the primary-key insert
+         *                              conflict. The default value is ''.
+         *                          <li>@ref
          *                              gpudb::insert_records_return_record_ids
          *                              "insert_records_return_record_ids": If
          *                              @ref gpudb::insert_records_true "true"
@@ -396,6 +408,18 @@ namespace gpudb
          *                              gpudb::insert_records_false
          *                              "insert_records_false".
          *                          <li>@ref
+         *                              gpudb::insert_records_pk_conflict_predicate_higher
+         *                              "insert_records_pk_conflict_predicate_higher":
+         *                              The record with higher value for the
+         *                              column resolves the primary-key insert
+         *                              conflict. The default value is ''.
+         *                          <li>@ref
+         *                              gpudb::insert_records_pk_conflict_predicate_lower
+         *                              "insert_records_pk_conflict_predicate_lower":
+         *                              The record with lower value for the
+         *                              column resolves the primary-key insert
+         *                              conflict. The default value is ''.
+         *                          <li>@ref
          *                              gpudb::insert_records_return_record_ids
          *                              "insert_records_return_record_ids": If
          *                              @ref gpudb::insert_records_true "true"
@@ -608,6 +632,14 @@ namespace gpudb
          *         </ul>
          *         The default value is @ref gpudb::insert_records_false
          *         "insert_records_false".
+         *     <li>@ref gpudb::insert_records_pk_conflict_predicate_higher
+         *         "insert_records_pk_conflict_predicate_higher": The record
+         *         with higher value for the column resolves the primary-key
+         *         insert conflict. The default value is ''.
+         *     <li>@ref gpudb::insert_records_pk_conflict_predicate_lower
+         *         "insert_records_pk_conflict_predicate_lower": The record
+         *         with lower value for the column resolves the primary-key
+         *         insert conflict. The default value is ''.
          *     <li>@ref gpudb::insert_records_return_record_ids
          *         "insert_records_return_record_ids": If @ref
          *         gpudb::insert_records_true "true" then return the internal
@@ -900,6 +932,18 @@ namespace gpudb
          *                              gpudb::insert_records_false
          *                              "insert_records_false".
          *                          <li>@ref
+         *                              gpudb::insert_records_pk_conflict_predicate_higher
+         *                              "insert_records_pk_conflict_predicate_higher":
+         *                              The record with higher value for the
+         *                              column resolves the primary-key insert
+         *                              conflict. The default value is ''.
+         *                          <li>@ref
+         *                              gpudb::insert_records_pk_conflict_predicate_lower
+         *                              "insert_records_pk_conflict_predicate_lower":
+         *                              The record with lower value for the
+         *                              column resolves the primary-key insert
+         *                              conflict. The default value is ''.
+         *                          <li>@ref
          *                              gpudb::insert_records_return_record_ids
          *                              "insert_records_return_record_ids": If
          *                              @ref gpudb::insert_records_true "true"
@@ -1091,6 +1135,14 @@ namespace gpudb
          *         </ul>
          *         The default value is @ref gpudb::insert_records_false
          *         "insert_records_false".
+         *     <li>@ref gpudb::insert_records_pk_conflict_predicate_higher
+         *         "insert_records_pk_conflict_predicate_higher": The record
+         *         with higher value for the column resolves the primary-key
+         *         insert conflict. The default value is ''.
+         *     <li>@ref gpudb::insert_records_pk_conflict_predicate_lower
+         *         "insert_records_pk_conflict_predicate_lower": The record
+         *         with lower value for the column resolves the primary-key
+         *         insert conflict. The default value is ''.
          *     <li>@ref gpudb::insert_records_return_record_ids
          *         "insert_records_return_record_ids": If @ref
          *         gpudb::insert_records_true "true" then return the internal

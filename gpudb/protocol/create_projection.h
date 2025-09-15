@@ -389,6 +389,13 @@ namespace gpudb
          *                              target="_top">tier strategy</a> for the
          *                              table and its columns.
          *                          <li>@ref
+         *                              gpudb::create_projection_compression_codec
+         *                              "create_projection_compression_codec":
+         *                              The default <a
+         *                              href="../../../concepts/column_compression/"
+         *                              target="_top">compression codec</a> for
+         *                              the projection's columns.
+         *                          <li>@ref
          *                              gpudb::create_projection_join_window_functions
          *                              "create_projection_join_window_functions":
          *                              If set, window functions which require
@@ -651,6 +658,11 @@ namespace gpudb
          *         "create_projection_strategy_definition": The <a
          *         href="../../../rm/concepts/#tier-strategies"
          *         target="_top">tier strategy</a> for the table and its
+         *         columns.
+         *     <li>@ref gpudb::create_projection_compression_codec
+         *         "create_projection_compression_codec": The default <a
+         *         href="../../../concepts/column_compression/"
+         *         target="_top">compression codec</a> for the projection's
          *         columns.
          *     <li>@ref gpudb::create_projection_join_window_functions
          *         "create_projection_join_window_functions": If set, window

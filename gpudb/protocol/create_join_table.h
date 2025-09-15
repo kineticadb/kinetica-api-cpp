@@ -170,6 +170,46 @@ namespace gpudb
          *                              less than chunk_size into a single
          *                              chunk. The default value is 'false'.
          *                          <li>@ref
+         *                              gpudb::create_join_table_max_virtual_chunk_size
+         *                              "create_join_table_max_virtual_chunk_size":
+         *                              Maximum number of records per
+         *                              virtual-chunk. When set, enables
+         *                              virtual chunking. Defaults to
+         *                              chunk_size if virtual chunking
+         *                              otherwise enabled.
+         *                          <li>@ref
+         *                              gpudb::create_join_table_min_virtual_chunk_size
+         *                              "create_join_table_min_virtual_chunk_size":
+         *                              Minimum number of records per
+         *                              virtual-chunk. When set, enables
+         *                              virtual chunking. Defaults to
+         *                              chunk_size if virtual chunking
+         *                              otherwise enabled.
+         *                          <li>@ref
+         *                              gpudb::create_join_table_enable_sparse_virtual_chunking
+         *                              "create_join_table_enable_sparse_virtual_chunking":
+         *                              materialize virtual chunks with only
+         *                              non-deleted values. The default value
+         *                              is 'false'.
+         *                          <li>@ref
+         *                              gpudb::create_join_table_enable_equi_join_lazy_result_store
+         *                              "create_join_table_enable_equi_join_lazy_result_store":
+         *                              Allow using the lazy result store to
+         *                              cache computation of one side of a
+         *                              multichunk equi-join.  Reduces
+         *                              computation but also reduces
+         *                              parallelism to the number of chunks on
+         *                              the other side of the equi-join
+         *                          <li>@ref
+         *                              gpudb::create_join_table_enable_predicate_equi_join_lazy_result_store
+         *                              "create_join_table_enable_predicate_equi_join_lazy_result_store":
+         *                              Allow using the lazy result store to
+         *                              cache computation of one side of a
+         *                              multichunk predicate-equi-join. Reduces
+         *                              computation but also reduces
+         *                              parallelism to the number of chunks on
+         *                              the other side of the equi-join
+         *                          <li>@ref
          *                              gpudb::create_join_table_enable_pk_equi_join
          *                              "create_join_table_enable_pk_equi_join":
          *                              Use equi-join to do primary key joins
@@ -295,6 +335,34 @@ namespace gpudb
          *         "create_join_table_enable_virtual_chunking": Collect chunks
          *         with accumulated size less than chunk_size into a single
          *         chunk. The default value is 'false'.
+         *     <li>@ref gpudb::create_join_table_max_virtual_chunk_size
+         *         "create_join_table_max_virtual_chunk_size": Maximum number
+         *         of records per virtual-chunk. When set, enables virtual
+         *         chunking. Defaults to chunk_size if virtual chunking
+         *         otherwise enabled.
+         *     <li>@ref gpudb::create_join_table_min_virtual_chunk_size
+         *         "create_join_table_min_virtual_chunk_size": Minimum number
+         *         of records per virtual-chunk. When set, enables virtual
+         *         chunking. Defaults to chunk_size if virtual chunking
+         *         otherwise enabled.
+         *     <li>@ref gpudb::create_join_table_enable_sparse_virtual_chunking
+         *         "create_join_table_enable_sparse_virtual_chunking":
+         *         materialize virtual chunks with only non-deleted values. The
+         *         default value is 'false'.
+         *     <li>@ref
+         *         gpudb::create_join_table_enable_equi_join_lazy_result_store
+         *         "create_join_table_enable_equi_join_lazy_result_store":
+         *         Allow using the lazy result store to cache computation of
+         *         one side of a multichunk equi-join.  Reduces computation but
+         *         also reduces parallelism to the number of chunks on the
+         *         other side of the equi-join
+         *     <li>@ref
+         *         gpudb::create_join_table_enable_predicate_equi_join_lazy_result_store
+         *         "create_join_table_enable_predicate_equi_join_lazy_result_store":
+         *         Allow using the lazy result store to cache computation of
+         *         one side of a multichunk predicate-equi-join. Reduces
+         *         computation but also reduces parallelism to the number of
+         *         chunks on the other side of the equi-join
          *     <li>@ref gpudb::create_join_table_enable_pk_equi_join
          *         "create_join_table_enable_pk_equi_join": Use equi-join to do
          *         primary key joins rather than using primary-key-index

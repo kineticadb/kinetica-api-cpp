@@ -29,7 +29,7 @@ namespace gpudb
         /**
          * Constructs a HasRoleRequest object with the specified parameters.
          *
-         * @param[in] principal_  Name of the user for which role membersih is
+         * @param[in] principal_  Name of the user for which role membership is
          *                        being checked. Must be an existing user. If
          *                        blank, will use the current user. The default
          *                        value is ''.
@@ -84,7 +84,7 @@ namespace gpudb
         }
 
         /**
-         * Name of the user for which role membersih is being checked. Must be
+         * Name of the user for which role membership is being checked. Must be
          * an existing user. If blank, will use the current user. The default
          * value is ''.
          */

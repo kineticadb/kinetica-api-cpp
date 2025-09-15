@@ -18,6 +18,25 @@ namespace gpudb
      *
      * See <a href="../../../sql/" target="_top">SQL Support</a> for the
      * complete set of supported SQL commands.
+     *
+     * When a caller wants all the results from a large query (e.g., more than
+     * <a href="../../../config/#config-main-general"
+     * target="_top">max_get_records_size</a> records), they can make multiple
+     * calls to this endpoint using the @ref offset and @ref limit parameters
+     * to page through the results.  Normally, this will execute the @ref
+     * statement query each time. To avoid re-executing the query each time and
+     * to keep the results in the same order, the caller should specify a @ref
+     * gpudb::execute_sql_paging_table "paging_table" name to hold the results
+     * of the query between calls and specify the @ref
+     * gpudb::execute_sql_paging_table "paging_table" on subsequent calls. When
+     * this is done, the caller should clear the paging table and any other
+     * tables in the @ref gpudb::execute_sql_result_table_list
+     * "result_table_list" (both returned in the response) when they are done
+     * paging through the results.  @ref
+     * gpudb::RawExecuteSqlResponse::pagingTable "pagingTable" (and @ref
+     * gpudb::execute_sql_result_table_list "result_table_list") will be empty
+     * if no paging table was created (e.g., when all the query results were
+     * returned in the first call).
      */
     struct ExecuteSqlRequest
     {
@@ -191,20 +210,49 @@ namespace gpudb
          *                              gpudb::execute_sql_false
          *                              "execute_sql_false".
          *                          <li>@ref gpudb::execute_sql_paging_table
-         *                              "execute_sql_paging_table": When empty
-         *                              or the specified paging table not
-         *                              exists, the system will create a paging
-         *                              table and return when query output has
-         *                              more records than the user asked. If
-         *                              the paging table exists in the system,
-         *                              the records from the paging table are
-         *                              returned without evaluating the query.
+         *                              "execute_sql_paging_table": When
+         *                              specified (or @ref
+         *                              gpudb::execute_sql_paging_table_ttl
+         *                              "paging_table_ttl" is set), the system
+         *                              will create a paging table to hold the
+         *                              results of the query, when the output
+         *                              has more records than are in the
+         *                              response (i.e., when @ref
+         *                              gpudb::RawExecuteSqlResponse::hasMoreRecords
+         *                              "hasMoreRecords" is @ref
+         *                              gpudb::execute_sql_true "true"). If the
+         *                              specified paging table exists, the
+         *                              records from the paging table are
+         *                              returned without re-evaluating the
+         *                              query.  It is the caller's
+         *                              responsibility to clear the @ref
+         *                              gpudb::RawExecuteSqlResponse::pagingTable
+         *                              "pagingTable" and other tables in the
+         *                              @ref
+         *                              gpudb::execute_sql_result_table_list
+         *                              "result_table_list" (both returned in
+         *                              the response) when they are done with
+         *                              this query.
          *                          <li>@ref
          *                              gpudb::execute_sql_paging_table_ttl
          *                              "execute_sql_paging_table_ttl": Sets
          *                              the <a href="../../../concepts/ttl/"
          *                              target="_top">TTL</a> of the paging
-         *                              table.
+         *                              table.  -1 indicates no timeout.
+         *                              Setting this option will cause a paging
+         *                              table to be generated when needed. The
+         *                              @ref
+         *                              gpudb::RawExecuteSqlResponse::pagingTable
+         *                              "pagingTable" and other tables in the
+         *                              @ref
+         *                              gpudb::execute_sql_result_table_list
+         *                              "result_table_list" (both returned in
+         *                              the response) will be automatically
+         *                              cleared after the TTL expires, if set
+         *                              to a positive number. However, it is
+         *                              still recommended that the caller clear
+         *                              these tables when they are done with
+         *                              this query.
          *                          <li>@ref
          *                              gpudb::execute_sql_parallel_execution
          *                              "execute_sql_parallel_execution": If
@@ -581,20 +629,49 @@ namespace gpudb
          *                              gpudb::execute_sql_false
          *                              "execute_sql_false".
          *                          <li>@ref gpudb::execute_sql_paging_table
-         *                              "execute_sql_paging_table": When empty
-         *                              or the specified paging table not
-         *                              exists, the system will create a paging
-         *                              table and return when query output has
-         *                              more records than the user asked. If
-         *                              the paging table exists in the system,
-         *                              the records from the paging table are
-         *                              returned without evaluating the query.
+         *                              "execute_sql_paging_table": When
+         *                              specified (or @ref
+         *                              gpudb::execute_sql_paging_table_ttl
+         *                              "paging_table_ttl" is set), the system
+         *                              will create a paging table to hold the
+         *                              results of the query, when the output
+         *                              has more records than are in the
+         *                              response (i.e., when @ref
+         *                              gpudb::RawExecuteSqlResponse::hasMoreRecords
+         *                              "hasMoreRecords" is @ref
+         *                              gpudb::execute_sql_true "true"). If the
+         *                              specified paging table exists, the
+         *                              records from the paging table are
+         *                              returned without re-evaluating the
+         *                              query.  It is the caller's
+         *                              responsibility to clear the @ref
+         *                              gpudb::RawExecuteSqlResponse::pagingTable
+         *                              "pagingTable" and other tables in the
+         *                              @ref
+         *                              gpudb::execute_sql_result_table_list
+         *                              "result_table_list" (both returned in
+         *                              the response) when they are done with
+         *                              this query.
          *                          <li>@ref
          *                              gpudb::execute_sql_paging_table_ttl
          *                              "execute_sql_paging_table_ttl": Sets
          *                              the <a href="../../../concepts/ttl/"
          *                              target="_top">TTL</a> of the paging
-         *                              table.
+         *                              table.  -1 indicates no timeout.
+         *                              Setting this option will cause a paging
+         *                              table to be generated when needed. The
+         *                              @ref
+         *                              gpudb::RawExecuteSqlResponse::pagingTable
+         *                              "pagingTable" and other tables in the
+         *                              @ref
+         *                              gpudb::execute_sql_result_table_list
+         *                              "result_table_list" (both returned in
+         *                              the response) will be automatically
+         *                              cleared after the TTL expires, if set
+         *                              to a positive number. However, it is
+         *                              still recommended that the caller clear
+         *                              these tables when they are done with
+         *                              this query.
          *                          <li>@ref
          *                              gpudb::execute_sql_parallel_execution
          *                              "execute_sql_parallel_execution": If
@@ -941,16 +1018,33 @@ namespace gpudb
          *         The default value is @ref gpudb::execute_sql_false
          *         "execute_sql_false".
          *     <li>@ref gpudb::execute_sql_paging_table
-         *         "execute_sql_paging_table": When empty or the specified
-         *         paging table not exists, the system will create a paging
-         *         table and return when query output has more records than the
-         *         user asked. If the paging table exists in the system, the
-         *         records from the paging table are returned without
-         *         evaluating the query.
+         *         "execute_sql_paging_table": When specified (or @ref
+         *         gpudb::execute_sql_paging_table_ttl "paging_table_ttl" is
+         *         set), the system will create a paging table to hold the
+         *         results of the query, when the output has more records than
+         *         are in the response (i.e., when @ref
+         *         gpudb::RawExecuteSqlResponse::hasMoreRecords
+         *         "hasMoreRecords" is @ref gpudb::execute_sql_true "true"). If
+         *         the specified paging table exists, the records from the
+         *         paging table are returned without re-evaluating the query.
+         *         It is the caller's responsibility to clear the @ref
+         *         gpudb::RawExecuteSqlResponse::pagingTable "pagingTable" and
+         *         other tables in the @ref
+         *         gpudb::execute_sql_result_table_list "result_table_list"
+         *         (both returned in the response) when they are done with this
+         *         query.
          *     <li>@ref gpudb::execute_sql_paging_table_ttl
          *         "execute_sql_paging_table_ttl": Sets the <a
          *         href="../../../concepts/ttl/" target="_top">TTL</a> of the
-         *         paging table.
+         *         paging table.  -1 indicates no timeout.  Setting this option
+         *         will cause a paging table to be generated when needed. The
+         *         @ref gpudb::RawExecuteSqlResponse::pagingTable "pagingTable"
+         *         and other tables in the @ref
+         *         gpudb::execute_sql_result_table_list "result_table_list"
+         *         (both returned in the response) will be automatically
+         *         cleared after the TTL expires, if set to a positive number.
+         *         However, it is still recommended that the caller clear these
+         *         tables when they are done with this query.
          *     <li>@ref gpudb::execute_sql_parallel_execution
          *         "execute_sql_parallel_execution": If @ref
          *         gpudb::execute_sql_false "false", disables the parallel step
@@ -1224,7 +1318,10 @@ namespace gpudb
 
         /**
          * Name of the table that has the result records of the query. Valid,
-         * when @ref hasMoreRecords is @ref gpudb::execute_sql_true "true"
+         * when @ref hasMoreRecords is @ref gpudb::execute_sql_true "true".
+         * The caller should clear this and all tables in @ref
+         * gpudb::execute_sql_result_table_list "result_table_list" when they
+         * are done querying.
          */
         std::string pagingTable;
 
@@ -1232,7 +1329,12 @@ namespace gpudb
          * Additional information.
          * <ul>
          *     <li>@ref gpudb::execute_sql_count "execute_sql_count": Number of
-         *         records in the final table
+         *         records without final limits applied
+         *     <li>@ref gpudb::execute_sql_result_table_list
+         *         "execute_sql_result_table_list": List of tables,
+         *         comma-separated, in addition to the @ref pagingTable,
+         *         created as result of the query. These should be cleared by
+         *         the caller when they are done querying.
          * </ul>
          * The default value is an empty map.
          */
@@ -1373,7 +1475,10 @@ namespace gpudb
 
         /**
          * Name of the table that has the result records of the query. Valid,
-         * when @ref hasMoreRecords is @ref gpudb::execute_sql_true "true"
+         * when @ref hasMoreRecords is @ref gpudb::execute_sql_true "true".
+         * The caller should clear this and all tables in @ref
+         * gpudb::execute_sql_result_table_list "result_table_list" when they
+         * are done querying.
          */
         std::string pagingTable;
 
@@ -1381,7 +1486,12 @@ namespace gpudb
          * Additional information.
          * <ul>
          *     <li>@ref gpudb::execute_sql_count "execute_sql_count": Number of
-         *         records in the final table
+         *         records without final limits applied
+         *     <li>@ref gpudb::execute_sql_result_table_list
+         *         "execute_sql_result_table_list": List of tables,
+         *         comma-separated, in addition to the @ref pagingTable,
+         *         created as result of the query. These should be cleared by
+         *         the caller when they are done querying.
          * </ul>
          * The default value is an empty map.
          */

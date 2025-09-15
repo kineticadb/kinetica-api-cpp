@@ -113,6 +113,10 @@ namespace gpudb
          *                             <li>@ref gpudb::revoke_permission_read
          *                                 "revoke_permission_read": Ability to
          *                                 read, list and use the object.
+         *                             <li>@ref
+         *                                 gpudb::revoke_permission_send_alert
+         *                                 "revoke_permission_send_alert":
+         *                                 Ability to send system alerts.
          *                             <li>@ref gpudb::revoke_permission_update
          *                                 "revoke_permission_update": Update
          *                                 access to the table.
@@ -211,6 +215,9 @@ namespace gpudb
          *         "revoke_permission_insert": Insert access to tables.
          *     <li>@ref gpudb::revoke_permission_read "revoke_permission_read":
          *         Ability to read, list and use the object.
+         *     <li>@ref gpudb::revoke_permission_send_alert
+         *         "revoke_permission_send_alert": Ability to send system
+         *         alerts.
          *     <li>@ref gpudb::revoke_permission_update
          *         "revoke_permission_update": Update access to the table.
          *     <li>@ref gpudb::revoke_permission_user_admin

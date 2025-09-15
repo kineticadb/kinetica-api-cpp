@@ -12,16 +12,40 @@ namespace gpudb
      * A set of parameters for @ref
      * GPUdb::createType(const CreateTypeRequest&) const "GPUdb::createType".
      *
-     * Creates a new type describing the layout of a table. The type definition
-     * is a JSON string describing the fields (i.e. columns) of the type. Each
-     * field consists of a name and a data type. Supported data types are:
-     * double, float, int, long, string, and bytes. In addition, one or more
-     * properties can be specified for each column which customize the memory
-     * usage and query availability of that column.  Note that some properties
-     * are mutually exclusive--i.e. they cannot be specified for any given
-     * column simultaneously.  One example of mutually exclusive properties are
-     * @ref gpudb::create_type_data "data" and @ref
-     * gpudb::create_type_store_only "store_only".
+     * Creates a new type describing the columns of a table. The type
+     * definition is specified as a list of columns, each specified as a list
+     * of the column name, data type, and any column attributes.
+     *
+     * Example of a type definition with some parameters:
+     * @code
+     *
+     *     [
+     *         ["id", "int8", "primary_key"],
+     *         ["dept_id", "int8", "primary_key", "shard_key"],
+     *         ["manager_id", "int8", "nullable"],
+     *         ["first_name", "char32"],
+     *         ["last_name", "char64"],
+     *         ["salary", "decimal"],
+     *         ["hire_date", "date"]
+     *     ]
+     *
+     * @endcode
+     * Each column definition consists of the column name (which should meet
+     * the standard <a href="../../../concepts/tables/#table-naming-criteria"
+     * target="_top">column naming criteria</a>), the column's <a
+     * href="../../../concepts/types/#types-chart" target="_top">specific
+     * type</a> (int, long, float, double, string, bytes, or any of the
+     * possible values for @ref properties), and any <a
+     * href="../../../concepts/types/#types-data-handling" target="_top">data
+     * handling</a>, <a href="../../../concepts/types/#types-data-keys"
+     * target="_top">data key</a>, or <a
+     * href="../../../concepts/types/#types-data-replace" target="_top">data
+     * replacement</a> properties.
+     *
+     * Note that some properties are mutually exclusive--i.e. they cannot be
+     * specified for any given column simultaneously.  One example of mutually
+     * exclusive properties are @ref gpudb::create_type_primary_key
+     * "primary_key" and @ref gpudb::create_type_nullable "nullable".
      *
      * A single <a href="../../../concepts/tables/#primary-keys"
      * target="_top">primary key</a> and/or single <a
@@ -35,29 +59,6 @@ namespace gpudb
      * parameters in the request, incoming objects with primary key values that
      * match existing objects will either overwrite (i.e. update) the existing
      * object or will be skipped and not added into the set.
-     *
-     * Example of a type definition with some of the parameters:
-     * @code
-     *
-     *     {"type":"record",
-     *     "name":"point",
-     *     "fields":[{"name":"msg_id","type":"string"},
-     *             {"name":"x","type":"double"},
-     *             {"name":"y","type":"double"},
-     *             {"name":"TIMESTAMP","type":"double"},
-     *             {"name":"source","type":"string"},
-     *             {"name":"group_id","type":"string"},
-     *             {"name":"OBJECT_ID","type":"string"}]
-     *     }
-     *
-     * @endcode
-     * Properties:
-     * @code
-     *
-     *     {"group_id":["store_only"],
-     *     "msg_id":["store_only","text_search"]
-     *     }
-     * @endcode
      */
     struct CreateTypeRequest
     {
@@ -76,14 +77,18 @@ namespace gpudb
          * Constructs a CreateTypeRequest object with the specified parameters.
          *
          * @param[in] typeDefinition_  a JSON string describing the columns of
-         *                             the type to be registered.
+         *                             the type to be registered, as described
+         *                             above.
          * @param[in] label_  A user-defined description string which can be
          *                    used to differentiate between tables and types
          *                    with otherwise identical schemas.
-         * @param[in] properties_  Each key-value pair specifies the properties
-         *                         to use for a given column where the key is
-         *                         the column name.  All keys used must be
-         *                         relevant column names for the given table.
+         * @param[in] properties_  [DEPRECATED--please use these property
+         *                         values in the @a typeDefinition_ directly,
+         *                         as described at the top, instead]  Each
+         *                         key-value pair specifies the properties to
+         *                         use for a given column where the key is the
+         *                         column name.  All keys used must be relevant
+         *                         column names for the given table.
          *                         Specifying any property overrides the
          *                         default properties for that column (which is
          *                         based on the column's data type).
@@ -101,46 +106,7 @@ namespace gpudb
          *                                 href="../../../concepts/full_text_search/"
          *                                 target="_top">Full Text Search</a>
          *                                 for details and applicable string
-         *                                 column types. Can be set
-         *                                 independently of @ref
-         *                                 gpudb::create_type_data "data" and
-         *                                 @ref gpudb::create_type_store_only
-         *                                 "store_only".
-         *                             <li>@ref gpudb::create_type_store_only
-         *                                 "create_type_store_only": Persist
-         *                                 the column value but do not make it
-         *                                 available to queries (e.g. @ref
-         *                                 GPUdb::filter(const FilterRequest&) const
-         *                                 "GPUdb::filter")-i.e. it is mutually
-         *                                 exclusive to the @ref
-         *                                 gpudb::create_type_data "data"
-         *                                 property. Any 'bytes' type column
-         *                                 must have a @ref
-         *                                 gpudb::create_type_store_only
-         *                                 "store_only" property. This property
-         *                                 reduces system memory usage.
-         *                             <li>@ref
-         *                                 gpudb::create_type_disk_optimized
-         *                                 "create_type_disk_optimized": Works
-         *                                 in conjunction with the @ref
-         *                                 gpudb::create_type_data "data"
-         *                                 property for string columns. This
-         *                                 property reduces system disk usage
-         *                                 by disabling reverse string lookups.
-         *                                 Queries like @ref
-         *                                 GPUdb::filter(const FilterRequest&) const
-         *                                 "GPUdb::filter", @ref
-         *                                 GPUdb::filterByList(const FilterByListRequest&) const
-         *                                 "GPUdb::filterByList", and @ref
-         *                                 GPUdb::filterByValue(const FilterByValueRequest&) const
-         *                                 "GPUdb::filterByValue" work as usual
-         *                                 but @ref
-         *                                 GPUdb::aggregateUnique(const AggregateUniqueRequest&) const
-         *                                 "GPUdb::aggregateUnique" and @ref
-         *                                 GPUdb::aggregateGroupBy(const AggregateGroupByRequest&) const
-         *                                 "GPUdb::aggregateGroupBy" are not
-         *                                 allowed on columns with this
-         *                                 property.
+         *                                 column types.
          *                             <li>@ref gpudb::create_type_timestamp
          *                                 "create_type_timestamp": Valid only
          *                                 for 'long' columns. Indicates that
@@ -354,19 +320,31 @@ namespace gpudb
          *                                 the column nullable.  The user must
          *                                 declare the type of the column as a
          *                                 union between its regular type and
-         *                                 'null' in the avro schema for the
+         *                                 'null' in the Avro schema for the
          *                                 record type in @a typeDefinition_.
          *                                 For example, if a column is of type
          *                                 integer and is nullable, then the
-         *                                 entry for the column in the avro
+         *                                 entry for the column in the Avro
          *                                 schema must be: ['int', 'null'].
          *                                 The C++, C#, Java, and Python APIs
          *                                 have built-in convenience for
-         *                                 bypassing setting the avro schema by
+         *                                 bypassing setting the Avro schema by
          *                                 hand.  For those languages, one can
          *                                 use this property as usual and not
-         *                                 have to worry about the avro schema
+         *                                 have to worry about the Avro schema
          *                                 for the record.
+         *                             <li>@ref gpudb::create_type_compress
+         *                                 "create_type_compress": This
+         *                                 property indicates that this column
+         *                                 should be <a
+         *                                 href="../../../concepts/column_compression/"
+         *                                 target="_top">compressed</a> with
+         *                                 the given codec and optional level;
+         *                                 e.g., 'compress(snappy)' for Snappy
+         *                                 compression and 'compress(zstd(7))'
+         *                                 for zstd level 7 compression.  This
+         *                                 property is primarily used in order
+         *                                 to save disk space.
          *                             <li>@ref gpudb::create_type_dict
          *                                 "create_type_dict": This property
          *                                 indicates that this column should be
@@ -404,8 +382,17 @@ namespace gpudb
          *                                 any update.
          *                         </ul>
          *                         The default value is an empty map.
-         * @param[in] options_  Optional parameters. The default value is an
-         *                      empty map.
+         * @param[in] options_  Optional parameters.
+         *                      <ul>
+         *                          <li>@ref
+         *                              gpudb::create_type_compression_codec
+         *                              "create_type_compression_codec": The
+         *                              default <a
+         *                              href="../../../concepts/column_compression/"
+         *                              target="_top">compression codec</a> for
+         *                              this type's columns.
+         *                      </ul>
+         *                      The default value is an empty map.
          */
         CreateTypeRequest(const std::string& typeDefinition_, const std::string& label_, const std::map<std::string, std::vector<std::string> >& properties_, const std::map<std::string, std::string>& options_):
             typeDefinition( typeDefinition_ ),
@@ -416,7 +403,8 @@ namespace gpudb
         }
 
         /**
-         * a JSON string describing the columns of the type to be registered.
+         * a JSON string describing the columns of the type to be registered,
+         * as described above.
          */
         std::string typeDefinition;
 
@@ -427,11 +415,13 @@ namespace gpudb
         std::string label;
 
         /**
-         * Each key-value pair specifies the properties to use for a given
-         * column where the key is the column name.  All keys used must be
-         * relevant column names for the given table.  Specifying any property
-         * overrides the default properties for that column (which is based on
-         * the column's data type).
+         * [DEPRECATED--please use these property values in the @ref
+         * typeDefinition directly, as described at the top, instead]  Each
+         * key-value pair specifies the properties to use for a given column
+         * where the key is the column name.  All keys used must be relevant
+         * column names for the given table.  Specifying any property overrides
+         * the default properties for that column (which is based on the
+         * column's data type).
          * Valid values are:
          * <ul>
          *     <li>@ref gpudb::create_type_data "create_type_data": Default
@@ -442,32 +432,7 @@ namespace gpudb
          *         columns. Enables full text search--see <a
          *         href="../../../concepts/full_text_search/"
          *         target="_top">Full Text Search</a> for details and
-         *         applicable string column types. Can be set independently of
-         *         @ref gpudb::create_type_data "data" and @ref
-         *         gpudb::create_type_store_only "store_only".
-         *     <li>@ref gpudb::create_type_store_only "create_type_store_only":
-         *         Persist the column value but do not make it available to
-         *         queries (e.g. @ref GPUdb::filter(const FilterRequest&) const
-         *         "GPUdb::filter")-i.e. it is mutually exclusive to the @ref
-         *         gpudb::create_type_data "data" property. Any 'bytes' type
-         *         column must have a @ref gpudb::create_type_store_only
-         *         "store_only" property. This property reduces system memory
-         *         usage.
-         *     <li>@ref gpudb::create_type_disk_optimized
-         *         "create_type_disk_optimized": Works in conjunction with the
-         *         @ref gpudb::create_type_data "data" property for string
-         *         columns. This property reduces system disk usage by
-         *         disabling reverse string lookups. Queries like @ref
-         *         GPUdb::filter(const FilterRequest&) const "GPUdb::filter",
-         *         @ref GPUdb::filterByList(const FilterByListRequest&) const
-         *         "GPUdb::filterByList", and @ref
-         *         GPUdb::filterByValue(const FilterByValueRequest&) const
-         *         "GPUdb::filterByValue" work as usual but @ref
-         *         GPUdb::aggregateUnique(const AggregateUniqueRequest&) const
-         *         "GPUdb::aggregateUnique" and @ref
-         *         GPUdb::aggregateGroupBy(const AggregateGroupByRequest&) const
-         *         "GPUdb::aggregateGroupBy" are not allowed on columns with
-         *         this property.
+         *         applicable string column types.
          *     <li>@ref gpudb::create_type_timestamp "create_type_timestamp":
          *         Valid only for 'long' columns. Indicates that this field
          *         represents a timestamp and will be provided in milliseconds
@@ -601,14 +566,22 @@ namespace gpudb
          *         However, setting this property is insufficient for making
          *         the column nullable.  The user must declare the type of the
          *         column as a union between its regular type and 'null' in the
-         *         avro schema for the record type in @ref typeDefinition.  For
+         *         Avro schema for the record type in @ref typeDefinition.  For
          *         example, if a column is of type integer and is nullable,
-         *         then the entry for the column in the avro schema must be:
+         *         then the entry for the column in the Avro schema must be:
          *         ['int', 'null'].  The C++, C#, Java, and Python APIs have
-         *         built-in convenience for bypassing setting the avro schema
+         *         built-in convenience for bypassing setting the Avro schema
          *         by hand.  For those languages, one can use this property as
-         *         usual and not have to worry about the avro schema for the
+         *         usual and not have to worry about the Avro schema for the
          *         record.
+         *     <li>@ref gpudb::create_type_compress "create_type_compress":
+         *         This property indicates that this column should be <a
+         *         href="../../../concepts/column_compression/"
+         *         target="_top">compressed</a> with the given codec and
+         *         optional level; e.g., 'compress(snappy)' for Snappy
+         *         compression and 'compress(zstd(7))' for zstd level 7
+         *         compression.  This property is primarily used in order to
+         *         save disk space.
          *     <li>@ref gpudb::create_type_dict "create_type_dict": This
          *         property indicates that this column should be <a
          *         href="../../../concepts/dictionary_encoding/"
@@ -635,7 +608,14 @@ namespace gpudb
         std::map<std::string, std::vector<std::string> > properties;
 
         /**
-         * Optional parameters. The default value is an empty map.
+         * Optional parameters.
+         * <ul>
+         *     <li>@ref gpudb::create_type_compression_codec
+         *         "create_type_compression_codec": The default <a
+         *         href="../../../concepts/column_compression/"
+         *         target="_top">compression codec</a> for this type's columns.
+         * </ul>
+         * The default value is an empty map.
          */
         std::map<std::string, std::string> options;
     };

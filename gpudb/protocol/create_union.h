@@ -122,12 +122,9 @@ namespace gpudb
          *                              will be automatically created. The
          *                              default value is ''.
          *                          <li>@ref gpudb::create_union_mode
-         *                              "create_union_mode": If @ref
-         *                              gpudb::create_union_merge_views
-         *                              "merge_views", then this operation will
-         *                              merge the provided views. All @a
-         *                              tableNames_ must be views from the same
-         *                              underlying base table.
+         *                              "create_union_mode": The mode describes
+         *                              what rows of the tables being unioned
+         *                              will be retained.
          *                              Supported values:
          *                              <ul>
          *                                  <li>@ref
@@ -175,30 +172,16 @@ namespace gpudb
          *                                      duplicates) that appear in both
          *                                      of the specified tables (only
          *                                      works on 2 tables).
-         *                                  <li>@ref
-         *                                      gpudb::create_union_merge_views
-         *                                      "create_union_merge_views":
-         *                                      Merge two or more views (or
-         *                                      views of views) of the same
-         *                                      base data set into a new view.
-         *                                      If this mode is selected @a
-         *                                      inputColumnNames_ AND @a
-         *                                      outputColumnNames_ must be
-         *                                      empty. The resulting view would
-         *                                      match the results of a SQL OR
-         *                                      operation, e.g., if filter 1
-         *                                      creates a view using the
-         *                                      expression 'x = 20' and filter
-         *                                      2 creates a view using the
-         *                                      expression 'x &lt;= 10', then
-         *                                      the merge views operation
-         *                                      creates a new view using the
-         *                                      expression 'x = 20 OR x &lt;=
-         *                                      10'.
          *                              </ul>
          *                              The default value is @ref
          *                              gpudb::create_union_union_all
          *                              "create_union_union_all".
+         *                          <li>@ref gpudb::create_union_long_hash
+         *                              "create_union_long_hash": When true use
+         *                              128 bit hash for union-distinct,
+         *                              except, except_all, intersect and
+         *                              intersect_all modes. Otherwise use 64
+         *                              bit hash.
          *                          <li>@ref gpudb::create_union_chunk_size
          *                              "create_union_chunk_size": Indicates
          *                              the number of records per chunk to be
@@ -277,6 +260,20 @@ namespace gpudb
          *                              href="../../../rm/concepts/#tier-strategies"
          *                              target="_top">tier strategy</a> for the
          *                              table and its columns.
+         *                          <li>@ref
+         *                              gpudb::create_union_compression_codec
+         *                              "create_union_compression_codec": The
+         *                              default <a
+         *                              href="../../../concepts/column_compression/"
+         *                              target="_top">compression codec</a> for
+         *                              this table's columns.
+         *                          <li>@ref gpudb::create_union_no_count
+         *                              "create_union_no_count": Return a count
+         *                              of 0 for the union table response to
+         *                              avoid the cost of counting;
+         *                              optimization needed for many chunk
+         *                              virtual_union's. The default value is
+         *                              'false'.
          *                      </ul>
          *                      The default value is an empty map.
          */
@@ -348,10 +345,9 @@ namespace gpudb
          *         Name of the schema for the output table. If the schema
          *         provided is non-existent, it will be automatically created.
          *         The default value is ''.
-         *     <li>@ref gpudb::create_union_mode "create_union_mode": If @ref
-         *         gpudb::create_union_merge_views "merge_views", then this
-         *         operation will merge the provided views. All @ref tableNames
-         *         must be views from the same underlying base table.
+         *     <li>@ref gpudb::create_union_mode "create_union_mode": The mode
+         *         describes what rows of the tables being unioned will be
+         *         retained.
          *         Supported values:
          *         <ul>
          *             <li>@ref gpudb::create_union_union_all
@@ -381,20 +377,13 @@ namespace gpudb
          *                 "create_union_intersect_all": Retains all
          *                 rows(including duplicates) that appear in both of
          *                 the specified tables (only works on 2 tables).
-         *             <li>@ref gpudb::create_union_merge_views
-         *                 "create_union_merge_views": Merge two or more views
-         *                 (or views of views) of the same base data set into a
-         *                 new view. If this mode is selected @ref
-         *                 inputColumnNames AND @ref outputColumnNames must be
-         *                 empty. The resulting view would match the results of
-         *                 a SQL OR operation, e.g., if filter 1 creates a view
-         *                 using the expression 'x = 20' and filter 2 creates a
-         *                 view using the expression 'x &lt;= 10', then the
-         *                 merge views operation creates a new view using the
-         *                 expression 'x = 20 OR x &lt;= 10'.
          *         </ul>
          *         The default value is @ref gpudb::create_union_union_all
          *         "create_union_union_all".
+         *     <li>@ref gpudb::create_union_long_hash "create_union_long_hash":
+         *         When true use 128 bit hash for union-distinct, except,
+         *         except_all, intersect and intersect_all modes. Otherwise use
+         *         64 bit hash.
          *     <li>@ref gpudb::create_union_chunk_size
          *         "create_union_chunk_size": Indicates the number of records
          *         per chunk to be used for this output table.
@@ -448,6 +437,15 @@ namespace gpudb
          *         href="../../../rm/concepts/#tier-strategies"
          *         target="_top">tier strategy</a> for the table and its
          *         columns.
+         *     <li>@ref gpudb::create_union_compression_codec
+         *         "create_union_compression_codec": The default <a
+         *         href="../../../concepts/column_compression/"
+         *         target="_top">compression codec</a> for this table's
+         *         columns.
+         *     <li>@ref gpudb::create_union_no_count "create_union_no_count":
+         *         Return a count of 0 for the union table response to avoid
+         *         the cost of counting; optimization needed for many chunk
+         *         virtual_union's. The default value is 'false'.
          * </ul>
          * The default value is an empty map.
          */

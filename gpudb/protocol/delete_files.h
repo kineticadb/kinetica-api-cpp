@@ -33,7 +33,7 @@ namespace gpudb
          *
          * @param[in] fileNames_  An array of names of files to be deleted.
          *                        File paths may contain wildcard characters
-         *                        after the KiFS directory delimeter.  Accepted
+         *                        after the KiFS directory delimiter.  Accepted
          *                        wildcard characters are asterisk (*) to
          *                        represent any string of zero or more
          *                        characters, and question mark (?) to indicate
@@ -67,7 +67,7 @@ namespace gpudb
 
         /**
          * An array of names of files to be deleted. File paths may contain
-         * wildcard characters after the KiFS directory delimeter.
+         * wildcard characters after the KiFS directory delimiter.
          *
          * Accepted wildcard characters are asterisk (*) to represent any
          * string of zero or more characters, and question mark (?) to indicate

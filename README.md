@@ -73,7 +73,7 @@ the repository. A Boost archive must be downloaded to the ``thirdparty``
 directory before ``./build-thidparty-libs.sh`` can be run. For example, to
 download Boost v1.71.0:
 
-    wget -P thirdparty/ https://dl.bintray.com/boostorg/release/1.71.0/source/boost_1_71_0.tar.bz2
+    wget -P thirdparty/ https://archives.boost.io/release/1.71.0/source/boost_1_71_0.tar.bz2
 
 Build the thirdparty libraries:
 
@@ -190,7 +190,7 @@ The libraries will be available in the following directory: ``kinetica-api-cpp/t
 Boost binaries available or Boost is able to be installed via NuGet. To install
 via the NuGet Console:
 
-    Install-Package boost -Version 1.65.1
+    Install-Package boost -Version 1.65.0
 
 Note to change ``boost`` to ``boost-vc120`` to include Virtual
 Studio 2013 libraries or ``boost-vc140`` to include Virtual Studio 2015

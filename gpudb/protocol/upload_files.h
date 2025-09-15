@@ -16,7 +16,7 @@ namespace gpudb
      * Uploads one or more files to <a href="../../../tools/kifs/"
      * target="_top">KiFS</a>. There are two methods for uploading files: load
      * files in their entirety, or load files in parts. The latter is
-     * recommeded for files of approximately 60 MB or larger.
+     * recommended for files of approximately 60 MB or larger.
      *
      * To upload files in their entirety, populate @ref fileNames with the file
      * names to upload into on KiFS, and their respective byte content in @ref
@@ -63,7 +63,7 @@ namespace gpudb
      * GPUdb::showDirectories(const ShowDirectoriesRequest&) const
      * "GPUdb::showDirectories". The user must have write permission on the
      * directory. Nested directories are permitted in file name paths.
-     * Directories are deliniated with the directory separator of '/'.  For
+     * Directories are delineated with the directory separator of '/'.  For
      * example, given the file path '/a/b/c/d.txt', 'a' must be a KiFS
      * directory.
      *

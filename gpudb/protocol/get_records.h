@@ -166,6 +166,8 @@ namespace gpudb
          *                               "get_records_json"
          *                           <li>@ref gpudb::get_records_geojson
          *                               "get_records_geojson"
+         *                           <li>@ref gpudb::get_records_arrow
+         *                               "get_records_arrow"
          *                       </ul>
          *                       The default value is @ref
          *                       gpudb::get_records_binary
@@ -270,6 +272,7 @@ namespace gpudb
          *     <li>@ref gpudb::get_records_binary "get_records_binary"
          *     <li>@ref gpudb::get_records_json "get_records_json"
          *     <li>@ref gpudb::get_records_geojson "get_records_geojson"
+         *     <li>@ref gpudb::get_records_arrow "get_records_arrow"
          * </ul>
          * The default value is @ref gpudb::get_records_binary
          * "get_records_binary".

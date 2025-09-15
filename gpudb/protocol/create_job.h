@@ -70,16 +70,6 @@ namespace gpudb
          *                      gpudb::create_job_json "json".
          * @param[in] options_  Optional parameters.
          *                      <ul>
-         *                          <li>@ref
-         *                              gpudb::create_job_remove_job_on_complete
-         *                              "create_job_remove_job_on_complete":
-         *                              Supported values:
-         *                              <ul>
-         *                                  <li>@ref gpudb::create_job_true
-         *                                      "create_job_true"
-         *                                  <li>@ref gpudb::create_job_false
-         *                                      "create_job_false"
-         *                              </ul>
          *                          <li>@ref gpudb::create_job_job_tag
          *                              "create_job_job_tag": Tag to use for
          *                              submitted job. The same tag could be
@@ -140,13 +130,6 @@ namespace gpudb
         /**
          * Optional parameters.
          * <ul>
-         *     <li>@ref gpudb::create_job_remove_job_on_complete
-         *         "create_job_remove_job_on_complete":
-         *         Supported values:
-         *         <ul>
-         *             <li>@ref gpudb::create_job_true "create_job_true"
-         *             <li>@ref gpudb::create_job_false "create_job_false"
-         *         </ul>
          *     <li>@ref gpudb::create_job_job_tag "create_job_job_tag": Tag to
          *         use for submitted job. The same tag could be used on backup
          *         cluster to retrieve response for the job. Tags can use
@@ -245,8 +228,10 @@ namespace gpudb
          * <ul>
          *     <li>@ref gpudb::create_job_job_tag "create_job_job_tag": The job
          *         tag specified by the user or if unspecified by user, a
-         *         unique identifier generated internally for the job across
-         *         clusters.
+         *         unique identifier generated internally.
+         *     <li>@ref gpudb::create_job_query_id "create_job_query_id": A
+         *         unique identifier for this job generated for use in tracing
+         *         telemetry data
          * </ul>
          * The default value is an empty map.
          */

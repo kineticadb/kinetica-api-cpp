@@ -14,7 +14,7 @@ namespace gpudb
      * "GPUdb::showSystemTiming".
      *
      * Returns the last 100 database requests along with the request timing and
-     * internal job id. The admin tool uses it to present request timing
+     * internal job ID. The admin tool uses it to present request timing
      * information to the user.
      */
     struct ShowSystemTimingRequest
@@ -115,7 +115,7 @@ namespace gpudb
         std::vector<float> timeInMs;
 
         /**
-         * List of the internal job ids for the recent requests.
+         * List of the internal job IDs for the recent requests.
          */
         std::vector<std::string> jobids;
 

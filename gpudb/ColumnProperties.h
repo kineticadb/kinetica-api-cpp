@@ -22,36 +22,9 @@ namespace gpudb
          * Valid only for select 'string' columns. Enables full text
          * search--see <a href="../../../concepts/full_text_search/"
          * target="_top">Full Text Search</a> for details and applicable string
-         * column types. Can be set independently of @ref DATA and @ref
-         * STORE_ONLY.
+         * column types.
          */
         extern const std::string TEXT_SEARCH;
-
-        /**
-         * Persist the column value but do not make it available to queries
-         * (e.g.\ @ref GPUdb::filter(const FilterRequest&) const
-         * "GPUdb::filter")-i.e.\ it is mutually exclusive to the @ref DATA
-         * property. Any 'bytes' type column must have a @ref STORE_ONLY
-         * property. This property reduces system memory usage.
-         */
-        extern const std::string STORE_ONLY;
-
-        /**
-         * Works in conjunction with the @ref DATA property for string columns.
-         * This property reduces system disk usage by disabling reverse string
-         * lookups. Queries like @ref GPUdb::filter(const FilterRequest&) const
-         * "GPUdb::filter", @ref
-         * GPUdb::filterByList(const FilterByListRequest&) const
-         * "GPUdb::filterByList", and @ref
-         * GPUdb::filterByValue(const FilterByValueRequest&) const
-         * "GPUdb::filterByValue" work as usual but @ref
-         * GPUdb::aggregateUnique(const AggregateUniqueRequest&) const
-         * "GPUdb::aggregateUnique" and @ref
-         * GPUdb::aggregateGroupBy(const AggregateGroupByRequest&) const
-         * "GPUdb::aggregateGroupBy" are not allowed on columns with this
-         * property.
-         */
-        extern const std::string DISK_OPTIMIZED;
 
         /**
          * Valid only for 'long' columns. Indicates that this field represents
@@ -258,18 +231,28 @@ namespace gpudb
          * This property indicates that this column is nullable.  However,
          * setting this property is insufficient for making the column
          * nullable.  The user must declare the type of the column as a union
-         * between its regular type and 'null' in the avro schema for the
+         * between its regular type and 'null' in the Avro schema for the
          * record type in @ref gpudb::CreateTypeRequest::typeDefinition
          * "typeDefinition".  For example, if a column is of type integer and
-         * is nullable, then the entry for the column in the avro schema must
+         * is nullable, then the entry for the column in the Avro schema must
          * be: ['int', 'null'].
          *
          * The C++, C#, Java, and Python APIs have built-in convenience for
-         * bypassing setting the avro schema by hand.  For those languages, one
-         * can use this property as usual and not have to worry about the avro
+         * bypassing setting the Avro schema by hand.  For those languages, one
+         * can use this property as usual and not have to worry about the Avro
          * schema for the record.
          */
         extern const std::string NULLABLE;
+
+        /**
+         * This property indicates that this column should be <a
+         * href="../../../concepts/column_compression/"
+         * target="_top">compressed</a> with the given codec and optional
+         * level; e.g., 'compress(snappy)' for Snappy compression and
+         * 'compress(zstd(7))' for zstd level 7 compression.  This property is
+         * primarily used in order to save disk space.
+         */
+        extern const std::string COMPRESS;
 
         /**
          * This property indicates that this column should be <a

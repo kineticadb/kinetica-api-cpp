@@ -13,7 +13,7 @@ namespace gpudb
      * GPUdb::alterResourceGroup(const AlterResourceGroupRequest&) const
      * "GPUdb::alterResourceGroup".
      *
-     * Alters the properties of an exisiting resource group to facilitate
+     * Alters the properties of an existing resource group to facilitate
      * resource management.
      */
     struct AlterResourceGroupRequest
@@ -37,15 +37,17 @@ namespace gpudb
          *
          * @param[in] name_  Name of the group to be altered. Must be an
          *                   existing resource group name or an empty string
-         *                   when used inconjunction with the is_default_group
-         *                   option.
+         *                   when used in conjunction with @ref
+         *                   gpudb::alter_resource_group_is_default_group
+         *                   "is_default_group".
          * @param[in] tierAttributes_  Optional map containing tier names and
          *                             their respective attribute group limits.
          *                             The only valid attribute limit that can
          *                             be set is max_memory (in bytes) for the
          *                             VRAM & RAM tiers.  For instance, to set
-         *                             max VRAM capacity to 1GB and max RAM
-         *                             capacity to 10GB, use:
+         *                             max VRAM capacity to 1GB per rank per
+         *                             GPU and max RAM capacity to 10GB per
+         *                             rank, use:
          *                             {'VRAM':{'max_memory':'1000000000'},
          *                             'RAM':{'max_memory':'10000000000'}}.
          *                             <ul>
@@ -53,33 +55,41 @@ namespace gpudb
          *                                     gpudb::alter_resource_group_max_memory
          *                                     "alter_resource_group_max_memory":
          *                                     Maximum amount of memory usable
-         *                                     in the given tier at one time
-         *                                     for this group.
+         *                                     at one time, per rank, per GPU,
+         *                                     for the VRAM tier; or maximum
+         *                                     amount of memory usable at one
+         *                                     time, per rank, for the RAM
+         *                                     tier.
          *                             </ul>
          *                             The default value is an empty map.
          * @param[in] ranking_  If the resource group ranking is to be updated,
          *                      this indicates the relative ranking among
          *                      existing resource groups where this resource
-         *                      group will be moved; leave blank if not
-         *                      changing the ranking.  When using @ref
-         *                      gpudb::alter_resource_group_before "before" or
-         *                      @ref gpudb::alter_resource_group_after "after",
-         *                      specify which resource group this one will be
-         *                      inserted before or after in @a
-         *                      adjoiningResourceGroup_.
+         *                      group will be placed.
          *                      Supported values:
          *                      <ul>
          *                          <li>@ref
          *                              gpudb::alter_resource_group_empty_string
-         *                              "alter_resource_group_empty_string"
+         *                              "alter_resource_group_empty_string":
+         *                              Don't change the ranking
          *                          <li>@ref gpudb::alter_resource_group_first
-         *                              "alter_resource_group_first"
+         *                              "alter_resource_group_first": Make this
+         *                              resource group the new first one in the
+         *                              ordering
          *                          <li>@ref gpudb::alter_resource_group_last
-         *                              "alter_resource_group_last"
+         *                              "alter_resource_group_last": Make this
+         *                              resource group the new last one in the
+         *                              ordering
          *                          <li>@ref gpudb::alter_resource_group_before
-         *                              "alter_resource_group_before"
+         *                              "alter_resource_group_before": Place
+         *                              this resource group before the one
+         *                              specified by @a adjoiningResourceGroup_
+         *                              in the ordering
          *                          <li>@ref gpudb::alter_resource_group_after
-         *                              "alter_resource_group_after"
+         *                              "alter_resource_group_after": Place
+         *                              this resource group after the one
+         *                              specified by @a adjoiningResourceGroup_
+         *                              in the ordering
          *                      </ul>
          *                      The default value is @ref
          *                      gpudb::alter_resource_group_empty_string
@@ -99,16 +109,17 @@ namespace gpudb
          *                              gpudb::alter_resource_group_max_cpu_concurrency
          *                              "alter_resource_group_max_cpu_concurrency":
          *                              Maximum number of simultaneous threads
-         *                              that will be used to execute a request
-         *                              for this group. The minimum allowed
-         *                              value is '4'.
+         *                              that will be used to execute a request,
+         *                              per rank, for this group. The minimum
+         *                              allowed value is '4'.
          *                          <li>@ref
          *                              gpudb::alter_resource_group_max_data
          *                              "alter_resource_group_max_data":
-         *                              Maximum amount of cumulative ram usage
-         *                              regardless of tier status for this
-         *                              group. The minimum allowed value is
-         *                              '-1'.
+         *                              Maximum amount of data, per rank, in
+         *                              bytes, that can be used by all database
+         *                              objects within this group.  Set to -1
+         *                              to indicate no upper limit. The minimum
+         *                              allowed value is '-1'.
          *                          <li>@ref
          *                              gpudb::alter_resource_group_max_scheduling_priority
          *                              "alter_resource_group_max_scheduling_priority":
@@ -183,8 +194,8 @@ namespace gpudb
 
         /**
          * Name of the group to be altered. Must be an existing resource group
-         * name or an empty string when used inconjunction with the
-         * is_default_group option.
+         * name or an empty string when used in conjunction with @ref
+         * gpudb::alter_resource_group_is_default_group "is_default_group".
          */
         std::string name;
 
@@ -193,13 +204,16 @@ namespace gpudb
          * group limits.  The only valid attribute limit that can be set is
          * max_memory (in bytes) for the VRAM & RAM tiers.
          *
-         * For instance, to set max VRAM capacity to 1GB and max RAM capacity
-         * to 10GB, use:  {'VRAM':{'max_memory':'1000000000'},
+         * For instance, to set max VRAM capacity to 1GB per rank per GPU and
+         * max RAM capacity to 10GB per rank, use:
+         * {'VRAM':{'max_memory':'1000000000'},
          * 'RAM':{'max_memory':'10000000000'}}.
          * <ul>
          *     <li>@ref gpudb::alter_resource_group_max_memory
          *         "alter_resource_group_max_memory": Maximum amount of memory
-         *         usable in the given tier at one time for this group.
+         *         usable at one time, per rank, per GPU, for the VRAM tier; or
+         *         maximum amount of memory usable at one time, per rank, for
+         *         the RAM tier.
          * </ul>
          * The default value is an empty map.
          */
@@ -208,23 +222,26 @@ namespace gpudb
         /**
          * If the resource group ranking is to be updated, this indicates the
          * relative ranking among existing resource groups where this resource
-         * group will be moved; leave blank if not changing the ranking.  When
-         * using @ref gpudb::alter_resource_group_before "before" or @ref
-         * gpudb::alter_resource_group_after "after", specify which resource
-         * group this one will be inserted before or after in @ref
-         * adjoiningResourceGroup.
+         * group will be placed.
          * Supported values:
          * <ul>
          *     <li>@ref gpudb::alter_resource_group_empty_string
-         *         "alter_resource_group_empty_string"
+         *         "alter_resource_group_empty_string": Don't change the
+         *         ranking
          *     <li>@ref gpudb::alter_resource_group_first
-         *         "alter_resource_group_first"
+         *         "alter_resource_group_first": Make this resource group the
+         *         new first one in the ordering
          *     <li>@ref gpudb::alter_resource_group_last
-         *         "alter_resource_group_last"
+         *         "alter_resource_group_last": Make this resource group the
+         *         new last one in the ordering
          *     <li>@ref gpudb::alter_resource_group_before
-         *         "alter_resource_group_before"
+         *         "alter_resource_group_before": Place this resource group
+         *         before the one specified by @ref adjoiningResourceGroup in
+         *         the ordering
          *     <li>@ref gpudb::alter_resource_group_after
-         *         "alter_resource_group_after"
+         *         "alter_resource_group_after": Place this resource group
+         *         after the one specified by @ref adjoiningResourceGroup in
+         *         the ordering
          * </ul>
          * The default value is @ref gpudb::alter_resource_group_empty_string
          * "alter_resource_group_empty_string".
@@ -245,11 +262,13 @@ namespace gpudb
          *     <li>@ref gpudb::alter_resource_group_max_cpu_concurrency
          *         "alter_resource_group_max_cpu_concurrency": Maximum number
          *         of simultaneous threads that will be used to execute a
-         *         request for this group. The minimum allowed value is '4'.
+         *         request, per rank, for this group. The minimum allowed value
+         *         is '4'.
          *     <li>@ref gpudb::alter_resource_group_max_data
-         *         "alter_resource_group_max_data": Maximum amount of
-         *         cumulative ram usage regardless of tier status for this
-         *         group. The minimum allowed value is '-1'.
+         *         "alter_resource_group_max_data": Maximum amount of data, per
+         *         rank, in bytes, that can be used by all database objects
+         *         within this group.  Set to -1 to indicate no upper limit.
+         *         The minimum allowed value is '-1'.
          *     <li>@ref gpudb::alter_resource_group_max_scheduling_priority
          *         "alter_resource_group_max_scheduling_priority": Maximum
          *         priority of a scheduled task for this group. The minimum

@@ -188,6 +188,18 @@ namespace gpudb
          *                              gpudb::append_records_false
          *                              "append_records_false".
          *                          <li>@ref
+         *                              gpudb::append_records_pk_conflict_predicate_higher
+         *                              "append_records_pk_conflict_predicate_higher":
+         *                              The record with higher value for the
+         *                              column resolves the primary-key insert
+         *                              conflict. The default value is ''.
+         *                          <li>@ref
+         *                              gpudb::append_records_pk_conflict_predicate_lower
+         *                              "append_records_pk_conflict_predicate_lower":
+         *                              The record with lower value for the
+         *                              column resolves the primary-key insert
+         *                              conflict. The default value is ''.
+         *                          <li>@ref
          *                              gpudb::append_records_truncate_strings
          *                              "append_records_truncate_strings": If
          *                              set to @ref gpudb::append_records_true
@@ -332,6 +344,14 @@ namespace gpudb
          *         </ul>
          *         The default value is @ref gpudb::append_records_false
          *         "append_records_false".
+         *     <li>@ref gpudb::append_records_pk_conflict_predicate_higher
+         *         "append_records_pk_conflict_predicate_higher": The record
+         *         with higher value for the column resolves the primary-key
+         *         insert conflict. The default value is ''.
+         *     <li>@ref gpudb::append_records_pk_conflict_predicate_lower
+         *         "append_records_pk_conflict_predicate_lower": The record
+         *         with lower value for the column resolves the primary-key
+         *         insert conflict. The default value is ''.
          *     <li>@ref gpudb::append_records_truncate_strings
          *         "append_records_truncate_strings": If set to @ref
          *         gpudb::append_records_true "true", it allows inserting

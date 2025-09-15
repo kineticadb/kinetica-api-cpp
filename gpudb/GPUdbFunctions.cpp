@@ -5,7 +5,7 @@
  */
 
 // GPUdb Version
-const std::string GPUdb::API_VERSION( "7.2.2.3" );
+const std::string GPUdb::API_VERSION( "7.2.3.0" );
 
 AdminAddHostResponse GPUdb::adminAddHost( const AdminAddHostRequest& request_ ) const
 {
@@ -223,6 +223,42 @@ AdminBackupEndResponse& GPUdb::adminBackupEnd( const std::map<std::string, std::
     return response_;
 }
 
+AdminHaOfflineResponse GPUdb::adminHaOffline( const AdminHaOfflineRequest& request_ ) const
+{
+    AdminHaOfflineResponse actualResponse_;
+    submitRequest("/admin/ha/offline", request_, actualResponse_, false);
+    return actualResponse_;
+}
+
+AdminHaOfflineResponse& GPUdb::adminHaOffline( const AdminHaOfflineRequest& request_,
+                                               AdminHaOfflineResponse& response_ ) const
+{
+    submitRequest("/admin/ha/offline", request_, response_, false);
+    return response_;
+}
+
+AdminHaOfflineResponse GPUdb::adminHaOffline( const bool offline,
+                                              const std::map<std::string, std::string>& options ) const
+{
+    AdminHaOfflineRequest actualRequest_;
+    actualRequest_.offline = offline;
+    actualRequest_.options = options;
+    AdminHaOfflineResponse actualResponse_;
+    submitRequest("/admin/ha/offline", actualRequest_, actualResponse_, false);
+    return actualResponse_;
+}
+
+AdminHaOfflineResponse& GPUdb::adminHaOffline( const bool offline,
+                                               const std::map<std::string, std::string>& options,
+                                               AdminHaOfflineResponse& response_ ) const
+{
+    AdminHaOfflineRequest actualRequest_;
+    actualRequest_.offline = offline;
+    actualRequest_.options = options;
+    submitRequest("/admin/ha/offline", actualRequest_, response_, false);
+    return response_;
+}
+
 AdminHaRefreshResponse GPUdb::adminHaRefresh( const AdminHaRefreshRequest& request_ ) const
 {
     AdminHaRefreshResponse actualResponse_;
@@ -428,6 +464,50 @@ AdminRepairTableResponse& GPUdb::adminRepairTable( const std::vector<std::string
     actualRequest_.tableNames = tableNames;
     actualRequest_.options = options;
     submitRequest("/admin/repair/table", actualRequest_, response_, false);
+    return response_;
+}
+
+AdminSendAlertResponse GPUdb::adminSendAlert( const AdminSendAlertRequest& request_ ) const
+{
+    AdminSendAlertResponse actualResponse_;
+    submitRequest("/admin/send/alert", request_, actualResponse_, false);
+    return actualResponse_;
+}
+
+AdminSendAlertResponse& GPUdb::adminSendAlert( const AdminSendAlertRequest& request_,
+                                               AdminSendAlertResponse& response_ ) const
+{
+    submitRequest("/admin/send/alert", request_, response_, false);
+    return response_;
+}
+
+AdminSendAlertResponse GPUdb::adminSendAlert( const std::string& message,
+                                              const std::string& label,
+                                              const std::string& logLevel,
+                                              const std::map<std::string, std::string>& options ) const
+{
+    AdminSendAlertRequest actualRequest_;
+    actualRequest_.message = message;
+    actualRequest_.label = label;
+    actualRequest_.logLevel = logLevel;
+    actualRequest_.options = options;
+    AdminSendAlertResponse actualResponse_;
+    submitRequest("/admin/send/alert", actualRequest_, actualResponse_, false);
+    return actualResponse_;
+}
+
+AdminSendAlertResponse& GPUdb::adminSendAlert( const std::string& message,
+                                               const std::string& label,
+                                               const std::string& logLevel,
+                                               const std::map<std::string, std::string>& options,
+                                               AdminSendAlertResponse& response_ ) const
+{
+    AdminSendAlertRequest actualRequest_;
+    actualRequest_.message = message;
+    actualRequest_.label = label;
+    actualRequest_.logLevel = logLevel;
+    actualRequest_.options = options;
+    submitRequest("/admin/send/alert", actualRequest_, response_, false);
     return response_;
 }
 
@@ -1292,6 +1372,54 @@ AggregateUnpivotResponse& GPUdb::aggregateUnpivot( const std::string& tableName,
     response_.totalNumberOfRecords = actualResponse_.totalNumberOfRecords;
     response_.hasMoreRecords = actualResponse_.hasMoreRecords;
     response_.info = actualResponse_.info;
+    return response_;
+}
+
+AlterBackupResponse GPUdb::alterBackup( const AlterBackupRequest& request_ ) const
+{
+    AlterBackupResponse actualResponse_;
+    submitRequest("/alter/backup", request_, actualResponse_, false);
+    return actualResponse_;
+}
+
+AlterBackupResponse& GPUdb::alterBackup( const AlterBackupRequest& request_,
+                                         AlterBackupResponse& response_ ) const
+{
+    submitRequest("/alter/backup", request_, response_, false);
+    return response_;
+}
+
+AlterBackupResponse GPUdb::alterBackup( const std::string& backupName,
+                                        const std::string& action,
+                                        const std::string& value,
+                                        const std::string& datasinkName,
+                                        const std::map<std::string, std::string>& options ) const
+{
+    AlterBackupRequest actualRequest_;
+    actualRequest_.backupName = backupName;
+    actualRequest_.action = action;
+    actualRequest_.value = value;
+    actualRequest_.datasinkName = datasinkName;
+    actualRequest_.options = options;
+    AlterBackupResponse actualResponse_;
+    submitRequest("/alter/backup", actualRequest_, actualResponse_, false);
+    return actualResponse_;
+}
+
+AlterBackupResponse& GPUdb::alterBackup( const std::string& backupName,
+                                         const std::string& action,
+                                         const std::string& value,
+                                         const std::string& datasinkName,
+                                         const std::map<std::string, std::string>& options,
+                                         AlterBackupResponse& response_ ) const
+{
+    AlterBackupRequest actualRequest_;
+    actualRequest_.backupName = backupName;
+    actualRequest_.action = action;
+    actualRequest_.value = value;
+    actualRequest_.datasinkName = datasinkName;
+    actualRequest_.options = options;
+    submitRequest("/alter/backup", actualRequest_, response_, false);
     return response_;
 }
 
@@ -2235,6 +2363,42 @@ ClearTableMonitorResponse& GPUdb::clearTableMonitor( const std::string& topicId,
     return response_;
 }
 
+ClearTablesResponse GPUdb::clearTables( const ClearTablesRequest& request_ ) const
+{
+    ClearTablesResponse actualResponse_;
+    submitRequest("/clear/tables", request_, actualResponse_, false);
+    return actualResponse_;
+}
+
+ClearTablesResponse& GPUdb::clearTables( const ClearTablesRequest& request_,
+                                         ClearTablesResponse& response_ ) const
+{
+    submitRequest("/clear/tables", request_, response_, false);
+    return response_;
+}
+
+ClearTablesResponse GPUdb::clearTables( const std::vector<std::string>& tableNames,
+                                        const std::map<std::string, std::string>& options ) const
+{
+    ClearTablesRequest actualRequest_;
+    actualRequest_.tableNames = tableNames;
+    actualRequest_.options = options;
+    ClearTablesResponse actualResponse_;
+    submitRequest("/clear/tables", actualRequest_, actualResponse_, false);
+    return actualResponse_;
+}
+
+ClearTablesResponse& GPUdb::clearTables( const std::vector<std::string>& tableNames,
+                                         const std::map<std::string, std::string>& options,
+                                         ClearTablesResponse& response_ ) const
+{
+    ClearTablesRequest actualRequest_;
+    actualRequest_.tableNames = tableNames;
+    actualRequest_.options = options;
+    submitRequest("/clear/tables", actualRequest_, response_, false);
+    return response_;
+}
+
 ClearTriggerResponse GPUdb::clearTrigger( const ClearTriggerRequest& request_ ) const
 {
     ClearTriggerResponse actualResponse_;
@@ -2308,6 +2472,54 @@ CollectStatisticsResponse& GPUdb::collectStatistics( const std::string& tableNam
     actualRequest_.columnNames = columnNames;
     actualRequest_.options = options;
     submitRequest("/collect/statistics", actualRequest_, response_, false);
+    return response_;
+}
+
+CreateBackupResponse GPUdb::createBackup( const CreateBackupRequest& request_ ) const
+{
+    CreateBackupResponse actualResponse_;
+    submitRequest("/create/backup", request_, actualResponse_, false);
+    return actualResponse_;
+}
+
+CreateBackupResponse& GPUdb::createBackup( const CreateBackupRequest& request_,
+                                           CreateBackupResponse& response_ ) const
+{
+    submitRequest("/create/backup", request_, response_, false);
+    return response_;
+}
+
+CreateBackupResponse GPUdb::createBackup( const std::string& backupName,
+                                          const std::string& backupType,
+                                          const std::map<std::string, std::string>& backupObjectsMap,
+                                          const std::string& datasinkName,
+                                          const std::map<std::string, std::string>& options ) const
+{
+    CreateBackupRequest actualRequest_;
+    actualRequest_.backupName = backupName;
+    actualRequest_.backupType = backupType;
+    actualRequest_.backupObjectsMap = backupObjectsMap;
+    actualRequest_.datasinkName = datasinkName;
+    actualRequest_.options = options;
+    CreateBackupResponse actualResponse_;
+    submitRequest("/create/backup", actualRequest_, actualResponse_, false);
+    return actualResponse_;
+}
+
+CreateBackupResponse& GPUdb::createBackup( const std::string& backupName,
+                                           const std::string& backupType,
+                                           const std::map<std::string, std::string>& backupObjectsMap,
+                                           const std::string& datasinkName,
+                                           const std::map<std::string, std::string>& options,
+                                           CreateBackupResponse& response_ ) const
+{
+    CreateBackupRequest actualRequest_;
+    actualRequest_.backupName = backupName;
+    actualRequest_.backupType = backupType;
+    actualRequest_.backupObjectsMap = backupObjectsMap;
+    actualRequest_.datasinkName = datasinkName;
+    actualRequest_.options = options;
+    submitRequest("/create/backup", actualRequest_, response_, false);
     return response_;
 }
 
@@ -6865,50 +7077,6 @@ MatchGraphResponse& GPUdb::matchGraph( const std::string& graphName,
     return response_;
 }
 
-MergeRecordsResponse GPUdb::mergeRecords( const MergeRecordsRequest& request_ ) const
-{
-    MergeRecordsResponse actualResponse_;
-    submitRequest("/merge/records", request_, actualResponse_, false);
-    return actualResponse_;
-}
-
-MergeRecordsResponse& GPUdb::mergeRecords( const MergeRecordsRequest& request_,
-                                           MergeRecordsResponse& response_ ) const
-{
-    submitRequest("/merge/records", request_, response_, false);
-    return response_;
-}
-
-MergeRecordsResponse GPUdb::mergeRecords( const std::string& tableName,
-                                          const std::vector<std::string>& sourceTableNames,
-                                          const std::vector<std::map<std::string, std::string> >& fieldMaps,
-                                          const std::map<std::string, std::string>& options ) const
-{
-    MergeRecordsRequest actualRequest_;
-    actualRequest_.tableName = tableName;
-    actualRequest_.sourceTableNames = sourceTableNames;
-    actualRequest_.fieldMaps = fieldMaps;
-    actualRequest_.options = options;
-    MergeRecordsResponse actualResponse_;
-    submitRequest("/merge/records", actualRequest_, actualResponse_, false);
-    return actualResponse_;
-}
-
-MergeRecordsResponse& GPUdb::mergeRecords( const std::string& tableName,
-                                           const std::vector<std::string>& sourceTableNames,
-                                           const std::vector<std::map<std::string, std::string> >& fieldMaps,
-                                           const std::map<std::string, std::string>& options,
-                                           MergeRecordsResponse& response_ ) const
-{
-    MergeRecordsRequest actualRequest_;
-    actualRequest_.tableName = tableName;
-    actualRequest_.sourceTableNames = sourceTableNames;
-    actualRequest_.fieldMaps = fieldMaps;
-    actualRequest_.options = options;
-    submitRequest("/merge/records", actualRequest_, response_, false);
-    return response_;
-}
-
 ModifyGraphResponse GPUdb::modifyGraph( const ModifyGraphRequest& request_ ) const
 {
     ModifyGraphResponse actualResponse_;
@@ -7098,6 +7266,50 @@ ReserveResourceResponse& GPUdb::reserveResource( const std::string& component,
     actualRequest_.ownerId = ownerId;
     actualRequest_.options = options;
     submitRequest("/reserve/resource", actualRequest_, response_, false);
+    return response_;
+}
+
+RestoreBackupResponse GPUdb::restoreBackup( const RestoreBackupRequest& request_ ) const
+{
+    RestoreBackupResponse actualResponse_;
+    submitRequest("/restore/backup", request_, actualResponse_, false);
+    return actualResponse_;
+}
+
+RestoreBackupResponse& GPUdb::restoreBackup( const RestoreBackupRequest& request_,
+                                             RestoreBackupResponse& response_ ) const
+{
+    submitRequest("/restore/backup", request_, response_, false);
+    return response_;
+}
+
+RestoreBackupResponse GPUdb::restoreBackup( const std::string& backupName,
+                                            const std::map<std::string, std::string>& restoreObjectsMap,
+                                            const std::string& datasourceName,
+                                            const std::map<std::string, std::string>& options ) const
+{
+    RestoreBackupRequest actualRequest_;
+    actualRequest_.backupName = backupName;
+    actualRequest_.restoreObjectsMap = restoreObjectsMap;
+    actualRequest_.datasourceName = datasourceName;
+    actualRequest_.options = options;
+    RestoreBackupResponse actualResponse_;
+    submitRequest("/restore/backup", actualRequest_, actualResponse_, false);
+    return actualResponse_;
+}
+
+RestoreBackupResponse& GPUdb::restoreBackup( const std::string& backupName,
+                                             const std::map<std::string, std::string>& restoreObjectsMap,
+                                             const std::string& datasourceName,
+                                             const std::map<std::string, std::string>& options,
+                                             RestoreBackupResponse& response_ ) const
+{
+    RestoreBackupRequest actualRequest_;
+    actualRequest_.backupName = backupName;
+    actualRequest_.restoreObjectsMap = restoreObjectsMap;
+    actualRequest_.datasourceName = datasourceName;
+    actualRequest_.options = options;
+    submitRequest("/restore/backup", actualRequest_, response_, false);
     return response_;
 }
 
@@ -7446,6 +7658,46 @@ RevokeRoleResponse& GPUdb::revokeRole( const std::string& role,
     actualRequest_.member = member;
     actualRequest_.options = options;
     submitRequest("/revoke/role", actualRequest_, response_, false);
+    return response_;
+}
+
+ShowBackupResponse GPUdb::showBackup( const ShowBackupRequest& request_ ) const
+{
+    ShowBackupResponse actualResponse_;
+    submitRequest("/show/backup", request_, actualResponse_, false);
+    return actualResponse_;
+}
+
+ShowBackupResponse& GPUdb::showBackup( const ShowBackupRequest& request_,
+                                       ShowBackupResponse& response_ ) const
+{
+    submitRequest("/show/backup", request_, response_, false);
+    return response_;
+}
+
+ShowBackupResponse GPUdb::showBackup( const std::string& backupName,
+                                      const std::string& datasourceName,
+                                      const std::map<std::string, std::string>& options ) const
+{
+    ShowBackupRequest actualRequest_;
+    actualRequest_.backupName = backupName;
+    actualRequest_.datasourceName = datasourceName;
+    actualRequest_.options = options;
+    ShowBackupResponse actualResponse_;
+    submitRequest("/show/backup", actualRequest_, actualResponse_, false);
+    return actualResponse_;
+}
+
+ShowBackupResponse& GPUdb::showBackup( const std::string& backupName,
+                                       const std::string& datasourceName,
+                                       const std::map<std::string, std::string>& options,
+                                       ShowBackupResponse& response_ ) const
+{
+    ShowBackupRequest actualRequest_;
+    actualRequest_.backupName = backupName;
+    actualRequest_.datasourceName = datasourceName;
+    actualRequest_.options = options;
+    submitRequest("/show/backup", actualRequest_, response_, false);
     return response_;
 }
 

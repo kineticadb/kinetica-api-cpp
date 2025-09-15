@@ -272,8 +272,8 @@ namespace gpudb
          *                          <li>@ref
          *                              gpudb::match_graph_left_turn_penalty
          *                              "match_graph_left_turn_penalty": This
-         *                              will add an additonal weight over the
-         *                              edges labelled as 'left turn' if the
+         *                              will add an additional weight over the
+         *                              edges labeled as 'left turn' if the
          *                              'add_turn' option parameter of the @ref
          *                              GPUdb::createGraph(const CreateGraphRequest&) const
          *                              "GPUdb::createGraph" was invoked at
@@ -282,8 +282,8 @@ namespace gpudb
          *                          <li>@ref
          *                              gpudb::match_graph_right_turn_penalty
          *                              "match_graph_right_turn_penalty": This
-         *                              will add an additonal weight over the
-         *                              edges labelled as' right turn' if the
+         *                              will add an additional weight over the
+         *                              edges labeled as' right turn' if the
          *                              'add_turn' option parameter of the @ref
          *                              GPUdb::createGraph(const CreateGraphRequest&) const
          *                              "GPUdb::createGraph" was invoked at
@@ -292,8 +292,8 @@ namespace gpudb
          *                          <li>@ref
          *                              gpudb::match_graph_intersection_penalty
          *                              "match_graph_intersection_penalty":
-         *                              This will add an additonal weight over
-         *                              the edges labelled as 'intersection' if
+         *                              This will add an additional weight over
+         *                              the edges labeled as 'intersection' if
          *                              the 'add_turn' option parameter of the
          *                              @ref
          *                              GPUdb::createGraph(const CreateGraphRequest&) const
@@ -303,8 +303,8 @@ namespace gpudb
          *                          <li>@ref
          *                              gpudb::match_graph_sharp_turn_penalty
          *                              "match_graph_sharp_turn_penalty": This
-         *                              will add an additonal weight over the
-         *                              edges labelled as 'sharp turn' or
+         *                              will add an additional weight over the
+         *                              edges labeled as 'sharp turn' or
          *                              'u-turn' if the 'add_turn' option
          *                              parameter of the @ref
          *                              GPUdb::createGraph(const CreateGraphRequest&) const
@@ -348,7 +348,7 @@ namespace gpudb
          *                              "match_pickup_dropoff" solvers only. If
          *                              this constraint is greater than zero
          *                              (default) then the trucks/rides will
-         *                              skip travelling from one demand/pick
+         *                              skip traveling from one demand/pick
          *                              location to another if the cost between
          *                              them is greater than this number
          *                              (distance or time). Zero (default)
@@ -364,7 +364,7 @@ namespace gpudb
          *                              combination is checked for folding over
          *                              patterns and can significantly increase
          *                              the execution time depending on the
-         *                              chain width and the number of gps
+         *                              chain width and the number of GPS
          *                              samples.
          *                              Supported values:
          *                              <ul>
@@ -469,7 +469,7 @@ namespace gpudb
          *                              "match_supply_demand" solver only. If
          *                              specified (true), supply side actors
          *                              are permuted for the demand
-         *                              combinations during msdo optimization -
+         *                              combinations during MSDO optimization -
          *                              note that this option increases
          *                              optimization time significantly - use
          *                              of 'max_combinations' option is
@@ -508,10 +508,10 @@ namespace gpudb
          *                                  <li>@ref gpudb::match_graph_true
          *                                      "match_graph_true": Sets only
          *                                      one visit per demand location
-         *                                      by a salesman (tsm mode)
+         *                                      by a salesman (TSM mode)
          *                                  <li>@ref gpudb::match_graph_false
          *                                      "match_graph_false": No preset
-         *                                      limit (usual msdo mode)
+         *                                      limit (usual MSDO mode)
          *                              </ul>
          *                              The default value is @ref
          *                              gpudb::match_graph_false
@@ -797,7 +797,7 @@ namespace gpudb
          *                              gpudb::match_graph_match_embedding
          *                              "match_embedding" solvers only. Solves
          *                              to find the optimal weights per sub
-         *                              feature in vector emdeddings.
+         *                              feature in vector embeddings.
          *                              Supported values:
          *                              <ul>
          *                                  <li>@ref gpudb::match_graph_true
@@ -866,14 +866,14 @@ namespace gpudb
          *                              "match_embedding" solver only. It is
          *                              otherwise known as the learning rate,
          *                              which is the proportionality constant
-         *                              in fornt of the gradient term in
+         *                              in front of the gradient term in
          *                              successive iterations. The default
          *                              value is '0.3'.
          *                          <li>@ref gpudb::match_graph_max_radius
          *                              "match_graph_max_radius": For the @ref
          *                              gpudb::match_graph_match_isochrone
          *                              "match_isochrone" solver only. Sets the
-         *                              maximal reachability limmit for
+         *                              maximal reachability limit for
          *                              computing isochrones. Zero means no
          *                              limit. The default value is '0.0'.
          *                      </ul>
@@ -1054,30 +1054,30 @@ namespace gpudb
          *         combinations for sequencing the supply locations if/when
          *         'permute_supplies' is true. The default value is '10000'.
          *     <li>@ref gpudb::match_graph_left_turn_penalty
-         *         "match_graph_left_turn_penalty": This will add an additonal
-         *         weight over the edges labelled as 'left turn' if the
+         *         "match_graph_left_turn_penalty": This will add an additional
+         *         weight over the edges labeled as 'left turn' if the
          *         'add_turn' option parameter of the @ref
          *         GPUdb::createGraph(const CreateGraphRequest&) const
          *         "GPUdb::createGraph" was invoked at graph creation. The
          *         default value is '0.0'.
          *     <li>@ref gpudb::match_graph_right_turn_penalty
-         *         "match_graph_right_turn_penalty": This will add an additonal
-         *         weight over the edges labelled as' right turn' if the
-         *         'add_turn' option parameter of the @ref
+         *         "match_graph_right_turn_penalty": This will add an
+         *         additional weight over the edges labeled as' right turn' if
+         *         the 'add_turn' option parameter of the @ref
          *         GPUdb::createGraph(const CreateGraphRequest&) const
          *         "GPUdb::createGraph" was invoked at graph creation. The
          *         default value is '0.0'.
          *     <li>@ref gpudb::match_graph_intersection_penalty
          *         "match_graph_intersection_penalty": This will add an
-         *         additonal weight over the edges labelled as 'intersection'
+         *         additional weight over the edges labeled as 'intersection'
          *         if the 'add_turn' option parameter of the @ref
          *         GPUdb::createGraph(const CreateGraphRequest&) const
          *         "GPUdb::createGraph" was invoked at graph creation. The
          *         default value is '0.0'.
          *     <li>@ref gpudb::match_graph_sharp_turn_penalty
-         *         "match_graph_sharp_turn_penalty": This will add an additonal
-         *         weight over the edges labelled as 'sharp turn' or 'u-turn'
-         *         if the 'add_turn' option parameter of the @ref
+         *         "match_graph_sharp_turn_penalty": This will add an
+         *         additional weight over the edges labeled as 'sharp turn' or
+         *         'u-turn' if the 'add_turn' option parameter of the @ref
          *         GPUdb::createGraph(const CreateGraphRequest&) const
          *         "GPUdb::createGraph" was invoked at graph creation. The
          *         default value is '0.0'.
@@ -1105,7 +1105,7 @@ namespace gpudb
          *         and @ref gpudb::match_graph_match_pickup_dropoff
          *         "match_pickup_dropoff" solvers only. If this constraint is
          *         greater than zero (default) then the trucks/rides will skip
-         *         travelling from one demand/pick location to another if the
+         *         traveling from one demand/pick location to another if the
          *         cost between them is greater than this number (distance or
          *         time). Zero (default) value means no check is performed. The
          *         default value is '0.0'.
@@ -1115,7 +1115,7 @@ namespace gpudb
          *         When true (non-default), the paths per sequence combination
          *         is checked for folding over patterns and can significantly
          *         increase the execution time depending on the chain width and
-         *         the number of gps samples.
+         *         the number of GPS samples.
          *         Supported values:
          *         <ul>
          *             <li>@ref gpudb::match_graph_true "match_graph_true":
@@ -1185,7 +1185,7 @@ namespace gpudb
          *         "match_graph_permute_supplies": For the @ref
          *         gpudb::match_graph_match_supply_demand "match_supply_demand"
          *         solver only. If specified (true), supply side actors are
-         *         permuted for the demand combinations during msdo
+         *         permuted for the demand combinations during MSDO
          *         optimization - note that this option increases optimization
          *         time significantly - use of 'max_combinations' option is
          *         recommended to prevent prohibitively long runs.
@@ -1210,9 +1210,9 @@ namespace gpudb
          *         <ul>
          *             <li>@ref gpudb::match_graph_true "match_graph_true":
          *                 Sets only one visit per demand location by a
-         *                 salesman (tsm mode)
+         *                 salesman (TSM mode)
          *             <li>@ref gpudb::match_graph_false "match_graph_false":
-         *                 No preset limit (usual msdo mode)
+         *                 No preset limit (usual MSDO mode)
          *         </ul>
          *         The default value is @ref gpudb::match_graph_false
          *         "match_graph_false".
@@ -1401,7 +1401,7 @@ namespace gpudb
          *         "match_graph_optimize_embedding_weights": For the @ref
          *         gpudb::match_graph_match_embedding "match_embedding" solvers
          *         only. Solves to find the optimal weights per sub feature in
-         *         vector emdeddings.
+         *         vector embeddings.
          *         Supported values:
          *         <ul>
          *             <li>@ref gpudb::match_graph_true "match_graph_true"
@@ -1444,12 +1444,12 @@ namespace gpudb
          *         "match_graph_optimization_iteration_rate": For the @ref
          *         gpudb::match_graph_match_embedding "match_embedding" solver
          *         only. It is otherwise known as the learning rate, which is
-         *         the proportionality constant in fornt of the gradient term
+         *         the proportionality constant in front of the gradient term
          *         in successive iterations. The default value is '0.3'.
          *     <li>@ref gpudb::match_graph_max_radius "match_graph_max_radius":
          *         For the @ref gpudb::match_graph_match_isochrone
          *         "match_isochrone" solver only. Sets the maximal reachability
-         *         limmit for computing isochrones. Zero means no limit. The
+         *         limit for computing isochrones. Zero means no limit. The
          *         default value is '0.0'.
          * </ul>
          * The default value is an empty map.

@@ -308,6 +308,14 @@ namespace gpudb
          *                                         target="_top">tier
          *                                         strategy</a> for the table
          *                                         and its columns.
+         *                                     <li>@ref
+         *                                         gpudb::insert_records_from_query_compression_codec
+         *                                         "insert_records_from_query_compression_codec":
+         *                                         The default <a
+         *                                         href="../../../concepts/column_compression/"
+         *                                         target="_top">compression
+         *                                         codec</a> for this table's
+         *                                         columns.
          *                                 </ul>
          *                                 The default value is an empty map.
          * @param[in] options_  Optional parameters.
@@ -827,6 +835,11 @@ namespace gpudb
          *         "insert_records_from_query_strategy_definition": The <a
          *         href="../../../rm/concepts/#tier-strategies"
          *         target="_top">tier strategy</a> for the table and its
+         *         columns.
+         *     <li>@ref gpudb::insert_records_from_query_compression_codec
+         *         "insert_records_from_query_compression_codec": The default
+         *         <a href="../../../concepts/column_compression/"
+         *         target="_top">compression codec</a> for this table's
          *         columns.
          * </ul>
          * The default value is an empty map.

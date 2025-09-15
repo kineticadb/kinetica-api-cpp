@@ -44,14 +44,14 @@ namespace gpudb
          *                                 "revoke_permission_directory_directory_read":
          *                                 For files in the directory, access
          *                                 to list files, download files, or
-         *                                 use files in server side functions
+         *                                 use files in server side functions.
          *                             <li>@ref
          *                                 gpudb::revoke_permission_directory_directory_write
          *                                 "revoke_permission_directory_directory_write":
          *                                 Access to upload files to, or delete
          *                                 files from, the directory. A user or
          *                                 role with write access automatically
-         *                                 has read acceess
+         *                                 has read access.
          *                         </ul>
          * @param[in] directoryName_  Name of the KiFS directory to which the
          *                            permission revokes access
@@ -79,11 +79,11 @@ namespace gpudb
          *     <li>@ref gpudb::revoke_permission_directory_directory_read
          *         "revoke_permission_directory_directory_read": For files in
          *         the directory, access to list files, download files, or use
-         *         files in server side functions
+         *         files in server side functions.
          *     <li>@ref gpudb::revoke_permission_directory_directory_write
          *         "revoke_permission_directory_directory_write": Access to
          *         upload files to, or delete files from, the directory. A user
-         *         or role with write access automatically has read acceess
+         *         or role with write access automatically has read access.
          * </ul>
          */
         std::string permission;

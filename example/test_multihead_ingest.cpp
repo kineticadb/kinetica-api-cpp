@@ -1177,7 +1177,7 @@ void test_type_compatibility( const gpudb::GPUdb &db )
 
     // Create a type
     std::vector<gpudb::Type::Column> columns;
-    columns.push_back( gpudb::Type::Column("a",  gpudb::Type::Column::INT, gpudb::ColumnProperty::STORE_ONLY) );
+    columns.push_back( gpudb::Type::Column("a",  gpudb::Type::Column::INT) );
     columns.push_back( gpudb::Type::Column("i",  gpudb::Type::Column::INT, gpudb::ColumnProperty::SHARD_KEY, gpudb::ColumnProperty::NULLABLE ) );
 
     gpudb::Type type1 = gpudb::Type( "Test", columns );

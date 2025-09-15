@@ -330,44 +330,18 @@ namespace gpudb
          *                                         target="_top">tier
          *                                         strategy</a> for the table
          *                                         and its columns.
+         *                                     <li>@ref
+         *                                         gpudb::insert_records_from_payload_compression_codec
+         *                                         "insert_records_from_payload_compression_codec":
+         *                                         The default <a
+         *                                         href="../../../concepts/column_compression/"
+         *                                         target="_top">compression
+         *                                         codec</a> for this table's
+         *                                         columns.
          *                                 </ul>
          *                                 The default value is an empty map.
          * @param[in] options_  Optional parameters.
          *                      <ul>
-         *                          <li>@ref
-         *                              gpudb::insert_records_from_payload_avro_header_bytes
-         *                              "insert_records_from_payload_avro_header_bytes":
-         *                              Optional number of bytes to skip when
-         *                              reading an avro record.
-         *                          <li>@ref
-         *                              gpudb::insert_records_from_payload_avro_num_records
-         *                              "insert_records_from_payload_avro_num_records":
-         *                              Optional number of avro records, if
-         *                              data includes only records.
-         *                          <li>@ref
-         *                              gpudb::insert_records_from_payload_avro_schema
-         *                              "insert_records_from_payload_avro_schema":
-         *                              Optional string representing avro
-         *                              schema, for insert records in avro
-         *                              format, that does not include is
-         *                              schema.
-         *                          <li>@ref
-         *                              gpudb::insert_records_from_payload_avro_schemaless
-         *                              "insert_records_from_payload_avro_schemaless":
-         *                              When user provides 'avro_schema', avro
-         *                              data is assumed to be schemaless,
-         *                              unless specified. Default is 'true'
-         *                              when given avro_schema. Igonred when
-         *                              avro_schema is not given.
-         *                              Supported values:
-         *                              <ul>
-         *                                  <li>@ref
-         *                                      gpudb::insert_records_from_payload_true
-         *                                      "insert_records_from_payload_true"
-         *                                  <li>@ref
-         *                                      gpudb::insert_records_from_payload_false
-         *                                      "insert_records_from_payload_false"
-         *                              </ul>
          *                          <li>@ref
          *                              gpudb::insert_records_from_payload_bad_record_table_name
          *                              "insert_records_from_payload_bad_record_table_name":
@@ -634,7 +608,7 @@ namespace gpudb
          *                              gpudb::insert_records_from_payload_gdal_configuration_options
          *                              "insert_records_from_payload_gdal_configuration_options":
          *                              Comma separated list of gdal conf
-         *                              options, for the specific requets:
+         *                              options, for the specific requests:
          *                              key=value. The default value is ''.
          *                          <li>@ref
          *                              gpudb::insert_records_from_payload_ignore_existing_pk
@@ -839,14 +813,31 @@ namespace gpudb
          *                              when not specified in the type. The
          *                              default value is ''.
          *                          <li>@ref
-         *                              gpudb::insert_records_from_payload_schema_registry_schema_id
-         *                              "insert_records_from_payload_schema_registry_schema_id"
+         *                              gpudb::insert_records_from_payload_schema_registry_connection_retries
+         *                              "insert_records_from_payload_schema_registry_connection_retries":
+         *                              Confluent Schema registry connection
+         *                              timeout (in Secs)
+         *                          <li>@ref
+         *                              gpudb::insert_records_from_payload_schema_registry_connection_timeout
+         *                              "insert_records_from_payload_schema_registry_connection_timeout":
+         *                              Confluent Schema registry connection
+         *                              timeout (in Secs)
+         *                          <li>@ref
+         *                              gpudb::insert_records_from_payload_schema_registry_max_consecutive_connection_failures
+         *                              "insert_records_from_payload_schema_registry_max_consecutive_connection_failures":
+         *                              Max records to skip due to SR
+         *                              connection failures, before failing
+         *                          <li>@ref
+         *                              gpudb::insert_records_from_payload_max_consecutive_invalid_schema_failure
+         *                              "insert_records_from_payload_max_consecutive_invalid_schema_failure":
+         *                              Max records to skip due to schema
+         *                              related errors, before failing
          *                          <li>@ref
          *                              gpudb::insert_records_from_payload_schema_registry_schema_name
-         *                              "insert_records_from_payload_schema_registry_schema_name"
-         *                          <li>@ref
-         *                              gpudb::insert_records_from_payload_schema_registry_schema_version
-         *                              "insert_records_from_payload_schema_registry_schema_version"
+         *                              "insert_records_from_payload_schema_registry_schema_name":
+         *                              Name of the Avro schema in the schema
+         *                              registry to use when reading Avro
+         *                              records.
          *                          <li>@ref
          *                              gpudb::insert_records_from_payload_shard_keys
          *                              "insert_records_from_payload_shard_keys":
@@ -857,8 +848,8 @@ namespace gpudb
          *                          <li>@ref
          *                              gpudb::insert_records_from_payload_skip_lines
          *                              "insert_records_from_payload_skip_lines":
-         *                              Skip number of lines from begining of
-         *                              file.
+         *                              Skip a number of lines from the
+         *                              beginning of the file.
          *                          <li>@ref
          *                              gpudb::insert_records_from_payload_subscribe
          *                              "insert_records_from_payload_subscribe":
@@ -1018,7 +1009,7 @@ namespace gpudb
          *                              "insert_records_from_payload_text_search_columns":
          *                              Add 'text_search' property to
          *                              internally inferenced string columns.
-         *                              Comma seperated list of column names or
+         *                              Comma separated list of column names or
          *                              '*' for all columns. To add text_search
          *                              property only to string columns of
          *                              minimum size, set also the option
@@ -1067,6 +1058,10 @@ namespace gpudb
          *                              The default value is @ref
          *                              gpudb::insert_records_from_payload_false
          *                              "insert_records_from_payload_false".
+         *                          <li>@ref
+         *                              gpudb::insert_records_from_payload_type_inference_max_records_read
+         *                              "insert_records_from_payload_type_inference_max_records_read":
+         *                              The default value is ''.
          *                          <li>@ref
          *                              gpudb::insert_records_from_payload_type_inference_mode
          *                              "insert_records_from_payload_type_inference_mode":
@@ -1351,6 +1346,11 @@ namespace gpudb
          *         href="../../../rm/concepts/#tier-strategies"
          *         target="_top">tier strategy</a> for the table and its
          *         columns.
+         *     <li>@ref gpudb::insert_records_from_payload_compression_codec
+         *         "insert_records_from_payload_compression_codec": The default
+         *         <a href="../../../concepts/column_compression/"
+         *         target="_top">compression codec</a> for this table's
+         *         columns.
          * </ul>
          * The default value is an empty map.
          */
@@ -1359,28 +1359,6 @@ namespace gpudb
         /**
          * Optional parameters.
          * <ul>
-         *     <li>@ref gpudb::insert_records_from_payload_avro_header_bytes
-         *         "insert_records_from_payload_avro_header_bytes": Optional
-         *         number of bytes to skip when reading an avro record.
-         *     <li>@ref gpudb::insert_records_from_payload_avro_num_records
-         *         "insert_records_from_payload_avro_num_records": Optional
-         *         number of avro records, if data includes only records.
-         *     <li>@ref gpudb::insert_records_from_payload_avro_schema
-         *         "insert_records_from_payload_avro_schema": Optional string
-         *         representing avro schema, for insert records in avro format,
-         *         that does not include is schema.
-         *     <li>@ref gpudb::insert_records_from_payload_avro_schemaless
-         *         "insert_records_from_payload_avro_schemaless": When user
-         *         provides 'avro_schema', avro data is assumed to be
-         *         schemaless, unless specified. Default is 'true' when given
-         *         avro_schema. Igonred when avro_schema is not given.
-         *         Supported values:
-         *         <ul>
-         *             <li>@ref gpudb::insert_records_from_payload_true
-         *                 "insert_records_from_payload_true"
-         *             <li>@ref gpudb::insert_records_from_payload_false
-         *                 "insert_records_from_payload_false"
-         *         </ul>
          *     <li>@ref
          *         gpudb::insert_records_from_payload_bad_record_table_name
          *         "insert_records_from_payload_bad_record_table_name":
@@ -1572,7 +1550,7 @@ namespace gpudb
          *         gpudb::insert_records_from_payload_gdal_configuration_options
          *         "insert_records_from_payload_gdal_configuration_options":
          *         Comma separated list of gdal conf options, for the specific
-         *         requets: key=value. The default value is ''.
+         *         requests: key=value. The default value is ''.
          *     <li>@ref gpudb::insert_records_from_payload_ignore_existing_pk
          *         "insert_records_from_payload_ignore_existing_pk": Specifies
          *         the record collision error-suppression policy for inserting
@@ -1712,21 +1690,35 @@ namespace gpudb
          *         separated list of column names, to set as primary keys, when
          *         not specified in the type. The default value is ''.
          *     <li>@ref
-         *         gpudb::insert_records_from_payload_schema_registry_schema_id
-         *         "insert_records_from_payload_schema_registry_schema_id"
+         *         gpudb::insert_records_from_payload_schema_registry_connection_retries
+         *         "insert_records_from_payload_schema_registry_connection_retries":
+         *         Confluent Schema registry connection timeout (in Secs)
+         *     <li>@ref
+         *         gpudb::insert_records_from_payload_schema_registry_connection_timeout
+         *         "insert_records_from_payload_schema_registry_connection_timeout":
+         *         Confluent Schema registry connection timeout (in Secs)
+         *     <li>@ref
+         *         gpudb::insert_records_from_payload_schema_registry_max_consecutive_connection_failures
+         *         "insert_records_from_payload_schema_registry_max_consecutive_connection_failures":
+         *         Max records to skip due to SR connection failures, before
+         *         failing
+         *     <li>@ref
+         *         gpudb::insert_records_from_payload_max_consecutive_invalid_schema_failure
+         *         "insert_records_from_payload_max_consecutive_invalid_schema_failure":
+         *         Max records to skip due to schema related errors, before
+         *         failing
          *     <li>@ref
          *         gpudb::insert_records_from_payload_schema_registry_schema_name
-         *         "insert_records_from_payload_schema_registry_schema_name"
-         *     <li>@ref
-         *         gpudb::insert_records_from_payload_schema_registry_schema_version
-         *         "insert_records_from_payload_schema_registry_schema_version"
+         *         "insert_records_from_payload_schema_registry_schema_name":
+         *         Name of the Avro schema in the schema registry to use when
+         *         reading Avro records.
          *     <li>@ref gpudb::insert_records_from_payload_shard_keys
          *         "insert_records_from_payload_shard_keys": Optional: comma
          *         separated list of column names, to set as primary keys, when
          *         not specified in the type. The default value is ''.
          *     <li>@ref gpudb::insert_records_from_payload_skip_lines
-         *         "insert_records_from_payload_skip_lines": Skip number of
-         *         lines from begining of file.
+         *         "insert_records_from_payload_skip_lines": Skip a number of
+         *         lines from the beginning of the file.
          *     <li>@ref gpudb::insert_records_from_payload_subscribe
          *         "insert_records_from_payload_subscribe": Continuously poll
          *         the data source to check for new data and load it into the
@@ -1846,7 +1838,7 @@ namespace gpudb
          *     <li>@ref gpudb::insert_records_from_payload_text_search_columns
          *         "insert_records_from_payload_text_search_columns": Add
          *         'text_search' property to internally inferenced string
-         *         columns. Comma seperated list of column names or '*' for all
+         *         columns. Comma separated list of column names or '*' for all
          *         columns. To add text_search property only to string columns
          *         of minimum size, set also the option
          *         'text_search_min_column_length'
@@ -1885,6 +1877,10 @@ namespace gpudb
          *         The default value is @ref
          *         gpudb::insert_records_from_payload_false
          *         "insert_records_from_payload_false".
+         *     <li>@ref
+         *         gpudb::insert_records_from_payload_type_inference_max_records_read
+         *         "insert_records_from_payload_type_inference_max_records_read":
+         *         The default value is ''.
          *     <li>@ref gpudb::insert_records_from_payload_type_inference_mode
          *         "insert_records_from_payload_type_inference_mode": optimize
          *         type inference for:

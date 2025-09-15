@@ -12,8 +12,8 @@ namespace gpudb
      * A set of parameters for @ref
      * GPUdb::alterWal(const AlterWalRequest&) const "GPUdb::alterWal".
      *
-     * Alters table wal settings.
-     * Returns information about the requested table wal modifications.
+     * Alters table write-ahead log (WAL) settings.
+     * Returns information about the requested table WAL modifications.
      */
     struct AlterWalRequest
     {
@@ -39,7 +39,7 @@ namespace gpudb
          *                          <li>@ref gpudb::alter_wal_segment_count
          *                              "alter_wal_segment_count": Approximate
          *                              number of segment files to split the
-         *                              wal across. Must be at least two.
+         *                              WAL across. Must be at least two.
          *                          <li>@ref gpudb::alter_wal_sync_policy
          *                              "alter_wal_sync_policy": Maximum size
          *                              of an individual segment file.
@@ -47,10 +47,10 @@ namespace gpudb
          *                              <ul>
          *                                  <li>@ref gpudb::alter_wal_none
          *                                      "alter_wal_none": Disables the
-         *                                      wal
+         *                                      WAL
          *                                  <li>@ref
          *                                      gpudb::alter_wal_background
-         *                                      "alter_wal_background": Wal
+         *                                      "alter_wal_background": WAL
          *                                      entries are periodically
          *                                      written instead of immediately
          *                                      after each operation
@@ -65,7 +65,7 @@ namespace gpudb
          *                              </ul>
          *                          <li>@ref gpudb::alter_wal_flush_frequency
          *                              "alter_wal_flush_frequency": Specifies
-         *                              how frequently wal entries are written
+         *                              how frequently WAL entries are written
          *                              with background sync. This is a global
          *                              setting and can only be used with the
          *                              system {options.table_names} specifier
@@ -88,7 +88,7 @@ namespace gpudb
          *                              gpudb::alter_wal_override_non_default
          *                              "alter_wal_override_non_default": If
          *                              @ref gpudb::alter_wal_true "true"
-         *                              tables with unique wal settings will be
+         *                              tables with unique WAL settings will be
          *                              overridden when applying a system level
          *                              change.
          *                              Supported values:
@@ -105,7 +105,7 @@ namespace gpudb
          *                              gpudb::alter_wal_restore_system_settings
          *                              "alter_wal_restore_system_settings": If
          *                              @ref gpudb::alter_wal_true "true"
-         *                              tables with unique wal settings will be
+         *                              tables with unique WAL settings will be
          *                              reverted to the current global
          *                              settings. Cannot be used in conjunction
          *                              with any other option.
@@ -159,15 +159,15 @@ namespace gpudb
          *         segment file
          *     <li>@ref gpudb::alter_wal_segment_count
          *         "alter_wal_segment_count": Approximate number of segment
-         *         files to split the wal across. Must be at least two.
+         *         files to split the WAL across. Must be at least two.
          *     <li>@ref gpudb::alter_wal_sync_policy "alter_wal_sync_policy":
          *         Maximum size of an individual segment file.
          *         Supported values:
          *         <ul>
          *             <li>@ref gpudb::alter_wal_none "alter_wal_none":
-         *                 Disables the wal
+         *                 Disables the WAL
          *             <li>@ref gpudb::alter_wal_background
-         *                 "alter_wal_background": Wal entries are periodically
+         *                 "alter_wal_background": WAL entries are periodically
          *                 written instead of immediately after each operation
          *             <li>@ref gpudb::alter_wal_flush "alter_wal_flush":
          *                 Protects entries in the event of a database crash
@@ -175,7 +175,7 @@ namespace gpudb
          *                 Protects entries in the event of an OS crash
          *         </ul>
          *     <li>@ref gpudb::alter_wal_flush_frequency
-         *         "alter_wal_flush_frequency": Specifies how frequently wal
+         *         "alter_wal_flush_frequency": Specifies how frequently WAL
          *         entries are written with background sync. This is a global
          *         setting and can only be used with the system
          *         {options.table_names} specifier '*'.
@@ -191,7 +191,7 @@ namespace gpudb
          *         "alter_wal_true".
          *     <li>@ref gpudb::alter_wal_override_non_default
          *         "alter_wal_override_non_default": If @ref
-         *         gpudb::alter_wal_true "true" tables with unique wal settings
+         *         gpudb::alter_wal_true "true" tables with unique WAL settings
          *         will be overridden when applying a system level change.
          *         Supported values:
          *         <ul>
@@ -202,7 +202,7 @@ namespace gpudb
          *         "alter_wal_false".
          *     <li>@ref gpudb::alter_wal_restore_system_settings
          *         "alter_wal_restore_system_settings": If @ref
-         *         gpudb::alter_wal_true "true" tables with unique wal settings
+         *         gpudb::alter_wal_true "true" tables with unique WAL settings
          *         will be reverted to the current global settings. Cannot be
          *         used in conjunction with any other option.
          *         Supported values:

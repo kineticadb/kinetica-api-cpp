@@ -17,6 +17,7 @@
 namespace gpudb
 {
     class GPUdb;
+    class FailbackPollerService;
 }
 
 #include "gpudb/Avro.hpp"
@@ -32,20 +33,20 @@ namespace gpudb
 
  This is the client-side C++ application programming interface (API) for Kinetica.
 
- </br>
+ <br/>
 
  The source code can be found <a href="https://github.com/kineticadb/kinetica-api-cpp" target="_top">here</a>.
 
- </br>
+ <br/>
 
  There are two projects here: gpudb and example.
- </br>
+ <br/>
 
  The gpudb project contains the main client source code in the gpudb namespace.
  The <see cref="gpudb.GPUdb">GPUdb</see> class implements the interface for the API.  The protocol
  subdirectory contains classes for each endpoint of the database server.
 
- </br>
+ <br/>
 
  The example project contains a short example in gpudb-api-example.cpp.  The user
  needs to specify the hostname of a database server (e.g. "127.0.0.1:9191") in the property
@@ -134,25 +135,22 @@ public:
     /**
      * A enumeration of high-availability synchronicity override modes.
      *
-     * Note: Internally, do not use the enum value as the mode to be set
-     *       in the header; use the {@link
-     *       #getHASynchronicityModeValue(HASynchronicityMode)} to get
-     *       the approprivate stirng value instead.
+     * <seealso cref="setHASyncMode"/>
      */
     enum HASynchronicityMode {
-        // No override; defer to the HA process for synchronizing
-        // endpoints (which has different logic for different endpoints)
+        /// No override; defer to the HA process for synchronizing
+        /// endpoints (which has different logic for different endpoints)
         DEFAULT = 0,  // maps to 'default'
-        // Explicitly do NOT replicate across the HA cluster
+        /// Explicitly do NOT replicate across the HA cluster
         NONE,         // maps to 'REPL_NONE'
-        // Synchronize all endpoint calls
+        /// Synchronize all endpoint calls
         SYNCHRONOUS,  // maps to 'REPL_SYNC'
-        // Sends a http request directly to each cluster, executes the query locally,
-        // and waits for the response from each cluster
+        /// Sends a http request directly to each cluster, executes the query locally,
+        /// and waits for the response from each cluster
         SYNCHRONOUS_PARALLEL, // maps to 'REPL_SYNC_PARALLEL'
-        // Do NOT synchronize any endpoint call
+        /// Do NOT synchronize any endpoint call
         ASYNCHRONOUS,  // maps to 'REPL_ASYNC'
-        // Queues a request to RMQ for each cluster, executes the query locally, and returns to the user
+        /// Queues a request to RMQ for each cluster, executes the query locally, and returns to the user
         ASYNCHRONOUS_PARALLEL // maps to 'REPL_ASYNC_PARALLEL'
     };
 
@@ -189,8 +187,6 @@ public:
      * @param[in] options  An optional GPUdb::Options object containing
      *                     options, e.g. primary cluster URL, used to the
      *                     create the GPUdb object.
-     *
-     * @return the instantiated GPUdb object.
      */
     GPUdb(const HttpUrl& url, const Options& options = Options());
 
@@ -208,8 +204,6 @@ public:
      * @param[in] options  An optional GPUdb::Options object containing
      *                     options, e.g. primary cluster URL, used to the
      *                     create the GPUdb object.
-     *
-     * @return the instantiated GPUdb object.
      */
     GPUdb(const std::string& url, const Options& options = Options());
 
@@ -223,8 +217,6 @@ public:
      * @param[in] options  An optional GPUdb::Options object containing
      *                     options, e.g. primary cluster URL, used to the
      *                     create the GPUdb object.
-     *
-     * @return the instantiated GPUdb object.
      */
     GPUdb(const std::vector<HttpUrl>& urls, const Options& options = Options());
 
@@ -239,16 +231,14 @@ public:
      * @param[in] options  An optional GPUdb::Options object containing
      *                     options, e.g. primary cluster URL, used to the
      *                     create the GPUdb object.
-     *
-     * @return the instantiated GPUdb object.
      */
     GPUdb(const std::vector<std::string>& urls, const Options& options = Options());
 
     /// Destructor
     ~GPUdb();
     
-    /// Some getters
-    /// ------------
+    // Some getters
+    // ------------
     const HttpUrl& getUrl() const;
     const std::vector<HttpUrl>& getUrls() const;
     const HttpUrl& getHmUrl() const;
@@ -279,21 +269,41 @@ public:
      * rows affected by the statement.
      * 
      * @param sql        - The SQL query to execute
-     * @param parameters - Query parameters for the SQL query.  Can be empty.
-     * @param options    - Optional parameters for the executeSql call.
      * 
      * @return - number of rows affected by the execution of statement
      */
     long execute(const std::string& sql);
+
+    /**
+     * This method is used to execute a SQL statement (e.g., DML, DDL).  It returns the number of
+     * rows affected by the statement.
+     * 
+     * @param sql        - The SQL query to execute
+     * @param parameters - Query parameters for the SQL query.  Can be empty.
+     * 
+     * @return - number of rows affected by the execution of statement
+     */
     long execute(const std::string& sql, const std::string& parameters);
+
+    /**
+     * This method is used to execute a SQL statement (e.g., DML, DDL).  It returns the number of
+     * rows affected by the statement.
+     * 
+     * @param sql        - The SQL query to execute
+     * @param parameters - Query parameters for the SQL query.  Can be empty.
+     * @param options    - Optional parameters for the execute call.
+     * 
+     * @return - number of rows affected by the execution of statement
+     */
     long execute(const std::string& sql, const std::string& parameters,
                  const std::map<std::string, std::string>& options);
+
     template<typename T> long execute(const std::string& sql, const std::vector<T>& parameters);
     template<typename T> long execute(const std::string& sql, const std::vector<T>& parameters,
                                       const std::map<std::string, std::string>& options);
 
-    /// Some setters
-    /// ------------
+    // Some setters
+    // ------------
 
     /**
      * Sets the high-availability synchronization mode which will override
@@ -585,7 +595,9 @@ private:
     mutable std::map<std::string, avro::DecoderPtr> m_knownTypes;
     mutable boost::mutex m_knownTypesMutex;
 
-   
+    friend class FailbackPollerService;
+    mutable std::unique_ptr<FailbackPollerService> pollerService;
+
     /// Helper functions
     /// ----------------
     /// Initialize the GPUdb object
@@ -605,7 +617,8 @@ private:
 
     // Update the URLs with the available HA ring information
     void getHAringHeadNodeAddresses();
-
+    bool isKineticaRunning(const std::string& primaryURL) const;
+    
     /// Host manager related methods
     void updateHostManagerUrls();
     void setHostManagerPort(uint16_t value);
@@ -613,7 +626,7 @@ private:
     /// Randomly shuffles the list of high availability URL indices so that HA
     /// failover happens at a random fashion.  One caveat is when a primary host
     /// is given by the user; in that case, we need to keep the primary host's
-    /// index as the first one in the list so that upon failover, when we cricle
+    /// index as the first one in the list so that upon failover, when we circle
     /// back, we always pick the first/primary host up again.
     void randomizeURLs() const;
 
@@ -621,16 +634,16 @@ private:
     /// to its string value
     const std::string& getHASynchronicityModeValue( HASynchronicityMode syncMode ) const;
 
-    /// Some getters
-    /// ------------
+    // Some getters
+    // ------------
     const HttpUrl* getUrlPointer() const;
     const HttpUrl* getHmUrlPointer() const;
     const HttpUrl* switchUrl(const HttpUrl* oldUrl) const;
     const HttpUrl* switchHmUrl(const HttpUrl* oldUrl) const;
-
+    bool checkFailbackConditions() const;
     
-    /// Request related methods
-    /// -----------------------
+    // Request related methods
+    // -----------------------
     void initHttpRequest(HttpRequest& httpRequest) const;
     void submitRequestRaw(const std::string& endpoint,
                           const std::vector<uint8_t>& request,

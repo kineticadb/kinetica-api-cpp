@@ -43,8 +43,9 @@ namespace gpudb
          *                             The only valid attribute limit that can
          *                             be set is max_memory (in bytes) for the
          *                             VRAM & RAM tiers.  For instance, to set
-         *                             max VRAM capacity to 1GB and max RAM
-         *                             capacity to 10GB, use:
+         *                             max VRAM capacity to 1GB per rank per
+         *                             GPU and max RAM capacity to 10GB per
+         *                             rank, use:
          *                             {'VRAM':{'max_memory':'1000000000'},
          *                             'RAM':{'max_memory':'10000000000'}}.
          *                             <ul>
@@ -52,29 +53,37 @@ namespace gpudb
          *                                     gpudb::create_resource_group_max_memory
          *                                     "create_resource_group_max_memory":
          *                                     Maximum amount of memory usable
-         *                                     in the given tier at one time
-         *                                     for this group.
+         *                                     at one time, per rank, per GPU,
+         *                                     for the VRAM tier; or maximum
+         *                                     amount of memory usable at one
+         *                                     time, per rank, for the RAM
+         *                                     tier.
          *                             </ul>
          *                             The default value is an empty map.
          * @param[in] ranking_  Indicates the relative ranking among existing
          *                      resource groups where this new resource group
-         *                      will be placed.  When using @ref
-         *                      gpudb::create_resource_group_before "before" or
-         *                      @ref gpudb::create_resource_group_after
-         *                      "after", specify which resource group this one
-         *                      will be inserted before or after in @a
-         *                      adjoiningResourceGroup_.
+         *                      will be placed.
          *                      Supported values:
          *                      <ul>
          *                          <li>@ref gpudb::create_resource_group_first
-         *                              "create_resource_group_first"
+         *                              "create_resource_group_first": Make
+         *                              this resource group the new first one
+         *                              in the ordering
          *                          <li>@ref gpudb::create_resource_group_last
-         *                              "create_resource_group_last"
+         *                              "create_resource_group_last": Make this
+         *                              resource group the new last one in the
+         *                              ordering
          *                          <li>@ref
          *                              gpudb::create_resource_group_before
-         *                              "create_resource_group_before"
+         *                              "create_resource_group_before": Place
+         *                              this resource group before the one
+         *                              specified by @a adjoiningResourceGroup_
+         *                              in the ordering
          *                          <li>@ref gpudb::create_resource_group_after
-         *                              "create_resource_group_after"
+         *                              "create_resource_group_after": Place
+         *                              this resource group after the one
+         *                              specified by @a adjoiningResourceGroup_
+         *                              in the ordering
          *                      </ul>
          * @param[in] adjoiningResourceGroup_  If @a ranking_ is @ref
          *                                     gpudb::create_resource_group_before
@@ -91,16 +100,17 @@ namespace gpudb
          *                              gpudb::create_resource_group_max_cpu_concurrency
          *                              "create_resource_group_max_cpu_concurrency":
          *                              Maximum number of simultaneous threads
-         *                              that will be used to execute a request
-         *                              for this group. The minimum allowed
-         *                              value is '4'.
+         *                              that will be used to execute a request,
+         *                              per rank, for this group. The minimum
+         *                              allowed value is '4'.
          *                          <li>@ref
          *                              gpudb::create_resource_group_max_data
          *                              "create_resource_group_max_data":
-         *                              Maximum amount of cumulative ram usage
-         *                              regardless of tier status for this
-         *                              group. The minimum allowed value is
-         *                              '-1'.
+         *                              Maximum amount of data, per rank, in
+         *                              bytes, that can be used by all database
+         *                              objects within this group.  Set to -1
+         *                              to indicate no upper limit. The minimum
+         *                              allowed value is '-1'.
          *                          <li>@ref
          *                              gpudb::create_resource_group_max_scheduling_priority
          *                              "create_resource_group_max_scheduling_priority":
@@ -139,13 +149,16 @@ namespace gpudb
          * group limits.  The only valid attribute limit that can be set is
          * max_memory (in bytes) for the VRAM & RAM tiers.
          *
-         * For instance, to set max VRAM capacity to 1GB and max RAM capacity
-         * to 10GB, use:  {'VRAM':{'max_memory':'1000000000'},
+         * For instance, to set max VRAM capacity to 1GB per rank per GPU and
+         * max RAM capacity to 10GB per rank, use:
+         * {'VRAM':{'max_memory':'1000000000'},
          * 'RAM':{'max_memory':'10000000000'}}.
          * <ul>
          *     <li>@ref gpudb::create_resource_group_max_memory
          *         "create_resource_group_max_memory": Maximum amount of memory
-         *         usable in the given tier at one time for this group.
+         *         usable at one time, per rank, per GPU, for the VRAM tier; or
+         *         maximum amount of memory usable at one time, per rank, for
+         *         the RAM tier.
          * </ul>
          * The default value is an empty map.
          */
@@ -153,21 +166,23 @@ namespace gpudb
 
         /**
          * Indicates the relative ranking among existing resource groups where
-         * this new resource group will be placed.  When using @ref
-         * gpudb::create_resource_group_before "before" or @ref
-         * gpudb::create_resource_group_after "after", specify which resource
-         * group this one will be inserted before or after in @ref
-         * adjoiningResourceGroup.
+         * this new resource group will be placed.
          * Supported values:
          * <ul>
          *     <li>@ref gpudb::create_resource_group_first
-         *         "create_resource_group_first"
+         *         "create_resource_group_first": Make this resource group the
+         *         new first one in the ordering
          *     <li>@ref gpudb::create_resource_group_last
-         *         "create_resource_group_last"
+         *         "create_resource_group_last": Make this resource group the
+         *         new last one in the ordering
          *     <li>@ref gpudb::create_resource_group_before
-         *         "create_resource_group_before"
+         *         "create_resource_group_before": Place this resource group
+         *         before the one specified by @ref adjoiningResourceGroup in
+         *         the ordering
          *     <li>@ref gpudb::create_resource_group_after
-         *         "create_resource_group_after"
+         *         "create_resource_group_after": Place this resource group
+         *         after the one specified by @ref adjoiningResourceGroup in
+         *         the ordering
          * </ul>
          */
         std::string ranking;
@@ -186,11 +201,13 @@ namespace gpudb
          *     <li>@ref gpudb::create_resource_group_max_cpu_concurrency
          *         "create_resource_group_max_cpu_concurrency": Maximum number
          *         of simultaneous threads that will be used to execute a
-         *         request for this group. The minimum allowed value is '4'.
+         *         request, per rank, for this group. The minimum allowed value
+         *         is '4'.
          *     <li>@ref gpudb::create_resource_group_max_data
-         *         "create_resource_group_max_data": Maximum amount of
-         *         cumulative ram usage regardless of tier status for this
-         *         group. The minimum allowed value is '-1'.
+         *         "create_resource_group_max_data": Maximum amount of data,
+         *         per rank, in bytes, that can be used by all database objects
+         *         within this group.  Set to -1 to indicate no upper limit.
+         *         The minimum allowed value is '-1'.
          *     <li>@ref gpudb::create_resource_group_max_scheduling_priority
          *         "create_resource_group_max_scheduling_priority": Maximum
          *         priority of a scheduled task for this group. The minimum

@@ -106,44 +106,14 @@ namespace gpudb
          * @param[in] options_  Optional parameters.
          *                      <ul>
          *                          <li>@ref gpudb::execute_proc_cache_input
-         *                              "execute_proc_cache_input": A
-         *                              comma-delimited list of table names
-         *                              from @a inputTableNames_ from which
-         *                              input data will be cached for use in
-         *                              subsequent calls to @ref
-         *                              GPUdb::executeProc(const ExecuteProcRequest&) const
-         *                              "GPUdb::executeProc" with the @ref
-         *                              gpudb::execute_proc_use_cached_input
-         *                              "use_cached_input" option. Cached input
-         *                              data will be retained until the proc
-         *                              status is cleared with the @ref
-         *                              GPUdb::showProcStatus(const ShowProcStatusRequest&) const
-         *                              "clear_complete" option of @ref
-         *                              GPUdb::showProcStatus(const ShowProcStatusRequest&) const
-         *                              "GPUdb::showProcStatus" and all proc
-         *                              instances using the cached data have
-         *                              completed. The default value is ''.
+         *                              "execute_proc_cache_input": No longer
+         *                              supported; option will be ignored. The
+         *                              default value is ''.
          *                          <li>@ref
          *                              gpudb::execute_proc_use_cached_input
-         *                              "execute_proc_use_cached_input": A
-         *                              comma-delimited list of run IDs (as
-         *                              returned from prior calls to @ref
-         *                              GPUdb::executeProc(const ExecuteProcRequest&) const
-         *                              "GPUdb::executeProc") of running or
-         *                              completed proc instances from which
-         *                              input data cached using the @ref
-         *                              gpudb::execute_proc_cache_input
-         *                              "cache_input" option will be used.
-         *                              Cached input data will not be used for
-         *                              any tables specified in @a
-         *                              inputTableNames_, but data from all
-         *                              other tables cached for the specified
-         *                              run IDs will be passed to the proc. If
-         *                              the same table was cached for multiple
-         *                              specified run IDs, the cached data from
-         *                              the first run ID specified in the list
-         *                              that includes that table will be used.
-         *                              The default value is ''.
+         *                              "execute_proc_use_cached_input": No
+         *                              longer supported; option will be
+         *                              ignored. The default value is ''.
          *                          <li>@ref gpudb::execute_proc_run_tag
          *                              "execute_proc_run_tag": A string that,
          *                              if not empty, can be used in subsequent
@@ -274,33 +244,11 @@ namespace gpudb
          * Optional parameters.
          * <ul>
          *     <li>@ref gpudb::execute_proc_cache_input
-         *         "execute_proc_cache_input": A comma-delimited list of table
-         *         names from @ref inputTableNames from which input data will
-         *         be cached for use in subsequent calls to @ref
-         *         GPUdb::executeProc(const ExecuteProcRequest&) const
-         *         "GPUdb::executeProc" with the @ref
-         *         gpudb::execute_proc_use_cached_input "use_cached_input"
-         *         option. Cached input data will be retained until the proc
-         *         status is cleared with the @ref
-         *         GPUdb::showProcStatus(const ShowProcStatusRequest&) const
-         *         "clear_complete" option of @ref
-         *         GPUdb::showProcStatus(const ShowProcStatusRequest&) const
-         *         "GPUdb::showProcStatus" and all proc instances using the
-         *         cached data have completed. The default value is ''.
+         *         "execute_proc_cache_input": No longer supported; option will
+         *         be ignored. The default value is ''.
          *     <li>@ref gpudb::execute_proc_use_cached_input
-         *         "execute_proc_use_cached_input": A comma-delimited list of
-         *         run IDs (as returned from prior calls to @ref
-         *         GPUdb::executeProc(const ExecuteProcRequest&) const
-         *         "GPUdb::executeProc") of running or completed proc instances
-         *         from which input data cached using the @ref
-         *         gpudb::execute_proc_cache_input "cache_input" option will be
-         *         used. Cached input data will not be used for any tables
-         *         specified in @ref inputTableNames, but data from all other
-         *         tables cached for the specified run IDs will be passed to
-         *         the proc. If the same table was cached for multiple
-         *         specified run IDs, the cached data from the first run ID
-         *         specified in the list that includes that table will be used.
-         *         The default value is ''.
+         *         "execute_proc_use_cached_input": No longer supported; option
+         *         will be ignored. The default value is ''.
          *     <li>@ref gpudb::execute_proc_run_tag "execute_proc_run_tag": A
          *         string that, if not empty, can be used in subsequent calls
          *         to @ref

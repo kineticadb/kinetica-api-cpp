@@ -202,6 +202,13 @@ namespace gpudb
          *                              combination with the @ref
          *                              gpudb::aggregate_unpivot_result_table
          *                              "result_table" option.
+         *                          <li>@ref
+         *                              gpudb::aggregate_unpivot_compression_codec
+         *                              "aggregate_unpivot_compression_codec":
+         *                              The default <a
+         *                              href="../../../concepts/column_compression/"
+         *                              target="_top">compression codec</a> for
+         *                              the result table's columns.
          *                          <li>@ref gpudb::aggregate_unpivot_limit
          *                              "aggregate_unpivot_limit": The number
          *                              of records to keep. The default value
@@ -430,6 +437,13 @@ namespace gpudb
          *                              combination with the @ref
          *                              gpudb::aggregate_unpivot_result_table
          *                              "result_table" option.
+         *                          <li>@ref
+         *                              gpudb::aggregate_unpivot_compression_codec
+         *                              "aggregate_unpivot_compression_codec":
+         *                              The default <a
+         *                              href="../../../concepts/column_compression/"
+         *                              target="_top">compression codec</a> for
+         *                              the result table's columns.
          *                          <li>@ref gpudb::aggregate_unpivot_limit
          *                              "aggregate_unpivot_limit": The number
          *                              of records to keep. The default value
@@ -627,6 +641,11 @@ namespace gpudb
          *         maximum data size for all columns in a chunk to be used for
          *         the result table. Must be used in combination with the @ref
          *         gpudb::aggregate_unpivot_result_table "result_table" option.
+         *     <li>@ref gpudb::aggregate_unpivot_compression_codec
+         *         "aggregate_unpivot_compression_codec": The default <a
+         *         href="../../../concepts/column_compression/"
+         *         target="_top">compression codec</a> for the result table's
+         *         columns.
          *     <li>@ref gpudb::aggregate_unpivot_limit
          *         "aggregate_unpivot_limit": The number of records to keep.
          *         The default value is ''.

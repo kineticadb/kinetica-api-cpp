@@ -127,6 +127,41 @@ namespace gpudb
          *                              Filter expression to limit records for
          *                              notification
          *                          <li>@ref
+         *                              gpudb::create_table_monitor_join_table_names
+         *                              "create_table_monitor_join_table_names":
+         *                              A comma-separated list of tables
+         *                              (optionally with aliases) to include in
+         *                              the join. The monitored table @a
+         *                              tableName_ must be included,
+         *                              representing only the newly inserted
+         *                              rows (deltas) since the last
+         *                              notification. Other tables can be any
+         *                              existing tables or views. Aliases can
+         *                              be used with the 'table_name as alias'
+         *                              syntax.
+         *                          <li>@ref
+         *                              gpudb::create_table_monitor_join_column_names
+         *                              "create_table_monitor_join_column_names":
+         *                              A comma-separated list of columns or
+         *                              expressions to include from the joined
+         *                              tables. Column references can use table
+         *                              names or aliases defined in
+         *                              'join_table_names'. Each column can
+         *                              optionally be aliased using 'as'. The
+         *                              selected columns will also appear in
+         *                              the notification output.
+         *                          <li>@ref
+         *                              gpudb::create_table_monitor_join_expressions
+         *                              "create_table_monitor_join_expressions":
+         *                              Optional filter or join expressions to
+         *                              apply when combining the tables.
+         *                              Expressions are standard SQL-style
+         *                              conditions and can reference any table
+         *                              or alias listed in 'join_table_names'.
+         *                              This corresponds to the WHERE clause of
+         *                              the underlying join, and can include
+         *                              conditions to filter the delta rows.
+         *                          <li>@ref
          *                              gpudb::create_table_monitor_refresh_method
          *                              "create_table_monitor_refresh_method":
          *                              Method controlling when the table
@@ -232,6 +267,28 @@ namespace gpudb
          *     <li>@ref gpudb::create_table_monitor_expression
          *         "create_table_monitor_expression": Filter expression to
          *         limit records for notification
+         *     <li>@ref gpudb::create_table_monitor_join_table_names
+         *         "create_table_monitor_join_table_names": A comma-separated
+         *         list of tables (optionally with aliases) to include in the
+         *         join. The monitored table @ref tableName must be included,
+         *         representing only the newly inserted rows (deltas) since the
+         *         last notification. Other tables can be any existing tables
+         *         or views. Aliases can be used with the 'table_name as alias'
+         *         syntax.
+         *     <li>@ref gpudb::create_table_monitor_join_column_names
+         *         "create_table_monitor_join_column_names": A comma-separated
+         *         list of columns or expressions to include from the joined
+         *         tables. Column references can use table names or aliases
+         *         defined in 'join_table_names'. Each column can optionally be
+         *         aliased using 'as'. The selected columns will also appear in
+         *         the notification output.
+         *     <li>@ref gpudb::create_table_monitor_join_expressions
+         *         "create_table_monitor_join_expressions": Optional filter or
+         *         join expressions to apply when combining the tables.
+         *         Expressions are standard SQL-style conditions and can
+         *         reference any table or alias listed in 'join_table_names'.
+         *         This corresponds to the WHERE clause of the underlying join,
+         *         and can include conditions to filter the delta rows.
          *     <li>@ref gpudb::create_table_monitor_refresh_method
          *         "create_table_monitor_refresh_method": Method controlling
          *         when the table monitor reports changes to the @ref

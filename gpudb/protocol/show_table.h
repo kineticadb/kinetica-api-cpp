@@ -93,6 +93,21 @@ namespace gpudb
          *                              The default value is @ref
          *                              gpudb::show_table_true
          *                              "show_table_true".
+         *                          <li>@ref gpudb::show_table_get_access_data
+         *                              "show_table_get_access_data": If @ref
+         *                              gpudb::show_table_true "true" then data
+         *                              about the last read, write, alter and
+         *                              create will be returned.
+         *                              Supported values:
+         *                              <ul>
+         *                                  <li>@ref gpudb::show_table_true
+         *                                      "show_table_true"
+         *                                  <li>@ref gpudb::show_table_false
+         *                                      "show_table_false"
+         *                              </ul>
+         *                              The default value is @ref
+         *                              gpudb::show_table_false
+         *                              "show_table_false".
          *                          <li>@ref gpudb::show_table_get_cached_sizes
          *                              "show_table_get_cached_sizes": If @ref
          *                              gpudb::show_table_true "true" then the
@@ -101,7 +116,7 @@ namespace gpudb
          *                              returned; blank, otherwise. This
          *                              version will return the sizes cached at
          *                              rank 0, which may be stale if there is
-         *                              a multihead insert occuring.
+         *                              a multihead insert occurring.
          *                              Supported values:
          *                              <ul>
          *                                  <li>@ref gpudb::show_table_true
@@ -129,6 +144,22 @@ namespace gpudb
          *                              gpudb::show_table_false
          *                              "show_table_false".
          *                          <li>@ref
+         *                              gpudb::show_table_skip_additional_info
+         *                              "show_table_skip_additional_info": If
+         *                              @ref gpudb::show_table_true "true" then
+         *                              the response will not populate the
+         *                              additional_info field.
+         *                              Supported values:
+         *                              <ul>
+         *                                  <li>@ref gpudb::show_table_true
+         *                                      "show_table_true"
+         *                                  <li>@ref gpudb::show_table_false
+         *                                      "show_table_false"
+         *                              </ul>
+         *                              The default value is @ref
+         *                              gpudb::show_table_false
+         *                              "show_table_false".
+         *                          <li>@ref
          *                              gpudb::show_table_no_error_if_not_exists
          *                              "show_table_no_error_if_not_exists": If
          *                              @ref gpudb::show_table_false "false"
@@ -136,6 +167,24 @@ namespace gpudb
          *                              tableName_ does not exist. If @ref
          *                              gpudb::show_table_true "true" then it
          *                              will return an empty result.
+         *                              Supported values:
+         *                              <ul>
+         *                                  <li>@ref gpudb::show_table_true
+         *                                      "show_table_true"
+         *                                  <li>@ref gpudb::show_table_false
+         *                                      "show_table_false"
+         *                              </ul>
+         *                              The default value is @ref
+         *                              gpudb::show_table_false
+         *                              "show_table_false".
+         *                          <li>@ref
+         *                              gpudb::show_table_skip_temp_schemas
+         *                              "show_table_skip_temp_schemas": If @ref
+         *                              gpudb::show_table_true "true" then the
+         *                              table list will not include tables from
+         *                              SYS_TEMP and other system temporary
+         *                              schemas.  This is the default behavior
+         *                              for non-admin users.
          *                              Supported values:
          *                              <ul>
          *                                  <li>@ref gpudb::show_table_true
@@ -230,13 +279,24 @@ namespace gpudb
          *         </ul>
          *         The default value is @ref gpudb::show_table_true
          *         "show_table_true".
+         *     <li>@ref gpudb::show_table_get_access_data
+         *         "show_table_get_access_data": If @ref gpudb::show_table_true
+         *         "true" then data about the last read, write, alter and
+         *         create will be returned.
+         *         Supported values:
+         *         <ul>
+         *             <li>@ref gpudb::show_table_true "show_table_true"
+         *             <li>@ref gpudb::show_table_false "show_table_false"
+         *         </ul>
+         *         The default value is @ref gpudb::show_table_false
+         *         "show_table_false".
          *     <li>@ref gpudb::show_table_get_cached_sizes
          *         "show_table_get_cached_sizes": If @ref
          *         gpudb::show_table_true "true" then the number of records in
          *         each table, along with a cumulative count, will be returned;
          *         blank, otherwise. This version will return the sizes cached
          *         at rank 0, which may be stale if there is a multihead insert
-         *         occuring.
+         *         occurring.
          *         Supported values:
          *         <ul>
          *             <li>@ref gpudb::show_table_true "show_table_true"
@@ -255,12 +315,35 @@ namespace gpudb
          *         </ul>
          *         The default value is @ref gpudb::show_table_false
          *         "show_table_false".
+         *     <li>@ref gpudb::show_table_skip_additional_info
+         *         "show_table_skip_additional_info": If @ref
+         *         gpudb::show_table_true "true" then the response will not
+         *         populate the additional_info field.
+         *         Supported values:
+         *         <ul>
+         *             <li>@ref gpudb::show_table_true "show_table_true"
+         *             <li>@ref gpudb::show_table_false "show_table_false"
+         *         </ul>
+         *         The default value is @ref gpudb::show_table_false
+         *         "show_table_false".
          *     <li>@ref gpudb::show_table_no_error_if_not_exists
          *         "show_table_no_error_if_not_exists": If @ref
          *         gpudb::show_table_false "false" will return an error if the
          *         provided @ref tableName does not exist. If @ref
          *         gpudb::show_table_true "true" then it will return an empty
          *         result.
+         *         Supported values:
+         *         <ul>
+         *             <li>@ref gpudb::show_table_true "show_table_true"
+         *             <li>@ref gpudb::show_table_false "show_table_false"
+         *         </ul>
+         *         The default value is @ref gpudb::show_table_false
+         *         "show_table_false".
+         *     <li>@ref gpudb::show_table_skip_temp_schemas
+         *         "show_table_skip_temp_schemas": If @ref
+         *         gpudb::show_table_true "true" then the table list will not
+         *         include tables from SYS_TEMP and other system temporary
+         *         schemas.  This is the default behavior for non-admin users.
          *         Supported values:
          *         <ul>
          *             <li>@ref gpudb::show_table_true "show_table_true"
@@ -424,7 +507,7 @@ namespace gpudb
         std::vector<std::vector<std::string> > tableDescriptions;
 
         /**
-         * Type ids of the respective tables in @ref tableNames.
+         * Type IDs of the respective tables in @ref tableNames.
          */
         std::vector<std::string> typeIds;
 
@@ -571,9 +654,6 @@ namespace gpudb
          *         using the form:
          *         &lt;index_type&gt;@&lt;column_list&gt;@&lt;column_options&gt;.
          *         Not present for schemas. The default value is ''.
-         *     <li>@ref gpudb::show_table_compressed_columns
-         *         "show_table_compressed_columns": No longer supported. The
-         *         default value is ''.
          *     <li>@ref gpudb::show_table_column_info "show_table_column_info":
          *         JSON-encoded string representing a map of column name to
          *         information including memory usage if the @ref
@@ -618,8 +698,8 @@ namespace gpudb
          *         default value is ''.
          *     <li>@ref gpudb::show_table_refresh_start_time
          *         "show_table_refresh_start_time": For materialized view with
-         *         periodic refresh_method the current intial datetime string
-         *         that periodic refreshes began. The default value is ''.
+         *         periodic refresh_method the initial datetime string that
+         *         periodic refreshes began. The default value is ''.
          *     <li>@ref gpudb::show_table_refresh_stop_time
          *         "show_table_refresh_stop_time": Time at which the periodic
          *         view refresh stops. The default value is ''.
@@ -628,8 +708,8 @@ namespace gpudb
          *         periodic refresh_method the current refresh period in
          *         seconds. The default value is ''.
          *     <li>@ref gpudb::show_table_last_refresh_time
-         *         "show_table_last_refresh_time": For materialized view the a
-         *         datatime string indicating the last time the view was
+         *         "show_table_last_refresh_time": For materialized view the
+         *         datetime string indicating the last time the view was
          *         refreshed. The default value is ''.
          *     <li>@ref gpudb::show_table_next_refresh_time
          *         "show_table_next_refresh_time": For materialized view with
@@ -662,6 +742,44 @@ namespace gpudb
          *     <li>@ref gpudb::show_table_null_modifying_columns
          *         "show_table_null_modifying_columns": Comma-separated list of
          *         null modifying column names. The default value is ''.
+         *     <li>@ref gpudb::show_table_compression_codec
+         *         "show_table_compression_codec": Default <a
+         *         href="../../../concepts/column_compression/"
+         *         target="_top">compression codec</a> for the table. The
+         *         default value is ''.
+         *     <li>@ref gpudb::show_table_created_by "show_table_created_by":
+         *         User that created this table or view. The default value is
+         *         ''.
+         *     <li>@ref gpudb::show_table_created_time
+         *         "show_table_created_time": Time (UTC) when this table or
+         *         view was created. The default value is ''.
+         *     <li>@ref gpudb::show_table_last_read_by
+         *         "show_table_last_read_by": User that last read this table or
+         *         view. The default value is ''.
+         *     <li>@ref gpudb::show_table_last_read_time
+         *         "show_table_last_read_time": Time (UTC) when this table or
+         *         view was last read. The default value is ''.
+         *     <li>@ref gpudb::show_table_read_count "show_table_read_count":
+         *         Count of times this table or view was read. The default
+         *         value is ''.
+         *     <li>@ref gpudb::show_table_last_write_by
+         *         "show_table_last_write_by": User that last wrote to this
+         *         table. The default value is ''.
+         *     <li>@ref gpudb::show_table_last_write_time
+         *         "show_table_last_write_time": Time (UTC) when this table was
+         *         last written. The default value is ''.
+         *     <li>@ref gpudb::show_table_write_count "show_table_write_count":
+         *         Count of times this table was written. The default value is
+         *         ''.
+         *     <li>@ref gpudb::show_table_last_alter_by
+         *         "show_table_last_alter_by": User that last altered this
+         *         table or view. The default value is ''.
+         *     <li>@ref gpudb::show_table_last_alter_time
+         *         "show_table_last_alter_time": Time (UTC) when this table or
+         *         view was last altered. The default value is ''.
+         *     <li>@ref gpudb::show_table_alter_count "show_table_alter_count":
+         *         Count of times this table or view was altered. The default
+         *         value is ''.
          * </ul>
          */
         std::vector<std::map<std::string, std::string> > additionalInfo;

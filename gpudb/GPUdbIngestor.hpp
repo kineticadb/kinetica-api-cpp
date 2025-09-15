@@ -109,7 +109,7 @@ public:
 
     /**
      * Queues a record for insertion into GPUdb.  If the queue reaches
-     * the <member cref="batch_size" />, all records in the queue will be
+     * the configured batch size, all records in the queue will be
      * inserted into Kinetica before the method returns.  If an error occurs
      * while inserting the records, the records will no longer be in the queue
      * nor in Kinetica; catch <see cref="InsertException{T}"/>  to get the list
@@ -122,7 +122,7 @@ public:
 
     /**
      * Queues a list of records for insertion into Kientica.  If any queue reaches
-     * the <member cref="batch_size" />, all records in the queue will be
+     * the configured batch size, all records in the queue will be
      * inserted into Kinetica before the method returns.  If an error occurs
      * while inserting the records, the records will no longer be in the queue
      * nor in Kinetica; catch <see cref="InsertException{T}"/>  to get the list

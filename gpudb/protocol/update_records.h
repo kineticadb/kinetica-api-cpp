@@ -160,13 +160,13 @@ namespace gpudb
          *                              taking its place; "insert collisions"
          *                              will result in the collided-into record
          *                              being updated with the values in @a
-         *                              recordsToInsert_/@a recordsToInsertStr_
-         *                              (if given).  If set to @ref
-         *                              gpudb::update_records_false "false",
-         *                              the existing collided-into record will
-         *                              remain unchanged, while the update will
-         *                              be rejected and the error handled as
-         *                              determined by @ref
+         *                              recordsToInsert_ / @a
+         *                              recordsToInsertStr_ (if given).  If set
+         *                              to @ref gpudb::update_records_false
+         *                              "false", the existing collided-into
+         *                              record will remain unchanged, while the
+         *                              update will be rejected and the error
+         *                              handled as determined by @ref
          *                              gpudb::update_records_ignore_existing_pk
          *                              "ignore_existing_pk".  If the specified
          *                              table does not have a primary key, then
@@ -445,13 +445,13 @@ namespace gpudb
          *                              taking its place; "insert collisions"
          *                              will result in the collided-into record
          *                              being updated with the values in @a
-         *                              recordsToInsert_/@a recordsToInsertStr_
-         *                              (if given).  If set to @ref
-         *                              gpudb::update_records_false "false",
-         *                              the existing collided-into record will
-         *                              remain unchanged, while the update will
-         *                              be rejected and the error handled as
-         *                              determined by @ref
+         *                              recordsToInsert_ / @a
+         *                              recordsToInsertStr_ (if given).  If set
+         *                              to @ref gpudb::update_records_false
+         *                              "false", the existing collided-into
+         *                              record will remain unchanged, while the
+         *                              update will be rejected and the error
+         *                              handled as determined by @ref
          *                              gpudb::update_records_ignore_existing_pk
          *                              "ignore_existing_pk".  If the specified
          *                              table does not have a primary key, then
@@ -710,7 +710,7 @@ namespace gpudb
          *         and the record updated with values specified in @ref
          *         newValuesMaps taking its place; "insert collisions" will
          *         result in the collided-into record being updated with the
-         *         values in @ref recordsToInsert/@ref recordsToInsertStr (if
+         *         values in @ref recordsToInsert / @ref recordsToInsertStr (if
          *         given).  If set to @ref gpudb::update_records_false "false",
          *         the existing collided-into record will remain unchanged,
          *         while the update will be rejected and the error handled as
@@ -1046,8 +1046,8 @@ namespace gpudb
          *                              taking its place; "insert collisions"
          *                              will result in the collided-into record
          *                              being updated with the values in @a
-         *                              data_/@a recordsToInsertStr (if given).
-         *                              If set to @ref
+         *                              data_ / @a recordsToInsertStr (if
+         *                              given).  If set to @ref
          *                              gpudb::update_records_false "false",
          *                              the existing collided-into record will
          *                              remain unchanged, while the update will
@@ -1289,7 +1289,7 @@ namespace gpudb
          *         and the record updated with values specified in @ref
          *         newValuesMaps taking its place; "insert collisions" will
          *         result in the collided-into record being updated with the
-         *         values in @ref data/@a recordsToInsertStr (if given).  If
+         *         values in @ref data / @a recordsToInsertStr (if given).  If
          *         set to @ref gpudb::update_records_false "false", the
          *         existing collided-into record will remain unchanged, while
          *         the update will be rejected and the error handled as
