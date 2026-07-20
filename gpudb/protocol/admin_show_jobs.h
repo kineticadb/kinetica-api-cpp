@@ -176,14 +176,49 @@ namespace gpudb
         {
         }
 
+        /**
+         * The identifiers of the running or completed jobs.
+         */
         std::vector<int64_t> jobId;
+
+        /**
+         * The current status of each job.
+         */
         std::vector<std::string> status;
+
+        /**
+         * The endpoint each job is executing (e.g.\ "/insert/records").
+         */
         std::vector<std::string> endpointName;
+
+        /**
+         * The epoch time, in milliseconds, at which each job was received.
+         */
         std::vector<int64_t> timeReceived;
+
+        /**
+         * The identifier of the submitting or execute-as user for each job.
+         */
         std::vector<std::string> authId;
+
+        /**
+         * The IP address from which each job request originated.
+         */
         std::vector<std::string> sourceIp;
+
+        /**
+         * The text of the query associated with each job, when applicable.
+         */
         std::vector<std::string> queryText;
+
+        /**
+         * Arbitrary user-provided data associated with each job.
+         */
         std::vector<std::string> userData;
+
+        /**
+         * Flags associated with each job.
+         */
         std::vector<std::string> flags;
 
         /**
@@ -195,7 +230,7 @@ namespace gpudb
          *         identifier for the job across clusters.
          *     <li>@ref gpudb::admin_show_jobs_worker_info
          *         "admin_show_jobs_worker_info": Worker job information as
-         *         json
+         *         JSON.
          * </ul>
          * The default value is an empty map.
          */

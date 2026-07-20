@@ -62,13 +62,13 @@ namespace gpudb
      * "additional_column_names".  Values in these columns will be included in
      * the overall aggregate calculation--individual aggregates will not be
      * calculated per additional column.  For instance, requesting the @ref
-     * gpudb::aggregate_statistics_count "count" & @ref
+     * gpudb::aggregate_statistics_count "count" and @ref
      * gpudb::aggregate_statistics_mean "mean" of @ref columnName x and @ref
      * gpudb::aggregate_statistics_additional_column_names
-     * "additional_column_names" y & z, where x holds the numbers 1-10, y holds
-     * 11-20, and z holds 21-30, would return the total number of x, y, & z
-     * values (30), and the single average value across all x, y, & z values
-     * (15.5).
+     * "additional_column_names" y and z, where x holds the numbers 1-10, y
+     * holds 11-20, and z holds 21-30, would return the total number of x, y,
+     * and z values (30), and the single average value across all x, y, and z
+     * values (15.5).
      *
      * The response includes a list of key/value pairs of each statistic
      * requested and its corresponding value.
@@ -159,7 +159,7 @@ namespace gpudb
          *                            approximation of the median). Add a
          *                            second, comma-separated value to
          *                            calculate percentile resolution, e.g.,
-         *                            'percentile(75,150)'
+         *                            'percentile(75,150)'.
          *                        <li>@ref
          *                            gpudb::aggregate_statistics_percentile_rank
          *                            "aggregate_statistics_percentile_rank":
@@ -261,7 +261,7 @@ namespace gpudb
          *         of the given percentile of the column(s) (percentile(50.0)
          *         will be an approximation of the median). Add a second,
          *         comma-separated value to calculate percentile resolution,
-         *         e.g., 'percentile(75,150)'
+         *         e.g., 'percentile(75,150)'.
          *     <li>@ref gpudb::aggregate_statistics_percentile_rank
          *         "aggregate_statistics_percentile_rank": Estimate (via
          *         t-digest) of the percentile rank of the given value in the

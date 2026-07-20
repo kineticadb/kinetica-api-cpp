@@ -18,7 +18,7 @@ namespace gpudb
      *
      * IMPORTANT: It's highly recommended that you review the <a
      * href="../../../graph_solver/network_graph_solver/" target="_top">Graphs
-     * & Solvers</a> concepts documentation, the <a
+     * and Solvers</a> concepts documentation, the <a
      * href="../../../guides/graph_rest_guide/" target="_top">Graph REST
      * Tutorial</a>, and/or some <a href="../../../guide-tags/graph---solve"
      * target="_top">/solve/graph examples</a> before using this endpoint.
@@ -397,11 +397,11 @@ namespace gpudb
          *                                  <li>@ref gpudb::solve_graph_true
          *                                      "solve_graph_true": An
          *                                      additional column 'CLUSTER'
-         *                                      will be added for each node
+         *                                      will be added for each node.
          *                                  <li>@ref gpudb::solve_graph_false
          *                                      "solve_graph_false": No extra
          *                                      cluster info per node will be
-         *                                      available in the output
+         *                                      available in the output.
          *                              </ul>
          *                              The default value is @ref
          *                              gpudb::solve_graph_false
@@ -416,10 +416,10 @@ namespace gpudb
          *                                  <li>@ref gpudb::solve_graph_astar
          *                                      "solve_graph_astar": Employs
          *                                      A-STAR heuristics to speed up
-         *                                      the shortest path traversal
+         *                                      the shortest path traversal.
          *                                  <li>@ref gpudb::solve_graph_none
          *                                      "solve_graph_none": No
-         *                                      heuristics are applied
+         *                                      heuristics are applied.
          *                              </ul>
          *                              The default value is @ref
          *                              gpudb::solve_graph_none
@@ -713,10 +713,10 @@ namespace gpudb
          *         <ul>
          *             <li>@ref gpudb::solve_graph_true "solve_graph_true": An
          *                 additional column 'CLUSTER' will be added for each
-         *                 node
+         *                 node.
          *             <li>@ref gpudb::solve_graph_false "solve_graph_false":
          *                 No extra cluster info per node will be available in
-         *                 the output
+         *                 the output.
          *         </ul>
          *         The default value is @ref gpudb::solve_graph_false
          *         "solve_graph_false".
@@ -728,9 +728,9 @@ namespace gpudb
          *         <ul>
          *             <li>@ref gpudb::solve_graph_astar "solve_graph_astar":
          *                 Employs A-STAR heuristics to speed up the shortest
-         *                 path traversal
+         *                 path traversal.
          *             <li>@ref gpudb::solve_graph_none "solve_graph_none": No
-         *                 heuristics are applied
+         *                 heuristics are applied.
          *         </ul>
          *         The default value is @ref gpudb::solve_graph_none
          *         "solve_graph_none".

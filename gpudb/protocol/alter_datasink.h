@@ -14,7 +14,7 @@ namespace gpudb
      * "GPUdb::alterDatasink".
      *
      * Alters the properties of an existing <a
-     * href="../../../concepts/data_sinks/" target="_top">data sink</a>
+     * href="../../../concepts/data_sinks/" target="_top">data sink</a>.
      */
     struct AlterDatasinkRequest
     {
@@ -52,13 +52,13 @@ namespace gpudb
          *                                         gpudb::alter_datasink_connection_timeout
          *                                         "alter_datasink_connection_timeout":
          *                                         Timeout in seconds for
-         *                                         connecting to this sink
+         *                                         connecting to this sink.
          *                                     <li>@ref
          *                                         gpudb::alter_datasink_wait_timeout
          *                                         "alter_datasink_wait_timeout":
          *                                         Timeout in seconds for
          *                                         waiting for a response from
-         *                                         this sink
+         *                                         this sink.
          *                                     <li>@ref
          *                                         gpudb::alter_datasink_credential
          *                                         "alter_datasink_credential":
@@ -66,18 +66,18 @@ namespace gpudb
          *                                         href="../../../concepts/credentials/"
          *                                         target="_top">credential</a>
          *                                         object to be used in this
-         *                                         data sink
+         *                                         data sink.
          *                                     <li>@ref
          *                                         gpudb::alter_datasink_s3_bucket_name
          *                                         "alter_datasink_s3_bucket_name":
          *                                         Name of the Amazon S3 bucket
-         *                                         to use as the data sink
+         *                                         to use as the data sink.
          *                                     <li>@ref
          *                                         gpudb::alter_datasink_s3_region
          *                                         "alter_datasink_s3_region":
          *                                         Name of the Amazon S3 region
          *                                         where the given bucket is
-         *                                         located
+         *                                         located.
          *                                     <li>@ref
          *                                         gpudb::alter_datasink_s3_verify_ssl
          *                                         "alter_datasink_s3_verify_ssl":
@@ -89,7 +89,7 @@ namespace gpudb
          *                                                 gpudb::alter_datasink_true
          *                                                 "alter_datasink_true":
          *                                                 Connect with SSL
-         *                                                 verification
+         *                                                 verification.
          *                                             <li>@ref
          *                                                 gpudb::alter_datasink_false
          *                                                 "alter_datasink_false":
@@ -138,26 +138,26 @@ namespace gpudb
          *                                         Amazon IAM Role ARN which
          *                                         has required S3 permissions
          *                                         that can be assumed for the
-         *                                         given S3 IAM user
+         *                                         given S3 IAM user.
          *                                     <li>@ref
          *                                         gpudb::alter_datasink_s3_encryption_customer_algorithm
          *                                         "alter_datasink_s3_encryption_customer_algorithm":
          *                                         Customer encryption
          *                                         algorithm used encrypting
-         *                                         data
+         *                                         data.
          *                                     <li>@ref
          *                                         gpudb::alter_datasink_s3_encryption_customer_key
          *                                         "alter_datasink_s3_encryption_customer_key":
          *                                         Customer encryption key to
-         *                                         encrypt or decrypt data
+         *                                         encrypt or decrypt data.
          *                                     <li>@ref
          *                                         gpudb::alter_datasink_s3_encryption_type
          *                                         "alter_datasink_s3_encryption_type":
-         *                                         Server side encryption type
+         *                                         Server side encryption type.
          *                                     <li>@ref
          *                                         gpudb::alter_datasink_s3_kms_key_id
          *                                         "alter_datasink_s3_kms_key_id":
-         *                                         KMS key
+         *                                         KMS key.
          *                                     <li>@ref
          *                                         gpudb::alter_datasink_hdfs_kerberos_keytab
          *                                         "alter_datasink_hdfs_kerberos_keytab":
@@ -169,7 +169,7 @@ namespace gpudb
          *                                         gpudb::alter_datasink_hdfs_delegation_token
          *                                         "alter_datasink_hdfs_delegation_token":
          *                                         Delegation token for the
-         *                                         given HDFS user
+         *                                         given HDFS user.
          *                                     <li>@ref
          *                                         gpudb::alter_datasink_hdfs_use_kerberos
          *                                         "alter_datasink_hdfs_use_kerberos":
@@ -193,48 +193,77 @@ namespace gpudb
          *                                         Name of the Azure storage
          *                                         account to use as the data
          *                                         sink, this is valid only if
-         *                                         tenant_id is specified
+         *                                         tenant_id is specified.
          *                                     <li>@ref
          *                                         gpudb::alter_datasink_azure_container_name
          *                                         "alter_datasink_azure_container_name":
          *                                         Name of the Azure storage
          *                                         container to use as the data
-         *                                         sink
+         *                                         sink.
          *                                     <li>@ref
          *                                         gpudb::alter_datasink_azure_tenant_id
          *                                         "alter_datasink_azure_tenant_id":
          *                                         Active Directory tenant ID
-         *                                         (or directory ID)
+         *                                         (or directory ID).
          *                                     <li>@ref
          *                                         gpudb::alter_datasink_azure_sas_token
          *                                         "alter_datasink_azure_sas_token":
          *                                         Shared access signature
          *                                         token for Azure storage
          *                                         account to use as the data
-         *                                         sink
+         *                                         sink.
          *                                     <li>@ref
          *                                         gpudb::alter_datasink_azure_oauth_token
          *                                         "alter_datasink_azure_oauth_token":
-         *                                         Oauth token to access given
-         *                                         storage container
+         *                                         OAuth token to access given
+         *                                         storage container.
+         *                                     <li>@ref
+         *                                         gpudb::alter_datasink_azure_use_virtual_addressing
+         *                                         "alter_datasink_azure_use_virtual_addressing":
+         *                                         Whether to use virtual
+         *                                         addressing when referencing
+         *                                         the Azure source.
+         *                                         Supported values:
+         *                                         <ul>
+         *                                             <li>@ref
+         *                                                 gpudb::alter_datasink_true
+         *                                                 "alter_datasink_true":
+         *                                                 The requests URI
+         *                                                 should be specified
+         *                                                 in
+         *                                                 virtual-hosted-style
+         *                                                 format where the
+         *                                                 bucket name is part
+         *                                                 of the domain name
+         *                                                 in the URL.
+         *                                             <li>@ref
+         *                                                 gpudb::alter_datasink_false
+         *                                                 "alter_datasink_false":
+         *                                                 Use path-style URI
+         *                                                 for requests.
+         *                                         </ul>
+         *                                         The default value is @ref
+         *                                         gpudb::alter_datasink_true
+         *                                         "alter_datasink_true".
          *                                     <li>@ref
          *                                         gpudb::alter_datasink_gcs_bucket_name
          *                                         "alter_datasink_gcs_bucket_name":
          *                                         Name of the Google Cloud
          *                                         Storage bucket to use as the
-         *                                         data sink
+         *                                         data sink.
          *                                     <li>@ref
          *                                         gpudb::alter_datasink_gcs_project_id
          *                                         "alter_datasink_gcs_project_id":
          *                                         Name of the Google Cloud
          *                                         project to use as the data
-         *                                         sink
+         *                                         sink.
          *                                     <li>@ref
          *                                         gpudb::alter_datasink_gcs_service_account_keys
          *                                         "alter_datasink_gcs_service_account_keys":
          *                                         Google Cloud service account
          *                                         keys to use for
-         *                                         authenticating the data sink
+         *                                         authenticating the data
+         *                                         sink.
          *                                     <li>@ref
          *                                         gpudb::alter_datasink_jdbc_driver_jar_path
          *                                         "alter_datasink_jdbc_driver_jar_path":
@@ -245,7 +274,7 @@ namespace gpudb
          *                                         gpudb::alter_datasink_jdbc_driver_class_name
          *                                         "alter_datasink_jdbc_driver_class_name":
          *                                         Name of the JDBC driver
-         *                                         class
+         *                                         class.
          *                                     <li>@ref
          *                                         gpudb::alter_datasink_kafka_url
          *                                         "alter_datasink_kafka_url":
@@ -258,7 +287,8 @@ namespace gpudb
          *                                         "alter_datasink_kafka_topic_name":
          *                                         Name of the Kafka topic to
          *                                         use for this data sink, if
-         *                                         it references a Kafka broker
+         *                                         it references a Kafka
+         *                                         broker.
          *                                     <li>@ref
          *                                         gpudb::alter_datasink_anonymous
          *                                         "alter_datasink_anonymous":
@@ -303,9 +333,9 @@ namespace gpudb
          *                                     <li>@ref
          *                                         gpudb::alter_datasink_use_https
          *                                         "alter_datasink_use_https":
-         *                                         Use https to connect to
+         *                                         Use HTTPS to connect to
          *                                         datasink if true, otherwise
-         *                                         use http.
+         *                                         use HTTP.
          *                                         Supported values:
          *                                         <ul>
          *                                             <li>@ref
@@ -343,13 +373,14 @@ namespace gpudb
          *                                                 gpudb::alter_datasink_flat
          *                                                 "alter_datasink_flat":
          *                                                 A single record is
-         *                                                 returned per message
+         *                                                 returned per
+         *                                                 message.
          *                                             <li>@ref
          *                                                 gpudb::alter_datasink_nested
          *                                                 "alter_datasink_nested":
          *                                                 Records are returned
          *                                                 as an array per
-         *                                                 message
+         *                                                 message.
          *                                         </ul>
          *                                         The default value is @ref
          *                                         gpudb::alter_datasink_flat
@@ -411,28 +442,29 @@ namespace gpudb
          *         'https', 'jdbc', 'kafka', and 's3'.
          *     <li>@ref gpudb::alter_datasink_connection_timeout
          *         "alter_datasink_connection_timeout": Timeout in seconds for
-         *         connecting to this sink
+         *         connecting to this sink.
          *     <li>@ref gpudb::alter_datasink_wait_timeout
          *         "alter_datasink_wait_timeout": Timeout in seconds for
-         *         waiting for a response from this sink
+         *         waiting for a response from this sink.
          *     <li>@ref gpudb::alter_datasink_credential
          *         "alter_datasink_credential": Name of the <a
          *         href="../../../concepts/credentials/"
          *         target="_top">credential</a> object to be used in this data
-         *         sink
+         *         sink.
          *     <li>@ref gpudb::alter_datasink_s3_bucket_name
          *         "alter_datasink_s3_bucket_name": Name of the Amazon S3
-         *         bucket to use as the data sink
+         *         bucket to use as the data sink.
          *     <li>@ref gpudb::alter_datasink_s3_region
          *         "alter_datasink_s3_region": Name of the Amazon S3 region
-         *         where the given bucket is located
+         *         where the given bucket is located.
          *     <li>@ref gpudb::alter_datasink_s3_verify_ssl
          *         "alter_datasink_s3_verify_ssl": Whether to verify SSL
          *         connections.
          *         Supported values:
          *         <ul>
          *             <li>@ref gpudb::alter_datasink_true
-         *                 "alter_datasink_true": Connect with SSL verification
+         *                 "alter_datasink_true": Connect with SSL
+         *                 verification.
          *             <li>@ref gpudb::alter_datasink_false
          *                 "alter_datasink_false": Connect without verifying
          *                 the SSL connection; for testing purposes, bypassing
@@ -458,24 +490,24 @@ namespace gpudb
          *     <li>@ref gpudb::alter_datasink_s3_aws_role_arn
          *         "alter_datasink_s3_aws_role_arn": Amazon IAM Role ARN which
          *         has required S3 permissions that can be assumed for the
-         *         given S3 IAM user
+         *         given S3 IAM user.
          *     <li>@ref gpudb::alter_datasink_s3_encryption_customer_algorithm
          *         "alter_datasink_s3_encryption_customer_algorithm": Customer
-         *         encryption algorithm used encrypting data
+         *         encryption algorithm used encrypting data.
          *     <li>@ref gpudb::alter_datasink_s3_encryption_customer_key
          *         "alter_datasink_s3_encryption_customer_key": Customer
-         *         encryption key to encrypt or decrypt data
+         *         encryption key to encrypt or decrypt data.
          *     <li>@ref gpudb::alter_datasink_s3_encryption_type
          *         "alter_datasink_s3_encryption_type": Server side encryption
-         *         type
+         *         type.
          *     <li>@ref gpudb::alter_datasink_s3_kms_key_id
-         *         "alter_datasink_s3_kms_key_id": KMS key
+         *         "alter_datasink_s3_kms_key_id": KMS key.
          *     <li>@ref gpudb::alter_datasink_hdfs_kerberos_keytab
          *         "alter_datasink_hdfs_kerberos_keytab": Kerberos keytab file
          *         location for the given HDFS user.  This may be a KIFS file.
          *     <li>@ref gpudb::alter_datasink_hdfs_delegation_token
          *         "alter_datasink_hdfs_delegation_token": Delegation token for
-         *         the given HDFS user
+         *         the given HDFS user.
          *     <li>@ref gpudb::alter_datasink_hdfs_use_kerberos
          *         "alter_datasink_hdfs_use_kerberos": Use kerberos
          *         authentication for the given HDFS cluster.
@@ -491,41 +523,57 @@ namespace gpudb
          *     <li>@ref gpudb::alter_datasink_azure_storage_account_name
          *         "alter_datasink_azure_storage_account_name": Name of the
          *         Azure storage account to use as the data sink, this is valid
-         *         only if tenant_id is specified
+         *         only if tenant_id is specified.
          *     <li>@ref gpudb::alter_datasink_azure_container_name
          *         "alter_datasink_azure_container_name": Name of the Azure
-         *         storage container to use as the data sink
+         *         storage container to use as the data sink.
          *     <li>@ref gpudb::alter_datasink_azure_tenant_id
          *         "alter_datasink_azure_tenant_id": Active Directory tenant ID
-         *         (or directory ID)
+         *         (or directory ID).
          *     <li>@ref gpudb::alter_datasink_azure_sas_token
          *         "alter_datasink_azure_sas_token": Shared access signature
-         *         token for Azure storage account to use as the data sink
+         *         token for Azure storage account to use as the data sink.
          *     <li>@ref gpudb::alter_datasink_azure_oauth_token
-         *         "alter_datasink_azure_oauth_token": Oauth token to access
-         *         given storage container
+         *         "alter_datasink_azure_oauth_token": OAuth token to access
+         *         given storage container.
+         *     <li>@ref gpudb::alter_datasink_azure_use_virtual_addressing
+         *         "alter_datasink_azure_use_virtual_addressing": Whether to
+         *         use virtual addressing when referencing the Azure source.
+         *         Supported values:
+         *         <ul>
+         *             <li>@ref gpudb::alter_datasink_true
+         *                 "alter_datasink_true": The requests URI should be
+         *                 specified in virtual-hosted-style format where the
+         *                 bucket name is part of the domain name in the URL.
+         *             <li>@ref gpudb::alter_datasink_false
+         *                 "alter_datasink_false": Use path-style URI for
+         *                 requests.
+         *         </ul>
+         *         The default value is @ref gpudb::alter_datasink_true
+         *         "alter_datasink_true".
          *     <li>@ref gpudb::alter_datasink_gcs_bucket_name
          *         "alter_datasink_gcs_bucket_name": Name of the Google Cloud
-         *         Storage bucket to use as the data sink
+         *         Storage bucket to use as the data sink.
          *     <li>@ref gpudb::alter_datasink_gcs_project_id
          *         "alter_datasink_gcs_project_id": Name of the Google Cloud
-         *         project to use as the data sink
+         *         project to use as the data sink.
          *     <li>@ref gpudb::alter_datasink_gcs_service_account_keys
          *         "alter_datasink_gcs_service_account_keys": Google Cloud
-         *         service account keys to use for authenticating the data sink
+         *         service account keys to use for authenticating the data
+         *         sink.
          *     <li>@ref gpudb::alter_datasink_jdbc_driver_jar_path
          *         "alter_datasink_jdbc_driver_jar_path": JDBC driver jar file
          *         location.  This may be a KIFS file.
          *     <li>@ref gpudb::alter_datasink_jdbc_driver_class_name
          *         "alter_datasink_jdbc_driver_class_name": Name of the JDBC
-         *         driver class
+         *         driver class.
          *     <li>@ref gpudb::alter_datasink_kafka_url
          *         "alter_datasink_kafka_url": The publicly-accessible full
          *         path URL to the kafka broker, e.g.,
          *         'http://172.123.45.67:9300'.
          *     <li>@ref gpudb::alter_datasink_kafka_topic_name
          *         "alter_datasink_kafka_topic_name": Name of the Kafka topic
-         *         to use for this data sink, if it references a Kafka broker
+         *         to use for this data sink, if it references a Kafka broker.
          *     <li>@ref gpudb::alter_datasink_anonymous
          *         "alter_datasink_anonymous": Create an anonymous connection
          *         to the storage provider--DEPRECATED: this is now the
@@ -555,8 +603,8 @@ namespace gpudb
          *         The default value is @ref gpudb::alter_datasink_false
          *         "alter_datasink_false".
          *     <li>@ref gpudb::alter_datasink_use_https
-         *         "alter_datasink_use_https": Use https to connect to datasink
-         *         if true, otherwise use http.
+         *         "alter_datasink_use_https": Use HTTPS to connect to datasink
+         *         if true, otherwise use HTTP.
          *         Supported values:
          *         <ul>
          *             <li>@ref gpudb::alter_datasink_true
@@ -579,10 +627,10 @@ namespace gpudb
          *         <ul>
          *             <li>@ref gpudb::alter_datasink_flat
          *                 "alter_datasink_flat": A single record is returned
-         *                 per message
+         *                 per message.
          *             <li>@ref gpudb::alter_datasink_nested
          *                 "alter_datasink_nested": Records are returned as an
-         *                 array per message
+         *                 array per message.
          *         </ul>
          *         The default value is @ref gpudb::alter_datasink_flat
          *         "alter_datasink_flat".
@@ -682,7 +730,7 @@ namespace gpudb
         }
 
         /**
-         * Map of values updated
+         * Map of values updated.
          */
         std::map<std::string, std::string> updatedPropertiesMap;
 

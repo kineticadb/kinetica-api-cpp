@@ -36,13 +36,17 @@ namespace gpudb
          *                        format, using standard <a
          *                        href="../../../concepts/tables/#table-name-resolution"
          *                        target="_top">name resolution rules</a>. Must
-         *                        be an existing table. The default value is
-         *                        ''.
+         *                        be an existing table.  A value of '*' clears
+         *                        statistics on every user table the caller may
+         *                        read (excluding system schemas, views, and
+         *                        temporary tables); when used, @a columnName_
+         *                        must be empty. The default value is ''.
          * @param[in] columnName_  Name of the column in @a tableName_ for
          *                         which to clear statistics. The column must
          *                         be from an existing table. An empty string
          *                         clears statistics for all columns in the
-         *                         table. The default value is ''.
+         *                         table.  Must be empty when @a tableName_ is
+         *                         '*'. The default value is ''.
          * @param[in] options_  Optional parameters. The default value is an
          *                      empty map.
          */
@@ -57,14 +61,17 @@ namespace gpudb
          * Name of a table, in [ schema_name.\ ]table_name format, using
          * standard <a href="../../../concepts/tables/#table-name-resolution"
          * target="_top">name resolution rules</a>. Must be an existing table.
-         * The default value is ''.
+         * A value of '*' clears statistics on every user table the caller may
+         * read (excluding system schemas, views, and temporary tables); when
+         * used, @ref columnName must be empty. The default value is ''.
          */
         std::string tableName;
 
         /**
          * Name of the column in @ref tableName for which to clear statistics.
          * The column must be from an existing table. An empty string clears
-         * statistics for all columns in the table. The default value is ''.
+         * statistics for all columns in the table.  Must be empty when @ref
+         * tableName is '*'. The default value is ''.
          */
         std::string columnName;
 

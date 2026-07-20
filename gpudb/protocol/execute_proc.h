@@ -16,7 +16,7 @@ namespace gpudb
      * Executes a proc. This endpoint is asynchronous and does not wait for the
      * proc to complete before returning.
      *
-     * If the proc being executed is distributed, @ref inputTableNames & @ref
+     * If the proc being executed is distributed, @ref inputTableNames and @ref
      * inputColumnNames may be passed to the proc to use for reading data, and
      * @ref outputTableNames may be passed to the proc to use for writing data.
      *
@@ -395,6 +395,11 @@ namespace gpudb
 
         /**
          * Additional information.
+         * <ul>
+         *     <li>@ref gpudb::execute_proc_deferred_tables
+         *         "execute_proc_deferred_tables": &lt;DEVELOPER&gt;
+         * </ul>
+         * The default value is an empty map.
          */
         std::map<std::string, std::string> info;
     };

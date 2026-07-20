@@ -2,6 +2,20 @@
 
 ## Version 7.2
 
+### Version 7.2.3.1 - 2026-07-20
+
+#### Added
+-   Checking of draining HA queue status on connection; fail over if so.
+-   Passing of API name & version in HTTP headers.
+
+#### Fixed
+-   Bug in testing whether all user URLs are in the same cluster.
+-   Bug in getting properties from primary cluster during fail-back check.
+
+#### Notes
+-   Check CHANGELOG-FUNCTIONS.md for endpoint related changes.
+
+
 ### Version 7.2.3.0 - 2025-09-14
 
 #### Added

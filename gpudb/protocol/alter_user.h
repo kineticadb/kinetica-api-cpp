@@ -40,9 +40,9 @@ namespace gpudb
          *                             "alter_user_set_activated": Is the user
          *                             allowed to login.
          *                         <li>@ref gpudb::alter_user_true
-         *                             "alter_user_true": User may login
+         *                             "alter_user_true": User may login.
          *                         <li>@ref gpudb::alter_user_false
-         *                             "alter_user_false": User may not login
+         *                             "alter_user_false": User may not login.
          *                         <li>@ref gpudb::alter_user_set_comment
          *                             "alter_user_set_comment": Sets the
          *                             comment for an internal user.
@@ -89,9 +89,9 @@ namespace gpudb
          *     <li>@ref gpudb::alter_user_set_activated
          *         "alter_user_set_activated": Is the user allowed to login.
          *     <li>@ref gpudb::alter_user_true "alter_user_true": User may
-         *         login
+         *         login.
          *     <li>@ref gpudb::alter_user_false "alter_user_false": User may
-         *         not login
+         *         not login.
          *     <li>@ref gpudb::alter_user_set_comment "alter_user_set_comment":
          *         Sets the comment for an internal user.
          *     <li>@ref gpudb::alter_user_set_default_schema

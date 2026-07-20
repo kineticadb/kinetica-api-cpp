@@ -85,7 +85,7 @@ namespace gpudb
          *                              gpudb::insert_records_ignore_existing_pk
          *                              "ignore_existing_pk", @ref
          *                              gpudb::insert_records_allow_partial_batch
-         *                              "allow_partial_batch", & @ref
+         *                              "allow_partial_batch", and  @ref
          *                              gpudb::insert_records_return_individual_errors
          *                              "return_individual_errors".  If the
          *                              specified table does not have a primary
@@ -95,16 +95,44 @@ namespace gpudb
          *                                  <li>@ref gpudb::insert_records_true
          *                                      "insert_records_true": Upsert
          *                                      new records when primary keys
-         *                                      match existing records
+         *                                      match existing records.
          *                                  <li>@ref
          *                                      gpudb::insert_records_false
          *                                      "insert_records_false": Reject
          *                                      new records when primary keys
-         *                                      match existing records
+         *                                      match existing records.
          *                              </ul>
          *                              The default value is @ref
          *                              gpudb::insert_records_false
          *                              "insert_records_false".
+         *                          <li>@ref
+         *                              gpudb::insert_records_enable_inplace_updates
+         *                              "insert_records_enable_inplace_updates":
+         *                              Applies only when upserting (when @ref
+         *                              gpudb::insert_records_update_on_existing_pk
+         *                              "update_on_existing_pk" is @ref
+         *                              gpudb::insert_records_true "true"). If
+         *                              set to @ref gpudb::insert_records_true
+         *                              "true", an existing record matched by
+         *                              primary key is modified in place. If
+         *                              set to @ref gpudb::insert_records_false
+         *                              "false", it is updated by deleting the
+         *                              existing record and inserting a
+         *                              replacement (delete and insert), which
+         *                              prevents the change from being
+         *                              reflected in dependent materialized
+         *                              views until they are refreshed.
+         *                              Supported values:
+         *                              <ul>
+         *                                  <li>@ref gpudb::insert_records_true
+         *                                      "insert_records_true"
+         *                                  <li>@ref
+         *                                      gpudb::insert_records_false
+         *                                      "insert_records_false"
+         *                              </ul>
+         *                              The default value is @ref
+         *                              gpudb::insert_records_true
+         *                              "insert_records_true".
          *                          <li>@ref
          *                              gpudb::insert_records_ignore_existing_pk
          *                              "insert_records_ignore_existing_pk":
@@ -131,7 +159,7 @@ namespace gpudb
          *                              record will result in an error being
          *                              reported, as determined by @ref
          *                              gpudb::insert_records_allow_partial_batch
-         *                              "allow_partial_batch" & @ref
+         *                              "allow_partial_batch" and @ref
          *                              gpudb::insert_records_return_individual_errors
          *                              "return_individual_errors".  If the
          *                              specified table does not have a primary
@@ -147,13 +175,13 @@ namespace gpudb
          *                                      "insert_records_true": Ignore
          *                                      new records whose primary key
          *                                      values collide with those of
-         *                                      existing records
+         *                                      existing records.
          *                                  <li>@ref
          *                                      gpudb::insert_records_false
          *                                      "insert_records_false": Treat
          *                                      as errors any new records whose
          *                                      primary key values collide with
-         *                                      those of existing records
+         *                                      those of existing records.
          *                              </ul>
          *                              The default value is @ref
          *                              gpudb::insert_records_false
@@ -214,10 +242,10 @@ namespace gpudb
          *                              any errors found will be included in
          *                              the info map.  The "bad_record_indices"
          *                              entry is a comma-separated list of bad
-         *                              records (0-based).  And if so, there
-         *                              will also be an "error_N" entry for
-         *                              each record with an error, where N is
-         *                              the index (0-based).
+         *                              records (0-based).  If so, there will
+         *                              also be an "error_N" entry for each
+         *                              record with an error, where N is the
+         *                              index (0-based).
          *                              Supported values:
          *                              <ul>
          *                                  <li>@ref gpudb::insert_records_true
@@ -250,6 +278,43 @@ namespace gpudb
          *                              The default value is @ref
          *                              gpudb::insert_records_false
          *                              "insert_records_false".
+         *                          <li>@ref
+         *                              gpudb::insert_records_error_handling
+         *                              "insert_records_error_handling":
+         *                              Specifies how errors should be handled
+         *                              upon insertion.  When set, this option
+         *                              is authoritative; supplying a
+         *                              contradictory @ref
+         *                              gpudb::insert_records_allow_partial_batch
+         *                              "allow_partial_batch" is an error.
+         *                              Supported values:
+         *                              <ul>
+         *                                  <li>@ref
+         *                                      gpudb::insert_records_permissive
+         *                                      "insert_records_permissive":
+         *                                      Records with bad column values
+         *                                      are kept when possible: the
+         *                                      offending column is filled with
+         *                                      its default value if one
+         *                                      exists, otherwise with null if
+         *                                      the column is nullable; if
+         *                                      neither is possible the record
+         *                                      is skipped and reported.
+         *                                  <li>@ref gpudb::insert_records_skip
+         *                                      "insert_records_skip": Records
+         *                                      with bad values are skipped and
+         *                                      reported; the rest of the batch
+         *                                      is inserted.
+         *                                  <li>@ref
+         *                                      gpudb::insert_records_abort
+         *                                      "insert_records_abort": Stops
+         *                                      the insertion and rejects the
+         *                                      entire batch when any record is
+         *                                      incorrect.
+         *                              </ul>
+         *                              The default value is @ref
+         *                              gpudb::insert_records_abort
+         *                              "insert_records_abort".
          *                          <li>@ref gpudb::insert_records_dry_run
          *                              "insert_records_dry_run": If set to
          *                              @ref gpudb::insert_records_true "true",
@@ -266,6 +331,37 @@ namespace gpudb
          *                              The default value is @ref
          *                              gpudb::insert_records_false
          *                              "insert_records_false".
+         *                          <li>@ref
+         *                              gpudb::insert_records_request_schema_str
+         *                              "insert_records_request_schema_str":
+         *                              Type schema of  @a list_ (when @a
+         *                              listEncoding_ is @ref
+         *                              gpudb::insert_records_binary "binary"),
+         *                              in [["{column_name}","{column_type}"]]
+         *                              format. When non-empty and different
+         *                              from the table's schema, the server
+         *                              remaps the incoming records to the
+         *                              table's full schema.  Columns present
+         *                              in the table but absent from this
+         *                              schema are filled using their default
+         *                              values, NULL (if nullable), or an error
+         *                              is returned.  If empty, records must
+         *                              match the table's full schema. The
+         *                              default value is ''.
+         *                          <li>@ref
+         *                              gpudb::insert_records_transformations
+         *                              "insert_records_transformations":
+         *                              Comma-separated expressions, one per
+         *                              target table column.  Each expression
+         *                              is evaluated per record.  Empty entries
+         *                              (two consecutive commas) mean no
+         *                              transformation for that column -- the
+         *                              value is resolved from the input
+         *                              record, table default, NULL, or an
+         *                              error. Expressions may reference input
+         *                              columns by name or by position ($1 for
+         *                              the first input column, $2 for the
+         *                              second, etc.). The default value is ''.
          *                      </ul>
          *                      The default value is an empty map.
          */
@@ -334,7 +430,7 @@ namespace gpudb
          *                              gpudb::insert_records_ignore_existing_pk
          *                              "ignore_existing_pk", @ref
          *                              gpudb::insert_records_allow_partial_batch
-         *                              "allow_partial_batch", & @ref
+         *                              "allow_partial_batch", and  @ref
          *                              gpudb::insert_records_return_individual_errors
          *                              "return_individual_errors".  If the
          *                              specified table does not have a primary
@@ -344,16 +440,44 @@ namespace gpudb
          *                                  <li>@ref gpudb::insert_records_true
          *                                      "insert_records_true": Upsert
          *                                      new records when primary keys
-         *                                      match existing records
+         *                                      match existing records.
          *                                  <li>@ref
          *                                      gpudb::insert_records_false
          *                                      "insert_records_false": Reject
          *                                      new records when primary keys
-         *                                      match existing records
+         *                                      match existing records.
          *                              </ul>
          *                              The default value is @ref
          *                              gpudb::insert_records_false
          *                              "insert_records_false".
+         *                          <li>@ref
+         *                              gpudb::insert_records_enable_inplace_updates
+         *                              "insert_records_enable_inplace_updates":
+         *                              Applies only when upserting (when @ref
+         *                              gpudb::insert_records_update_on_existing_pk
+         *                              "update_on_existing_pk" is @ref
+         *                              gpudb::insert_records_true "true"). If
+         *                              set to @ref gpudb::insert_records_true
+         *                              "true", an existing record matched by
+         *                              primary key is modified in place. If
+         *                              set to @ref gpudb::insert_records_false
+         *                              "false", it is updated by deleting the
+         *                              existing record and inserting a
+         *                              replacement (delete and insert), which
+         *                              prevents the change from being
+         *                              reflected in dependent materialized
+         *                              views until they are refreshed.
+         *                              Supported values:
+         *                              <ul>
+         *                                  <li>@ref gpudb::insert_records_true
+         *                                      "insert_records_true"
+         *                                  <li>@ref
+         *                                      gpudb::insert_records_false
+         *                                      "insert_records_false"
+         *                              </ul>
+         *                              The default value is @ref
+         *                              gpudb::insert_records_true
+         *                              "insert_records_true".
          *                          <li>@ref
          *                              gpudb::insert_records_ignore_existing_pk
          *                              "insert_records_ignore_existing_pk":
@@ -380,7 +504,7 @@ namespace gpudb
          *                              record will result in an error being
          *                              reported, as determined by @ref
          *                              gpudb::insert_records_allow_partial_batch
-         *                              "allow_partial_batch" & @ref
+         *                              "allow_partial_batch" and @ref
          *                              gpudb::insert_records_return_individual_errors
          *                              "return_individual_errors".  If the
          *                              specified table does not have a primary
@@ -396,13 +520,13 @@ namespace gpudb
          *                                      "insert_records_true": Ignore
          *                                      new records whose primary key
          *                                      values collide with those of
-         *                                      existing records
+         *                                      existing records.
          *                                  <li>@ref
          *                                      gpudb::insert_records_false
          *                                      "insert_records_false": Treat
          *                                      as errors any new records whose
          *                                      primary key values collide with
-         *                                      those of existing records
+         *                                      those of existing records.
          *                              </ul>
          *                              The default value is @ref
          *                              gpudb::insert_records_false
@@ -463,10 +587,10 @@ namespace gpudb
          *                              any errors found will be included in
          *                              the info map.  The "bad_record_indices"
          *                              entry is a comma-separated list of bad
-         *                              records (0-based).  And if so, there
-         *                              will also be an "error_N" entry for
-         *                              each record with an error, where N is
-         *                              the index (0-based).
+         *                              records (0-based).  If so, there will
+         *                              also be an "error_N" entry for each
+         *                              record with an error, where N is the
+         *                              index (0-based).
          *                              Supported values:
          *                              <ul>
          *                                  <li>@ref gpudb::insert_records_true
@@ -499,6 +623,43 @@ namespace gpudb
          *                              The default value is @ref
          *                              gpudb::insert_records_false
          *                              "insert_records_false".
+         *                          <li>@ref
+         *                              gpudb::insert_records_error_handling
+         *                              "insert_records_error_handling":
+         *                              Specifies how errors should be handled
+         *                              upon insertion.  When set, this option
+         *                              is authoritative; supplying a
+         *                              contradictory @ref
+         *                              gpudb::insert_records_allow_partial_batch
+         *                              "allow_partial_batch" is an error.
+         *                              Supported values:
+         *                              <ul>
+         *                                  <li>@ref
+         *                                      gpudb::insert_records_permissive
+         *                                      "insert_records_permissive":
+         *                                      Records with bad column values
+         *                                      are kept when possible: the
+         *                                      offending column is filled with
+         *                                      its default value if one
+         *                                      exists, otherwise with null if
+         *                                      the column is nullable; if
+         *                                      neither is possible the record
+         *                                      is skipped and reported.
+         *                                  <li>@ref gpudb::insert_records_skip
+         *                                      "insert_records_skip": Records
+         *                                      with bad values are skipped and
+         *                                      reported; the rest of the batch
+         *                                      is inserted.
+         *                                  <li>@ref
+         *                                      gpudb::insert_records_abort
+         *                                      "insert_records_abort": Stops
+         *                                      the insertion and rejects the
+         *                                      entire batch when any record is
+         *                                      incorrect.
+         *                              </ul>
+         *                              The default value is @ref
+         *                              gpudb::insert_records_abort
+         *                              "insert_records_abort".
          *                          <li>@ref gpudb::insert_records_dry_run
          *                              "insert_records_dry_run": If set to
          *                              @ref gpudb::insert_records_true "true",
@@ -515,6 +676,37 @@ namespace gpudb
          *                              The default value is @ref
          *                              gpudb::insert_records_false
          *                              "insert_records_false".
+         *                          <li>@ref
+         *                              gpudb::insert_records_request_schema_str
+         *                              "insert_records_request_schema_str":
+         *                              Type schema of  @a list_ (when @a
+         *                              listEncoding_ is @ref
+         *                              gpudb::insert_records_binary "binary"),
+         *                              in [["{column_name}","{column_type}"]]
+         *                              format. When non-empty and different
+         *                              from the table's schema, the server
+         *                              remaps the incoming records to the
+         *                              table's full schema.  Columns present
+         *                              in the table but absent from this
+         *                              schema are filled using their default
+         *                              values, NULL (if nullable), or an error
+         *                              is returned.  If empty, records must
+         *                              match the table's full schema. The
+         *                              default value is ''.
+         *                          <li>@ref
+         *                              gpudb::insert_records_transformations
+         *                              "insert_records_transformations":
+         *                              Comma-separated expressions, one per
+         *                              target table column.  Each expression
+         *                              is evaluated per record.  Empty entries
+         *                              (two consecutive commas) mean no
+         *                              transformation for that column -- the
+         *                              value is resolved from the input
+         *                              record, table default, NULL, or an
+         *                              error. Expressions may reference input
+         *                              columns by name or by position ($1 for
+         *                              the first input column, $2 for the
+         *                              second, etc.). The default value is ''.
          *                      </ul>
          *                      The default value is an empty map.
          */
@@ -580,7 +772,7 @@ namespace gpudb
          *         gpudb::insert_records_ignore_existing_pk
          *         "ignore_existing_pk", @ref
          *         gpudb::insert_records_allow_partial_batch
-         *         "allow_partial_batch", & @ref
+         *         "allow_partial_batch", and  @ref
          *         gpudb::insert_records_return_individual_errors
          *         "return_individual_errors".  If the specified table does not
          *         have a primary key, then this option has no effect.
@@ -588,13 +780,34 @@ namespace gpudb
          *         <ul>
          *             <li>@ref gpudb::insert_records_true
          *                 "insert_records_true": Upsert new records when
-         *                 primary keys match existing records
+         *                 primary keys match existing records.
          *             <li>@ref gpudb::insert_records_false
          *                 "insert_records_false": Reject new records when
-         *                 primary keys match existing records
+         *                 primary keys match existing records.
          *         </ul>
          *         The default value is @ref gpudb::insert_records_false
          *         "insert_records_false".
+         *     <li>@ref gpudb::insert_records_enable_inplace_updates
+         *         "insert_records_enable_inplace_updates": Applies only when
+         *         upserting (when @ref
+         *         gpudb::insert_records_update_on_existing_pk
+         *         "update_on_existing_pk" is @ref gpudb::insert_records_true
+         *         "true"). If set to @ref gpudb::insert_records_true "true",
+         *         an existing record matched by primary key is modified in
+         *         place. If set to @ref gpudb::insert_records_false "false",
+         *         it is updated by deleting the existing record and inserting
+         *         a replacement (delete and insert), which prevents the change
+         *         from being reflected in dependent materialized views until
+         *         they are refreshed.
+         *         Supported values:
+         *         <ul>
+         *             <li>@ref gpudb::insert_records_true
+         *                 "insert_records_true"
+         *             <li>@ref gpudb::insert_records_false
+         *                 "insert_records_false"
+         *         </ul>
+         *         The default value is @ref gpudb::insert_records_true
+         *         "insert_records_true".
          *     <li>@ref gpudb::insert_records_ignore_existing_pk
          *         "insert_records_ignore_existing_pk": Specifies the record
          *         collision error-suppression policy for inserting into a
@@ -612,7 +825,7 @@ namespace gpudb
          *         record for having primary key values matching an existing
          *         record will result in an error being reported, as determined
          *         by @ref gpudb::insert_records_allow_partial_batch
-         *         "allow_partial_batch" & @ref
+         *         "allow_partial_batch" and @ref
          *         gpudb::insert_records_return_individual_errors
          *         "return_individual_errors".  If the specified table does not
          *         have a primary key or if upsert mode is in effect (@ref
@@ -624,11 +837,11 @@ namespace gpudb
          *             <li>@ref gpudb::insert_records_true
          *                 "insert_records_true": Ignore new records whose
          *                 primary key values collide with those of existing
-         *                 records
+         *                 records.
          *             <li>@ref gpudb::insert_records_false
          *                 "insert_records_false": Treat as errors any new
          *                 records whose primary key values collide with those
-         *                 of existing records
+         *                 of existing records.
          *         </ul>
          *         The default value is @ref gpudb::insert_records_false
          *         "insert_records_false".
@@ -672,9 +885,9 @@ namespace gpudb
          *         gpudb::insert_records_true "true", success will always be
          *         returned, and any errors found will be included in the info
          *         map.  The "bad_record_indices" entry is a comma-separated
-         *         list of bad records (0-based).  And if so, there will also
-         *         be an "error_N" entry for each record with an error, where N
-         *         is the index (0-based).
+         *         list of bad records (0-based).  If so, there will also be an
+         *         "error_N" entry for each record with an error, where N is
+         *         the index (0-based).
          *         Supported values:
          *         <ul>
          *             <li>@ref gpudb::insert_records_true
@@ -699,6 +912,32 @@ namespace gpudb
          *         </ul>
          *         The default value is @ref gpudb::insert_records_false
          *         "insert_records_false".
+         *     <li>@ref gpudb::insert_records_error_handling
+         *         "insert_records_error_handling": Specifies how errors should
+         *         be handled upon insertion.  When set, this option is
+         *         authoritative; supplying a contradictory @ref
+         *         gpudb::insert_records_allow_partial_batch
+         *         "allow_partial_batch" is an error.
+         *         Supported values:
+         *         <ul>
+         *             <li>@ref gpudb::insert_records_permissive
+         *                 "insert_records_permissive": Records with bad column
+         *                 values are kept when possible: the offending column
+         *                 is filled with its default value if one exists,
+         *                 otherwise with null if the column is nullable; if
+         *                 neither is possible the record is skipped and
+         *                 reported.
+         *             <li>@ref gpudb::insert_records_skip
+         *                 "insert_records_skip": Records with bad values are
+         *                 skipped and reported; the rest of the batch is
+         *                 inserted.
+         *             <li>@ref gpudb::insert_records_abort
+         *                 "insert_records_abort": Stops the insertion and
+         *                 rejects the entire batch when any record is
+         *                 incorrect.
+         *         </ul>
+         *         The default value is @ref gpudb::insert_records_abort
+         *         "insert_records_abort".
          *     <li>@ref gpudb::insert_records_dry_run "insert_records_dry_run":
          *         If set to @ref gpudb::insert_records_true "true", no data
          *         will be saved and any errors will be returned.
@@ -711,6 +950,26 @@ namespace gpudb
          *         </ul>
          *         The default value is @ref gpudb::insert_records_false
          *         "insert_records_false".
+         *     <li>@ref gpudb::insert_records_request_schema_str
+         *         "insert_records_request_schema_str": Type schema of  @ref
+         *         list (when @ref listEncoding is @ref
+         *         gpudb::insert_records_binary "binary"), in
+         *         [["{column_name}","{column_type}"]] format. When non-empty
+         *         and different from the table's schema, the server remaps the
+         *         incoming records to the table's full schema.  Columns
+         *         present in the table but absent from this schema are filled
+         *         using their default values, NULL (if nullable), or an error
+         *         is returned.  If empty, records must match the table's full
+         *         schema. The default value is ''.
+         *     <li>@ref gpudb::insert_records_transformations
+         *         "insert_records_transformations": Comma-separated
+         *         expressions, one per target table column.  Each expression
+         *         is evaluated per record.  Empty entries (two consecutive
+         *         commas) mean no transformation for that column -- the value
+         *         is resolved from the input record, table default, NULL, or
+         *         an error. Expressions may reference input columns by name or
+         *         by position ($1 for the first input column, $2 for the
+         *         second, etc.). The default value is ''.
          * </ul>
          * The default value is an empty map.
          */
@@ -858,7 +1117,7 @@ namespace gpudb
          *                              gpudb::insert_records_ignore_existing_pk
          *                              "ignore_existing_pk", @ref
          *                              gpudb::insert_records_allow_partial_batch
-         *                              "allow_partial_batch", & @ref
+         *                              "allow_partial_batch", and  @ref
          *                              gpudb::insert_records_return_individual_errors
          *                              "return_individual_errors".  If the
          *                              specified table does not have a primary
@@ -868,16 +1127,44 @@ namespace gpudb
          *                                  <li>@ref gpudb::insert_records_true
          *                                      "insert_records_true": Upsert
          *                                      new records when primary keys
-         *                                      match existing records
+         *                                      match existing records.
          *                                  <li>@ref
          *                                      gpudb::insert_records_false
          *                                      "insert_records_false": Reject
          *                                      new records when primary keys
-         *                                      match existing records
+         *                                      match existing records.
          *                              </ul>
          *                              The default value is @ref
          *                              gpudb::insert_records_false
          *                              "insert_records_false".
+         *                          <li>@ref
+         *                              gpudb::insert_records_enable_inplace_updates
+         *                              "insert_records_enable_inplace_updates":
+         *                              Applies only when upserting (when @ref
+         *                              gpudb::insert_records_update_on_existing_pk
+         *                              "update_on_existing_pk" is @ref
+         *                              gpudb::insert_records_true "true"). If
+         *                              set to @ref gpudb::insert_records_true
+         *                              "true", an existing record matched by
+         *                              primary key is modified in place. If
+         *                              set to @ref gpudb::insert_records_false
+         *                              "false", it is updated by deleting the
+         *                              existing record and inserting a
+         *                              replacement (delete and insert), which
+         *                              prevents the change from being
+         *                              reflected in dependent materialized
+         *                              views until they are refreshed.
+         *                              Supported values:
+         *                              <ul>
+         *                                  <li>@ref gpudb::insert_records_true
+         *                                      "insert_records_true"
+         *                                  <li>@ref
+         *                                      gpudb::insert_records_false
+         *                                      "insert_records_false"
+         *                              </ul>
+         *                              The default value is @ref
+         *                              gpudb::insert_records_true
+         *                              "insert_records_true".
          *                          <li>@ref
          *                              gpudb::insert_records_ignore_existing_pk
          *                              "insert_records_ignore_existing_pk":
@@ -904,7 +1191,7 @@ namespace gpudb
          *                              record will result in an error being
          *                              reported, as determined by @ref
          *                              gpudb::insert_records_allow_partial_batch
-         *                              "allow_partial_batch" & @ref
+         *                              "allow_partial_batch" and @ref
          *                              gpudb::insert_records_return_individual_errors
          *                              "return_individual_errors".  If the
          *                              specified table does not have a primary
@@ -920,13 +1207,13 @@ namespace gpudb
          *                                      "insert_records_true": Ignore
          *                                      new records whose primary key
          *                                      values collide with those of
-         *                                      existing records
+         *                                      existing records.
          *                                  <li>@ref
          *                                      gpudb::insert_records_false
          *                                      "insert_records_false": Treat
          *                                      as errors any new records whose
          *                                      primary key values collide with
-         *                                      those of existing records
+         *                                      those of existing records.
          *                              </ul>
          *                              The default value is @ref
          *                              gpudb::insert_records_false
@@ -987,10 +1274,10 @@ namespace gpudb
          *                              any errors found will be included in
          *                              the info map.  The "bad_record_indices"
          *                              entry is a comma-separated list of bad
-         *                              records (0-based).  And if so, there
-         *                              will also be an "error_N" entry for
-         *                              each record with an error, where N is
-         *                              the index (0-based).
+         *                              records (0-based).  If so, there will
+         *                              also be an "error_N" entry for each
+         *                              record with an error, where N is the
+         *                              index (0-based).
          *                              Supported values:
          *                              <ul>
          *                                  <li>@ref gpudb::insert_records_true
@@ -1023,6 +1310,43 @@ namespace gpudb
          *                              The default value is @ref
          *                              gpudb::insert_records_false
          *                              "insert_records_false".
+         *                          <li>@ref
+         *                              gpudb::insert_records_error_handling
+         *                              "insert_records_error_handling":
+         *                              Specifies how errors should be handled
+         *                              upon insertion.  When set, this option
+         *                              is authoritative; supplying a
+         *                              contradictory @ref
+         *                              gpudb::insert_records_allow_partial_batch
+         *                              "allow_partial_batch" is an error.
+         *                              Supported values:
+         *                              <ul>
+         *                                  <li>@ref
+         *                                      gpudb::insert_records_permissive
+         *                                      "insert_records_permissive":
+         *                                      Records with bad column values
+         *                                      are kept when possible: the
+         *                                      offending column is filled with
+         *                                      its default value if one
+         *                                      exists, otherwise with null if
+         *                                      the column is nullable; if
+         *                                      neither is possible the record
+         *                                      is skipped and reported.
+         *                                  <li>@ref gpudb::insert_records_skip
+         *                                      "insert_records_skip": Records
+         *                                      with bad values are skipped and
+         *                                      reported; the rest of the batch
+         *                                      is inserted.
+         *                                  <li>@ref
+         *                                      gpudb::insert_records_abort
+         *                                      "insert_records_abort": Stops
+         *                                      the insertion and rejects the
+         *                                      entire batch when any record is
+         *                                      incorrect.
+         *                              </ul>
+         *                              The default value is @ref
+         *                              gpudb::insert_records_abort
+         *                              "insert_records_abort".
          *                          <li>@ref gpudb::insert_records_dry_run
          *                              "insert_records_dry_run": If set to
          *                              @ref gpudb::insert_records_true "true",
@@ -1039,6 +1363,36 @@ namespace gpudb
          *                              The default value is @ref
          *                              gpudb::insert_records_false
          *                              "insert_records_false".
+         *                          <li>@ref
+         *                              gpudb::insert_records_request_schema_str
+         *                              "insert_records_request_schema_str":
+         *                              Type schema of  @a data_ (when @a
+         *                              listEncoding is @a binary), in
+         *                              [["{column_name}","{column_type}"]]
+         *                              format. When non-empty and different
+         *                              from the table's schema, the server
+         *                              remaps the incoming records to the
+         *                              table's full schema.  Columns present
+         *                              in the table but absent from this
+         *                              schema are filled using their default
+         *                              values, NULL (if nullable), or an error
+         *                              is returned.  If empty, records must
+         *                              match the table's full schema. The
+         *                              default value is ''.
+         *                          <li>@ref
+         *                              gpudb::insert_records_transformations
+         *                              "insert_records_transformations":
+         *                              Comma-separated expressions, one per
+         *                              target table column.  Each expression
+         *                              is evaluated per record.  Empty entries
+         *                              (two consecutive commas) mean no
+         *                              transformation for that column -- the
+         *                              value is resolved from the input
+         *                              record, table default, NULL, or an
+         *                              error. Expressions may reference input
+         *                              columns by name or by position ($1 for
+         *                              the first input column, $2 for the
+         *                              second, etc.). The default value is ''.
          *                      </ul>
          *                      The default value is an empty map.
          */
@@ -1083,7 +1437,7 @@ namespace gpudb
          *         gpudb::insert_records_ignore_existing_pk
          *         "ignore_existing_pk", @ref
          *         gpudb::insert_records_allow_partial_batch
-         *         "allow_partial_batch", & @ref
+         *         "allow_partial_batch", and  @ref
          *         gpudb::insert_records_return_individual_errors
          *         "return_individual_errors".  If the specified table does not
          *         have a primary key, then this option has no effect.
@@ -1091,13 +1445,34 @@ namespace gpudb
          *         <ul>
          *             <li>@ref gpudb::insert_records_true
          *                 "insert_records_true": Upsert new records when
-         *                 primary keys match existing records
+         *                 primary keys match existing records.
          *             <li>@ref gpudb::insert_records_false
          *                 "insert_records_false": Reject new records when
-         *                 primary keys match existing records
+         *                 primary keys match existing records.
          *         </ul>
          *         The default value is @ref gpudb::insert_records_false
          *         "insert_records_false".
+         *     <li>@ref gpudb::insert_records_enable_inplace_updates
+         *         "insert_records_enable_inplace_updates": Applies only when
+         *         upserting (when @ref
+         *         gpudb::insert_records_update_on_existing_pk
+         *         "update_on_existing_pk" is @ref gpudb::insert_records_true
+         *         "true"). If set to @ref gpudb::insert_records_true "true",
+         *         an existing record matched by primary key is modified in
+         *         place. If set to @ref gpudb::insert_records_false "false",
+         *         it is updated by deleting the existing record and inserting
+         *         a replacement (delete and insert), which prevents the change
+         *         from being reflected in dependent materialized views until
+         *         they are refreshed.
+         *         Supported values:
+         *         <ul>
+         *             <li>@ref gpudb::insert_records_true
+         *                 "insert_records_true"
+         *             <li>@ref gpudb::insert_records_false
+         *                 "insert_records_false"
+         *         </ul>
+         *         The default value is @ref gpudb::insert_records_true
+         *         "insert_records_true".
          *     <li>@ref gpudb::insert_records_ignore_existing_pk
          *         "insert_records_ignore_existing_pk": Specifies the record
          *         collision error-suppression policy for inserting into a
@@ -1115,7 +1490,7 @@ namespace gpudb
          *         record for having primary key values matching an existing
          *         record will result in an error being reported, as determined
          *         by @ref gpudb::insert_records_allow_partial_batch
-         *         "allow_partial_batch" & @ref
+         *         "allow_partial_batch" and @ref
          *         gpudb::insert_records_return_individual_errors
          *         "return_individual_errors".  If the specified table does not
          *         have a primary key or if upsert mode is in effect (@ref
@@ -1127,11 +1502,11 @@ namespace gpudb
          *             <li>@ref gpudb::insert_records_true
          *                 "insert_records_true": Ignore new records whose
          *                 primary key values collide with those of existing
-         *                 records
+         *                 records.
          *             <li>@ref gpudb::insert_records_false
          *                 "insert_records_false": Treat as errors any new
          *                 records whose primary key values collide with those
-         *                 of existing records
+         *                 of existing records.
          *         </ul>
          *         The default value is @ref gpudb::insert_records_false
          *         "insert_records_false".
@@ -1175,9 +1550,9 @@ namespace gpudb
          *         gpudb::insert_records_true "true", success will always be
          *         returned, and any errors found will be included in the info
          *         map.  The "bad_record_indices" entry is a comma-separated
-         *         list of bad records (0-based).  And if so, there will also
-         *         be an "error_N" entry for each record with an error, where N
-         *         is the index (0-based).
+         *         list of bad records (0-based).  If so, there will also be an
+         *         "error_N" entry for each record with an error, where N is
+         *         the index (0-based).
          *         Supported values:
          *         <ul>
          *             <li>@ref gpudb::insert_records_true
@@ -1202,6 +1577,32 @@ namespace gpudb
          *         </ul>
          *         The default value is @ref gpudb::insert_records_false
          *         "insert_records_false".
+         *     <li>@ref gpudb::insert_records_error_handling
+         *         "insert_records_error_handling": Specifies how errors should
+         *         be handled upon insertion.  When set, this option is
+         *         authoritative; supplying a contradictory @ref
+         *         gpudb::insert_records_allow_partial_batch
+         *         "allow_partial_batch" is an error.
+         *         Supported values:
+         *         <ul>
+         *             <li>@ref gpudb::insert_records_permissive
+         *                 "insert_records_permissive": Records with bad column
+         *                 values are kept when possible: the offending column
+         *                 is filled with its default value if one exists,
+         *                 otherwise with null if the column is nullable; if
+         *                 neither is possible the record is skipped and
+         *                 reported.
+         *             <li>@ref gpudb::insert_records_skip
+         *                 "insert_records_skip": Records with bad values are
+         *                 skipped and reported; the rest of the batch is
+         *                 inserted.
+         *             <li>@ref gpudb::insert_records_abort
+         *                 "insert_records_abort": Stops the insertion and
+         *                 rejects the entire batch when any record is
+         *                 incorrect.
+         *         </ul>
+         *         The default value is @ref gpudb::insert_records_abort
+         *         "insert_records_abort".
          *     <li>@ref gpudb::insert_records_dry_run "insert_records_dry_run":
          *         If set to @ref gpudb::insert_records_true "true", no data
          *         will be saved and any errors will be returned.
@@ -1214,6 +1615,25 @@ namespace gpudb
          *         </ul>
          *         The default value is @ref gpudb::insert_records_false
          *         "insert_records_false".
+         *     <li>@ref gpudb::insert_records_request_schema_str
+         *         "insert_records_request_schema_str": Type schema of  @ref
+         *         data (when @a listEncoding is @a binary), in
+         *         [["{column_name}","{column_type}"]] format. When non-empty
+         *         and different from the table's schema, the server remaps the
+         *         incoming records to the table's full schema.  Columns
+         *         present in the table but absent from this schema are filled
+         *         using their default values, NULL (if nullable), or an error
+         *         is returned.  If empty, records must match the table's full
+         *         schema. The default value is ''.
+         *     <li>@ref gpudb::insert_records_transformations
+         *         "insert_records_transformations": Comma-separated
+         *         expressions, one per target table column.  Each expression
+         *         is evaluated per record.  Empty entries (two consecutive
+         *         commas) mean no transformation for that column -- the value
+         *         is resolved from the input record, table default, NULL, or
+         *         an error. Expressions may reference input columns by name or
+         *         by position ($1 for the first input column, $2 for the
+         *         second, etc.). The default value is ''.
          * </ul>
          * The default value is an empty map.
          */
@@ -1263,9 +1683,9 @@ namespace gpudb
          *     <li>@ref gpudb::insert_records_bad_record_indices
          *         "insert_records_bad_record_indices": If
          *         return_individual_errors option is specified or implied,
-         *         returns a comma-separated list of invalid indices (0-based)
+         *         returns a comma-separated list of invalid indices (0-based).
          *     <li>@ref gpudb::insert_records_error_N "insert_records_error_N":
-         *         Error message for record at index N (0-based)
+         *         Error message for record at index N (0-based).
          * </ul>
          */
         std::map<std::string, std::string> info;

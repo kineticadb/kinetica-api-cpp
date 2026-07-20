@@ -52,8 +52,8 @@ namespace gpudb
          *                        meet standard <a
          *                        href="../../../concepts/tables/#table-naming-criteria"
          *                        target="_top">table naming criteria</a>.
-         * @param[in] dataText_  Records formatted as delimited text
-         * @param[in] dataBytes_  Records formatted as binary data
+         * @param[in] dataText_  Records formatted as delimited text.
+         * @param[in] dataBytes_  Records formatted as binary data.
          * @param[in] modifyColumns_  Not implemented yet. The default value is
          *                            an empty map.
          * @param[in] createTableOptions_  Options used when creating the
@@ -345,9 +345,9 @@ namespace gpudb
          *                          <li>@ref
          *                              gpudb::insert_records_from_payload_bad_record_table_name
          *                              "insert_records_from_payload_bad_record_table_name":
-         *                              Optional name of a table to which
-         *                              records that were rejected are written.
-         *                              The bad-record-table has the following
+         *                              Name of a table to which records that
+         *                              were rejected are written.  The
+         *                              bad-record-table has the following
          *                              columns: line_number (long),
          *                              line_rejected (string), error_message
          *                              (string).
@@ -357,7 +357,7 @@ namespace gpudb
          *                              A positive integer indicating the
          *                              maximum number of records that can be
          *                              written to the bad-record-table.
-         *                              Default value is 10000
+         *                              Default value is 10000.
          *                          <li>@ref
          *                              gpudb::insert_records_from_payload_bad_record_table_limit_per_input
          *                              "insert_records_from_payload_bad_record_table_limit_per_input":
@@ -368,7 +368,7 @@ namespace gpudb
          *                              Default value will be
          *                              'bad_record_table_limit' and total size
          *                              of the table per rank is limited to
-         *                              'bad_record_table_limit'
+         *                              'bad_record_table_limit'.
          *                          <li>@ref
          *                              gpudb::insert_records_from_payload_batch_size
          *                              "insert_records_from_payload_batch_size":
@@ -385,7 +385,7 @@ namespace gpudb
          *                              column properties to an appropriate
          *                              format for each property.  Currently
          *                              supported column properties include
-         *                              date, time, & datetime. The parameter
+         *                              date, time, and datetime. The parameter
          *                              value must be formatted as a JSON
          *                              string of maps of column names to maps
          *                              of column properties to their
@@ -447,18 +447,18 @@ namespace gpudb
          *                          <li>@ref
          *                              gpudb::insert_records_from_payload_compression_type
          *                              "insert_records_from_payload_compression_type":
-         *                              Optional: payload compression type.
+         *                              Payload compression type.
          *                              Supported values:
          *                              <ul>
          *                                  <li>@ref
          *                                      gpudb::insert_records_from_payload_none
          *                                      "insert_records_from_payload_none":
-         *                                      Uncompressed
+         *                                      Uncompressed.
          *                                  <li>@ref
          *                                      gpudb::insert_records_from_payload_auto
          *                                      "insert_records_from_payload_auto":
          *                                      Default. Auto detect
-         *                                      compression type
+         *                                      compression type.
          *                                  <li>@ref
          *                                      gpudb::insert_records_from_payload_gzip
          *                                      "insert_records_from_payload_gzip":
@@ -478,11 +478,11 @@ namespace gpudb
          *                              applied to source data loaded into
          *                              columns with the corresponding column
          *                              property.  Currently supported column
-         *                              properties include date, time, &
+         *                              properties include date, time, and
          *                              datetime.  This default
          *                              column-property-bound format can be
          *                              overridden by specifying a column
-         *                              property & format for a given target
+         *                              property and format for a given target
          *                              column in @ref
          *                              gpudb::insert_records_from_payload_column_formats
          *                              "column_formats". For each specified
@@ -533,9 +533,13 @@ namespace gpudb
          *                                      possible; otherwise, the
          *                                      malformed records are skipped.
          *                                  <li>@ref
+         *                                      gpudb::insert_records_from_payload_skip
+         *                                      "insert_records_from_payload_skip":
+         *                                      Malformed records are skipped.
+         *                                  <li>@ref
          *                                      gpudb::insert_records_from_payload_ignore_bad_records
          *                                      "insert_records_from_payload_ignore_bad_records":
-         *                                      Malformed records are skipped.
+         *                                      Alias for skip.
          *                                  <li>@ref
          *                                      gpudb::insert_records_from_payload_abort
          *                                      "insert_records_from_payload_abort":
@@ -558,7 +562,7 @@ namespace gpudb
          *                                  <li>@ref
          *                                      gpudb::insert_records_from_payload_avro
          *                                      "insert_records_from_payload_avro":
-         *                                      Avro file format
+         *                                      Avro file format.
          *                                  <li>@ref
          *                                      gpudb::insert_records_from_payload_delimited_text
          *                                      "insert_records_from_payload_delimited_text":
@@ -567,19 +571,19 @@ namespace gpudb
          *                                  <li>@ref
          *                                      gpudb::insert_records_from_payload_gdb
          *                                      "insert_records_from_payload_gdb":
-         *                                      Esri/GDB file format
+         *                                      Esri/GDB file format.
          *                                  <li>@ref
          *                                      gpudb::insert_records_from_payload_json
          *                                      "insert_records_from_payload_json":
-         *                                      Json file format
+         *                                      JSON file format.
          *                                  <li>@ref
          *                                      gpudb::insert_records_from_payload_parquet
          *                                      "insert_records_from_payload_parquet":
-         *                                      Apache Parquet file format
+         *                                      Apache Parquet file format.
          *                                  <li>@ref
          *                                      gpudb::insert_records_from_payload_shapefile
          *                                      "insert_records_from_payload_shapefile":
-         *                                      ShapeFile file format
+         *                                      ShapeFile file format.
          *                              </ul>
          *                              The default value is @ref
          *                              gpudb::insert_records_from_payload_delimited_text
@@ -594,12 +598,12 @@ namespace gpudb
          *                                      gpudb::insert_records_from_payload_true
          *                                      "insert_records_from_payload_true":
          *                                      Break up nested columns to
-         *                                      multiple columns
+         *                                      multiple columns.
          *                                  <li>@ref
          *                                      gpudb::insert_records_from_payload_false
          *                                      "insert_records_from_payload_false":
-         *                                      Treat nested columns as json
-         *                                      columns instead of flattening
+         *                                      Treat nested columns as JSON
+         *                                      columns instead of flattening.
          *                              </ul>
          *                              The default value is @ref
          *                              gpudb::insert_records_from_payload_false
@@ -652,14 +656,14 @@ namespace gpudb
          *                                      "insert_records_from_payload_true":
          *                                      Ignore new records whose
          *                                      primary key values collide with
-         *                                      those of existing records
+         *                                      those of existing records.
          *                                  <li>@ref
          *                                      gpudb::insert_records_from_payload_false
          *                                      "insert_records_from_payload_false":
          *                                      Treat as errors any new records
          *                                      whose primary key values
          *                                      collide with those of existing
-         *                                      records
+         *                                      records.
          *                              </ul>
          *                              The default value is @ref
          *                              gpudb::insert_records_from_payload_false
@@ -677,7 +681,7 @@ namespace gpudb
          *                                      "insert_records_from_payload_full":
          *                                      Run a type inference on the
          *                                      source data (if needed) and
-         *                                      ingest
+         *                                      ingest.
          *                                  <li>@ref
          *                                      gpudb::insert_records_from_payload_dry_run
          *                                      "insert_records_from_payload_dry_run":
@@ -703,9 +707,8 @@ namespace gpudb
          *                          <li>@ref
          *                              gpudb::insert_records_from_payload_layer
          *                              "insert_records_from_payload_layer":
-         *                              Optional: geo files layer(s) name(s):
-         *                              comma separated. The default value is
-         *                              ''.
+         *                              Geo files layer(s) name(s): comma
+         *                              separated. The default value is ''.
          *                          <li>@ref
          *                              gpudb::insert_records_from_payload_loading_mode
          *                              "insert_records_from_payload_loading_mode":
@@ -776,7 +779,7 @@ namespace gpudb
          *                          <li>@ref
          *                              gpudb::insert_records_from_payload_local_time_offset
          *                              "insert_records_from_payload_local_time_offset":
-         *                              For Avro local timestamp columns
+         *                              For Avro local timestamp columns.
          *                          <li>@ref
          *                              gpudb::insert_records_from_payload_max_records_to_load
          *                              "insert_records_from_payload_max_records_to_load":
@@ -788,11 +791,34 @@ namespace gpudb
          *                              working thread). The default value is
          *                              ''.
          *                          <li>@ref
+         *                              gpudb::insert_records_from_payload_name_columns_from_file
+         *                              "insert_records_from_payload_name_columns_from_file":
+         *                              Specifies a comma-delimited list of
+         *                              column names to be used as the
+         *                              source-data column names.  If the
+         *                              payload has a header row (i.e., @ref
+         *                              gpudb::insert_records_from_payload_text_has_header
+         *                              "text_has_header" is @ref
+         *                              gpudb::insert_records_from_payload_true
+         *                              "true"), these names override the
+         *                              payload's header names.  If the payload
+         *                              has no header row, these names are used
+         *                              as the source-data column names. Either
+         *                              way, the i-th name in this list applies
+         *                              to the i-th column in the payload,
+         *                              enabling name-based matching against
+         *                              the target table's columns (and use
+         *                              with @ref
+         *                              gpudb::insert_records_from_payload_columns_to_load
+         *                              "columns_to_load" / @ref
+         *                              gpudb::insert_records_from_payload_columns_to_skip
+         *                              "columns_to_skip").
+         *                          <li>@ref
          *                              gpudb::insert_records_from_payload_num_tasks_per_rank
          *                              "insert_records_from_payload_num_tasks_per_rank":
-         *                              Optional: number of tasks for reading
-         *                              file per rank. Default will be
-         *                              external_file_reader_num_tasks
+         *                              Number of tasks for reading file per
+         *                              rank. Default will be
+         *                              external_file_reader_num_tasks.
          *                          <li>@ref
          *                              gpudb::insert_records_from_payload_poll_interval
          *                              "insert_records_from_payload_poll_interval":
@@ -808,30 +834,30 @@ namespace gpudb
          *                          <li>@ref
          *                              gpudb::insert_records_from_payload_primary_keys
          *                              "insert_records_from_payload_primary_keys":
-         *                              Optional: comma separated list of
-         *                              column names, to set as primary keys,
-         *                              when not specified in the type. The
-         *                              default value is ''.
+         *                              Comma separated list of column names,
+         *                              to set as primary keys, when not
+         *                              specified in the type. The default
+         *                              value is ''.
          *                          <li>@ref
          *                              gpudb::insert_records_from_payload_schema_registry_connection_retries
          *                              "insert_records_from_payload_schema_registry_connection_retries":
          *                              Confluent Schema registry connection
-         *                              timeout (in Secs)
+         *                              timeout (in secs).
          *                          <li>@ref
          *                              gpudb::insert_records_from_payload_schema_registry_connection_timeout
          *                              "insert_records_from_payload_schema_registry_connection_timeout":
          *                              Confluent Schema registry connection
-         *                              timeout (in Secs)
+         *                              timeout (in secs).
          *                          <li>@ref
          *                              gpudb::insert_records_from_payload_schema_registry_max_consecutive_connection_failures
          *                              "insert_records_from_payload_schema_registry_max_consecutive_connection_failures":
          *                              Max records to skip due to SR
-         *                              connection failures, before failing
+         *                              connection failures, before failing.
          *                          <li>@ref
          *                              gpudb::insert_records_from_payload_max_consecutive_invalid_schema_failure
          *                              "insert_records_from_payload_max_consecutive_invalid_schema_failure":
          *                              Max records to skip due to schema
-         *                              related errors, before failing
+         *                              related errors, before failing.
          *                          <li>@ref
          *                              gpudb::insert_records_from_payload_schema_registry_schema_name
          *                              "insert_records_from_payload_schema_registry_schema_name":
@@ -841,10 +867,10 @@ namespace gpudb
          *                          <li>@ref
          *                              gpudb::insert_records_from_payload_shard_keys
          *                              "insert_records_from_payload_shard_keys":
-         *                              Optional: comma separated list of
-         *                              column names, to set as primary keys,
-         *                              when not specified in the type. The
-         *                              default value is ''.
+         *                              Comma separated list of column names,
+         *                              to set as shard keys, when not
+         *                              specified in the type. The default
+         *                              value is ''.
          *                          <li>@ref
          *                              gpudb::insert_records_from_payload_skip_lines
          *                              "insert_records_from_payload_skip_lines":
@@ -871,9 +897,10 @@ namespace gpudb
          *                          <li>@ref
          *                              gpudb::insert_records_from_payload_table_insert_mode
          *                              "insert_records_from_payload_table_insert_mode":
-         *                              Optional: table_insert_mode. When
-         *                              inserting records from multiple files:
-         *                              if table_per_file then insert from each
+         *                              When inserting records from multiple
+         *                              files: if @ref
+         *                              gpudb::insert_records_from_payload_table_per_file
+         *                              "table_per_file", then insert from each
          *                              file into a new table. Currently
          *                              supported only for shapefiles.
          *                              Supported values:
@@ -922,7 +949,7 @@ namespace gpudb
          *                              or 'v' preceded by an escape character
          *                              will be interpreted as the ASCII bell,
          *                              backspace, form feed, line feed,
-         *                              carriage return, horizontal tab, &
+         *                              carriage return, horizontal tab, and
          *                              vertical tab, respectively.  For
          *                              example, the escape character followed
          *                              by an 'n' will be interpreted as a
@@ -1013,12 +1040,31 @@ namespace gpudb
          *                              '*' for all columns. To add text_search
          *                              property only to string columns of
          *                              minimum size, set also the option
-         *                              'text_search_min_column_length'
+         *                              'text_search_min_column_length'.
          *                          <li>@ref
          *                              gpudb::insert_records_from_payload_text_search_min_column_length
          *                              "insert_records_from_payload_text_search_min_column_length":
          *                              Set minimum column size. Used only when
          *                              'text_search_columns' has a value.
+         *                          <li>@ref
+         *                              gpudb::insert_records_from_payload_trim_space
+         *                              "insert_records_from_payload_trim_space":
+         *                              If set to @ref
+         *                              gpudb::insert_records_from_payload_true
+         *                              "true", remove leading or trailing
+         *                              space from fields.
+         *                              Supported values:
+         *                              <ul>
+         *                                  <li>@ref
+         *                                      gpudb::insert_records_from_payload_true
+         *                                      "insert_records_from_payload_true"
+         *                                  <li>@ref
+         *                                      gpudb::insert_records_from_payload_false
+         *                                      "insert_records_from_payload_false"
+         *                              </ul>
+         *                              The default value is @ref
+         *                              gpudb::insert_records_from_payload_false
+         *                              "insert_records_from_payload_false".
          *                          <li>@ref
          *                              gpudb::insert_records_from_payload_truncate_strings
          *                              "insert_records_from_payload_truncate_strings":
@@ -1065,14 +1111,14 @@ namespace gpudb
          *                          <li>@ref
          *                              gpudb::insert_records_from_payload_type_inference_mode
          *                              "insert_records_from_payload_type_inference_mode":
-         *                              optimize type inference for:
+         *                              Optimize type inference mode.
          *                              Supported values:
          *                              <ul>
          *                                  <li>@ref
          *                                      gpudb::insert_records_from_payload_accuracy
          *                                      "insert_records_from_payload_accuracy":
          *                                      Scans data to get exactly-typed
-         *                                      & sized columns for all data
+         *                                      and sized columns for all data
          *                                      scanned.
          *                                  <li>@ref
          *                                      gpudb::insert_records_from_payload_speed
@@ -1080,11 +1126,37 @@ namespace gpudb
          *                                      Scans data and picks the widest
          *                                      possible column types so that
          *                                      'all' values will fit with
-         *                                      minimum data scanned
+         *                                      minimum data scanned.
          *                              </ul>
          *                              The default value is @ref
          *                              gpudb::insert_records_from_payload_accuracy
          *                              "insert_records_from_payload_accuracy".
+         *                          <li>@ref
+         *                              gpudb::insert_records_from_payload_enable_inplace_updates
+         *                              "insert_records_from_payload_enable_inplace_updates":
+         *                              Applies only when upserting (when
+         *                              update_on_existing_pk is true). If set
+         *                              to true (the default), an existing
+         *                              record matched by primary key is
+         *                              modified in place. If set to false, the
+         *                              matched record is updated by deleting
+         *                              it and inserting a replacement (delete
+         *                              and insert), which prevents the change
+         *                              from being reflected in dependent
+         *                              materialized views until they are
+         *                              refreshed.
+         *                              Supported values:
+         *                              <ul>
+         *                                  <li>@ref
+         *                                      gpudb::insert_records_from_payload_true
+         *                                      "insert_records_from_payload_true"
+         *                                  <li>@ref
+         *                                      gpudb::insert_records_from_payload_false
+         *                                      "insert_records_from_payload_false"
+         *                              </ul>
+         *                              The default value is @ref
+         *                              gpudb::insert_records_from_payload_true
+         *                              "insert_records_from_payload_true".
          *                          <li>@ref
          *                              gpudb::insert_records_from_payload_update_on_existing_pk
          *                              "insert_records_from_payload_update_on_existing_pk":
@@ -1108,7 +1180,7 @@ namespace gpudb
          *                              rejected and the error handled as
          *                              determined by @ref
          *                              gpudb::insert_records_from_payload_ignore_existing_pk
-         *                              "ignore_existing_pk" & @ref
+         *                              "ignore_existing_pk" and @ref
          *                              gpudb::insert_records_from_payload_error_handling
          *                              "error_handling".  If the specified
          *                              table does not have a primary key, then
@@ -1119,16 +1191,30 @@ namespace gpudb
          *                                      gpudb::insert_records_from_payload_true
          *                                      "insert_records_from_payload_true":
          *                                      Upsert new records when primary
-         *                                      keys match existing records
+         *                                      keys match existing records.
          *                                  <li>@ref
          *                                      gpudb::insert_records_from_payload_false
          *                                      "insert_records_from_payload_false":
          *                                      Reject new records when primary
-         *                                      keys match existing records
+         *                                      keys match existing records.
          *                              </ul>
          *                              The default value is @ref
          *                              gpudb::insert_records_from_payload_false
          *                              "insert_records_from_payload_false".
+         *                          <li>@ref
+         *                              gpudb::insert_records_from_payload_transformations
+         *                              "insert_records_from_payload_transformations":
+         *                              Comma-separated expressions, one per
+         *                              target table column.  Each expression
+         *                              is evaluated per record.  Empty entries
+         *                              (two consecutive commas) mean no
+         *                              transformation for that column -- the
+         *                              value is resolved from the input
+         *                              record, table default, NULL, or an
+         *                              error. Expressions may reference input
+         *                              columns by name or by position ($1 for
+         *                              the first input column, $2 for the
+         *                              second, etc.). The default value is ''.
          *                      </ul>
          *                      The default value is an empty map.
          */
@@ -1156,12 +1242,12 @@ namespace gpudb
         std::string tableName;
 
         /**
-         * Records formatted as delimited text
+         * Records formatted as delimited text.
          */
         std::string dataText;
 
         /**
-         * Records formatted as binary data
+         * Records formatted as binary data.
          */
         std::vector<uint8_t> dataBytes;
 
@@ -1361,17 +1447,16 @@ namespace gpudb
          * <ul>
          *     <li>@ref
          *         gpudb::insert_records_from_payload_bad_record_table_name
-         *         "insert_records_from_payload_bad_record_table_name":
-         *         Optional name of a table to which records that were rejected
-         *         are written.  The bad-record-table has the following
-         *         columns: line_number (long), line_rejected (string),
-         *         error_message (string).
+         *         "insert_records_from_payload_bad_record_table_name": Name of
+         *         a table to which records that were rejected are written.
+         *         The bad-record-table has the following columns: line_number
+         *         (long), line_rejected (string), error_message (string).
          *     <li>@ref
          *         gpudb::insert_records_from_payload_bad_record_table_limit
          *         "insert_records_from_payload_bad_record_table_limit": A
          *         positive integer indicating the maximum number of records
          *         that can be  written to the bad-record-table.   Default
-         *         value is 10000
+         *         value is 10000.
          *     <li>@ref
          *         gpudb::insert_records_from_payload_bad_record_table_limit_per_input
          *         "insert_records_from_payload_bad_record_table_limit_per_input":
@@ -1379,7 +1464,7 @@ namespace gpudb
          *         number of records that can be written to the
          *         bad-record-table per file/payload. Default value will be
          *         'bad_record_table_limit' and total size of the table per
-         *         rank is limited to 'bad_record_table_limit'
+         *         rank is limited to 'bad_record_table_limit'.
          *     <li>@ref gpudb::insert_records_from_payload_batch_size
          *         "insert_records_from_payload_batch_size": Internal tuning
          *         parameter--number of records per batch when inserting data.
@@ -1390,7 +1475,7 @@ namespace gpudb
          *         column format will contain a mapping of one or more of its
          *         column properties to an appropriate format for each
          *         property.  Currently supported column properties include
-         *         date, time, & datetime. The parameter value must be
+         *         date, time, and datetime. The parameter value must be
          *         formatted as a JSON string of maps of column names to maps
          *         of column properties to their corresponding column formats,
          *         e.g., '{ "order_date" : { "date" : "%Y.%m.%d" },
@@ -1430,15 +1515,15 @@ namespace gpudb
          *         gpudb::insert_records_from_payload_columns_to_load
          *         "columns_to_load".
          *     <li>@ref gpudb::insert_records_from_payload_compression_type
-         *         "insert_records_from_payload_compression_type": Optional:
-         *         payload compression type.
+         *         "insert_records_from_payload_compression_type": Payload
+         *         compression type.
          *         Supported values:
          *         <ul>
          *             <li>@ref gpudb::insert_records_from_payload_none
-         *                 "insert_records_from_payload_none": Uncompressed
+         *                 "insert_records_from_payload_none": Uncompressed.
          *             <li>@ref gpudb::insert_records_from_payload_auto
          *                 "insert_records_from_payload_auto": Default. Auto
-         *                 detect compression type
+         *                 detect compression type.
          *             <li>@ref gpudb::insert_records_from_payload_gzip
          *                 "insert_records_from_payload_gzip": gzip file
          *                 compression.
@@ -1454,10 +1539,10 @@ namespace gpudb
          *         "insert_records_from_payload_default_column_formats":
          *         Specifies the default format to be applied to source data
          *         loaded into columns with the corresponding column property.
-         *         Currently supported column properties include date, time, &
-         *         datetime.  This default column-property-bound format can be
-         *         overridden by specifying a column property & format for a
-         *         given target column in @ref
+         *         Currently supported column properties include date, time,
+         *         and datetime.  This default column-property-bound format can
+         *         be overridden by specifying a column property and format for
+         *         a given target column in @ref
          *         gpudb::insert_records_from_payload_column_formats
          *         "column_formats". For each specified annotation, the format
          *         will apply to all columns with that annotation unless a
@@ -1491,10 +1576,13 @@ namespace gpudb
          *                 with missing columns are populated with nulls if
          *                 possible; otherwise, the malformed records are
          *                 skipped.
+         *             <li>@ref gpudb::insert_records_from_payload_skip
+         *                 "insert_records_from_payload_skip": Malformed
+         *                 records are skipped.
          *             <li>@ref
          *                 gpudb::insert_records_from_payload_ignore_bad_records
          *                 "insert_records_from_payload_ignore_bad_records":
-         *                 Malformed records are skipped.
+         *                 Alias for skip.
          *             <li>@ref gpudb::insert_records_from_payload_abort
          *                 "insert_records_from_payload_abort": Stops current
          *                 insertion and aborts entire operation when an error
@@ -1510,7 +1598,8 @@ namespace gpudb
          *         Supported values:
          *         <ul>
          *             <li>@ref gpudb::insert_records_from_payload_avro
-         *                 "insert_records_from_payload_avro": Avro file format
+         *                 "insert_records_from_payload_avro": Avro file
+         *                 format.
          *             <li>@ref
          *                 gpudb::insert_records_from_payload_delimited_text
          *                 "insert_records_from_payload_delimited_text":
@@ -1518,15 +1607,16 @@ namespace gpudb
          *                 etc.
          *             <li>@ref gpudb::insert_records_from_payload_gdb
          *                 "insert_records_from_payload_gdb": Esri/GDB file
-         *                 format
+         *                 format.
          *             <li>@ref gpudb::insert_records_from_payload_json
-         *                 "insert_records_from_payload_json": Json file format
+         *                 "insert_records_from_payload_json": JSON file
+         *                 format.
          *             <li>@ref gpudb::insert_records_from_payload_parquet
          *                 "insert_records_from_payload_parquet": Apache
-         *                 Parquet file format
+         *                 Parquet file format.
          *             <li>@ref gpudb::insert_records_from_payload_shapefile
          *                 "insert_records_from_payload_shapefile": ShapeFile
-         *                 file format
+         *                 file format.
          *         </ul>
          *         The default value is @ref
          *         gpudb::insert_records_from_payload_delimited_text
@@ -1538,10 +1628,10 @@ namespace gpudb
          *         <ul>
          *             <li>@ref gpudb::insert_records_from_payload_true
          *                 "insert_records_from_payload_true": Break up nested
-         *                 columns to multiple columns
+         *                 columns to multiple columns.
          *             <li>@ref gpudb::insert_records_from_payload_false
          *                 "insert_records_from_payload_false": Treat nested
-         *                 columns as json columns instead of flattening
+         *                 columns as JSON columns instead of flattening.
          *         </ul>
          *         The default value is @ref
          *         gpudb::insert_records_from_payload_false
@@ -1581,11 +1671,11 @@ namespace gpudb
          *             <li>@ref gpudb::insert_records_from_payload_true
          *                 "insert_records_from_payload_true": Ignore new
          *                 records whose primary key values collide with those
-         *                 of existing records
+         *                 of existing records.
          *             <li>@ref gpudb::insert_records_from_payload_false
          *                 "insert_records_from_payload_false": Treat as errors
          *                 any new records whose primary key values collide
-         *                 with those of existing records
+         *                 with those of existing records.
          *         </ul>
          *         The default value is @ref
          *         gpudb::insert_records_from_payload_false
@@ -1598,7 +1688,7 @@ namespace gpudb
          *         <ul>
          *             <li>@ref gpudb::insert_records_from_payload_full
          *                 "insert_records_from_payload_full": Run a type
-         *                 inference on the source data (if needed) and ingest
+         *                 inference on the source data (if needed) and ingest.
          *             <li>@ref gpudb::insert_records_from_payload_dry_run
          *                 "insert_records_from_payload_dry_run": Does not load
          *                 data, but walks through the source data and
@@ -1617,8 +1707,8 @@ namespace gpudb
          *         gpudb::insert_records_from_payload_full
          *         "insert_records_from_payload_full".
          *     <li>@ref gpudb::insert_records_from_payload_layer
-         *         "insert_records_from_payload_layer": Optional: geo files
-         *         layer(s) name(s): comma separated. The default value is ''.
+         *         "insert_records_from_payload_layer": Geo files layer(s)
+         *         name(s): comma separated. The default value is ''.
          *     <li>@ref gpudb::insert_records_from_payload_loading_mode
          *         "insert_records_from_payload_loading_mode": Scheme for
          *         distributing the extraction and loading of data from the
@@ -1667,17 +1757,35 @@ namespace gpudb
          *         "insert_records_from_payload_head".
          *     <li>@ref gpudb::insert_records_from_payload_local_time_offset
          *         "insert_records_from_payload_local_time_offset": For Avro
-         *         local timestamp columns
+         *         local timestamp columns.
          *     <li>@ref gpudb::insert_records_from_payload_max_records_to_load
          *         "insert_records_from_payload_max_records_to_load": Limit the
          *         number of records to load in this request: If this number is
          *         larger than a batch_size, then the number of records loaded
          *         will be limited to the next whole number of batch_size (per
          *         working thread). The default value is ''.
+         *     <li>@ref
+         *         gpudb::insert_records_from_payload_name_columns_from_file
+         *         "insert_records_from_payload_name_columns_from_file":
+         *         Specifies a comma-delimited list of column names to be used
+         *         as the source-data column names.  If the payload has a
+         *         header row (i.e., @ref
+         *         gpudb::insert_records_from_payload_text_has_header
+         *         "text_has_header" is @ref
+         *         gpudb::insert_records_from_payload_true "true"), these names
+         *         override the payload's header names.  If the payload has no
+         *         header row, these names are used as the source-data column
+         *         names. Either way, the i-th name in this list applies to the
+         *         i-th column in the payload, enabling name-based matching
+         *         against the target table's columns (and use with @ref
+         *         gpudb::insert_records_from_payload_columns_to_load
+         *         "columns_to_load" / @ref
+         *         gpudb::insert_records_from_payload_columns_to_skip
+         *         "columns_to_skip").
          *     <li>@ref gpudb::insert_records_from_payload_num_tasks_per_rank
-         *         "insert_records_from_payload_num_tasks_per_rank": Optional:
-         *         number of tasks for reading file per rank. Default will be
-         *         external_file_reader_num_tasks
+         *         "insert_records_from_payload_num_tasks_per_rank": Number of
+         *         tasks for reading file per rank. Default will be
+         *         external_file_reader_num_tasks.
          *     <li>@ref gpudb::insert_records_from_payload_poll_interval
          *         "insert_records_from_payload_poll_interval": If @ref
          *         gpudb::insert_records_from_payload_true "true", the number
@@ -1686,36 +1794,36 @@ namespace gpudb
          *         is found.  If no data is found, the interval will steadily
          *         increase to a maximum of 60 seconds.
          *     <li>@ref gpudb::insert_records_from_payload_primary_keys
-         *         "insert_records_from_payload_primary_keys": Optional: comma
-         *         separated list of column names, to set as primary keys, when
-         *         not specified in the type. The default value is ''.
+         *         "insert_records_from_payload_primary_keys": Comma separated
+         *         list of column names, to set as primary keys, when not
+         *         specified in the type. The default value is ''.
          *     <li>@ref
          *         gpudb::insert_records_from_payload_schema_registry_connection_retries
          *         "insert_records_from_payload_schema_registry_connection_retries":
-         *         Confluent Schema registry connection timeout (in Secs)
+         *         Confluent Schema registry connection timeout (in secs).
          *     <li>@ref
          *         gpudb::insert_records_from_payload_schema_registry_connection_timeout
          *         "insert_records_from_payload_schema_registry_connection_timeout":
-         *         Confluent Schema registry connection timeout (in Secs)
+         *         Confluent Schema registry connection timeout (in secs).
          *     <li>@ref
          *         gpudb::insert_records_from_payload_schema_registry_max_consecutive_connection_failures
          *         "insert_records_from_payload_schema_registry_max_consecutive_connection_failures":
          *         Max records to skip due to SR connection failures, before
-         *         failing
+         *         failing.
          *     <li>@ref
          *         gpudb::insert_records_from_payload_max_consecutive_invalid_schema_failure
          *         "insert_records_from_payload_max_consecutive_invalid_schema_failure":
          *         Max records to skip due to schema related errors, before
-         *         failing
+         *         failing.
          *     <li>@ref
          *         gpudb::insert_records_from_payload_schema_registry_schema_name
          *         "insert_records_from_payload_schema_registry_schema_name":
          *         Name of the Avro schema in the schema registry to use when
          *         reading Avro records.
          *     <li>@ref gpudb::insert_records_from_payload_shard_keys
-         *         "insert_records_from_payload_shard_keys": Optional: comma
-         *         separated list of column names, to set as primary keys, when
-         *         not specified in the type. The default value is ''.
+         *         "insert_records_from_payload_shard_keys": Comma separated
+         *         list of column names, to set as shard keys, when not
+         *         specified in the type. The default value is ''.
          *     <li>@ref gpudb::insert_records_from_payload_skip_lines
          *         "insert_records_from_payload_skip_lines": Skip a number of
          *         lines from the beginning of the file.
@@ -1734,10 +1842,11 @@ namespace gpudb
          *         gpudb::insert_records_from_payload_false
          *         "insert_records_from_payload_false".
          *     <li>@ref gpudb::insert_records_from_payload_table_insert_mode
-         *         "insert_records_from_payload_table_insert_mode": Optional:
-         *         table_insert_mode. When inserting records from multiple
-         *         files: if table_per_file then insert from each file into a
-         *         new table. Currently supported only for shapefiles.
+         *         "insert_records_from_payload_table_insert_mode": When
+         *         inserting records from multiple files: if @ref
+         *         gpudb::insert_records_from_payload_table_per_file
+         *         "table_per_file", then insert from each file into a new
+         *         table. Currently supported only for shapefiles.
          *         Supported values:
          *         <ul>
          *             <li>@ref gpudb::insert_records_from_payload_single
@@ -1773,7 +1882,7 @@ namespace gpudb
          *         characters in the source data.  An 'a', 'b', 'f', 'n', 'r',
          *         't', or 'v' preceded by an escape character will be
          *         interpreted as the ASCII bell, backspace, form feed, line
-         *         feed, carriage return, horizontal tab, & vertical tab,
+         *         feed, carriage return, horizontal tab, and vertical tab,
          *         respectively.  For example, the escape character followed by
          *         an 'n' will be interpreted as a newline within a field
          *         value.  The escape character can also be used to escape the
@@ -1841,12 +1950,26 @@ namespace gpudb
          *         columns. Comma separated list of column names or '*' for all
          *         columns. To add text_search property only to string columns
          *         of minimum size, set also the option
-         *         'text_search_min_column_length'
+         *         'text_search_min_column_length'.
          *     <li>@ref
          *         gpudb::insert_records_from_payload_text_search_min_column_length
          *         "insert_records_from_payload_text_search_min_column_length":
          *         Set minimum column size. Used only when
          *         'text_search_columns' has a value.
+         *     <li>@ref gpudb::insert_records_from_payload_trim_space
+         *         "insert_records_from_payload_trim_space": If set to @ref
+         *         gpudb::insert_records_from_payload_true "true", remove
+         *         leading or trailing space from fields.
+         *         Supported values:
+         *         <ul>
+         *             <li>@ref gpudb::insert_records_from_payload_true
+         *                 "insert_records_from_payload_true"
+         *             <li>@ref gpudb::insert_records_from_payload_false
+         *                 "insert_records_from_payload_false"
+         *         </ul>
+         *         The default value is @ref
+         *         gpudb::insert_records_from_payload_false
+         *         "insert_records_from_payload_false".
          *     <li>@ref gpudb::insert_records_from_payload_truncate_strings
          *         "insert_records_from_payload_truncate_strings": If set to
          *         @ref gpudb::insert_records_from_payload_true "true",
@@ -1882,22 +2005,42 @@ namespace gpudb
          *         "insert_records_from_payload_type_inference_max_records_read":
          *         The default value is ''.
          *     <li>@ref gpudb::insert_records_from_payload_type_inference_mode
-         *         "insert_records_from_payload_type_inference_mode": optimize
-         *         type inference for:
+         *         "insert_records_from_payload_type_inference_mode": Optimize
+         *         type inference mode.
          *         Supported values:
          *         <ul>
          *             <li>@ref gpudb::insert_records_from_payload_accuracy
          *                 "insert_records_from_payload_accuracy": Scans data
-         *                 to get exactly-typed & sized columns for all data
+         *                 to get exactly-typed and sized columns for all data
          *                 scanned.
          *             <li>@ref gpudb::insert_records_from_payload_speed
          *                 "insert_records_from_payload_speed": Scans data and
          *                 picks the widest possible column types so that 'all'
-         *                 values will fit with minimum data scanned
+         *                 values will fit with minimum data scanned.
          *         </ul>
          *         The default value is @ref
          *         gpudb::insert_records_from_payload_accuracy
          *         "insert_records_from_payload_accuracy".
+         *     <li>@ref
+         *         gpudb::insert_records_from_payload_enable_inplace_updates
+         *         "insert_records_from_payload_enable_inplace_updates":
+         *         Applies only when upserting (when update_on_existing_pk is
+         *         true). If set to true (the default), an existing record
+         *         matched by primary key is modified in place. If set to
+         *         false, the matched record is updated by deleting it and
+         *         inserting a replacement (delete and insert), which prevents
+         *         the change from being reflected in dependent materialized
+         *         views until they are refreshed.
+         *         Supported values:
+         *         <ul>
+         *             <li>@ref gpudb::insert_records_from_payload_true
+         *                 "insert_records_from_payload_true"
+         *             <li>@ref gpudb::insert_records_from_payload_false
+         *                 "insert_records_from_payload_false"
+         *         </ul>
+         *         The default value is @ref
+         *         gpudb::insert_records_from_payload_true
+         *         "insert_records_from_payload_true".
          *     <li>@ref
          *         gpudb::insert_records_from_payload_update_on_existing_pk
          *         "insert_records_from_payload_update_on_existing_pk":
@@ -1915,7 +2058,7 @@ namespace gpudb
          *         while the new record will be rejected and the error handled
          *         as determined by @ref
          *         gpudb::insert_records_from_payload_ignore_existing_pk
-         *         "ignore_existing_pk" & @ref
+         *         "ignore_existing_pk" and @ref
          *         gpudb::insert_records_from_payload_error_handling
          *         "error_handling".  If the specified table does not have a
          *         primary key, then this option has no effect.
@@ -1923,14 +2066,23 @@ namespace gpudb
          *         <ul>
          *             <li>@ref gpudb::insert_records_from_payload_true
          *                 "insert_records_from_payload_true": Upsert new
-         *                 records when primary keys match existing records
+         *                 records when primary keys match existing records.
          *             <li>@ref gpudb::insert_records_from_payload_false
          *                 "insert_records_from_payload_false": Reject new
-         *                 records when primary keys match existing records
+         *                 records when primary keys match existing records.
          *         </ul>
          *         The default value is @ref
          *         gpudb::insert_records_from_payload_false
          *         "insert_records_from_payload_false".
+         *     <li>@ref gpudb::insert_records_from_payload_transformations
+         *         "insert_records_from_payload_transformations":
+         *         Comma-separated expressions, one per target table column.
+         *         Each expression is evaluated per record.  Empty entries (two
+         *         consecutive commas) mean no transformation for that column
+         *         -- the value is resolved from the input record, table
+         *         default, NULL, or an error. Expressions may reference input
+         *         columns by name or by position ($1 for the first input
+         *         column, $2 for the second, etc.). The default value is ''.
          * </ul>
          * The default value is an empty map.
          */
@@ -2039,24 +2191,24 @@ namespace gpudb
         /**
          * ID of the currently registered table structure <a
          * href="../../../concepts/types/" target="_top">type</a> for the
-         * target table
+         * target table.
          */
         std::string typeId;
 
         /**
-         * A JSON string describing the columns of the target table
+         * A JSON string describing the columns of the target table.
          */
         std::string typeDefinition;
 
         /**
          * The user-defined description associated with the target table's
-         * structure
+         * structure.
          */
         std::string typeLabel;
 
         /**
          * A mapping of each target table column name to an array of column
-         * properties associated with that column
+         * properties associated with that column.
          */
         std::map<std::string, std::vector<std::string> > typeProperties;
 

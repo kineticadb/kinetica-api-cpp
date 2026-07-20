@@ -144,6 +144,21 @@ namespace gpudb
          *                              gpudb::show_table_false
          *                              "show_table_false".
          *                          <li>@ref
+         *                              gpudb::show_table_referencing_materialized_views
+         *                              "show_table_referencing_materialized_views":
+         *                              Include materialized views using this
+         *                              table as a source in the output.
+         *                              Supported values:
+         *                              <ul>
+         *                                  <li>@ref gpudb::show_table_true
+         *                                      "show_table_true"
+         *                                  <li>@ref gpudb::show_table_false
+         *                                      "show_table_false"
+         *                              </ul>
+         *                              The default value is @ref
+         *                              gpudb::show_table_false
+         *                              "show_table_false".
+         *                          <li>@ref
          *                              gpudb::show_table_skip_additional_info
          *                              "show_table_skip_additional_info": If
          *                              @ref gpudb::show_table_true "true" then
@@ -308,6 +323,17 @@ namespace gpudb
          *         @ref gpudb::show_table_true "true" then the number of
          *         records in each table, along with a cumulative count, will
          *         be returned; blank, otherwise.
+         *         Supported values:
+         *         <ul>
+         *             <li>@ref gpudb::show_table_true "show_table_true"
+         *             <li>@ref gpudb::show_table_false "show_table_false"
+         *         </ul>
+         *         The default value is @ref gpudb::show_table_false
+         *         "show_table_false".
+         *     <li>@ref gpudb::show_table_referencing_materialized_views
+         *         "show_table_referencing_materialized_views": Include
+         *         materialized views using this table as a source in the
+         *         output.
          *         Supported values:
          *         <ul>
          *             <li>@ref gpudb::show_table_true "show_table_true"
@@ -582,9 +608,9 @@ namespace gpudb
          *         Supported values:
          *         <ul>
          *             <li>@ref gpudb::show_table_memory "show_table_memory":
-         *                 In-memory primary key
+         *                 In-memory primary key.
          *             <li>@ref gpudb::show_table_disk "show_table_disk":
-         *                 On-disk primary key
+         *                 On-disk primary key.
          *         </ul>
          *     <li>@ref gpudb::show_table_foreign_keys
          *         "show_table_foreign_keys": Semicolon-separated list of <a
@@ -607,15 +633,15 @@ namespace gpudb
          *             <li>@ref gpudb::show_table_RANGE "show_table_RANGE":
          *                 Using <a
          *                 href="../../../concepts/tables/#partitioning-by-range"
-         *                 target="_top">range partitioning</a>
+         *                 target="_top">range partitioning</a>.
          *             <li>@ref gpudb::show_table_INTERVAL
          *                 "show_table_INTERVAL": Using <a
          *                 href="../../../concepts/tables/#partitioning-by-interval"
-         *                 target="_top">interval partitioning</a>
+         *                 target="_top">interval partitioning</a>.
          *             <li>@ref gpudb::show_table_LIST "show_table_LIST": Using
          *                 <a
          *                 href="../../../concepts/tables/#partitioning-by-list-manual"
-         *                 target="_top">manual list partitioning</a>
+         *                 target="_top">manual list partitioning</a>.
          *             <li>@ref gpudb::show_table_HASH "show_table_HASH": Using
          *                 <a
          *                 href="../../../concepts/tables/#partitioning-by-hash"
@@ -625,7 +651,7 @@ namespace gpudb
          *                 href="../../../concepts/tables/#partitioning-by-series"
          *                 target="_top">series partitioning</a>.
          *             <li>@ref gpudb::show_table_NONE "show_table_NONE": Using
-         *                 no partitioning
+         *                 no partitioning.
          *         </ul>
          *         The default value is @ref gpudb::show_table_NONE
          *         "show_table_NONE".

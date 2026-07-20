@@ -54,8 +54,34 @@ namespace gpudb
          *                                        "schema_name" is empty, then
          *                                        the user's default schema
          *                                        will be used.
+         *                                    <li>@ref
+         *                                        gpudb::alter_table_monitor_max_consecutive_failures
+         *                                        "alter_table_monitor_max_consecutive_failures":
+         *                                        Updates the maximum number of
+         *                                        consecutive failures before
+         *                                        suspending the stream.  A
+         *                                        value of '-1' to disables
+         *                                        auto-suspend. This value is
+         *                                        by rank and not overall.
+         *                                    <li>@ref
+         *                                        gpudb::alter_table_monitor_notifications
+         *                                        "alter_table_monitor_notifications":
+         *                                        Updates the state of the
+         *                                        monitor.
+         *                                        Supported values:
+         *                                        <ul>
+         *                                            <li>@ref
+         *                                                gpudb::alter_table_monitor_resume
+         *                                                "alter_table_monitor_resume"
+         *                                            <li>@ref
+         *                                                gpudb::alter_table_monitor_suspend
+         *                                                "alter_table_monitor_suspend"
+         *                                        </ul>
+         *                                        The default value is an empty
+         *                                        map.
          *                                </ul>
-         * @param[in] options_  Optional parameters.
+         * @param[in] options_  Optional parameters. The default value is an
+         *                      empty map.
          */
         AlterTableMonitorRequest(const std::string& topicId_, const std::map<std::string, std::string>& monitorUpdatesMap_, const std::map<std::string, std::string>& options_):
             topicId( topicId_ ),
@@ -81,12 +107,28 @@ namespace gpudb
          *         doesn't exist, an error will be thrown. If @ref
          *         gpudb::alter_table_monitor_schema_name "schema_name" is
          *         empty, then the user's default schema will be used.
+         *     <li>@ref gpudb::alter_table_monitor_max_consecutive_failures
+         *         "alter_table_monitor_max_consecutive_failures": Updates the
+         *         maximum number of consecutive failures before suspending the
+         *         stream.  A value of '-1' to disables auto-suspend. This
+         *         value is by rank and not overall.
+         *     <li>@ref gpudb::alter_table_monitor_notifications
+         *         "alter_table_monitor_notifications": Updates the state of
+         *         the monitor.
+         *         Supported values:
+         *         <ul>
+         *             <li>@ref gpudb::alter_table_monitor_resume
+         *                 "alter_table_monitor_resume"
+         *             <li>@ref gpudb::alter_table_monitor_suspend
+         *                 "alter_table_monitor_suspend"
+         *         </ul>
+         *         The default value is an empty map.
          * </ul>
          */
         std::map<std::string, std::string> monitorUpdatesMap;
 
         /**
-         * Optional parameters.
+         * Optional parameters. The default value is an empty map.
          */
         std::map<std::string, std::string> options;
     };

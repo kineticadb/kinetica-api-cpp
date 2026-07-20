@@ -175,6 +175,10 @@ namespace gpudb
          */
         int32_t count;
 
+        /**
+         * Indicates whether a valid convex hull could be computed for the
+         * input.
+         */
         bool isValid;
 
         /**

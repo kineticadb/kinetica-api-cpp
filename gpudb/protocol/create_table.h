@@ -775,7 +775,7 @@ namespace gpudb
          * <ul>
          *     <li>@ref gpudb::create_table_qualified_table_name
          *         "create_table_qualified_table_name": The fully qualified
-         *         name of the new table (i.e. including the schema)
+         *         name of the new table (i.e. including the schema).
          * </ul>
          * The default value is an empty map.
          */

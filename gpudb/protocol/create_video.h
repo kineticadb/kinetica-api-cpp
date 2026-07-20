@@ -45,7 +45,7 @@ namespace gpudb
          *                        numeric type.
          * @param[in] begin_  The start point for the video. Accepts an
          *                    expression evaluable over the @a attribute_.
-         * @param[in] durationSeconds_  Seconds of video to produce
+         * @param[in] durationSeconds_  Seconds of video to produce.
          * @param[in] end_  The end point for the video. Accepts an expression
          *                  evaluable over the @a attribute_.
          * @param[in] framesPerSecond_  The presentation frame rate of the
@@ -164,7 +164,7 @@ namespace gpudb
         std::string begin;
 
         /**
-         * Seconds of video to produce
+         * Seconds of video to produce.
          */
         double durationSeconds;
 

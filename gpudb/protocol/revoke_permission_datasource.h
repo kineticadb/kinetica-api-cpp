@@ -43,12 +43,12 @@ namespace gpudb
          *                                 gpudb::revoke_permission_datasource_admin
          *                                 "revoke_permission_datasource_admin":
          *                                 Admin access on the given data
-         *                                 source
+         *                                 source.
          *                             <li>@ref
          *                                 gpudb::revoke_permission_datasource_connect
          *                                 "revoke_permission_datasource_connect":
          *                                 Connect access on the given data
-         *                                 source
+         *                                 source.
          *                         </ul>
          * @param[in] datasourceName_  Name of the data source on which the
          *                             permission will be revoked. Must be an
@@ -78,10 +78,10 @@ namespace gpudb
          * <ul>
          *     <li>@ref gpudb::revoke_permission_datasource_admin
          *         "revoke_permission_datasource_admin": Admin access on the
-         *         given data source
+         *         given data source.
          *     <li>@ref gpudb::revoke_permission_datasource_connect
          *         "revoke_permission_datasource_connect": Connect access on
-         *         the given data source
+         *         the given data source.
          * </ul>
          */
         std::string permission;

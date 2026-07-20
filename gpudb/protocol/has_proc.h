@@ -111,7 +111,7 @@ namespace gpudb
         }
 
         /**
-         * Value of @ref gpudb::HasProcRequest::procName "procName"
+         * Value of @ref gpudb::HasProcRequest::procName "procName".
          */
         std::string procName;
 

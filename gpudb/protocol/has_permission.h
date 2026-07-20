@@ -44,6 +44,9 @@ namespace gpudb
          * @param[in] objectType_  The type of object being checked.
          *                         Supported values:
          *                         <ul>
+         *                             <li>@ref gpudb::has_permission_catalog
+         *                                 "has_permission_catalog": External
+         *                                 Catalog
          *                             <li>@ref gpudb::has_permission_context
          *                                 "has_permission_context": Context
          *                             <li>@ref
@@ -103,6 +106,9 @@ namespace gpudb
          *                             <li>@ref gpudb::has_permission_insert
          *                                 "has_permission_insert": Insert
          *                                 access to tables.
+         *                             <li>@ref gpudb::has_permission_monitor
+         *                                 "has_permission_monitor": Monitor
+         *                                 logs and statistics.
          *                             <li>@ref gpudb::has_permission_read
          *                                 "has_permission_read": Ability to
          *                                 read, list and use the object.
@@ -177,6 +183,8 @@ namespace gpudb
          * The type of object being checked.
          * Supported values:
          * <ul>
+         *     <li>@ref gpudb::has_permission_catalog "has_permission_catalog":
+         *         External Catalog
          *     <li>@ref gpudb::has_permission_context "has_permission_context":
          *         Context
          *     <li>@ref gpudb::has_permission_credential
@@ -221,6 +229,8 @@ namespace gpudb
          *         Ability to Execute the Procedure object.
          *     <li>@ref gpudb::has_permission_insert "has_permission_insert":
          *         Insert access to tables.
+         *     <li>@ref gpudb::has_permission_monitor "has_permission_monitor":
+         *         Monitor logs and statistics.
          *     <li>@ref gpudb::has_permission_read "has_permission_read":
          *         Ability to read, list and use the object.
          *     <li>@ref gpudb::has_permission_send_alert
@@ -346,23 +356,23 @@ namespace gpudb
         }
 
         /**
-         * Value of @ref gpudb::HasPermissionRequest::principal "principal"
+         * Value of @ref gpudb::HasPermissionRequest::principal "principal".
          */
         std::string principal;
 
         /**
          * Fully-qualified value of @ref gpudb::HasPermissionRequest::object
-         * "object"
+         * "object".
          */
         std::string object;
 
         /**
-         * Value of @ref gpudb::HasPermissionRequest::objectType "objectType"
+         * Value of @ref gpudb::HasPermissionRequest::objectType "objectType".
          */
         std::string objectType;
 
         /**
-         * Value of @ref gpudb::HasPermissionRequest::permission "permission"
+         * Value of @ref gpudb::HasPermissionRequest::permission "permission".
          */
         std::string permission;
 
@@ -371,8 +381,8 @@ namespace gpudb
          * the specified target.
          * Supported values:
          * <ul>
-         *     <li>true: User has the effective queried permission
-         *     <li>false: User does not have the queried permission
+         *     <li>true: User has the effective queried permission.
+         *     <li>false: User does not have the queried permission.
          * </ul>
          */
         bool hasPermission;

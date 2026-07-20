@@ -123,31 +123,31 @@ namespace gpudb
         }
 
         /**
-         * KiFS directory names
+         * KiFS directory names.
          */
         std::vector<std::string> directories;
 
         /**
          * User that created each directory for the respective directories in
-         * @ref directories
+         * @ref directories.
          */
         std::vector<std::string> users;
 
         /**
          * The creation time for each directory in milliseconds since epoch,
-         * for the respective directories in @ref directories
+         * for the respective directories in @ref directories.
          */
         std::vector<int64_t> creationTimes;
 
         /**
          * The data usage each directory in bytes, for the respective
-         * directories in @ref directories
+         * directories in @ref directories.
          */
         std::vector<int64_t> dataUsages;
 
         /**
          * The data limit for each directory in bytes, for the respective
-         * directories in @ref directories
+         * directories in @ref directories.
          */
         std::vector<int64_t> dataLimits;
 

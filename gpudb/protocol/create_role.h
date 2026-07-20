@@ -37,7 +37,7 @@ namespace gpudb
          *                          <li>@ref gpudb::create_role_resource_group
          *                              "create_role_resource_group": Name of
          *                              an existing resource group to associate
-         *                              with this user
+         *                              with this user.
          *                      </ul>
          *                      The default value is an empty map.
          */
@@ -59,7 +59,7 @@ namespace gpudb
          * <ul>
          *     <li>@ref gpudb::create_role_resource_group
          *         "create_role_resource_group": Name of an existing resource
-         *         group to associate with this user
+         *         group to associate with this user.
          * </ul>
          * The default value is an empty map.
          */

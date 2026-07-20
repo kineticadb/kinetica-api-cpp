@@ -13,8 +13,11 @@ namespace gpudb
      * GPUdb::restoreBackup(const RestoreBackupRequest&) const
      * "GPUdb::restoreBackup".
      *
-     * Restores objects from a backup instance.
-     * Response from a backup restoration operation.
+     * Restores database objects from a <a
+     * href="../../../admin/backup_restore/#database-backup"
+     * target="_top">backup</a> accessible via the <a
+     * href="../../../concepts/data_sources/" target="_top">data source</a>
+     * specified by @ref datasourceName.
      */
     struct RestoreBackupRequest
     {
@@ -33,172 +36,201 @@ namespace gpudb
          * Constructs a RestoreBackupRequest object with the specified
          * parameters.
          *
-         * @param[in] backupName_  Name of the backup object, which must refer
-         *                         to a currently existing backup. The default
-         *                         value is ''.
-         * @param[in] restoreObjectsMap_  Map of objects to be restored from
-         *                                the backup. Error if empty.
+         * @param[in] backupName_  Name of the backup to restore from, which
+         *                         must refer to an existing backup. The
+         *                         default value is ''.
+         * @param[in] restoreObjectsMap_  Map of database objects to be
+         *                                restored from the backup.
          *                                <ul>
          *                                    <li>@ref
          *                                        gpudb::restore_backup_all
          *                                        "restore_backup_all": All
-         *                                        object types in a schema
-         *                                        (excludes permissions, system
-         *                                        configuration, host secret
-         *                                        key, KiFS directories and
-         *                                        user defined functions)
+         *                                        object types and data
+         *                                        contained in the given <a
+         *                                        href="../../../concepts/schemas/"
+         *                                        target="_top">schema(s)</a>.
          *                                    <li>@ref
-         *                                        gpudb::restore_backup_table
-         *                                        "restore_backup_table":
-         *                                        Database Table
+         *                                        gpudb::restore_backup_catalog
+         *                                        "restore_backup_catalog":
+         *                                        Data Lake catalog that is
+         *                                        external to the database.
+         *                                    <li>@ref
+         *                                        gpudb::restore_backup_context
+         *                                        "restore_backup_context": <a
+         *                                        href="../../../sql-gpt/concepts/#sql-gpt-context"
+         *                                        target="_top">Context(s)</a>.
          *                                    <li>@ref
          *                                        gpudb::restore_backup_credential
          *                                        "restore_backup_credential":
-         *                                        Credential
-         *                                    <li>@ref
-         *                                        gpudb::restore_backup_context
-         *                                        "restore_backup_context":
-         *                                        Context
+         *                                        <a
+         *                                        href="../../../concepts/credentials/"
+         *                                        target="_top">Credential(s)</a>.
          *                                    <li>@ref
          *                                        gpudb::restore_backup_datasink
-         *                                        "restore_backup_datasink":
-         *                                        Data Sink
+         *                                        "restore_backup_datasink": <a
+         *                                        href="../../../concepts/data_sinks/"
+         *                                        target="_top">Data
+         *                                        sink(s)</a>.
          *                                    <li>@ref
          *                                        gpudb::restore_backup_datasource
          *                                        "restore_backup_datasource":
-         *                                        Data Source
+         *                                        <a
+         *                                        href="../../../concepts/data_sources/"
+         *                                        target="_top">Data
+         *                                        source(s)</a>.
+         *                                    <li>@ref
+         *                                        gpudb::restore_backup_directory
+         *                                        "restore_backup_directory":
+         *                                        KiFS <a
+         *                                        href="../../../tools/kifs/"
+         *                                        target="_top">File
+         *                                        directory(ies)</a>.
+         *                                    <li>@ref
+         *                                        gpudb::restore_backup_function_environment
+         *                                        "restore_backup_function_environment":
+         *                                        <a
+         *                                        href="../../../udf/python/writing/#udf-python-func-env"
+         *                                        target="_top">Python UDF
+         *                                        function environment(s)</a>.
+         *                                    <li>@ref
+         *                                        gpudb::restore_backup_graph
+         *                                        "restore_backup_graph": <a
+         *                                        href="../../../graph_solver/network_graph_solver/"
+         *                                        target="_top">Graph</a>
+         *                                        definition(s).  Source
+         *                                        table(s), if applicable, are
+         *                                        required in order to restore
+         *                                        graph objects.
+         *                                    <li>@ref
+         *                                        gpudb::restore_backup_monitor
+         *                                        "restore_backup_monitor": <a
+         *                                        href="../../../concepts/table_monitors/"
+         *                                        target="_top">Table
+         *                                        monitor(s)</a> / <a
+         *                                        href="../../../sql/ddl/#create-stream"
+         *                                        target="_top">SQL
+         *                                        stream(s)</a>.
+         *                                    <li>@ref
+         *                                        gpudb::restore_backup_resource_group
+         *                                        "restore_backup_resource_group":
+         *                                        <a
+         *                                        href="../../../rm/concepts/#resource-groups"
+         *                                        target="_top">Resource
+         *                                        group(s)</a>.
+         *                                    <li>@ref
+         *                                        gpudb::restore_backup_role
+         *                                        "restore_backup_role": <a
+         *                                        href="../../../security/sec_concepts/#roles"
+         *                                        target="_top">Role(s)</a>,
+         *                                        role members (roles or users,
+         *                                        recursively), and associated
+         *                                        permissions.
          *                                    <li>@ref
          *                                        gpudb::restore_backup_stored_procedure
          *                                        "restore_backup_stored_procedure":
-         *                                        SQL Procedure
+         *                                        <a
+         *                                        href="../../../sql/procedure/"
+         *                                        target="_top">SQL
+         *                                        procedure(s)</a>.
          *                                    <li>@ref
-         *                                        gpudb::restore_backup_monitor
-         *                                        "restore_backup_monitor":
-         *                                        Table Monitor (Stream)
+         *                                        gpudb::restore_backup_table
+         *                                        "restore_backup_table": <a
+         *                                        href="../../../concepts/tables/"
+         *                                        target="_top">Table(s)</a>
+         *                                        and <a
+         *                                        href="../../../sql/ddl/#create-view"
+         *                                        target="_top">SQL
+         *                                        view(s)</a>.  Tables with
+         *                                        subscriptions will by default
+         *                                        be restored in the state they
+         *                                        were in at the time of the
+         *                                        snapshot.  See @ref
+         *                                        gpudb::restore_backup_restore_subscriptions
+         *                                        "restore_subscriptions" for
+         *                                        options to override the
+         *                                        default behavior.
          *                                    <li>@ref
          *                                        gpudb::restore_backup_user
-         *                                        "restore_backup_user": User
+         *                                        "restore_backup_user": <a
+         *                                        href="../../../security/sec_concepts/#security-concepts-users"
+         *                                        target="_top">User(s)</a>
          *                                        (internal and external) and
-         *                                        associated permissions
+         *                                        associated permissions.
          *                                    <li>@ref
-         *                                        gpudb::restore_backup_role
-         *                                        "restore_backup_role": Role,
-         *                                        role members (roles or users,
-         *                                        recursively) and associated
-         *                                        permissions
-         *                                    <li>@ref
-         *                                        gpudb::restore_backup_configuration
-         *                                        "restore_backup_configuration":
-         *                                        If @ref
-         *                                        gpudb::restore_backup_true
-         *                                        "true", restore the database
-         *                                        configuration file.
-         *                                        Supported values:
-         *                                        <ul>
-         *                                            <li>@ref
-         *                                                gpudb::restore_backup_false
-         *                                                "restore_backup_false"
-         *                                            <li>@ref
-         *                                                gpudb::restore_backup_true
-         *                                                "restore_backup_true"
-         *                                        </ul>
-         *                                        The default value is @ref
-         *                                        gpudb::restore_backup_false
-         *                                        "restore_backup_false".
+         *                                        gpudb::restore_backup_user_defined_function
+         *                                        "restore_backup_user_defined_function":
+         *                                        <a
+         *                                        href="../../../udf_overview"
+         *                                        target="_top">UDF(s)</a>.
          *                                </ul>
-         * @param[in] datasourceName_  Datasource where backup is located.
+         * @param[in] datasourceName_  Data source through which the backup
+         *                             will be restored.
          * @param[in] options_  Optional parameters.
          *                      <ul>
          *                          <li>@ref gpudb::restore_backup_backup_id
-         *                              "restore_backup_backup_id": Backup
-         *                              instance ID to restore. Leave empty to
-         *                              restore the most recent backup
-         *                              instance. The default value is ''.
-         *                          <li>@ref
-         *                              gpudb::restore_backup_restore_policy
-         *                              "restore_backup_restore_policy":
-         *                              Behavior to apply when restoring
-         *                              objects that already exist.
+         *                              "restore_backup_backup_id": ID of the
+         *                              snapshot to restore. Leave empty to
+         *                              restore the most recent snapshot in the
+         *                              backup. The default value is ''.
+         *                          <li>@ref gpudb::restore_backup_checksum
+         *                              "restore_backup_checksum": Whether or
+         *                              not to verify checksums for backup
+         *                              files when restoring.
          *                              Supported values:
          *                              <ul>
-         *                                  <li>@ref gpudb::restore_backup_none
-         *                                      "restore_backup_none": If an
-         *                                      object to be restored currently
-         *                                      exists with the same name,
-         *                                      abort and return error
-         *                                  <li>@ref
-         *                                      gpudb::restore_backup_replace
-         *                                      "restore_backup_replace": If an
-         *                                      object to be restored currently
-         *                                      exists with the same name,
-         *                                      replace it with the backup
-         *                                      version
-         *                                  <li>@ref
-         *                                      gpudb::restore_backup_rename
-         *                                      "restore_backup_rename": If an
-         *                                      object to be restored currently
-         *                                      exists with the same name,
-         *                                      rename the original version
-         *                              </ul>
-         *                              The default value is @ref
-         *                              gpudb::restore_backup_none
-         *                              "restore_backup_none".
-         *                          <li>@ref
-         *                              gpudb::restore_backup_renamed_objects_schema
-         *                              "restore_backup_renamed_objects_schema":
-         *                              If the restore policy is rename,
-         *                              optionally use this schema for renamed
-         *                              objects instead of a default generated
-         *                              one. The default value is ''.
-         *                          <li>@ref
-         *                              gpudb::restore_backup_create_schema_if_not_exist
-         *                              "restore_backup_create_schema_if_not_exist":
-         *                              Create the schema for an object to be
-         *                              restored if it does not currently
-         *                              exist. Error otherwise.
-         *                              Supported values:
-         *                              <ul>
+         *                                  <li>@ref gpudb::restore_backup_true
+         *                                      "restore_backup_true"
          *                                  <li>@ref
          *                                      gpudb::restore_backup_false
          *                                      "restore_backup_false"
+         *                              </ul>
+         *                              The default value is @ref
+         *                              gpudb::restore_backup_false
+         *                              "restore_backup_false".
+         *                          <li>@ref
+         *                              gpudb::restore_backup_create_schema_if_not_exist
+         *                              "restore_backup_create_schema_if_not_exist":
+         *                              Behavior to apply when the schema
+         *                              containing any database object to
+         *                              restore does not already exist.
+         *                              Supported values:
+         *                              <ul>
          *                                  <li>@ref gpudb::restore_backup_true
-         *                                      "restore_backup_true"
+         *                                      "restore_backup_true": If the
+         *                                      schema containing any restored
+         *                                      object does not exist, create
+         *                                      it automatically.
+         *                                  <li>@ref
+         *                                      gpudb::restore_backup_false
+         *                                      "restore_backup_false": If the
+         *                                      schema containing any restored
+         *                                      object does not exist, return
+         *                                      an error.
          *                              </ul>
          *                              The default value is @ref
          *                              gpudb::restore_backup_true
          *                              "restore_backup_true".
          *                          <li>@ref gpudb::restore_backup_ddl_only
-         *                              "restore_backup_ddl_only": Only
-         *                              recreates the objects from their DDL,
-         *                              do not restore table data.
+         *                              "restore_backup_ddl_only": Behavior to
+         *                              apply when restoring tables.
          *                              Supported values:
          *                              <ul>
          *                                  <li>@ref gpudb::restore_backup_true
-         *                                      "restore_backup_true"
+         *                                      "restore_backup_true": Restore
+         *                                      table DDL, but do not restore
+         *                                      data.
          *                                  <li>@ref
          *                                      gpudb::restore_backup_false
-         *                                      "restore_backup_false"
+         *                                      "restore_backup_false": Restore
+         *                                      tables and their data.
          *                              </ul>
          *                              The default value is @ref
          *                              gpudb::restore_backup_false
          *                              "restore_backup_false".
-         *                          <li>@ref gpudb::restore_backup_checksum
-         *                              "restore_backup_checksum": Verify
-         *                              checksum for backup files.
-         *                              Supported values:
-         *                              <ul>
-         *                                  <li>@ref
-         *                                      gpudb::restore_backup_false
-         *                                      "restore_backup_false"
-         *                                  <li>@ref gpudb::restore_backup_true
-         *                                      "restore_backup_true"
-         *                              </ul>
-         *                              The default value is @ref
-         *                              gpudb::restore_backup_true
-         *                              "restore_backup_true".
          *                          <li>@ref gpudb::restore_backup_dry_run
-         *                              "restore_backup_dry_run": Does a
-         *                              dry-run restoration operation.
+         *                              "restore_backup_dry_run": Whether or
+         *                              not to perform a dry run of the
+         *                              restoration operation.
          *                              Supported values:
          *                              <ul>
          *                                  <li>@ref gpudb::restore_backup_true
@@ -210,6 +242,132 @@ namespace gpudb
          *                              The default value is @ref
          *                              gpudb::restore_backup_false
          *                              "restore_backup_false".
+         *                          <li>@ref
+         *                              gpudb::restore_backup_restore_subscriptions
+         *                              "restore_backup_restore_subscriptions":
+         *                              Behavior to apply when restoring
+         *                              datasource subscriptions on tables.
+         *                              Supported values:
+         *                              <ul>
+         *                                  <li>@ref
+         *                                      gpudb::restore_backup_resume
+         *                                      "restore_backup_resume": Resume
+         *                                      subscriptions that were active
+         *                                      when the backup was made.
+         *                                  <li>@ref
+         *                                      gpudb::restore_backup_pause
+         *                                      "restore_backup_pause": Pause
+         *                                      subscriptions that were active
+         *                                      when the backup was made.
+         *                                  <li>@ref
+         *                                      gpudb::restore_backup_cancel
+         *                                      "restore_backup_cancel": Cancel
+         *                                      active subscriptions.
+         *                              </ul>
+         *                              The default value is @ref
+         *                              gpudb::restore_backup_resume
+         *                              "restore_backup_resume".
+         *                          <li>@ref gpudb::restore_backup_reingest
+         *                              "restore_backup_reingest": Behavior to
+         *                              apply when restoring table data.
+         *                              Supported values:
+         *                              <ul>
+         *                                  <li>@ref gpudb::restore_backup_true
+         *                                      "restore_backup_true": Restore
+         *                                      table data by re-ingesting it.
+         *                                      This is the default behavior if
+         *                                      the cluster topology differs
+         *                                      from that of the contained
+         *                                      backup.
+         *                                  <li>@ref
+         *                                      gpudb::restore_backup_false
+         *                                      "restore_backup_false": Restore
+         *                                      the persisted data files
+         *                                      directly.
+         *                              </ul>
+         *                              The default value is @ref
+         *                              gpudb::restore_backup_false
+         *                              "restore_backup_false".
+         *                          <li>@ref
+         *                              gpudb::restore_backup_renamed_objects_schema
+         *                              "restore_backup_renamed_objects_schema":
+         *                              If the @ref
+         *                              gpudb::restore_backup_restore_policy
+         *                              "restore_policy" is @ref
+         *                              gpudb::restore_backup_rename "rename",
+         *                              use this schema for relocated existing
+         *                              objects instead of the default
+         *                              generated one. The default value is ''.
+         *                          <li>@ref
+         *                              gpudb::restore_backup_restore_all_permissions
+         *                              "restore_backup_restore_all_permissions":
+         *                              Whether or not all permissions of
+         *                              restored principals should be restored
+         *                              or scoped to the restored objects.
+         *                              Supported values:
+         *                              <ul>
+         *                                  <li>@ref gpudb::restore_backup_true
+         *                                      "restore_backup_true": Restore
+         *                                      all permissions.
+         *                                  <li>@ref
+         *                                      gpudb::restore_backup_false
+         *                                      "restore_backup_false": Restore
+         *                                      only permissions on restored
+         *                                      objects.
+         *                              </ul>
+         *                              The default value is @ref
+         *                              gpudb::restore_backup_false
+         *                              "restore_backup_false".
+         *                          <li>@ref
+         *                              gpudb::restore_backup_restore_policy
+         *                              "restore_backup_restore_policy":
+         *                              Behavior to apply when any database
+         *                              object to restore already exists.
+         *                              Supported values:
+         *                              <ul>
+         *                                  <li>@ref gpudb::restore_backup_none
+         *                                      "restore_backup_none": If an
+         *                                      object to be restored already
+         *                                      exists with the same name,
+         *                                      abort and return error.
+         *                                  <li>@ref
+         *                                      gpudb::restore_backup_replace
+         *                                      "restore_backup_replace": If an
+         *                                      object to be restored already
+         *                                      exists with the same name,
+         *                                      replace it with the backup
+         *                                      version.
+         *                                  <li>@ref
+         *                                      gpudb::restore_backup_rename
+         *                                      "restore_backup_rename": If an
+         *                                      object to be restored already
+         *                                      exists with the same name, move
+         *                                      that existing one to the schema
+         *                                      specified by @ref
+         *                                      gpudb::restore_backup_renamed_objects_schema
+         *                                      "renamed_objects_schema". This
+         *                                      policy does not apply to
+         *                                      non-schema objects.
+         *                              </ul>
+         *                              The default value is @ref
+         *                              gpudb::restore_backup_none
+         *                              "restore_backup_none".
+         *                          <li>@ref
+         *                              gpudb::restore_backup_target_schema_map
+         *                              "restore_backup_target_schema_map":
+         *                              Restore schema-based objects to
+         *                              alternate schema. Value is a comma
+         *                              delimitted list of key:value pairs
+         *                              mapping the original (source) schema
+         *                              name as it exists in the backup to a
+         *                              target (destination) schema namespace:
+         *                              '&lt;src&gt;:&lt;dst&gt;,&lt;src&gt;:&lt;dst&gt;,...'.
+         *                              Note that schema names are case
+         *                              sensitive and must adhere to the
+         *                              database  schema <a
+         *                              href="../../../concepts/schemas/"
+         *                              target="_top">naming criteria</a>. The
+         *                              default value is ''.
          *                      </ul>
          *                      The default value is an empty map.
          */
@@ -222,56 +380,86 @@ namespace gpudb
         }
 
         /**
-         * Name of the backup object, which must refer to a currently existing
+         * Name of the backup to restore from, which must refer to an existing
          * backup. The default value is ''.
          */
         std::string backupName;
 
         /**
-         * Map of objects to be restored from the backup. Error if empty.
+         * Map of database objects to be restored from the backup.
          * <ul>
          *     <li>@ref gpudb::restore_backup_all "restore_backup_all": All
-         *         object types in a schema (excludes permissions, system
-         *         configuration, host secret key, KiFS directories and user
-         *         defined functions)
-         *     <li>@ref gpudb::restore_backup_table "restore_backup_table":
-         *         Database Table
-         *     <li>@ref gpudb::restore_backup_credential
-         *         "restore_backup_credential": Credential
+         *         object types and data contained in the given <a
+         *         href="../../../concepts/schemas/"
+         *         target="_top">schema(s)</a>.
+         *     <li>@ref gpudb::restore_backup_catalog "restore_backup_catalog":
+         *         Data Lake catalog that is external to the database.
          *     <li>@ref gpudb::restore_backup_context "restore_backup_context":
-         *         Context
+         *         <a href="../../../sql-gpt/concepts/#sql-gpt-context"
+         *         target="_top">Context(s)</a>.
+         *     <li>@ref gpudb::restore_backup_credential
+         *         "restore_backup_credential": <a
+         *         href="../../../concepts/credentials/"
+         *         target="_top">Credential(s)</a>.
          *     <li>@ref gpudb::restore_backup_datasink
-         *         "restore_backup_datasink": Data Sink
+         *         "restore_backup_datasink": <a
+         *         href="../../../concepts/data_sinks/" target="_top">Data
+         *         sink(s)</a>.
          *     <li>@ref gpudb::restore_backup_datasource
-         *         "restore_backup_datasource": Data Source
-         *     <li>@ref gpudb::restore_backup_stored_procedure
-         *         "restore_backup_stored_procedure": SQL Procedure
+         *         "restore_backup_datasource": <a
+         *         href="../../../concepts/data_sources/" target="_top">Data
+         *         source(s)</a>.
+         *     <li>@ref gpudb::restore_backup_directory
+         *         "restore_backup_directory": KiFS <a
+         *         href="../../../tools/kifs/" target="_top">File
+         *         directory(ies)</a>.
+         *     <li>@ref gpudb::restore_backup_function_environment
+         *         "restore_backup_function_environment": <a
+         *         href="../../../udf/python/writing/#udf-python-func-env"
+         *         target="_top">Python UDF function environment(s)</a>.
+         *     <li>@ref gpudb::restore_backup_graph "restore_backup_graph": <a
+         *         href="../../../graph_solver/network_graph_solver/"
+         *         target="_top">Graph</a> definition(s).  Source table(s), if
+         *         applicable, are required in order to restore graph objects.
          *     <li>@ref gpudb::restore_backup_monitor "restore_backup_monitor":
-         *         Table Monitor (Stream)
-         *     <li>@ref gpudb::restore_backup_user "restore_backup_user": User
-         *         (internal and external) and associated permissions
-         *     <li>@ref gpudb::restore_backup_role "restore_backup_role": Role,
-         *         role members (roles or users, recursively) and associated
-         *         permissions
-         *     <li>@ref gpudb::restore_backup_configuration
-         *         "restore_backup_configuration": If @ref
-         *         gpudb::restore_backup_true "true", restore the database
-         *         configuration file.
-         *         Supported values:
-         *         <ul>
-         *             <li>@ref gpudb::restore_backup_false
-         *                 "restore_backup_false"
-         *             <li>@ref gpudb::restore_backup_true
-         *                 "restore_backup_true"
-         *         </ul>
-         *         The default value is @ref gpudb::restore_backup_false
-         *         "restore_backup_false".
+         *         <a href="../../../concepts/table_monitors/"
+         *         target="_top">Table monitor(s)</a> / <a
+         *         href="../../../sql/ddl/#create-stream" target="_top">SQL
+         *         stream(s)</a>.
+         *     <li>@ref gpudb::restore_backup_resource_group
+         *         "restore_backup_resource_group": <a
+         *         href="../../../rm/concepts/#resource-groups"
+         *         target="_top">Resource group(s)</a>.
+         *     <li>@ref gpudb::restore_backup_role "restore_backup_role": <a
+         *         href="../../../security/sec_concepts/#roles"
+         *         target="_top">Role(s)</a>, role members (roles or users,
+         *         recursively), and associated permissions.
+         *     <li>@ref gpudb::restore_backup_stored_procedure
+         *         "restore_backup_stored_procedure": <a
+         *         href="../../../sql/procedure/" target="_top">SQL
+         *         procedure(s)</a>.
+         *     <li>@ref gpudb::restore_backup_table "restore_backup_table": <a
+         *         href="../../../concepts/tables/" target="_top">Table(s)</a>
+         *         and <a href="../../../sql/ddl/#create-view"
+         *         target="_top">SQL view(s)</a>.  Tables with subscriptions
+         *         will by default be restored in the state they were in at the
+         *         time of the snapshot.  See @ref
+         *         gpudb::restore_backup_restore_subscriptions
+         *         "restore_subscriptions" for options to override the default
+         *         behavior.
+         *     <li>@ref gpudb::restore_backup_user "restore_backup_user": <a
+         *         href="../../../security/sec_concepts/#security-concepts-users"
+         *         target="_top">User(s)</a> (internal and external) and
+         *         associated permissions.
+         *     <li>@ref gpudb::restore_backup_user_defined_function
+         *         "restore_backup_user_defined_function": <a
+         *         href="../../../udf_overview" target="_top">UDF(s)</a>.
          * </ul>
          */
         std::map<std::string, std::string> restoreObjectsMap;
 
         /**
-         * Datasource where backup is located.
+         * Data source through which the backup will be restored.
          */
         std::string datasourceName;
 
@@ -279,72 +467,54 @@ namespace gpudb
          * Optional parameters.
          * <ul>
          *     <li>@ref gpudb::restore_backup_backup_id
-         *         "restore_backup_backup_id": Backup instance ID to restore.
-         *         Leave empty to restore the most recent backup instance. The
-         *         default value is ''.
-         *     <li>@ref gpudb::restore_backup_restore_policy
-         *         "restore_backup_restore_policy": Behavior to apply when
-         *         restoring objects that already exist.
+         *         "restore_backup_backup_id": ID of the snapshot to restore.
+         *         Leave empty to restore the most recent snapshot in the
+         *         backup. The default value is ''.
+         *     <li>@ref gpudb::restore_backup_checksum
+         *         "restore_backup_checksum": Whether or not to verify
+         *         checksums for backup files when restoring.
          *         Supported values:
          *         <ul>
-         *             <li>@ref gpudb::restore_backup_none
-         *                 "restore_backup_none": If an object to be restored
-         *                 currently exists with the same name, abort and
-         *                 return error
-         *             <li>@ref gpudb::restore_backup_replace
-         *                 "restore_backup_replace": If an object to be
-         *                 restored currently exists with the same name,
-         *                 replace it with the backup version
-         *             <li>@ref gpudb::restore_backup_rename
-         *                 "restore_backup_rename": If an object to be restored
-         *                 currently exists with the same name, rename the
-         *                 original version
-         *         </ul>
-         *         The default value is @ref gpudb::restore_backup_none
-         *         "restore_backup_none".
-         *     <li>@ref gpudb::restore_backup_renamed_objects_schema
-         *         "restore_backup_renamed_objects_schema": If the restore
-         *         policy is rename, optionally use this schema for renamed
-         *         objects instead of a default generated one. The default
-         *         value is ''.
-         *     <li>@ref gpudb::restore_backup_create_schema_if_not_exist
-         *         "restore_backup_create_schema_if_not_exist": Create the
-         *         schema for an object to be restored if it does not currently
-         *         exist. Error otherwise.
-         *         Supported values:
-         *         <ul>
-         *             <li>@ref gpudb::restore_backup_false
-         *                 "restore_backup_false"
          *             <li>@ref gpudb::restore_backup_true
          *                 "restore_backup_true"
+         *             <li>@ref gpudb::restore_backup_false
+         *                 "restore_backup_false"
+         *         </ul>
+         *         The default value is @ref gpudb::restore_backup_false
+         *         "restore_backup_false".
+         *     <li>@ref gpudb::restore_backup_create_schema_if_not_exist
+         *         "restore_backup_create_schema_if_not_exist": Behavior to
+         *         apply when the schema containing any database object to
+         *         restore does not already exist.
+         *         Supported values:
+         *         <ul>
+         *             <li>@ref gpudb::restore_backup_true
+         *                 "restore_backup_true": If the schema containing any
+         *                 restored object does not exist, create it
+         *                 automatically.
+         *             <li>@ref gpudb::restore_backup_false
+         *                 "restore_backup_false": If the schema containing any
+         *                 restored object does not exist, return an error.
          *         </ul>
          *         The default value is @ref gpudb::restore_backup_true
          *         "restore_backup_true".
          *     <li>@ref gpudb::restore_backup_ddl_only
-         *         "restore_backup_ddl_only": Only recreates the objects from
-         *         their DDL, do not restore table data.
+         *         "restore_backup_ddl_only": Behavior to apply when restoring
+         *         tables.
          *         Supported values:
          *         <ul>
          *             <li>@ref gpudb::restore_backup_true
-         *                 "restore_backup_true"
+         *                 "restore_backup_true": Restore table DDL, but do not
+         *                 restore data.
          *             <li>@ref gpudb::restore_backup_false
-         *                 "restore_backup_false"
+         *                 "restore_backup_false": Restore tables and their
+         *                 data.
          *         </ul>
          *         The default value is @ref gpudb::restore_backup_false
          *         "restore_backup_false".
-         *     <li>@ref gpudb::restore_backup_checksum
-         *         "restore_backup_checksum": Verify checksum for backup files.
-         *         Supported values:
-         *         <ul>
-         *             <li>@ref gpudb::restore_backup_false
-         *                 "restore_backup_false"
-         *             <li>@ref gpudb::restore_backup_true
-         *                 "restore_backup_true"
-         *         </ul>
-         *         The default value is @ref gpudb::restore_backup_true
-         *         "restore_backup_true".
          *     <li>@ref gpudb::restore_backup_dry_run "restore_backup_dry_run":
-         *         Does a dry-run restoration operation.
+         *         Whether or not to perform a dry run of the restoration
+         *         operation.
          *         Supported values:
          *         <ul>
          *             <li>@ref gpudb::restore_backup_true
@@ -354,6 +524,92 @@ namespace gpudb
          *         </ul>
          *         The default value is @ref gpudb::restore_backup_false
          *         "restore_backup_false".
+         *     <li>@ref gpudb::restore_backup_restore_subscriptions
+         *         "restore_backup_restore_subscriptions": Behavior to apply
+         *         when restoring datasource subscriptions on tables.
+         *         Supported values:
+         *         <ul>
+         *             <li>@ref gpudb::restore_backup_resume
+         *                 "restore_backup_resume": Resume subscriptions that
+         *                 were active when the backup was made.
+         *             <li>@ref gpudb::restore_backup_pause
+         *                 "restore_backup_pause": Pause subscriptions that
+         *                 were active when the backup was made.
+         *             <li>@ref gpudb::restore_backup_cancel
+         *                 "restore_backup_cancel": Cancel active
+         *                 subscriptions.
+         *         </ul>
+         *         The default value is @ref gpudb::restore_backup_resume
+         *         "restore_backup_resume".
+         *     <li>@ref gpudb::restore_backup_reingest
+         *         "restore_backup_reingest": Behavior to apply when restoring
+         *         table data.
+         *         Supported values:
+         *         <ul>
+         *             <li>@ref gpudb::restore_backup_true
+         *                 "restore_backup_true": Restore table data by
+         *                 re-ingesting it.  This is the default behavior if
+         *                 the cluster topology differs from that of the
+         *                 contained backup.
+         *             <li>@ref gpudb::restore_backup_false
+         *                 "restore_backup_false": Restore the persisted data
+         *                 files directly.
+         *         </ul>
+         *         The default value is @ref gpudb::restore_backup_false
+         *         "restore_backup_false".
+         *     <li>@ref gpudb::restore_backup_renamed_objects_schema
+         *         "restore_backup_renamed_objects_schema": If the @ref
+         *         gpudb::restore_backup_restore_policy "restore_policy" is
+         *         @ref gpudb::restore_backup_rename "rename", use this schema
+         *         for relocated existing objects instead of the default
+         *         generated one. The default value is ''.
+         *     <li>@ref gpudb::restore_backup_restore_all_permissions
+         *         "restore_backup_restore_all_permissions": Whether or not all
+         *         permissions of restored principals should be restored or
+         *         scoped to the restored objects.
+         *         Supported values:
+         *         <ul>
+         *             <li>@ref gpudb::restore_backup_true
+         *                 "restore_backup_true": Restore all permissions.
+         *             <li>@ref gpudb::restore_backup_false
+         *                 "restore_backup_false": Restore only permissions on
+         *                 restored objects.
+         *         </ul>
+         *         The default value is @ref gpudb::restore_backup_false
+         *         "restore_backup_false".
+         *     <li>@ref gpudb::restore_backup_restore_policy
+         *         "restore_backup_restore_policy": Behavior to apply when any
+         *         database object to restore already exists.
+         *         Supported values:
+         *         <ul>
+         *             <li>@ref gpudb::restore_backup_none
+         *                 "restore_backup_none": If an object to be restored
+         *                 already exists with the same name, abort and return
+         *                 error.
+         *             <li>@ref gpudb::restore_backup_replace
+         *                 "restore_backup_replace": If an object to be
+         *                 restored already exists with the same name, replace
+         *                 it with the backup version.
+         *             <li>@ref gpudb::restore_backup_rename
+         *                 "restore_backup_rename": If an object to be restored
+         *                 already exists with the same name, move that
+         *                 existing one to the schema specified by @ref
+         *                 gpudb::restore_backup_renamed_objects_schema
+         *                 "renamed_objects_schema". This policy does not apply
+         *                 to non-schema objects.
+         *         </ul>
+         *         The default value is @ref gpudb::restore_backup_none
+         *         "restore_backup_none".
+         *     <li>@ref gpudb::restore_backup_target_schema_map
+         *         "restore_backup_target_schema_map": Restore schema-based
+         *         objects to alternate schema. Value is a comma delimitted
+         *         list of key:value pairs mapping the original (source) schema
+         *         name as it exists in the backup to a target (destination)
+         *         schema namespace:
+         *         '&lt;src&gt;:&lt;dst&gt;,&lt;src&gt;:&lt;dst&gt;,...'. Note
+         *         that schema names are case sensitive and must adhere to the
+         *         database  schema <a href="../../../concepts/schemas/"
+         *         target="_top">naming criteria</a>. The default value is ''.
          * </ul>
          * The default value is an empty map.
          */
@@ -441,43 +697,45 @@ namespace gpudb
         }
 
         /**
-         * The backup name
+         * Value of @ref gpudb::RestoreBackupRequest::backupName "backupName".
          */
         std::string backupName;
 
         /**
-         * The backup ID that was restored
+         * ID of the snapshot that was restored.
          */
         int64_t backupId;
 
         /**
-         * Total size of data restored from backup
+         * Total size of data restored from backup.
          */
         int64_t restoredBytes;
 
         /**
-         * Total number of files restored from backup
+         * Total number of files restored from backup.
          */
         int64_t restoredFiles;
 
         /**
-         * Total number of records restored from backup
+         * Total number of records restored from backup.
          */
         int64_t restoredRecords;
 
         /**
-         * Objects that were successfully restored and their associated types.
+         * Database objects that were successfully restored and their
+         * associated types.
          */
         std::map<std::string, std::string> restoredObjects;
 
         /**
-         * Original and new names of objects that were successfully restored
-         * and their associated types.
+         * Original and new names of database objects that were successfully
+         * restored and their associated types.
          */
         std::map<std::string, std::string> renamedObjects;
 
         /**
-         * Objects that failed to be restored and their associated types.
+         * Database objects that failed to be restored and their associated
+         * types.
          */
         std::map<std::string, std::string> failedObjects;
 

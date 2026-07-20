@@ -133,9 +133,9 @@ namespace gpudb
          * Supported values:
          * <ul>
          *     <li>@ref gpudb::show_datasource_hdfs "show_datasource_hdfs":
-         *         Apache Hadoop Distributed File System
+         *         Apache Hadoop Distributed File System.
          *     <li>@ref gpudb::show_datasource_s3 "show_datasource_s3": Amazon
-         *         S3 bucket
+         *         S3 bucket.
          * </ul>
          */
         std::vector<std::string> storageProviderTypes;
@@ -147,18 +147,18 @@ namespace gpudb
          *     <li>@ref gpudb::show_datasource_location
          *         "show_datasource_location": Location of the remote storage
          *         in 'storage_provider_type://[storage_path[:storage_port]]'
-         *         format
+         *         format.
          *     <li>@ref gpudb::show_datasource_s3_bucket_name
          *         "show_datasource_s3_bucket_name": Name of the Amazon S3
-         *         bucket used as the data source
+         *         bucket used as the data source.
          *     <li>@ref gpudb::show_datasource_s3_region
          *         "show_datasource_s3_region": Name of the Amazon S3 region
-         *         where the bucket is located
+         *         where the bucket is located.
          *     <li>@ref gpudb::show_datasource_hdfs_kerberos_keytab
          *         "show_datasource_hdfs_kerberos_keytab": Kerberos key for the
-         *         given HDFS user
+         *         given HDFS user.
          *     <li>@ref gpudb::show_datasource_user_name
-         *         "show_datasource_user_name": Name of the remote system user
+         *         "show_datasource_user_name": Name of the remote system user.
          * </ul>
          */
         std::vector<std::map<std::string, std::string> > additionalInfo;

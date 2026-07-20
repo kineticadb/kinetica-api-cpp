@@ -154,6 +154,17 @@ namespace gpudb
 
         /**
          * Additional information.
+         * <ul>
+         *     <li>@ref gpudb::aggregate_min_max_min_string
+         *         "aggregate_min_max_min_string": The minimum value of @ref
+         *         gpudb::AggregateMinMaxRequest::columnName "columnName",
+         *         stored as a byte vector.
+         *     <li>@ref gpudb::aggregate_min_max_max_string
+         *         "aggregate_min_max_max_string": The maximum value of @ref
+         *         gpudb::AggregateMinMaxRequest::columnName "columnName",
+         *         stored as a byte vector.
+         * </ul>
+         * The default value is an empty map.
          */
         std::map<std::string, std::string> info;
     };

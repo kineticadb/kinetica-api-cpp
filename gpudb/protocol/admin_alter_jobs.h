@@ -48,7 +48,7 @@ namespace gpudb
          *                      <ul>
          *                          <li>@ref gpudb::admin_alter_jobs_job_tag
          *                              "admin_alter_jobs_job_tag": Job tag
-         *                              returned in call to create the job
+         *                              returned in call to create the job.
          *                      </ul>
          *                      The default value is an empty map.
          */
@@ -79,7 +79,7 @@ namespace gpudb
          * <ul>
          *     <li>@ref gpudb::admin_alter_jobs_job_tag
          *         "admin_alter_jobs_job_tag": Job tag returned in call to
-         *         create the job
+         *         create the job.
          * </ul>
          * The default value is an empty map.
          */

@@ -58,8 +58,7 @@ namespace gpudb
          *                      internal keys represents which parameter is
          *                      being specified.  These parameters take on
          *                      different meanings depending on the type of the
-         *                      column.  Below follows a more detailed
-         *                      description of the map:
+         *                      column.
          *                      <ul>
          *                          <li>@ref gpudb::insert_records_random_seed
          *                              "insert_records_random_seed": If
@@ -80,7 +79,7 @@ namespace gpudb
          *                                  <li>@ref
          *                                      gpudb::insert_records_random_value
          *                                      "insert_records_random_value":
-         *                                      The seed value to use
+         *                                      The seed value to use.
          *                              </ul>
          *                          <li>@ref gpudb::insert_records_random_all
          *                              "insert_records_random_all": This key
@@ -401,8 +400,7 @@ namespace gpudb
          * map, the top level keys represent which column's parameters are
          * being specified, while the internal keys represents which parameter
          * is being specified.  These parameters take on different meanings
-         * depending on the type of the column.  Below follows a more detailed
-         * description of the map:
+         * depending on the type of the column.
          * <ul>
          *     <li>@ref gpudb::insert_records_random_seed
          *         "insert_records_random_seed": If provided, the internal
@@ -416,7 +414,8 @@ namespace gpudb
          *         equivalent to: 'options' = {'seed': { 'value': 100 } }.
          *         <ul>
          *             <li>@ref gpudb::insert_records_random_value
-         *                 "insert_records_random_value": The seed value to use
+         *                 "insert_records_random_value": The seed value to
+         *                 use.
          *         </ul>
          *     <li>@ref gpudb::insert_records_random_all
          *         "insert_records_random_all": This key indicates that the

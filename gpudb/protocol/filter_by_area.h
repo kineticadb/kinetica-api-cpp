@@ -296,7 +296,7 @@ namespace gpudb
          * <ul>
          *     <li>@ref gpudb::filter_by_area_qualified_view_name
          *         "filter_by_area_qualified_view_name": The fully qualified
-         *         name of the view (i.e. including the schema)
+         *         name of the view (i.e. including the schema).
          * </ul>
          * The default value is an empty map.
          */

@@ -278,10 +278,31 @@ namespace gpudb
         extern const std::string INIT_WITH_UUID;
 
         /**
-         * For 'date', 'time', 'datetime', or 'timestamp' column types, always
-         * update the field with 'NOW()' upon any update.
+         * For 'date', 'time', 'datetime', or 'timestamp' column types, update
+         * the field with 'NOW()' upon any update.
          */
         extern const std::string UPDATE_WITH_NOW;
+
+        /**
+         * For 'charN' or 'string' column types, update the field with the
+         * current user's name upon any update.
+         */
+        extern const std::string UPDATE_WITH_USER;
+
+        /**
+         * Sets a default value expression for this column, e.g.\ 'default(0)',
+         * 'default(''pending'')', or 'default(NOW())'.  When the column is
+         * omitted from an insert via request_schema_str, the expression is
+         * evaluated and the result is used as the column value.
+         */
+        extern const std::string DEFAULT;
+
+        /**
+         * Sets a default value expression for this column with SQL syntax,
+         * e.g.\ 'default(0)', 'default(''pending'')', or 'default(NOW())'.
+         * Only used for showing the expression when generating SQL DDL.
+         */
+        extern const std::string DEFAULT_SQL;
     } // end namespace ColumnProperty
 } // end namespace gpudb
 

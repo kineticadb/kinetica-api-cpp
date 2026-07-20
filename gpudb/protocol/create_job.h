@@ -75,7 +75,7 @@ namespace gpudb
          *                              submitted job. The same tag could be
          *                              used on backup cluster to retrieve
          *                              response for the job. Tags can use
-         *                              letter, numbers, '_' and '-'
+         *                              letter, numbers, '_' and '-'.
          *                      </ul>
          *                      The default value is an empty map.
          */
@@ -133,7 +133,7 @@ namespace gpudb
          *     <li>@ref gpudb::create_job_job_tag "create_job_job_tag": Tag to
          *         use for submitted job. The same tag could be used on backup
          *         cluster to retrieve response for the job. Tags can use
-         *         letter, numbers, '_' and '-'
+         *         letter, numbers, '_' and '-'.
          * </ul>
          * The default value is an empty map.
          */
@@ -231,7 +231,7 @@ namespace gpudb
          *         unique identifier generated internally.
          *     <li>@ref gpudb::create_job_query_id "create_job_query_id": A
          *         unique identifier for this job generated for use in tracing
-         *         telemetry data
+         *         telemetry data.
          * </ul>
          * The default value is an empty map.
          */

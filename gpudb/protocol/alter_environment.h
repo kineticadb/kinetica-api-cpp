@@ -43,12 +43,12 @@ namespace gpudb
          *                             gpudb::alter_environment_install_package
          *                             "alter_environment_install_package":
          *                             Install a python package from PyPI, an
-         *                             external data source or KiFS
+         *                             external data source or KiFS.
          *                         <li>@ref
          *                             gpudb::alter_environment_install_requirements
          *                             "alter_environment_install_requirements":
          *                             Install packages from a requirements
-         *                             file
+         *                             file.
          *                         <li>@ref
          *                             gpudb::alter_environment_uninstall_package
          *                             "alter_environment_uninstall_package":
@@ -57,17 +57,17 @@ namespace gpudb
          *                             gpudb::alter_environment_uninstall_requirements
          *                             "alter_environment_uninstall_requirements":
          *                             Uninstall packages from a requirements
-         *                             file
+         *                             file.
          *                         <li>@ref gpudb::alter_environment_reset
          *                             "alter_environment_reset": Uninstalls
          *                             all packages in the environment and
          *                             resets it to the original state at time
-         *                             of creation
+         *                             of creation.
          *                         <li>@ref gpudb::alter_environment_rebuild
          *                             "alter_environment_rebuild": Recreates
          *                             the environment and re-installs all
          *                             packages, upgrades the packages if
-         *                             necessary based on dependencies
+         *                             necessary based on dependencies.
          *                     </ul>
          * @param[in] value_  The value of the modification, depending on @a
          *                    action_.  For example, if @a action_ is @ref
@@ -93,7 +93,7 @@ namespace gpudb
          *                              "alter_environment_datasource_name":
          *                              Name of an existing external data
          *                              source from which packages specified in
-         *                              @a value_ can be loaded
+         *                              @a value_ can be loaded.
          *                      </ul>
          *                      The default value is an empty map.
          */
@@ -116,24 +116,24 @@ namespace gpudb
          * <ul>
          *     <li>@ref gpudb::alter_environment_install_package
          *         "alter_environment_install_package": Install a python
-         *         package from PyPI, an external data source or KiFS
+         *         package from PyPI, an external data source or KiFS.
          *     <li>@ref gpudb::alter_environment_install_requirements
          *         "alter_environment_install_requirements": Install packages
-         *         from a requirements file
+         *         from a requirements file.
          *     <li>@ref gpudb::alter_environment_uninstall_package
          *         "alter_environment_uninstall_package": Uninstall a python
          *         package.
          *     <li>@ref gpudb::alter_environment_uninstall_requirements
          *         "alter_environment_uninstall_requirements": Uninstall
-         *         packages from a requirements file
+         *         packages from a requirements file.
          *     <li>@ref gpudb::alter_environment_reset
          *         "alter_environment_reset": Uninstalls all packages in the
          *         environment and resets it to the original state at time of
-         *         creation
+         *         creation.
          *     <li>@ref gpudb::alter_environment_rebuild
          *         "alter_environment_rebuild": Recreates the environment and
          *         re-installs all packages, upgrades the packages if necessary
-         *         based on dependencies
+         *         based on dependencies.
          * </ul>
          */
         std::string action;
@@ -163,7 +163,7 @@ namespace gpudb
          *     <li>@ref gpudb::alter_environment_datasource_name
          *         "alter_environment_datasource_name": Name of an existing
          *         external data source from which packages specified in @ref
-         *         value can be loaded
+         *         value can be loaded.
          * </ul>
          * The default value is an empty map.
          */

@@ -79,8 +79,8 @@ namespace gpudb
          *                              results should be returned. The default
          *                              value is '-9999'.
          *                          <li>@ref gpudb::append_records_expression
-         *                              "append_records_expression": Optional
-         *                              filter expression to apply to the @a
+         *                              "append_records_expression": Filter
+         *                              expression to apply to the @a
          *                              sourceTableName_. The default value is
          *                              ''.
          *                          <li>@ref gpudb::append_records_order_by
@@ -125,16 +125,44 @@ namespace gpudb
          *                                  <li>@ref gpudb::append_records_true
          *                                      "append_records_true": Upsert
          *                                      new records when primary keys
-         *                                      match existing records
+         *                                      match existing records.
          *                                  <li>@ref
          *                                      gpudb::append_records_false
          *                                      "append_records_false": Reject
          *                                      new records when primary keys
-         *                                      match existing records
+         *                                      match existing records.
          *                              </ul>
          *                              The default value is @ref
          *                              gpudb::append_records_false
          *                              "append_records_false".
+         *                          <li>@ref
+         *                              gpudb::append_records_enable_inplace_updates
+         *                              "append_records_enable_inplace_updates":
+         *                              Applies only when upserting (when @ref
+         *                              gpudb::append_records_update_on_existing_pk
+         *                              "update_on_existing_pk" is @ref
+         *                              gpudb::append_records_true "true"). If
+         *                              set to @ref gpudb::append_records_true
+         *                              "true", an existing record matched by
+         *                              primary key is modified in place. If
+         *                              set to @ref gpudb::append_records_false
+         *                              "false", it is updated by deleting the
+         *                              existing record and inserting a
+         *                              replacement (delete and insert), which
+         *                              prevents the change from being
+         *                              reflected in dependent materialized
+         *                              views until they are refreshed.
+         *                              Supported values:
+         *                              <ul>
+         *                                  <li>@ref gpudb::append_records_true
+         *                                      "append_records_true"
+         *                                  <li>@ref
+         *                                      gpudb::append_records_false
+         *                                      "append_records_false"
+         *                              </ul>
+         *                              The default value is @ref
+         *                              gpudb::append_records_true
+         *                              "append_records_true".
          *                          <li>@ref
          *                              gpudb::append_records_ignore_existing_pk
          *                              "append_records_ignore_existing_pk":
@@ -175,14 +203,14 @@ namespace gpudb
          *                                      "append_records_true": Ignore
          *                                      source table records whose
          *                                      primary key values collide with
-         *                                      those of target table records
+         *                                      those of target table records.
          *                                  <li>@ref
          *                                      gpudb::append_records_false
          *                                      "append_records_false": Raise
          *                                      an error for any source table
          *                                      record whose primary key values
          *                                      collide with those of a target
-         *                                      table record
+         *                                      table record.
          *                              </ul>
          *                              The default value is @ref
          *                              gpudb::append_records_false
@@ -271,8 +299,8 @@ namespace gpudb
          *         to indicate that the max number of results should be
          *         returned. The default value is '-9999'.
          *     <li>@ref gpudb::append_records_expression
-         *         "append_records_expression": Optional filter expression to
-         *         apply to the @ref sourceTableName. The default value is ''.
+         *         "append_records_expression": Filter expression to apply to
+         *         the @ref sourceTableName. The default value is ''.
          *     <li>@ref gpudb::append_records_order_by
          *         "append_records_order_by": Comma-separated list of the
          *         columns to be sorted by from source table (specified by @ref
@@ -302,13 +330,34 @@ namespace gpudb
          *         <ul>
          *             <li>@ref gpudb::append_records_true
          *                 "append_records_true": Upsert new records when
-         *                 primary keys match existing records
+         *                 primary keys match existing records.
          *             <li>@ref gpudb::append_records_false
          *                 "append_records_false": Reject new records when
-         *                 primary keys match existing records
+         *                 primary keys match existing records.
          *         </ul>
          *         The default value is @ref gpudb::append_records_false
          *         "append_records_false".
+         *     <li>@ref gpudb::append_records_enable_inplace_updates
+         *         "append_records_enable_inplace_updates": Applies only when
+         *         upserting (when @ref
+         *         gpudb::append_records_update_on_existing_pk
+         *         "update_on_existing_pk" is @ref gpudb::append_records_true
+         *         "true"). If set to @ref gpudb::append_records_true "true",
+         *         an existing record matched by primary key is modified in
+         *         place. If set to @ref gpudb::append_records_false "false",
+         *         it is updated by deleting the existing record and inserting
+         *         a replacement (delete and insert), which prevents the change
+         *         from being reflected in dependent materialized views until
+         *         they are refreshed.
+         *         Supported values:
+         *         <ul>
+         *             <li>@ref gpudb::append_records_true
+         *                 "append_records_true"
+         *             <li>@ref gpudb::append_records_false
+         *                 "append_records_false"
+         *         </ul>
+         *         The default value is @ref gpudb::append_records_true
+         *         "append_records_true".
          *     <li>@ref gpudb::append_records_ignore_existing_pk
          *         "append_records_ignore_existing_pk": Specifies the record
          *         collision error-suppression policy for inserting source
@@ -336,11 +385,11 @@ namespace gpudb
          *             <li>@ref gpudb::append_records_true
          *                 "append_records_true": Ignore source table records
          *                 whose primary key values collide with those of
-         *                 target table records
+         *                 target table records.
          *             <li>@ref gpudb::append_records_false
          *                 "append_records_false": Raise an error for any
          *                 source table record whose primary key values collide
-         *                 with those of a target table record
+         *                 with those of a target table record.
          *         </ul>
          *         The default value is @ref gpudb::append_records_false
          *         "append_records_false".
@@ -445,6 +494,9 @@ namespace gpudb
         {
         }
 
+        /**
+         * The name of the table to which the records were appended.
+         */
         std::string tableName;
 
         /**

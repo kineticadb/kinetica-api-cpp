@@ -64,8 +64,8 @@ namespace gpudb
          *                    server's own limit, defined by the <a
          *                    href="../../../config/#config-main-general"
          *                    target="_top">max_get_records_size</a> parameter
-         *                    in the server configuration. Use @a offset_ & @a
-         *                    limit_ to request subsequent pages of results.
+         *                    in the server configuration. Use @a offset_ and
+         *                    @a limit_ to request subsequent pages of results.
          *                    The default value is -9999.
          * @param[in] options_  <ul>
          *                          <li>@ref
@@ -90,8 +90,8 @@ namespace gpudb
          *                          <li>@ref
          *                              gpudb::get_records_from_collection_expression
          *                              "get_records_from_collection_expression":
-         *                              Optional filter expression to apply to
-         *                              the table. The default value is ''.
+         *                              Filter expression to apply to the
+         *                              table. The default value is ''.
          *                      </ul>
          *                      The default value is an empty map.
          */
@@ -128,8 +128,8 @@ namespace gpudb
          *                    server's own limit, defined by the <a
          *                    href="../../../config/#config-main-general"
          *                    target="_top">max_get_records_size</a> parameter
-         *                    in the server configuration. Use @a offset_ & @a
-         *                    limit_ to request subsequent pages of results.
+         *                    in the server configuration. Use @a offset_ and
+         *                    @a limit_ to request subsequent pages of results.
          *                    The default value is -9999.
          * @param[in] encoding_  Specifies the encoding for returned records;
          *                       either @ref
@@ -172,8 +172,8 @@ namespace gpudb
          *                          <li>@ref
          *                              gpudb::get_records_from_collection_expression
          *                              "get_records_from_collection_expression":
-         *                              Optional filter expression to apply to
-         *                              the table. The default value is ''.
+         *                              Filter expression to apply to the
+         *                              table. The default value is ''.
          *                      </ul>
          *                      The default value is an empty map.
          */
@@ -210,7 +210,7 @@ namespace gpudb
          * records returned will never exceed the server's own limit, defined
          * by the <a href="../../../config/#config-main-general"
          * target="_top">max_get_records_size</a> parameter in the server
-         * configuration. Use @ref offset & @ref limit to request subsequent
+         * configuration. Use @ref offset and @ref limit to request subsequent
          * pages of results. The default value is -9999.
          */
         int64_t limit;
@@ -248,8 +248,8 @@ namespace gpudb
          *         gpudb::get_records_from_collection_false
          *         "get_records_from_collection_false".
          *     <li>@ref gpudb::get_records_from_collection_expression
-         *         "get_records_from_collection_expression": Optional filter
-         *         expression to apply to the table. The default value is ''.
+         *         "get_records_from_collection_expression": Filter expression
+         *         to apply to the table. The default value is ''.
          * </ul>
          * The default value is an empty map.
          */

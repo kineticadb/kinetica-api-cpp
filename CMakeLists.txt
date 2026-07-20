@@ -186,7 +186,7 @@ endif()
 MESSAGE(STATUS "*")
 
 # Need at least 1.48 version for boost::asio::connect(socket, iterator) function.
-find_package(Boost 1.48 COMPONENTS iostreams regex system thread)
+find_package(Boost 1.48 COMPONENTS iostreams regex thread)
 
 MESSAGE(STATUS "* Boost_FOUND        = ${Boost_FOUND}")
 MESSAGE(STATUS "* Boost_VERSION      = ${Boost_VERSION}")

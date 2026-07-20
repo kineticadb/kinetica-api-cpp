@@ -79,12 +79,13 @@ GetRecordsResponse<boost::any>& GPUdb::getRecords( const GetRecordsRequest& requ
  *                   server configuration. Use @ref
  *                   gpudb::RawGetRecordsResponse::hasMoreRecords
  *                   "hasMoreRecords" to see if more records exist in the
- *                   result to be fetched, and @a offset & @a limit to request
- *                   subsequent pages of results. The default value is -9999.
+ *                   result to be fetched, and @a offset and @a limit to
+ *                   request subsequent pages of results. The default value is
+ *                   -9999.
  * @param[in] options  <ul>
  *                         <li>@ref gpudb::get_records_expression
- *                             "get_records_expression": Optional filter
- *                             expression to apply to the table.
+ *                             "get_records_expression": Filter expression to
+ *                             apply to the table.
  *                         <li>@ref gpudb::get_records_fast_index_lookup
  *                             "get_records_fast_index_lookup": Indicates if
  *                             indexes should be used to perform the lookup for
@@ -103,9 +104,9 @@ GetRecordsResponse<boost::any>& GPUdb::getRecords( const GetRecordsRequest& requ
  *                             The default value is @ref
  *                             gpudb::get_records_true "get_records_true".
  *                         <li>@ref gpudb::get_records_sort_by
- *                             "get_records_sort_by": Optional column that the
- *                             data should be sorted by. Empty by default (i.e.
- *                             no sorting is applied).
+ *                             "get_records_sort_by": Column that the data
+ *                             should be sorted by. Empty by default (i.e. no
+ *                             sorting is applied).
  *                         <li>@ref gpudb::get_records_sort_order
  *                             "get_records_sort_order": String indicating how
  *                             the returned values should be sorted - ascending
@@ -163,12 +164,13 @@ GetRecordsResponse<boost::any> GPUdb::getRecords( const std::string& tableName,
  *                   server configuration. Use @ref
  *                   gpudb::RawGetRecordsResponse::hasMoreRecords
  *                   "hasMoreRecords" to see if more records exist in the
- *                   result to be fetched, and @a offset & @a limit to request
- *                   subsequent pages of results. The default value is -9999.
+ *                   result to be fetched, and @a offset and @a limit to
+ *                   request subsequent pages of results. The default value is
+ *                   -9999.
  * @param[in] options  <ul>
  *                         <li>@ref gpudb::get_records_expression
- *                             "get_records_expression": Optional filter
- *                             expression to apply to the table.
+ *                             "get_records_expression": Filter expression to
+ *                             apply to the table.
  *                         <li>@ref gpudb::get_records_fast_index_lookup
  *                             "get_records_fast_index_lookup": Indicates if
  *                             indexes should be used to perform the lookup for
@@ -187,9 +189,9 @@ GetRecordsResponse<boost::any> GPUdb::getRecords( const std::string& tableName,
  *                             The default value is @ref
  *                             gpudb::get_records_true "get_records_true".
  *                         <li>@ref gpudb::get_records_sort_by
- *                             "get_records_sort_by": Optional column that the
- *                             data should be sorted by. Empty by default (i.e.
- *                             no sorting is applied).
+ *                             "get_records_sort_by": Column that the data
+ *                             should be sorted by. Empty by default (i.e. no
+ *                             sorting is applied).
  *                         <li>@ref gpudb::get_records_sort_order
  *                             "get_records_sort_order": String indicating how
  *                             the returned values should be sorted - ascending
@@ -459,8 +461,9 @@ GetRecordsFromCollectionResponse<boost::any>& GPUdb::getRecordsFromCollection( c
  *                   never exceed the server's own limit, defined by the <a
  *                   href="../../../config/#config-main-general"
  *                   target="_top">max_get_records_size</a> parameter in the
- *                   server configuration. Use @a offset & @a limit to request
- *                   subsequent pages of results. The default value is -9999.
+ *                   server configuration. Use @a offset and @a limit to
+ *                   request subsequent pages of results. The default value is
+ *                   -9999.
  * @param[in] options  <ul>
  *                         <li>@ref
  *                             gpudb::get_records_from_collection_return_record_ids
@@ -482,9 +485,9 @@ GetRecordsFromCollectionResponse<boost::any>& GPUdb::getRecordsFromCollection( c
  *                             "get_records_from_collection_false".
  *                         <li>@ref
  *                             gpudb::get_records_from_collection_expression
- *                             "get_records_from_collection_expression":
- *                             Optional filter expression to apply to the
- *                             table. The default value is ''.
+ *                             "get_records_from_collection_expression": Filter
+ *                             expression to apply to the table. The default
+ *                             value is ''.
  *                     </ul>
  *                     The default value is an empty map.
  *
@@ -527,8 +530,9 @@ GetRecordsFromCollectionResponse<boost::any> GPUdb::getRecordsFromCollection( co
  *                   never exceed the server's own limit, defined by the <a
  *                   href="../../../config/#config-main-general"
  *                   target="_top">max_get_records_size</a> parameter in the
- *                   server configuration. Use @a offset & @a limit to request
- *                   subsequent pages of results. The default value is -9999.
+ *                   server configuration. Use @a offset and @a limit to
+ *                   request subsequent pages of results. The default value is
+ *                   -9999.
  * @param[in] options  <ul>
  *                         <li>@ref
  *                             gpudb::get_records_from_collection_return_record_ids
@@ -550,9 +554,9 @@ GetRecordsFromCollectionResponse<boost::any> GPUdb::getRecordsFromCollection( co
  *                             "get_records_from_collection_false".
  *                         <li>@ref
  *                             gpudb::get_records_from_collection_expression
- *                             "get_records_from_collection_expression":
- *                             Optional filter expression to apply to the
- *                             table. The default value is ''.
+ *                             "get_records_from_collection_expression": Filter
+ *                             expression to apply to the table. The default
+ *                             value is ''.
  *                     </ul>
  *                     The default value is an empty map.
  * @param[out] response_  @ref gpudb::GetRecordsFromCollectionResponse

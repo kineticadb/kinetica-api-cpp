@@ -532,7 +532,7 @@ AdminAlterHostResponse& adminAlterHost( const AdminAlterHostRequest& request_,
  *
  * @param[in] host  Identifies the host this applies to. Can be the host
  *                  address, or formatted as 'hostN' where N is the host number
- *                  as specified in gpudb.conf
+ *                  as specified in gpudb.conf.
  * @param[in] options  Optional parameters.
  *                     <ul>
  *                         <li>@ref gpudb::admin_alter_host_accepts_failover
@@ -567,7 +567,7 @@ AdminAlterHostResponse adminAlterHost( const std::string& host,
  *
  * @param[in] host  Identifies the host this applies to. Can be the host
  *                  address, or formatted as 'hostN' where N is the host number
- *                  as specified in gpudb.conf
+ *                  as specified in gpudb.conf.
  * @param[in] options  Optional parameters.
  *                     <ul>
  *                         <li>@ref gpudb::admin_alter_host_accepts_failover
@@ -652,7 +652,7 @@ AdminAlterJobsResponse& adminAlterJobs( const AdminAlterJobsRequest& request_,
  *                     <ul>
  *                         <li>@ref gpudb::admin_alter_jobs_job_tag
  *                             "admin_alter_jobs_job_tag": Job tag returned in
- *                             call to create the job
+ *                             call to create the job.
  *                     </ul>
  *                     The default value is an empty map.
  *
@@ -682,7 +682,7 @@ AdminAlterJobsResponse adminAlterJobs( const std::vector<int64_t>& jobIds,
  *                     <ul>
  *                         <li>@ref gpudb::admin_alter_jobs_job_tag
  *                             "admin_alter_jobs_job_tag": Job tag returned in
- *                             call to create the job
+ *                             call to create the job.
  *                     </ul>
  *                     The default value is an empty map.
  * @param[out] response_  @ref gpudb::AdminAlterJobsResponse "Response" object
@@ -1537,7 +1537,7 @@ AdminRemoveHostResponse& adminRemoveHost( const AdminRemoveHostRequest& request_
  *
  * @param[in] host  Identifies the host this applies to. Can be the host
  *                  address, or formatted as 'hostN' where N is the host number
- *                  as specified in gpudb.conf
+ *                  as specified in gpudb.conf.
  * @param[in] options  Optional parameters.
  *                     <ul>
  *                         <li>@ref gpudb::admin_remove_host_dry_run
@@ -1580,7 +1580,7 @@ AdminRemoveHostResponse adminRemoveHost( const std::string& host,
  *
  * @param[in] host  Identifies the host this applies to. Can be the host
  *                  address, or formatted as 'hostN' where N is the host number
- *                  as specified in gpudb.conf
+ *                  as specified in gpudb.conf.
  * @param[in] options  Optional parameters.
  *                     <ul>
  *                         <li>@ref gpudb::admin_remove_host_dry_run
@@ -1913,6 +1913,7 @@ AdminRepairTableResponse& adminRepairTable( const AdminRepairTableRequest& reque
  *
  * @param[in] tableNames  List of tables to query. An asterisk returns all
  *                        tables.
+ * @param[in] tableTypes  ID of the type per table.
  * @param[in] options  Optional parameters.
  *                     <ul>
  *                         <li>@ref gpudb::admin_repair_table_repair_policy
@@ -1923,17 +1924,22 @@ AdminRepairTableResponse& adminRepairTable( const AdminRepairTableRequest& reque
  *                                 <li>@ref
  *                                     gpudb::admin_repair_table_delete_chunks
  *                                     "admin_repair_table_delete_chunks":
- *                                     Deletes any corrupted chunks
+ *                                     Deletes any corrupted chunks.
  *                                 <li>@ref
  *                                     gpudb::admin_repair_table_shrink_columns
  *                                     "admin_repair_table_shrink_columns":
  *                                     Shrinks corrupted chunks to the shortest
- *                                     column
+ *                                     column.
  *                                 <li>@ref
  *                                     gpudb::admin_repair_table_replay_wal
  *                                     "admin_repair_table_replay_wal":
  *                                     Manually invokes write-ahead log (WAL)
- *                                     replay on the table
+ *                                     replay on the table.
+ *                                 <li>@ref
+ *                                     gpudb::admin_repair_table_alter_table
+ *                                     "admin_repair_table_alter_table": Reset
+ *                                     columns modification after incomplete
+ *                                     alter column.
  *                             </ul>
  *                         <li>@ref gpudb::admin_repair_table_verify_all
  *                             "admin_repair_table_verify_all": If @ref
@@ -1959,6 +1965,7 @@ AdminRepairTableResponse& adminRepairTable( const AdminRepairTableRequest& reque
  *         the result of the operation.
  */
 AdminRepairTableResponse adminRepairTable( const std::vector<std::string>& tableNames,
+                                           const std::map<std::string, std::string>& tableTypes,
                                            const std::map<std::string, std::string>& options ) const;
 
 /**
@@ -1967,6 +1974,7 @@ AdminRepairTableResponse adminRepairTable( const std::vector<std::string>& table
  *
  * @param[in] tableNames  List of tables to query. An asterisk returns all
  *                        tables.
+ * @param[in] tableTypes  ID of the type per table.
  * @param[in] options  Optional parameters.
  *                     <ul>
  *                         <li>@ref gpudb::admin_repair_table_repair_policy
@@ -1977,17 +1985,22 @@ AdminRepairTableResponse adminRepairTable( const std::vector<std::string>& table
  *                                 <li>@ref
  *                                     gpudb::admin_repair_table_delete_chunks
  *                                     "admin_repair_table_delete_chunks":
- *                                     Deletes any corrupted chunks
+ *                                     Deletes any corrupted chunks.
  *                                 <li>@ref
  *                                     gpudb::admin_repair_table_shrink_columns
  *                                     "admin_repair_table_shrink_columns":
  *                                     Shrinks corrupted chunks to the shortest
- *                                     column
+ *                                     column.
  *                                 <li>@ref
  *                                     gpudb::admin_repair_table_replay_wal
  *                                     "admin_repair_table_replay_wal":
  *                                     Manually invokes write-ahead log (WAL)
- *                                     replay on the table
+ *                                     replay on the table.
+ *                                 <li>@ref
+ *                                     gpudb::admin_repair_table_alter_table
+ *                                     "admin_repair_table_alter_table": Reset
+ *                                     columns modification after incomplete
+ *                                     alter column.
  *                             </ul>
  *                         <li>@ref gpudb::admin_repair_table_verify_all
  *                             "admin_repair_table_verify_all": If @ref
@@ -2015,6 +2028,7 @@ AdminRepairTableResponse adminRepairTable( const std::vector<std::string>& table
  *         the result of the operation (initially passed in by reference).
  */
 AdminRepairTableResponse& adminRepairTable( const std::vector<std::string>& tableNames,
+                                            const std::map<std::string, std::string>& tableTypes,
                                             const std::map<std::string, std::string>& options,
                                             AdminRepairTableResponse& response_ ) const;
 
@@ -2651,9 +2665,8 @@ AdminVerifyDbResponse& adminVerifyDb( const AdminVerifyDbRequest& request_,
  * @param[in] options  Optional parameters.
  *                     <ul>
  *                         <li>@ref gpudb::admin_verify_db_rebuild_on_error
- *                             "admin_verify_db_rebuild_on_error": [DEPRECATED
- *                             -- Use the Rebuild DB feature of GAdmin
- *                             instead.].
+ *                             "admin_verify_db_rebuild_on_error": [DEPRECATED]
+ *                             Use the Rebuild DB feature of GAdmin instead.
  *                             Supported values:
  *                             <ul>
  *                                 <li>@ref gpudb::admin_verify_db_true
@@ -2797,9 +2810,8 @@ AdminVerifyDbResponse adminVerifyDb( const std::map<std::string, std::string>& o
  * @param[in] options  Optional parameters.
  *                     <ul>
  *                         <li>@ref gpudb::admin_verify_db_rebuild_on_error
- *                             "admin_verify_db_rebuild_on_error": [DEPRECATED
- *                             -- Use the Rebuild DB feature of GAdmin
- *                             instead.].
+ *                             "admin_verify_db_rebuild_on_error": [DEPRECATED]
+ *                             Use the Rebuild DB feature of GAdmin instead.
  *                             Supported values:
  *                             <ul>
  *                                 <li>@ref gpudb::admin_verify_db_true
@@ -3025,10 +3037,7 @@ AggregateConvexHullResponse& aggregateConvexHull( const std::string& tableName,
  * target="_top">Aggregation Limitations</a>.
  *
  * Any column(s) can be grouped on, and all column types except
- * unrestricted-length strings may be used for computing applicable aggregates;
- * columns marked as <a href="../../../concepts/types/#data-handling"
- * target="_top">store-only</a> are unable to be used in grouping or
- * aggregation.
+ * unrestricted-length strings may be used for computing applicable aggregates.
  *
  * The results can be paged via the @ref gpudb::AggregateGroupByRequest::offset
  * "offset" and @ref gpudb::AggregateGroupByRequest::limit "limit" parameters.
@@ -3102,10 +3111,7 @@ RawAggregateGroupByResponse aggregateGroupByRaw( const AggregateGroupByRequest& 
  * target="_top">Aggregation Limitations</a>.
  *
  * Any column(s) can be grouped on, and all column types except
- * unrestricted-length strings may be used for computing applicable aggregates;
- * columns marked as <a href="../../../concepts/types/#data-handling"
- * target="_top">store-only</a> are unable to be used in grouping or
- * aggregation.
+ * unrestricted-length strings may be used for computing applicable aggregates.
  *
  * The results can be paged via the @ref gpudb::AggregateGroupByRequest::offset
  * "offset" and @ref gpudb::AggregateGroupByRequest::limit "limit" parameters.
@@ -3182,10 +3188,7 @@ RawAggregateGroupByResponse& aggregateGroupByRaw( const AggregateGroupByRequest&
  * target="_top">Aggregation Limitations</a>.
  *
  * Any column(s) can be grouped on, and all column types except
- * unrestricted-length strings may be used for computing applicable aggregates;
- * columns marked as <a href="../../../concepts/types/#data-handling"
- * target="_top">store-only</a> are unable to be used in grouping or
- * aggregation.
+ * unrestricted-length strings may be used for computing applicable aggregates.
  *
  * The results can be paged via the @ref gpudb::AggregateGroupByRequest::offset
  * "offset" and @ref gpudb::AggregateGroupByRequest::limit "limit" parameters.
@@ -3259,10 +3262,7 @@ AggregateGroupByResponse aggregateGroupBy( const AggregateGroupByRequest& reques
  * target="_top">Aggregation Limitations</a>.
  *
  * Any column(s) can be grouped on, and all column types except
- * unrestricted-length strings may be used for computing applicable aggregates;
- * columns marked as <a href="../../../concepts/types/#data-handling"
- * target="_top">store-only</a> are unable to be used in grouping or
- * aggregation.
+ * unrestricted-length strings may be used for computing applicable aggregates.
  *
  * The results can be paged via the @ref gpudb::AggregateGroupByRequest::offset
  * "offset" and @ref gpudb::AggregateGroupByRequest::limit "limit" parameters.
@@ -3339,10 +3339,7 @@ AggregateGroupByResponse& aggregateGroupBy( const AggregateGroupByRequest& reque
  * target="_top">Aggregation Limitations</a>.
  *
  * Any column(s) can be grouped on, and all column types except
- * unrestricted-length strings may be used for computing applicable aggregates;
- * columns marked as <a href="../../../concepts/types/#data-handling"
- * target="_top">store-only</a> are unable to be used in grouping or
- * aggregation.
+ * unrestricted-length strings may be used for computing applicable aggregates.
  *
  * The results can be paged via the @a offset and @a limit parameters. For
  * example, to get 10 groups with the largest counts the inputs would be:
@@ -3415,8 +3412,9 @@ AggregateGroupByResponse& aggregateGroupBy( const AggregateGroupByRequest& reque
  *                   server configuration. Use @ref
  *                   gpudb::RawAggregateGroupByResponse::hasMoreRecords
  *                   "hasMoreRecords" to see if more records exist in the
- *                   result to be fetched, and @a offset & @a limit to request
- *                   subsequent pages of results. The default value is -9999.
+ *                   result to be fetched, and @a offset and @a limit to
+ *                   request subsequent pages of results. The default value is
+ *                   -9999.
  * @param[in] options  Optional parameters.
  *                     <ul>
  *                         <li>@ref gpudb::aggregate_group_by_create_temp_table
@@ -3464,7 +3462,7 @@ AggregateGroupByResponse& aggregateGroupBy( const AggregateGroupByRequest& reque
  *                         <li>@ref
  *                             gpudb::aggregate_group_by_pipelined_expression_evaluation
  *                             "aggregate_group_by_pipelined_expression_evaluation":
- *                             evaluate the group-by during last JoinedSet
+ *                             Evaluate the group-by during last JoinedSet
  *                             filter plan step.
  *                             Supported values:
  *                             <ul>
@@ -3673,17 +3671,91 @@ AggregateGroupByResponse& aggregateGroupBy( const AggregateGroupByRequest& reque
  *                             in combination with the @ref
  *                             gpudb::aggregate_group_by_result_table
  *                             "result_table" option.
+ *                         <li>@ref gpudb::aggregate_group_by_partition_type
+ *                             "aggregate_group_by_partition_type": <a
+ *                             href="../../../concepts/tables/#partitioning"
+ *                             target="_top">Partitioning</a> scheme to use for
+ *                             the result table.
+ *                             Supported values:
+ *                             <ul>
+ *                                 <li>@ref gpudb::aggregate_group_by_RANGE
+ *                                     "aggregate_group_by_RANGE": Use <a
+ *                                     href="../../../concepts/tables/#partitioning-by-range"
+ *                                     target="_top">range partitioning</a>.
+ *                                 <li>@ref gpudb::aggregate_group_by_INTERVAL
+ *                                     "aggregate_group_by_INTERVAL": Use <a
+ *                                     href="../../../concepts/tables/#partitioning-by-interval"
+ *                                     target="_top">interval partitioning</a>.
+ *                                 <li>@ref gpudb::aggregate_group_by_LIST
+ *                                     "aggregate_group_by_LIST": Use <a
+ *                                     href="../../../concepts/tables/#partitioning-by-list"
+ *                                     target="_top">list partitioning</a>.
+ *                                 <li>@ref gpudb::aggregate_group_by_HASH
+ *                                     "aggregate_group_by_HASH": Use <a
+ *                                     href="../../../concepts/tables/#partitioning-by-hash"
+ *                                     target="_top">hash partitioning</a>.
+ *                                 <li>@ref gpudb::aggregate_group_by_SERIES
+ *                                     "aggregate_group_by_SERIES": Use <a
+ *                                     href="../../../concepts/tables/#partitioning-by-series"
+ *                                     target="_top">series partitioning</a>.
+ *                             </ul>
+ *                         <li>@ref gpudb::aggregate_group_by_partition_keys
+ *                             "aggregate_group_by_partition_keys":
+ *                             Comma-separated list of partition keys, which
+ *                             are the columns or column expressions by which
+ *                             records will be assigned to partitions defined
+ *                             by @ref
+ *                             gpudb::aggregate_group_by_partition_definitions
+ *                             "partition_definitions".
+ *                         <li>@ref
+ *                             gpudb::aggregate_group_by_partition_definitions
+ *                             "aggregate_group_by_partition_definitions":
+ *                             Comma-separated list of partition definitions,
+ *                             whose format depends on the choice of @ref
+ *                             gpudb::aggregate_group_by_partition_type
+ *                             "partition_type".  See <a
+ *                             href="../../../concepts/tables/#partitioning-by-range"
+ *                             target="_top">range partitioning</a>, <a
+ *                             href="../../../concepts/tables/#partitioning-by-interval"
+ *                             target="_top">interval partitioning</a>, <a
+ *                             href="../../../concepts/tables/#partitioning-by-list"
+ *                             target="_top">list partitioning</a>, <a
+ *                             href="../../../concepts/tables/#partitioning-by-hash"
+ *                             target="_top">hash partitioning</a>, or <a
+ *                             href="../../../concepts/tables/#partitioning-by-series"
+ *                             target="_top">series partitioning</a> for
+ *                             example formats.
+ *                         <li>@ref
+ *                             gpudb::aggregate_group_by_is_automatic_partition
+ *                             "aggregate_group_by_is_automatic_partition": If
+ *                             @ref gpudb::aggregate_group_by_true "true", a
+ *                             new partition will be created for values which
+ *                             don't fall into an existing partition.
+ *                             Currently only supported for <a
+ *                             href="../../../concepts/tables/#partitioning-by-list"
+ *                             target="_top">list partitions</a>.
+ *                             Supported values:
+ *                             <ul>
+ *                                 <li>@ref gpudb::aggregate_group_by_true
+ *                                     "aggregate_group_by_true"
+ *                                 <li>@ref gpudb::aggregate_group_by_false
+ *                                     "aggregate_group_by_false"
+ *                             </ul>
+ *                             The default value is @ref
+ *                             gpudb::aggregate_group_by_false
+ *                             "aggregate_group_by_false".
  *                         <li>@ref gpudb::aggregate_group_by_view_id
  *                             "aggregate_group_by_view_id": ID of view of
  *                             which the result table will be a member. The
  *                             default value is ''.
  *                         <li>@ref gpudb::aggregate_group_by_pivot
- *                             "aggregate_group_by_pivot": pivot column
+ *                             "aggregate_group_by_pivot": Pivot column.
  *                         <li>@ref gpudb::aggregate_group_by_pivot_values
- *                             "aggregate_group_by_pivot_values": The value
- *                             list provided will become the column headers in
- *                             the output. Should be the values from the
- *                             pivot_column.
+ *                             "aggregate_group_by_pivot_values":
+ *                             Comma-separated list of the values in the @ref
+ *                             gpudb::aggregate_group_by_pivot "pivot" column.
+ *                             The list provided will become the column header
+ *                             prefixes in the output.
  *                         <li>@ref gpudb::aggregate_group_by_grouping_sets
  *                             "aggregate_group_by_grouping_sets": Customize
  *                             the grouping attribute sets to compute the
@@ -3730,10 +3802,7 @@ AggregateGroupByResponse aggregateGroupBy( const std::string& tableName,
  * target="_top">Aggregation Limitations</a>.
  *
  * Any column(s) can be grouped on, and all column types except
- * unrestricted-length strings may be used for computing applicable aggregates;
- * columns marked as <a href="../../../concepts/types/#data-handling"
- * target="_top">store-only</a> are unable to be used in grouping or
- * aggregation.
+ * unrestricted-length strings may be used for computing applicable aggregates.
  *
  * The results can be paged via the @a offset and @a limit parameters. For
  * example, to get 10 groups with the largest counts the inputs would be:
@@ -3806,8 +3875,9 @@ AggregateGroupByResponse aggregateGroupBy( const std::string& tableName,
  *                   server configuration. Use @ref
  *                   gpudb::RawAggregateGroupByResponse::hasMoreRecords
  *                   "hasMoreRecords" to see if more records exist in the
- *                   result to be fetched, and @a offset & @a limit to request
- *                   subsequent pages of results. The default value is -9999.
+ *                   result to be fetched, and @a offset and @a limit to
+ *                   request subsequent pages of results. The default value is
+ *                   -9999.
  * @param[in] options  Optional parameters.
  *                     <ul>
  *                         <li>@ref gpudb::aggregate_group_by_create_temp_table
@@ -3855,7 +3925,7 @@ AggregateGroupByResponse aggregateGroupBy( const std::string& tableName,
  *                         <li>@ref
  *                             gpudb::aggregate_group_by_pipelined_expression_evaluation
  *                             "aggregate_group_by_pipelined_expression_evaluation":
- *                             evaluate the group-by during last JoinedSet
+ *                             Evaluate the group-by during last JoinedSet
  *                             filter plan step.
  *                             Supported values:
  *                             <ul>
@@ -4064,17 +4134,91 @@ AggregateGroupByResponse aggregateGroupBy( const std::string& tableName,
  *                             in combination with the @ref
  *                             gpudb::aggregate_group_by_result_table
  *                             "result_table" option.
+ *                         <li>@ref gpudb::aggregate_group_by_partition_type
+ *                             "aggregate_group_by_partition_type": <a
+ *                             href="../../../concepts/tables/#partitioning"
+ *                             target="_top">Partitioning</a> scheme to use for
+ *                             the result table.
+ *                             Supported values:
+ *                             <ul>
+ *                                 <li>@ref gpudb::aggregate_group_by_RANGE
+ *                                     "aggregate_group_by_RANGE": Use <a
+ *                                     href="../../../concepts/tables/#partitioning-by-range"
+ *                                     target="_top">range partitioning</a>.
+ *                                 <li>@ref gpudb::aggregate_group_by_INTERVAL
+ *                                     "aggregate_group_by_INTERVAL": Use <a
+ *                                     href="../../../concepts/tables/#partitioning-by-interval"
+ *                                     target="_top">interval partitioning</a>.
+ *                                 <li>@ref gpudb::aggregate_group_by_LIST
+ *                                     "aggregate_group_by_LIST": Use <a
+ *                                     href="../../../concepts/tables/#partitioning-by-list"
+ *                                     target="_top">list partitioning</a>.
+ *                                 <li>@ref gpudb::aggregate_group_by_HASH
+ *                                     "aggregate_group_by_HASH": Use <a
+ *                                     href="../../../concepts/tables/#partitioning-by-hash"
+ *                                     target="_top">hash partitioning</a>.
+ *                                 <li>@ref gpudb::aggregate_group_by_SERIES
+ *                                     "aggregate_group_by_SERIES": Use <a
+ *                                     href="../../../concepts/tables/#partitioning-by-series"
+ *                                     target="_top">series partitioning</a>.
+ *                             </ul>
+ *                         <li>@ref gpudb::aggregate_group_by_partition_keys
+ *                             "aggregate_group_by_partition_keys":
+ *                             Comma-separated list of partition keys, which
+ *                             are the columns or column expressions by which
+ *                             records will be assigned to partitions defined
+ *                             by @ref
+ *                             gpudb::aggregate_group_by_partition_definitions
+ *                             "partition_definitions".
+ *                         <li>@ref
+ *                             gpudb::aggregate_group_by_partition_definitions
+ *                             "aggregate_group_by_partition_definitions":
+ *                             Comma-separated list of partition definitions,
+ *                             whose format depends on the choice of @ref
+ *                             gpudb::aggregate_group_by_partition_type
+ *                             "partition_type".  See <a
+ *                             href="../../../concepts/tables/#partitioning-by-range"
+ *                             target="_top">range partitioning</a>, <a
+ *                             href="../../../concepts/tables/#partitioning-by-interval"
+ *                             target="_top">interval partitioning</a>, <a
+ *                             href="../../../concepts/tables/#partitioning-by-list"
+ *                             target="_top">list partitioning</a>, <a
+ *                             href="../../../concepts/tables/#partitioning-by-hash"
+ *                             target="_top">hash partitioning</a>, or <a
+ *                             href="../../../concepts/tables/#partitioning-by-series"
+ *                             target="_top">series partitioning</a> for
+ *                             example formats.
+ *                         <li>@ref
+ *                             gpudb::aggregate_group_by_is_automatic_partition
+ *                             "aggregate_group_by_is_automatic_partition": If
+ *                             @ref gpudb::aggregate_group_by_true "true", a
+ *                             new partition will be created for values which
+ *                             don't fall into an existing partition.
+ *                             Currently only supported for <a
+ *                             href="../../../concepts/tables/#partitioning-by-list"
+ *                             target="_top">list partitions</a>.
+ *                             Supported values:
+ *                             <ul>
+ *                                 <li>@ref gpudb::aggregate_group_by_true
+ *                                     "aggregate_group_by_true"
+ *                                 <li>@ref gpudb::aggregate_group_by_false
+ *                                     "aggregate_group_by_false"
+ *                             </ul>
+ *                             The default value is @ref
+ *                             gpudb::aggregate_group_by_false
+ *                             "aggregate_group_by_false".
  *                         <li>@ref gpudb::aggregate_group_by_view_id
  *                             "aggregate_group_by_view_id": ID of view of
  *                             which the result table will be a member. The
  *                             default value is ''.
  *                         <li>@ref gpudb::aggregate_group_by_pivot
- *                             "aggregate_group_by_pivot": pivot column
+ *                             "aggregate_group_by_pivot": Pivot column.
  *                         <li>@ref gpudb::aggregate_group_by_pivot_values
- *                             "aggregate_group_by_pivot_values": The value
- *                             list provided will become the column headers in
- *                             the output. Should be the values from the
- *                             pivot_column.
+ *                             "aggregate_group_by_pivot_values":
+ *                             Comma-separated list of the values in the @ref
+ *                             gpudb::aggregate_group_by_pivot "pivot" column.
+ *                             The list provided will become the column header
+ *                             prefixes in the output.
  *                         <li>@ref gpudb::aggregate_group_by_grouping_sets
  *                             "aggregate_group_by_grouping_sets": Customize
  *                             the grouping attribute sets to compute the
@@ -4202,6 +4346,15 @@ AggregateHistogramResponse& aggregateHistogram( const AggregateHistogramRequest&
  *                             the column to use when calculating the bin
  *                             values (values are summed).  The column must be
  *                             a numerical type (int, double, long, float).
+ *                         <li>@ref gpudb::aggregate_histogram_start
+ *                             "aggregate_histogram_start": The start parameter
+ *                             for char types.
+ *                         <li>@ref gpudb::aggregate_histogram_end
+ *                             "aggregate_histogram_end": The end parameter for
+ *                             char types.
+ *                         <li>@ref gpudb::aggregate_histogram_interval
+ *                             "aggregate_histogram_interval": The interval
+ *                             parameter for char types.
  *                     </ul>
  *                     The default value is an empty map.
  *
@@ -4251,6 +4404,15 @@ AggregateHistogramResponse aggregateHistogram( const std::string& tableName,
  *                             the column to use when calculating the bin
  *                             values (values are summed).  The column must be
  *                             a numerical type (int, double, long, float).
+ *                         <li>@ref gpudb::aggregate_histogram_start
+ *                             "aggregate_histogram_start": The start parameter
+ *                             for char types.
+ *                         <li>@ref gpudb::aggregate_histogram_end
+ *                             "aggregate_histogram_end": The end parameter for
+ *                             char types.
+ *                         <li>@ref gpudb::aggregate_histogram_interval
+ *                             "aggregate_histogram_interval": The interval
+ *                             parameter for char types.
  *                     </ul>
  *                     The default value is an empty map.
  * @param[out] response_  @ref gpudb::AggregateHistogramResponse "Response"
@@ -4742,13 +4904,14 @@ AggregateMinMaxGeometryResponse& aggregateMinMaxGeometry( const std::string& tab
  * "additional_column_names".  Values in these columns will be included in the
  * overall aggregate calculation--individual aggregates will not be calculated
  * per additional column.  For instance, requesting the @ref
- * gpudb::aggregate_statistics_count "count" & @ref
+ * gpudb::aggregate_statistics_count "count" and @ref
  * gpudb::aggregate_statistics_mean "mean" of @ref
  * gpudb::AggregateStatisticsRequest::columnName "columnName" x and @ref
  * gpudb::aggregate_statistics_additional_column_names
- * "additional_column_names" y & z, where x holds the numbers 1-10, y holds
- * 11-20, and z holds 21-30, would return the total number of x, y, & z values
- * (30), and the single average value across all x, y, & z values (15.5).
+ * "additional_column_names" y and z, where x holds the numbers 1-10, y holds
+ * 11-20, and z holds 21-30, would return the total number of x, y, and z
+ * values (30), and the single average value across all x, y, and z values
+ * (15.5).
  *
  * The response includes a list of key/value pairs of each statistic requested
  * and its corresponding value.
@@ -4806,13 +4969,14 @@ AggregateStatisticsResponse aggregateStatistics( const AggregateStatisticsReques
  * "additional_column_names".  Values in these columns will be included in the
  * overall aggregate calculation--individual aggregates will not be calculated
  * per additional column.  For instance, requesting the @ref
- * gpudb::aggregate_statistics_count "count" & @ref
+ * gpudb::aggregate_statistics_count "count" and @ref
  * gpudb::aggregate_statistics_mean "mean" of @ref
  * gpudb::AggregateStatisticsRequest::columnName "columnName" x and @ref
  * gpudb::aggregate_statistics_additional_column_names
- * "additional_column_names" y & z, where x holds the numbers 1-10, y holds
- * 11-20, and z holds 21-30, would return the total number of x, y, & z values
- * (30), and the single average value across all x, y, & z values (15.5).
+ * "additional_column_names" y and z, where x holds the numbers 1-10, y holds
+ * 11-20, and z holds 21-30, would return the total number of x, y, and z
+ * values (30), and the single average value across all x, y, and z values
+ * (15.5).
  *
  * The response includes a list of key/value pairs of each statistic requested
  * and its corresponding value.
@@ -4872,12 +5036,13 @@ AggregateStatisticsResponse& aggregateStatistics( const AggregateStatisticsReque
  * "additional_column_names".  Values in these columns will be included in the
  * overall aggregate calculation--individual aggregates will not be calculated
  * per additional column.  For instance, requesting the @ref
- * gpudb::aggregate_statistics_count "count" & @ref
+ * gpudb::aggregate_statistics_count "count" and @ref
  * gpudb::aggregate_statistics_mean "mean" of @a columnName x and @ref
  * gpudb::aggregate_statistics_additional_column_names
- * "additional_column_names" y & z, where x holds the numbers 1-10, y holds
- * 11-20, and z holds 21-30, would return the total number of x, y, & z values
- * (30), and the single average value across all x, y, & z values (15.5).
+ * "additional_column_names" y and z, where x holds the numbers 1-10, y holds
+ * 11-20, and z holds 21-30, would return the total number of x, y, and z
+ * values (30), and the single average value across all x, y, and z values
+ * (15.5).
  *
  * The response includes a list of key/value pairs of each statistic requested
  * and its corresponding value.
@@ -4939,7 +5104,7 @@ AggregateStatisticsResponse& aggregateStatistics( const AggregateStatisticsReque
  *                           (percentile(50.0) will be an approximation of the
  *                           median). Add a second, comma-separated value to
  *                           calculate percentile resolution, e.g.,
- *                           'percentile(75,150)'
+ *                           'percentile(75,150)'.
  *                       <li>@ref gpudb::aggregate_statistics_percentile_rank
  *                           "aggregate_statistics_percentile_rank": Estimate
  *                           (via t-digest) of the percentile rank of the given
@@ -5019,12 +5184,13 @@ AggregateStatisticsResponse aggregateStatistics( const std::string& tableName,
  * "additional_column_names".  Values in these columns will be included in the
  * overall aggregate calculation--individual aggregates will not be calculated
  * per additional column.  For instance, requesting the @ref
- * gpudb::aggregate_statistics_count "count" & @ref
+ * gpudb::aggregate_statistics_count "count" and @ref
  * gpudb::aggregate_statistics_mean "mean" of @a columnName x and @ref
  * gpudb::aggregate_statistics_additional_column_names
- * "additional_column_names" y & z, where x holds the numbers 1-10, y holds
- * 11-20, and z holds 21-30, would return the total number of x, y, & z values
- * (30), and the single average value across all x, y, & z values (15.5).
+ * "additional_column_names" y and z, where x holds the numbers 1-10, y holds
+ * 11-20, and z holds 21-30, would return the total number of x, y, and z
+ * values (30), and the single average value across all x, y, and z values
+ * (15.5).
  *
  * The response includes a list of key/value pairs of each statistic requested
  * and its corresponding value.
@@ -5086,7 +5252,7 @@ AggregateStatisticsResponse aggregateStatistics( const std::string& tableName,
  *                           (percentile(50.0) will be an approximation of the
  *                           median). Add a second, comma-separated value to
  *                           calculate percentile resolution, e.g.,
- *                           'percentile(75,150)'
+ *                           'percentile(75,150)'.
  *                       <li>@ref gpudb::aggregate_statistics_percentile_rank
  *                           "aggregate_statistics_percentile_rank": Estimate
  *                           (via t-digest) of the percentile rank of the given
@@ -5256,7 +5422,7 @@ AggregateStatisticsByRangeResponse& aggregateStatisticsByRange( const AggregateS
  * @param[in] interval  The interval of a bin. Set members fall into bin i if
  *                      the binning-column falls in the range
  *                      [start+interval*i, start+interval*(i+1)).
- * @param[in] options  Map of optional parameters:
+ * @param[in] options  Optional parameters.
  *                     <ul>
  *                         <li>@ref
  *                             gpudb::aggregate_statistics_by_range_additional_column_names
@@ -5346,7 +5512,7 @@ AggregateStatisticsByRangeResponse aggregateStatisticsByRange( const std::string
  * @param[in] interval  The interval of a bin. Set members fall into bin i if
  *                      the binning-column falls in the range
  *                      [start+interval*i, start+interval*(i+1)).
- * @param[in] options  Map of optional parameters:
+ * @param[in] options  Optional parameters.
  *                     <ul>
  *                         <li>@ref
  *                             gpudb::aggregate_statistics_by_range_additional_column_names
@@ -5406,16 +5572,9 @@ AggregateStatisticsByRangeResponse& aggregateStatisticsByRange( const std::strin
  * gpudb::AggregateUniqueRequest::offset "offset" and @ref
  * gpudb::AggregateUniqueRequest::limit "limit" parameters.
  *
- * Columns marked as <a href="../../../concepts/types/#data-handling"
- * target="_top">store-only</a> are unable to be used with this function.
  *
- * To get the first 10 unique values sorted in descending order @ref
- * gpudb::AggregateUniqueRequest::options "options" would be:
- * @code
+ * {"limit":"10","sort_order":"descending"}
  *
- *     {"limit":"10","sort_order":"descending"}
- *
- * @endcode
  * The response is returned as a dynamic schema. For details see: <a
  * href="../../../api/concepts/#dynamic-schemas" target="_top">dynamic schemas
  * documentation</a>.
@@ -5458,16 +5617,9 @@ RawAggregateUniqueResponse aggregateUniqueRaw( const AggregateUniqueRequest& req
  * gpudb::AggregateUniqueRequest::offset "offset" and @ref
  * gpudb::AggregateUniqueRequest::limit "limit" parameters.
  *
- * Columns marked as <a href="../../../concepts/types/#data-handling"
- * target="_top">store-only</a> are unable to be used with this function.
  *
- * To get the first 10 unique values sorted in descending order @ref
- * gpudb::AggregateUniqueRequest::options "options" would be:
- * @code
+ * {"limit":"10","sort_order":"descending"}
  *
- *     {"limit":"10","sort_order":"descending"}
- *
- * @endcode
  * The response is returned as a dynamic schema. For details see: <a
  * href="../../../api/concepts/#dynamic-schemas" target="_top">dynamic schemas
  * documentation</a>.
@@ -5513,16 +5665,9 @@ RawAggregateUniqueResponse& aggregateUniqueRaw( const AggregateUniqueRequest& re
  * gpudb::AggregateUniqueRequest::offset "offset" and @ref
  * gpudb::AggregateUniqueRequest::limit "limit" parameters.
  *
- * Columns marked as <a href="../../../concepts/types/#data-handling"
- * target="_top">store-only</a> are unable to be used with this function.
  *
- * To get the first 10 unique values sorted in descending order @ref
- * gpudb::AggregateUniqueRequest::options "options" would be:
- * @code
+ * {"limit":"10","sort_order":"descending"}
  *
- *     {"limit":"10","sort_order":"descending"}
- *
- * @endcode
  * The response is returned as a dynamic schema. For details see: <a
  * href="../../../api/concepts/#dynamic-schemas" target="_top">dynamic schemas
  * documentation</a>.
@@ -5565,16 +5710,9 @@ AggregateUniqueResponse aggregateUnique( const AggregateUniqueRequest& request_ 
  * gpudb::AggregateUniqueRequest::offset "offset" and @ref
  * gpudb::AggregateUniqueRequest::limit "limit" parameters.
  *
- * Columns marked as <a href="../../../concepts/types/#data-handling"
- * target="_top">store-only</a> are unable to be used with this function.
  *
- * To get the first 10 unique values sorted in descending order @ref
- * gpudb::AggregateUniqueRequest::options "options" would be:
- * @code
+ * {"limit":"10","sort_order":"descending"}
  *
- *     {"limit":"10","sort_order":"descending"}
- *
- * @endcode
  * The response is returned as a dynamic schema. For details see: <a
  * href="../../../api/concepts/#dynamic-schemas" target="_top">dynamic schemas
  * documentation</a>.
@@ -5616,16 +5754,9 @@ AggregateUniqueResponse& aggregateUnique( const AggregateUniqueRequest& request_
  * "jsonEncodedResponse".  The results can be paged via @a offset and @a limit
  * parameters.
  *
- * Columns marked as <a href="../../../concepts/types/#data-handling"
- * target="_top">store-only</a> are unable to be used with this function.
  *
- * To get the first 10 unique values sorted in descending order @a options
- * would be:
- * @code
+ * {"limit":"10","sort_order":"descending"}
  *
- *     {"limit":"10","sort_order":"descending"}
- *
- * @endcode
  * The response is returned as a dynamic schema. For details see: <a
  * href="../../../api/concepts/#dynamic-schemas" target="_top">dynamic schemas
  * documentation</a>.
@@ -5665,8 +5796,9 @@ AggregateUniqueResponse& aggregateUnique( const AggregateUniqueRequest& request_
  *                   server configuration. Use @ref
  *                   gpudb::RawAggregateUniqueResponse::hasMoreRecords
  *                   "hasMoreRecords" to see if more records exist in the
- *                   result to be fetched, and @a offset & @a limit to request
- *                   subsequent pages of results. The default value is -9999.
+ *                   result to be fetched, and @a offset and @a limit to
+ *                   request subsequent pages of results. The default value is
+ *                   -9999.
  * @param[in] options  Optional parameters.
  *                     <ul>
  *                         <li>@ref gpudb::aggregate_unique_create_temp_table
@@ -5708,8 +5840,8 @@ AggregateUniqueResponse& aggregateUnique( const AggregateUniqueRequest& request_
  *                             "result_table". If the schema provided is
  *                             non-existent, it will be automatically created.
  *                         <li>@ref gpudb::aggregate_unique_expression
- *                             "aggregate_unique_expression": Optional filter
- *                             expression to apply to the table.
+ *                             "aggregate_unique_expression": Filter expression
+ *                             to apply to the table.
  *                         <li>@ref gpudb::aggregate_unique_sort_order
  *                             "aggregate_unique_sort_order": String indicating
  *                             how the returned values should be sorted.
@@ -5859,16 +5991,9 @@ AggregateUniqueResponse aggregateUnique( const std::string& tableName,
  * "jsonEncodedResponse".  The results can be paged via @a offset and @a limit
  * parameters.
  *
- * Columns marked as <a href="../../../concepts/types/#data-handling"
- * target="_top">store-only</a> are unable to be used with this function.
  *
- * To get the first 10 unique values sorted in descending order @a options
- * would be:
- * @code
+ * {"limit":"10","sort_order":"descending"}
  *
- *     {"limit":"10","sort_order":"descending"}
- *
- * @endcode
  * The response is returned as a dynamic schema. For details see: <a
  * href="../../../api/concepts/#dynamic-schemas" target="_top">dynamic schemas
  * documentation</a>.
@@ -5908,8 +6033,9 @@ AggregateUniqueResponse aggregateUnique( const std::string& tableName,
  *                   server configuration. Use @ref
  *                   gpudb::RawAggregateUniqueResponse::hasMoreRecords
  *                   "hasMoreRecords" to see if more records exist in the
- *                   result to be fetched, and @a offset & @a limit to request
- *                   subsequent pages of results. The default value is -9999.
+ *                   result to be fetched, and @a offset and @a limit to
+ *                   request subsequent pages of results. The default value is
+ *                   -9999.
  * @param[in] options  Optional parameters.
  *                     <ul>
  *                         <li>@ref gpudb::aggregate_unique_create_temp_table
@@ -5951,8 +6077,8 @@ AggregateUniqueResponse aggregateUnique( const std::string& tableName,
  *                             "result_table". If the schema provided is
  *                             non-existent, it will be automatically created.
  *                         <li>@ref gpudb::aggregate_unique_expression
- *                             "aggregate_unique_expression": Optional filter
- *                             expression to apply to the table.
+ *                             "aggregate_unique_expression": Filter expression
+ *                             to apply to the table.
  *                         <li>@ref gpudb::aggregate_unique_sort_order
  *                             "aggregate_unique_sort_order": String indicating
  *                             how the returned values should be sorted.
@@ -6367,7 +6493,7 @@ AggregateUnpivotResponse& aggregateUnpivot( const AggregateUnpivotRequest& reque
  *                             @ref gpudb::aggregate_unpivot_result_table
  *                             "result_table".
  *                         <li>@ref gpudb::aggregate_unpivot_view_id
- *                             "aggregate_unpivot_view_id": view this result
+ *                             "aggregate_unpivot_view_id": View this result
  *                             table is part of. The default value is ''.
  *                         <li>@ref gpudb::aggregate_unpivot_create_indexes
  *                             "aggregate_unpivot_create_indexes":
@@ -6567,7 +6693,7 @@ AggregateUnpivotResponse aggregateUnpivot( const std::string& tableName,
  *                             @ref gpudb::aggregate_unpivot_result_table
  *                             "result_table".
  *                         <li>@ref gpudb::aggregate_unpivot_view_id
- *                             "aggregate_unpivot_view_id": view this result
+ *                             "aggregate_unpivot_view_id": View this result
  *                             table is part of. The default value is ''.
  *                         <li>@ref gpudb::aggregate_unpivot_create_indexes
  *                             "aggregate_unpivot_create_indexes":
@@ -6612,8 +6738,11 @@ AggregateUnpivotResponse& aggregateUnpivot( const std::string& tableName,
                                             AggregateUnpivotResponse& response_ ) const;
 
 /**
- * Alters an existing database backup containing a current snapshot of existing
- * objects.
+ * Alters an existing database <a
+ * href="../../../admin/backup_restore/#database-backup"
+ * target="_top">backup</a>, accessible via the <a
+ * href="../../../concepts/data_sinks/" target="_top">data sink</a> specified
+ * by @ref gpudb::AlterBackupRequest::datasinkName "datasinkName".
  *
  * @param[in] request_  @ref gpudb::AlterBackupRequest "Request" object
  *                      containing the parameters for the operation.
@@ -6624,8 +6753,11 @@ AggregateUnpivotResponse& aggregateUnpivot( const std::string& tableName,
 AlterBackupResponse alterBackup( const AlterBackupRequest& request_ ) const;
 
 /**
- * Alters an existing database backup containing a current snapshot of existing
- * objects.
+ * Alters an existing database <a
+ * href="../../../admin/backup_restore/#database-backup"
+ * target="_top">backup</a>, accessible via the <a
+ * href="../../../concepts/data_sinks/" target="_top">data sink</a> specified
+ * by @ref gpudb::AlterBackupRequest::datasinkName "datasinkName".
  *
  * @param[in] request_  @ref gpudb::AlterBackupRequest "Request" object
  *                      containing the parameters for the operation.
@@ -6639,45 +6771,54 @@ AlterBackupResponse& alterBackup( const AlterBackupRequest& request_,
                                   AlterBackupResponse& response_ ) const;
 
 /**
- * Alters an existing database backup containing a current snapshot of existing
- * objects.
+ * Alters an existing database <a
+ * href="../../../admin/backup_restore/#database-backup"
+ * target="_top">backup</a>, accessible via the <a
+ * href="../../../concepts/data_sinks/" target="_top">data sink</a> specified
+ * by @a datasinkName.
  *
- * @param[in] backupName  Name of the backup object to be altered
+ * @param[in] backupName  Name of the backup to be altered.
  * @param[in] action  Operation to be applied.
  *                    Supported values:
  *                    <ul>
  *                        <li>@ref gpudb::alter_backup_checksum
  *                            "alter_backup_checksum": Calculate checksum for
- *                            backup files
+ *                            backed-up files.
  *                        <li>@ref gpudb::alter_backup_ddl_only
- *                            "alter_backup_ddl_only": Only save the DDL, do
- *                            not backup table data
+ *                            "alter_backup_ddl_only": Whether or not to only
+ *                            save DDL and not back up table data, when taking
+ *                            future snapshots; set @a value to 'true' or
+ *                            'false' for DDL only or DDL and table data,
+ *                            respectively.
  *                        <li>@ref
  *                            gpudb::alter_backup_max_incremental_backups_to_keep
  *                            "alter_backup_max_incremental_backups_to_keep":
- *                            Maximum number of incremental backups to keep
+ *                            Maximum number of incremental snapshots to keep,
+ *                            when taking future snapshots; set @a value to the
+ *                            number of snapshots to keep.
  *                        <li>@ref gpudb::alter_backup_merge
- *                            "alter_backup_merge": Merges all backup instances
- *                            and creates a single full backup
+ *                            "alter_backup_merge": Merges all snapshots within
+ *                            a backup and creates a single full snapshot.
  *                        <li>@ref gpudb::alter_backup_purge
- *                            "alter_backup_purge": Purges backup instances
+ *                            "alter_backup_purge": Deletes a snapshot from a
+ *                            backup; set @a value to the snapshot ID to purge.
  *                    </ul>
- * @param[in] value  Action specific argument.
- * @param[in] datasinkName  Datasink where backup will be stored.
+ * @param[in] value  Value of the modification, depending on @a action.
+ * @param[in] datasinkName  Data sink through which the backup is accessible.
  * @param[in] options  Optional parameters.
  *                     <ul>
  *                         <li>@ref gpudb::alter_backup_comment
  *                             "alter_backup_comment": Comments to store with
- *                             the new backup instance
+ *                             the backup.
  *                         <li>@ref gpudb::alter_backup_dry_run
- *                             "alter_backup_dry_run": Dry run of backup
- *                             changes.
+ *                             "alter_backup_dry_run": Whether or not to
+ *                             perform a dry run of a backup alteration.
  *                             Supported values:
  *                             <ul>
- *                                 <li>@ref gpudb::alter_backup_false
- *                                     "alter_backup_false"
  *                                 <li>@ref gpudb::alter_backup_true
  *                                     "alter_backup_true"
+ *                                 <li>@ref gpudb::alter_backup_false
+ *                                     "alter_backup_false"
  *                             </ul>
  *                             The default value is @ref
  *                             gpudb::alter_backup_false "alter_backup_false".
@@ -6694,45 +6835,54 @@ AlterBackupResponse alterBackup( const std::string& backupName,
                                  const std::map<std::string, std::string>& options ) const;
 
 /**
- * Alters an existing database backup containing a current snapshot of existing
- * objects.
+ * Alters an existing database <a
+ * href="../../../admin/backup_restore/#database-backup"
+ * target="_top">backup</a>, accessible via the <a
+ * href="../../../concepts/data_sinks/" target="_top">data sink</a> specified
+ * by @a datasinkName.
  *
- * @param[in] backupName  Name of the backup object to be altered
+ * @param[in] backupName  Name of the backup to be altered.
  * @param[in] action  Operation to be applied.
  *                    Supported values:
  *                    <ul>
  *                        <li>@ref gpudb::alter_backup_checksum
  *                            "alter_backup_checksum": Calculate checksum for
- *                            backup files
+ *                            backed-up files.
  *                        <li>@ref gpudb::alter_backup_ddl_only
- *                            "alter_backup_ddl_only": Only save the DDL, do
- *                            not backup table data
+ *                            "alter_backup_ddl_only": Whether or not to only
+ *                            save DDL and not back up table data, when taking
+ *                            future snapshots; set @a value to 'true' or
+ *                            'false' for DDL only or DDL and table data,
+ *                            respectively.
  *                        <li>@ref
  *                            gpudb::alter_backup_max_incremental_backups_to_keep
  *                            "alter_backup_max_incremental_backups_to_keep":
- *                            Maximum number of incremental backups to keep
+ *                            Maximum number of incremental snapshots to keep,
+ *                            when taking future snapshots; set @a value to the
+ *                            number of snapshots to keep.
  *                        <li>@ref gpudb::alter_backup_merge
- *                            "alter_backup_merge": Merges all backup instances
- *                            and creates a single full backup
+ *                            "alter_backup_merge": Merges all snapshots within
+ *                            a backup and creates a single full snapshot.
  *                        <li>@ref gpudb::alter_backup_purge
- *                            "alter_backup_purge": Purges backup instances
+ *                            "alter_backup_purge": Deletes a snapshot from a
+ *                            backup; set @a value to the snapshot ID to purge.
  *                    </ul>
- * @param[in] value  Action specific argument.
- * @param[in] datasinkName  Datasink where backup will be stored.
+ * @param[in] value  Value of the modification, depending on @a action.
+ * @param[in] datasinkName  Data sink through which the backup is accessible.
  * @param[in] options  Optional parameters.
  *                     <ul>
  *                         <li>@ref gpudb::alter_backup_comment
  *                             "alter_backup_comment": Comments to store with
- *                             the new backup instance
+ *                             the backup.
  *                         <li>@ref gpudb::alter_backup_dry_run
- *                             "alter_backup_dry_run": Dry run of backup
- *                             changes.
+ *                             "alter_backup_dry_run": Whether or not to
+ *                             perform a dry run of a backup alteration.
  *                             Supported values:
  *                             <ul>
- *                                 <li>@ref gpudb::alter_backup_false
- *                                     "alter_backup_false"
  *                                 <li>@ref gpudb::alter_backup_true
  *                                     "alter_backup_true"
+ *                                 <li>@ref gpudb::alter_backup_false
+ *                                     "alter_backup_false"
  *                             </ul>
  *                             The default value is @ref
  *                             gpudb::alter_backup_false "alter_backup_false".
@@ -6829,10 +6979,10 @@ AlterCredentialResponse& alterCredential( const AlterCredentialRequest& request_
  *                                      <li>@ref
  *                                          gpudb::alter_credential_identity
  *                                          "alter_credential_identity": New
- *                                          user for the credential
+ *                                          user for the credential.
  *                                      <li>@ref gpudb::alter_credential_secret
  *                                          "alter_credential_secret": New
- *                                          password for the credential
+ *                                          password for the credential.
  *                                      <li>@ref
  *                                          gpudb::alter_credential_schema_name
  *                                          "alter_credential_schema_name":
@@ -6904,10 +7054,10 @@ AlterCredentialResponse alterCredential( const std::string& credentialName,
  *                                      <li>@ref
  *                                          gpudb::alter_credential_identity
  *                                          "alter_credential_identity": New
- *                                          user for the credential
+ *                                          user for the credential.
  *                                      <li>@ref gpudb::alter_credential_secret
  *                                          "alter_credential_secret": New
- *                                          password for the credential
+ *                                          password for the credential.
  *                                      <li>@ref
  *                                          gpudb::alter_credential_schema_name
  *                                          "alter_credential_schema_name":
@@ -6933,7 +7083,7 @@ AlterCredentialResponse& alterCredential( const std::string& credentialName,
 
 /**
  * Alters the properties of an existing <a href="../../../concepts/data_sinks/"
- * target="_top">data sink</a>
+ * target="_top">data sink</a>.
  *
  * @param[in] request_  @ref gpudb::AlterDatasinkRequest "Request" object
  *                      containing the parameters for the operation.
@@ -6945,7 +7095,7 @@ AlterDatasinkResponse alterDatasink( const AlterDatasinkRequest& request_ ) cons
 
 /**
  * Alters the properties of an existing <a href="../../../concepts/data_sinks/"
- * target="_top">data sink</a>
+ * target="_top">data sink</a>.
  *
  * @param[in] request_  @ref gpudb::AlterDatasinkRequest "Request" object
  *                      containing the parameters for the operation.
@@ -6960,7 +7110,7 @@ AlterDatasinkResponse& alterDatasink( const AlterDatasinkRequest& request_,
 
 /**
  * Alters the properties of an existing <a href="../../../concepts/data_sinks/"
- * target="_top">data sink</a>
+ * target="_top">data sink</a>.
  *
  * @param[in] name  Name of the data sink to be altered. Must be an existing
  *                  data sink.
@@ -6980,27 +7130,27 @@ AlterDatasinkResponse& alterDatasink( const AlterDatasinkRequest& request_,
  *                                        gpudb::alter_datasink_connection_timeout
  *                                        "alter_datasink_connection_timeout":
  *                                        Timeout in seconds for connecting to
- *                                        this sink
+ *                                        this sink.
  *                                    <li>@ref
  *                                        gpudb::alter_datasink_wait_timeout
  *                                        "alter_datasink_wait_timeout":
  *                                        Timeout in seconds for waiting for a
- *                                        response from this sink
+ *                                        response from this sink.
  *                                    <li>@ref gpudb::alter_datasink_credential
  *                                        "alter_datasink_credential": Name of
  *                                        the <a
  *                                        href="../../../concepts/credentials/"
  *                                        target="_top">credential</a> object
- *                                        to be used in this data sink
+ *                                        to be used in this data sink.
  *                                    <li>@ref
  *                                        gpudb::alter_datasink_s3_bucket_name
  *                                        "alter_datasink_s3_bucket_name": Name
  *                                        of the Amazon S3 bucket to use as the
- *                                        data sink
+ *                                        data sink.
  *                                    <li>@ref gpudb::alter_datasink_s3_region
  *                                        "alter_datasink_s3_region": Name of
  *                                        the Amazon S3 region where the given
- *                                        bucket is located
+ *                                        bucket is located.
  *                                    <li>@ref
  *                                        gpudb::alter_datasink_s3_verify_ssl
  *                                        "alter_datasink_s3_verify_ssl":
@@ -7010,7 +7160,8 @@ AlterDatasinkResponse& alterDatasink( const AlterDatasinkRequest& request_,
  *                                            <li>@ref
  *                                                gpudb::alter_datasink_true
  *                                                "alter_datasink_true":
- *                                                Connect with SSL verification
+ *                                                Connect with SSL
+ *                                                verification.
  *                                            <li>@ref
  *                                                gpudb::alter_datasink_false
  *                                                "alter_datasink_false":
@@ -7052,25 +7203,25 @@ AlterDatasinkResponse& alterDatasink( const AlterDatasinkRequest& request_,
  *                                        "alter_datasink_s3_aws_role_arn":
  *                                        Amazon IAM Role ARN which has
  *                                        required S3 permissions that can be
- *                                        assumed for the given S3 IAM user
+ *                                        assumed for the given S3 IAM user.
  *                                    <li>@ref
  *                                        gpudb::alter_datasink_s3_encryption_customer_algorithm
  *                                        "alter_datasink_s3_encryption_customer_algorithm":
  *                                        Customer encryption algorithm used
- *                                        encrypting data
+ *                                        encrypting data.
  *                                    <li>@ref
  *                                        gpudb::alter_datasink_s3_encryption_customer_key
  *                                        "alter_datasink_s3_encryption_customer_key":
  *                                        Customer encryption key to encrypt or
- *                                        decrypt data
+ *                                        decrypt data.
  *                                    <li>@ref
  *                                        gpudb::alter_datasink_s3_encryption_type
  *                                        "alter_datasink_s3_encryption_type":
- *                                        Server side encryption type
+ *                                        Server side encryption type.
  *                                    <li>@ref
  *                                        gpudb::alter_datasink_s3_kms_key_id
  *                                        "alter_datasink_s3_kms_key_id": KMS
- *                                        key
+ *                                        key.
  *                                    <li>@ref
  *                                        gpudb::alter_datasink_hdfs_kerberos_keytab
  *                                        "alter_datasink_hdfs_kerberos_keytab":
@@ -7081,7 +7232,7 @@ AlterDatasinkResponse& alterDatasink( const AlterDatasinkRequest& request_,
  *                                        gpudb::alter_datasink_hdfs_delegation_token
  *                                        "alter_datasink_hdfs_delegation_token":
  *                                        Delegation token for the given HDFS
- *                                        user
+ *                                        user.
  *                                    <li>@ref
  *                                        gpudb::alter_datasink_hdfs_use_kerberos
  *                                        "alter_datasink_hdfs_use_kerberos":
@@ -7104,43 +7255,67 @@ AlterDatasinkResponse& alterDatasink( const AlterDatasinkRequest& request_,
  *                                        "alter_datasink_azure_storage_account_name":
  *                                        Name of the Azure storage account to
  *                                        use as the data sink, this is valid
- *                                        only if tenant_id is specified
+ *                                        only if tenant_id is specified.
  *                                    <li>@ref
  *                                        gpudb::alter_datasink_azure_container_name
  *                                        "alter_datasink_azure_container_name":
  *                                        Name of the Azure storage container
- *                                        to use as the data sink
+ *                                        to use as the data sink.
  *                                    <li>@ref
  *                                        gpudb::alter_datasink_azure_tenant_id
  *                                        "alter_datasink_azure_tenant_id":
  *                                        Active Directory tenant ID (or
- *                                        directory ID)
+ *                                        directory ID).
  *                                    <li>@ref
  *                                        gpudb::alter_datasink_azure_sas_token
  *                                        "alter_datasink_azure_sas_token":
  *                                        Shared access signature token for
  *                                        Azure storage account to use as the
- *                                        data sink
+ *                                        data sink.
  *                                    <li>@ref
  *                                        gpudb::alter_datasink_azure_oauth_token
  *                                        "alter_datasink_azure_oauth_token":
- *                                        Oauth token to access given storage
- *                                        container
+ *                                        OAuth token to access given storage
+ *                                        container.
+ *                                    <li>@ref
+ *                                        gpudb::alter_datasink_azure_use_virtual_addressing
+ *                                        "alter_datasink_azure_use_virtual_addressing":
+ *                                        Whether to use virtual addressing
+ *                                        when referencing the Azure source.
+ *                                        Supported values:
+ *                                        <ul>
+ *                                            <li>@ref
+ *                                                gpudb::alter_datasink_true
+ *                                                "alter_datasink_true": The
+ *                                                requests URI should be
+ *                                                specified in
+ *                                                virtual-hosted-style format
+ *                                                where the bucket name is part
+ *                                                of the domain name in the
+ *                                                URL.
+ *                                            <li>@ref
+ *                                                gpudb::alter_datasink_false
+ *                                                "alter_datasink_false": Use
+ *                                                path-style URI for requests.
+ *                                        </ul>
+ *                                        The default value is @ref
+ *                                        gpudb::alter_datasink_true
+ *                                        "alter_datasink_true".
  *                                    <li>@ref
  *                                        gpudb::alter_datasink_gcs_bucket_name
  *                                        "alter_datasink_gcs_bucket_name":
  *                                        Name of the Google Cloud Storage
- *                                        bucket to use as the data sink
+ *                                        bucket to use as the data sink.
  *                                    <li>@ref
  *                                        gpudb::alter_datasink_gcs_project_id
  *                                        "alter_datasink_gcs_project_id": Name
  *                                        of the Google Cloud project to use as
- *                                        the data sink
+ *                                        the data sink.
  *                                    <li>@ref
  *                                        gpudb::alter_datasink_gcs_service_account_keys
  *                                        "alter_datasink_gcs_service_account_keys":
  *                                        Google Cloud service account keys to
- *                                        use for authenticating the data sink
+ *                                        use for authenticating the data sink.
  *                                    <li>@ref
  *                                        gpudb::alter_datasink_jdbc_driver_jar_path
  *                                        "alter_datasink_jdbc_driver_jar_path":
@@ -7149,7 +7324,7 @@ AlterDatasinkResponse& alterDatasink( const AlterDatasinkRequest& request_,
  *                                    <li>@ref
  *                                        gpudb::alter_datasink_jdbc_driver_class_name
  *                                        "alter_datasink_jdbc_driver_class_name":
- *                                        Name of the JDBC driver class
+ *                                        Name of the JDBC driver class.
  *                                    <li>@ref gpudb::alter_datasink_kafka_url
  *                                        "alter_datasink_kafka_url": The
  *                                        publicly-accessible full path URL to
@@ -7160,7 +7335,7 @@ AlterDatasinkResponse& alterDatasink( const AlterDatasinkRequest& request_,
  *                                        "alter_datasink_kafka_topic_name":
  *                                        Name of the Kafka topic to use for
  *                                        this data sink, if it references a
- *                                        Kafka broker
+ *                                        Kafka broker.
  *                                    <li>@ref gpudb::alter_datasink_anonymous
  *                                        "alter_datasink_anonymous": Create an
  *                                        anonymous connection to the storage
@@ -7200,9 +7375,9 @@ AlterDatasinkResponse& alterDatasink( const AlterDatasinkRequest& request_,
  *                                        gpudb::alter_datasink_false
  *                                        "alter_datasink_false".
  *                                    <li>@ref gpudb::alter_datasink_use_https
- *                                        "alter_datasink_use_https": Use https
+ *                                        "alter_datasink_use_https": Use HTTPS
  *                                        to connect to datasink if true,
- *                                        otherwise use http.
+ *                                        otherwise use HTTP.
  *                                        Supported values:
  *                                        <ul>
  *                                            <li>@ref
@@ -7238,12 +7413,12 @@ AlterDatasinkResponse& alterDatasink( const AlterDatasinkRequest& request_,
  *                                                gpudb::alter_datasink_flat
  *                                                "alter_datasink_flat": A
  *                                                single record is returned per
- *                                                message
+ *                                                message.
  *                                            <li>@ref
  *                                                gpudb::alter_datasink_nested
  *                                                "alter_datasink_nested":
  *                                                Records are returned as an
- *                                                array per message
+ *                                                array per message.
  *                                        </ul>
  *                                        The default value is @ref
  *                                        gpudb::alter_datasink_flat
@@ -7287,7 +7462,7 @@ AlterDatasinkResponse alterDatasink( const std::string& name,
 
 /**
  * Alters the properties of an existing <a href="../../../concepts/data_sinks/"
- * target="_top">data sink</a>
+ * target="_top">data sink</a>.
  *
  * @param[in] name  Name of the data sink to be altered. Must be an existing
  *                  data sink.
@@ -7307,27 +7482,27 @@ AlterDatasinkResponse alterDatasink( const std::string& name,
  *                                        gpudb::alter_datasink_connection_timeout
  *                                        "alter_datasink_connection_timeout":
  *                                        Timeout in seconds for connecting to
- *                                        this sink
+ *                                        this sink.
  *                                    <li>@ref
  *                                        gpudb::alter_datasink_wait_timeout
  *                                        "alter_datasink_wait_timeout":
  *                                        Timeout in seconds for waiting for a
- *                                        response from this sink
+ *                                        response from this sink.
  *                                    <li>@ref gpudb::alter_datasink_credential
  *                                        "alter_datasink_credential": Name of
  *                                        the <a
  *                                        href="../../../concepts/credentials/"
  *                                        target="_top">credential</a> object
- *                                        to be used in this data sink
+ *                                        to be used in this data sink.
  *                                    <li>@ref
  *                                        gpudb::alter_datasink_s3_bucket_name
  *                                        "alter_datasink_s3_bucket_name": Name
  *                                        of the Amazon S3 bucket to use as the
- *                                        data sink
+ *                                        data sink.
  *                                    <li>@ref gpudb::alter_datasink_s3_region
  *                                        "alter_datasink_s3_region": Name of
  *                                        the Amazon S3 region where the given
- *                                        bucket is located
+ *                                        bucket is located.
  *                                    <li>@ref
  *                                        gpudb::alter_datasink_s3_verify_ssl
  *                                        "alter_datasink_s3_verify_ssl":
@@ -7337,7 +7512,8 @@ AlterDatasinkResponse alterDatasink( const std::string& name,
  *                                            <li>@ref
  *                                                gpudb::alter_datasink_true
  *                                                "alter_datasink_true":
- *                                                Connect with SSL verification
+ *                                                Connect with SSL
+ *                                                verification.
  *                                            <li>@ref
  *                                                gpudb::alter_datasink_false
  *                                                "alter_datasink_false":
@@ -7379,25 +7555,25 @@ AlterDatasinkResponse alterDatasink( const std::string& name,
  *                                        "alter_datasink_s3_aws_role_arn":
  *                                        Amazon IAM Role ARN which has
  *                                        required S3 permissions that can be
- *                                        assumed for the given S3 IAM user
+ *                                        assumed for the given S3 IAM user.
  *                                    <li>@ref
  *                                        gpudb::alter_datasink_s3_encryption_customer_algorithm
  *                                        "alter_datasink_s3_encryption_customer_algorithm":
  *                                        Customer encryption algorithm used
- *                                        encrypting data
+ *                                        encrypting data.
  *                                    <li>@ref
  *                                        gpudb::alter_datasink_s3_encryption_customer_key
  *                                        "alter_datasink_s3_encryption_customer_key":
  *                                        Customer encryption key to encrypt or
- *                                        decrypt data
+ *                                        decrypt data.
  *                                    <li>@ref
  *                                        gpudb::alter_datasink_s3_encryption_type
  *                                        "alter_datasink_s3_encryption_type":
- *                                        Server side encryption type
+ *                                        Server side encryption type.
  *                                    <li>@ref
  *                                        gpudb::alter_datasink_s3_kms_key_id
  *                                        "alter_datasink_s3_kms_key_id": KMS
- *                                        key
+ *                                        key.
  *                                    <li>@ref
  *                                        gpudb::alter_datasink_hdfs_kerberos_keytab
  *                                        "alter_datasink_hdfs_kerberos_keytab":
@@ -7408,7 +7584,7 @@ AlterDatasinkResponse alterDatasink( const std::string& name,
  *                                        gpudb::alter_datasink_hdfs_delegation_token
  *                                        "alter_datasink_hdfs_delegation_token":
  *                                        Delegation token for the given HDFS
- *                                        user
+ *                                        user.
  *                                    <li>@ref
  *                                        gpudb::alter_datasink_hdfs_use_kerberos
  *                                        "alter_datasink_hdfs_use_kerberos":
@@ -7431,43 +7607,67 @@ AlterDatasinkResponse alterDatasink( const std::string& name,
  *                                        "alter_datasink_azure_storage_account_name":
  *                                        Name of the Azure storage account to
  *                                        use as the data sink, this is valid
- *                                        only if tenant_id is specified
+ *                                        only if tenant_id is specified.
  *                                    <li>@ref
  *                                        gpudb::alter_datasink_azure_container_name
  *                                        "alter_datasink_azure_container_name":
  *                                        Name of the Azure storage container
- *                                        to use as the data sink
+ *                                        to use as the data sink.
  *                                    <li>@ref
  *                                        gpudb::alter_datasink_azure_tenant_id
  *                                        "alter_datasink_azure_tenant_id":
  *                                        Active Directory tenant ID (or
- *                                        directory ID)
+ *                                        directory ID).
  *                                    <li>@ref
  *                                        gpudb::alter_datasink_azure_sas_token
  *                                        "alter_datasink_azure_sas_token":
  *                                        Shared access signature token for
  *                                        Azure storage account to use as the
- *                                        data sink
+ *                                        data sink.
  *                                    <li>@ref
  *                                        gpudb::alter_datasink_azure_oauth_token
  *                                        "alter_datasink_azure_oauth_token":
- *                                        Oauth token to access given storage
- *                                        container
+ *                                        OAuth token to access given storage
+ *                                        container.
+ *                                    <li>@ref
+ *                                        gpudb::alter_datasink_azure_use_virtual_addressing
+ *                                        "alter_datasink_azure_use_virtual_addressing":
+ *                                        Whether to use virtual addressing
+ *                                        when referencing the Azure source.
+ *                                        Supported values:
+ *                                        <ul>
+ *                                            <li>@ref
+ *                                                gpudb::alter_datasink_true
+ *                                                "alter_datasink_true": The
+ *                                                requests URI should be
+ *                                                specified in
+ *                                                virtual-hosted-style format
+ *                                                where the bucket name is part
+ *                                                of the domain name in the
+ *                                                URL.
+ *                                            <li>@ref
+ *                                                gpudb::alter_datasink_false
+ *                                                "alter_datasink_false": Use
+ *                                                path-style URI for requests.
+ *                                        </ul>
+ *                                        The default value is @ref
+ *                                        gpudb::alter_datasink_true
+ *                                        "alter_datasink_true".
  *                                    <li>@ref
  *                                        gpudb::alter_datasink_gcs_bucket_name
  *                                        "alter_datasink_gcs_bucket_name":
  *                                        Name of the Google Cloud Storage
- *                                        bucket to use as the data sink
+ *                                        bucket to use as the data sink.
  *                                    <li>@ref
  *                                        gpudb::alter_datasink_gcs_project_id
  *                                        "alter_datasink_gcs_project_id": Name
  *                                        of the Google Cloud project to use as
- *                                        the data sink
+ *                                        the data sink.
  *                                    <li>@ref
  *                                        gpudb::alter_datasink_gcs_service_account_keys
  *                                        "alter_datasink_gcs_service_account_keys":
  *                                        Google Cloud service account keys to
- *                                        use for authenticating the data sink
+ *                                        use for authenticating the data sink.
  *                                    <li>@ref
  *                                        gpudb::alter_datasink_jdbc_driver_jar_path
  *                                        "alter_datasink_jdbc_driver_jar_path":
@@ -7476,7 +7676,7 @@ AlterDatasinkResponse alterDatasink( const std::string& name,
  *                                    <li>@ref
  *                                        gpudb::alter_datasink_jdbc_driver_class_name
  *                                        "alter_datasink_jdbc_driver_class_name":
- *                                        Name of the JDBC driver class
+ *                                        Name of the JDBC driver class.
  *                                    <li>@ref gpudb::alter_datasink_kafka_url
  *                                        "alter_datasink_kafka_url": The
  *                                        publicly-accessible full path URL to
@@ -7487,7 +7687,7 @@ AlterDatasinkResponse alterDatasink( const std::string& name,
  *                                        "alter_datasink_kafka_topic_name":
  *                                        Name of the Kafka topic to use for
  *                                        this data sink, if it references a
- *                                        Kafka broker
+ *                                        Kafka broker.
  *                                    <li>@ref gpudb::alter_datasink_anonymous
  *                                        "alter_datasink_anonymous": Create an
  *                                        anonymous connection to the storage
@@ -7527,9 +7727,9 @@ AlterDatasinkResponse alterDatasink( const std::string& name,
  *                                        gpudb::alter_datasink_false
  *                                        "alter_datasink_false".
  *                                    <li>@ref gpudb::alter_datasink_use_https
- *                                        "alter_datasink_use_https": Use https
+ *                                        "alter_datasink_use_https": Use HTTPS
  *                                        to connect to datasink if true,
- *                                        otherwise use http.
+ *                                        otherwise use HTTP.
  *                                        Supported values:
  *                                        <ul>
  *                                            <li>@ref
@@ -7565,12 +7765,12 @@ AlterDatasinkResponse alterDatasink( const std::string& name,
  *                                                gpudb::alter_datasink_flat
  *                                                "alter_datasink_flat": A
  *                                                single record is returned per
- *                                                message
+ *                                                message.
  *                                            <li>@ref
  *                                                gpudb::alter_datasink_nested
  *                                                "alter_datasink_nested":
  *                                                Records are returned as an
- *                                                array per message
+ *                                                array per message.
  *                                        </ul>
  *                                        The default value is @ref
  *                                        gpudb::alter_datasink_flat
@@ -7617,7 +7817,7 @@ AlterDatasinkResponse& alterDatasink( const std::string& name,
 
 /**
  * Alters the properties of an existing <a
- * href="../../../concepts/data_sources/" target="_top">data source</a>
+ * href="../../../concepts/data_sources/" target="_top">data source</a>.
  *
  * @param[in] request_  @ref gpudb::AlterDatasourceRequest "Request" object
  *                      containing the parameters for the operation.
@@ -7629,7 +7829,7 @@ AlterDatasourceResponse alterDatasource( const AlterDatasourceRequest& request_ 
 
 /**
  * Alters the properties of an existing <a
- * href="../../../concepts/data_sources/" target="_top">data source</a>
+ * href="../../../concepts/data_sources/" target="_top">data source</a>.
  *
  * @param[in] request_  @ref gpudb::AlterDatasourceRequest "Request" object
  *                      containing the parameters for the operation.
@@ -7644,7 +7844,7 @@ AlterDatasourceResponse& alterDatasource( const AlterDatasourceRequest& request_
 
 /**
  * Alters the properties of an existing <a
- * href="../../../concepts/data_sources/" target="_top">data source</a>
+ * href="../../../concepts/data_sources/" target="_top">data source</a>.
  *
  * @param[in] name  Name of the data source to be altered. Must be an existing
  *                  data source.
@@ -7664,12 +7864,12 @@ AlterDatasourceResponse& alterDatasource( const AlterDatasourceRequest& request_
  *                                          gpudb::alter_datasource_user_name
  *                                          "alter_datasource_user_name": Name
  *                                          of the remote system user; may be
- *                                          an empty string
+ *                                          an empty string.
  *                                      <li>@ref
  *                                          gpudb::alter_datasource_password
  *                                          "alter_datasource_password":
  *                                          Password for the remote system
- *                                          user; may be an empty string
+ *                                          user; may be an empty string.
  *                                      <li>@ref
  *                                          gpudb::alter_datasource_skip_validation
  *                                          "alter_datasource_skip_validation":
@@ -7691,29 +7891,29 @@ AlterDatasourceResponse& alterDatasource( const AlterDatasourceRequest& request_
  *                                          gpudb::alter_datasource_connection_timeout
  *                                          "alter_datasource_connection_timeout":
  *                                          Timeout in seconds for connecting
- *                                          to this storage provider
+ *                                          to this storage provider.
  *                                      <li>@ref
  *                                          gpudb::alter_datasource_wait_timeout
  *                                          "alter_datasource_wait_timeout":
  *                                          Timeout in seconds for reading from
- *                                          this storage provider
+ *                                          this storage provider.
  *                                      <li>@ref
  *                                          gpudb::alter_datasource_credential
  *                                          "alter_datasource_credential": Name
  *                                          of the <a
  *                                          href="../../../concepts/credentials"
  *                                          target="_top">credential</a> object
- *                                          to be used in data source
+ *                                          to be used in data source.
  *                                      <li>@ref
  *                                          gpudb::alter_datasource_s3_bucket_name
  *                                          "alter_datasource_s3_bucket_name":
  *                                          Name of the Amazon S3 bucket to use
- *                                          as the data source
+ *                                          as the data source.
  *                                      <li>@ref
  *                                          gpudb::alter_datasource_s3_region
  *                                          "alter_datasource_s3_region": Name
  *                                          of the Amazon S3 region where the
- *                                          given bucket is located
+ *                                          given bucket is located.
  *                                      <li>@ref
  *                                          gpudb::alter_datasource_s3_verify_ssl
  *                                          "alter_datasource_s3_verify_ssl":
@@ -7724,7 +7924,7 @@ AlterDatasourceResponse& alterDatasource( const AlterDatasourceRequest& request_
  *                                                  gpudb::alter_datasource_true
  *                                                  "alter_datasource_true":
  *                                                  Connect with SSL
- *                                                  verification
+ *                                                  verification.
  *                                              <li>@ref
  *                                                  gpudb::alter_datasource_false
  *                                                  "alter_datasource_false":
@@ -7768,17 +7968,17 @@ AlterDatasourceResponse& alterDatasource( const AlterDatasourceRequest& request_
  *                                          "alter_datasource_s3_aws_role_arn":
  *                                          Amazon IAM Role ARN which has
  *                                          required S3 permissions that can be
- *                                          assumed for the given S3 IAM user
+ *                                          assumed for the given S3 IAM user.
  *                                      <li>@ref
  *                                          gpudb::alter_datasource_s3_encryption_customer_algorithm
  *                                          "alter_datasource_s3_encryption_customer_algorithm":
  *                                          Customer encryption algorithm used
- *                                          encrypting data
+ *                                          encrypting data.
  *                                      <li>@ref
  *                                          gpudb::alter_datasource_s3_encryption_customer_key
  *                                          "alter_datasource_s3_encryption_customer_key":
  *                                          Customer encryption key to encrypt
- *                                          or decrypt data
+ *                                          or decrypt data.
  *                                      <li>@ref
  *                                          gpudb::alter_datasource_hdfs_kerberos_keytab
  *                                          "alter_datasource_hdfs_kerberos_keytab":
@@ -7789,7 +7989,7 @@ AlterDatasourceResponse& alterDatasource( const AlterDatasourceRequest& request_
  *                                          gpudb::alter_datasource_hdfs_delegation_token
  *                                          "alter_datasource_hdfs_delegation_token":
  *                                          Delegation token for the given HDFS
- *                                          user
+ *                                          user.
  *                                      <li>@ref
  *                                          gpudb::alter_datasource_hdfs_use_kerberos
  *                                          "alter_datasource_hdfs_use_kerberos":
@@ -7813,44 +8013,69 @@ AlterDatasourceResponse& alterDatasource( const AlterDatasourceRequest& request_
  *                                          Name of the Azure storage account
  *                                          to use as the data source, this is
  *                                          valid only if tenant_id is
- *                                          specified
+ *                                          specified.
  *                                      <li>@ref
  *                                          gpudb::alter_datasource_azure_container_name
  *                                          "alter_datasource_azure_container_name":
  *                                          Name of the Azure storage container
- *                                          to use as the data source
+ *                                          to use as the data source.
  *                                      <li>@ref
  *                                          gpudb::alter_datasource_azure_tenant_id
  *                                          "alter_datasource_azure_tenant_id":
  *                                          Active Directory tenant ID (or
- *                                          directory ID)
+ *                                          directory ID).
  *                                      <li>@ref
  *                                          gpudb::alter_datasource_azure_sas_token
  *                                          "alter_datasource_azure_sas_token":
  *                                          Shared access signature token for
  *                                          Azure storage account to use as the
- *                                          data source
+ *                                          data source.
  *                                      <li>@ref
  *                                          gpudb::alter_datasource_azure_oauth_token
  *                                          "alter_datasource_azure_oauth_token":
  *                                          OAuth token to access given storage
- *                                          container
+ *                                          container.
+ *                                      <li>@ref
+ *                                          gpudb::alter_datasource_azure_use_virtual_addressing
+ *                                          "alter_datasource_azure_use_virtual_addressing":
+ *                                          Whether to use virtual addressing
+ *                                          when referencing the Azure source.
+ *                                          Supported values:
+ *                                          <ul>
+ *                                              <li>@ref
+ *                                                  gpudb::alter_datasource_true
+ *                                                  "alter_datasource_true":
+ *                                                  The requests URI should be
+ *                                                  specified in
+ *                                                  virtual-hosted-style format
+ *                                                  where the bucket name is
+ *                                                  part of the domain name in
+ *                                                  the URL.
+ *                                              <li>@ref
+ *                                                  gpudb::alter_datasource_false
+ *                                                  "alter_datasource_false":
+ *                                                  Use path-style URI for
+ *                                                  requests.
+ *                                          </ul>
+ *                                          The default value is @ref
+ *                                          gpudb::alter_datasource_true
+ *                                          "alter_datasource_true".
  *                                      <li>@ref
  *                                          gpudb::alter_datasource_gcs_bucket_name
  *                                          "alter_datasource_gcs_bucket_name":
  *                                          Name of the Google Cloud Storage
- *                                          bucket to use as the data source
+ *                                          bucket to use as the data source.
  *                                      <li>@ref
  *                                          gpudb::alter_datasource_gcs_project_id
  *                                          "alter_datasource_gcs_project_id":
  *                                          Name of the Google Cloud project to
- *                                          use as the data source
+ *                                          use as the data source.
  *                                      <li>@ref
  *                                          gpudb::alter_datasource_gcs_service_account_keys
  *                                          "alter_datasource_gcs_service_account_keys":
  *                                          Google Cloud service account keys
  *                                          to use for authenticating the data
- *                                          source
+ *                                          source.
  *                                      <li>@ref
  *                                          gpudb::alter_datasource_jdbc_driver_jar_path
  *                                          "alter_datasource_jdbc_driver_jar_path":
@@ -7859,7 +8084,7 @@ AlterDatasourceResponse& alterDatasource( const AlterDatasourceRequest& request_
  *                                      <li>@ref
  *                                          gpudb::alter_datasource_jdbc_driver_class_name
  *                                          "alter_datasource_jdbc_driver_class_name":
- *                                          Name of the JDBC driver class
+ *                                          Name of the JDBC driver class.
  *                                      <li>@ref
  *                                          gpudb::alter_datasource_kafka_url
  *                                          "alter_datasource_kafka_url": The
@@ -7870,7 +8095,7 @@ AlterDatasourceResponse& alterDatasource( const AlterDatasourceRequest& request_
  *                                          gpudb::alter_datasource_kafka_topic_name
  *                                          "alter_datasource_kafka_topic_name":
  *                                          Name of the Kafka topic to use as
- *                                          the data source
+ *                                          the data source.
  *                                      <li>@ref
  *                                          gpudb::alter_datasource_anonymous
  *                                          "alter_datasource_anonymous":
@@ -7913,8 +8138,8 @@ AlterDatasourceResponse& alterDatasource( const AlterDatasourceRequest& request_
  *                                      <li>@ref
  *                                          gpudb::alter_datasource_use_https
  *                                          "alter_datasource_use_https": Use
- *                                          https to connect to datasource if
- *                                          true, otherwise use http.
+ *                                          HTTPS to connect to datasource if
+ *                                          true, otherwise use HTTP.
  *                                          Supported values:
  *                                          <ul>
  *                                              <li>@ref
@@ -7941,12 +8166,12 @@ AlterDatasourceResponse& alterDatasource( const AlterDatasourceRequest& request_
  *                                          gpudb::alter_datasource_schema_registry_connection_retries
  *                                          "alter_datasource_schema_registry_connection_retries":
  *                                          Confluent Schema registry
- *                                          connection timeout (in Secs)
+ *                                          connection timeout (in secs).
  *                                      <li>@ref
  *                                          gpudb::alter_datasource_schema_registry_connection_timeout
  *                                          "alter_datasource_schema_registry_connection_timeout":
  *                                          Confluent Schema registry
- *                                          connection timeout (in Secs)
+ *                                          connection timeout (in secs).
  *                                      <li>@ref
  *                                          gpudb::alter_datasource_schema_registry_credential
  *                                          "alter_datasource_schema_registry_credential":
@@ -7978,7 +8203,7 @@ AlterDatasourceResponse alterDatasource( const std::string& name,
 
 /**
  * Alters the properties of an existing <a
- * href="../../../concepts/data_sources/" target="_top">data source</a>
+ * href="../../../concepts/data_sources/" target="_top">data source</a>.
  *
  * @param[in] name  Name of the data source to be altered. Must be an existing
  *                  data source.
@@ -7998,12 +8223,12 @@ AlterDatasourceResponse alterDatasource( const std::string& name,
  *                                          gpudb::alter_datasource_user_name
  *                                          "alter_datasource_user_name": Name
  *                                          of the remote system user; may be
- *                                          an empty string
+ *                                          an empty string.
  *                                      <li>@ref
  *                                          gpudb::alter_datasource_password
  *                                          "alter_datasource_password":
  *                                          Password for the remote system
- *                                          user; may be an empty string
+ *                                          user; may be an empty string.
  *                                      <li>@ref
  *                                          gpudb::alter_datasource_skip_validation
  *                                          "alter_datasource_skip_validation":
@@ -8025,29 +8250,29 @@ AlterDatasourceResponse alterDatasource( const std::string& name,
  *                                          gpudb::alter_datasource_connection_timeout
  *                                          "alter_datasource_connection_timeout":
  *                                          Timeout in seconds for connecting
- *                                          to this storage provider
+ *                                          to this storage provider.
  *                                      <li>@ref
  *                                          gpudb::alter_datasource_wait_timeout
  *                                          "alter_datasource_wait_timeout":
  *                                          Timeout in seconds for reading from
- *                                          this storage provider
+ *                                          this storage provider.
  *                                      <li>@ref
  *                                          gpudb::alter_datasource_credential
  *                                          "alter_datasource_credential": Name
  *                                          of the <a
  *                                          href="../../../concepts/credentials"
  *                                          target="_top">credential</a> object
- *                                          to be used in data source
+ *                                          to be used in data source.
  *                                      <li>@ref
  *                                          gpudb::alter_datasource_s3_bucket_name
  *                                          "alter_datasource_s3_bucket_name":
  *                                          Name of the Amazon S3 bucket to use
- *                                          as the data source
+ *                                          as the data source.
  *                                      <li>@ref
  *                                          gpudb::alter_datasource_s3_region
  *                                          "alter_datasource_s3_region": Name
  *                                          of the Amazon S3 region where the
- *                                          given bucket is located
+ *                                          given bucket is located.
  *                                      <li>@ref
  *                                          gpudb::alter_datasource_s3_verify_ssl
  *                                          "alter_datasource_s3_verify_ssl":
@@ -8058,7 +8283,7 @@ AlterDatasourceResponse alterDatasource( const std::string& name,
  *                                                  gpudb::alter_datasource_true
  *                                                  "alter_datasource_true":
  *                                                  Connect with SSL
- *                                                  verification
+ *                                                  verification.
  *                                              <li>@ref
  *                                                  gpudb::alter_datasource_false
  *                                                  "alter_datasource_false":
@@ -8102,17 +8327,17 @@ AlterDatasourceResponse alterDatasource( const std::string& name,
  *                                          "alter_datasource_s3_aws_role_arn":
  *                                          Amazon IAM Role ARN which has
  *                                          required S3 permissions that can be
- *                                          assumed for the given S3 IAM user
+ *                                          assumed for the given S3 IAM user.
  *                                      <li>@ref
  *                                          gpudb::alter_datasource_s3_encryption_customer_algorithm
  *                                          "alter_datasource_s3_encryption_customer_algorithm":
  *                                          Customer encryption algorithm used
- *                                          encrypting data
+ *                                          encrypting data.
  *                                      <li>@ref
  *                                          gpudb::alter_datasource_s3_encryption_customer_key
  *                                          "alter_datasource_s3_encryption_customer_key":
  *                                          Customer encryption key to encrypt
- *                                          or decrypt data
+ *                                          or decrypt data.
  *                                      <li>@ref
  *                                          gpudb::alter_datasource_hdfs_kerberos_keytab
  *                                          "alter_datasource_hdfs_kerberos_keytab":
@@ -8123,7 +8348,7 @@ AlterDatasourceResponse alterDatasource( const std::string& name,
  *                                          gpudb::alter_datasource_hdfs_delegation_token
  *                                          "alter_datasource_hdfs_delegation_token":
  *                                          Delegation token for the given HDFS
- *                                          user
+ *                                          user.
  *                                      <li>@ref
  *                                          gpudb::alter_datasource_hdfs_use_kerberos
  *                                          "alter_datasource_hdfs_use_kerberos":
@@ -8147,44 +8372,69 @@ AlterDatasourceResponse alterDatasource( const std::string& name,
  *                                          Name of the Azure storage account
  *                                          to use as the data source, this is
  *                                          valid only if tenant_id is
- *                                          specified
+ *                                          specified.
  *                                      <li>@ref
  *                                          gpudb::alter_datasource_azure_container_name
  *                                          "alter_datasource_azure_container_name":
  *                                          Name of the Azure storage container
- *                                          to use as the data source
+ *                                          to use as the data source.
  *                                      <li>@ref
  *                                          gpudb::alter_datasource_azure_tenant_id
  *                                          "alter_datasource_azure_tenant_id":
  *                                          Active Directory tenant ID (or
- *                                          directory ID)
+ *                                          directory ID).
  *                                      <li>@ref
  *                                          gpudb::alter_datasource_azure_sas_token
  *                                          "alter_datasource_azure_sas_token":
  *                                          Shared access signature token for
  *                                          Azure storage account to use as the
- *                                          data source
+ *                                          data source.
  *                                      <li>@ref
  *                                          gpudb::alter_datasource_azure_oauth_token
  *                                          "alter_datasource_azure_oauth_token":
  *                                          OAuth token to access given storage
- *                                          container
+ *                                          container.
+ *                                      <li>@ref
+ *                                          gpudb::alter_datasource_azure_use_virtual_addressing
+ *                                          "alter_datasource_azure_use_virtual_addressing":
+ *                                          Whether to use virtual addressing
+ *                                          when referencing the Azure source.
+ *                                          Supported values:
+ *                                          <ul>
+ *                                              <li>@ref
+ *                                                  gpudb::alter_datasource_true
+ *                                                  "alter_datasource_true":
+ *                                                  The requests URI should be
+ *                                                  specified in
+ *                                                  virtual-hosted-style format
+ *                                                  where the bucket name is
+ *                                                  part of the domain name in
+ *                                                  the URL.
+ *                                              <li>@ref
+ *                                                  gpudb::alter_datasource_false
+ *                                                  "alter_datasource_false":
+ *                                                  Use path-style URI for
+ *                                                  requests.
+ *                                          </ul>
+ *                                          The default value is @ref
+ *                                          gpudb::alter_datasource_true
+ *                                          "alter_datasource_true".
  *                                      <li>@ref
  *                                          gpudb::alter_datasource_gcs_bucket_name
  *                                          "alter_datasource_gcs_bucket_name":
  *                                          Name of the Google Cloud Storage
- *                                          bucket to use as the data source
+ *                                          bucket to use as the data source.
  *                                      <li>@ref
  *                                          gpudb::alter_datasource_gcs_project_id
  *                                          "alter_datasource_gcs_project_id":
  *                                          Name of the Google Cloud project to
- *                                          use as the data source
+ *                                          use as the data source.
  *                                      <li>@ref
  *                                          gpudb::alter_datasource_gcs_service_account_keys
  *                                          "alter_datasource_gcs_service_account_keys":
  *                                          Google Cloud service account keys
  *                                          to use for authenticating the data
- *                                          source
+ *                                          source.
  *                                      <li>@ref
  *                                          gpudb::alter_datasource_jdbc_driver_jar_path
  *                                          "alter_datasource_jdbc_driver_jar_path":
@@ -8193,7 +8443,7 @@ AlterDatasourceResponse alterDatasource( const std::string& name,
  *                                      <li>@ref
  *                                          gpudb::alter_datasource_jdbc_driver_class_name
  *                                          "alter_datasource_jdbc_driver_class_name":
- *                                          Name of the JDBC driver class
+ *                                          Name of the JDBC driver class.
  *                                      <li>@ref
  *                                          gpudb::alter_datasource_kafka_url
  *                                          "alter_datasource_kafka_url": The
@@ -8204,7 +8454,7 @@ AlterDatasourceResponse alterDatasource( const std::string& name,
  *                                          gpudb::alter_datasource_kafka_topic_name
  *                                          "alter_datasource_kafka_topic_name":
  *                                          Name of the Kafka topic to use as
- *                                          the data source
+ *                                          the data source.
  *                                      <li>@ref
  *                                          gpudb::alter_datasource_anonymous
  *                                          "alter_datasource_anonymous":
@@ -8247,8 +8497,8 @@ AlterDatasourceResponse alterDatasource( const std::string& name,
  *                                      <li>@ref
  *                                          gpudb::alter_datasource_use_https
  *                                          "alter_datasource_use_https": Use
- *                                          https to connect to datasource if
- *                                          true, otherwise use http.
+ *                                          HTTPS to connect to datasource if
+ *                                          true, otherwise use HTTP.
  *                                          Supported values:
  *                                          <ul>
  *                                              <li>@ref
@@ -8275,12 +8525,12 @@ AlterDatasourceResponse alterDatasource( const std::string& name,
  *                                          gpudb::alter_datasource_schema_registry_connection_retries
  *                                          "alter_datasource_schema_registry_connection_retries":
  *                                          Confluent Schema registry
- *                                          connection timeout (in Secs)
+ *                                          connection timeout (in secs).
  *                                      <li>@ref
  *                                          gpudb::alter_datasource_schema_registry_connection_timeout
  *                                          "alter_datasource_schema_registry_connection_timeout":
  *                                          Confluent Schema registry
- *                                          connection timeout (in Secs)
+ *                                          connection timeout (in secs).
  *                                      <li>@ref
  *                                          gpudb::alter_datasource_schema_registry_credential
  *                                          "alter_datasource_schema_registry_credential":
@@ -8429,27 +8679,27 @@ AlterEnvironmentResponse& alterEnvironment( const AlterEnvironmentRequest& reque
  *                        <li>@ref gpudb::alter_environment_install_package
  *                            "alter_environment_install_package": Install a
  *                            python package from PyPI, an external data source
- *                            or KiFS
+ *                            or KiFS.
  *                        <li>@ref
  *                            gpudb::alter_environment_install_requirements
  *                            "alter_environment_install_requirements": Install
- *                            packages from a requirements file
+ *                            packages from a requirements file.
  *                        <li>@ref gpudb::alter_environment_uninstall_package
  *                            "alter_environment_uninstall_package": Uninstall
  *                            a python package.
  *                        <li>@ref
  *                            gpudb::alter_environment_uninstall_requirements
  *                            "alter_environment_uninstall_requirements":
- *                            Uninstall packages from a requirements file
+ *                            Uninstall packages from a requirements file.
  *                        <li>@ref gpudb::alter_environment_reset
  *                            "alter_environment_reset": Uninstalls all
  *                            packages in the environment and resets it to the
- *                            original state at time of creation
+ *                            original state at time of creation.
  *                        <li>@ref gpudb::alter_environment_rebuild
  *                            "alter_environment_rebuild": Recreates the
  *                            environment and re-installs all packages,
  *                            upgrades the packages if necessary based on
- *                            dependencies
+ *                            dependencies.
  *                    </ul>
  * @param[in] value  The value of the modification, depending on @a action.
  *                   For example, if @a action is @ref
@@ -8471,7 +8721,7 @@ AlterEnvironmentResponse& alterEnvironment( const AlterEnvironmentRequest& reque
  *                         <li>@ref gpudb::alter_environment_datasource_name
  *                             "alter_environment_datasource_name": Name of an
  *                             existing external data source from which
- *                             packages specified in @a value can be loaded
+ *                             packages specified in @a value can be loaded.
  *                     </ul>
  *                     The default value is an empty map.
  *
@@ -8494,27 +8744,27 @@ AlterEnvironmentResponse alterEnvironment( const std::string& environmentName,
  *                        <li>@ref gpudb::alter_environment_install_package
  *                            "alter_environment_install_package": Install a
  *                            python package from PyPI, an external data source
- *                            or KiFS
+ *                            or KiFS.
  *                        <li>@ref
  *                            gpudb::alter_environment_install_requirements
  *                            "alter_environment_install_requirements": Install
- *                            packages from a requirements file
+ *                            packages from a requirements file.
  *                        <li>@ref gpudb::alter_environment_uninstall_package
  *                            "alter_environment_uninstall_package": Uninstall
  *                            a python package.
  *                        <li>@ref
  *                            gpudb::alter_environment_uninstall_requirements
  *                            "alter_environment_uninstall_requirements":
- *                            Uninstall packages from a requirements file
+ *                            Uninstall packages from a requirements file.
  *                        <li>@ref gpudb::alter_environment_reset
  *                            "alter_environment_reset": Uninstalls all
  *                            packages in the environment and resets it to the
- *                            original state at time of creation
+ *                            original state at time of creation.
  *                        <li>@ref gpudb::alter_environment_rebuild
  *                            "alter_environment_rebuild": Recreates the
  *                            environment and re-installs all packages,
  *                            upgrades the packages if necessary based on
- *                            dependencies
+ *                            dependencies.
  *                    </ul>
  * @param[in] value  The value of the modification, depending on @a action.
  *                   For example, if @a action is @ref
@@ -8536,7 +8786,7 @@ AlterEnvironmentResponse alterEnvironment( const std::string& environmentName,
  *                         <li>@ref gpudb::alter_environment_datasource_name
  *                             "alter_environment_datasource_name": Name of an
  *                             existing external data source from which
- *                             packages specified in @a value can be loaded
+ *                             packages specified in @a value can be loaded.
  *                     </ul>
  *                     The default value is an empty map.
  * @param[out] response_  @ref gpudb::AlterEnvironmentResponse "Response"
@@ -8630,7 +8880,7 @@ AlterResourceGroupResponse& alterResourceGroup( const AlterResourceGroupRequest&
  * @param[in] tierAttributes  Optional map containing tier names and their
  *                            respective attribute group limits.  The only
  *                            valid attribute limit that can be set is
- *                            max_memory (in bytes) for the VRAM & RAM tiers.
+ *                            max_memory (in bytes) for the VRAM and RAM tiers.
  *                            For instance, to set max VRAM capacity to 1GB per
  *                            rank per GPU and max RAM capacity to 10GB per
  *                            rank, use:  {'VRAM':{'max_memory':'1000000000'},
@@ -8652,21 +8902,21 @@ AlterResourceGroupResponse& alterResourceGroup( const AlterResourceGroupRequest&
  *                     <ul>
  *                         <li>@ref gpudb::alter_resource_group_empty_string
  *                             "alter_resource_group_empty_string": Don't
- *                             change the ranking
+ *                             change the ranking.
  *                         <li>@ref gpudb::alter_resource_group_first
  *                             "alter_resource_group_first": Make this resource
- *                             group the new first one in the ordering
+ *                             group the new first one in the ordering.
  *                         <li>@ref gpudb::alter_resource_group_last
  *                             "alter_resource_group_last": Make this resource
- *                             group the new last one in the ordering
+ *                             group the new last one in the ordering.
  *                         <li>@ref gpudb::alter_resource_group_before
  *                             "alter_resource_group_before": Place this
  *                             resource group before the one specified by @a
- *                             adjoiningResourceGroup in the ordering
+ *                             adjoiningResourceGroup in the ordering.
  *                         <li>@ref gpudb::alter_resource_group_after
  *                             "alter_resource_group_after": Place this
  *                             resource group after the one specified by @a
- *                             adjoiningResourceGroup in the ordering
+ *                             adjoiningResourceGroup in the ordering.
  *                     </ul>
  *                     The default value is @ref
  *                     gpudb::alter_resource_group_empty_string
@@ -8765,7 +9015,7 @@ AlterResourceGroupResponse alterResourceGroup( const std::string& name,
  * @param[in] tierAttributes  Optional map containing tier names and their
  *                            respective attribute group limits.  The only
  *                            valid attribute limit that can be set is
- *                            max_memory (in bytes) for the VRAM & RAM tiers.
+ *                            max_memory (in bytes) for the VRAM and RAM tiers.
  *                            For instance, to set max VRAM capacity to 1GB per
  *                            rank per GPU and max RAM capacity to 10GB per
  *                            rank, use:  {'VRAM':{'max_memory':'1000000000'},
@@ -8787,21 +9037,21 @@ AlterResourceGroupResponse alterResourceGroup( const std::string& name,
  *                     <ul>
  *                         <li>@ref gpudb::alter_resource_group_empty_string
  *                             "alter_resource_group_empty_string": Don't
- *                             change the ranking
+ *                             change the ranking.
  *                         <li>@ref gpudb::alter_resource_group_first
  *                             "alter_resource_group_first": Make this resource
- *                             group the new first one in the ordering
+ *                             group the new first one in the ordering.
  *                         <li>@ref gpudb::alter_resource_group_last
  *                             "alter_resource_group_last": Make this resource
- *                             group the new last one in the ordering
+ *                             group the new last one in the ordering.
  *                         <li>@ref gpudb::alter_resource_group_before
  *                             "alter_resource_group_before": Place this
  *                             resource group before the one specified by @a
- *                             adjoiningResourceGroup in the ordering
+ *                             adjoiningResourceGroup in the ordering.
  *                         <li>@ref gpudb::alter_resource_group_after
  *                             "alter_resource_group_after": Place this
  *                             resource group after the one specified by @a
- *                             adjoiningResourceGroup in the ordering
+ *                             adjoiningResourceGroup in the ordering.
  *                     </ul>
  *                     The default value is @ref
  *                     gpudb::alter_resource_group_empty_string
@@ -9012,7 +9262,7 @@ AlterSchemaResponse& alterSchema( const AlterSchemaRequest& request_,
  *                    <ul>
  *                        <li>@ref gpudb::alter_schema_add_comment
  *                            "alter_schema_add_comment": Adds a comment
- *                            describing the schema
+ *                            describing the schema.
  *                        <li>@ref gpudb::alter_schema_rename_schema
  *                            "alter_schema_rename_schema": Renames a schema to
  *                            @a value. Has the same naming restrictions as <a
@@ -9043,7 +9293,7 @@ AlterSchemaResponse alterSchema( const std::string& schemaName,
  *                    <ul>
  *                        <li>@ref gpudb::alter_schema_add_comment
  *                            "alter_schema_add_comment": Adds a comment
- *                            describing the schema
+ *                            describing the schema.
  *                        <li>@ref gpudb::alter_schema_rename_schema
  *                            "alter_schema_rename_schema": Renames a schema to
  *                            @a value. Has the same naming restrictions as <a
@@ -9170,14 +9420,14 @@ AlterSystemPropertiesResponse& alterSystemProperties( const AlterSystemPropertie
  *                                        value. Possible values are host,
  *                                        device, default (engine decides) or
  *                                        an integer value that indicates max
- *                                        chunk size to exec on host
+ *                                        chunk size to exec on host.
  *                                    <li>@ref
  *                                        gpudb::alter_system_properties_external_files_directory
  *                                        "alter_system_properties_external_files_directory":
  *                                        Sets the root directory path where
  *                                        external table data files are
  *                                        accessed from.  Path must exist on
- *                                        the head node
+ *                                        the head node.
  *                                    <li>@ref
  *                                        gpudb::alter_system_properties_request_timeout
  *                                        "alter_system_properties_request_timeout":
@@ -9262,7 +9512,7 @@ AlterSystemPropertiesResponse& alterSystemProperties( const AlterSystemPropertie
  *                                        gpudb::alter_system_properties_kafka_poll_timeout
  *                                        "alter_system_properties_kafka_poll_timeout":
  *                                        Maximum time (milliseconds) for each
- *                                        poll to get records from kafka. The
+ *                                        poll to get records from Kafka. The
  *                                        default value is '0'. The minimum
  *                                        allowed value is '0'. The maximum
  *                                        allowed value is '1000'.
@@ -9270,10 +9520,41 @@ AlterSystemPropertiesResponse& alterSystemProperties( const AlterSystemPropertie
  *                                        gpudb::alter_system_properties_kafka_wait_time
  *                                        "alter_system_properties_kafka_wait_time":
  *                                        Maximum time (seconds) to buffer
- *                                        records received from kafka before
+ *                                        records received from Kafka before
  *                                        ingestion. The default value is '30'.
  *                                        The minimum allowed value is '1'. The
  *                                        maximum allowed value is '120'.
+ *                                    <li>@ref
+ *                                        gpudb::alter_system_properties_iceberg_table_metadata_cache_enabled
+ *                                        "alter_system_properties_iceberg_table_metadata_cache_enabled":
+ *                                        Enable caching of Iceberg table
+ *                                        metadata.
+ *                                    <li>@ref
+ *                                        gpudb::alter_system_properties_iceberg_table_metadata_cache_size
+ *                                        "alter_system_properties_iceberg_table_metadata_cache_size":
+ *                                        Maximum number of Iceberg table
+ *                                        metadata entries to cache.
+ *                                    <li>@ref
+ *                                        gpudb::alter_system_properties_iceberg_table_metadata_cache_ttl
+ *                                        "alter_system_properties_iceberg_table_metadata_cache_ttl":
+ *                                        Time-to-live (seconds) for cached
+ *                                        Iceberg table metadata entries.
+ *                                    <li>@ref
+ *                                        gpudb::alter_system_properties_iceberg_table_metadata_cache_snapshot_check
+ *                                        "alter_system_properties_iceberg_table_metadata_cache_snapshot_check":
+ *                                        When enabled, check the current
+ *                                        Iceberg snapshot on cache hits and
+ *                                        invalidate entries that have changed.
+ *                                    <li>@ref
+ *                                        gpudb::alter_system_properties_iceberg_catalog_connection_cache_size
+ *                                        "alter_system_properties_iceberg_catalog_connection_cache_size":
+ *                                        Maximum number of cached Iceberg REST
+ *                                        catalog connections.
+ *                                    <li>@ref
+ *                                        gpudb::alter_system_properties_iceberg_manifest_cache_enabled
+ *                                        "alter_system_properties_iceberg_manifest_cache_enabled":
+ *                                        Enable caching of parsed Iceberg
+ *                                        manifest and manifest-list files.
  *                                    <li>@ref
  *                                        gpudb::alter_system_properties_egress_parquet_compression
  *                                        "alter_system_properties_egress_parquet_compression":
@@ -9332,11 +9613,18 @@ AlterSystemPropertiesResponse& alterSystemProperties( const AlterSystemPropertie
  *                                        Size of the worker rank data
  *                                        processing thread pool.  This
  *                                        includes operations such as inserts,
- *                                        updates, & deletes on table data.
+ *                                        updates, and deletes on table data.
  *                                        Multi-head inserts are not affected
  *                                        by this limit. The minimum allowed
  *                                        value is '2'. The maximum allowed
  *                                        value is '8192'.
+ *                                    <li>@ref
+ *                                        gpudb::alter_system_properties_remote_io_threads
+ *                                        "alter_system_properties_remote_io_threads":
+ *                                        Size of the worker rank IO thread
+ *                                        pool. This is used for blocking IO
+ *                                        operations such as reads from object
+ *                                        storage or external file systems.
  *                                    <li>@ref
  *                                        gpudb::alter_system_properties_background_worker_threads
  *                                        "alter_system_properties_background_worker_threads":
@@ -9367,37 +9655,42 @@ AlterSystemPropertiesResponse& alterSystemProperties( const AlterSystemPropertie
  *                                    <li>@ref
  *                                        gpudb::alter_system_properties_ai_api_provider
  *                                        "alter_system_properties_ai_api_provider":
- *                                        AI API provider type
+ *                                        AI API provider type.
  *                                    <li>@ref
  *                                        gpudb::alter_system_properties_ai_api_url
  *                                        "alter_system_properties_ai_api_url":
- *                                        AI API URL
+ *                                        AI API URL.
  *                                    <li>@ref
  *                                        gpudb::alter_system_properties_ai_api_key
  *                                        "alter_system_properties_ai_api_key":
- *                                        AI API key
+ *                                        AI API key.
  *                                    <li>@ref
  *                                        gpudb::alter_system_properties_ai_api_connection_timeout
  *                                        "alter_system_properties_ai_api_connection_timeout":
- *                                        AI API connection timeout in seconds
+ *                                        AI API connection timeout in seconds.
  *                                    <li>@ref
  *                                        gpudb::alter_system_properties_ai_api_embeddings_model
  *                                        "alter_system_properties_ai_api_embeddings_model":
- *                                        AI API model name
+ *                                        AI API model name.
  *                                    <li>@ref
  *                                        gpudb::alter_system_properties_telm_persist_query_metrics
  *                                        "alter_system_properties_telm_persist_query_metrics":
  *                                        Enable or disable persisting of query
  *                                        metrics.
  *                                    <li>@ref
+ *                                        gpudb::alter_system_properties_telm_force_metrics_duration
+ *                                        "alter_system_properties_telm_force_metrics_duration":
+ *                                        Capture metrics for any query
+ *                                        exceeding this duration in seconds.
+ *                                    <li>@ref
  *                                        gpudb::alter_system_properties_postgres_proxy_idle_connection_timeout
  *                                        "alter_system_properties_postgres_proxy_idle_connection_timeout":
- *                                        Idle connection timeout in seconds
+ *                                        Idle connection timeout in seconds.
  *                                    <li>@ref
  *                                        gpudb::alter_system_properties_postgres_proxy_keep_alive
  *                                        "alter_system_properties_postgres_proxy_keep_alive":
- *                                        Enable  postgres proxy keep alive.
- *                                        The default value is 'false'.
+ *                                        Enable postgres proxy keep alive. The
+ *                                        default value is 'false'.
  *                                    <li>@ref
  *                                        gpudb::alter_system_properties_kifs_directory_data_limit
  *                                        "alter_system_properties_kifs_directory_data_limit":
@@ -9414,7 +9707,7 @@ AlterSystemPropertiesResponse& alterSystemProperties( const AlterSystemPropertie
  *                                        algorithm</a> applied to any column
  *                                        without a column-level or table-level
  *                                        default compression specified at the
- *                                        time it was created
+ *                                        time it was created.
  *                                    <li>@ref
  *                                        gpudb::alter_system_properties_disk_auto_optimize_timeout
  *                                        "alter_system_properties_disk_auto_optimize_timeout":
@@ -9430,6 +9723,12 @@ AlterSystemPropertiesResponse& alterSystemProperties( const AlterSystemPropertie
  *                                        timestamp (as milliseconds since unix
  *                                        epoch). The minimum allowed value is
  *                                        '-1'.
+ *                                    <li>@ref
+ *                                        gpudb::alter_system_properties_admin_access_only
+ *                                        "alter_system_properties_admin_access_only":
+ *                                        Restricts access to system admin
+ *                                        users only. The default value is
+ *                                        'false'.
  *                                </ul>
  * @param[in] options  Optional parameters.
  *                     <ul>
@@ -9540,14 +9839,14 @@ AlterSystemPropertiesResponse alterSystemProperties( const std::map<std::string,
  *                                        value. Possible values are host,
  *                                        device, default (engine decides) or
  *                                        an integer value that indicates max
- *                                        chunk size to exec on host
+ *                                        chunk size to exec on host.
  *                                    <li>@ref
  *                                        gpudb::alter_system_properties_external_files_directory
  *                                        "alter_system_properties_external_files_directory":
  *                                        Sets the root directory path where
  *                                        external table data files are
  *                                        accessed from.  Path must exist on
- *                                        the head node
+ *                                        the head node.
  *                                    <li>@ref
  *                                        gpudb::alter_system_properties_request_timeout
  *                                        "alter_system_properties_request_timeout":
@@ -9632,7 +9931,7 @@ AlterSystemPropertiesResponse alterSystemProperties( const std::map<std::string,
  *                                        gpudb::alter_system_properties_kafka_poll_timeout
  *                                        "alter_system_properties_kafka_poll_timeout":
  *                                        Maximum time (milliseconds) for each
- *                                        poll to get records from kafka. The
+ *                                        poll to get records from Kafka. The
  *                                        default value is '0'. The minimum
  *                                        allowed value is '0'. The maximum
  *                                        allowed value is '1000'.
@@ -9640,10 +9939,41 @@ AlterSystemPropertiesResponse alterSystemProperties( const std::map<std::string,
  *                                        gpudb::alter_system_properties_kafka_wait_time
  *                                        "alter_system_properties_kafka_wait_time":
  *                                        Maximum time (seconds) to buffer
- *                                        records received from kafka before
+ *                                        records received from Kafka before
  *                                        ingestion. The default value is '30'.
  *                                        The minimum allowed value is '1'. The
  *                                        maximum allowed value is '120'.
+ *                                    <li>@ref
+ *                                        gpudb::alter_system_properties_iceberg_table_metadata_cache_enabled
+ *                                        "alter_system_properties_iceberg_table_metadata_cache_enabled":
+ *                                        Enable caching of Iceberg table
+ *                                        metadata.
+ *                                    <li>@ref
+ *                                        gpudb::alter_system_properties_iceberg_table_metadata_cache_size
+ *                                        "alter_system_properties_iceberg_table_metadata_cache_size":
+ *                                        Maximum number of Iceberg table
+ *                                        metadata entries to cache.
+ *                                    <li>@ref
+ *                                        gpudb::alter_system_properties_iceberg_table_metadata_cache_ttl
+ *                                        "alter_system_properties_iceberg_table_metadata_cache_ttl":
+ *                                        Time-to-live (seconds) for cached
+ *                                        Iceberg table metadata entries.
+ *                                    <li>@ref
+ *                                        gpudb::alter_system_properties_iceberg_table_metadata_cache_snapshot_check
+ *                                        "alter_system_properties_iceberg_table_metadata_cache_snapshot_check":
+ *                                        When enabled, check the current
+ *                                        Iceberg snapshot on cache hits and
+ *                                        invalidate entries that have changed.
+ *                                    <li>@ref
+ *                                        gpudb::alter_system_properties_iceberg_catalog_connection_cache_size
+ *                                        "alter_system_properties_iceberg_catalog_connection_cache_size":
+ *                                        Maximum number of cached Iceberg REST
+ *                                        catalog connections.
+ *                                    <li>@ref
+ *                                        gpudb::alter_system_properties_iceberg_manifest_cache_enabled
+ *                                        "alter_system_properties_iceberg_manifest_cache_enabled":
+ *                                        Enable caching of parsed Iceberg
+ *                                        manifest and manifest-list files.
  *                                    <li>@ref
  *                                        gpudb::alter_system_properties_egress_parquet_compression
  *                                        "alter_system_properties_egress_parquet_compression":
@@ -9702,11 +10032,18 @@ AlterSystemPropertiesResponse alterSystemProperties( const std::map<std::string,
  *                                        Size of the worker rank data
  *                                        processing thread pool.  This
  *                                        includes operations such as inserts,
- *                                        updates, & deletes on table data.
+ *                                        updates, and deletes on table data.
  *                                        Multi-head inserts are not affected
  *                                        by this limit. The minimum allowed
  *                                        value is '2'. The maximum allowed
  *                                        value is '8192'.
+ *                                    <li>@ref
+ *                                        gpudb::alter_system_properties_remote_io_threads
+ *                                        "alter_system_properties_remote_io_threads":
+ *                                        Size of the worker rank IO thread
+ *                                        pool. This is used for blocking IO
+ *                                        operations such as reads from object
+ *                                        storage or external file systems.
  *                                    <li>@ref
  *                                        gpudb::alter_system_properties_background_worker_threads
  *                                        "alter_system_properties_background_worker_threads":
@@ -9737,37 +10074,42 @@ AlterSystemPropertiesResponse alterSystemProperties( const std::map<std::string,
  *                                    <li>@ref
  *                                        gpudb::alter_system_properties_ai_api_provider
  *                                        "alter_system_properties_ai_api_provider":
- *                                        AI API provider type
+ *                                        AI API provider type.
  *                                    <li>@ref
  *                                        gpudb::alter_system_properties_ai_api_url
  *                                        "alter_system_properties_ai_api_url":
- *                                        AI API URL
+ *                                        AI API URL.
  *                                    <li>@ref
  *                                        gpudb::alter_system_properties_ai_api_key
  *                                        "alter_system_properties_ai_api_key":
- *                                        AI API key
+ *                                        AI API key.
  *                                    <li>@ref
  *                                        gpudb::alter_system_properties_ai_api_connection_timeout
  *                                        "alter_system_properties_ai_api_connection_timeout":
- *                                        AI API connection timeout in seconds
+ *                                        AI API connection timeout in seconds.
  *                                    <li>@ref
  *                                        gpudb::alter_system_properties_ai_api_embeddings_model
  *                                        "alter_system_properties_ai_api_embeddings_model":
- *                                        AI API model name
+ *                                        AI API model name.
  *                                    <li>@ref
  *                                        gpudb::alter_system_properties_telm_persist_query_metrics
  *                                        "alter_system_properties_telm_persist_query_metrics":
  *                                        Enable or disable persisting of query
  *                                        metrics.
  *                                    <li>@ref
+ *                                        gpudb::alter_system_properties_telm_force_metrics_duration
+ *                                        "alter_system_properties_telm_force_metrics_duration":
+ *                                        Capture metrics for any query
+ *                                        exceeding this duration in seconds.
+ *                                    <li>@ref
  *                                        gpudb::alter_system_properties_postgres_proxy_idle_connection_timeout
  *                                        "alter_system_properties_postgres_proxy_idle_connection_timeout":
- *                                        Idle connection timeout in seconds
+ *                                        Idle connection timeout in seconds.
  *                                    <li>@ref
  *                                        gpudb::alter_system_properties_postgres_proxy_keep_alive
  *                                        "alter_system_properties_postgres_proxy_keep_alive":
- *                                        Enable  postgres proxy keep alive.
- *                                        The default value is 'false'.
+ *                                        Enable postgres proxy keep alive. The
+ *                                        default value is 'false'.
  *                                    <li>@ref
  *                                        gpudb::alter_system_properties_kifs_directory_data_limit
  *                                        "alter_system_properties_kifs_directory_data_limit":
@@ -9784,7 +10126,7 @@ AlterSystemPropertiesResponse alterSystemProperties( const std::map<std::string,
  *                                        algorithm</a> applied to any column
  *                                        without a column-level or table-level
  *                                        default compression specified at the
- *                                        time it was created
+ *                                        time it was created.
  *                                    <li>@ref
  *                                        gpudb::alter_system_properties_disk_auto_optimize_timeout
  *                                        "alter_system_properties_disk_auto_optimize_timeout":
@@ -9800,6 +10142,12 @@ AlterSystemPropertiesResponse alterSystemProperties( const std::map<std::string,
  *                                        timestamp (as milliseconds since unix
  *                                        epoch). The minimum allowed value is
  *                                        '-1'.
+ *                                    <li>@ref
+ *                                        gpudb::alter_system_properties_admin_access_only
+ *                                        "alter_system_properties_admin_access_only":
+ *                                        Restricts access to system admin
+ *                                        users only. The default value is
+ *                                        'false'.
  *                                </ul>
  * @param[in] options  Optional parameters.
  *                     <ul>
@@ -10128,6 +10476,17 @@ AlterTableResponse& alterTable( const AlterTableRequest& request_,
  *                            "alter_table_delete_column": Deletes the column
  *                            specified in @a value from the table specified in
  *                            @a tableName.
+ *                        <li>@ref gpudb::alter_table_set_default
+ *                            "alter_table_set_default": Sets or replaces the
+ *                            default value expression for the column specified
+ *                            in @a value.  The new default is taken from @ref
+ *                            gpudb::alter_table_add_column_expression
+ *                            "add_column_expression".  Existing properties on
+ *                            the column are preserved.
+ *                        <li>@ref gpudb::alter_table_delete_default
+ *                            "alter_table_delete_default": Removes the default
+ *                            value expression from the column specified in @a
+ *                            value.  Other column properties are preserved.
  *                        <li>@ref gpudb::alter_table_create_foreign_key
  *                            "alter_table_create_foreign_key": Creates a <a
  *                            href="../../../concepts/tables/#foreign-key"
@@ -10254,18 +10613,23 @@ AlterTableResponse& alterTable( const AlterTableRequest& request_,
  *                            "alter_table_cancel_datasource_subscription":
  *                            Permanently unsubscribe a data source that is
  *                            loading continuously as a stream. The data source
- *                            can be Kafka / S3 / Azure.
+ *                            can be Kafka / S3 / Azure / GCS.
+ *                        <li>@ref
+ *                            gpudb::alter_table_drop_datasource_subscription
+ *                            "alter_table_drop_datasource_subscription":
+ *                            Permanently delete a cancelled data source
+ *                            subscription.
  *                        <li>@ref
  *                            gpudb::alter_table_pause_datasource_subscription
  *                            "alter_table_pause_datasource_subscription":
  *                            Temporarily unsubscribe a data source that is
  *                            loading continuously as a stream. The data source
- *                            can be Kafka / S3 / Azure.
+ *                            can be Kafka / S3 / Azure / GCS.
  *                        <li>@ref
  *                            gpudb::alter_table_resume_datasource_subscription
  *                            "alter_table_resume_datasource_subscription":
  *                            Resubscribe to a paused data source subscription.
- *                            The data source can be Kafka / S3 / Azure.
+ *                            The data source can be Kafka / S3 / Azure / GCS.
  *                        <li>@ref gpudb::alter_table_change_owner
  *                            "alter_table_change_owner": Change the owner
  *                            resource group of the table.
@@ -10274,14 +10638,14 @@ AlterTableResponse& alterTable( const AlterTableRequest& request_,
  *                            startup data loading scheme for the table; see
  *                            description of 'load_vectors_policy' in @ref
  *                            createTable(const std::string&, const std::string&, const std::map<std::string, std::string>&) const
- *                            "createTable" for possible values for @a value
+ *                            "createTable" for possible values for @a value.
  *                        <li>@ref gpudb::alter_table_set_build_pk_index_policy
  *                            "alter_table_set_build_pk_index_policy": Set
  *                            startup primary key generation scheme for the
  *                            table; see description of 'build_pk_index_policy'
  *                            in @ref
  *                            createTable(const std::string&, const std::string&, const std::map<std::string, std::string>&) const
- *                            "createTable" for possible values for @a value
+ *                            "createTable" for possible values for @a value.
  *                        <li>@ref
  *                            gpudb::alter_table_set_build_materialized_view_policy
  *                            "alter_table_set_build_materialized_view_policy":
@@ -10290,7 +10654,24 @@ AlterTableResponse& alterTable( const AlterTableRequest& request_,
  *                            'build_materialized_view_policy' in @ref
  *                            createMaterializedView(const std::string&, const std::map<std::string, std::string>&) const
  *                            "createMaterializedView" for possible values for
- *                            @a value
+ *                            @a value.
+ *                        <li>@ref gpudb::alter_table_rebuild_text_search_index
+ *                            "alter_table_rebuild_text_search_index": Drops
+ *                            and rebuilds the <a
+ *                            href="../../../concepts/full_text_search/"
+ *                            target="_top">text search</a> index for the table
+ *                            from current type metadata and chunk storage. Use
+ *                            this to repair a text-search index left
+ *                            incomplete by an interrupted or failed rebuild
+ *                            (for example, after a crash during an add-column
+ *                            that requested text search): re-running the
+ *                            original add_column will not work because the
+ *                            column already exists. This action is also
+ *                            dispatched automatically by @ref
+ *                            alterTableColumns(const std::string&, const std::vector<std::map<std::string, std::string> >&, const std::map<std::string, std::string>&) const
+ *                            "alterTableColumns" after add_column completions
+ *                            that require a full re-index. The @a value is
+ *                            ignored.
  *                    </ul>
  * @param[in] value  The value of the modification, depending on @a action. For
  *                   example, if @a action is @ref
@@ -10317,9 +10698,11 @@ AlterTableResponse& alterTable( const AlterTableRequest& request_,
  *                             "alter_table_table_name"
  *                         <li>@ref gpudb::alter_table_column_default_value
  *                             "alter_table_column_default_value": When adding
- *                             a column, set a default value for existing
- *                             records.  For nullable columns, the default
- *                             value will be null, regardless of data type.
+ *                             a column, set a literal default value for
+ *                             existing records.  For nullable columns, the
+ *                             default value will be null, regardless of data
+ *                             type.  Also persisted as the column's default
+ *                             for future inserts that omit the column.
  *                         <li>@ref gpudb::alter_table_column_properties
  *                             "alter_table_column_properties": When adding or
  *                             changing a column, set the column properties
@@ -10332,9 +10715,9 @@ AlterTableResponse& alterTable( const AlterTableRequest& request_,
  *                             etc).
  *                         <li>@ref gpudb::alter_table_copy_values_from_column
  *                             "alter_table_copy_values_from_column":
- *                             [DEPRECATED--please use @ref
+ *                             [DEPRECATED]  Please use @ref
  *                             gpudb::alter_table_add_column_expression
- *                             "add_column_expression" instead.]
+ *                             "add_column_expression" instead.
  *                         <li>@ref gpudb::alter_table_rename_column
  *                             "alter_table_rename_column": When changing a
  *                             column, specify new column name.
@@ -10376,13 +10759,28 @@ AlterTableResponse& alterTable( const AlterTableRequest& request_,
  *                             gpudb::alter_table_true "alter_table_true".
  *                         <li>@ref gpudb::alter_table_add_column_expression
  *                             "alter_table_add_column_expression": When adding
- *                             a column, an optional expression to use for the
- *                             new column's values. Any valid expression may be
- *                             used, including one containing references to
- *                             existing columns in the same table.
+ *                             a column or setting a new default with @a action
+ *                             set to @ref gpudb::alter_table_set_default
+ *                             "set_default", the new default expression
+ *                             (GPUdb-syntax) for the column.  Any valid
+ *                             expression may be used, including one containing
+ *                             references to existing columns in the same
+ *                             table.  Persisted as the column's default for
+ *                             future inserts that omit the column; for
+ *                             add_column, also used to backfill existing rows.
+ *                         <li>@ref
+ *                             gpudb::alter_table_add_column_expression_sql
+ *                             "alter_table_add_column_expression_sql":
+ *                             Optional SQL-syntax form of @ref
+ *                             gpudb::alter_table_add_column_expression
+ *                             "add_column_expression", used only when the SQL
+ *                             syntax differs from the GPUdb syntax.  Persisted
+ *                             alongside the GPUdb form so SHOW CREATE TABLE /
+ *                             information_schema can reproduce the original
+ *                             SQL.
  *                         <li>@ref gpudb::alter_table_strategy_definition
- *                             "alter_table_strategy_definition": Optional
- *                             parameter for specifying the <a
+ *                             "alter_table_strategy_definition": Parameter for
+ *                             specifying the <a
  *                             href="../../../rm/concepts/#tier-strategies"
  *                             target="_top">tier strategy</a> for the table
  *                             and its columns when @a action is @ref
@@ -10421,21 +10819,21 @@ AlterTableResponse& alterTable( const AlterTableRequest& request_,
  *                                     "alter_table_geospatial": Create or
  *                                     delete a <a
  *                                     href="../../../concepts/indexes/#geospatial-index"
- *                                     target="_top">geospatial index</a>
+ *                                     target="_top">geospatial index</a>.
  *                                 <li>@ref gpudb::alter_table_cagra
  *                                     "alter_table_cagra": Create or delete a
  *                                     <a
  *                                     href="../../../concepts/indexes/#cagra-index"
  *                                     target="_top">CAGRA index</a> on a <a
  *                                     href="../../../vector_search/#vector-type"
- *                                     target="_top">vector column</a>
+ *                                     target="_top">vector column</a>.
  *                                 <li>@ref gpudb::alter_table_hnsw
  *                                     "alter_table_hnsw": Create or delete an
  *                                     <a
  *                                     href="../../../concepts/indexes/#hnsw-index"
  *                                     target="_top">HNSW index</a> on a <a
  *                                     href="../../../vector_search/#vector-type"
- *                                     target="_top">vector column</a>
+ *                                     target="_top">vector column</a>.
  *                             </ul>
  *                             The default value is @ref
  *                             gpudb::alter_table_column "alter_table_column".
@@ -10617,6 +11015,17 @@ AlterTableResponse alterTable( const std::string& tableName,
  *                            "alter_table_delete_column": Deletes the column
  *                            specified in @a value from the table specified in
  *                            @a tableName.
+ *                        <li>@ref gpudb::alter_table_set_default
+ *                            "alter_table_set_default": Sets or replaces the
+ *                            default value expression for the column specified
+ *                            in @a value.  The new default is taken from @ref
+ *                            gpudb::alter_table_add_column_expression
+ *                            "add_column_expression".  Existing properties on
+ *                            the column are preserved.
+ *                        <li>@ref gpudb::alter_table_delete_default
+ *                            "alter_table_delete_default": Removes the default
+ *                            value expression from the column specified in @a
+ *                            value.  Other column properties are preserved.
  *                        <li>@ref gpudb::alter_table_create_foreign_key
  *                            "alter_table_create_foreign_key": Creates a <a
  *                            href="../../../concepts/tables/#foreign-key"
@@ -10743,18 +11152,23 @@ AlterTableResponse alterTable( const std::string& tableName,
  *                            "alter_table_cancel_datasource_subscription":
  *                            Permanently unsubscribe a data source that is
  *                            loading continuously as a stream. The data source
- *                            can be Kafka / S3 / Azure.
+ *                            can be Kafka / S3 / Azure / GCS.
+ *                        <li>@ref
+ *                            gpudb::alter_table_drop_datasource_subscription
+ *                            "alter_table_drop_datasource_subscription":
+ *                            Permanently delete a cancelled data source
+ *                            subscription.
  *                        <li>@ref
  *                            gpudb::alter_table_pause_datasource_subscription
  *                            "alter_table_pause_datasource_subscription":
  *                            Temporarily unsubscribe a data source that is
  *                            loading continuously as a stream. The data source
- *                            can be Kafka / S3 / Azure.
+ *                            can be Kafka / S3 / Azure / GCS.
  *                        <li>@ref
  *                            gpudb::alter_table_resume_datasource_subscription
  *                            "alter_table_resume_datasource_subscription":
  *                            Resubscribe to a paused data source subscription.
- *                            The data source can be Kafka / S3 / Azure.
+ *                            The data source can be Kafka / S3 / Azure / GCS.
  *                        <li>@ref gpudb::alter_table_change_owner
  *                            "alter_table_change_owner": Change the owner
  *                            resource group of the table.
@@ -10763,14 +11177,14 @@ AlterTableResponse alterTable( const std::string& tableName,
  *                            startup data loading scheme for the table; see
  *                            description of 'load_vectors_policy' in @ref
  *                            createTable(const std::string&, const std::string&, const std::map<std::string, std::string>&) const
- *                            "createTable" for possible values for @a value
+ *                            "createTable" for possible values for @a value.
  *                        <li>@ref gpudb::alter_table_set_build_pk_index_policy
  *                            "alter_table_set_build_pk_index_policy": Set
  *                            startup primary key generation scheme for the
  *                            table; see description of 'build_pk_index_policy'
  *                            in @ref
  *                            createTable(const std::string&, const std::string&, const std::map<std::string, std::string>&) const
- *                            "createTable" for possible values for @a value
+ *                            "createTable" for possible values for @a value.
  *                        <li>@ref
  *                            gpudb::alter_table_set_build_materialized_view_policy
  *                            "alter_table_set_build_materialized_view_policy":
@@ -10779,7 +11193,24 @@ AlterTableResponse alterTable( const std::string& tableName,
  *                            'build_materialized_view_policy' in @ref
  *                            createMaterializedView(const std::string&, const std::map<std::string, std::string>&) const
  *                            "createMaterializedView" for possible values for
- *                            @a value
+ *                            @a value.
+ *                        <li>@ref gpudb::alter_table_rebuild_text_search_index
+ *                            "alter_table_rebuild_text_search_index": Drops
+ *                            and rebuilds the <a
+ *                            href="../../../concepts/full_text_search/"
+ *                            target="_top">text search</a> index for the table
+ *                            from current type metadata and chunk storage. Use
+ *                            this to repair a text-search index left
+ *                            incomplete by an interrupted or failed rebuild
+ *                            (for example, after a crash during an add-column
+ *                            that requested text search): re-running the
+ *                            original add_column will not work because the
+ *                            column already exists. This action is also
+ *                            dispatched automatically by @ref
+ *                            alterTableColumns(const std::string&, const std::vector<std::map<std::string, std::string> >&, const std::map<std::string, std::string>&) const
+ *                            "alterTableColumns" after add_column completions
+ *                            that require a full re-index. The @a value is
+ *                            ignored.
  *                    </ul>
  * @param[in] value  The value of the modification, depending on @a action. For
  *                   example, if @a action is @ref
@@ -10806,9 +11237,11 @@ AlterTableResponse alterTable( const std::string& tableName,
  *                             "alter_table_table_name"
  *                         <li>@ref gpudb::alter_table_column_default_value
  *                             "alter_table_column_default_value": When adding
- *                             a column, set a default value for existing
- *                             records.  For nullable columns, the default
- *                             value will be null, regardless of data type.
+ *                             a column, set a literal default value for
+ *                             existing records.  For nullable columns, the
+ *                             default value will be null, regardless of data
+ *                             type.  Also persisted as the column's default
+ *                             for future inserts that omit the column.
  *                         <li>@ref gpudb::alter_table_column_properties
  *                             "alter_table_column_properties": When adding or
  *                             changing a column, set the column properties
@@ -10821,9 +11254,9 @@ AlterTableResponse alterTable( const std::string& tableName,
  *                             etc).
  *                         <li>@ref gpudb::alter_table_copy_values_from_column
  *                             "alter_table_copy_values_from_column":
- *                             [DEPRECATED--please use @ref
+ *                             [DEPRECATED]  Please use @ref
  *                             gpudb::alter_table_add_column_expression
- *                             "add_column_expression" instead.]
+ *                             "add_column_expression" instead.
  *                         <li>@ref gpudb::alter_table_rename_column
  *                             "alter_table_rename_column": When changing a
  *                             column, specify new column name.
@@ -10865,13 +11298,28 @@ AlterTableResponse alterTable( const std::string& tableName,
  *                             gpudb::alter_table_true "alter_table_true".
  *                         <li>@ref gpudb::alter_table_add_column_expression
  *                             "alter_table_add_column_expression": When adding
- *                             a column, an optional expression to use for the
- *                             new column's values. Any valid expression may be
- *                             used, including one containing references to
- *                             existing columns in the same table.
+ *                             a column or setting a new default with @a action
+ *                             set to @ref gpudb::alter_table_set_default
+ *                             "set_default", the new default expression
+ *                             (GPUdb-syntax) for the column.  Any valid
+ *                             expression may be used, including one containing
+ *                             references to existing columns in the same
+ *                             table.  Persisted as the column's default for
+ *                             future inserts that omit the column; for
+ *                             add_column, also used to backfill existing rows.
+ *                         <li>@ref
+ *                             gpudb::alter_table_add_column_expression_sql
+ *                             "alter_table_add_column_expression_sql":
+ *                             Optional SQL-syntax form of @ref
+ *                             gpudb::alter_table_add_column_expression
+ *                             "add_column_expression", used only when the SQL
+ *                             syntax differs from the GPUdb syntax.  Persisted
+ *                             alongside the GPUdb form so SHOW CREATE TABLE /
+ *                             information_schema can reproduce the original
+ *                             SQL.
  *                         <li>@ref gpudb::alter_table_strategy_definition
- *                             "alter_table_strategy_definition": Optional
- *                             parameter for specifying the <a
+ *                             "alter_table_strategy_definition": Parameter for
+ *                             specifying the <a
  *                             href="../../../rm/concepts/#tier-strategies"
  *                             target="_top">tier strategy</a> for the table
  *                             and its columns when @a action is @ref
@@ -10910,21 +11358,21 @@ AlterTableResponse alterTable( const std::string& tableName,
  *                                     "alter_table_geospatial": Create or
  *                                     delete a <a
  *                                     href="../../../concepts/indexes/#geospatial-index"
- *                                     target="_top">geospatial index</a>
+ *                                     target="_top">geospatial index</a>.
  *                                 <li>@ref gpudb::alter_table_cagra
  *                                     "alter_table_cagra": Create or delete a
  *                                     <a
  *                                     href="../../../concepts/indexes/#cagra-index"
  *                                     target="_top">CAGRA index</a> on a <a
  *                                     href="../../../vector_search/#vector-type"
- *                                     target="_top">vector column</a>
+ *                                     target="_top">vector column</a>.
  *                                 <li>@ref gpudb::alter_table_hnsw
  *                                     "alter_table_hnsw": Create or delete an
  *                                     <a
  *                                     href="../../../concepts/indexes/#hnsw-index"
  *                                     target="_top">HNSW index</a> on a <a
  *                                     href="../../../vector_search/#vector-type"
- *                                     target="_top">vector column</a>
+ *                                     target="_top">vector column</a>.
  *                             </ul>
  *                             The default value is @ref
  *                             gpudb::alter_table_column "alter_table_column".
@@ -11024,7 +11472,7 @@ AlterTableColumnsResponse& alterTableColumns( const AlterTableColumnsRequest& re
  *                               table requests but in the same map as the
  *                               column name and the action. For example:
  *                               [{'column_name':'col_1','action':'change_column','rename_column':'col_2'},{'column_name':'col_1','action':'add_column',
- *                               'type':'int','default_value':'1'}]
+ *                               'type':'int','default_value':'1'}].
  * @param[in] options  Optional parameters.
  *
  * @return @ref gpudb::AlterTableColumnsResponse "Response" object containing
@@ -11062,7 +11510,7 @@ AlterTableColumnsResponse alterTableColumns( const std::string& tableName,
  *                               table requests but in the same map as the
  *                               column name and the action. For example:
  *                               [{'column_name':'col_1','action':'change_column','rename_column':'col_2'},{'column_name':'col_1','action':'add_column',
- *                               'type':'int','default_value':'1'}]
+ *                               'type':'int','default_value':'1'}].
  * @param[in] options  Optional parameters.
  * @param[out] response_  @ref gpudb::AlterTableColumnsResponse "Response"
  *                        object containing the results of the operation.
@@ -11213,8 +11661,30 @@ AlterTableMonitorResponse& alterTableMonitor( const AlterTableMonitorRequest& re
  *                                       gpudb::alter_table_monitor_schema_name
  *                                       "schema_name" is empty, then the
  *                                       user's default schema will be used.
+ *                                   <li>@ref
+ *                                       gpudb::alter_table_monitor_max_consecutive_failures
+ *                                       "alter_table_monitor_max_consecutive_failures":
+ *                                       Updates the maximum number of
+ *                                       consecutive failures before suspending
+ *                                       the stream.  A value of '-1' to
+ *                                       disables auto-suspend. This value is
+ *                                       by rank and not overall.
+ *                                   <li>@ref
+ *                                       gpudb::alter_table_monitor_notifications
+ *                                       "alter_table_monitor_notifications":
+ *                                       Updates the state of the monitor.
+ *                                       Supported values:
+ *                                       <ul>
+ *                                           <li>@ref
+ *                                               gpudb::alter_table_monitor_resume
+ *                                               "alter_table_monitor_resume"
+ *                                           <li>@ref
+ *                                               gpudb::alter_table_monitor_suspend
+ *                                               "alter_table_monitor_suspend"
+ *                                       </ul>
+ *                                       The default value is an empty map.
  *                               </ul>
- * @param[in] options  Optional parameters.
+ * @param[in] options  Optional parameters. The default value is an empty map.
  *
  * @return @ref gpudb::AlterTableMonitorResponse "Response" object containing
  *         the result of the operation.
@@ -11244,8 +11714,30 @@ AlterTableMonitorResponse alterTableMonitor( const std::string& topicId,
  *                                       gpudb::alter_table_monitor_schema_name
  *                                       "schema_name" is empty, then the
  *                                       user's default schema will be used.
+ *                                   <li>@ref
+ *                                       gpudb::alter_table_monitor_max_consecutive_failures
+ *                                       "alter_table_monitor_max_consecutive_failures":
+ *                                       Updates the maximum number of
+ *                                       consecutive failures before suspending
+ *                                       the stream.  A value of '-1' to
+ *                                       disables auto-suspend. This value is
+ *                                       by rank and not overall.
+ *                                   <li>@ref
+ *                                       gpudb::alter_table_monitor_notifications
+ *                                       "alter_table_monitor_notifications":
+ *                                       Updates the state of the monitor.
+ *                                       Supported values:
+ *                                       <ul>
+ *                                           <li>@ref
+ *                                               gpudb::alter_table_monitor_resume
+ *                                               "alter_table_monitor_resume"
+ *                                           <li>@ref
+ *                                               gpudb::alter_table_monitor_suspend
+ *                                               "alter_table_monitor_suspend"
+ *                                       </ul>
+ *                                       The default value is an empty map.
  *                               </ul>
- * @param[in] options  Optional parameters.
+ * @param[in] options  Optional parameters. The default value is an empty map.
  * @param[out] response_  @ref gpudb::AlterTableMonitorResponse "Response"
  *                        object containing the results of the operation.
  *
@@ -11469,9 +11961,9 @@ AlterUserResponse& alterUser( const AlterUserRequest& request_,
  *                            "alter_user_set_activated": Is the user allowed
  *                            to login.
  *                        <li>@ref gpudb::alter_user_true "alter_user_true":
- *                            User may login
+ *                            User may login.
  *                        <li>@ref gpudb::alter_user_false "alter_user_false":
- *                            User may not login
+ *                            User may not login.
  *                        <li>@ref gpudb::alter_user_set_comment
  *                            "alter_user_set_comment": Sets the comment for an
  *                            internal user.
@@ -11511,9 +12003,9 @@ AlterUserResponse alterUser( const std::string& name,
  *                            "alter_user_set_activated": Is the user allowed
  *                            to login.
  *                        <li>@ref gpudb::alter_user_true "alter_user_true":
- *                            User may login
+ *                            User may login.
  *                        <li>@ref gpudb::alter_user_false "alter_user_false":
- *                            User may not login
+ *                            User may not login.
  *                        <li>@ref gpudb::alter_user_set_comment
  *                            "alter_user_set_comment": Sets the comment for an
  *                            internal user.
@@ -11648,7 +12140,7 @@ AlterWalResponse& alterWal( const AlterWalRequest& request_,
  *                     <ul>
  *                         <li>@ref gpudb::alter_wal_max_segment_size
  *                             "alter_wal_max_segment_size": Maximum size of an
- *                             individual segment file
+ *                             individual segment file.
  *                         <li>@ref gpudb::alter_wal_segment_count
  *                             "alter_wal_segment_count": Approximate number of
  *                             segment files to split the WAL across. Must be
@@ -11659,17 +12151,17 @@ AlterWalResponse& alterWal( const AlterWalRequest& request_,
  *                             Supported values:
  *                             <ul>
  *                                 <li>@ref gpudb::alter_wal_none
- *                                     "alter_wal_none": Disables the WAL
+ *                                     "alter_wal_none": Disables the WAL.
  *                                 <li>@ref gpudb::alter_wal_background
  *                                     "alter_wal_background": WAL entries are
  *                                     periodically written instead of
- *                                     immediately after each operation
+ *                                     immediately after each operation.
  *                                 <li>@ref gpudb::alter_wal_flush
  *                                     "alter_wal_flush": Protects entries in
- *                                     the event of a database crash
+ *                                     the event of a database crash.
  *                                 <li>@ref gpudb::alter_wal_fsync
  *                                     "alter_wal_fsync": Protects entries in
- *                                     the event of an OS crash
+ *                                     the event of an OS crash.
  *                             </ul>
  *                         <li>@ref gpudb::alter_wal_flush_frequency
  *                             "alter_wal_flush_frequency": Specifies how
@@ -11755,7 +12247,7 @@ AlterWalResponse alterWal( const std::vector<std::string>& tableNames,
  *                     <ul>
  *                         <li>@ref gpudb::alter_wal_max_segment_size
  *                             "alter_wal_max_segment_size": Maximum size of an
- *                             individual segment file
+ *                             individual segment file.
  *                         <li>@ref gpudb::alter_wal_segment_count
  *                             "alter_wal_segment_count": Approximate number of
  *                             segment files to split the WAL across. Must be
@@ -11766,17 +12258,17 @@ AlterWalResponse alterWal( const std::vector<std::string>& tableNames,
  *                             Supported values:
  *                             <ul>
  *                                 <li>@ref gpudb::alter_wal_none
- *                                     "alter_wal_none": Disables the WAL
+ *                                     "alter_wal_none": Disables the WAL.
  *                                 <li>@ref gpudb::alter_wal_background
  *                                     "alter_wal_background": WAL entries are
  *                                     periodically written instead of
- *                                     immediately after each operation
+ *                                     immediately after each operation.
  *                                 <li>@ref gpudb::alter_wal_flush
  *                                     "alter_wal_flush": Protects entries in
- *                                     the event of a database crash
+ *                                     the event of a database crash.
  *                                 <li>@ref gpudb::alter_wal_fsync
  *                                     "alter_wal_fsync": Protects entries in
- *                                     the event of an OS crash
+ *                                     the event of an OS crash.
  *                             </ul>
  *                         <li>@ref gpudb::alter_wal_flush_frequency
  *                             "alter_wal_flush_frequency": Specifies how
@@ -11934,9 +12426,9 @@ AppendRecordsResponse& appendRecords( const AppendRecordsRequest& request_,
  *                             results should be returned. The default value is
  *                             '-9999'.
  *                         <li>@ref gpudb::append_records_expression
- *                             "append_records_expression": Optional filter
- *                             expression to apply to the @a sourceTableName.
- *                             The default value is ''.
+ *                             "append_records_expression": Filter expression
+ *                             to apply to the @a sourceTableName. The default
+ *                             value is ''.
  *                         <li>@ref gpudb::append_records_order_by
  *                             "append_records_order_by": Comma-separated list
  *                             of the columns to be sorted by from source table
@@ -11973,15 +12465,41 @@ AppendRecordsResponse& appendRecords( const AppendRecordsRequest& request_,
  *                                 <li>@ref gpudb::append_records_true
  *                                     "append_records_true": Upsert new
  *                                     records when primary keys match existing
- *                                     records
+ *                                     records.
  *                                 <li>@ref gpudb::append_records_false
  *                                     "append_records_false": Reject new
  *                                     records when primary keys match existing
- *                                     records
+ *                                     records.
  *                             </ul>
  *                             The default value is @ref
  *                             gpudb::append_records_false
  *                             "append_records_false".
+ *                         <li>@ref
+ *                             gpudb::append_records_enable_inplace_updates
+ *                             "append_records_enable_inplace_updates": Applies
+ *                             only when upserting (when @ref
+ *                             gpudb::append_records_update_on_existing_pk
+ *                             "update_on_existing_pk" is @ref
+ *                             gpudb::append_records_true "true"). If set to
+ *                             @ref gpudb::append_records_true "true", an
+ *                             existing record matched by primary key is
+ *                             modified in place. If set to @ref
+ *                             gpudb::append_records_false "false", it is
+ *                             updated by deleting the existing record and
+ *                             inserting a replacement (delete and insert),
+ *                             which prevents the change from being reflected
+ *                             in dependent materialized views until they are
+ *                             refreshed.
+ *                             Supported values:
+ *                             <ul>
+ *                                 <li>@ref gpudb::append_records_true
+ *                                     "append_records_true"
+ *                                 <li>@ref gpudb::append_records_false
+ *                                     "append_records_false"
+ *                             </ul>
+ *                             The default value is @ref
+ *                             gpudb::append_records_true
+ *                             "append_records_true".
  *                         <li>@ref gpudb::append_records_ignore_existing_pk
  *                             "append_records_ignore_existing_pk": Specifies
  *                             the record collision error-suppression policy
@@ -12015,12 +12533,12 @@ AppendRecordsResponse& appendRecords( const AppendRecordsRequest& request_,
  *                                     "append_records_true": Ignore source
  *                                     table records whose primary key values
  *                                     collide with those of target table
- *                                     records
+ *                                     records.
  *                                 <li>@ref gpudb::append_records_false
  *                                     "append_records_false": Raise an error
  *                                     for any source table record whose
  *                                     primary key values collide with those of
- *                                     a target table record
+ *                                     a target table record.
  *                             </ul>
  *                             The default value is @ref
  *                             gpudb::append_records_false
@@ -12106,9 +12624,9 @@ AppendRecordsResponse appendRecords( const std::string& tableName,
  *                             results should be returned. The default value is
  *                             '-9999'.
  *                         <li>@ref gpudb::append_records_expression
- *                             "append_records_expression": Optional filter
- *                             expression to apply to the @a sourceTableName.
- *                             The default value is ''.
+ *                             "append_records_expression": Filter expression
+ *                             to apply to the @a sourceTableName. The default
+ *                             value is ''.
  *                         <li>@ref gpudb::append_records_order_by
  *                             "append_records_order_by": Comma-separated list
  *                             of the columns to be sorted by from source table
@@ -12145,15 +12663,41 @@ AppendRecordsResponse appendRecords( const std::string& tableName,
  *                                 <li>@ref gpudb::append_records_true
  *                                     "append_records_true": Upsert new
  *                                     records when primary keys match existing
- *                                     records
+ *                                     records.
  *                                 <li>@ref gpudb::append_records_false
  *                                     "append_records_false": Reject new
  *                                     records when primary keys match existing
- *                                     records
+ *                                     records.
  *                             </ul>
  *                             The default value is @ref
  *                             gpudb::append_records_false
  *                             "append_records_false".
+ *                         <li>@ref
+ *                             gpudb::append_records_enable_inplace_updates
+ *                             "append_records_enable_inplace_updates": Applies
+ *                             only when upserting (when @ref
+ *                             gpudb::append_records_update_on_existing_pk
+ *                             "update_on_existing_pk" is @ref
+ *                             gpudb::append_records_true "true"). If set to
+ *                             @ref gpudb::append_records_true "true", an
+ *                             existing record matched by primary key is
+ *                             modified in place. If set to @ref
+ *                             gpudb::append_records_false "false", it is
+ *                             updated by deleting the existing record and
+ *                             inserting a replacement (delete and insert),
+ *                             which prevents the change from being reflected
+ *                             in dependent materialized views until they are
+ *                             refreshed.
+ *                             Supported values:
+ *                             <ul>
+ *                                 <li>@ref gpudb::append_records_true
+ *                                     "append_records_true"
+ *                                 <li>@ref gpudb::append_records_false
+ *                                     "append_records_false"
+ *                             </ul>
+ *                             The default value is @ref
+ *                             gpudb::append_records_true
+ *                             "append_records_true".
  *                         <li>@ref gpudb::append_records_ignore_existing_pk
  *                             "append_records_ignore_existing_pk": Specifies
  *                             the record collision error-suppression policy
@@ -12187,12 +12731,12 @@ AppendRecordsResponse appendRecords( const std::string& tableName,
  *                                     "append_records_true": Ignore source
  *                                     table records whose primary key values
  *                                     collide with those of target table
- *                                     records
+ *                                     records.
  *                                 <li>@ref gpudb::append_records_false
  *                                     "append_records_false": Raise an error
  *                                     for any source table record whose
  *                                     primary key values collide with those of
- *                                     a target table record
+ *                                     a target table record.
  *                             </ul>
  *                             The default value is @ref
  *                             gpudb::append_records_false
@@ -12240,6 +12784,148 @@ AppendRecordsResponse& appendRecords( const std::string& tableName,
                                       AppendRecordsResponse& response_ ) const;
 
 /**
+ * Scans the requested tables as specified in @ref
+ * gpudb::CheckTableRequest::tableNames "tableNames" for integrity. Any table
+ * chunks which fail the check will be marked as corrupt. By default the
+ * database will automatically repair corrupt tables (via truncating). Note
+ * that since this reads every table column from disk it may be a potentially
+ * long-running operation. The option @ref gpudb::check_table_local_only
+ * "local_only" can be used to skip any table files already written to a remote
+ * storage.
+ * Returns table corruption results.
+ *
+ * @param[in] request_  @ref gpudb::CheckTableRequest "Request" object
+ *                      containing the parameters for the operation.
+ *
+ * @return @ref gpudb::CheckTableResponse "Response" object containing the
+ *         result of the operation.
+ */
+CheckTableResponse checkTable( const CheckTableRequest& request_ ) const;
+
+/**
+ * Scans the requested tables as specified in @ref
+ * gpudb::CheckTableRequest::tableNames "tableNames" for integrity. Any table
+ * chunks which fail the check will be marked as corrupt. By default the
+ * database will automatically repair corrupt tables (via truncating). Note
+ * that since this reads every table column from disk it may be a potentially
+ * long-running operation. The option @ref gpudb::check_table_local_only
+ * "local_only" can be used to skip any table files already written to a remote
+ * storage.
+ * Returns table corruption results.
+ *
+ * @param[in] request_  @ref gpudb::CheckTableRequest "Request" object
+ *                      containing the parameters for the operation.
+ * @param[out] response_  @ref gpudb::CheckTableResponse "Response" object
+ *                        containing the results of the operation.
+ *
+ * @return @ref gpudb::CheckTableResponse "Response" object containing the
+ *         result of the operation (initially passed in by reference).
+ */
+CheckTableResponse& checkTable( const CheckTableRequest& request_,
+                                CheckTableResponse& response_ ) const;
+
+/**
+ * Scans the requested tables as specified in @a tableNames for integrity. Any
+ * table chunks which fail the check will be marked as corrupt. By default the
+ * database will automatically repair corrupt tables (via truncating). Note
+ * that since this reads every table column from disk it may be a potentially
+ * long-running operation. The option @ref gpudb::check_table_local_only
+ * "local_only" can be used to skip any table files already written to a remote
+ * storage.
+ * Returns table corruption results.
+ *
+ * @param[in] tableNames  List of tables to query. An asterisk returns all
+ *                        tables.
+ * @param[in] options  Optional parameters.
+ *                     <ul>
+ *                         <li>@ref gpudb::check_table_local_only
+ *                             "check_table_local_only": If @ref
+ *                             gpudb::check_table_true "true" only locally
+ *                             persisted files will be checked.
+ *                             Supported values:
+ *                             <ul>
+ *                                 <li>@ref gpudb::check_table_true
+ *                                     "check_table_true"
+ *                                 <li>@ref gpudb::check_table_false
+ *                                     "check_table_false"
+ *                             </ul>
+ *                             The default value is @ref
+ *                             gpudb::check_table_false "check_table_false".
+ *                         <li>@ref gpudb::check_table_show_detail
+ *                             "check_table_show_detail": If @ref
+ *                             gpudb::check_table_true "true" reports
+ *                             individual chunk errors.
+ *                             Supported values:
+ *                             <ul>
+ *                                 <li>@ref gpudb::check_table_true
+ *                                     "check_table_true"
+ *                                 <li>@ref gpudb::check_table_false
+ *                                     "check_table_false"
+ *                             </ul>
+ *                             The default value is @ref
+ *                             gpudb::check_table_true "check_table_true".
+ *                     </ul>
+ *                     The default value is an empty map.
+ *
+ * @return @ref gpudb::CheckTableResponse "Response" object containing the
+ *         result of the operation.
+ */
+CheckTableResponse checkTable( const std::vector<std::string>& tableNames,
+                               const std::map<std::string, std::string>& options ) const;
+
+/**
+ * Scans the requested tables as specified in @a tableNames for integrity. Any
+ * table chunks which fail the check will be marked as corrupt. By default the
+ * database will automatically repair corrupt tables (via truncating). Note
+ * that since this reads every table column from disk it may be a potentially
+ * long-running operation. The option @ref gpudb::check_table_local_only
+ * "local_only" can be used to skip any table files already written to a remote
+ * storage.
+ * Returns table corruption results.
+ *
+ * @param[in] tableNames  List of tables to query. An asterisk returns all
+ *                        tables.
+ * @param[in] options  Optional parameters.
+ *                     <ul>
+ *                         <li>@ref gpudb::check_table_local_only
+ *                             "check_table_local_only": If @ref
+ *                             gpudb::check_table_true "true" only locally
+ *                             persisted files will be checked.
+ *                             Supported values:
+ *                             <ul>
+ *                                 <li>@ref gpudb::check_table_true
+ *                                     "check_table_true"
+ *                                 <li>@ref gpudb::check_table_false
+ *                                     "check_table_false"
+ *                             </ul>
+ *                             The default value is @ref
+ *                             gpudb::check_table_false "check_table_false".
+ *                         <li>@ref gpudb::check_table_show_detail
+ *                             "check_table_show_detail": If @ref
+ *                             gpudb::check_table_true "true" reports
+ *                             individual chunk errors.
+ *                             Supported values:
+ *                             <ul>
+ *                                 <li>@ref gpudb::check_table_true
+ *                                     "check_table_true"
+ *                                 <li>@ref gpudb::check_table_false
+ *                                     "check_table_false"
+ *                             </ul>
+ *                             The default value is @ref
+ *                             gpudb::check_table_true "check_table_true".
+ *                     </ul>
+ *                     The default value is an empty map.
+ * @param[out] response_  @ref gpudb::CheckTableResponse "Response" object
+ *                        containing the results of the operation.
+ *
+ * @return @ref gpudb::CheckTableResponse "Response" object containing the
+ *         result of the operation (initially passed in by reference).
+ */
+CheckTableResponse& checkTable( const std::vector<std::string>& tableNames,
+                                const std::map<std::string, std::string>& options,
+                                CheckTableResponse& response_ ) const;
+
+/**
  * Clears statistics (cardinality, mean value, etc.) for a column in a
  * specified table.
  *
@@ -12274,11 +12960,15 @@ ClearStatisticsResponse& clearStatistics( const ClearStatisticsRequest& request_
  *                       using standard <a
  *                       href="../../../concepts/tables/#table-name-resolution"
  *                       target="_top">name resolution rules</a>. Must be an
- *                       existing table. The default value is ''.
+ *                       existing table.  A value of '*' clears statistics on
+ *                       every user table the caller may read (excluding system
+ *                       schemas, views, and temporary tables); when used, @a
+ *                       columnName must be empty. The default value is ''.
  * @param[in] columnName  Name of the column in @a tableName for which to clear
  *                        statistics. The column must be from an existing
  *                        table. An empty string clears statistics for all
- *                        columns in the table. The default value is ''.
+ *                        columns in the table.  Must be empty when @a
+ *                        tableName is '*'. The default value is ''.
  * @param[in] options  Optional parameters. The default value is an empty map.
  *
  * @return @ref gpudb::ClearStatisticsResponse "Response" object containing the
@@ -12296,11 +12986,15 @@ ClearStatisticsResponse clearStatistics( const std::string& tableName,
  *                       using standard <a
  *                       href="../../../concepts/tables/#table-name-resolution"
  *                       target="_top">name resolution rules</a>. Must be an
- *                       existing table. The default value is ''.
+ *                       existing table.  A value of '*' clears statistics on
+ *                       every user table the caller may read (excluding system
+ *                       schemas, views, and temporary tables); when used, @a
+ *                       columnName must be empty. The default value is ''.
  * @param[in] columnName  Name of the column in @a tableName for which to clear
  *                        statistics. The column must be from an existing
  *                        table. An empty string clears statistics for all
- *                        columns in the table. The default value is ''.
+ *                        columns in the table.  Must be empty when @a
+ *                        tableName is '*'. The default value is ''.
  * @param[in] options  Optional parameters. The default value is an empty map.
  * @param[out] response_  @ref gpudb::ClearStatisticsResponse "Response" object
  *                        containing the results of the operation.
@@ -12792,11 +13486,16 @@ CollectStatisticsResponse& collectStatistics( const CollectStatisticsRequest& re
  * @param[in] tableName  Name of a table, in [schema_name.]table_name format,
  *                       using standard <a
  *                       href="../../../concepts/tables/#table-name-resolution"
- *                       target="_top">name resolution rules</a>.  Must be an
- *                       existing table.
+ *                       target="_top">name resolution rules</a>. Must be an
+ *                       existing table.  A value of '*' collects statistics on
+ *                       every user table the caller may read (excluding system
+ *                       schemas, views, and temporary tables); when used, @a
+ *                       columnNames must be '*'.
  * @param[in] columnNames  List of one or more column names in @a tableName for
  *                         which to collect statistics (cardinality, mean
- *                         value, etc.).
+ *                         value, etc.). A single entry of '*' expands to every
+ *                         collectable column on the table (geometry, vector,
+ *                         JSON, and array columns are skipped).
  * @param[in] options  Optional parameters. The default value is an empty map.
  *
  * @return @ref gpudb::CollectStatisticsResponse "Response" object containing
@@ -12812,11 +13511,16 @@ CollectStatisticsResponse collectStatistics( const std::string& tableName,
  * @param[in] tableName  Name of a table, in [schema_name.]table_name format,
  *                       using standard <a
  *                       href="../../../concepts/tables/#table-name-resolution"
- *                       target="_top">name resolution rules</a>.  Must be an
- *                       existing table.
+ *                       target="_top">name resolution rules</a>. Must be an
+ *                       existing table.  A value of '*' collects statistics on
+ *                       every user table the caller may read (excluding system
+ *                       schemas, views, and temporary tables); when used, @a
+ *                       columnNames must be '*'.
  * @param[in] columnNames  List of one or more column names in @a tableName for
  *                         which to collect statistics (cardinality, mean
- *                         value, etc.).
+ *                         value, etc.). A single entry of '*' expands to every
+ *                         collectable column on the table (geometry, vector,
+ *                         JSON, and array columns are skipped).
  * @param[in] options  Optional parameters. The default value is an empty map.
  * @param[out] response_  @ref gpudb::CollectStatisticsResponse "Response"
  *                        object containing the results of the operation.
@@ -12830,7 +13534,11 @@ CollectStatisticsResponse& collectStatistics( const std::string& tableName,
                                               CollectStatisticsResponse& response_ ) const;
 
 /**
- * Creates a database backup containing a current snapshot of existing objects.
+ * Creates a database <a href="../../../admin/backup_restore/#database-backup"
+ * target="_top">backup</a>, containing a snapshot of existing objects, at the
+ * remote file store accessible via the <a href="../../../concepts/data_sinks/"
+ * target="_top">data sink</a> specified by @ref
+ * gpudb::CreateBackupRequest::datasinkName "datasinkName".
  *
  * @param[in] request_  @ref gpudb::CreateBackupRequest "Request" object
  *                      containing the parameters for the operation.
@@ -12841,7 +13549,11 @@ CollectStatisticsResponse& collectStatistics( const std::string& tableName,
 CreateBackupResponse createBackup( const CreateBackupRequest& request_ ) const;
 
 /**
- * Creates a database backup containing a current snapshot of existing objects.
+ * Creates a database <a href="../../../admin/backup_restore/#database-backup"
+ * target="_top">backup</a>, containing a snapshot of existing objects, at the
+ * remote file store accessible via the <a href="../../../concepts/data_sinks/"
+ * target="_top">data sink</a> specified by @ref
+ * gpudb::CreateBackupRequest::datasinkName "datasinkName".
  *
  * @param[in] request_  @ref gpudb::CreateBackupRequest "Request" object
  *                      containing the parameters for the operation.
@@ -12855,93 +13567,194 @@ CreateBackupResponse& createBackup( const CreateBackupRequest& request_,
                                     CreateBackupResponse& response_ ) const;
 
 /**
- * Creates a database backup containing a current snapshot of existing objects.
+ * Creates a database <a href="../../../admin/backup_restore/#database-backup"
+ * target="_top">backup</a>, containing a snapshot of existing objects, at the
+ * remote file store accessible via the <a href="../../../concepts/data_sinks/"
+ * target="_top">data sink</a> specified by @a datasinkName.
  *
- * @param[in] backupName  Name for this backup object. If the backup object
- *                        already exists, only an incremental or differential
- *                        backup can be made, unless recreate is specified
- * @param[in] backupType  Type of backup to create.
+ * @param[in] backupName  Name for this backup. If the backup already exists,
+ *                        only an incremental or differential backup can be
+ *                        made, unless @ref gpudb::create_backup_recreate
+ *                        "recreate" is set to @ref gpudb::create_backup_true
+ *                        "true".
+ * @param[in] backupType  Type of snapshot to create.
  *                        Supported values:
  *                        <ul>
- *                            <li>@ref gpudb::create_backup_incremental
- *                                "create_backup_incremental"
  *                            <li>@ref gpudb::create_backup_differential
- *                                "create_backup_differential"
+ *                                "create_backup_differential": Snapshot of
+ *                                changes in the database objects and data
+ *                                since the last full snapshot.
  *                            <li>@ref gpudb::create_backup_full
- *                                "create_backup_full"
+ *                                "create_backup_full": Snapshot of the given
+ *                                database objects and data.
+ *                            <li>@ref gpudb::create_backup_incremental
+ *                                "create_backup_incremental": Snapshot of
+ *                                changes in the database objects and data
+ *                                since the last snapshot of any kind.
  *                        </ul>
- * @param[in] backupObjectsMap  Map of objects to be captured in the backup.
- *                              Error if empty and creating full backup. Error
- *                              if non-empty when creating an incremental or
- *                              differential backup.
+ * @param[in] backupObjectsMap  Map of objects to be captured in the backup;
+ *                              must be specified when creating a full snapshot
+ *                              and left unspecified when creating an
+ *                              incremental or differential snapshot.
  *                              <ul>
  *                                  <li>@ref gpudb::create_backup_all
  *                                      "create_backup_all": All object types
- *                                      in a schema (excludes permissions,
- *                                      system configuration, host secret key,
- *                                      KiFS directories and user defined
- *                                      functions)
- *                                  <li>@ref gpudb::create_backup_table
- *                                      "create_backup_table": Database Table
- *                                  <li>@ref gpudb::create_backup_credential
- *                                      "create_backup_credential": Credential
+ *                                      and data contained in the given <a
+ *                                      href="../../../concepts/schemas/"
+ *                                      target="_top">schema(s)</a>.
+ *                                  <li>@ref gpudb::create_backup_catalog
+ *                                      "create_backup_catalog": Data Lake
+ *                                      catalog that is external to the
+ *                                      database.
  *                                  <li>@ref gpudb::create_backup_context
- *                                      "create_backup_context": Context
+ *                                      "create_backup_context": <a
+ *                                      href="../../../sql-gpt/concepts/#sql-gpt-context"
+ *                                      target="_top">Context(s)</a>.
+ *                                  <li>@ref gpudb::create_backup_credential
+ *                                      "create_backup_credential": <a
+ *                                      href="../../../concepts/credentials/"
+ *                                      target="_top">Credential(s)</a>.
  *                                  <li>@ref gpudb::create_backup_datasink
- *                                      "create_backup_datasink": Data Sink
+ *                                      "create_backup_datasink": <a
+ *                                      href="../../../concepts/data_sinks/"
+ *                                      target="_top">Data sink(s)</a>.
  *                                  <li>@ref gpudb::create_backup_datasource
- *                                      "create_backup_datasource": Data Source
+ *                                      "create_backup_datasource": <a
+ *                                      href="../../../concepts/data_sources/"
+ *                                      target="_top">Data source(s)</a>.
+ *                                  <li>@ref gpudb::create_backup_directory
+ *                                      "create_backup_directory": KiFS <a
+ *                                      href="../../../tools/kifs/"
+ *                                      target="_top">File directory(ies)</a>.
+ *                                  <li>@ref
+ *                                      gpudb::create_backup_function_environment
+ *                                      "create_backup_function_environment":
+ *                                      <a
+ *                                      href="../../../udf/python/writing/#udf-python-func-env"
+ *                                      target="_top">Python UDF function
+ *                                      environment(s)</a>.
+ *                                  <li>@ref gpudb::create_backup_graph
+ *                                      "create_backup_graph": <a
+ *                                      href="../../../graph_solver/network_graph_solver/"
+ *                                      target="_top">Graph</a> definition(s).
+ *                                      Source table(s), if applicable, are
+ *                                      required in order to restore graph
+ *                                      objects.
+ *                                  <li>@ref gpudb::create_backup_monitor
+ *                                      "create_backup_monitor": <a
+ *                                      href="../../../concepts/table_monitors/"
+ *                                      target="_top">Table monitor(s)</a> / <a
+ *                                      href="../../../sql/ddl/#create-stream"
+ *                                      target="_top">SQL stream(s)</a>.
+ *                                  <li>@ref
+ *                                      gpudb::create_backup_resource_group
+ *                                      "create_backup_resource_group": <a
+ *                                      href="../../../rm/concepts/#resource-groups"
+ *                                      target="_top">Resource group(s)</a>.
+ *                                  <li>@ref gpudb::create_backup_role
+ *                                      "create_backup_role": <a
+ *                                      href="../../../security/sec_concepts/#roles"
+ *                                      target="_top">Role(s)</a>, role members
+ *                                      (roles or users, recursively), and
+ *                                      associated permissions.
  *                                  <li>@ref
  *                                      gpudb::create_backup_stored_procedure
- *                                      "create_backup_stored_procedure": SQL
- *                                      Procedure
- *                                  <li>@ref gpudb::create_backup_monitor
- *                                      "create_backup_monitor": Table Monitor
- *                                      (Stream)
+ *                                      "create_backup_stored_procedure": <a
+ *                                      href="../../../sql/procedure/"
+ *                                      target="_top">SQL procedure(s)</a>.
+ *                                  <li>@ref gpudb::create_backup_table
+ *                                      "create_backup_table": <a
+ *                                      href="../../../concepts/tables/"
+ *                                      target="_top">Table(s)</a> and <a
+ *                                      href="../../../sql/ddl/#create-view"
+ *                                      target="_top">SQL view(s)</a>.  Active
+ *                                      subscriptions on any tables to be
+ *                                      backed up will be temporarily suspended
+ *                                      while the backup is active.
  *                                  <li>@ref gpudb::create_backup_user
- *                                      "create_backup_user": User (internal
- *                                      and external) and associated
- *                                      permissions
- *                                  <li>@ref gpudb::create_backup_role
- *                                      "create_backup_role": Role, role
- *                                      members (roles or users, recursively)
- *                                      and associated permissions
- *                                  <li>@ref gpudb::create_backup_configuration
- *                                      "create_backup_configuration": If @ref
- *                                      gpudb::create_backup_true "true",
- *                                      backup the database configuration file.
- *                                      Supported values:
- *                                      <ul>
- *                                          <li>@ref gpudb::create_backup_false
- *                                              "create_backup_false"
- *                                          <li>@ref gpudb::create_backup_true
- *                                              "create_backup_true"
- *                                      </ul>
- *                                      The default value is @ref
- *                                      gpudb::create_backup_false
- *                                      "create_backup_false".
+ *                                      "create_backup_user": <a
+ *                                      href="../../../security/sec_concepts/#security-concepts-users"
+ *                                      target="_top">User(s)</a> (internal and
+ *                                      external) and associated permissions.
+ *                                  <li>@ref
+ *                                      gpudb::create_backup_user_defined_function
+ *                                      "create_backup_user_defined_function":
+ *                                      <a href="../../../udf_overview"
+ *                                      target="_top">UDF(s)</a>.
  *                              </ul>
- * @param[in] datasinkName  Datasink where backup will be stored.
+ *                              The default value is an empty map.
+ * @param[in] datasinkName  Data sink through which the backup will be stored.
  * @param[in] options  Optional parameters.
  *                     <ul>
- *                         <li>@ref gpudb::create_backup_comment
- *                             "create_backup_comment": Comments to store with
- *                             this backup
- *                         <li>@ref gpudb::create_backup_checksum
- *                             "create_backup_checksum": Calculate checksum for
- *                             backup files.
+ *                         <li>@ref gpudb::create_backup_block_table_mutations
+ *                             "create_backup_block_table_mutations": Whether
+ *                             or not to block all mutations on target tables
+ *                             while they are being backed up.
  *                             Supported values:
  *                             <ul>
- *                                 <li>@ref gpudb::create_backup_false
- *                                     "create_backup_false"
  *                                 <li>@ref gpudb::create_backup_true
- *                                     "create_backup_true"
+ *                                     "create_backup_true": Block all
+ *                                     mutations on target tables while they
+ *                                     are being backed up.
+ *                                 <li>@ref gpudb::create_backup_false
+ *                                     "create_backup_false": Only block
+ *                                     mutations on a target table at the point
+ *                                     a disk eviction is necessary.
  *                             </ul>
  *                             The default value is @ref
- *                             gpudb::create_backup_true "create_backup_true".
+ *                             gpudb::create_backup_false
+ *                             "create_backup_false".
+ *                         <li>@ref gpudb::create_backup_checksum
+ *                             "create_backup_checksum": Whether or not to
+ *                             calculate checksums for backup files.
+ *                             Supported values:
+ *                             <ul>
+ *                                 <li>@ref gpudb::create_backup_true
+ *                                     "create_backup_true"
+ *                                 <li>@ref gpudb::create_backup_false
+ *                                     "create_backup_false"
+ *                             </ul>
+ *                             The default value is @ref
+ *                             gpudb::create_backup_false
+ *                             "create_backup_false".
+ *                         <li>@ref gpudb::create_backup_comment
+ *                             "create_backup_comment": Comments to store with
+ *                             this backup.
  *                         <li>@ref gpudb::create_backup_ddl_only
- *                             "create_backup_ddl_only": Only save the DDL, do
- *                             not backup table data.
+ *                             "create_backup_ddl_only": Whether or not, for
+ *                             tables, to only backup DDL and not table data.
+ *                             Supported values:
+ *                             <ul>
+ *                                 <li>@ref gpudb::create_backup_true
+ *                                     "create_backup_true": For tables, only
+ *                                     back up DDL, not data.
+ *                                 <li>@ref gpudb::create_backup_false
+ *                                     "create_backup_false": For tables, back
+ *                                     up DDL and data.
+ *                             </ul>
+ *                             The default value is @ref
+ *                             gpudb::create_backup_false
+ *                             "create_backup_false".
+ *                         <li>@ref
+ *                             gpudb::create_backup_delete_intermediate_backups
+ *                             "create_backup_delete_intermediate_backups":
+ *                             Whether or not to delete any intermediate
+ *                             snapshots when the @a backupType is set to @ref
+ *                             gpudb::create_backup_differential
+ *                             "differential".
+ *                             Supported values:
+ *                             <ul>
+ *                                 <li>@ref gpudb::create_backup_true
+ *                                     "create_backup_true"
+ *                                 <li>@ref gpudb::create_backup_false
+ *                                     "create_backup_false"
+ *                             </ul>
+ *                             The default value is @ref
+ *                             gpudb::create_backup_false
+ *                             "create_backup_false".
+ *                         <li>@ref gpudb::create_backup_dry_run
+ *                             "create_backup_dry_run": Whether or not to
+ *                             perform a dry run of a backup operation.
  *                             Supported values:
  *                             <ul>
  *                                 <li>@ref gpudb::create_backup_true
@@ -12955,48 +13768,19 @@ CreateBackupResponse& createBackup( const CreateBackupRequest& request_,
  *                         <li>@ref
  *                             gpudb::create_backup_max_incremental_backups_to_keep
  *                             "create_backup_max_incremental_backups_to_keep":
- *                             Maximum number of incremental backups to keep.
+ *                             Maximum number of incremental snapshots to keep.
  *                             The default value is '-1'.
- *                         <li>@ref
- *                             gpudb::create_backup_delete_intermediate_backups
- *                             "create_backup_delete_intermediate_backups":
- *                             When the backup type is differential, delete any
- *                             intermediate incremental or differential
- *                             backups. This overrides @ref
- *                             gpudb::create_backup_max_incremental_backups_to_keep
- *                             "max_incremental_backups_to_keep".
- *                             Supported values:
- *                             <ul>
- *                                 <li>@ref gpudb::create_backup_false
- *                                     "create_backup_false"
- *                                 <li>@ref gpudb::create_backup_true
- *                                     "create_backup_true"
- *                             </ul>
- *                             The default value is @ref
- *                             gpudb::create_backup_false
- *                             "create_backup_false".
  *                         <li>@ref gpudb::create_backup_recreate
- *                             "create_backup_recreate": Replace the existing
- *                             backup object with a new full backup if it
- *                             already exists.
+ *                             "create_backup_recreate": Whether or not to
+ *                             replace an existing backup object with a new
+ *                             backup with a full snapshot, if one already
+ *                             exists.
  *                             Supported values:
  *                             <ul>
- *                                 <li>@ref gpudb::create_backup_false
- *                                     "create_backup_false"
  *                                 <li>@ref gpudb::create_backup_true
  *                                     "create_backup_true"
- *                             </ul>
- *                             The default value is @ref
- *                             gpudb::create_backup_false
- *                             "create_backup_false".
- *                         <li>@ref gpudb::create_backup_dry_run
- *                             "create_backup_dry_run": Dry run of backup.
- *                             Supported values:
- *                             <ul>
  *                                 <li>@ref gpudb::create_backup_false
  *                                     "create_backup_false"
- *                                 <li>@ref gpudb::create_backup_true
- *                                     "create_backup_true"
  *                             </ul>
  *                             The default value is @ref
  *                             gpudb::create_backup_false
@@ -13014,93 +13798,194 @@ CreateBackupResponse createBackup( const std::string& backupName,
                                    const std::map<std::string, std::string>& options ) const;
 
 /**
- * Creates a database backup containing a current snapshot of existing objects.
+ * Creates a database <a href="../../../admin/backup_restore/#database-backup"
+ * target="_top">backup</a>, containing a snapshot of existing objects, at the
+ * remote file store accessible via the <a href="../../../concepts/data_sinks/"
+ * target="_top">data sink</a> specified by @a datasinkName.
  *
- * @param[in] backupName  Name for this backup object. If the backup object
- *                        already exists, only an incremental or differential
- *                        backup can be made, unless recreate is specified
- * @param[in] backupType  Type of backup to create.
+ * @param[in] backupName  Name for this backup. If the backup already exists,
+ *                        only an incremental or differential backup can be
+ *                        made, unless @ref gpudb::create_backup_recreate
+ *                        "recreate" is set to @ref gpudb::create_backup_true
+ *                        "true".
+ * @param[in] backupType  Type of snapshot to create.
  *                        Supported values:
  *                        <ul>
- *                            <li>@ref gpudb::create_backup_incremental
- *                                "create_backup_incremental"
  *                            <li>@ref gpudb::create_backup_differential
- *                                "create_backup_differential"
+ *                                "create_backup_differential": Snapshot of
+ *                                changes in the database objects and data
+ *                                since the last full snapshot.
  *                            <li>@ref gpudb::create_backup_full
- *                                "create_backup_full"
+ *                                "create_backup_full": Snapshot of the given
+ *                                database objects and data.
+ *                            <li>@ref gpudb::create_backup_incremental
+ *                                "create_backup_incremental": Snapshot of
+ *                                changes in the database objects and data
+ *                                since the last snapshot of any kind.
  *                        </ul>
- * @param[in] backupObjectsMap  Map of objects to be captured in the backup.
- *                              Error if empty and creating full backup. Error
- *                              if non-empty when creating an incremental or
- *                              differential backup.
+ * @param[in] backupObjectsMap  Map of objects to be captured in the backup;
+ *                              must be specified when creating a full snapshot
+ *                              and left unspecified when creating an
+ *                              incremental or differential snapshot.
  *                              <ul>
  *                                  <li>@ref gpudb::create_backup_all
  *                                      "create_backup_all": All object types
- *                                      in a schema (excludes permissions,
- *                                      system configuration, host secret key,
- *                                      KiFS directories and user defined
- *                                      functions)
- *                                  <li>@ref gpudb::create_backup_table
- *                                      "create_backup_table": Database Table
- *                                  <li>@ref gpudb::create_backup_credential
- *                                      "create_backup_credential": Credential
+ *                                      and data contained in the given <a
+ *                                      href="../../../concepts/schemas/"
+ *                                      target="_top">schema(s)</a>.
+ *                                  <li>@ref gpudb::create_backup_catalog
+ *                                      "create_backup_catalog": Data Lake
+ *                                      catalog that is external to the
+ *                                      database.
  *                                  <li>@ref gpudb::create_backup_context
- *                                      "create_backup_context": Context
+ *                                      "create_backup_context": <a
+ *                                      href="../../../sql-gpt/concepts/#sql-gpt-context"
+ *                                      target="_top">Context(s)</a>.
+ *                                  <li>@ref gpudb::create_backup_credential
+ *                                      "create_backup_credential": <a
+ *                                      href="../../../concepts/credentials/"
+ *                                      target="_top">Credential(s)</a>.
  *                                  <li>@ref gpudb::create_backup_datasink
- *                                      "create_backup_datasink": Data Sink
+ *                                      "create_backup_datasink": <a
+ *                                      href="../../../concepts/data_sinks/"
+ *                                      target="_top">Data sink(s)</a>.
  *                                  <li>@ref gpudb::create_backup_datasource
- *                                      "create_backup_datasource": Data Source
+ *                                      "create_backup_datasource": <a
+ *                                      href="../../../concepts/data_sources/"
+ *                                      target="_top">Data source(s)</a>.
+ *                                  <li>@ref gpudb::create_backup_directory
+ *                                      "create_backup_directory": KiFS <a
+ *                                      href="../../../tools/kifs/"
+ *                                      target="_top">File directory(ies)</a>.
+ *                                  <li>@ref
+ *                                      gpudb::create_backup_function_environment
+ *                                      "create_backup_function_environment":
+ *                                      <a
+ *                                      href="../../../udf/python/writing/#udf-python-func-env"
+ *                                      target="_top">Python UDF function
+ *                                      environment(s)</a>.
+ *                                  <li>@ref gpudb::create_backup_graph
+ *                                      "create_backup_graph": <a
+ *                                      href="../../../graph_solver/network_graph_solver/"
+ *                                      target="_top">Graph</a> definition(s).
+ *                                      Source table(s), if applicable, are
+ *                                      required in order to restore graph
+ *                                      objects.
+ *                                  <li>@ref gpudb::create_backup_monitor
+ *                                      "create_backup_monitor": <a
+ *                                      href="../../../concepts/table_monitors/"
+ *                                      target="_top">Table monitor(s)</a> / <a
+ *                                      href="../../../sql/ddl/#create-stream"
+ *                                      target="_top">SQL stream(s)</a>.
+ *                                  <li>@ref
+ *                                      gpudb::create_backup_resource_group
+ *                                      "create_backup_resource_group": <a
+ *                                      href="../../../rm/concepts/#resource-groups"
+ *                                      target="_top">Resource group(s)</a>.
+ *                                  <li>@ref gpudb::create_backup_role
+ *                                      "create_backup_role": <a
+ *                                      href="../../../security/sec_concepts/#roles"
+ *                                      target="_top">Role(s)</a>, role members
+ *                                      (roles or users, recursively), and
+ *                                      associated permissions.
  *                                  <li>@ref
  *                                      gpudb::create_backup_stored_procedure
- *                                      "create_backup_stored_procedure": SQL
- *                                      Procedure
- *                                  <li>@ref gpudb::create_backup_monitor
- *                                      "create_backup_monitor": Table Monitor
- *                                      (Stream)
+ *                                      "create_backup_stored_procedure": <a
+ *                                      href="../../../sql/procedure/"
+ *                                      target="_top">SQL procedure(s)</a>.
+ *                                  <li>@ref gpudb::create_backup_table
+ *                                      "create_backup_table": <a
+ *                                      href="../../../concepts/tables/"
+ *                                      target="_top">Table(s)</a> and <a
+ *                                      href="../../../sql/ddl/#create-view"
+ *                                      target="_top">SQL view(s)</a>.  Active
+ *                                      subscriptions on any tables to be
+ *                                      backed up will be temporarily suspended
+ *                                      while the backup is active.
  *                                  <li>@ref gpudb::create_backup_user
- *                                      "create_backup_user": User (internal
- *                                      and external) and associated
- *                                      permissions
- *                                  <li>@ref gpudb::create_backup_role
- *                                      "create_backup_role": Role, role
- *                                      members (roles or users, recursively)
- *                                      and associated permissions
- *                                  <li>@ref gpudb::create_backup_configuration
- *                                      "create_backup_configuration": If @ref
- *                                      gpudb::create_backup_true "true",
- *                                      backup the database configuration file.
- *                                      Supported values:
- *                                      <ul>
- *                                          <li>@ref gpudb::create_backup_false
- *                                              "create_backup_false"
- *                                          <li>@ref gpudb::create_backup_true
- *                                              "create_backup_true"
- *                                      </ul>
- *                                      The default value is @ref
- *                                      gpudb::create_backup_false
- *                                      "create_backup_false".
+ *                                      "create_backup_user": <a
+ *                                      href="../../../security/sec_concepts/#security-concepts-users"
+ *                                      target="_top">User(s)</a> (internal and
+ *                                      external) and associated permissions.
+ *                                  <li>@ref
+ *                                      gpudb::create_backup_user_defined_function
+ *                                      "create_backup_user_defined_function":
+ *                                      <a href="../../../udf_overview"
+ *                                      target="_top">UDF(s)</a>.
  *                              </ul>
- * @param[in] datasinkName  Datasink where backup will be stored.
+ *                              The default value is an empty map.
+ * @param[in] datasinkName  Data sink through which the backup will be stored.
  * @param[in] options  Optional parameters.
  *                     <ul>
- *                         <li>@ref gpudb::create_backup_comment
- *                             "create_backup_comment": Comments to store with
- *                             this backup
- *                         <li>@ref gpudb::create_backup_checksum
- *                             "create_backup_checksum": Calculate checksum for
- *                             backup files.
+ *                         <li>@ref gpudb::create_backup_block_table_mutations
+ *                             "create_backup_block_table_mutations": Whether
+ *                             or not to block all mutations on target tables
+ *                             while they are being backed up.
  *                             Supported values:
  *                             <ul>
- *                                 <li>@ref gpudb::create_backup_false
- *                                     "create_backup_false"
  *                                 <li>@ref gpudb::create_backup_true
- *                                     "create_backup_true"
+ *                                     "create_backup_true": Block all
+ *                                     mutations on target tables while they
+ *                                     are being backed up.
+ *                                 <li>@ref gpudb::create_backup_false
+ *                                     "create_backup_false": Only block
+ *                                     mutations on a target table at the point
+ *                                     a disk eviction is necessary.
  *                             </ul>
  *                             The default value is @ref
- *                             gpudb::create_backup_true "create_backup_true".
+ *                             gpudb::create_backup_false
+ *                             "create_backup_false".
+ *                         <li>@ref gpudb::create_backup_checksum
+ *                             "create_backup_checksum": Whether or not to
+ *                             calculate checksums for backup files.
+ *                             Supported values:
+ *                             <ul>
+ *                                 <li>@ref gpudb::create_backup_true
+ *                                     "create_backup_true"
+ *                                 <li>@ref gpudb::create_backup_false
+ *                                     "create_backup_false"
+ *                             </ul>
+ *                             The default value is @ref
+ *                             gpudb::create_backup_false
+ *                             "create_backup_false".
+ *                         <li>@ref gpudb::create_backup_comment
+ *                             "create_backup_comment": Comments to store with
+ *                             this backup.
  *                         <li>@ref gpudb::create_backup_ddl_only
- *                             "create_backup_ddl_only": Only save the DDL, do
- *                             not backup table data.
+ *                             "create_backup_ddl_only": Whether or not, for
+ *                             tables, to only backup DDL and not table data.
+ *                             Supported values:
+ *                             <ul>
+ *                                 <li>@ref gpudb::create_backup_true
+ *                                     "create_backup_true": For tables, only
+ *                                     back up DDL, not data.
+ *                                 <li>@ref gpudb::create_backup_false
+ *                                     "create_backup_false": For tables, back
+ *                                     up DDL and data.
+ *                             </ul>
+ *                             The default value is @ref
+ *                             gpudb::create_backup_false
+ *                             "create_backup_false".
+ *                         <li>@ref
+ *                             gpudb::create_backup_delete_intermediate_backups
+ *                             "create_backup_delete_intermediate_backups":
+ *                             Whether or not to delete any intermediate
+ *                             snapshots when the @a backupType is set to @ref
+ *                             gpudb::create_backup_differential
+ *                             "differential".
+ *                             Supported values:
+ *                             <ul>
+ *                                 <li>@ref gpudb::create_backup_true
+ *                                     "create_backup_true"
+ *                                 <li>@ref gpudb::create_backup_false
+ *                                     "create_backup_false"
+ *                             </ul>
+ *                             The default value is @ref
+ *                             gpudb::create_backup_false
+ *                             "create_backup_false".
+ *                         <li>@ref gpudb::create_backup_dry_run
+ *                             "create_backup_dry_run": Whether or not to
+ *                             perform a dry run of a backup operation.
  *                             Supported values:
  *                             <ul>
  *                                 <li>@ref gpudb::create_backup_true
@@ -13114,48 +13999,19 @@ CreateBackupResponse createBackup( const std::string& backupName,
  *                         <li>@ref
  *                             gpudb::create_backup_max_incremental_backups_to_keep
  *                             "create_backup_max_incremental_backups_to_keep":
- *                             Maximum number of incremental backups to keep.
+ *                             Maximum number of incremental snapshots to keep.
  *                             The default value is '-1'.
- *                         <li>@ref
- *                             gpudb::create_backup_delete_intermediate_backups
- *                             "create_backup_delete_intermediate_backups":
- *                             When the backup type is differential, delete any
- *                             intermediate incremental or differential
- *                             backups. This overrides @ref
- *                             gpudb::create_backup_max_incremental_backups_to_keep
- *                             "max_incremental_backups_to_keep".
- *                             Supported values:
- *                             <ul>
- *                                 <li>@ref gpudb::create_backup_false
- *                                     "create_backup_false"
- *                                 <li>@ref gpudb::create_backup_true
- *                                     "create_backup_true"
- *                             </ul>
- *                             The default value is @ref
- *                             gpudb::create_backup_false
- *                             "create_backup_false".
  *                         <li>@ref gpudb::create_backup_recreate
- *                             "create_backup_recreate": Replace the existing
- *                             backup object with a new full backup if it
- *                             already exists.
+ *                             "create_backup_recreate": Whether or not to
+ *                             replace an existing backup object with a new
+ *                             backup with a full snapshot, if one already
+ *                             exists.
  *                             Supported values:
  *                             <ul>
- *                                 <li>@ref gpudb::create_backup_false
- *                                     "create_backup_false"
  *                                 <li>@ref gpudb::create_backup_true
  *                                     "create_backup_true"
- *                             </ul>
- *                             The default value is @ref
- *                             gpudb::create_backup_false
- *                             "create_backup_false".
- *                         <li>@ref gpudb::create_backup_dry_run
- *                             "create_backup_dry_run": Dry run of backup.
- *                             Supported values:
- *                             <ul>
  *                                 <li>@ref gpudb::create_backup_false
  *                                     "create_backup_false"
- *                                 <li>@ref gpudb::create_backup_true
- *                                     "create_backup_true"
  *                             </ul>
  *                             The default value is @ref
  *                             gpudb::create_backup_false
@@ -13174,6 +14030,154 @@ CreateBackupResponse& createBackup( const std::string& backupName,
                                     const std::string& datasinkName,
                                     const std::map<std::string, std::string>& options,
                                     CreateBackupResponse& response_ ) const;
+
+/**
+ * Creates a catalog, which contains the location and connection information
+ * for a deltalake catalog that is external to the database.
+ *
+ * @param[in] request_  @ref gpudb::CreateCatalogRequest "Request" object
+ *                      containing the parameters for the operation.
+ *
+ * @return @ref gpudb::CreateCatalogResponse "Response" object containing the
+ *         result of the operation.
+ */
+CreateCatalogResponse createCatalog( const CreateCatalogRequest& request_ ) const;
+
+/**
+ * Creates a catalog, which contains the location and connection information
+ * for a deltalake catalog that is external to the database.
+ *
+ * @param[in] request_  @ref gpudb::CreateCatalogRequest "Request" object
+ *                      containing the parameters for the operation.
+ * @param[out] response_  @ref gpudb::CreateCatalogResponse "Response" object
+ *                        containing the results of the operation.
+ *
+ * @return @ref gpudb::CreateCatalogResponse "Response" object containing the
+ *         result of the operation (initially passed in by reference).
+ */
+CreateCatalogResponse& createCatalog( const CreateCatalogRequest& request_,
+                                      CreateCatalogResponse& response_ ) const;
+
+/**
+ * Creates a catalog, which contains the location and connection information
+ * for a deltalake catalog that is external to the database.
+ *
+ * @param[in] name  Name of the catalog to be created.
+ * @param[in] tableFormat  Table format (iceberg, hudi, deltalake).
+ * @param[in] location  Location of the catalog in 'http[s]://[server[:port]]]'
+ *                      format.
+ * @param[in] type  Type of the catalog (REST (unity, polaris, tabular),
+ *                  nessie, hive, glue).
+ * @param[in] credential  Name of the <a href="../../../concepts/credentials"
+ *                        target="_top">credential</a> object to be used in
+ *                        catalog.
+ * @param[in] datasource  Password for the remote system user; may be an empty
+ *                        string.
+ * @param[in] options  Optional parameters.
+ *                     <ul>
+ *                         <li>@ref gpudb::create_catalog_access_delegation
+ *                             "create_catalog_access_delegation": Use access
+ *                             delegation for object store.
+ *                             Supported values:
+ *                             <ul>
+ *                                 <li>@ref
+ *                                     gpudb::create_catalog_datasource_credentials
+ *                                     "create_catalog_datasource_credentials"
+ *                                 <li>@ref
+ *                                     gpudb::create_catalog_vended_credentials
+ *                                     "create_catalog_vended_credentials"
+ *                             </ul>
+ *                             The default value is @ref
+ *                             gpudb::create_catalog_datasource_credentials
+ *                             "create_catalog_datasource_credentials".
+ *                         <li>@ref gpudb::create_catalog_skip_validation
+ *                             "create_catalog_skip_validation": Bypass
+ *                             validation of connection to remote source.
+ *                             Supported values:
+ *                             <ul>
+ *                                 <li>@ref gpudb::create_catalog_true
+ *                                     "create_catalog_true"
+ *                                 <li>@ref gpudb::create_catalog_false
+ *                                     "create_catalog_false"
+ *                             </ul>
+ *                             The default value is @ref
+ *                             gpudb::create_catalog_false
+ *                             "create_catalog_false".
+ *                     </ul>
+ *                     The default value is an empty map.
+ *
+ * @return @ref gpudb::CreateCatalogResponse "Response" object containing the
+ *         result of the operation.
+ */
+CreateCatalogResponse createCatalog( const std::string& name,
+                                     const std::string& tableFormat,
+                                     const std::string& location,
+                                     const std::string& type,
+                                     const std::string& credential,
+                                     const std::string& datasource,
+                                     const std::map<std::string, std::string>& options ) const;
+
+/**
+ * Creates a catalog, which contains the location and connection information
+ * for a deltalake catalog that is external to the database.
+ *
+ * @param[in] name  Name of the catalog to be created.
+ * @param[in] tableFormat  Table format (iceberg, hudi, deltalake).
+ * @param[in] location  Location of the catalog in 'http[s]://[server[:port]]]'
+ *                      format.
+ * @param[in] type  Type of the catalog (REST (unity, polaris, tabular),
+ *                  nessie, hive, glue).
+ * @param[in] credential  Name of the <a href="../../../concepts/credentials"
+ *                        target="_top">credential</a> object to be used in
+ *                        catalog.
+ * @param[in] datasource  Password for the remote system user; may be an empty
+ *                        string.
+ * @param[in] options  Optional parameters.
+ *                     <ul>
+ *                         <li>@ref gpudb::create_catalog_access_delegation
+ *                             "create_catalog_access_delegation": Use access
+ *                             delegation for object store.
+ *                             Supported values:
+ *                             <ul>
+ *                                 <li>@ref
+ *                                     gpudb::create_catalog_datasource_credentials
+ *                                     "create_catalog_datasource_credentials"
+ *                                 <li>@ref
+ *                                     gpudb::create_catalog_vended_credentials
+ *                                     "create_catalog_vended_credentials"
+ *                             </ul>
+ *                             The default value is @ref
+ *                             gpudb::create_catalog_datasource_credentials
+ *                             "create_catalog_datasource_credentials".
+ *                         <li>@ref gpudb::create_catalog_skip_validation
+ *                             "create_catalog_skip_validation": Bypass
+ *                             validation of connection to remote source.
+ *                             Supported values:
+ *                             <ul>
+ *                                 <li>@ref gpudb::create_catalog_true
+ *                                     "create_catalog_true"
+ *                                 <li>@ref gpudb::create_catalog_false
+ *                                     "create_catalog_false"
+ *                             </ul>
+ *                             The default value is @ref
+ *                             gpudb::create_catalog_false
+ *                             "create_catalog_false".
+ *                     </ul>
+ *                     The default value is an empty map.
+ * @param[out] response_  @ref gpudb::CreateCatalogResponse "Response" object
+ *                        containing the results of the operation.
+ *
+ * @return @ref gpudb::CreateCatalogResponse "Response" object containing the
+ *         result of the operation (initially passed in by reference).
+ */
+CreateCatalogResponse& createCatalog( const std::string& name,
+                                      const std::string& tableFormat,
+                                      const std::string& location,
+                                      const std::string& type,
+                                      const std::string& credential,
+                                      const std::string& datasource,
+                                      const std::map<std::string, std::string>& options,
+                                      CreateCatalogResponse& response_ ) const;
 
 /** @private */
 CreateContainerRegistryResponse createContainerRegistry( const CreateContainerRegistryRequest& request_ ) const;
@@ -13265,6 +14269,8 @@ CreateCredentialResponse& createCredential( const CreateCredentialRequest& reque
  *                          "create_credential_nvidia_api_key"
  *                      <li>@ref gpudb::create_credential_openai_api_key
  *                          "create_credential_openai_api_key"
+ *                      <li>@ref gpudb::create_credential_rest
+ *                          "create_credential_rest"
  *                  </ul>
  * @param[in] identity  User of the credential to be created.
  * @param[in] secret  Password of the credential to be created.
@@ -13322,6 +14328,8 @@ CreateCredentialResponse createCredential( const std::string& credentialName,
  *                          "create_credential_nvidia_api_key"
  *                      <li>@ref gpudb::create_credential_openai_api_key
  *                          "create_credential_openai_api_key"
+ *                      <li>@ref gpudb::create_credential_rest
+ *                          "create_credential_rest"
  *                  </ul>
  * @param[in] identity  User of the credential to be created.
  * @param[in] secret  Password of the credential to be created.
@@ -13382,22 +14390,22 @@ CreateDatasinkResponse& createDatasink( const CreateDatasinkRequest& request_,
  *                     <ul>
  *                         <li>@ref gpudb::create_datasink_connection_timeout
  *                             "create_datasink_connection_timeout": Timeout in
- *                             seconds for connecting to this data sink
+ *                             seconds for connecting to this data sink.
  *                         <li>@ref gpudb::create_datasink_wait_timeout
  *                             "create_datasink_wait_timeout": Timeout in
  *                             seconds for waiting for a response from this
- *                             data sink
+ *                             data sink.
  *                         <li>@ref gpudb::create_datasink_credential
  *                             "create_datasink_credential": Name of the <a
  *                             href="../../../concepts/credentials/"
  *                             target="_top">credential</a> object to be used
- *                             in this data sink
+ *                             in this data sink.
  *                         <li>@ref gpudb::create_datasink_s3_bucket_name
  *                             "create_datasink_s3_bucket_name": Name of the
- *                             Amazon S3 bucket to use as the data sink
+ *                             Amazon S3 bucket to use as the data sink.
  *                         <li>@ref gpudb::create_datasink_s3_region
  *                             "create_datasink_s3_region": Name of the Amazon
- *                             S3 region where the given bucket is located
+ *                             S3 region where the given bucket is located.
  *                         <li>@ref gpudb::create_datasink_s3_verify_ssl
  *                             "create_datasink_s3_verify_ssl": Whether to
  *                             verify SSL connections.
@@ -13405,7 +14413,7 @@ CreateDatasinkResponse& createDatasink( const CreateDatasinkRequest& request_,
  *                             <ul>
  *                                 <li>@ref gpudb::create_datasink_true
  *                                     "create_datasink_true": Connect with SSL
- *                                     verification
+ *                                     verification.
  *                                 <li>@ref gpudb::create_datasink_false
  *                                     "create_datasink_false": Connect without
  *                                     verifying the SSL connection; for
@@ -13438,22 +14446,22 @@ CreateDatasinkResponse& createDatasink( const CreateDatasinkRequest& request_,
  *                         <li>@ref gpudb::create_datasink_s3_aws_role_arn
  *                             "create_datasink_s3_aws_role_arn": Amazon IAM
  *                             Role ARN which has required S3 permissions that
- *                             can be assumed for the given S3 IAM user
+ *                             can be assumed for the given S3 IAM user.
  *                         <li>@ref
  *                             gpudb::create_datasink_s3_encryption_customer_algorithm
  *                             "create_datasink_s3_encryption_customer_algorithm":
  *                             Customer encryption algorithm used encrypting
- *                             data
+ *                             data.
  *                         <li>@ref
  *                             gpudb::create_datasink_s3_encryption_customer_key
  *                             "create_datasink_s3_encryption_customer_key":
  *                             Customer encryption key to encrypt or decrypt
- *                             data
+ *                             data.
  *                         <li>@ref gpudb::create_datasink_s3_encryption_type
  *                             "create_datasink_s3_encryption_type": Server
- *                             side encryption type
+ *                             side encryption type.
  *                         <li>@ref gpudb::create_datasink_s3_kms_key_id
- *                             "create_datasink_s3_kms_key_id": KMS key
+ *                             "create_datasink_s3_kms_key_id": KMS key.
  *                         <li>@ref gpudb::create_datasink_hdfs_kerberos_keytab
  *                             "create_datasink_hdfs_kerberos_keytab": Kerberos
  *                             keytab file location for the given HDFS user.
@@ -13461,7 +14469,7 @@ CreateDatasinkResponse& createDatasink( const CreateDatasinkRequest& request_,
  *                         <li>@ref
  *                             gpudb::create_datasink_hdfs_delegation_token
  *                             "create_datasink_hdfs_delegation_token":
- *                             Delegation token for the given HDFS user
+ *                             Delegation token for the given HDFS user.
  *                         <li>@ref gpudb::create_datasink_hdfs_use_kerberos
  *                             "create_datasink_hdfs_use_kerberos": Use
  *                             kerberos authentication for the given HDFS
@@ -13481,44 +14489,64 @@ CreateDatasinkResponse& createDatasink( const CreateDatasinkRequest& request_,
  *                             "create_datasink_azure_storage_account_name":
  *                             Name of the Azure storage account to use as the
  *                             data sink, this is valid only if tenant_id is
- *                             specified
+ *                             specified.
  *                         <li>@ref gpudb::create_datasink_azure_container_name
  *                             "create_datasink_azure_container_name": Name of
  *                             the Azure storage container to use as the data
- *                             sink
+ *                             sink.
  *                         <li>@ref gpudb::create_datasink_azure_tenant_id
  *                             "create_datasink_azure_tenant_id": Active
- *                             Directory tenant ID (or directory ID)
+ *                             Directory tenant ID (or directory ID).
  *                         <li>@ref gpudb::create_datasink_azure_sas_token
  *                             "create_datasink_azure_sas_token": Shared access
  *                             signature token for Azure storage account to use
- *                             as the data sink
+ *                             as the data sink.
  *                         <li>@ref gpudb::create_datasink_azure_oauth_token
  *                             "create_datasink_azure_oauth_token": Oauth token
- *                             to access given storage container
+ *                             to access given storage container.
+ *                         <li>@ref
+ *                             gpudb::create_datasink_azure_use_virtual_addressing
+ *                             "create_datasink_azure_use_virtual_addressing":
+ *                             Whether to use virtual addressing when
+ *                             referencing the Azure source.
+ *                             Supported values:
+ *                             <ul>
+ *                                 <li>@ref gpudb::create_datasink_true
+ *                                     "create_datasink_true": The requests URI
+ *                                     should be specified in
+ *                                     virtual-hosted-style format where the
+ *                                     bucket name is part of the domain name
+ *                                     in the URL.
+ *                                 <li>@ref gpudb::create_datasink_false
+ *                                     "create_datasink_false": Use path-style
+ *                                     URI for requests.
+ *                             </ul>
+ *                             The default value is @ref
+ *                             gpudb::create_datasink_true
+ *                             "create_datasink_true".
  *                         <li>@ref gpudb::create_datasink_gcs_bucket_name
  *                             "create_datasink_gcs_bucket_name": Name of the
  *                             Google Cloud Storage bucket to use as the data
- *                             sink
+ *                             sink.
  *                         <li>@ref gpudb::create_datasink_gcs_project_id
  *                             "create_datasink_gcs_project_id": Name of the
- *                             Google Cloud project to use as the data sink
+ *                             Google Cloud project to use as the data sink.
  *                         <li>@ref
  *                             gpudb::create_datasink_gcs_service_account_keys
  *                             "create_datasink_gcs_service_account_keys":
  *                             Google Cloud service account keys to use for
- *                             authenticating the data sink
+ *                             authenticating the data sink.
  *                         <li>@ref gpudb::create_datasink_jdbc_driver_jar_path
  *                             "create_datasink_jdbc_driver_jar_path": JDBC
- *                             driver jar file location
+ *                             driver jar file location.
  *                         <li>@ref
  *                             gpudb::create_datasink_jdbc_driver_class_name
  *                             "create_datasink_jdbc_driver_class_name": Name
- *                             of the JDBC driver class
+ *                             of the JDBC driver class.
  *                         <li>@ref gpudb::create_datasink_kafka_topic_name
  *                             "create_datasink_kafka_topic_name": Name of the
  *                             Kafka topic to publish to if @a destination is a
- *                             Kafka broker
+ *                             Kafka broker.
  *                         <li>@ref gpudb::create_datasink_max_batch_size
  *                             "create_datasink_max_batch_size": Maximum number
  *                             of records per notification message. The default
@@ -13534,10 +14562,10 @@ CreateDatasinkResponse& createDatasink( const CreateDatasinkRequest& request_,
  *                             <ul>
  *                                 <li>@ref gpudb::create_datasink_flat
  *                                     "create_datasink_flat": A single record
- *                                     is returned per message
+ *                                     is returned per message.
  *                                 <li>@ref gpudb::create_datasink_nested
  *                                     "create_datasink_nested": Records are
- *                                     returned as an array per message
+ *                                     returned as an array per message.
  *                             </ul>
  *                             The default value is @ref
  *                             gpudb::create_datasink_flat
@@ -13559,8 +14587,8 @@ CreateDatasinkResponse& createDatasink( const CreateDatasinkRequest& request_,
  *                             gpudb::create_datasink_false
  *                             "create_datasink_false".
  *                         <li>@ref gpudb::create_datasink_use_https
- *                             "create_datasink_use_https": Use https to
- *                             connect to datasink if true, otherwise use http.
+ *                             "create_datasink_use_https": Use HTTPS to
+ *                             connect to datasink if true, otherwise use HTTP.
  *                             Supported values:
  *                             <ul>
  *                                 <li>@ref gpudb::create_datasink_true
@@ -13608,22 +14636,22 @@ CreateDatasinkResponse createDatasink( const std::string& name,
  *                     <ul>
  *                         <li>@ref gpudb::create_datasink_connection_timeout
  *                             "create_datasink_connection_timeout": Timeout in
- *                             seconds for connecting to this data sink
+ *                             seconds for connecting to this data sink.
  *                         <li>@ref gpudb::create_datasink_wait_timeout
  *                             "create_datasink_wait_timeout": Timeout in
  *                             seconds for waiting for a response from this
- *                             data sink
+ *                             data sink.
  *                         <li>@ref gpudb::create_datasink_credential
  *                             "create_datasink_credential": Name of the <a
  *                             href="../../../concepts/credentials/"
  *                             target="_top">credential</a> object to be used
- *                             in this data sink
+ *                             in this data sink.
  *                         <li>@ref gpudb::create_datasink_s3_bucket_name
  *                             "create_datasink_s3_bucket_name": Name of the
- *                             Amazon S3 bucket to use as the data sink
+ *                             Amazon S3 bucket to use as the data sink.
  *                         <li>@ref gpudb::create_datasink_s3_region
  *                             "create_datasink_s3_region": Name of the Amazon
- *                             S3 region where the given bucket is located
+ *                             S3 region where the given bucket is located.
  *                         <li>@ref gpudb::create_datasink_s3_verify_ssl
  *                             "create_datasink_s3_verify_ssl": Whether to
  *                             verify SSL connections.
@@ -13631,7 +14659,7 @@ CreateDatasinkResponse createDatasink( const std::string& name,
  *                             <ul>
  *                                 <li>@ref gpudb::create_datasink_true
  *                                     "create_datasink_true": Connect with SSL
- *                                     verification
+ *                                     verification.
  *                                 <li>@ref gpudb::create_datasink_false
  *                                     "create_datasink_false": Connect without
  *                                     verifying the SSL connection; for
@@ -13664,22 +14692,22 @@ CreateDatasinkResponse createDatasink( const std::string& name,
  *                         <li>@ref gpudb::create_datasink_s3_aws_role_arn
  *                             "create_datasink_s3_aws_role_arn": Amazon IAM
  *                             Role ARN which has required S3 permissions that
- *                             can be assumed for the given S3 IAM user
+ *                             can be assumed for the given S3 IAM user.
  *                         <li>@ref
  *                             gpudb::create_datasink_s3_encryption_customer_algorithm
  *                             "create_datasink_s3_encryption_customer_algorithm":
  *                             Customer encryption algorithm used encrypting
- *                             data
+ *                             data.
  *                         <li>@ref
  *                             gpudb::create_datasink_s3_encryption_customer_key
  *                             "create_datasink_s3_encryption_customer_key":
  *                             Customer encryption key to encrypt or decrypt
- *                             data
+ *                             data.
  *                         <li>@ref gpudb::create_datasink_s3_encryption_type
  *                             "create_datasink_s3_encryption_type": Server
- *                             side encryption type
+ *                             side encryption type.
  *                         <li>@ref gpudb::create_datasink_s3_kms_key_id
- *                             "create_datasink_s3_kms_key_id": KMS key
+ *                             "create_datasink_s3_kms_key_id": KMS key.
  *                         <li>@ref gpudb::create_datasink_hdfs_kerberos_keytab
  *                             "create_datasink_hdfs_kerberos_keytab": Kerberos
  *                             keytab file location for the given HDFS user.
@@ -13687,7 +14715,7 @@ CreateDatasinkResponse createDatasink( const std::string& name,
  *                         <li>@ref
  *                             gpudb::create_datasink_hdfs_delegation_token
  *                             "create_datasink_hdfs_delegation_token":
- *                             Delegation token for the given HDFS user
+ *                             Delegation token for the given HDFS user.
  *                         <li>@ref gpudb::create_datasink_hdfs_use_kerberos
  *                             "create_datasink_hdfs_use_kerberos": Use
  *                             kerberos authentication for the given HDFS
@@ -13707,44 +14735,64 @@ CreateDatasinkResponse createDatasink( const std::string& name,
  *                             "create_datasink_azure_storage_account_name":
  *                             Name of the Azure storage account to use as the
  *                             data sink, this is valid only if tenant_id is
- *                             specified
+ *                             specified.
  *                         <li>@ref gpudb::create_datasink_azure_container_name
  *                             "create_datasink_azure_container_name": Name of
  *                             the Azure storage container to use as the data
- *                             sink
+ *                             sink.
  *                         <li>@ref gpudb::create_datasink_azure_tenant_id
  *                             "create_datasink_azure_tenant_id": Active
- *                             Directory tenant ID (or directory ID)
+ *                             Directory tenant ID (or directory ID).
  *                         <li>@ref gpudb::create_datasink_azure_sas_token
  *                             "create_datasink_azure_sas_token": Shared access
  *                             signature token for Azure storage account to use
- *                             as the data sink
+ *                             as the data sink.
  *                         <li>@ref gpudb::create_datasink_azure_oauth_token
  *                             "create_datasink_azure_oauth_token": Oauth token
- *                             to access given storage container
+ *                             to access given storage container.
+ *                         <li>@ref
+ *                             gpudb::create_datasink_azure_use_virtual_addressing
+ *                             "create_datasink_azure_use_virtual_addressing":
+ *                             Whether to use virtual addressing when
+ *                             referencing the Azure source.
+ *                             Supported values:
+ *                             <ul>
+ *                                 <li>@ref gpudb::create_datasink_true
+ *                                     "create_datasink_true": The requests URI
+ *                                     should be specified in
+ *                                     virtual-hosted-style format where the
+ *                                     bucket name is part of the domain name
+ *                                     in the URL.
+ *                                 <li>@ref gpudb::create_datasink_false
+ *                                     "create_datasink_false": Use path-style
+ *                                     URI for requests.
+ *                             </ul>
+ *                             The default value is @ref
+ *                             gpudb::create_datasink_true
+ *                             "create_datasink_true".
  *                         <li>@ref gpudb::create_datasink_gcs_bucket_name
  *                             "create_datasink_gcs_bucket_name": Name of the
  *                             Google Cloud Storage bucket to use as the data
- *                             sink
+ *                             sink.
  *                         <li>@ref gpudb::create_datasink_gcs_project_id
  *                             "create_datasink_gcs_project_id": Name of the
- *                             Google Cloud project to use as the data sink
+ *                             Google Cloud project to use as the data sink.
  *                         <li>@ref
  *                             gpudb::create_datasink_gcs_service_account_keys
  *                             "create_datasink_gcs_service_account_keys":
  *                             Google Cloud service account keys to use for
- *                             authenticating the data sink
+ *                             authenticating the data sink.
  *                         <li>@ref gpudb::create_datasink_jdbc_driver_jar_path
  *                             "create_datasink_jdbc_driver_jar_path": JDBC
- *                             driver jar file location
+ *                             driver jar file location.
  *                         <li>@ref
  *                             gpudb::create_datasink_jdbc_driver_class_name
  *                             "create_datasink_jdbc_driver_class_name": Name
- *                             of the JDBC driver class
+ *                             of the JDBC driver class.
  *                         <li>@ref gpudb::create_datasink_kafka_topic_name
  *                             "create_datasink_kafka_topic_name": Name of the
  *                             Kafka topic to publish to if @a destination is a
- *                             Kafka broker
+ *                             Kafka broker.
  *                         <li>@ref gpudb::create_datasink_max_batch_size
  *                             "create_datasink_max_batch_size": Maximum number
  *                             of records per notification message. The default
@@ -13760,10 +14808,10 @@ CreateDatasinkResponse createDatasink( const std::string& name,
  *                             <ul>
  *                                 <li>@ref gpudb::create_datasink_flat
  *                                     "create_datasink_flat": A single record
- *                                     is returned per message
+ *                                     is returned per message.
  *                                 <li>@ref gpudb::create_datasink_nested
  *                                     "create_datasink_nested": Records are
- *                                     returned as an array per message
+ *                                     returned as an array per message.
  *                             </ul>
  *                             The default value is @ref
  *                             gpudb::create_datasink_flat
@@ -13785,8 +14833,8 @@ CreateDatasinkResponse createDatasink( const std::string& name,
  *                             gpudb::create_datasink_false
  *                             "create_datasink_false".
  *                         <li>@ref gpudb::create_datasink_use_https
- *                             "create_datasink_use_https": Use https to
- *                             connect to datasink if true, otherwise use http.
+ *                             "create_datasink_use_https": Use HTTPS to
+ *                             connect to datasink if true, otherwise use HTTP.
  *                             Supported values:
  *                             <ul>
  *                                 <li>@ref gpudb::create_datasink_true
@@ -13862,9 +14910,9 @@ CreateDatasourceResponse& createDatasource( const CreateDatasourceRequest& reque
  *                      'storage_provider_type://[storage_path[:storage_port]]'
  *                      format.  Supported storage provider types are 'azure',
  *                      'gcs', 'hdfs', 'jdbc', 'kafka', 'confluent', and 's3'.
- * @param[in] userName  Name of the remote system user; may be an empty string
+ * @param[in] userName  Name of the remote system user; may be an empty string.
  * @param[in] password  Password for the remote system user; may be an empty
- *                      string
+ *                      string.
  * @param[in] options  Optional parameters.
  *                     <ul>
  *                         <li>@ref gpudb::create_datasource_skip_validation
@@ -13883,22 +14931,22 @@ CreateDatasourceResponse& createDatasource( const CreateDatasourceRequest& reque
  *                         <li>@ref gpudb::create_datasource_connection_timeout
  *                             "create_datasource_connection_timeout": Timeout
  *                             in seconds for connecting to this storage
- *                             provider
+ *                             provider.
  *                         <li>@ref gpudb::create_datasource_wait_timeout
  *                             "create_datasource_wait_timeout": Timeout in
- *                             seconds for reading from this storage provider
+ *                             seconds for reading from this storage provider.
  *                         <li>@ref gpudb::create_datasource_credential
  *                             "create_datasource_credential": Name of the <a
  *                             href="../../../concepts/credentials"
  *                             target="_top">credential</a> object to be used
- *                             in data source
+ *                             in data source.
  *                         <li>@ref gpudb::create_datasource_s3_bucket_name
  *                             "create_datasource_s3_bucket_name": Name of the
- *                             Amazon S3 bucket to use as the data source
+ *                             Amazon S3 bucket to use as the data source.
  *                         <li>@ref gpudb::create_datasource_s3_region
  *                             "create_datasource_s3_region": Name of the
  *                             Amazon S3 region where the given bucket is
- *                             located
+ *                             located.
  *                         <li>@ref gpudb::create_datasource_s3_verify_ssl
  *                             "create_datasource_s3_verify_ssl": Whether to
  *                             verify SSL connections.
@@ -13906,7 +14954,7 @@ CreateDatasourceResponse& createDatasource( const CreateDatasourceRequest& reque
  *                             <ul>
  *                                 <li>@ref gpudb::create_datasource_true
  *                                     "create_datasource_true": Connect with
- *                                     SSL verification
+ *                                     SSL verification.
  *                                 <li>@ref gpudb::create_datasource_false
  *                                     "create_datasource_false": Connect
  *                                     without verifying the SSL connection;
@@ -13939,17 +14987,17 @@ CreateDatasourceResponse& createDatasource( const CreateDatasourceRequest& reque
  *                         <li>@ref gpudb::create_datasource_s3_aws_role_arn
  *                             "create_datasource_s3_aws_role_arn": Amazon IAM
  *                             Role ARN which has required S3 permissions that
- *                             can be assumed for the given S3 IAM user
+ *                             can be assumed for the given S3 IAM user.
  *                         <li>@ref
  *                             gpudb::create_datasource_s3_encryption_customer_algorithm
  *                             "create_datasource_s3_encryption_customer_algorithm":
  *                             Customer encryption algorithm used encrypting
- *                             data
+ *                             data.
  *                         <li>@ref
  *                             gpudb::create_datasource_s3_encryption_customer_key
  *                             "create_datasource_s3_encryption_customer_key":
  *                             Customer encryption key to encrypt or decrypt
- *                             data
+ *                             data.
  *                         <li>@ref
  *                             gpudb::create_datasource_hdfs_kerberos_keytab
  *                             "create_datasource_hdfs_kerberos_keytab":
@@ -13958,7 +15006,7 @@ CreateDatasourceResponse& createDatasource( const CreateDatasourceRequest& reque
  *                         <li>@ref
  *                             gpudb::create_datasource_hdfs_delegation_token
  *                             "create_datasource_hdfs_delegation_token":
- *                             Delegation token for the given HDFS user
+ *                             Delegation token for the given HDFS user.
  *                         <li>@ref gpudb::create_datasource_hdfs_use_kerberos
  *                             "create_datasource_hdfs_use_kerberos": Use
  *                             kerberos authentication for the given HDFS
@@ -13978,34 +15026,54 @@ CreateDatasourceResponse& createDatasource( const CreateDatasourceRequest& reque
  *                             "create_datasource_azure_storage_account_name":
  *                             Name of the Azure storage account to use as the
  *                             data source, this is valid only if tenant_id is
- *                             specified
+ *                             specified.
  *                         <li>@ref
  *                             gpudb::create_datasource_azure_container_name
  *                             "create_datasource_azure_container_name": Name
  *                             of the Azure storage container to use as the
- *                             data source
+ *                             data source.
  *                         <li>@ref gpudb::create_datasource_azure_tenant_id
  *                             "create_datasource_azure_tenant_id": Active
- *                             Directory tenant ID (or directory ID)
+ *                             Directory tenant ID (or directory ID).
  *                         <li>@ref gpudb::create_datasource_azure_sas_token
  *                             "create_datasource_azure_sas_token": Shared
  *                             access signature token for Azure storage account
- *                             to use as the data source
+ *                             to use as the data source.
  *                         <li>@ref gpudb::create_datasource_azure_oauth_token
  *                             "create_datasource_azure_oauth_token": OAuth
- *                             token to access given storage container
+ *                             token to access given storage container.
+ *                         <li>@ref
+ *                             gpudb::create_datasource_azure_use_virtual_addressing
+ *                             "create_datasource_azure_use_virtual_addressing":
+ *                             Whether to use virtual addressing when
+ *                             referencing the Azure source.
+ *                             Supported values:
+ *                             <ul>
+ *                                 <li>@ref gpudb::create_datasource_true
+ *                                     "create_datasource_true": The requests
+ *                                     URI should be specified in
+ *                                     virtual-hosted-style format where the
+ *                                     bucket name is part of the domain name
+ *                                     in the URL.
+ *                                 <li>@ref gpudb::create_datasource_false
+ *                                     "create_datasource_false": Use
+ *                                     path-style URI for requests.
+ *                             </ul>
+ *                             The default value is @ref
+ *                             gpudb::create_datasource_true
+ *                             "create_datasource_true".
  *                         <li>@ref gpudb::create_datasource_gcs_bucket_name
  *                             "create_datasource_gcs_bucket_name": Name of the
  *                             Google Cloud Storage bucket to use as the data
- *                             source
+ *                             source.
  *                         <li>@ref gpudb::create_datasource_gcs_project_id
  *                             "create_datasource_gcs_project_id": Name of the
- *                             Google Cloud project to use as the data source
+ *                             Google Cloud project to use as the data source.
  *                         <li>@ref
  *                             gpudb::create_datasource_gcs_service_account_keys
  *                             "create_datasource_gcs_service_account_keys":
  *                             Google Cloud service account keys to use for
- *                             authenticating the data source
+ *                             authenticating the data source.
  *                         <li>@ref gpudb::create_datasource_is_stream
  *                             "create_datasource_is_stream": To load from
  *                             Azure/GCS/S3 as a stream continuously.
@@ -14021,7 +15089,7 @@ CreateDatasourceResponse& createDatasource( const CreateDatasourceRequest& reque
  *                             "create_datasource_false".
  *                         <li>@ref gpudb::create_datasource_kafka_topic_name
  *                             "create_datasource_kafka_topic_name": Name of
- *                             the Kafka topic to use as the data source
+ *                             the Kafka topic to use as the data source.
  *                         <li>@ref
  *                             gpudb::create_datasource_jdbc_driver_jar_path
  *                             "create_datasource_jdbc_driver_jar_path": JDBC
@@ -14030,7 +15098,7 @@ CreateDatasourceResponse& createDatasource( const CreateDatasourceRequest& reque
  *                         <li>@ref
  *                             gpudb::create_datasource_jdbc_driver_class_name
  *                             "create_datasource_jdbc_driver_class_name": Name
- *                             of the JDBC driver class
+ *                             of the JDBC driver class.
  *                         <li>@ref gpudb::create_datasource_anonymous
  *                             "create_datasource_anonymous": Use anonymous
  *                             connection to storage provider--DEPRECATED: this
@@ -14064,9 +15132,9 @@ CreateDatasourceResponse& createDatasource( const CreateDatasourceRequest& reque
  *                             gpudb::create_datasource_false
  *                             "create_datasource_false".
  *                         <li>@ref gpudb::create_datasource_use_https
- *                             "create_datasource_use_https": Use https to
+ *                             "create_datasource_use_https": Use HTTPS to
  *                             connect to datasource if true, otherwise use
- *                             http.
+ *                             HTTP.
  *                             Supported values:
  *                             <ul>
  *                                 <li>@ref gpudb::create_datasource_true
@@ -14096,12 +15164,12 @@ CreateDatasourceResponse& createDatasource( const CreateDatasourceRequest& reque
  *                             gpudb::create_datasource_schema_registry_connection_retries
  *                             "create_datasource_schema_registry_connection_retries":
  *                             Confluent Schema registry connection timeout (in
- *                             Secs)
+ *                             secs).
  *                         <li>@ref
  *                             gpudb::create_datasource_schema_registry_connection_timeout
  *                             "create_datasource_schema_registry_connection_timeout":
  *                             Confluent Schema registry connection timeout (in
- *                             Secs)
+ *                             secs).
  *                     </ul>
  *                     The default value is an empty map.
  *
@@ -14124,9 +15192,9 @@ CreateDatasourceResponse createDatasource( const std::string& name,
  *                      'storage_provider_type://[storage_path[:storage_port]]'
  *                      format.  Supported storage provider types are 'azure',
  *                      'gcs', 'hdfs', 'jdbc', 'kafka', 'confluent', and 's3'.
- * @param[in] userName  Name of the remote system user; may be an empty string
+ * @param[in] userName  Name of the remote system user; may be an empty string.
  * @param[in] password  Password for the remote system user; may be an empty
- *                      string
+ *                      string.
  * @param[in] options  Optional parameters.
  *                     <ul>
  *                         <li>@ref gpudb::create_datasource_skip_validation
@@ -14145,22 +15213,22 @@ CreateDatasourceResponse createDatasource( const std::string& name,
  *                         <li>@ref gpudb::create_datasource_connection_timeout
  *                             "create_datasource_connection_timeout": Timeout
  *                             in seconds for connecting to this storage
- *                             provider
+ *                             provider.
  *                         <li>@ref gpudb::create_datasource_wait_timeout
  *                             "create_datasource_wait_timeout": Timeout in
- *                             seconds for reading from this storage provider
+ *                             seconds for reading from this storage provider.
  *                         <li>@ref gpudb::create_datasource_credential
  *                             "create_datasource_credential": Name of the <a
  *                             href="../../../concepts/credentials"
  *                             target="_top">credential</a> object to be used
- *                             in data source
+ *                             in data source.
  *                         <li>@ref gpudb::create_datasource_s3_bucket_name
  *                             "create_datasource_s3_bucket_name": Name of the
- *                             Amazon S3 bucket to use as the data source
+ *                             Amazon S3 bucket to use as the data source.
  *                         <li>@ref gpudb::create_datasource_s3_region
  *                             "create_datasource_s3_region": Name of the
  *                             Amazon S3 region where the given bucket is
- *                             located
+ *                             located.
  *                         <li>@ref gpudb::create_datasource_s3_verify_ssl
  *                             "create_datasource_s3_verify_ssl": Whether to
  *                             verify SSL connections.
@@ -14168,7 +15236,7 @@ CreateDatasourceResponse createDatasource( const std::string& name,
  *                             <ul>
  *                                 <li>@ref gpudb::create_datasource_true
  *                                     "create_datasource_true": Connect with
- *                                     SSL verification
+ *                                     SSL verification.
  *                                 <li>@ref gpudb::create_datasource_false
  *                                     "create_datasource_false": Connect
  *                                     without verifying the SSL connection;
@@ -14201,17 +15269,17 @@ CreateDatasourceResponse createDatasource( const std::string& name,
  *                         <li>@ref gpudb::create_datasource_s3_aws_role_arn
  *                             "create_datasource_s3_aws_role_arn": Amazon IAM
  *                             Role ARN which has required S3 permissions that
- *                             can be assumed for the given S3 IAM user
+ *                             can be assumed for the given S3 IAM user.
  *                         <li>@ref
  *                             gpudb::create_datasource_s3_encryption_customer_algorithm
  *                             "create_datasource_s3_encryption_customer_algorithm":
  *                             Customer encryption algorithm used encrypting
- *                             data
+ *                             data.
  *                         <li>@ref
  *                             gpudb::create_datasource_s3_encryption_customer_key
  *                             "create_datasource_s3_encryption_customer_key":
  *                             Customer encryption key to encrypt or decrypt
- *                             data
+ *                             data.
  *                         <li>@ref
  *                             gpudb::create_datasource_hdfs_kerberos_keytab
  *                             "create_datasource_hdfs_kerberos_keytab":
@@ -14220,7 +15288,7 @@ CreateDatasourceResponse createDatasource( const std::string& name,
  *                         <li>@ref
  *                             gpudb::create_datasource_hdfs_delegation_token
  *                             "create_datasource_hdfs_delegation_token":
- *                             Delegation token for the given HDFS user
+ *                             Delegation token for the given HDFS user.
  *                         <li>@ref gpudb::create_datasource_hdfs_use_kerberos
  *                             "create_datasource_hdfs_use_kerberos": Use
  *                             kerberos authentication for the given HDFS
@@ -14240,34 +15308,54 @@ CreateDatasourceResponse createDatasource( const std::string& name,
  *                             "create_datasource_azure_storage_account_name":
  *                             Name of the Azure storage account to use as the
  *                             data source, this is valid only if tenant_id is
- *                             specified
+ *                             specified.
  *                         <li>@ref
  *                             gpudb::create_datasource_azure_container_name
  *                             "create_datasource_azure_container_name": Name
  *                             of the Azure storage container to use as the
- *                             data source
+ *                             data source.
  *                         <li>@ref gpudb::create_datasource_azure_tenant_id
  *                             "create_datasource_azure_tenant_id": Active
- *                             Directory tenant ID (or directory ID)
+ *                             Directory tenant ID (or directory ID).
  *                         <li>@ref gpudb::create_datasource_azure_sas_token
  *                             "create_datasource_azure_sas_token": Shared
  *                             access signature token for Azure storage account
- *                             to use as the data source
+ *                             to use as the data source.
  *                         <li>@ref gpudb::create_datasource_azure_oauth_token
  *                             "create_datasource_azure_oauth_token": OAuth
- *                             token to access given storage container
+ *                             token to access given storage container.
+ *                         <li>@ref
+ *                             gpudb::create_datasource_azure_use_virtual_addressing
+ *                             "create_datasource_azure_use_virtual_addressing":
+ *                             Whether to use virtual addressing when
+ *                             referencing the Azure source.
+ *                             Supported values:
+ *                             <ul>
+ *                                 <li>@ref gpudb::create_datasource_true
+ *                                     "create_datasource_true": The requests
+ *                                     URI should be specified in
+ *                                     virtual-hosted-style format where the
+ *                                     bucket name is part of the domain name
+ *                                     in the URL.
+ *                                 <li>@ref gpudb::create_datasource_false
+ *                                     "create_datasource_false": Use
+ *                                     path-style URI for requests.
+ *                             </ul>
+ *                             The default value is @ref
+ *                             gpudb::create_datasource_true
+ *                             "create_datasource_true".
  *                         <li>@ref gpudb::create_datasource_gcs_bucket_name
  *                             "create_datasource_gcs_bucket_name": Name of the
  *                             Google Cloud Storage bucket to use as the data
- *                             source
+ *                             source.
  *                         <li>@ref gpudb::create_datasource_gcs_project_id
  *                             "create_datasource_gcs_project_id": Name of the
- *                             Google Cloud project to use as the data source
+ *                             Google Cloud project to use as the data source.
  *                         <li>@ref
  *                             gpudb::create_datasource_gcs_service_account_keys
  *                             "create_datasource_gcs_service_account_keys":
  *                             Google Cloud service account keys to use for
- *                             authenticating the data source
+ *                             authenticating the data source.
  *                         <li>@ref gpudb::create_datasource_is_stream
  *                             "create_datasource_is_stream": To load from
  *                             Azure/GCS/S3 as a stream continuously.
@@ -14283,7 +15371,7 @@ CreateDatasourceResponse createDatasource( const std::string& name,
  *                             "create_datasource_false".
  *                         <li>@ref gpudb::create_datasource_kafka_topic_name
  *                             "create_datasource_kafka_topic_name": Name of
- *                             the Kafka topic to use as the data source
+ *                             the Kafka topic to use as the data source.
  *                         <li>@ref
  *                             gpudb::create_datasource_jdbc_driver_jar_path
  *                             "create_datasource_jdbc_driver_jar_path": JDBC
@@ -14292,7 +15380,7 @@ CreateDatasourceResponse createDatasource( const std::string& name,
  *                         <li>@ref
  *                             gpudb::create_datasource_jdbc_driver_class_name
  *                             "create_datasource_jdbc_driver_class_name": Name
- *                             of the JDBC driver class
+ *                             of the JDBC driver class.
  *                         <li>@ref gpudb::create_datasource_anonymous
  *                             "create_datasource_anonymous": Use anonymous
  *                             connection to storage provider--DEPRECATED: this
@@ -14326,9 +15414,9 @@ CreateDatasourceResponse createDatasource( const std::string& name,
  *                             gpudb::create_datasource_false
  *                             "create_datasource_false".
  *                         <li>@ref gpudb::create_datasource_use_https
- *                             "create_datasource_use_https": Use https to
+ *                             "create_datasource_use_https": Use HTTPS to
  *                             connect to datasource if true, otherwise use
- *                             http.
+ *                             HTTP.
  *                             Supported values:
  *                             <ul>
  *                                 <li>@ref gpudb::create_datasource_true
@@ -14358,12 +15446,12 @@ CreateDatasourceResponse createDatasource( const std::string& name,
  *                             gpudb::create_datasource_schema_registry_connection_retries
  *                             "create_datasource_schema_registry_connection_retries":
  *                             Confluent Schema registry connection timeout (in
- *                             Secs)
+ *                             secs).
  *                         <li>@ref
  *                             gpudb::create_datasource_schema_registry_connection_timeout
  *                             "create_datasource_schema_registry_connection_timeout":
  *                             Confluent Schema registry connection timeout (in
- *                             Secs)
+ *                             secs).
  *                     </ul>
  *                     The default value is an empty map.
  * @param[out] response_  @ref gpudb::CreateDatasourceResponse "Response"
@@ -14586,7 +15674,7 @@ CreateEnvironmentResponse& createEnvironment( const std::string& environmentName
  * restrictions.
  *
  * IMPORTANT: It's highly recommended that you review the <a
- * href="../../../graph_solver/network_graph_solver/" target="_top">Graphs &
+ * href="../../../graph_solver/network_graph_solver/" target="_top">Graphs and
  * Solvers</a> concepts documentation, the <a
  * href="../../../guides/graph_rest_guide/" target="_top">Graph REST
  * Tutorial</a>, and/or some <a href="../../../guide-tags/graph/"
@@ -14605,7 +15693,7 @@ CreateGraphResponse createGraph( const CreateGraphRequest& request_ ) const;
  * restrictions.
  *
  * IMPORTANT: It's highly recommended that you review the <a
- * href="../../../graph_solver/network_graph_solver/" target="_top">Graphs &
+ * href="../../../graph_solver/network_graph_solver/" target="_top">Graphs and
  * Solvers</a> concepts documentation, the <a
  * href="../../../guides/graph_rest_guide/" target="_top">Graph REST
  * Tutorial</a>, and/or some <a href="../../../guide-tags/graph/"
@@ -14627,7 +15715,7 @@ CreateGraphResponse& createGraph( const CreateGraphRequest& request_,
  * restrictions.
  *
  * IMPORTANT: It's highly recommended that you review the <a
- * href="../../../graph_solver/network_graph_solver/" target="_top">Graphs &
+ * href="../../../graph_solver/network_graph_solver/" target="_top">Graphs and
  * Solvers</a> concepts documentation, the <a
  * href="../../../guides/graph_rest_guide/" target="_top">Graph REST
  * Tutorial</a>, and/or some <a href="../../../guide-tags/graph/"
@@ -14874,7 +15962,7 @@ CreateGraphResponse createGraph( const std::string& graphName,
  * restrictions.
  *
  * IMPORTANT: It's highly recommended that you review the <a
- * href="../../../graph_solver/network_graph_solver/" target="_top">Graphs &
+ * href="../../../graph_solver/network_graph_solver/" target="_top">Graphs and
  * Solvers</a> concepts documentation, the <a
  * href="../../../guides/graph_rest_guide/" target="_top">Graph REST
  * Tutorial</a>, and/or some <a href="../../../guide-tags/graph/"
@@ -15193,7 +16281,7 @@ CreateJobResponse& createJob( const CreateJobRequest& request_,
  *                             "create_job_job_tag": Tag to use for submitted
  *                             job. The same tag could be used on backup
  *                             cluster to retrieve response for the job. Tags
- *                             can use letter, numbers, '_' and '-'
+ *                             can use letter, numbers, '_' and '-'.
  *                     </ul>
  *                     The default value is an empty map.
  *
@@ -15249,7 +16337,7 @@ CreateJobResponse createJob( const std::string& endpoint,
  *                             "create_job_job_tag": Tag to use for submitted
  *                             job. The same tag could be used on backup
  *                             cluster to retrieve response for the job. Tags
- *                             can use letter, numbers, '_' and '-'
+ *                             can use letter, numbers, '_' and '-'.
  *                     </ul>
  *                     The default value is an empty map.
  * @param[out] response_  @ref gpudb::CreateJobResponse "Response" object
@@ -15373,19 +16461,6 @@ CreateJoinTableResponse& createJoinTable( const CreateJoinTableRequest& request_
  *                             gpudb::create_join_table_max_query_dimensions
  *                             "create_join_table_max_query_dimensions": No
  *                             longer used.
- *                         <li>@ref gpudb::create_join_table_optimize_lookups
- *                             "create_join_table_optimize_lookups": Use more
- *                             memory to speed up the joining of tables.
- *                             Supported values:
- *                             <ul>
- *                                 <li>@ref gpudb::create_join_table_true
- *                                     "create_join_table_true"
- *                                 <li>@ref gpudb::create_join_table_false
- *                                     "create_join_table_false"
- *                             </ul>
- *                             The default value is @ref
- *                             gpudb::create_join_table_false
- *                             "create_join_table_false".
  *                         <li>@ref
  *                             gpudb::create_join_table_strategy_definition
  *                             "create_join_table_strategy_definition": The <a
@@ -15398,7 +16473,7 @@ CreateJoinTableResponse& createJoinTable( const CreateJoinTableRequest& request_
  *                             target="_top">TTL</a> of the join table
  *                             specified in @a joinTableName.
  *                         <li>@ref gpudb::create_join_table_view_id
- *                             "create_join_table_view_id": view this
+ *                             "create_join_table_view_id": View this
  *                             projection is part of. The default value is ''.
  *                         <li>@ref gpudb::create_join_table_no_count
  *                             "create_join_table_no_count": Return a count of
@@ -15410,7 +16485,7 @@ CreateJoinTableResponse& createJoinTable( const CreateJoinTableRequest& request_
  *                         <li>@ref gpudb::create_join_table_chunk_size
  *                             "create_join_table_chunk_size": Maximum number
  *                             of records per joined-chunk for this table.
- *                             Defaults to the gpudb.conf file chunk size
+ *                             Defaults to the gpudb.conf file chunk size.
  *                         <li>@ref
  *                             gpudb::create_join_table_enable_virtual_chunking
  *                             "create_join_table_enable_virtual_chunking":
@@ -15434,7 +16509,7 @@ CreateJoinTableResponse& createJoinTable( const CreateJoinTableRequest& request_
  *                         <li>@ref
  *                             gpudb::create_join_table_enable_sparse_virtual_chunking
  *                             "create_join_table_enable_sparse_virtual_chunking":
- *                             materialize virtual chunks with only non-deleted
+ *                             Materialize virtual chunks with only non-deleted
  *                             values. The default value is 'false'.
  *                         <li>@ref
  *                             gpudb::create_join_table_enable_equi_join_lazy_result_store
@@ -15443,7 +16518,7 @@ CreateJoinTableResponse& createJoinTable( const CreateJoinTableRequest& request_
  *                             computation of one side of a multichunk
  *                             equi-join.  Reduces computation but also reduces
  *                             parallelism to the number of chunks on the other
- *                             side of the equi-join
+ *                             side of the equi-join.
  *                         <li>@ref
  *                             gpudb::create_join_table_enable_predicate_equi_join_lazy_result_store
  *                             "create_join_table_enable_predicate_equi_join_lazy_result_store":
@@ -15451,12 +16526,12 @@ CreateJoinTableResponse& createJoinTable( const CreateJoinTableRequest& request_
  *                             computation of one side of a multichunk
  *                             predicate-equi-join. Reduces computation but
  *                             also reduces parallelism to the number of chunks
- *                             on the other side of the equi-join
+ *                             on the other side of the equi-join.
  *                         <li>@ref
  *                             gpudb::create_join_table_enable_pk_equi_join
  *                             "create_join_table_enable_pk_equi_join": Use
  *                             equi-join to do primary key joins rather than
- *                             using primary-key-index
+ *                             using primary key index.
  *                     </ul>
  *                     The default value is an empty map.
  *
@@ -15542,19 +16617,6 @@ CreateJoinTableResponse createJoinTable( const std::string& joinTableName,
  *                             gpudb::create_join_table_max_query_dimensions
  *                             "create_join_table_max_query_dimensions": No
  *                             longer used.
- *                         <li>@ref gpudb::create_join_table_optimize_lookups
- *                             "create_join_table_optimize_lookups": Use more
- *                             memory to speed up the joining of tables.
- *                             Supported values:
- *                             <ul>
- *                                 <li>@ref gpudb::create_join_table_true
- *                                     "create_join_table_true"
- *                                 <li>@ref gpudb::create_join_table_false
- *                                     "create_join_table_false"
- *                             </ul>
- *                             The default value is @ref
- *                             gpudb::create_join_table_false
- *                             "create_join_table_false".
  *                         <li>@ref
  *                             gpudb::create_join_table_strategy_definition
  *                             "create_join_table_strategy_definition": The <a
@@ -15567,7 +16629,7 @@ CreateJoinTableResponse createJoinTable( const std::string& joinTableName,
  *                             target="_top">TTL</a> of the join table
  *                             specified in @a joinTableName.
  *                         <li>@ref gpudb::create_join_table_view_id
- *                             "create_join_table_view_id": view this
+ *                             "create_join_table_view_id": View this
  *                             projection is part of. The default value is ''.
  *                         <li>@ref gpudb::create_join_table_no_count
  *                             "create_join_table_no_count": Return a count of
@@ -15579,7 +16641,7 @@ CreateJoinTableResponse createJoinTable( const std::string& joinTableName,
  *                         <li>@ref gpudb::create_join_table_chunk_size
  *                             "create_join_table_chunk_size": Maximum number
  *                             of records per joined-chunk for this table.
- *                             Defaults to the gpudb.conf file chunk size
+ *                             Defaults to the gpudb.conf file chunk size.
  *                         <li>@ref
  *                             gpudb::create_join_table_enable_virtual_chunking
  *                             "create_join_table_enable_virtual_chunking":
@@ -15603,7 +16665,7 @@ CreateJoinTableResponse createJoinTable( const std::string& joinTableName,
  *                         <li>@ref
  *                             gpudb::create_join_table_enable_sparse_virtual_chunking
  *                             "create_join_table_enable_sparse_virtual_chunking":
- *                             materialize virtual chunks with only non-deleted
+ *                             Materialize virtual chunks with only non-deleted
  *                             values. The default value is 'false'.
  *                         <li>@ref
  *                             gpudb::create_join_table_enable_equi_join_lazy_result_store
@@ -15612,7 +16674,7 @@ CreateJoinTableResponse createJoinTable( const std::string& joinTableName,
  *                             computation of one side of a multichunk
  *                             equi-join.  Reduces computation but also reduces
  *                             parallelism to the number of chunks on the other
- *                             side of the equi-join
+ *                             side of the equi-join.
  *                         <li>@ref
  *                             gpudb::create_join_table_enable_predicate_equi_join_lazy_result_store
  *                             "create_join_table_enable_predicate_equi_join_lazy_result_store":
@@ -15620,12 +16682,12 @@ CreateJoinTableResponse createJoinTable( const std::string& joinTableName,
  *                             computation of one side of a multichunk
  *                             predicate-equi-join. Reduces computation but
  *                             also reduces parallelism to the number of chunks
- *                             on the other side of the equi-join
+ *                             on the other side of the equi-join.
  *                         <li>@ref
  *                             gpudb::create_join_table_enable_pk_equi_join
  *                             "create_join_table_enable_pk_equi_join": Use
  *                             equi-join to do primary key joins rather than
- *                             using primary-key-index
+ *                             using primary key index.
  *                     </ul>
  *                     The default value is an empty map.
  * @param[out] response_  @ref gpudb::CreateJoinTableResponse "Response" object
@@ -15720,7 +16782,7 @@ CreateMaterializedViewResponse& createMaterializedView( const CreateMaterialized
  *                             automatically created.
  *                         <li>@ref gpudb::create_materialized_view_execute_as
  *                             "create_materialized_view_execute_as": User name
- *                             to use to run the refresh job
+ *                             to use to run the refresh job.
  *                         <li>@ref
  *                             gpudb::create_materialized_view_build_materialized_view_policy
  *                             "create_materialized_view_build_materialized_view_policy":
@@ -15777,10 +16839,34 @@ CreateMaterializedViewResponse& createMaterializedView( const CreateMaterialized
  *                             gpudb::create_materialized_view_false
  *                             "create_materialized_view_false".
  *                         <li>@ref
+ *                             gpudb::create_materialized_view_enable_mv_input_wrappers
+ *                             "create_materialized_view_enable_mv_input_wrappers":
+ *                             If @ref gpudb::create_materialized_view_true
+ *                             "true", each base table the view reads is
+ *                             accessed through a wrapper view so an
+ *                             in-progress out-of-place update cannot make a
+ *                             record momentarily disappear from the view, and
+ *                             a long refresh does not block updates to the
+ *                             base tables.  Overrides the
+ *                             {gaia.enable_mv_input_wrappers} configuration
+ *                             default when set.
+ *                             Supported values:
+ *                             <ul>
+ *                                 <li>@ref
+ *                                     gpudb::create_materialized_view_true
+ *                                     "create_materialized_view_true"
+ *                                 <li>@ref
+ *                                     gpudb::create_materialized_view_false
+ *                                     "create_materialized_view_false"
+ *                             </ul>
+ *                             The default value is @ref
+ *                             gpudb::create_materialized_view_false
+ *                             "create_materialized_view_false".
+ *                         <li>@ref
  *                             gpudb::create_materialized_view_refresh_span
  *                             "create_materialized_view_refresh_span": Sets
  *                             the future time-offset(in seconds) at which
- *                             periodic refresh stops
+ *                             periodic refresh stops.
  *                         <li>@ref
  *                             gpudb::create_materialized_view_refresh_stop_time
  *                             "create_materialized_view_refresh_stop_time":
@@ -15807,7 +16893,7 @@ CreateMaterializedViewResponse& createMaterializedView( const CreateMaterialized
  *                                     requested by calling @ref
  *                                     alterTable(const std::string&, const std::string&, const std::string&, const std::map<std::string, std::string>&) const
  *                                     "alterTable" with an 'action' of
- *                                     'refresh'
+ *                                     'refresh'.
  *                                 <li>@ref
  *                                     gpudb::create_materialized_view_on_query
  *                                     "create_materialized_view_on_query":
@@ -15827,7 +16913,7 @@ CreateMaterializedViewResponse& createMaterializedView( const CreateMaterialized
  *                                     Refresh table periodically at rate
  *                                     specified by @ref
  *                                     gpudb::create_materialized_view_refresh_period
- *                                     "refresh_period"
+ *                                     "refresh_period".
  *                             </ul>
  *                             The default value is @ref
  *                             gpudb::create_materialized_view_manual
@@ -15840,7 +16926,7 @@ CreateMaterializedViewResponse& createMaterializedView( const CreateMaterialized
  *                             "refresh_method" is @ref
  *                             gpudb::create_materialized_view_periodic
  *                             "periodic", specifies the period in seconds at
- *                             which refresh occurs
+ *                             which refresh occurs.
  *                         <li>@ref
  *                             gpudb::create_materialized_view_refresh_start_time
  *                             "create_materialized_view_refresh_start_time":
@@ -15900,7 +16986,7 @@ CreateMaterializedViewResponse createMaterializedView( const std::string& tableN
  *                             automatically created.
  *                         <li>@ref gpudb::create_materialized_view_execute_as
  *                             "create_materialized_view_execute_as": User name
- *                             to use to run the refresh job
+ *                             to use to run the refresh job.
  *                         <li>@ref
  *                             gpudb::create_materialized_view_build_materialized_view_policy
  *                             "create_materialized_view_build_materialized_view_policy":
@@ -15957,10 +17043,34 @@ CreateMaterializedViewResponse createMaterializedView( const std::string& tableN
  *                             gpudb::create_materialized_view_false
  *                             "create_materialized_view_false".
  *                         <li>@ref
+ *                             gpudb::create_materialized_view_enable_mv_input_wrappers
+ *                             "create_materialized_view_enable_mv_input_wrappers":
+ *                             If @ref gpudb::create_materialized_view_true
+ *                             "true", each base table the view reads is
+ *                             accessed through a wrapper view so an
+ *                             in-progress out-of-place update cannot make a
+ *                             record momentarily disappear from the view, and
+ *                             a long refresh does not block updates to the
+ *                             base tables.  Overrides the
+ *                             {gaia.enable_mv_input_wrappers} configuration
+ *                             default when set.
+ *                             Supported values:
+ *                             <ul>
+ *                                 <li>@ref
+ *                                     gpudb::create_materialized_view_true
+ *                                     "create_materialized_view_true"
+ *                                 <li>@ref
+ *                                     gpudb::create_materialized_view_false
+ *                                     "create_materialized_view_false"
+ *                             </ul>
+ *                             The default value is @ref
+ *                             gpudb::create_materialized_view_false
+ *                             "create_materialized_view_false".
+ *                         <li>@ref
  *                             gpudb::create_materialized_view_refresh_span
  *                             "create_materialized_view_refresh_span": Sets
  *                             the future time-offset(in seconds) at which
- *                             periodic refresh stops
+ *                             periodic refresh stops.
  *                         <li>@ref
  *                             gpudb::create_materialized_view_refresh_stop_time
  *                             "create_materialized_view_refresh_stop_time":
@@ -15987,7 +17097,7 @@ CreateMaterializedViewResponse createMaterializedView( const std::string& tableN
  *                                     requested by calling @ref
  *                                     alterTable(const std::string&, const std::string&, const std::string&, const std::map<std::string, std::string>&) const
  *                                     "alterTable" with an 'action' of
- *                                     'refresh'
+ *                                     'refresh'.
  *                                 <li>@ref
  *                                     gpudb::create_materialized_view_on_query
  *                                     "create_materialized_view_on_query":
@@ -16007,7 +17117,7 @@ CreateMaterializedViewResponse createMaterializedView( const std::string& tableN
  *                                     Refresh table periodically at rate
  *                                     specified by @ref
  *                                     gpudb::create_materialized_view_refresh_period
- *                                     "refresh_period"
+ *                                     "refresh_period".
  *                             </ul>
  *                             The default value is @ref
  *                             gpudb::create_materialized_view_manual
@@ -16020,7 +17130,7 @@ CreateMaterializedViewResponse createMaterializedView( const std::string& tableN
  *                             "refresh_method" is @ref
  *                             gpudb::create_materialized_view_periodic
  *                             "periodic", specifies the period in seconds at
- *                             which refresh occurs
+ *                             which refresh occurs.
  *                         <li>@ref
  *                             gpudb::create_materialized_view_refresh_start_time
  *                             "create_materialized_view_refresh_start_time":
@@ -16649,6 +17759,17 @@ CreateProjectionResponse& createProjection( const CreateProjectionRequest& reque
  *                             bytes), then window functions which require a
  *                             reshard will be computed separately and joined
  *                             back together. The default value is ''.
+ *                         <li>@ref gpudb::create_projection_qualify_filter
+ *                             "create_projection_qualify_filter": An optional
+ *                             filter <a href="../../../concepts/expressions/"
+ *                             target="_top">expression</a> applied to the
+ *                             projection after window function evaluation,
+ *                             equivalent to a SQL QUALIFY clause.  May
+ *                             reference window function aliases as well as any
+ *                             other column in the projection.  Rows for which
+ *                             the expression evaluates to false (or NULL) are
+ *                             removed from the projection. The default value
+ *                             is ''.
  *                     </ul>
  *                     The default value is an empty map.
  *
@@ -16977,6 +18098,17 @@ CreateProjectionResponse createProjection( const std::string& tableName,
  *                             bytes), then window functions which require a
  *                             reshard will be computed separately and joined
  *                             back together. The default value is ''.
+ *                         <li>@ref gpudb::create_projection_qualify_filter
+ *                             "create_projection_qualify_filter": An optional
+ *                             filter <a href="../../../concepts/expressions/"
+ *                             target="_top">expression</a> applied to the
+ *                             projection after window function evaluation,
+ *                             equivalent to a SQL QUALIFY clause.  May
+ *                             reference window function aliases as well as any
+ *                             other column in the projection.  Rows for which
+ *                             the expression evaluates to false (or NULL) are
+ *                             removed from the projection. The default value
+ *                             is ''.
  *                     </ul>
  *                     The default value is an empty map.
  * @param[out] response_  @ref gpudb::CreateProjectionResponse "Response"
@@ -17025,7 +18157,7 @@ CreateResourceGroupResponse& createResourceGroup( const CreateResourceGroupReque
  * @param[in] tierAttributes  Optional map containing tier names and their
  *                            respective attribute group limits.  The only
  *                            valid attribute limit that can be set is
- *                            max_memory (in bytes) for the VRAM & RAM tiers.
+ *                            max_memory (in bytes) for the VRAM and RAM tiers.
  *                            For instance, to set max VRAM capacity to 1GB per
  *                            rank per GPU and max RAM capacity to 10GB per
  *                            rank, use:  {'VRAM':{'max_memory':'1000000000'},
@@ -17046,18 +18178,19 @@ CreateResourceGroupResponse& createResourceGroup( const CreateResourceGroupReque
  *                     <ul>
  *                         <li>@ref gpudb::create_resource_group_first
  *                             "create_resource_group_first": Make this
- *                             resource group the new first one in the ordering
+ *                             resource group the new first one in the
+ *                             ordering.
  *                         <li>@ref gpudb::create_resource_group_last
  *                             "create_resource_group_last": Make this resource
- *                             group the new last one in the ordering
+ *                             group the new last one in the ordering.
  *                         <li>@ref gpudb::create_resource_group_before
  *                             "create_resource_group_before": Place this
  *                             resource group before the one specified by @a
- *                             adjoiningResourceGroup in the ordering
+ *                             adjoiningResourceGroup in the ordering.
  *                         <li>@ref gpudb::create_resource_group_after
  *                             "create_resource_group_after": Place this
  *                             resource group after the one specified by @a
- *                             adjoiningResourceGroup in the ordering
+ *                             adjoiningResourceGroup in the ordering.
  *                     </ul>
  * @param[in] adjoiningResourceGroup  If @a ranking is @ref
  *                                    gpudb::create_resource_group_before
@@ -17114,7 +18247,7 @@ CreateResourceGroupResponse createResourceGroup( const std::string& name,
  * @param[in] tierAttributes  Optional map containing tier names and their
  *                            respective attribute group limits.  The only
  *                            valid attribute limit that can be set is
- *                            max_memory (in bytes) for the VRAM & RAM tiers.
+ *                            max_memory (in bytes) for the VRAM and RAM tiers.
  *                            For instance, to set max VRAM capacity to 1GB per
  *                            rank per GPU and max RAM capacity to 10GB per
  *                            rank, use:  {'VRAM':{'max_memory':'1000000000'},
@@ -17135,18 +18268,19 @@ CreateResourceGroupResponse createResourceGroup( const std::string& name,
  *                     <ul>
  *                         <li>@ref gpudb::create_resource_group_first
  *                             "create_resource_group_first": Make this
- *                             resource group the new first one in the ordering
+ *                             resource group the new first one in the
+ *                             ordering.
  *                         <li>@ref gpudb::create_resource_group_last
  *                             "create_resource_group_last": Make this resource
- *                             group the new last one in the ordering
+ *                             group the new last one in the ordering.
  *                         <li>@ref gpudb::create_resource_group_before
  *                             "create_resource_group_before": Place this
  *                             resource group before the one specified by @a
- *                             adjoiningResourceGroup in the ordering
+ *                             adjoiningResourceGroup in the ordering.
  *                         <li>@ref gpudb::create_resource_group_after
  *                             "create_resource_group_after": Place this
  *                             resource group after the one specified by @a
- *                             adjoiningResourceGroup in the ordering
+ *                             adjoiningResourceGroup in the ordering.
  *                     </ul>
  * @param[in] adjoiningResourceGroup  If @a ranking is @ref
  *                                    gpudb::create_resource_group_before
@@ -17240,7 +18374,7 @@ CreateRoleResponse& createRole( const CreateRoleRequest& request_,
  *                         <li>@ref gpudb::create_role_resource_group
  *                             "create_role_resource_group": Name of an
  *                             existing resource group to associate with this
- *                             user
+ *                             user.
  *                     </ul>
  *                     The default value is an empty map.
  *
@@ -17264,7 +18398,7 @@ CreateRoleResponse createRole( const std::string& name,
  *                         <li>@ref gpudb::create_role_resource_group
  *                             "create_role_resource_group": Name of an
  *                             existing resource group to associate with this
- *                             user
+ *                             user.
  *                     </ul>
  *                     The default value is an empty map.
  * @param[out] response_  @ref gpudb::CreateRoleResponse "Response" object
@@ -18586,7 +19720,7 @@ CreateTableExternalResponse& createTableExternal( const CreateTableExternalReque
  *                             will contain a mapping of one or more of its
  *                             column properties to an appropriate format for
  *                             each property.  Currently supported column
- *                             properties include date, time, & datetime. The
+ *                             properties include date, time, and datetime. The
  *                             parameter value must be formatted as a JSON
  *                             string of maps of column names to maps of column
  *                             properties to their corresponding column
@@ -18648,7 +19782,7 @@ CreateTableExternalResponse& createTableExternal( const CreateTableExternalReque
  *                                     compression.
  *                                 <li>@ref gpudb::create_table_external_auto
  *                                     "create_table_external_auto": Auto
- *                                     detect compression type
+ *                                     detect compression type.
  *                                 <li>@ref gpudb::create_table_external_gzip
  *                                     "create_table_external_gzip": gzip file
  *                                     compression.
@@ -18663,7 +19797,8 @@ CreateTableExternalResponse& createTableExternal( const CreateTableExternalReque
  *                             gpudb::create_table_external_datasource_name
  *                             "create_table_external_datasource_name": Name of
  *                             an existing external data source from which data
- *                             file(s) specified in @a filepaths will be loaded
+ *                             file(s) specified in @a filepaths will be
+ *                             loaded.
  *                         <li>@ref
  *                             gpudb::create_table_external_default_column_formats
  *                             "create_table_external_default_column_formats":
@@ -18671,10 +19806,11 @@ CreateTableExternalResponse& createTableExternal( const CreateTableExternalReque
  *                             source data loaded into columns with the
  *                             corresponding column property.  Currently
  *                             supported column properties include date, time,
- *                             & datetime.  This default column-property-bound
- *                             format can be overridden by specifying a column
- *                             property & format for a given target column in
- *                             @ref gpudb::create_table_external_column_formats
+ *                             and datetime.  This default
+ *                             column-property-bound format can be overridden
+ *                             by specifying a column property and format for a
+ *                             given target column in @ref
+ *                             gpudb::create_table_external_column_formats
  *                             "column_formats". For each specified annotation,
  *                             the format will apply to all columns with that
  *                             annotation unless a custom @ref
@@ -18700,7 +19836,19 @@ CreateTableExternalResponse& createTableExternal( const CreateTableExternalReque
  *                             the 'date' and 'time' control character
  *                             requirements. For example, '{"datetime" :
  *                             "%m/%d/%Y %H:%M:%S" }' would be used to
- *                             interpret text as "05/04/2000 12:12:11"
+ *                             interpret text as "05/04/2000 12:12:11".
+ *                         <li>@ref
+ *                             gpudb::create_table_external_datalake_catalog
+ *                             "create_table_external_datalake_catalog": Name
+ *                             of an existing datalake(iceberg) catalog used in
+ *                             loading files.
+ *                         <li>@ref gpudb::create_table_external_datalake_path
+ *                             "create_table_external_datalake_path": Path of
+ *                             datalake(iceberg) object.
+ *                         <li>@ref
+ *                             gpudb::create_table_external_datalake_snapshot
+ *                             "create_table_external_datalake_snapshot":
+ *                             Snapshot ID of datalake(iceberg) object.
  *                         <li>@ref gpudb::create_table_external_error_handling
  *                             "create_table_external_error_handling":
  *                             Specifies how errors should be handled upon
@@ -18714,10 +19862,13 @@ CreateTableExternalResponse& createTableExternal( const CreateTableExternalReque
  *                                     populated with nulls if possible;
  *                                     otherwise, the malformed records are
  *                                     skipped.
+ *                                 <li>@ref gpudb::create_table_external_skip
+ *                                     "create_table_external_skip": Malformed
+ *                                     records are skipped.
  *                                 <li>@ref
  *                                     gpudb::create_table_external_ignore_bad_records
  *                                     "create_table_external_ignore_bad_records":
- *                                     Malformed records are skipped.
+ *                                     Alias for skip.
  *                                 <li>@ref gpudb::create_table_external_abort
  *                                     "create_table_external_abort": Stops
  *                                     current insertion and aborts entire
@@ -18739,14 +19890,14 @@ CreateTableExternalResponse& createTableExternal( const CreateTableExternalReque
  *                                     gpudb::create_table_external_materialized
  *                                     "create_table_external_materialized":
  *                                     Loads a copy of the external data into
- *                                     the database, refreshed on demand
+ *                                     the database, refreshed on demand.
  *                                 <li>@ref
  *                                     gpudb::create_table_external_logical
  *                                     "create_table_external_logical":
  *                                     External data will not be loaded into
  *                                     the database; the data will be retrieved
  *                                     from the source upon servicing each
- *                                     query against the external table
+ *                                     query against the external table.
  *                             </ul>
  *                             The default value is @ref
  *                             gpudb::create_table_external_materialized
@@ -18759,7 +19910,7 @@ CreateTableExternalResponse& createTableExternal( const CreateTableExternalReque
  *                             <ul>
  *                                 <li>@ref gpudb::create_table_external_avro
  *                                     "create_table_external_avro": Avro file
- *                                     format
+ *                                     format.
  *                                 <li>@ref
  *                                     gpudb::create_table_external_delimited_text
  *                                     "create_table_external_delimited_text":
@@ -18767,18 +19918,18 @@ CreateTableExternalResponse& createTableExternal( const CreateTableExternalReque
  *                                     TSV, PSV, etc.
  *                                 <li>@ref gpudb::create_table_external_gdb
  *                                     "create_table_external_gdb": Esri/GDB
- *                                     file format
+ *                                     file format.
  *                                 <li>@ref gpudb::create_table_external_json
- *                                     "create_table_external_json": Json file
- *                                     format
+ *                                     "create_table_external_json": JSON file
+ *                                     format.
  *                                 <li>@ref
  *                                     gpudb::create_table_external_parquet
  *                                     "create_table_external_parquet": Apache
- *                                     Parquet file format
+ *                                     Parquet file format.
  *                                 <li>@ref
  *                                     gpudb::create_table_external_shapefile
  *                                     "create_table_external_shapefile":
- *                                     ShapeFile file format
+ *                                     ShapeFile file format.
  *                             </ul>
  *                             The default value is @ref
  *                             gpudb::create_table_external_delimited_text
@@ -18791,11 +19942,11 @@ CreateTableExternalResponse& createTableExternal( const CreateTableExternalReque
  *                             <ul>
  *                                 <li>@ref gpudb::create_table_external_true
  *                                     "create_table_external_true": Break up
- *                                     nested columns to multiple columns
+ *                                     nested columns to multiple columns.
  *                                 <li>@ref gpudb::create_table_external_false
  *                                     "create_table_external_false": Treat
- *                                     nested columns as json columns instead
- *                                     of flattening
+ *                                     nested columns as JSON columns instead
+ *                                     of flattening.
  *                             </ul>
  *                             The default value is @ref
  *                             gpudb::create_table_external_false
@@ -18804,7 +19955,7 @@ CreateTableExternalResponse& createTableExternal( const CreateTableExternalReque
  *                             gpudb::create_table_external_gdal_configuration_options
  *                             "create_table_external_gdal_configuration_options":
  *                             Comma separated list of gdal conf options, for
- *                             the specific requests: key=value
+ *                             the specific requests: key=value.
  *                         <li>@ref
  *                             gpudb::create_table_external_ignore_existing_pk
  *                             "create_table_external_ignore_existing_pk":
@@ -18839,12 +19990,12 @@ CreateTableExternalResponse& createTableExternal( const CreateTableExternalReque
  *                                 <li>@ref gpudb::create_table_external_true
  *                                     "create_table_external_true": Ignore new
  *                                     records whose primary key values collide
- *                                     with those of existing records
+ *                                     with those of existing records.
  *                                 <li>@ref gpudb::create_table_external_false
  *                                     "create_table_external_false": Treat as
  *                                     errors any new records whose primary key
  *                                     values collide with those of existing
- *                                     records
+ *                                     records.
  *                             </ul>
  *                             The default value is @ref
  *                             gpudb::create_table_external_false
@@ -18858,7 +20009,7 @@ CreateTableExternalResponse& createTableExternal( const CreateTableExternalReque
  *                                 <li>@ref gpudb::create_table_external_full
  *                                     "create_table_external_full": Run a type
  *                                     inference on the source data (if needed)
- *                                     and ingest
+ *                                     and ingest.
  *                                 <li>@ref
  *                                     gpudb::create_table_external_dry_run
  *                                     "create_table_external_dry_run": Does
@@ -19011,6 +20162,26 @@ CreateTableExternalResponse& createTableExternal( const CreateTableExternalReque
  *                             gpudb::create_table_external_batch_size
  *                             "batch_size" (per working thread).
  *                         <li>@ref
+ *                             gpudb::create_table_external_name_columns_from_file
+ *                             "create_table_external_name_columns_from_file":
+ *                             Specifies a comma-delimited list of column names
+ *                             to be used as the source-data column names.  If
+ *                             the file has a header row (i.e., @ref
+ *                             gpudb::create_table_external_text_has_header
+ *                             "text_has_header" is @ref
+ *                             gpudb::create_table_external_true "true"), these
+ *                             names override the file's header names.  If the
+ *                             file has no header row, these names are used as
+ *                             the source-data column names. Either way, the
+ *                             i-th name in this list applies to the i-th
+ *                             column in the file, enabling name-based matching
+ *                             against the target table's columns (and use with
+ *                             @ref
+ *                             gpudb::create_table_external_columns_to_load
+ *                             "columns_to_load" / @ref
+ *                             gpudb::create_table_external_columns_to_skip
+ *                             "columns_to_skip").
+ *                         <li>@ref
  *                             gpudb::create_table_external_num_tasks_per_rank
  *                             "create_table_external_num_tasks_per_rank":
  *                             Number of tasks for reading file per rank.
@@ -19057,22 +20228,22 @@ CreateTableExternalResponse& createTableExternal( const CreateTableExternalReque
  *                             gpudb::create_table_external_schema_registry_connection_retries
  *                             "create_table_external_schema_registry_connection_retries":
  *                             Confluent Schema registry connection timeout (in
- *                             Secs)
+ *                             secs).
  *                         <li>@ref
  *                             gpudb::create_table_external_schema_registry_connection_timeout
  *                             "create_table_external_schema_registry_connection_timeout":
  *                             Confluent Schema registry connection timeout (in
- *                             Secs)
+ *                             secs).
  *                         <li>@ref
  *                             gpudb::create_table_external_schema_registry_max_consecutive_connection_failures
  *                             "create_table_external_schema_registry_max_consecutive_connection_failures":
  *                             Max records to skip due to SR connection
- *                             failures, before failing
+ *                             failures, before failing.
  *                         <li>@ref
  *                             gpudb::create_table_external_max_consecutive_invalid_schema_failure
  *                             "create_table_external_max_consecutive_invalid_schema_failure":
  *                             Max records to skip due to schema related
- *                             errors, before failing
+ *                             errors, before failing.
  *                         <li>@ref
  *                             gpudb::create_table_external_schema_registry_schema_name
  *                             "create_table_external_schema_registry_schema_name":
@@ -19150,10 +20321,10 @@ CreateTableExternalResponse& createTableExternal( const CreateTableExternalReque
  *                             'b', 'f', 'n', 'r', 't', or 'v' preceded by an
  *                             escape character will be interpreted as the
  *                             ASCII bell, backspace, form feed, line feed,
- *                             carriage return, horizontal tab, & vertical tab,
- *                             respectively.  For example, the escape character
- *                             followed by an 'n' will be interpreted as a
- *                             newline within a field value.  The escape
+ *                             carriage return, horizontal tab, and vertical
+ *                             tab, respectively.  For example, the escape
+ *                             character followed by an 'n' will be interpreted
+ *                             as a newline within a field value.  The escape
  *                             character can also be used to escape the quoting
  *                             character, and will be treated as an escape
  *                             character whether it is within a quoted field
@@ -19242,6 +20413,32 @@ CreateTableExternalResponse& createTableExternal( const CreateTableExternalReque
  *                             gpudb::create_table_external_text_search_columns
  *                             "text_search_columns" has a value.
  *                         <li>@ref
+ *                             gpudb::create_table_external_transformations
+ *                             "create_table_external_transformations":
+ *                             Comma-separated expressions, one per target
+ *                             table column.  Each expression is evaluated per
+ *                             record.  Empty entries (two consecutive commas)
+ *                             mean no transformation for that column -- the
+ *                             value is resolved from the input record, table
+ *                             default, NULL, or an error. Expressions may
+ *                             reference input columns by name or by position
+ *                             ($1 for the first input column, $2 for the
+ *                             second, etc.). The default value is ''.
+ *                         <li>@ref gpudb::create_table_external_trim_space
+ *                             "create_table_external_trim_space": If set to
+ *                             @ref gpudb::create_table_external_true "true",
+ *                             remove leading or trailing space from fields.
+ *                             Supported values:
+ *                             <ul>
+ *                                 <li>@ref gpudb::create_table_external_true
+ *                                     "create_table_external_true"
+ *                                 <li>@ref gpudb::create_table_external_false
+ *                                     "create_table_external_false"
+ *                             </ul>
+ *                             The default value is @ref
+ *                             gpudb::create_table_external_false
+ *                             "create_table_external_false".
+ *                         <li>@ref
  *                             gpudb::create_table_external_truncate_strings
  *                             "create_table_external_truncate_strings": If set
  *                             to @ref gpudb::create_table_external_true
@@ -19285,27 +20482,27 @@ CreateTableExternalResponse& createTableExternal( const CreateTableExternalReque
  *                                 <li>@ref
  *                                     gpudb::create_table_external_accuracy
  *                                     "create_table_external_accuracy": Scans
- *                                     data to get exactly-typed & sized
+ *                                     data to get exactly-typed and sized
  *                                     columns for all data scanned.
  *                                 <li>@ref gpudb::create_table_external_speed
  *                                     "create_table_external_speed": Scans
  *                                     data and picks the widest possible
  *                                     column types so that 'all' values will
- *                                     fit with minimum data scanned
+ *                                     fit with minimum data scanned.
  *                             </ul>
  *                             The default value is @ref
  *                             gpudb::create_table_external_speed
  *                             "create_table_external_speed".
  *                         <li>@ref gpudb::create_table_external_remote_query
  *                             "create_table_external_remote_query": Remote SQL
- *                             query from which data will be sourced
+ *                             query from which data will be sourced.
  *                         <li>@ref
  *                             gpudb::create_table_external_remote_query_filter_column
  *                             "create_table_external_remote_query_filter_column":
  *                             Name of column to be used for splitting @ref
  *                             gpudb::create_table_external_remote_query
  *                             "remote_query" into multiple sub-queries using
- *                             the data distribution of given column
+ *                             the data distribution of given column.
  *                         <li>@ref
  *                             gpudb::create_table_external_remote_query_increasing_column
  *                             "create_table_external_remote_query_increasing_column":
@@ -19317,6 +20514,28 @@ CreateTableExternalResponse& createTableExternal( const CreateTableExternalReque
  *                             Alias name for @ref
  *                             gpudb::create_table_external_remote_query_filter_column
  *                             "remote_query_filter_column".
+ *                         <li>@ref
+ *                             gpudb::create_table_external_enable_inplace_updates
+ *                             "create_table_external_enable_inplace_updates":
+ *                             Applies only when upserting (when
+ *                             update_on_existing_pk is true). If set to true
+ *                             (the default), an existing record matched by
+ *                             primary key is modified in place. If set to
+ *                             false, the matched record is updated by deleting
+ *                             it and inserting a replacement (delete and
+ *                             insert), which prevents the change from being
+ *                             reflected in dependent materialized views until
+ *                             they are refreshed.
+ *                             Supported values:
+ *                             <ul>
+ *                                 <li>@ref gpudb::create_table_external_true
+ *                                     "create_table_external_true"
+ *                                 <li>@ref gpudb::create_table_external_false
+ *                                     "create_table_external_false"
+ *                             </ul>
+ *                             The default value is @ref
+ *                             gpudb::create_table_external_true
+ *                             "create_table_external_true".
  *                         <li>@ref
  *                             gpudb::create_table_external_update_on_existing_pk
  *                             "create_table_external_update_on_existing_pk":
@@ -19336,7 +20555,7 @@ CreateTableExternalResponse& createTableExternal( const CreateTableExternalReque
  *                             rejected and the error handled as determined by
  *                             @ref
  *                             gpudb::create_table_external_ignore_existing_pk
- *                             "ignore_existing_pk" & @ref
+ *                             "ignore_existing_pk" and @ref
  *                             gpudb::create_table_external_error_handling
  *                             "error_handling".  If the specified table does
  *                             not have a primary key, then this option has no
@@ -19346,11 +20565,11 @@ CreateTableExternalResponse& createTableExternal( const CreateTableExternalReque
  *                                 <li>@ref gpudb::create_table_external_true
  *                                     "create_table_external_true": Upsert new
  *                                     records when primary keys match existing
- *                                     records
+ *                                     records.
  *                                 <li>@ref gpudb::create_table_external_false
  *                                     "create_table_external_false": Reject
  *                                     new records when primary keys match
- *                                     existing records
+ *                                     existing records.
  *                             </ul>
  *                             The default value is @ref
  *                             gpudb::create_table_external_false
@@ -19717,7 +20936,7 @@ CreateTableExternalResponse createTableExternal( const std::string& tableName,
  *                             will contain a mapping of one or more of its
  *                             column properties to an appropriate format for
  *                             each property.  Currently supported column
- *                             properties include date, time, & datetime. The
+ *                             properties include date, time, and datetime. The
  *                             parameter value must be formatted as a JSON
  *                             string of maps of column names to maps of column
  *                             properties to their corresponding column
@@ -19779,7 +20998,7 @@ CreateTableExternalResponse createTableExternal( const std::string& tableName,
  *                                     compression.
  *                                 <li>@ref gpudb::create_table_external_auto
  *                                     "create_table_external_auto": Auto
- *                                     detect compression type
+ *                                     detect compression type.
  *                                 <li>@ref gpudb::create_table_external_gzip
  *                                     "create_table_external_gzip": gzip file
  *                                     compression.
@@ -19794,7 +21013,8 @@ CreateTableExternalResponse createTableExternal( const std::string& tableName,
  *                             gpudb::create_table_external_datasource_name
  *                             "create_table_external_datasource_name": Name of
  *                             an existing external data source from which data
- *                             file(s) specified in @a filepaths will be loaded
+ *                             file(s) specified in @a filepaths will be
+ *                             loaded.
  *                         <li>@ref
  *                             gpudb::create_table_external_default_column_formats
  *                             "create_table_external_default_column_formats":
@@ -19802,10 +21022,11 @@ CreateTableExternalResponse createTableExternal( const std::string& tableName,
  *                             source data loaded into columns with the
  *                             corresponding column property.  Currently
  *                             supported column properties include date, time,
- *                             & datetime.  This default column-property-bound
- *                             format can be overridden by specifying a column
- *                             property & format for a given target column in
- *                             @ref gpudb::create_table_external_column_formats
+ *                             and datetime.  This default
+ *                             column-property-bound format can be overridden
+ *                             by specifying a column property and format for a
+ *                             given target column in @ref
+ *                             gpudb::create_table_external_column_formats
  *                             "column_formats". For each specified annotation,
  *                             the format will apply to all columns with that
  *                             annotation unless a custom @ref
@@ -19831,7 +21052,19 @@ CreateTableExternalResponse createTableExternal( const std::string& tableName,
  *                             the 'date' and 'time' control character
  *                             requirements. For example, '{"datetime" :
  *                             "%m/%d/%Y %H:%M:%S" }' would be used to
- *                             interpret text as "05/04/2000 12:12:11"
+ *                             interpret text as "05/04/2000 12:12:11".
+ *                         <li>@ref
+ *                             gpudb::create_table_external_datalake_catalog
+ *                             "create_table_external_datalake_catalog": Name
+ *                             of an existing datalake(iceberg) catalog used in
+ *                             loading files.
+ *                         <li>@ref gpudb::create_table_external_datalake_path
+ *                             "create_table_external_datalake_path": Path of
+ *                             datalake(iceberg) object.
+ *                         <li>@ref
+ *                             gpudb::create_table_external_datalake_snapshot
+ *                             "create_table_external_datalake_snapshot":
+ *                             Snapshot ID of datalake(iceberg) object.
  *                         <li>@ref gpudb::create_table_external_error_handling
  *                             "create_table_external_error_handling":
  *                             Specifies how errors should be handled upon
@@ -19845,10 +21078,13 @@ CreateTableExternalResponse createTableExternal( const std::string& tableName,
  *                                     populated with nulls if possible;
  *                                     otherwise, the malformed records are
  *                                     skipped.
+ *                                 <li>@ref gpudb::create_table_external_skip
+ *                                     "create_table_external_skip": Malformed
+ *                                     records are skipped.
  *                                 <li>@ref
  *                                     gpudb::create_table_external_ignore_bad_records
  *                                     "create_table_external_ignore_bad_records":
- *                                     Malformed records are skipped.
+ *                                     Alias for skip.
  *                                 <li>@ref gpudb::create_table_external_abort
  *                                     "create_table_external_abort": Stops
  *                                     current insertion and aborts entire
@@ -19870,14 +21106,14 @@ CreateTableExternalResponse createTableExternal( const std::string& tableName,
  *                                     gpudb::create_table_external_materialized
  *                                     "create_table_external_materialized":
  *                                     Loads a copy of the external data into
- *                                     the database, refreshed on demand
+ *                                     the database, refreshed on demand.
  *                                 <li>@ref
  *                                     gpudb::create_table_external_logical
  *                                     "create_table_external_logical":
  *                                     External data will not be loaded into
  *                                     the database; the data will be retrieved
  *                                     from the source upon servicing each
- *                                     query against the external table
+ *                                     query against the external table.
  *                             </ul>
  *                             The default value is @ref
  *                             gpudb::create_table_external_materialized
@@ -19890,7 +21126,7 @@ CreateTableExternalResponse createTableExternal( const std::string& tableName,
  *                             <ul>
  *                                 <li>@ref gpudb::create_table_external_avro
  *                                     "create_table_external_avro": Avro file
- *                                     format
+ *                                     format.
  *                                 <li>@ref
  *                                     gpudb::create_table_external_delimited_text
  *                                     "create_table_external_delimited_text":
@@ -19898,18 +21134,18 @@ CreateTableExternalResponse createTableExternal( const std::string& tableName,
  *                                     TSV, PSV, etc.
  *                                 <li>@ref gpudb::create_table_external_gdb
  *                                     "create_table_external_gdb": Esri/GDB
- *                                     file format
+ *                                     file format.
  *                                 <li>@ref gpudb::create_table_external_json
- *                                     "create_table_external_json": Json file
- *                                     format
+ *                                     "create_table_external_json": JSON file
+ *                                     format.
  *                                 <li>@ref
  *                                     gpudb::create_table_external_parquet
  *                                     "create_table_external_parquet": Apache
- *                                     Parquet file format
+ *                                     Parquet file format.
  *                                 <li>@ref
  *                                     gpudb::create_table_external_shapefile
  *                                     "create_table_external_shapefile":
- *                                     ShapeFile file format
+ *                                     ShapeFile file format.
  *                             </ul>
  *                             The default value is @ref
  *                             gpudb::create_table_external_delimited_text
@@ -19922,11 +21158,11 @@ CreateTableExternalResponse createTableExternal( const std::string& tableName,
  *                             <ul>
  *                                 <li>@ref gpudb::create_table_external_true
  *                                     "create_table_external_true": Break up
- *                                     nested columns to multiple columns
+ *                                     nested columns to multiple columns.
  *                                 <li>@ref gpudb::create_table_external_false
  *                                     "create_table_external_false": Treat
- *                                     nested columns as json columns instead
- *                                     of flattening
+ *                                     nested columns as JSON columns instead
+ *                                     of flattening.
  *                             </ul>
  *                             The default value is @ref
  *                             gpudb::create_table_external_false
@@ -19935,7 +21171,7 @@ CreateTableExternalResponse createTableExternal( const std::string& tableName,
  *                             gpudb::create_table_external_gdal_configuration_options
  *                             "create_table_external_gdal_configuration_options":
  *                             Comma separated list of gdal conf options, for
- *                             the specific requests: key=value
+ *                             the specific requests: key=value.
  *                         <li>@ref
  *                             gpudb::create_table_external_ignore_existing_pk
  *                             "create_table_external_ignore_existing_pk":
@@ -19970,12 +21206,12 @@ CreateTableExternalResponse createTableExternal( const std::string& tableName,
  *                                 <li>@ref gpudb::create_table_external_true
  *                                     "create_table_external_true": Ignore new
  *                                     records whose primary key values collide
- *                                     with those of existing records
+ *                                     with those of existing records.
  *                                 <li>@ref gpudb::create_table_external_false
  *                                     "create_table_external_false": Treat as
  *                                     errors any new records whose primary key
  *                                     values collide with those of existing
- *                                     records
+ *                                     records.
  *                             </ul>
  *                             The default value is @ref
  *                             gpudb::create_table_external_false
@@ -19989,7 +21225,7 @@ CreateTableExternalResponse createTableExternal( const std::string& tableName,
  *                                 <li>@ref gpudb::create_table_external_full
  *                                     "create_table_external_full": Run a type
  *                                     inference on the source data (if needed)
- *                                     and ingest
+ *                                     and ingest.
  *                                 <li>@ref
  *                                     gpudb::create_table_external_dry_run
  *                                     "create_table_external_dry_run": Does
@@ -20142,6 +21378,26 @@ CreateTableExternalResponse createTableExternal( const std::string& tableName,
  *                             gpudb::create_table_external_batch_size
  *                             "batch_size" (per working thread).
  *                         <li>@ref
+ *                             gpudb::create_table_external_name_columns_from_file
+ *                             "create_table_external_name_columns_from_file":
+ *                             Specifies a comma-delimited list of column names
+ *                             to be used as the source-data column names.  If
+ *                             the file has a header row (i.e., @ref
+ *                             gpudb::create_table_external_text_has_header
+ *                             "text_has_header" is @ref
+ *                             gpudb::create_table_external_true "true"), these
+ *                             names override the file's header names.  If the
+ *                             file has no header row, these names are used as
+ *                             the source-data column names. Either way, the
+ *                             i-th name in this list applies to the i-th
+ *                             column in the file, enabling name-based matching
+ *                             against the target table's columns (and use with
+ *                             @ref
+ *                             gpudb::create_table_external_columns_to_load
+ *                             "columns_to_load" / @ref
+ *                             gpudb::create_table_external_columns_to_skip
+ *                             "columns_to_skip").
+ *                         <li>@ref
  *                             gpudb::create_table_external_num_tasks_per_rank
  *                             "create_table_external_num_tasks_per_rank":
  *                             Number of tasks for reading file per rank.
@@ -20188,22 +21444,22 @@ CreateTableExternalResponse createTableExternal( const std::string& tableName,
  *                             gpudb::create_table_external_schema_registry_connection_retries
  *                             "create_table_external_schema_registry_connection_retries":
  *                             Confluent Schema registry connection timeout (in
- *                             Secs)
+ *                             secs).
  *                         <li>@ref
  *                             gpudb::create_table_external_schema_registry_connection_timeout
  *                             "create_table_external_schema_registry_connection_timeout":
  *                             Confluent Schema registry connection timeout (in
- *                             Secs)
+ *                             secs).
  *                         <li>@ref
  *                             gpudb::create_table_external_schema_registry_max_consecutive_connection_failures
  *                             "create_table_external_schema_registry_max_consecutive_connection_failures":
  *                             Max records to skip due to SR connection
- *                             failures, before failing
+ *                             failures, before failing.
  *                         <li>@ref
  *                             gpudb::create_table_external_max_consecutive_invalid_schema_failure
  *                             "create_table_external_max_consecutive_invalid_schema_failure":
  *                             Max records to skip due to schema related
- *                             errors, before failing
+ *                             errors, before failing.
  *                         <li>@ref
  *                             gpudb::create_table_external_schema_registry_schema_name
  *                             "create_table_external_schema_registry_schema_name":
@@ -20281,10 +21537,10 @@ CreateTableExternalResponse createTableExternal( const std::string& tableName,
  *                             'b', 'f', 'n', 'r', 't', or 'v' preceded by an
  *                             escape character will be interpreted as the
  *                             ASCII bell, backspace, form feed, line feed,
- *                             carriage return, horizontal tab, & vertical tab,
- *                             respectively.  For example, the escape character
- *                             followed by an 'n' will be interpreted as a
- *                             newline within a field value.  The escape
+ *                             carriage return, horizontal tab, and vertical
+ *                             tab, respectively.  For example, the escape
+ *                             character followed by an 'n' will be interpreted
+ *                             as a newline within a field value.  The escape
  *                             character can also be used to escape the quoting
  *                             character, and will be treated as an escape
  *                             character whether it is within a quoted field
@@ -20373,6 +21629,32 @@ CreateTableExternalResponse createTableExternal( const std::string& tableName,
  *                             gpudb::create_table_external_text_search_columns
  *                             "text_search_columns" has a value.
  *                         <li>@ref
+ *                             gpudb::create_table_external_transformations
+ *                             "create_table_external_transformations":
+ *                             Comma-separated expressions, one per target
+ *                             table column.  Each expression is evaluated per
+ *                             record.  Empty entries (two consecutive commas)
+ *                             mean no transformation for that column -- the
+ *                             value is resolved from the input record, table
+ *                             default, NULL, or an error. Expressions may
+ *                             reference input columns by name or by position
+ *                             ($1 for the first input column, $2 for the
+ *                             second, etc.). The default value is ''.
+ *                         <li>@ref gpudb::create_table_external_trim_space
+ *                             "create_table_external_trim_space": If set to
+ *                             @ref gpudb::create_table_external_true "true",
+ *                             remove leading or trailing space from fields.
+ *                             Supported values:
+ *                             <ul>
+ *                                 <li>@ref gpudb::create_table_external_true
+ *                                     "create_table_external_true"
+ *                                 <li>@ref gpudb::create_table_external_false
+ *                                     "create_table_external_false"
+ *                             </ul>
+ *                             The default value is @ref
+ *                             gpudb::create_table_external_false
+ *                             "create_table_external_false".
+ *                         <li>@ref
  *                             gpudb::create_table_external_truncate_strings
  *                             "create_table_external_truncate_strings": If set
  *                             to @ref gpudb::create_table_external_true
@@ -20416,27 +21698,27 @@ CreateTableExternalResponse createTableExternal( const std::string& tableName,
  *                                 <li>@ref
  *                                     gpudb::create_table_external_accuracy
  *                                     "create_table_external_accuracy": Scans
- *                                     data to get exactly-typed & sized
+ *                                     data to get exactly-typed and sized
  *                                     columns for all data scanned.
  *                                 <li>@ref gpudb::create_table_external_speed
  *                                     "create_table_external_speed": Scans
  *                                     data and picks the widest possible
  *                                     column types so that 'all' values will
- *                                     fit with minimum data scanned
+ *                                     fit with minimum data scanned.
  *                             </ul>
  *                             The default value is @ref
  *                             gpudb::create_table_external_speed
  *                             "create_table_external_speed".
  *                         <li>@ref gpudb::create_table_external_remote_query
  *                             "create_table_external_remote_query": Remote SQL
- *                             query from which data will be sourced
+ *                             query from which data will be sourced.
  *                         <li>@ref
  *                             gpudb::create_table_external_remote_query_filter_column
  *                             "create_table_external_remote_query_filter_column":
  *                             Name of column to be used for splitting @ref
  *                             gpudb::create_table_external_remote_query
  *                             "remote_query" into multiple sub-queries using
- *                             the data distribution of given column
+ *                             the data distribution of given column.
  *                         <li>@ref
  *                             gpudb::create_table_external_remote_query_increasing_column
  *                             "create_table_external_remote_query_increasing_column":
@@ -20448,6 +21730,28 @@ CreateTableExternalResponse createTableExternal( const std::string& tableName,
  *                             Alias name for @ref
  *                             gpudb::create_table_external_remote_query_filter_column
  *                             "remote_query_filter_column".
+ *                         <li>@ref
+ *                             gpudb::create_table_external_enable_inplace_updates
+ *                             "create_table_external_enable_inplace_updates":
+ *                             Applies only when upserting (when
+ *                             update_on_existing_pk is true). If set to true
+ *                             (the default), an existing record matched by
+ *                             primary key is modified in place. If set to
+ *                             false, the matched record is updated by deleting
+ *                             it and inserting a replacement (delete and
+ *                             insert), which prevents the change from being
+ *                             reflected in dependent materialized views until
+ *                             they are refreshed.
+ *                             Supported values:
+ *                             <ul>
+ *                                 <li>@ref gpudb::create_table_external_true
+ *                                     "create_table_external_true"
+ *                                 <li>@ref gpudb::create_table_external_false
+ *                                     "create_table_external_false"
+ *                             </ul>
+ *                             The default value is @ref
+ *                             gpudb::create_table_external_true
+ *                             "create_table_external_true".
  *                         <li>@ref
  *                             gpudb::create_table_external_update_on_existing_pk
  *                             "create_table_external_update_on_existing_pk":
@@ -20467,7 +21771,7 @@ CreateTableExternalResponse createTableExternal( const std::string& tableName,
  *                             rejected and the error handled as determined by
  *                             @ref
  *                             gpudb::create_table_external_ignore_existing_pk
- *                             "ignore_existing_pk" & @ref
+ *                             "ignore_existing_pk" and @ref
  *                             gpudb::create_table_external_error_handling
  *                             "error_handling".  If the specified table does
  *                             not have a primary key, then this option has no
@@ -20477,11 +21781,11 @@ CreateTableExternalResponse createTableExternal( const std::string& tableName,
  *                                 <li>@ref gpudb::create_table_external_true
  *                                     "create_table_external_true": Upsert new
  *                                     records when primary keys match existing
- *                                     records
+ *                                     records.
  *                                 <li>@ref gpudb::create_table_external_false
  *                                     "create_table_external_false": Reject
  *                                     new records when primary keys match
- *                                     existing records
+ *                                     existing records.
  *                             </ul>
  *                             The default value is @ref
  *                             gpudb::create_table_external_false
@@ -20610,12 +21914,35 @@ CreateTableMonitorResponse& createTableMonitor( const CreateTableMonitorRequest&
  *                             "create_table_monitor_insert".
  *                         <li>@ref gpudb::create_table_monitor_monitor_id
  *                             "create_table_monitor_monitor_id": ID to use for
- *                             this monitor instead of a randomly generated one
+ *                             this monitor instead of a randomly generated
+ *                             one.
  *                         <li>@ref gpudb::create_table_monitor_datasink_name
  *                             "create_table_monitor_datasink_name": Name of an
  *                             existing <a href="../../../concepts/data_sinks/"
  *                             target="_top">data sink</a> to send change data
- *                             notifications to
+ *                             notifications to.
+ *                         <li>@ref
+ *                             gpudb::create_table_monitor_max_consecutive_failures
+ *                             "create_table_monitor_max_consecutive_failures":
+ *                             Maximum number of consecutive failed
+ *                             notification attempts before suspending the
+ *                             stream.  A value of -1 (default) disables
+ *                             auto-suspend. This value is by rank and not
+ *                             overall.
+ *                         <li>@ref
+ *                             gpudb::create_table_monitor_failed_notifications_table_name
+ *                             "create_table_monitor_failed_notifications_table_name":
+ *                             Name of a <a href="../../../concepts/tables/"
+ *                             target="_top">table</a> to which failed stream
+ *                             notifications are written when the stream is
+ *                             suspended.  The database will attempt to send
+ *                             notifications persisted in this table when the
+ *                             stream is resumed.  The table has the following
+ *                             columns: rank (long), job_id (long), uuid
+ *                             (uuid), timestamp (timestamp), error_msg
+ *                             (string), payload (bytes).  Leave this option
+ *                             empty to disable persisting failed notification
+ *                             events.
  *                         <li>@ref gpudb::create_table_monitor_destination
  *                             "create_table_monitor_destination": Destination
  *                             for the output data in format
@@ -20628,7 +21955,7 @@ CreateTableMonitorResponse& createTableMonitor( const CreateTableMonitorRequest&
  *                             the Kafka topic to publish to if @ref
  *                             gpudb::create_table_monitor_destination
  *                             "destination" in @a options is specified and is
- *                             a Kafka broker
+ *                             a Kafka broker.
  *                         <li>@ref
  *                             gpudb::create_table_monitor_increasing_column
  *                             "create_table_monitor_increasing_column": Column
@@ -20636,7 +21963,7 @@ CreateTableMonitorResponse& createTableMonitor( const CreateTableMonitorRequest&
  *                             records (e.g., TIMESTAMP).
  *                         <li>@ref gpudb::create_table_monitor_expression
  *                             "create_table_monitor_expression": Filter
- *                             expression to limit records for notification
+ *                             expression to limit records for notification.
  *                         <li>@ref
  *                             gpudb::create_table_monitor_join_table_names
  *                             "create_table_monitor_join_table_names": A
@@ -20660,14 +21987,13 @@ CreateTableMonitorResponse& createTableMonitor( const CreateTableMonitorRequest&
  *                             output.
  *                         <li>@ref
  *                             gpudb::create_table_monitor_join_expressions
- *                             "create_table_monitor_join_expressions":
- *                             Optional filter or join expressions to apply
- *                             when combining the tables. Expressions are
- *                             standard SQL-style conditions and can reference
- *                             any table or alias listed in 'join_table_names'.
- *                             This corresponds to the WHERE clause of the
- *                             underlying join, and can include conditions to
- *                             filter the delta rows.
+ *                             "create_table_monitor_join_expressions": Filter
+ *                             or join expressions to apply when combining the
+ *                             tables. Expressions are standard SQL-style
+ *                             conditions and can reference any table or alias
+ *                             listed in 'join_table_names'. This corresponds
+ *                             to the WHERE clause of the underlying join, and
+ *                             can include conditions to filter the delta rows.
  *                         <li>@ref gpudb::create_table_monitor_refresh_method
  *                             "create_table_monitor_refresh_method": Method
  *                             controlling when the table monitor reports
@@ -20766,12 +22092,35 @@ CreateTableMonitorResponse createTableMonitor( const std::string& tableName,
  *                             "create_table_monitor_insert".
  *                         <li>@ref gpudb::create_table_monitor_monitor_id
  *                             "create_table_monitor_monitor_id": ID to use for
- *                             this monitor instead of a randomly generated one
+ *                             this monitor instead of a randomly generated
+ *                             one.
  *                         <li>@ref gpudb::create_table_monitor_datasink_name
  *                             "create_table_monitor_datasink_name": Name of an
  *                             existing <a href="../../../concepts/data_sinks/"
  *                             target="_top">data sink</a> to send change data
- *                             notifications to
+ *                             notifications to.
+ *                         <li>@ref
+ *                             gpudb::create_table_monitor_max_consecutive_failures
+ *                             "create_table_monitor_max_consecutive_failures":
+ *                             Maximum number of consecutive failed
+ *                             notification attempts before suspending the
+ *                             stream.  A value of -1 (default) disables
+ *                             auto-suspend. This value is by rank and not
+ *                             overall.
+ *                         <li>@ref
+ *                             gpudb::create_table_monitor_failed_notifications_table_name
+ *                             "create_table_monitor_failed_notifications_table_name":
+ *                             Name of a <a href="../../../concepts/tables/"
+ *                             target="_top">table</a> to which failed stream
+ *                             notifications are written when the stream is
+ *                             suspended.  The database will attempt to send
+ *                             notifications persisted in this table when the
+ *                             stream is resumed.  The table has the following
+ *                             columns: rank (long), job_id (long), uuid
+ *                             (uuid), timestamp (timestamp), error_msg
+ *                             (string), payload (bytes).  Leave this option
+ *                             empty to disable persisting failed notification
+ *                             events.
  *                         <li>@ref gpudb::create_table_monitor_destination
  *                             "create_table_monitor_destination": Destination
  *                             for the output data in format
@@ -20784,7 +22133,7 @@ CreateTableMonitorResponse createTableMonitor( const std::string& tableName,
  *                             the Kafka topic to publish to if @ref
  *                             gpudb::create_table_monitor_destination
  *                             "destination" in @a options is specified and is
- *                             a Kafka broker
+ *                             a Kafka broker.
  *                         <li>@ref
  *                             gpudb::create_table_monitor_increasing_column
  *                             "create_table_monitor_increasing_column": Column
@@ -20792,7 +22141,7 @@ CreateTableMonitorResponse createTableMonitor( const std::string& tableName,
  *                             records (e.g., TIMESTAMP).
  *                         <li>@ref gpudb::create_table_monitor_expression
  *                             "create_table_monitor_expression": Filter
- *                             expression to limit records for notification
+ *                             expression to limit records for notification.
  *                         <li>@ref
  *                             gpudb::create_table_monitor_join_table_names
  *                             "create_table_monitor_join_table_names": A
@@ -20816,14 +22165,13 @@ CreateTableMonitorResponse createTableMonitor( const std::string& tableName,
  *                             output.
  *                         <li>@ref
  *                             gpudb::create_table_monitor_join_expressions
- *                             "create_table_monitor_join_expressions":
- *                             Optional filter or join expressions to apply
- *                             when combining the tables. Expressions are
- *                             standard SQL-style conditions and can reference
- *                             any table or alias listed in 'join_table_names'.
- *                             This corresponds to the WHERE clause of the
- *                             underlying join, and can include conditions to
- *                             filter the delta rows.
+ *                             "create_table_monitor_join_expressions": Filter
+ *                             or join expressions to apply when combining the
+ *                             tables. Expressions are standard SQL-style
+ *                             conditions and can reference any table or alias
+ *                             listed in 'join_table_names'. This corresponds
+ *                             to the WHERE clause of the underlying join, and
+ *                             can include conditions to filter the delta rows.
  *                         <li>@ref gpudb::create_table_monitor_refresh_method
  *                             "create_table_monitor_refresh_method": Method
  *                             controlling when the table monitor reports
@@ -21337,8 +22685,8 @@ CreateTypeResponse& createType( const CreateTypeRequest& request_,
  * match existing objects will either overwrite (i.e.\ update) the existing
  * object or will be skipped and not added into the set.
  *
- * @param[in] typeDefinition  a JSON string describing the columns of the type
- *                            to be registered, as described above.
+ * @param[in] typeDefinition  JSON string defining the columns of the type to
+ *                            be registered, as described above.
  * @param[in] label  A user-defined description string which can be used to
  *                   differentiate between tables and types with otherwise
  *                   identical schemas.
@@ -21591,8 +22939,27 @@ CreateTypeResponse& createType( const CreateTypeRequest& request_,
  *                            <li>@ref gpudb::create_type_update_with_now
  *                                "create_type_update_with_now": For 'date',
  *                                'time', 'datetime', or 'timestamp' column
- *                                types, always update the field with 'NOW()'
- *                                upon any update.
+ *                                types, update the field with 'NOW()' upon any
+ *                                update.
+ *                            <li>@ref gpudb::create_type_update_with_user
+ *                                "create_type_update_with_user": For 'charN'
+ *                                or 'string' column types, update the field
+ *                                with the current user's name upon any update.
+ *                            <li>@ref gpudb::create_type_default
+ *                                "create_type_default": Sets a default value
+ *                                expression for this column, e.g.
+ *                                'default(0)', 'default(''pending'')', or
+ *                                'default(NOW())'.  When the column is omitted
+ *                                from an insert via request_schema_str, the
+ *                                expression is evaluated and the result is
+ *                                used as the column value.
+ *                            <li>@ref gpudb::create_type_default_sql
+ *                                "create_type_default_sql": Sets a default
+ *                                value expression for this column with SQL
+ *                                syntax, e.g. 'default(0)',
+ *                                'default(''pending'')', or 'default(NOW())'.
+ *                                Only used for showing the expression when
+ *                                generating SQL DDL.
  *                        </ul>
  *                        The default value is an empty map.
  * @param[in] options  Optional parameters.
@@ -21662,8 +23029,8 @@ CreateTypeResponse createType( const std::string& typeDefinition,
  * match existing objects will either overwrite (i.e.\ update) the existing
  * object or will be skipped and not added into the set.
  *
- * @param[in] typeDefinition  a JSON string describing the columns of the type
- *                            to be registered, as described above.
+ * @param[in] typeDefinition  JSON string defining the columns of the type to
+ *                            be registered, as described above.
  * @param[in] label  A user-defined description string which can be used to
  *                   differentiate between tables and types with otherwise
  *                   identical schemas.
@@ -21916,8 +23283,27 @@ CreateTypeResponse createType( const std::string& typeDefinition,
  *                            <li>@ref gpudb::create_type_update_with_now
  *                                "create_type_update_with_now": For 'date',
  *                                'time', 'datetime', or 'timestamp' column
- *                                types, always update the field with 'NOW()'
- *                                upon any update.
+ *                                types, update the field with 'NOW()' upon any
+ *                                update.
+ *                            <li>@ref gpudb::create_type_update_with_user
+ *                                "create_type_update_with_user": For 'charN'
+ *                                or 'string' column types, update the field
+ *                                with the current user's name upon any update.
+ *                            <li>@ref gpudb::create_type_default
+ *                                "create_type_default": Sets a default value
+ *                                expression for this column, e.g.
+ *                                'default(0)', 'default(''pending'')', or
+ *                                'default(NOW())'.  When the column is omitted
+ *                                from an insert via request_schema_str, the
+ *                                expression is evaluated and the result is
+ *                                used as the column value.
+ *                            <li>@ref gpudb::create_type_default_sql
+ *                                "create_type_default_sql": Sets a default
+ *                                value expression for this column with SQL
+ *                                syntax, e.g. 'default(0)',
+ *                                'default(''pending'')', or 'default(NOW())'.
+ *                                Only used for showing the expression when
+ *                                generating SQL DDL.
  *                        </ul>
  *                        The default value is an empty map.
  * @param[in] options  Optional parameters.
@@ -21948,28 +23334,19 @@ CreateTypeResponse& createType( const std::string& typeDefinition,
  * The following merges are supported:
  *
  * UNION (DISTINCT/ALL) - For data set union details and examples, see <a
- * href="../../../concepts/unions/" target="_top">Union</a>.  For limitations,
+ * href="../../../concepts/unions/" target="_top">Union</a>. For limitations,
  * see <a href="../../../concepts/unions/#limitations-and-cautions"
  * target="_top">Union Limitations and Cautions</a>.
  *
  * INTERSECT (DISTINCT/ALL) - For data set intersection details and examples,
- * see <a href="../../../concepts/intersect/" target="_top">Intersect</a>.  For
+ * see <a href="../../../concepts/intersect/" target="_top">Intersect</a>. For
  * limitations, see <a href="../../../concepts/intersect/#limitations"
  * target="_top">Intersect Limitations</a>.
  *
  * EXCEPT (DISTINCT/ALL) - For data set subtraction details and examples, see
- * <a href="../../../concepts/except/" target="_top">Except</a>.  For
+ * <a href="../../../concepts/except/" target="_top">Except</a>. For
  * limitations, see <a href="../../../concepts/except/#limitations"
  * target="_top">Except Limitations</a>.
- *
- * MERGE VIEWS - For a given set of <a href="../../../concepts/filtered_views/"
- * target="_top">filtered views</a> on a single table, creates a single
- * filtered view containing all of the unique records across all of the given
- * filtered data sets.
- *
- * Non-charN 'string' and 'bytes' column types cannot be merged, nor can
- * columns marked as <a href="../../../concepts/types/#data-handling"
- * target="_top">store-only</a>.
  *
  * @param[in] request_  @ref gpudb::CreateUnionRequest "Request" object
  *                      containing the parameters for the operation.
@@ -21986,28 +23363,19 @@ CreateUnionResponse createUnion( const CreateUnionRequest& request_ ) const;
  * The following merges are supported:
  *
  * UNION (DISTINCT/ALL) - For data set union details and examples, see <a
- * href="../../../concepts/unions/" target="_top">Union</a>.  For limitations,
+ * href="../../../concepts/unions/" target="_top">Union</a>. For limitations,
  * see <a href="../../../concepts/unions/#limitations-and-cautions"
  * target="_top">Union Limitations and Cautions</a>.
  *
  * INTERSECT (DISTINCT/ALL) - For data set intersection details and examples,
- * see <a href="../../../concepts/intersect/" target="_top">Intersect</a>.  For
+ * see <a href="../../../concepts/intersect/" target="_top">Intersect</a>. For
  * limitations, see <a href="../../../concepts/intersect/#limitations"
  * target="_top">Intersect Limitations</a>.
  *
  * EXCEPT (DISTINCT/ALL) - For data set subtraction details and examples, see
- * <a href="../../../concepts/except/" target="_top">Except</a>.  For
+ * <a href="../../../concepts/except/" target="_top">Except</a>. For
  * limitations, see <a href="../../../concepts/except/#limitations"
  * target="_top">Except Limitations</a>.
- *
- * MERGE VIEWS - For a given set of <a href="../../../concepts/filtered_views/"
- * target="_top">filtered views</a> on a single table, creates a single
- * filtered view containing all of the unique records across all of the given
- * filtered data sets.
- *
- * Non-charN 'string' and 'bytes' column types cannot be merged, nor can
- * columns marked as <a href="../../../concepts/types/#data-handling"
- * target="_top">store-only</a>.
  *
  * @param[in] request_  @ref gpudb::CreateUnionRequest "Request" object
  *                      containing the parameters for the operation.
@@ -22027,28 +23395,19 @@ CreateUnionResponse& createUnion( const CreateUnionRequest& request_,
  * The following merges are supported:
  *
  * UNION (DISTINCT/ALL) - For data set union details and examples, see <a
- * href="../../../concepts/unions/" target="_top">Union</a>.  For limitations,
+ * href="../../../concepts/unions/" target="_top">Union</a>. For limitations,
  * see <a href="../../../concepts/unions/#limitations-and-cautions"
  * target="_top">Union Limitations and Cautions</a>.
  *
  * INTERSECT (DISTINCT/ALL) - For data set intersection details and examples,
- * see <a href="../../../concepts/intersect/" target="_top">Intersect</a>.  For
+ * see <a href="../../../concepts/intersect/" target="_top">Intersect</a>. For
  * limitations, see <a href="../../../concepts/intersect/#limitations"
  * target="_top">Intersect Limitations</a>.
  *
  * EXCEPT (DISTINCT/ALL) - For data set subtraction details and examples, see
- * <a href="../../../concepts/except/" target="_top">Except</a>.  For
+ * <a href="../../../concepts/except/" target="_top">Except</a>. For
  * limitations, see <a href="../../../concepts/except/#limitations"
  * target="_top">Except Limitations</a>.
- *
- * MERGE VIEWS - For a given set of <a href="../../../concepts/filtered_views/"
- * target="_top">filtered views</a> on a single table, creates a single
- * filtered view containing all of the unique records across all of the given
- * filtered data sets.
- *
- * Non-charN 'string' and 'bytes' column types cannot be merged, nor can
- * columns marked as <a href="../../../concepts/types/#data-handling"
- * target="_top">store-only</a>.
  *
  * @param[in] tableName  Name of the table to be created, in
  *                       [schema_name.]table_name format, using standard <a
@@ -22143,11 +23502,6 @@ CreateUnionResponse& createUnion( const CreateUnionRequest& request_,
  *                             The default value is @ref
  *                             gpudb::create_union_union_all
  *                             "create_union_union_all".
- *                         <li>@ref gpudb::create_union_long_hash
- *                             "create_union_long_hash": When true use 128 bit
- *                             hash for union-distinct, except, except_all,
- *                             intersect and intersect_all modes. Otherwise use
- *                             64 bit hash.
  *                         <li>@ref gpudb::create_union_chunk_size
  *                             "create_union_chunk_size": Indicates the number
  *                             of records per chunk to be used for this output
@@ -22166,6 +23520,75 @@ CreateUnionResponse& createUnion( const CreateUnionRequest& request_,
  *                             list of columns on which to create indexes on
  *                             the output table.  The columns specified must be
  *                             present in @a outputColumnNames.
+ *                         <li>@ref gpudb::create_union_partition_type
+ *                             "create_union_partition_type": <a
+ *                             href="../../../concepts/tables/#partitioning"
+ *                             target="_top">Partitioning</a> scheme to use for
+ *                             the output table.
+ *                             Supported values:
+ *                             <ul>
+ *                                 <li>@ref gpudb::create_union_RANGE
+ *                                     "create_union_RANGE": Use <a
+ *                                     href="../../../concepts/tables/#partitioning-by-range"
+ *                                     target="_top">range partitioning</a>.
+ *                                 <li>@ref gpudb::create_union_INTERVAL
+ *                                     "create_union_INTERVAL": Use <a
+ *                                     href="../../../concepts/tables/#partitioning-by-interval"
+ *                                     target="_top">interval partitioning</a>.
+ *                                 <li>@ref gpudb::create_union_LIST
+ *                                     "create_union_LIST": Use <a
+ *                                     href="../../../concepts/tables/#partitioning-by-list"
+ *                                     target="_top">list partitioning</a>.
+ *                                 <li>@ref gpudb::create_union_HASH
+ *                                     "create_union_HASH": Use <a
+ *                                     href="../../../concepts/tables/#partitioning-by-hash"
+ *                                     target="_top">hash partitioning</a>.
+ *                                 <li>@ref gpudb::create_union_SERIES
+ *                                     "create_union_SERIES": Use <a
+ *                                     href="../../../concepts/tables/#partitioning-by-series"
+ *                                     target="_top">series partitioning</a>.
+ *                             </ul>
+ *                         <li>@ref gpudb::create_union_partition_keys
+ *                             "create_union_partition_keys": Comma-separated
+ *                             list of partition keys, which are the columns or
+ *                             column expressions by which records will be
+ *                             assigned to partitions defined by @ref
+ *                             gpudb::create_union_partition_definitions
+ *                             "partition_definitions".
+ *                         <li>@ref gpudb::create_union_partition_definitions
+ *                             "create_union_partition_definitions":
+ *                             Comma-separated list of partition definitions,
+ *                             whose format depends on the choice of @ref
+ *                             gpudb::create_union_partition_type
+ *                             "partition_type".  See <a
+ *                             href="../../../concepts/tables/#partitioning-by-range"
+ *                             target="_top">range partitioning</a>, <a
+ *                             href="../../../concepts/tables/#partitioning-by-interval"
+ *                             target="_top">interval partitioning</a>, <a
+ *                             href="../../../concepts/tables/#partitioning-by-list"
+ *                             target="_top">list partitioning</a>, <a
+ *                             href="../../../concepts/tables/#partitioning-by-hash"
+ *                             target="_top">hash partitioning</a>, or <a
+ *                             href="../../../concepts/tables/#partitioning-by-series"
+ *                             target="_top">series partitioning</a> for
+ *                             example formats.
+ *                         <li>@ref gpudb::create_union_is_automatic_partition
+ *                             "create_union_is_automatic_partition": If @ref
+ *                             gpudb::create_union_true "true", a new partition
+ *                             will be created for values which don't fall into
+ *                             an existing partition.  Currently only supported
+ *                             for <a
+ *                             href="../../../concepts/tables/#partitioning-by-list"
+ *                             target="_top">list partitions</a>.
+ *                             Supported values:
+ *                             <ul>
+ *                                 <li>@ref gpudb::create_union_true
+ *                                     "create_union_true"
+ *                                 <li>@ref gpudb::create_union_false
+ *                                     "create_union_false"
+ *                             </ul>
+ *                             The default value is @ref
+ *                             gpudb::create_union_false "create_union_false".
  *                         <li>@ref gpudb::create_union_ttl "create_union_ttl":
  *                             Sets the <a href="../../../concepts/ttl/"
  *                             target="_top">TTL</a> of the output table
@@ -22221,7 +23644,7 @@ CreateUnionResponse& createUnion( const CreateUnionRequest& request_,
  *                             "create_union_no_count": Return a count of 0 for
  *                             the union table response to avoid the cost of
  *                             counting; optimization needed for many chunk
- *                             virtual_union's. The default value is 'false'.
+ *                             virtual unions. The default value is 'false'.
  *                     </ul>
  *                     The default value is an empty map.
  *
@@ -22241,28 +23664,19 @@ CreateUnionResponse createUnion( const std::string& tableName,
  * The following merges are supported:
  *
  * UNION (DISTINCT/ALL) - For data set union details and examples, see <a
- * href="../../../concepts/unions/" target="_top">Union</a>.  For limitations,
+ * href="../../../concepts/unions/" target="_top">Union</a>. For limitations,
  * see <a href="../../../concepts/unions/#limitations-and-cautions"
  * target="_top">Union Limitations and Cautions</a>.
  *
  * INTERSECT (DISTINCT/ALL) - For data set intersection details and examples,
- * see <a href="../../../concepts/intersect/" target="_top">Intersect</a>.  For
+ * see <a href="../../../concepts/intersect/" target="_top">Intersect</a>. For
  * limitations, see <a href="../../../concepts/intersect/#limitations"
  * target="_top">Intersect Limitations</a>.
  *
  * EXCEPT (DISTINCT/ALL) - For data set subtraction details and examples, see
- * <a href="../../../concepts/except/" target="_top">Except</a>.  For
+ * <a href="../../../concepts/except/" target="_top">Except</a>. For
  * limitations, see <a href="../../../concepts/except/#limitations"
  * target="_top">Except Limitations</a>.
- *
- * MERGE VIEWS - For a given set of <a href="../../../concepts/filtered_views/"
- * target="_top">filtered views</a> on a single table, creates a single
- * filtered view containing all of the unique records across all of the given
- * filtered data sets.
- *
- * Non-charN 'string' and 'bytes' column types cannot be merged, nor can
- * columns marked as <a href="../../../concepts/types/#data-handling"
- * target="_top">store-only</a>.
  *
  * @param[in] tableName  Name of the table to be created, in
  *                       [schema_name.]table_name format, using standard <a
@@ -22357,11 +23771,6 @@ CreateUnionResponse createUnion( const std::string& tableName,
  *                             The default value is @ref
  *                             gpudb::create_union_union_all
  *                             "create_union_union_all".
- *                         <li>@ref gpudb::create_union_long_hash
- *                             "create_union_long_hash": When true use 128 bit
- *                             hash for union-distinct, except, except_all,
- *                             intersect and intersect_all modes. Otherwise use
- *                             64 bit hash.
  *                         <li>@ref gpudb::create_union_chunk_size
  *                             "create_union_chunk_size": Indicates the number
  *                             of records per chunk to be used for this output
@@ -22380,6 +23789,75 @@ CreateUnionResponse createUnion( const std::string& tableName,
  *                             list of columns on which to create indexes on
  *                             the output table.  The columns specified must be
  *                             present in @a outputColumnNames.
+ *                         <li>@ref gpudb::create_union_partition_type
+ *                             "create_union_partition_type": <a
+ *                             href="../../../concepts/tables/#partitioning"
+ *                             target="_top">Partitioning</a> scheme to use for
+ *                             the output table.
+ *                             Supported values:
+ *                             <ul>
+ *                                 <li>@ref gpudb::create_union_RANGE
+ *                                     "create_union_RANGE": Use <a
+ *                                     href="../../../concepts/tables/#partitioning-by-range"
+ *                                     target="_top">range partitioning</a>.
+ *                                 <li>@ref gpudb::create_union_INTERVAL
+ *                                     "create_union_INTERVAL": Use <a
+ *                                     href="../../../concepts/tables/#partitioning-by-interval"
+ *                                     target="_top">interval partitioning</a>.
+ *                                 <li>@ref gpudb::create_union_LIST
+ *                                     "create_union_LIST": Use <a
+ *                                     href="../../../concepts/tables/#partitioning-by-list"
+ *                                     target="_top">list partitioning</a>.
+ *                                 <li>@ref gpudb::create_union_HASH
+ *                                     "create_union_HASH": Use <a
+ *                                     href="../../../concepts/tables/#partitioning-by-hash"
+ *                                     target="_top">hash partitioning</a>.
+ *                                 <li>@ref gpudb::create_union_SERIES
+ *                                     "create_union_SERIES": Use <a
+ *                                     href="../../../concepts/tables/#partitioning-by-series"
+ *                                     target="_top">series partitioning</a>.
+ *                             </ul>
+ *                         <li>@ref gpudb::create_union_partition_keys
+ *                             "create_union_partition_keys": Comma-separated
+ *                             list of partition keys, which are the columns or
+ *                             column expressions by which records will be
+ *                             assigned to partitions defined by @ref
+ *                             gpudb::create_union_partition_definitions
+ *                             "partition_definitions".
+ *                         <li>@ref gpudb::create_union_partition_definitions
+ *                             "create_union_partition_definitions":
+ *                             Comma-separated list of partition definitions,
+ *                             whose format depends on the choice of @ref
+ *                             gpudb::create_union_partition_type
+ *                             "partition_type".  See <a
+ *                             href="../../../concepts/tables/#partitioning-by-range"
+ *                             target="_top">range partitioning</a>, <a
+ *                             href="../../../concepts/tables/#partitioning-by-interval"
+ *                             target="_top">interval partitioning</a>, <a
+ *                             href="../../../concepts/tables/#partitioning-by-list"
+ *                             target="_top">list partitioning</a>, <a
+ *                             href="../../../concepts/tables/#partitioning-by-hash"
+ *                             target="_top">hash partitioning</a>, or <a
+ *                             href="../../../concepts/tables/#partitioning-by-series"
+ *                             target="_top">series partitioning</a> for
+ *                             example formats.
+ *                         <li>@ref gpudb::create_union_is_automatic_partition
+ *                             "create_union_is_automatic_partition": If @ref
+ *                             gpudb::create_union_true "true", a new partition
+ *                             will be created for values which don't fall into
+ *                             an existing partition.  Currently only supported
+ *                             for <a
+ *                             href="../../../concepts/tables/#partitioning-by-list"
+ *                             target="_top">list partitions</a>.
+ *                             Supported values:
+ *                             <ul>
+ *                                 <li>@ref gpudb::create_union_true
+ *                                     "create_union_true"
+ *                                 <li>@ref gpudb::create_union_false
+ *                                     "create_union_false"
+ *                             </ul>
+ *                             The default value is @ref
+ *                             gpudb::create_union_false "create_union_false".
  *                         <li>@ref gpudb::create_union_ttl "create_union_ttl":
  *                             Sets the <a href="../../../concepts/ttl/"
  *                             target="_top">TTL</a> of the output table
@@ -22435,7 +23913,7 @@ CreateUnionResponse createUnion( const std::string& tableName,
  *                             "create_union_no_count": Return a count of 0 for
  *                             the union table response to avoid the cost of
  *                             counting; optimization needed for many chunk
- *                             virtual_union's. The default value is 'false'.
+ *                             virtual unions. The default value is 'false'.
  *                     </ul>
  *                     The default value is an empty map.
  * @param[out] response_  @ref gpudb::CreateUnionResponse "Response" object
@@ -22500,10 +23978,10 @@ CreateUserExternalResponse& createUserExternal( const CreateUserExternalRequest&
  *                             <ul>
  *                                 <li>@ref gpudb::create_user_external_true
  *                                     "create_user_external_true": User may
- *                                     login
+ *                                     login.
  *                                 <li>@ref gpudb::create_user_external_false
  *                                     "create_user_external_false": User may
- *                                     not login
+ *                                     not login.
  *                             </ul>
  *                             The default value is @ref
  *                             gpudb::create_user_external_true
@@ -22526,7 +24004,7 @@ CreateUserExternalResponse& createUserExternal( const CreateUserExternalRequest&
  *                             "create_user_external_true".
  *                         <li>@ref gpudb::create_user_external_default_schema
  *                             "create_user_external_default_schema": Default
- *                             schema to associate with this user
+ *                             schema to associate with this user.
  *                         <li>@ref
  *                             gpudb::create_user_external_directory_data_limit
  *                             "create_user_external_directory_data_limit": The
@@ -22540,7 +24018,7 @@ CreateUserExternalResponse& createUserExternal( const CreateUserExternalRequest&
  *                         <li>@ref gpudb::create_user_external_resource_group
  *                             "create_user_external_resource_group": Name of
  *                             an existing resource group to associate with
- *                             this user
+ *                             this user.
  *                     </ul>
  *                     The default value is an empty map.
  *
@@ -22568,10 +24046,10 @@ CreateUserExternalResponse createUserExternal( const std::string& name,
  *                             <ul>
  *                                 <li>@ref gpudb::create_user_external_true
  *                                     "create_user_external_true": User may
- *                                     login
+ *                                     login.
  *                                 <li>@ref gpudb::create_user_external_false
  *                                     "create_user_external_false": User may
- *                                     not login
+ *                                     not login.
  *                             </ul>
  *                             The default value is @ref
  *                             gpudb::create_user_external_true
@@ -22594,7 +24072,7 @@ CreateUserExternalResponse createUserExternal( const std::string& name,
  *                             "create_user_external_true".
  *                         <li>@ref gpudb::create_user_external_default_schema
  *                             "create_user_external_default_schema": Default
- *                             schema to associate with this user
+ *                             schema to associate with this user.
  *                         <li>@ref
  *                             gpudb::create_user_external_directory_data_limit
  *                             "create_user_external_directory_data_limit": The
@@ -22608,7 +24086,7 @@ CreateUserExternalResponse createUserExternal( const std::string& name,
  *                         <li>@ref gpudb::create_user_external_resource_group
  *                             "create_user_external_resource_group": Name of
  *                             an existing resource group to associate with
- *                             this user
+ *                             this user.
  *                     </ul>
  *                     The default value is an empty map.
  * @param[out] response_  @ref gpudb::CreateUserExternalResponse "Response"
@@ -22667,10 +24145,10 @@ CreateUserInternalResponse& createUserInternal( const CreateUserInternalRequest&
  *                             <ul>
  *                                 <li>@ref gpudb::create_user_internal_true
  *                                     "create_user_internal_true": User may
- *                                     login
+ *                                     login.
  *                                 <li>@ref gpudb::create_user_internal_false
  *                                     "create_user_internal_false": User may
- *                                     not login
+ *                                     not login.
  *                             </ul>
  *                             The default value is @ref
  *                             gpudb::create_user_internal_true
@@ -22693,7 +24171,7 @@ CreateUserInternalResponse& createUserInternal( const CreateUserInternalRequest&
  *                             "create_user_internal_true".
  *                         <li>@ref gpudb::create_user_internal_default_schema
  *                             "create_user_internal_default_schema": Default
- *                             schema to associate with this user
+ *                             schema to associate with this user.
  *                         <li>@ref
  *                             gpudb::create_user_internal_directory_data_limit
  *                             "create_user_internal_directory_data_limit": The
@@ -22707,7 +24185,7 @@ CreateUserInternalResponse& createUserInternal( const CreateUserInternalRequest&
  *                         <li>@ref gpudb::create_user_internal_resource_group
  *                             "create_user_internal_resource_group": Name of
  *                             an existing resource group to associate with
- *                             this user
+ *                             this user.
  *                     </ul>
  *                     The default value is an empty map.
  *
@@ -22737,10 +24215,10 @@ CreateUserInternalResponse createUserInternal( const std::string& name,
  *                             <ul>
  *                                 <li>@ref gpudb::create_user_internal_true
  *                                     "create_user_internal_true": User may
- *                                     login
+ *                                     login.
  *                                 <li>@ref gpudb::create_user_internal_false
  *                                     "create_user_internal_false": User may
- *                                     not login
+ *                                     not login.
  *                             </ul>
  *                             The default value is @ref
  *                             gpudb::create_user_internal_true
@@ -22763,7 +24241,7 @@ CreateUserInternalResponse createUserInternal( const std::string& name,
  *                             "create_user_internal_true".
  *                         <li>@ref gpudb::create_user_internal_default_schema
  *                             "create_user_internal_default_schema": Default
- *                             schema to associate with this user
+ *                             schema to associate with this user.
  *                         <li>@ref
  *                             gpudb::create_user_internal_directory_data_limit
  *                             "create_user_internal_directory_data_limit": The
@@ -22777,7 +24255,7 @@ CreateUserInternalResponse createUserInternal( const std::string& name,
  *                         <li>@ref gpudb::create_user_internal_resource_group
  *                             "create_user_internal_resource_group": Name of
  *                             an existing resource group to associate with
- *                             this user
+ *                             this user.
  *                     </ul>
  *                     The default value is an empty map.
  * @param[out] response_  @ref gpudb::CreateUserInternalResponse "Response"
@@ -22828,7 +24306,7 @@ CreateVideoResponse& createVideo( const CreateVideoRequest& request_,
  *                       may be any numeric type.
  * @param[in] begin  The start point for the video. Accepts an expression
  *                   evaluable over the @a attribute.
- * @param[in] durationSeconds  Seconds of video to produce
+ * @param[in] durationSeconds  Seconds of video to produce.
  * @param[in] end  The end point for the video. Accepts an expression evaluable
  *                 over the @a attribute.
  * @param[in] framesPerSecond  The presentation frame rate of the encoded video
@@ -22932,7 +24410,7 @@ CreateVideoResponse createVideo( const std::string& attribute,
  *                       may be any numeric type.
  * @param[in] begin  The start point for the video. Accepts an expression
  *                   evaluable over the @a attribute.
- * @param[in] durationSeconds  Seconds of video to produce
+ * @param[in] durationSeconds  Seconds of video to produce.
  * @param[in] end  The end point for the video. Accepts an expression evaluable
  *                 over the @a attribute.
  * @param[in] framesPerSecond  The presentation frame rate of the encoded video
@@ -23063,7 +24541,7 @@ DeleteDirectoryResponse& deleteDirectory( const DeleteDirectoryRequest& request_
  * @param[in] directoryName  Name of the directory in KiFS to be deleted. The
  *                           directory must contain no files, unless @ref
  *                           gpudb::delete_directory_recursive "recursive" is
- *                           @ref gpudb::delete_directory_true "true"
+ *                           @ref gpudb::delete_directory_true "true".
  * @param[in] options  Optional parameters.
  *                     <ul>
  *                         <li>@ref gpudb::delete_directory_recursive
@@ -23113,7 +24591,7 @@ DeleteDirectoryResponse deleteDirectory( const std::string& directoryName,
  * @param[in] directoryName  Name of the directory in KiFS to be deleted. The
  *                           directory must contain no files, unless @ref
  *                           gpudb::delete_directory_recursive "recursive" is
- *                           @ref gpudb::delete_directory_true "true"
+ *                           @ref gpudb::delete_directory_true "true".
  * @param[in] options  Optional parameters.
  *                     <ul>
  *                         <li>@ref gpudb::delete_directory_recursive
@@ -23933,6 +25411,232 @@ DownloadFilesResponse& downloadFiles( const std::vector<std::string>& fileNames,
                                       const std::map<std::string, std::string>& options,
                                       DownloadFilesResponse& response_ ) const;
 
+/**
+ * Deletes one or more existing database <a
+ * href="../../../admin/backup_restore/#database-backup"
+ * target="_top">backups</a> and contained snapshots, accessible via the <a
+ * href="../../../concepts/data_sinks/" target="_top">data sink</a> specified
+ * by @ref gpudb::DropBackupRequest::datasinkName "datasinkName".
+ *
+ * @param[in] request_  @ref gpudb::DropBackupRequest "Request" object
+ *                      containing the parameters for the operation.
+ *
+ * @return @ref gpudb::DropBackupResponse "Response" object containing the
+ *         result of the operation.
+ */
+DropBackupResponse dropBackup( const DropBackupRequest& request_ ) const;
+
+/**
+ * Deletes one or more existing database <a
+ * href="../../../admin/backup_restore/#database-backup"
+ * target="_top">backups</a> and contained snapshots, accessible via the <a
+ * href="../../../concepts/data_sinks/" target="_top">data sink</a> specified
+ * by @ref gpudb::DropBackupRequest::datasinkName "datasinkName".
+ *
+ * @param[in] request_  @ref gpudb::DropBackupRequest "Request" object
+ *                      containing the parameters for the operation.
+ * @param[out] response_  @ref gpudb::DropBackupResponse "Response" object
+ *                        containing the results of the operation.
+ *
+ * @return @ref gpudb::DropBackupResponse "Response" object containing the
+ *         result of the operation (initially passed in by reference).
+ */
+DropBackupResponse& dropBackup( const DropBackupRequest& request_,
+                                DropBackupResponse& response_ ) const;
+
+/**
+ * Deletes one or more existing database <a
+ * href="../../../admin/backup_restore/#database-backup"
+ * target="_top">backups</a> and contained snapshots, accessible via the <a
+ * href="../../../concepts/data_sinks/" target="_top">data sink</a> specified
+ * by @a datasinkName.
+ *
+ * @param[in] backupName  Name of the backup to be deleted. An empty string or
+ *                        '*' will delete all existing backups. Any text
+ *                        followed by a '*' will delete backups whose name
+ *                        starts with that text.  When deleting multiple
+ *                        backups, @ref gpudb::drop_backup_delete_all_backups
+ *                        "delete_all_backups" must be set to @ref
+ *                        gpudb::drop_backup_true "true".
+ * @param[in] datasinkName  Data sink through which the backup is accessible.
+ * @param[in] options  Optional parameters.
+ *                     <ul>
+ *                         <li>@ref gpudb::drop_backup_dry_run
+ *                             "drop_backup_dry_run": Whether or not to perform
+ *                             a dry run of a backup deletion.
+ *                             Supported values:
+ *                             <ul>
+ *                                 <li>@ref gpudb::drop_backup_true
+ *                                     "drop_backup_true"
+ *                                 <li>@ref gpudb::drop_backup_false
+ *                                     "drop_backup_false"
+ *                             </ul>
+ *                             The default value is @ref
+ *                             gpudb::drop_backup_false "drop_backup_false".
+ *                         <li>@ref gpudb::drop_backup_delete_all_backups
+ *                             "drop_backup_delete_all_backups": Allow multiple
+ *                             backups to be deleted if @ref
+ *                             gpudb::drop_backup_true "true" and multiple
+ *                             backup names are found matching @a backupName.
+ *                             Supported values:
+ *                             <ul>
+ *                                 <li>@ref gpudb::drop_backup_true
+ *                                     "drop_backup_true"
+ *                                 <li>@ref gpudb::drop_backup_false
+ *                                     "drop_backup_false"
+ *                             </ul>
+ *                             The default value is @ref
+ *                             gpudb::drop_backup_false "drop_backup_false".
+ *                         <li>@ref gpudb::drop_backup_no_error_if_not_exists
+ *                             "drop_backup_no_error_if_not_exists": Whether or
+ *                             not to suppress the error if the specified
+ *                             backup does not exist.
+ *                             Supported values:
+ *                             <ul>
+ *                                 <li>@ref gpudb::drop_backup_true
+ *                                     "drop_backup_true"
+ *                                 <li>@ref gpudb::drop_backup_false
+ *                                     "drop_backup_false"
+ *                             </ul>
+ *                             The default value is @ref
+ *                             gpudb::drop_backup_false "drop_backup_false".
+ *                     </ul>
+ *                     The default value is an empty map.
+ *
+ * @return @ref gpudb::DropBackupResponse "Response" object containing the
+ *         result of the operation.
+ */
+DropBackupResponse dropBackup( const std::string& backupName,
+                               const std::string& datasinkName,
+                               const std::map<std::string, std::string>& options ) const;
+
+/**
+ * Deletes one or more existing database <a
+ * href="../../../admin/backup_restore/#database-backup"
+ * target="_top">backups</a> and contained snapshots, accessible via the <a
+ * href="../../../concepts/data_sinks/" target="_top">data sink</a> specified
+ * by @a datasinkName.
+ *
+ * @param[in] backupName  Name of the backup to be deleted. An empty string or
+ *                        '*' will delete all existing backups. Any text
+ *                        followed by a '*' will delete backups whose name
+ *                        starts with that text.  When deleting multiple
+ *                        backups, @ref gpudb::drop_backup_delete_all_backups
+ *                        "delete_all_backups" must be set to @ref
+ *                        gpudb::drop_backup_true "true".
+ * @param[in] datasinkName  Data sink through which the backup is accessible.
+ * @param[in] options  Optional parameters.
+ *                     <ul>
+ *                         <li>@ref gpudb::drop_backup_dry_run
+ *                             "drop_backup_dry_run": Whether or not to perform
+ *                             a dry run of a backup deletion.
+ *                             Supported values:
+ *                             <ul>
+ *                                 <li>@ref gpudb::drop_backup_true
+ *                                     "drop_backup_true"
+ *                                 <li>@ref gpudb::drop_backup_false
+ *                                     "drop_backup_false"
+ *                             </ul>
+ *                             The default value is @ref
+ *                             gpudb::drop_backup_false "drop_backup_false".
+ *                         <li>@ref gpudb::drop_backup_delete_all_backups
+ *                             "drop_backup_delete_all_backups": Allow multiple
+ *                             backups to be deleted if @ref
+ *                             gpudb::drop_backup_true "true" and multiple
+ *                             backup names are found matching @a backupName.
+ *                             Supported values:
+ *                             <ul>
+ *                                 <li>@ref gpudb::drop_backup_true
+ *                                     "drop_backup_true"
+ *                                 <li>@ref gpudb::drop_backup_false
+ *                                     "drop_backup_false"
+ *                             </ul>
+ *                             The default value is @ref
+ *                             gpudb::drop_backup_false "drop_backup_false".
+ *                         <li>@ref gpudb::drop_backup_no_error_if_not_exists
+ *                             "drop_backup_no_error_if_not_exists": Whether or
+ *                             not to suppress the error if the specified
+ *                             backup does not exist.
+ *                             Supported values:
+ *                             <ul>
+ *                                 <li>@ref gpudb::drop_backup_true
+ *                                     "drop_backup_true"
+ *                                 <li>@ref gpudb::drop_backup_false
+ *                                     "drop_backup_false"
+ *                             </ul>
+ *                             The default value is @ref
+ *                             gpudb::drop_backup_false "drop_backup_false".
+ *                     </ul>
+ *                     The default value is an empty map.
+ * @param[out] response_  @ref gpudb::DropBackupResponse "Response" object
+ *                        containing the results of the operation.
+ *
+ * @return @ref gpudb::DropBackupResponse "Response" object containing the
+ *         result of the operation (initially passed in by reference).
+ */
+DropBackupResponse& dropBackup( const std::string& backupName,
+                                const std::string& datasinkName,
+                                const std::map<std::string, std::string>& options,
+                                DropBackupResponse& response_ ) const;
+
+/**
+ * Drops an existing catalog.  Any external tables that depend on the catalog
+ * must be dropped before it can be dropped.
+ *
+ * @param[in] request_  @ref gpudb::DropCatalogRequest "Request" object
+ *                      containing the parameters for the operation.
+ *
+ * @return @ref gpudb::DropCatalogResponse "Response" object containing the
+ *         result of the operation.
+ */
+DropCatalogResponse dropCatalog( const DropCatalogRequest& request_ ) const;
+
+/**
+ * Drops an existing catalog.  Any external tables that depend on the catalog
+ * must be dropped before it can be dropped.
+ *
+ * @param[in] request_  @ref gpudb::DropCatalogRequest "Request" object
+ *                      containing the parameters for the operation.
+ * @param[out] response_  @ref gpudb::DropCatalogResponse "Response" object
+ *                        containing the results of the operation.
+ *
+ * @return @ref gpudb::DropCatalogResponse "Response" object containing the
+ *         result of the operation (initially passed in by reference).
+ */
+DropCatalogResponse& dropCatalog( const DropCatalogRequest& request_,
+                                  DropCatalogResponse& response_ ) const;
+
+/**
+ * Drops an existing catalog.  Any external tables that depend on the catalog
+ * must be dropped before it can be dropped.
+ *
+ * @param[in] name  Name of the catalog to be dropped. Must be an existing
+ *                  catalog.
+ * @param[in] options  Optional parameters. The default value is an empty map.
+ *
+ * @return @ref gpudb::DropCatalogResponse "Response" object containing the
+ *         result of the operation.
+ */
+DropCatalogResponse dropCatalog( const std::string& name,
+                                 const std::map<std::string, std::string>& options ) const;
+
+/**
+ * Drops an existing catalog.  Any external tables that depend on the catalog
+ * must be dropped before it can be dropped.
+ *
+ * @param[in] name  Name of the catalog to be dropped. Must be an existing
+ *                  catalog.
+ * @param[in] options  Optional parameters. The default value is an empty map.
+ * @param[out] response_  @ref gpudb::DropCatalogResponse "Response" object
+ *                        containing the results of the operation.
+ *
+ * @return @ref gpudb::DropCatalogResponse "Response" object containing the
+ *         result of the operation (initially passed in by reference).
+ */
+DropCatalogResponse& dropCatalog( const std::string& name,
+                                  const std::map<std::string, std::string>& options,
+                                  DropCatalogResponse& response_ ) const;
+
 /** @private */
 DropContainerRegistryResponse dropContainerRegistry( const DropContainerRegistryRequest& request_ ) const;
 
@@ -24462,7 +26166,7 @@ EvaluateModelResponse& evaluateModel( const std::string& modelName,
  * proc to complete before returning.
  *
  * If the proc being executed is distributed, @ref
- * gpudb::ExecuteProcRequest::inputTableNames "inputTableNames" & @ref
+ * gpudb::ExecuteProcRequest::inputTableNames "inputTableNames" and @ref
  * gpudb::ExecuteProcRequest::inputColumnNames "inputColumnNames" may be passed
  * to the proc to use for reading data, and @ref
  * gpudb::ExecuteProcRequest::outputTableNames "outputTableNames" may be passed
@@ -24484,7 +26188,7 @@ ExecuteProcResponse executeProc( const ExecuteProcRequest& request_ ) const;
  * proc to complete before returning.
  *
  * If the proc being executed is distributed, @ref
- * gpudb::ExecuteProcRequest::inputTableNames "inputTableNames" & @ref
+ * gpudb::ExecuteProcRequest::inputTableNames "inputTableNames" and @ref
  * gpudb::ExecuteProcRequest::inputColumnNames "inputColumnNames" may be passed
  * to the proc to use for reading data, and @ref
  * gpudb::ExecuteProcRequest::outputTableNames "outputTableNames" may be passed
@@ -24508,7 +26212,7 @@ ExecuteProcResponse& executeProc( const ExecuteProcRequest& request_,
  * Executes a proc. This endpoint is asynchronous and does not wait for the
  * proc to complete before returning.
  *
- * If the proc being executed is distributed, @a inputTableNames & @a
+ * If the proc being executed is distributed, @a inputTableNames and @a
  * inputColumnNames may be passed to the proc to use for reading data, and @a
  * outputTableNames may be passed to the proc to use for writing data.
  *
@@ -24636,7 +26340,7 @@ ExecuteProcResponse executeProc( const std::string& procName,
  * Executes a proc. This endpoint is asynchronous and does not wait for the
  * proc to complete before returning.
  *
- * If the proc being executed is distributed, @a inputTableNames & @a
+ * If the proc being executed is distributed, @a inputTableNames and @a
  * inputColumnNames may be passed to the proc to use for reading data, and @a
  * outputTableNames may be passed to the proc to use for writing data.
  *
@@ -24925,7 +26629,7 @@ ExecuteSqlResponse& executeSql( const ExecuteSqlRequest& request_,
  * no paging table was created (e.g., when all the query results were returned
  * in the first call).
  *
- * @param[in] statement  SQL statement (query, DML, or DDL) to be executed
+ * @param[in] statement  SQL statement (query, DML, or DDL) to be executed.
  * @param[in] offset  A positive integer indicating the number of initial
  *                    results to skip (this can be useful for paging through
  *                    the results). The default value is 0. The minimum allowed
@@ -24940,8 +26644,9 @@ ExecuteSqlResponse& executeSql( const ExecuteSqlRequest& request_,
  *                   server configuration. Use @ref
  *                   gpudb::RawExecuteSqlResponse::hasMoreRecords
  *                   "hasMoreRecords" to see if more records exist in the
- *                   result to be fetched, and @a offset & @a limit to request
- *                   subsequent pages of results. The default value is -9999.
+ *                   result to be fetched, and @a offset and @a limit to
+ *                   request subsequent pages of results. The default value is
+ *                   -9999.
  * @param[in] requestSchemaStr  Avro schema of @a data. The default value is
  *                              ''.
  * @param[in] data  An array of binary-encoded data for the records to be
@@ -25026,11 +26731,11 @@ ExecuteSqlResponse& executeSql( const ExecuteSqlRequest& request_,
  *                                 <li>@ref gpudb::execute_sql_true
  *                                     "execute_sql_true": Ignore
  *                                     inserts/updates that result in primary
- *                                     key collisions with existing records
+ *                                     key collisions with existing records.
  *                                 <li>@ref gpudb::execute_sql_false
  *                                     "execute_sql_false": Treat as errors any
  *                                     inserts/updates that result in primary
- *                                     key collisions with existing records
+ *                                     key collisions with existing records.
  *                             </ul>
  *                             The default value is @ref
  *                             gpudb::execute_sql_false "execute_sql_false".
@@ -25211,11 +26916,11 @@ ExecuteSqlResponse& executeSql( const ExecuteSqlRequest& request_,
  *                                     collided-into record with the record
  *                                     inserted or updated when a new/modified
  *                                     record causes a primary key collision
- *                                     with an existing record
+ *                                     with an existing record.
  *                                 <li>@ref gpudb::execute_sql_false
  *                                     "execute_sql_false": Reject the insert
  *                                     or update when it results in a primary
- *                                     key collision with an existing record
+ *                                     key collision with an existing record.
  *                             </ul>
  *                             The default value is @ref
  *                             gpudb::execute_sql_false "execute_sql_false".
@@ -25281,7 +26986,7 @@ ExecuteSqlResponse executeSql( const std::string& statement,
  * no paging table was created (e.g., when all the query results were returned
  * in the first call).
  *
- * @param[in] statement  SQL statement (query, DML, or DDL) to be executed
+ * @param[in] statement  SQL statement (query, DML, or DDL) to be executed.
  * @param[in] offset  A positive integer indicating the number of initial
  *                    results to skip (this can be useful for paging through
  *                    the results). The default value is 0. The minimum allowed
@@ -25296,8 +27001,9 @@ ExecuteSqlResponse executeSql( const std::string& statement,
  *                   server configuration. Use @ref
  *                   gpudb::RawExecuteSqlResponse::hasMoreRecords
  *                   "hasMoreRecords" to see if more records exist in the
- *                   result to be fetched, and @a offset & @a limit to request
- *                   subsequent pages of results. The default value is -9999.
+ *                   result to be fetched, and @a offset and @a limit to
+ *                   request subsequent pages of results. The default value is
+ *                   -9999.
  * @param[in] requestSchemaStr  Avro schema of @a data. The default value is
  *                              ''.
  * @param[in] data  An array of binary-encoded data for the records to be
@@ -25382,11 +27088,11 @@ ExecuteSqlResponse executeSql( const std::string& statement,
  *                                 <li>@ref gpudb::execute_sql_true
  *                                     "execute_sql_true": Ignore
  *                                     inserts/updates that result in primary
- *                                     key collisions with existing records
+ *                                     key collisions with existing records.
  *                                 <li>@ref gpudb::execute_sql_false
  *                                     "execute_sql_false": Treat as errors any
  *                                     inserts/updates that result in primary
- *                                     key collisions with existing records
+ *                                     key collisions with existing records.
  *                             </ul>
  *                             The default value is @ref
  *                             gpudb::execute_sql_false "execute_sql_false".
@@ -25567,11 +27273,11 @@ ExecuteSqlResponse executeSql( const std::string& statement,
  *                                     collided-into record with the record
  *                                     inserted or updated when a new/modified
  *                                     record causes a primary key collision
- *                                     with an existing record
+ *                                     with an existing record.
  *                                 <li>@ref gpudb::execute_sql_false
  *                                     "execute_sql_false": Reject the insert
  *                                     or update when it results in a primary
- *                                     key collision with an existing record
+ *                                     key collision with an existing record.
  *                             </ul>
  *                             The default value is @ref
  *                             gpudb::execute_sql_false "execute_sql_false".
@@ -25651,7 +27357,7 @@ ExportQueryMetricsResponse& exportQueryMetrics( const ExportQueryMetricsRequest&
  *                     <ul>
  *                         <li>@ref gpudb::export_query_metrics_expression
  *                             "export_query_metrics_expression": Filter for
- *                             multi query export
+ *                             multi query export.
  *                         <li>@ref gpudb::export_query_metrics_filepath
  *                             "export_query_metrics_filepath": Path to export
  *                             target specified as a filename or existing
@@ -25663,21 +27369,21 @@ ExportQueryMetricsResponse& exportQueryMetrics( const ExportQueryMetricsRequest&
  *                             <ul>
  *                                 <li>@ref gpudb::export_query_metrics_json
  *                                     "export_query_metrics_json": Generic
- *                                     json output
+ *                                     JSON output.
  *                                 <li>@ref
  *                                     gpudb::export_query_metrics_json_trace_event
  *                                     "export_query_metrics_json_trace_event":
- *                                     Chromium/Perfetto trace event format
+ *                                     Chromium/Perfetto trace event format.
  *                             </ul>
  *                             The default value is @ref
  *                             gpudb::export_query_metrics_json
  *                             "export_query_metrics_json".
  *                         <li>@ref gpudb::export_query_metrics_job_id
  *                             "export_query_metrics_job_id": Export query
- *                             metrics for the currently running job
+ *                             metrics for the currently running job.
  *                         <li>@ref gpudb::export_query_metrics_limit
  *                             "export_query_metrics_limit": Record limit per
- *                             file for multi query export
+ *                             file for multi query export.
  *                     </ul>
  *                     The default value is an empty map.
  *
@@ -25694,7 +27400,7 @@ ExportQueryMetricsResponse exportQueryMetrics( const std::map<std::string, std::
  *                     <ul>
  *                         <li>@ref gpudb::export_query_metrics_expression
  *                             "export_query_metrics_expression": Filter for
- *                             multi query export
+ *                             multi query export.
  *                         <li>@ref gpudb::export_query_metrics_filepath
  *                             "export_query_metrics_filepath": Path to export
  *                             target specified as a filename or existing
@@ -25706,21 +27412,21 @@ ExportQueryMetricsResponse exportQueryMetrics( const std::map<std::string, std::
  *                             <ul>
  *                                 <li>@ref gpudb::export_query_metrics_json
  *                                     "export_query_metrics_json": Generic
- *                                     json output
+ *                                     JSON output.
  *                                 <li>@ref
  *                                     gpudb::export_query_metrics_json_trace_event
  *                                     "export_query_metrics_json_trace_event":
- *                                     Chromium/Perfetto trace event format
+ *                                     Chromium/Perfetto trace event format.
  *                             </ul>
  *                             The default value is @ref
  *                             gpudb::export_query_metrics_json
  *                             "export_query_metrics_json".
  *                         <li>@ref gpudb::export_query_metrics_job_id
  *                             "export_query_metrics_job_id": Export query
- *                             metrics for the currently running job
+ *                             metrics for the currently running job.
  *                         <li>@ref gpudb::export_query_metrics_limit
  *                             "export_query_metrics_limit": Record limit per
- *                             file for multi query export
+ *                             file for multi query export.
  *                     </ul>
  *                     The default value is an empty map.
  * @param[out] response_  @ref gpudb::ExportQueryMetricsResponse "Response"
@@ -25807,7 +27513,8 @@ ExportRecordsToFilesResponse& exportRecordsToFiles( const ExportRecordsToFilesRe
  *
  * All filenames created are returned in the response.
  *
- * @param[in] tableName
+ * @param[in] tableName  The name of the table whose records are to be
+ *                       exported.
  * @param[in] filepath  Path to data export target.  If @a filepath has a file
  *                      extension, it is read as the name of a file. If @a
  *                      filepath is a directory, then the source table name
@@ -25830,7 +27537,7 @@ ExportRecordsToFilesResponse& exportRecordsToFiles( const ExportRecordsToFilesRe
  *                             each source column specified, applies the
  *                             column-property-bound format.  Currently
  *                             supported column properties include date, time,
- *                             & datetime. The parameter value must be
+ *                             and datetime. The parameter value must be
  *                             formatted as a JSON string of maps of column
  *                             names to maps of column properties to their
  *                             corresponding column formats, e.g., '{
@@ -25881,9 +27588,9 @@ ExportRecordsToFilesResponse& exportRecordsToFiles( const ExportRecordsToFilesRe
  *                             "export_records_to_files_default_column_formats":
  *                             Specifies the default format to use to write
  *                             data.  Currently supported column properties
- *                             include date, time, & datetime.  This default
+ *                             include date, time, and datetime.  This default
  *                             column-property-bound format can be overridden
- *                             by specifying a column property & format for a
+ *                             by specifying a column property and format for a
  *                             given source column in @ref
  *                             gpudb::export_records_to_files_column_formats
  *                             "column_formats". For each specified annotation,
@@ -26076,7 +27783,8 @@ ExportRecordsToFilesResponse exportRecordsToFiles( const std::string& tableName,
  *
  * All filenames created are returned in the response.
  *
- * @param[in] tableName
+ * @param[in] tableName  The name of the table whose records are to be
+ *                       exported.
  * @param[in] filepath  Path to data export target.  If @a filepath has a file
  *                      extension, it is read as the name of a file. If @a
  *                      filepath is a directory, then the source table name
@@ -26099,7 +27807,7 @@ ExportRecordsToFilesResponse exportRecordsToFiles( const std::string& tableName,
  *                             each source column specified, applies the
  *                             column-property-bound format.  Currently
  *                             supported column properties include date, time,
- *                             & datetime. The parameter value must be
+ *                             and datetime. The parameter value must be
  *                             formatted as a JSON string of maps of column
  *                             names to maps of column properties to their
  *                             corresponding column formats, e.g., '{
@@ -26150,9 +27858,9 @@ ExportRecordsToFilesResponse exportRecordsToFiles( const std::string& tableName,
  *                             "export_records_to_files_default_column_formats":
  *                             Specifies the default format to use to write
  *                             data.  Currently supported column properties
- *                             include date, time, & datetime.  This default
+ *                             include date, time, and datetime.  This default
  *                             column-property-bound format can be overridden
- *                             by specifying a column property & format for a
+ *                             by specifying a column property and format for a
  *                             given source column in @ref
  *                             gpudb::export_records_to_files_column_formats
  *                             "column_formats". For each specified annotation,
@@ -26332,7 +28040,7 @@ ExportRecordsToFilesResponse& exportRecordsToFiles( const std::string& tableName
 
 /**
  * Exports records from source table to the specified target table in an
- * external database
+ * external database.
  *
  * @param[in] request_  @ref gpudb::ExportRecordsToTableRequest "Request"
  *                      object containing the parameters for the operation.
@@ -26344,7 +28052,7 @@ ExportRecordsToTableResponse exportRecordsToTable( const ExportRecordsToTableReq
 
 /**
  * Exports records from source table to the specified target table in an
- * external database
+ * external database.
  *
  * @param[in] request_  @ref gpudb::ExportRecordsToTableRequest "Request"
  *                      object containing the parameters for the operation.
@@ -26360,7 +28068,7 @@ ExportRecordsToTableResponse& exportRecordsToTable( const ExportRecordsToTableRe
 
 /**
  * Exports records from source table to the specified target table in an
- * external database
+ * external database.
  *
  * @param[in] tableName  Name of the table from which the data will be exported
  *                       to remote database, in [schema_name.]table_name
@@ -26379,7 +28087,7 @@ ExportRecordsToTableResponse& exportRecordsToTable( const ExportRecordsToTableRe
  *                             gpudb::export_records_to_table_datasink_name
  *                             "export_records_to_table_datasink_name": Name of
  *                             an existing external data sink to which table
- *                             name specified in @a tableName will be exported
+ *                             name specified in @a tableName will be exported.
  *                         <li>@ref
  *                             gpudb::export_records_to_table_jdbc_session_init_statement
  *                             "export_records_to_table_jdbc_session_init_statement":
@@ -26442,7 +28150,7 @@ ExportRecordsToTableResponse exportRecordsToTable( const std::string& tableName,
 
 /**
  * Exports records from source table to the specified target table in an
- * external database
+ * external database.
  *
  * @param[in] tableName  Name of the table from which the data will be exported
  *                       to remote database, in [schema_name.]table_name
@@ -26461,7 +28169,7 @@ ExportRecordsToTableResponse exportRecordsToTable( const std::string& tableName,
  *                             gpudb::export_records_to_table_datasink_name
  *                             "export_records_to_table_datasink_name": Name of
  *                             an existing external data sink to which table
- *                             name specified in @a tableName will be exported
+ *                             name specified in @a tableName will be exported.
  *                         <li>@ref
  *                             gpudb::export_records_to_table_jdbc_session_init_statement
  *                             "export_records_to_table_jdbc_session_init_statement":
@@ -26625,7 +28333,7 @@ FilterResponse& filter( const FilterRequest& request_,
  *                             created view. If the schema is non-existent, it
  *                             will be automatically created.
  *                         <li>@ref gpudb::filter_view_id "filter_view_id":
- *                             view this filtered-view is part of. The default
+ *                             View this filtered-view is part of. The default
  *                             value is ''.
  *                         <li>@ref gpudb::filter_ttl "filter_ttl": Sets the <a
  *                             href="../../../concepts/ttl/"
@@ -26700,7 +28408,7 @@ FilterResponse filter( const std::string& tableName,
  *                             created view. If the schema is non-existent, it
  *                             will be automatically created.
  *                         <li>@ref gpudb::filter_view_id "filter_view_id":
- *                             view this filtered-view is part of. The default
+ *                             View this filtered-view is part of. The default
  *                             value is ''.
  *                         <li>@ref gpudb::filter_ttl "filter_ttl": Sets the <a
  *                             href="../../../concepts/ttl/"
@@ -27834,7 +29542,7 @@ FilterByListResponse& filterByList( const FilterByListRequest& request_,
  *                      an already existing table or view. The default value is
  *                      ''.
  * @param[in] columnValuesMap  List of values for the corresponding column in
- *                             the table
+ *                             the table.
  * @param[in] options  Optional parameters.
  *                     <ul>
  *                         <li>@ref gpudb::filter_by_list_create_temp_table
@@ -27927,7 +29635,7 @@ FilterByListResponse filterByList( const std::string& tableName,
  *                      an already existing table or view. The default value is
  *                      ''.
  * @param[in] columnValuesMap  List of values for the corresponding column in
- *                             the table
+ *                             the table.
  * @param[in] options  Optional parameters.
  *                     <ul>
  *                         <li>@ref gpudb::filter_by_list_create_temp_table
@@ -29016,6 +30724,17 @@ FilterByStringResponse& filterByString( const FilterByStringRequest& request_,
  *                          search (not accelerated). If the column is a string
  *                          type (non-charN) and the number of records is too
  *                          large, it will return 0.
+ *                      <li>@ref gpudb::filter_by_string_search_stats
+ *                          "filter_by_string_search_stats": Cross-shard BM25
+ *                          corpus statistics for one (column, query) pair.
+ *                          Returns the merged BM25 statistics (max_doc,
+ *                          doc_count, sum_total_term_freq, per-term doc_freq /
+ *                          total_term_freq) needed by callers that score
+ *                          documents themselves (e.g. text_match_bm25_global
+ *                          SQL function pre-pass). Requires @a column_names to
+ *                          contain exactly one column with text search
+ *                          enabled. The @a view_name field is ignored — this
+ *                          mode does not produce a result table.
  *                  </ul>
  * @param[in] columnNames  List of columns on which to apply the filter.
  *                         Ignored for @ref gpudb::filter_by_string_search
@@ -29134,6 +30853,17 @@ FilterByStringResponse filterByString( const std::string& tableName,
  *                          search (not accelerated). If the column is a string
  *                          type (non-charN) and the number of records is too
  *                          large, it will return 0.
+ *                      <li>@ref gpudb::filter_by_string_search_stats
+ *                          "filter_by_string_search_stats": Cross-shard BM25
+ *                          corpus statistics for one (column, query) pair.
+ *                          Returns the merged BM25 statistics (max_doc,
+ *                          doc_count, sum_total_term_freq, per-term doc_freq /
+ *                          total_term_freq) needed by callers that score
+ *                          documents themselves (e.g. text_match_bm25_global
+ *                          SQL function pre-pass). Requires @a column_names to
+ *                          contain exactly one column with text search
+ *                          enabled. The @a view_name field is ignored — this
+ *                          mode does not produce a result table.
  *                  </ul>
  * @param[in] columnNames  List of columns on which to apply the filter.
  *                         Ignored for @ref gpudb::filter_by_string_search
@@ -29360,7 +31090,7 @@ FilterByTableResponse& filterByTable( const FilterByTableRequest& request_,
  *                                     "filter_by_table_normal"
  *                                 <li>@ref gpudb::filter_by_table_geos
  *                                     "filter_by_table_geos": Use geos 1 edge
- *                                     per corner algorithm
+ *                                     per corner algorithm.
  *                             </ul>
  *                             The default value is @ref
  *                             gpudb::filter_by_table_normal
@@ -29515,7 +31245,7 @@ FilterByTableResponse filterByTable( const std::string& tableName,
  *                                     "filter_by_table_normal"
  *                                 <li>@ref gpudb::filter_by_table_geos
  *                                     "filter_by_table_geos": Use geos 1 edge
- *                                     per corner algorithm
+ *                                     per corner algorithm.
  *                             </ul>
  *                             The default value is @ref
  *                             gpudb::filter_by_table_normal
@@ -29761,6 +31491,268 @@ FilterByValueResponse& filterByValue( const std::string& tableName,
                                       FilterByValueResponse& response_ ) const;
 
 /**
+ * Retrieves node or edge entities from an existing graph, with pagination
+ * support via offset and limit. Use @ref
+ * showGraph(const ShowGraphRequest&) const "showGraph" to obtain the total
+ * number of nodes and edges.
+ *
+ * @param[in] request_  @ref gpudb::GetGraphEntitiesRequest "Request" object
+ *                      containing the parameters for the operation.
+ *
+ * @return @ref gpudb::GetGraphEntitiesResponse "Response" object containing
+ *         the result of the operation.
+ */
+GetGraphEntitiesResponse getGraphEntities( const GetGraphEntitiesRequest& request_ ) const;
+
+/**
+ * Retrieves node or edge entities from an existing graph, with pagination
+ * support via offset and limit. Use @ref
+ * showGraph(const ShowGraphRequest&) const "showGraph" to obtain the total
+ * number of nodes and edges.
+ *
+ * @param[in] request_  @ref gpudb::GetGraphEntitiesRequest "Request" object
+ *                      containing the parameters for the operation.
+ * @param[out] response_  @ref gpudb::GetGraphEntitiesResponse "Response"
+ *                        object containing the results of the operation.
+ *
+ * @return @ref gpudb::GetGraphEntitiesResponse "Response" object containing
+ *         the result of the operation (initially passed in by reference).
+ */
+GetGraphEntitiesResponse& getGraphEntities( const GetGraphEntitiesRequest& request_,
+                                            GetGraphEntitiesResponse& response_ ) const;
+
+/**
+ * Retrieves node or edge entities from an existing graph, with pagination
+ * support via offset and limit. Use @ref
+ * showGraph(const std::string&, const std::map<std::string, std::string>&) const
+ * "showGraph" to obtain the total number of nodes and edges.
+ *
+ * @param[in] graphName  Name of the graph from which to retrieve entities.
+ * @param[in] offset  Starting index of the entities to retrieve (0-based). The
+ *                    default value is 0.
+ * @param[in] limit  Number of entities to retrieve starting from @a offset. A
+ *                   value of -1 returns all entities from the offset to the
+ *                   end. Note: the @ref
+ *                   gpudb::GetGraphEntitiesResponse::entitiesInt "entitiesInt"
+ *                   or @ref gpudb::GetGraphEntitiesResponse::entitiesString
+ *                   "entitiesString" array size will be 2x this value for
+ *                   nodes (stride 2) or 4x for edges (stride 4). The default
+ *                   value is 10000.
+ * @param[in] options  Optional parameters.
+ *                     <ul>
+ *                         <li>@ref gpudb::get_graph_entities_entity_type
+ *                             "get_graph_entities_entity_type": The type of
+ *                             entity to retrieve.
+ *                             Supported values:
+ *                             <ul>
+ *                                 <li>@ref gpudb::get_graph_entities_edge
+ *                                     "get_graph_entities_edge": Retrieve edge
+ *                                     entities (default).
+ *                                 <li>@ref gpudb::get_graph_entities_node
+ *                                     "get_graph_entities_node": Retrieve node
+ *                                     entities.
+ *                             </ul>
+ *                             The default value is @ref
+ *                             gpudb::get_graph_entities_edge
+ *                             "get_graph_entities_edge".
+ *                         <li>@ref gpudb::get_graph_entities_server_id
+ *                             "get_graph_entities_server_id": Indicates which
+ *                             graph server to send the request to. Required
+ *                             when the graph is distributed across multiple
+ *                             servers. The default value is '0'.
+ *                         <li>@ref
+ *                             gpudb::get_graph_entities_concise_edge_connectivity
+ *                             "get_graph_entities_concise_edge_connectivity":
+ *                             When true, edges are emitted in a compact
+ *                             connectivity form regardless of the graph's
+ *                             identifier type: @ref
+ *                             gpudb::GetGraphEntitiesResponse::entitiesInt
+ *                             "entitiesInt" contains stride-4 records
+ *                             [edge_id, node1_index, node2_index,
+ *                             edge_label_index] where node1_index/node2_index
+ *                             are 0-based positions into the node array
+ *                             (obtained from a node-entity call on the same
+ *                             graph). When requesting nodes with this option,
+ *                             the response includes tombstoned (deleted) slots
+ *                             in order to keep position indices stable so edge
+ *                             indices resolve correctly; deleted slots carry
+ *                             id=0 for integer graphs or an empty identifier
+ *                             for string/WKT graphs. For paginated node calls,
+ *                             subtract @a offset from an edge endpoint index
+ *                             to locate it within the returned page.
+ *                             Supported values:
+ *                             <ul>
+ *                                 <li>@ref gpudb::get_graph_entities_true
+ *                                     "get_graph_entities_true": Compact
+ *                                     integer connectivity for edges; deleted
+ *                                     node slots included in node output.
+ *                                 <li>@ref gpudb::get_graph_entities_false
+ *                                     "get_graph_entities_false": Default:
+ *                                     edges emit node identifiers
+ *                                     (int/string/WKT) matching the graph;
+ *                                     deleted nodes are skipped.
+ *                             </ul>
+ *                             The default value is @ref
+ *                             gpudb::get_graph_entities_false
+ *                             "get_graph_entities_false".
+ *                         <li>@ref gpudb::get_graph_entities_include_weights
+ *                             "get_graph_entities_include_weights": When true
+ *                             and @a options entityType is 'edge', the
+ *                             response @ref
+ *                             gpudb::GetGraphEntitiesResponse::entitiesWeight
+ *                             "entitiesWeight" array is populated with one
+ *                             float weight per emitted edge (aligned 1:1 with
+ *                             the edge records in @ref
+ *                             gpudb::GetGraphEntitiesResponse::entitiesInt
+ *                             "entitiesInt" or @ref
+ *                             gpudb::GetGraphEntitiesResponse::entitiesString
+ *                             "entitiesString"). Empty when the graph has no
+ *                             weights component or when requesting nodes.
+ *                             Supported values:
+ *                             <ul>
+ *                                 <li>@ref gpudb::get_graph_entities_true
+ *                                     "get_graph_entities_true": Populate @ref
+ *                                     gpudb::GetGraphEntitiesResponse::entitiesWeight
+ *                                     "entitiesWeight" with per-edge weights
+ *                                     (edge requests only).
+ *                                 <li>@ref gpudb::get_graph_entities_false
+ *                                     "get_graph_entities_false": Default:
+ *                                     @ref
+ *                                     gpudb::GetGraphEntitiesResponse::entitiesWeight
+ *                                     "entitiesWeight" is empty.
+ *                             </ul>
+ *                             The default value is @ref
+ *                             gpudb::get_graph_entities_false
+ *                             "get_graph_entities_false".
+ *                     </ul>
+ *                     The default value is an empty map.
+ *
+ * @return @ref gpudb::GetGraphEntitiesResponse "Response" object containing
+ *         the result of the operation.
+ */
+GetGraphEntitiesResponse getGraphEntities( const std::string& graphName,
+                                           const int64_t offset,
+                                           const int64_t limit,
+                                           const std::map<std::string, std::string>& options ) const;
+
+/**
+ * Retrieves node or edge entities from an existing graph, with pagination
+ * support via offset and limit. Use @ref
+ * showGraph(const std::string&, const std::map<std::string, std::string>&) const
+ * "showGraph" to obtain the total number of nodes and edges.
+ *
+ * @param[in] graphName  Name of the graph from which to retrieve entities.
+ * @param[in] offset  Starting index of the entities to retrieve (0-based). The
+ *                    default value is 0.
+ * @param[in] limit  Number of entities to retrieve starting from @a offset. A
+ *                   value of -1 returns all entities from the offset to the
+ *                   end. Note: the @ref
+ *                   gpudb::GetGraphEntitiesResponse::entitiesInt "entitiesInt"
+ *                   or @ref gpudb::GetGraphEntitiesResponse::entitiesString
+ *                   "entitiesString" array size will be 2x this value for
+ *                   nodes (stride 2) or 4x for edges (stride 4). The default
+ *                   value is 10000.
+ * @param[in] options  Optional parameters.
+ *                     <ul>
+ *                         <li>@ref gpudb::get_graph_entities_entity_type
+ *                             "get_graph_entities_entity_type": The type of
+ *                             entity to retrieve.
+ *                             Supported values:
+ *                             <ul>
+ *                                 <li>@ref gpudb::get_graph_entities_edge
+ *                                     "get_graph_entities_edge": Retrieve edge
+ *                                     entities (default).
+ *                                 <li>@ref gpudb::get_graph_entities_node
+ *                                     "get_graph_entities_node": Retrieve node
+ *                                     entities.
+ *                             </ul>
+ *                             The default value is @ref
+ *                             gpudb::get_graph_entities_edge
+ *                             "get_graph_entities_edge".
+ *                         <li>@ref gpudb::get_graph_entities_server_id
+ *                             "get_graph_entities_server_id": Indicates which
+ *                             graph server to send the request to. Required
+ *                             when the graph is distributed across multiple
+ *                             servers. The default value is '0'.
+ *                         <li>@ref
+ *                             gpudb::get_graph_entities_concise_edge_connectivity
+ *                             "get_graph_entities_concise_edge_connectivity":
+ *                             When true, edges are emitted in a compact
+ *                             connectivity form regardless of the graph's
+ *                             identifier type: @ref
+ *                             gpudb::GetGraphEntitiesResponse::entitiesInt
+ *                             "entitiesInt" contains stride-4 records
+ *                             [edge_id, node1_index, node2_index,
+ *                             edge_label_index] where node1_index/node2_index
+ *                             are 0-based positions into the node array
+ *                             (obtained from a node-entity call on the same
+ *                             graph). When requesting nodes with this option,
+ *                             the response includes tombstoned (deleted) slots
+ *                             in order to keep position indices stable so edge
+ *                             indices resolve correctly; deleted slots carry
+ *                             id=0 for integer graphs or an empty identifier
+ *                             for string/WKT graphs. For paginated node calls,
+ *                             subtract @a offset from an edge endpoint index
+ *                             to locate it within the returned page.
+ *                             Supported values:
+ *                             <ul>
+ *                                 <li>@ref gpudb::get_graph_entities_true
+ *                                     "get_graph_entities_true": Compact
+ *                                     integer connectivity for edges; deleted
+ *                                     node slots included in node output.
+ *                                 <li>@ref gpudb::get_graph_entities_false
+ *                                     "get_graph_entities_false": Default:
+ *                                     edges emit node identifiers
+ *                                     (int/string/WKT) matching the graph;
+ *                                     deleted nodes are skipped.
+ *                             </ul>
+ *                             The default value is @ref
+ *                             gpudb::get_graph_entities_false
+ *                             "get_graph_entities_false".
+ *                         <li>@ref gpudb::get_graph_entities_include_weights
+ *                             "get_graph_entities_include_weights": When true
+ *                             and @a options entityType is 'edge', the
+ *                             response @ref
+ *                             gpudb::GetGraphEntitiesResponse::entitiesWeight
+ *                             "entitiesWeight" array is populated with one
+ *                             float weight per emitted edge (aligned 1:1 with
+ *                             the edge records in @ref
+ *                             gpudb::GetGraphEntitiesResponse::entitiesInt
+ *                             "entitiesInt" or @ref
+ *                             gpudb::GetGraphEntitiesResponse::entitiesString
+ *                             "entitiesString"). Empty when the graph has no
+ *                             weights component or when requesting nodes.
+ *                             Supported values:
+ *                             <ul>
+ *                                 <li>@ref gpudb::get_graph_entities_true
+ *                                     "get_graph_entities_true": Populate @ref
+ *                                     gpudb::GetGraphEntitiesResponse::entitiesWeight
+ *                                     "entitiesWeight" with per-edge weights
+ *                                     (edge requests only).
+ *                                 <li>@ref gpudb::get_graph_entities_false
+ *                                     "get_graph_entities_false": Default:
+ *                                     @ref
+ *                                     gpudb::GetGraphEntitiesResponse::entitiesWeight
+ *                                     "entitiesWeight" is empty.
+ *                             </ul>
+ *                             The default value is @ref
+ *                             gpudb::get_graph_entities_false
+ *                             "get_graph_entities_false".
+ *                     </ul>
+ *                     The default value is an empty map.
+ * @param[out] response_  @ref gpudb::GetGraphEntitiesResponse "Response"
+ *                        object containing the results of the operation.
+ *
+ * @return @ref gpudb::GetGraphEntitiesResponse "Response" object containing
+ *         the result of the operation (initially passed in by reference).
+ */
+GetGraphEntitiesResponse& getGraphEntities( const std::string& graphName,
+                                            const int64_t offset,
+                                            const int64_t limit,
+                                            const std::map<std::string, std::string>& options,
+                                            GetGraphEntitiesResponse& response_ ) const;
+
+/**
  * Get the status and result of asynchronously running job.  See the @ref
  * createJob(const CreateJobRequest&) const "createJob" for starting an
  * asynchronous job.  Some fields of the response are filled only after the
@@ -29802,7 +31794,7 @@ GetJobResponse& getJob( const GetJobRequest& request_,
  * @param[in] options  Optional parameters.
  *                     <ul>
  *                         <li>@ref gpudb::get_job_job_tag "get_job_job_tag":
- *                             Job tag returned in call to create the job
+ *                             Job tag returned in call to create the job.
  *                     </ul>
  *                     The default value is an empty map.
  *
@@ -29823,7 +31815,7 @@ GetJobResponse getJob( const int64_t jobId,
  * @param[in] options  Optional parameters.
  *                     <ul>
  *                         <li>@ref gpudb::get_job_job_tag "get_job_job_tag":
- *                             Job tag returned in call to create the job
+ *                             Job tag returned in call to create the job.
  *                     </ul>
  *                     The default value is an empty map.
  * @param[out] response_  @ref gpudb::GetJobResponse "Response" object
@@ -29993,12 +31985,13 @@ GetRecordsResponse<TResponse>& getRecords( const GetRecordsRequest& request_,
  *                   server configuration. Use @ref
  *                   gpudb::RawGetRecordsResponse::hasMoreRecords
  *                   "hasMoreRecords" to see if more records exist in the
- *                   result to be fetched, and @a offset & @a limit to request
- *                   subsequent pages of results. The default value is -9999.
+ *                   result to be fetched, and @a offset and @a limit to
+ *                   request subsequent pages of results. The default value is
+ *                   -9999.
  * @param[in] options  <ul>
  *                         <li>@ref gpudb::get_records_expression
- *                             "get_records_expression": Optional filter
- *                             expression to apply to the table.
+ *                             "get_records_expression": Filter expression to
+ *                             apply to the table.
  *                         <li>@ref gpudb::get_records_fast_index_lookup
  *                             "get_records_fast_index_lookup": Indicates if
  *                             indexes should be used to perform the lookup for
@@ -30017,9 +32010,9 @@ GetRecordsResponse<TResponse>& getRecords( const GetRecordsRequest& request_,
  *                             The default value is @ref
  *                             gpudb::get_records_true "get_records_true".
  *                         <li>@ref gpudb::get_records_sort_by
- *                             "get_records_sort_by": Optional column that the
- *                             data should be sorted by. Empty by default (i.e.
- *                             no sorting is applied).
+ *                             "get_records_sort_by": Column that the data
+ *                             should be sorted by. Empty by default (i.e. no
+ *                             sorting is applied).
  *                         <li>@ref gpudb::get_records_sort_order
  *                             "get_records_sort_order": String indicating how
  *                             the returned values should be sorted - ascending
@@ -30098,12 +32091,13 @@ GetRecordsResponse<TResponse> getRecords( const std::string& tableName,
  *                   server configuration. Use @ref
  *                   gpudb::RawGetRecordsResponse::hasMoreRecords
  *                   "hasMoreRecords" to see if more records exist in the
- *                   result to be fetched, and @a offset & @a limit to request
- *                   subsequent pages of results. The default value is -9999.
+ *                   result to be fetched, and @a offset and @a limit to
+ *                   request subsequent pages of results. The default value is
+ *                   -9999.
  * @param[in] options  <ul>
  *                         <li>@ref gpudb::get_records_expression
- *                             "get_records_expression": Optional filter
- *                             expression to apply to the table.
+ *                             "get_records_expression": Filter expression to
+ *                             apply to the table.
  *                         <li>@ref gpudb::get_records_fast_index_lookup
  *                             "get_records_fast_index_lookup": Indicates if
  *                             indexes should be used to perform the lookup for
@@ -30122,9 +32116,9 @@ GetRecordsResponse<TResponse> getRecords( const std::string& tableName,
  *                             The default value is @ref
  *                             gpudb::get_records_true "get_records_true".
  *                         <li>@ref gpudb::get_records_sort_by
- *                             "get_records_sort_by": Optional column that the
- *                             data should be sorted by. Empty by default (i.e.
- *                             no sorting is applied).
+ *                             "get_records_sort_by": Column that the data
+ *                             should be sorted by. Empty by default (i.e. no
+ *                             sorting is applied).
  *                         <li>@ref gpudb::get_records_sort_order
  *                             "get_records_sort_order": String indicating how
  *                             the returned values should be sorted - ascending
@@ -30378,12 +32372,13 @@ GetRecordsResponse<TResponse>& getRecords( const Type& type_,
  *                   server configuration. Use @ref
  *                   gpudb::RawGetRecordsResponse::hasMoreRecords
  *                   "hasMoreRecords" to see if more records exist in the
- *                   result to be fetched, and @a offset & @a limit to request
- *                   subsequent pages of results. The default value is -9999.
+ *                   result to be fetched, and @a offset and @a limit to
+ *                   request subsequent pages of results. The default value is
+ *                   -9999.
  * @param[in] options  <ul>
  *                         <li>@ref gpudb::get_records_expression
- *                             "get_records_expression": Optional filter
- *                             expression to apply to the table.
+ *                             "get_records_expression": Filter expression to
+ *                             apply to the table.
  *                         <li>@ref gpudb::get_records_fast_index_lookup
  *                             "get_records_fast_index_lookup": Indicates if
  *                             indexes should be used to perform the lookup for
@@ -30402,9 +32397,9 @@ GetRecordsResponse<TResponse>& getRecords( const Type& type_,
  *                             The default value is @ref
  *                             gpudb::get_records_true "get_records_true".
  *                         <li>@ref gpudb::get_records_sort_by
- *                             "get_records_sort_by": Optional column that the
- *                             data should be sorted by. Empty by default (i.e.
- *                             no sorting is applied).
+ *                             "get_records_sort_by": Column that the data
+ *                             should be sorted by. Empty by default (i.e. no
+ *                             sorting is applied).
  *                         <li>@ref gpudb::get_records_sort_order
  *                             "get_records_sort_order": String indicating how
  *                             the returned values should be sorted - ascending
@@ -30485,12 +32480,13 @@ GetRecordsResponse<TResponse> getRecords( const ::avro::ValidSchema& schema_,
  *                   server configuration. Use @ref
  *                   gpudb::RawGetRecordsResponse::hasMoreRecords
  *                   "hasMoreRecords" to see if more records exist in the
- *                   result to be fetched, and @a offset & @a limit to request
- *                   subsequent pages of results. The default value is -9999.
+ *                   result to be fetched, and @a offset and @a limit to
+ *                   request subsequent pages of results. The default value is
+ *                   -9999.
  * @param[in] options  <ul>
  *                         <li>@ref gpudb::get_records_expression
- *                             "get_records_expression": Optional filter
- *                             expression to apply to the table.
+ *                             "get_records_expression": Filter expression to
+ *                             apply to the table.
  *                         <li>@ref gpudb::get_records_fast_index_lookup
  *                             "get_records_fast_index_lookup": Indicates if
  *                             indexes should be used to perform the lookup for
@@ -30509,9 +32505,9 @@ GetRecordsResponse<TResponse> getRecords( const ::avro::ValidSchema& schema_,
  *                             The default value is @ref
  *                             gpudb::get_records_true "get_records_true".
  *                         <li>@ref gpudb::get_records_sort_by
- *                             "get_records_sort_by": Optional column that the
- *                             data should be sorted by. Empty by default (i.e.
- *                             no sorting is applied).
+ *                             "get_records_sort_by": Column that the data
+ *                             should be sorted by. Empty by default (i.e. no
+ *                             sorting is applied).
  *                         <li>@ref gpudb::get_records_sort_order
  *                             "get_records_sort_order": String indicating how
  *                             the returned values should be sorted - ascending
@@ -30592,12 +32588,13 @@ GetRecordsResponse<TResponse> getRecords( const Type& type_,
  *                   server configuration. Use @ref
  *                   gpudb::RawGetRecordsResponse::hasMoreRecords
  *                   "hasMoreRecords" to see if more records exist in the
- *                   result to be fetched, and @a offset & @a limit to request
- *                   subsequent pages of results. The default value is -9999.
+ *                   result to be fetched, and @a offset and @a limit to
+ *                   request subsequent pages of results. The default value is
+ *                   -9999.
  * @param[in] options  <ul>
  *                         <li>@ref gpudb::get_records_expression
- *                             "get_records_expression": Optional filter
- *                             expression to apply to the table.
+ *                             "get_records_expression": Filter expression to
+ *                             apply to the table.
  *                         <li>@ref gpudb::get_records_fast_index_lookup
  *                             "get_records_fast_index_lookup": Indicates if
  *                             indexes should be used to perform the lookup for
@@ -30616,9 +32613,9 @@ GetRecordsResponse<TResponse> getRecords( const Type& type_,
  *                             The default value is @ref
  *                             gpudb::get_records_true "get_records_true".
  *                         <li>@ref gpudb::get_records_sort_by
- *                             "get_records_sort_by": Optional column that the
- *                             data should be sorted by. Empty by default (i.e.
- *                             no sorting is applied).
+ *                             "get_records_sort_by": Column that the data
+ *                             should be sorted by. Empty by default (i.e. no
+ *                             sorting is applied).
  *                         <li>@ref gpudb::get_records_sort_order
  *                             "get_records_sort_order": String indicating how
  *                             the returned values should be sorted - ascending
@@ -30701,12 +32698,13 @@ GetRecordsResponse<TResponse>& getRecords( const ::avro::ValidSchema& schema_,
  *                   server configuration. Use @ref
  *                   gpudb::RawGetRecordsResponse::hasMoreRecords
  *                   "hasMoreRecords" to see if more records exist in the
- *                   result to be fetched, and @a offset & @a limit to request
- *                   subsequent pages of results. The default value is -9999.
+ *                   result to be fetched, and @a offset and @a limit to
+ *                   request subsequent pages of results. The default value is
+ *                   -9999.
  * @param[in] options  <ul>
  *                         <li>@ref gpudb::get_records_expression
- *                             "get_records_expression": Optional filter
- *                             expression to apply to the table.
+ *                             "get_records_expression": Filter expression to
+ *                             apply to the table.
  *                         <li>@ref gpudb::get_records_fast_index_lookup
  *                             "get_records_fast_index_lookup": Indicates if
  *                             indexes should be used to perform the lookup for
@@ -30725,9 +32723,9 @@ GetRecordsResponse<TResponse>& getRecords( const ::avro::ValidSchema& schema_,
  *                             The default value is @ref
  *                             gpudb::get_records_true "get_records_true".
  *                         <li>@ref gpudb::get_records_sort_by
- *                             "get_records_sort_by": Optional column that the
- *                             data should be sorted by. Empty by default (i.e.
- *                             no sorting is applied).
+ *                             "get_records_sort_by": Column that the data
+ *                             should be sorted by. Empty by default (i.e. no
+ *                             sorting is applied).
  *                         <li>@ref gpudb::get_records_sort_order
  *                             "get_records_sort_order": String indicating how
  *                             the returned values should be sorted - ascending
@@ -30998,16 +32996,17 @@ GetRecordsByColumnResponse& getRecordsByColumn( const GetRecordsByColumnRequest&
  *                   server configuration. Use @ref
  *                   gpudb::RawGetRecordsByColumnResponse::hasMoreRecords
  *                   "hasMoreRecords" to see if more records exist in the
- *                   result to be fetched, and @a offset & @a limit to request
- *                   subsequent pages of results. The default value is -9999.
+ *                   result to be fetched, and @a offset and @a limit to
+ *                   request subsequent pages of results. The default value is
+ *                   -9999.
  * @param[in] options  <ul>
  *                         <li>@ref gpudb::get_records_by_column_expression
- *                             "get_records_by_column_expression": Optional
- *                             filter expression to apply to the table.
+ *                             "get_records_by_column_expression": Filter
+ *                             expression to apply to the table.
  *                         <li>@ref gpudb::get_records_by_column_sort_by
- *                             "get_records_by_column_sort_by": Optional column
- *                             that the data should be sorted by. Used in
- *                             conjunction with @ref
+ *                             "get_records_by_column_sort_by": Column that the
+ *                             data should be sorted by. Used in conjunction
+ *                             with @ref
  *                             gpudb::get_records_by_column_sort_order
  *                             "sort_order". The @ref
  *                             gpudb::get_records_by_column_order_by "order_by"
@@ -31132,16 +33131,17 @@ GetRecordsByColumnResponse getRecordsByColumn( const std::string& tableName,
  *                   server configuration. Use @ref
  *                   gpudb::RawGetRecordsByColumnResponse::hasMoreRecords
  *                   "hasMoreRecords" to see if more records exist in the
- *                   result to be fetched, and @a offset & @a limit to request
- *                   subsequent pages of results. The default value is -9999.
+ *                   result to be fetched, and @a offset and @a limit to
+ *                   request subsequent pages of results. The default value is
+ *                   -9999.
  * @param[in] options  <ul>
  *                         <li>@ref gpudb::get_records_by_column_expression
- *                             "get_records_by_column_expression": Optional
- *                             filter expression to apply to the table.
+ *                             "get_records_by_column_expression": Filter
+ *                             expression to apply to the table.
  *                         <li>@ref gpudb::get_records_by_column_sort_by
- *                             "get_records_by_column_sort_by": Optional column
- *                             that the data should be sorted by. Used in
- *                             conjunction with @ref
+ *                             "get_records_by_column_sort_by": Column that the
+ *                             data should be sorted by. Used in conjunction
+ *                             with @ref
  *                             gpudb::get_records_by_column_sort_order
  *                             "sort_order". The @ref
  *                             gpudb::get_records_by_column_order_by "order_by"
@@ -32218,8 +34218,9 @@ GetRecordsFromCollectionResponse<TResponse>& getRecordsFromCollection( const Get
  *                   never exceed the server's own limit, defined by the <a
  *                   href="../../../config/#config-main-general"
  *                   target="_top">max_get_records_size</a> parameter in the
- *                   server configuration. Use @a offset & @a limit to request
- *                   subsequent pages of results. The default value is -9999.
+ *                   server configuration. Use @a offset and @a limit to
+ *                   request subsequent pages of results. The default value is
+ *                   -9999.
  * @param[in] options  <ul>
  *                         <li>@ref
  *                             gpudb::get_records_from_collection_return_record_ids
@@ -32241,9 +34242,9 @@ GetRecordsFromCollectionResponse<TResponse>& getRecordsFromCollection( const Get
  *                             "get_records_from_collection_false".
  *                         <li>@ref
  *                             gpudb::get_records_from_collection_expression
- *                             "get_records_from_collection_expression":
- *                             Optional filter expression to apply to the
- *                             table. The default value is ''.
+ *                             "get_records_from_collection_expression": Filter
+ *                             expression to apply to the table. The default
+ *                             value is ''.
  *                     </ul>
  *                     The default value is an empty map.
  *
@@ -32305,8 +34306,9 @@ GetRecordsFromCollectionResponse<TResponse> getRecordsFromCollection( const std:
  *                   never exceed the server's own limit, defined by the <a
  *                   href="../../../config/#config-main-general"
  *                   target="_top">max_get_records_size</a> parameter in the
- *                   server configuration. Use @a offset & @a limit to request
- *                   subsequent pages of results. The default value is -9999.
+ *                   server configuration. Use @a offset and @a limit to
+ *                   request subsequent pages of results. The default value is
+ *                   -9999.
  * @param[in] options  <ul>
  *                         <li>@ref
  *                             gpudb::get_records_from_collection_return_record_ids
@@ -32328,9 +34330,9 @@ GetRecordsFromCollectionResponse<TResponse> getRecordsFromCollection( const std:
  *                             "get_records_from_collection_false".
  *                         <li>@ref
  *                             gpudb::get_records_from_collection_expression
- *                             "get_records_from_collection_expression":
- *                             Optional filter expression to apply to the
- *                             table. The default value is ''.
+ *                             "get_records_from_collection_expression": Filter
+ *                             expression to apply to the table. The default
+ *                             value is ''.
  *                     </ul>
  *                     The default value is an empty map.
  * @param[out] response_  @ref gpudb::GetRecordsFromCollectionResponse
@@ -32573,8 +34575,9 @@ GetRecordsFromCollectionResponse<TResponse>& getRecordsFromCollection( const Typ
  *                   never exceed the server's own limit, defined by the <a
  *                   href="../../../config/#config-main-general"
  *                   target="_top">max_get_records_size</a> parameter in the
- *                   server configuration. Use @a offset & @a limit to request
- *                   subsequent pages of results. The default value is -9999.
+ *                   server configuration. Use @a offset and @a limit to
+ *                   request subsequent pages of results. The default value is
+ *                   -9999.
  * @param[in] options  <ul>
  *                         <li>@ref
  *                             gpudb::get_records_from_collection_return_record_ids
@@ -32596,9 +34599,9 @@ GetRecordsFromCollectionResponse<TResponse>& getRecordsFromCollection( const Typ
  *                             "get_records_from_collection_false".
  *                         <li>@ref
  *                             gpudb::get_records_from_collection_expression
- *                             "get_records_from_collection_expression":
- *                             Optional filter expression to apply to the
- *                             table. The default value is ''.
+ *                             "get_records_from_collection_expression": Filter
+ *                             expression to apply to the table. The default
+ *                             value is ''.
  *                     </ul>
  *                     The default value is an empty map.
  *
@@ -32662,8 +34665,9 @@ GetRecordsFromCollectionResponse<TResponse> getRecordsFromCollection( const ::av
  *                   never exceed the server's own limit, defined by the <a
  *                   href="../../../config/#config-main-general"
  *                   target="_top">max_get_records_size</a> parameter in the
- *                   server configuration. Use @a offset & @a limit to request
- *                   subsequent pages of results. The default value is -9999.
+ *                   server configuration. Use @a offset and @a limit to
+ *                   request subsequent pages of results. The default value is
+ *                   -9999.
  * @param[in] options  <ul>
  *                         <li>@ref
  *                             gpudb::get_records_from_collection_return_record_ids
@@ -32685,9 +34689,9 @@ GetRecordsFromCollectionResponse<TResponse> getRecordsFromCollection( const ::av
  *                             "get_records_from_collection_false".
  *                         <li>@ref
  *                             gpudb::get_records_from_collection_expression
- *                             "get_records_from_collection_expression":
- *                             Optional filter expression to apply to the
- *                             table. The default value is ''.
+ *                             "get_records_from_collection_expression": Filter
+ *                             expression to apply to the table. The default
+ *                             value is ''.
  *                     </ul>
  *                     The default value is an empty map.
  *
@@ -32751,8 +34755,9 @@ GetRecordsFromCollectionResponse<TResponse> getRecordsFromCollection( const Type
  *                   never exceed the server's own limit, defined by the <a
  *                   href="../../../config/#config-main-general"
  *                   target="_top">max_get_records_size</a> parameter in the
- *                   server configuration. Use @a offset & @a limit to request
- *                   subsequent pages of results. The default value is -9999.
+ *                   server configuration. Use @a offset and @a limit to
+ *                   request subsequent pages of results. The default value is
+ *                   -9999.
  * @param[in] options  <ul>
  *                         <li>@ref
  *                             gpudb::get_records_from_collection_return_record_ids
@@ -32774,9 +34779,9 @@ GetRecordsFromCollectionResponse<TResponse> getRecordsFromCollection( const Type
  *                             "get_records_from_collection_false".
  *                         <li>@ref
  *                             gpudb::get_records_from_collection_expression
- *                             "get_records_from_collection_expression":
- *                             Optional filter expression to apply to the
- *                             table. The default value is ''.
+ *                             "get_records_from_collection_expression": Filter
+ *                             expression to apply to the table. The default
+ *                             value is ''.
  *                     </ul>
  *                     The default value is an empty map.
  * @param[out] response_  @ref gpudb::GetRecordsFromCollectionResponse
@@ -32844,8 +34849,9 @@ GetRecordsFromCollectionResponse<TResponse>& getRecordsFromCollection( const ::a
  *                   never exceed the server's own limit, defined by the <a
  *                   href="../../../config/#config-main-general"
  *                   target="_top">max_get_records_size</a> parameter in the
- *                   server configuration. Use @a offset & @a limit to request
- *                   subsequent pages of results. The default value is -9999.
+ *                   server configuration. Use @a offset and @a limit to
+ *                   request subsequent pages of results. The default value is
+ *                   -9999.
  * @param[in] options  <ul>
  *                         <li>@ref
  *                             gpudb::get_records_from_collection_return_record_ids
@@ -32867,9 +34873,9 @@ GetRecordsFromCollectionResponse<TResponse>& getRecordsFromCollection( const ::a
  *                             "get_records_from_collection_false".
  *                         <li>@ref
  *                             gpudb::get_records_from_collection_expression
- *                             "get_records_from_collection_expression":
- *                             Optional filter expression to apply to the
- *                             table. The default value is ''.
+ *                             "get_records_from_collection_expression": Filter
+ *                             expression to apply to the table. The default
+ *                             value is ''.
  *                     </ul>
  *                     The default value is an empty map.
  * @param[out] response_  @ref gpudb::GetRecordsFromCollectionResponse
@@ -32966,6 +34972,8 @@ GrantPermissionResponse& grantPermission( const GrantPermissionRequest& request_
  * @param[in] objectType  The type of object being granted to.
  *                        Supported values:
  *                        <ul>
+ *                            <li>@ref gpudb::grant_permission_catalog
+ *                                "grant_permission_catalog": Catalog
  *                            <li>@ref gpudb::grant_permission_context
  *                                "grant_permission_context": Context
  *                            <li>@ref gpudb::grant_permission_credential
@@ -33015,6 +35023,9 @@ GrantPermissionResponse& grantPermission( const GrantPermissionRequest& request_
  *                            <li>@ref gpudb::grant_permission_insert
  *                                "grant_permission_insert": Insert access to
  *                                tables.
+ *                            <li>@ref gpudb::grant_permission_monitor
+ *                                "grant_permission_monitor": Monitor logs and
+ *                                statistics.
  *                            <li>@ref gpudb::grant_permission_read
  *                                "grant_permission_read": Ability to read,
  *                                list and use the object.
@@ -33039,9 +35050,9 @@ GrantPermissionResponse& grantPermission( const GrantPermissionRequest& request_
  *                             to these columns, comma-separated. The default
  *                             value is ''.
  *                         <li>@ref gpudb::grant_permission_filter_expression
- *                             "grant_permission_filter_expression": Optional
- *                             filter expression to apply to this grant.  Only
- *                             rows that match the filter will be affected. The
+ *                             "grant_permission_filter_expression": Filter
+ *                             expression to apply to this grant.  Only rows
+ *                             that match the filter will be affected. The
  *                             default value is ''.
  *                         <li>@ref gpudb::grant_permission_with_grant_option
  *                             "grant_permission_with_grant_option": Allow the
@@ -33080,6 +35091,8 @@ GrantPermissionResponse grantPermission( const std::string& principal,
  * @param[in] objectType  The type of object being granted to.
  *                        Supported values:
  *                        <ul>
+ *                            <li>@ref gpudb::grant_permission_catalog
+ *                                "grant_permission_catalog": Catalog
  *                            <li>@ref gpudb::grant_permission_context
  *                                "grant_permission_context": Context
  *                            <li>@ref gpudb::grant_permission_credential
@@ -33129,6 +35142,9 @@ GrantPermissionResponse grantPermission( const std::string& principal,
  *                            <li>@ref gpudb::grant_permission_insert
  *                                "grant_permission_insert": Insert access to
  *                                tables.
+ *                            <li>@ref gpudb::grant_permission_monitor
+ *                                "grant_permission_monitor": Monitor logs and
+ *                                statistics.
  *                            <li>@ref gpudb::grant_permission_read
  *                                "grant_permission_read": Ability to read,
  *                                list and use the object.
@@ -33153,9 +35169,9 @@ GrantPermissionResponse grantPermission( const std::string& principal,
  *                             to these columns, comma-separated. The default
  *                             value is ''.
  *                         <li>@ref gpudb::grant_permission_filter_expression
- *                             "grant_permission_filter_expression": Optional
- *                             filter expression to apply to this grant.  Only
- *                             rows that match the filter will be affected. The
+ *                             "grant_permission_filter_expression": Filter
+ *                             expression to apply to this grant.  Only rows
+ *                             that match the filter will be affected. The
  *                             default value is ''.
  *                         <li>@ref gpudb::grant_permission_with_grant_option
  *                             "grant_permission_with_grant_option": Allow the
@@ -33330,11 +35346,11 @@ GrantPermissionDatasourceResponse& grantPermissionDatasource( const GrantPermiss
  *                        <ul>
  *                            <li>@ref gpudb::grant_permission_datasource_admin
  *                                "grant_permission_datasource_admin": Admin
- *                                access on the given data source
+ *                                access on the given data source.
  *                            <li>@ref
  *                                gpudb::grant_permission_datasource_connect
  *                                "grant_permission_datasource_connect":
- *                                Connect access on the given data source
+ *                                Connect access on the given data source.
  *                        </ul>
  * @param[in] datasourceName  Name of the data source on which the permission
  *                            will be granted. Must be an existing data source,
@@ -33361,11 +35377,11 @@ GrantPermissionDatasourceResponse grantPermissionDatasource( const std::string& 
  *                        <ul>
  *                            <li>@ref gpudb::grant_permission_datasource_admin
  *                                "grant_permission_datasource_admin": Admin
- *                                access on the given data source
+ *                                access on the given data source.
  *                            <li>@ref
  *                                gpudb::grant_permission_datasource_connect
  *                                "grant_permission_datasource_connect":
- *                                Connect access on the given data source
+ *                                Connect access on the given data source.
  *                        </ul>
  * @param[in] datasourceName  Name of the data source on which the permission
  *                            will be granted. Must be an existing data source,
@@ -33429,17 +35445,17 @@ GrantPermissionDirectoryResponse& grantPermissionDirectory( const GrantPermissio
  *                                "grant_permission_directory_directory_read":
  *                                For files in the directory, access to list
  *                                files, download files, or use files in server
- *                                side functions
+ *                                side functions.
  *                            <li>@ref
  *                                gpudb::grant_permission_directory_directory_write
  *                                "grant_permission_directory_directory_write":
  *                                Access to upload files to, or delete files
  *                                from, the directory. A user or role with
- *                                write access automatically has read access
+ *                                write access automatically has read access.
  *                        </ul>
  * @param[in] directoryName  Name of the KiFS directory to which the permission
  *                           grants access. An empty directory name grants
- *                           access to all KiFS directories
+ *                           access to all KiFS directories.
  * @param[in] options  Optional parameters. The default value is an empty map.
  *
  * @return @ref gpudb::GrantPermissionDirectoryResponse "Response" object
@@ -33464,17 +35480,17 @@ GrantPermissionDirectoryResponse grantPermissionDirectory( const std::string& na
  *                                "grant_permission_directory_directory_read":
  *                                For files in the directory, access to list
  *                                files, download files, or use files in server
- *                                side functions
+ *                                side functions.
  *                            <li>@ref
  *                                gpudb::grant_permission_directory_directory_write
  *                                "grant_permission_directory_directory_write":
  *                                Access to upload files to, or delete files
  *                                from, the directory. A user or role with
- *                                write access automatically has read access
+ *                                write access automatically has read access.
  *                        </ul>
  * @param[in] directoryName  Name of the KiFS directory to which the permission
  *                           grants access. An empty directory name grants
- *                           access to all KiFS directories
+ *                           access to all KiFS directories.
  * @param[in] options  Optional parameters. The default value is an empty map.
  * @param[out] response_  @ref gpudb::GrantPermissionDirectoryResponse
  *                        "Response" object containing the results of the
@@ -33930,6 +35946,8 @@ HasPermissionResponse& hasPermission( const HasPermissionRequest& request_,
  * @param[in] objectType  The type of object being checked.
  *                        Supported values:
  *                        <ul>
+ *                            <li>@ref gpudb::has_permission_catalog
+ *                                "has_permission_catalog": External Catalog
  *                            <li>@ref gpudb::has_permission_context
  *                                "has_permission_context": Context
  *                            <li>@ref gpudb::has_permission_credential
@@ -33977,6 +35995,9 @@ HasPermissionResponse& hasPermission( const HasPermissionRequest& request_,
  *                            <li>@ref gpudb::has_permission_insert
  *                                "has_permission_insert": Insert access to
  *                                tables.
+ *                            <li>@ref gpudb::has_permission_monitor
+ *                                "has_permission_monitor": Monitor logs and
+ *                                statistics.
  *                            <li>@ref gpudb::has_permission_read
  *                                "has_permission_read": Ability to read, list
  *                                and use the object.
@@ -34042,6 +36063,8 @@ HasPermissionResponse hasPermission( const std::string& principal,
  * @param[in] objectType  The type of object being checked.
  *                        Supported values:
  *                        <ul>
+ *                            <li>@ref gpudb::has_permission_catalog
+ *                                "has_permission_catalog": External Catalog
  *                            <li>@ref gpudb::has_permission_context
  *                                "has_permission_context": Context
  *                            <li>@ref gpudb::has_permission_credential
@@ -34089,6 +36112,9 @@ HasPermissionResponse hasPermission( const std::string& principal,
  *                            <li>@ref gpudb::has_permission_insert
  *                                "has_permission_insert": Insert access to
  *                                tables.
+ *                            <li>@ref gpudb::has_permission_monitor
+ *                                "has_permission_monitor": Monitor logs and
+ *                                statistics.
  *                            <li>@ref gpudb::has_permission_read
  *                                "has_permission_read": Ability to read, list
  *                                and use the object.
@@ -34710,7 +36736,7 @@ InsertRecordsResponse& insertRecords( const InsertRecordsRequest<TRequest>& requ
  *                             @ref gpudb::insert_records_ignore_existing_pk
  *                             "ignore_existing_pk", @ref
  *                             gpudb::insert_records_allow_partial_batch
- *                             "allow_partial_batch", & @ref
+ *                             "allow_partial_batch", and  @ref
  *                             gpudb::insert_records_return_individual_errors
  *                             "return_individual_errors".  If the specified
  *                             table does not have a primary key, then this
@@ -34720,15 +36746,41 @@ InsertRecordsResponse& insertRecords( const InsertRecordsRequest<TRequest>& requ
  *                                 <li>@ref gpudb::insert_records_true
  *                                     "insert_records_true": Upsert new
  *                                     records when primary keys match existing
- *                                     records
+ *                                     records.
  *                                 <li>@ref gpudb::insert_records_false
  *                                     "insert_records_false": Reject new
  *                                     records when primary keys match existing
- *                                     records
+ *                                     records.
  *                             </ul>
  *                             The default value is @ref
  *                             gpudb::insert_records_false
  *                             "insert_records_false".
+ *                         <li>@ref
+ *                             gpudb::insert_records_enable_inplace_updates
+ *                             "insert_records_enable_inplace_updates": Applies
+ *                             only when upserting (when @ref
+ *                             gpudb::insert_records_update_on_existing_pk
+ *                             "update_on_existing_pk" is @ref
+ *                             gpudb::insert_records_true "true"). If set to
+ *                             @ref gpudb::insert_records_true "true", an
+ *                             existing record matched by primary key is
+ *                             modified in place. If set to @ref
+ *                             gpudb::insert_records_false "false", it is
+ *                             updated by deleting the existing record and
+ *                             inserting a replacement (delete and insert),
+ *                             which prevents the change from being reflected
+ *                             in dependent materialized views until they are
+ *                             refreshed.
+ *                             Supported values:
+ *                             <ul>
+ *                                 <li>@ref gpudb::insert_records_true
+ *                                     "insert_records_true"
+ *                                 <li>@ref gpudb::insert_records_false
+ *                                     "insert_records_false"
+ *                             </ul>
+ *                             The default value is @ref
+ *                             gpudb::insert_records_true
+ *                             "insert_records_true".
  *                         <li>@ref gpudb::insert_records_ignore_existing_pk
  *                             "insert_records_ignore_existing_pk": Specifies
  *                             the record collision error-suppression policy
@@ -34749,7 +36801,7 @@ InsertRecordsResponse& insertRecords( const InsertRecordsRequest<TRequest>& requ
  *                             values matching an existing record will result
  *                             in an error being reported, as determined by
  *                             @ref gpudb::insert_records_allow_partial_batch
- *                             "allow_partial_batch" & @ref
+ *                             "allow_partial_batch" and @ref
  *                             gpudb::insert_records_return_individual_errors
  *                             "return_individual_errors".  If the specified
  *                             table does not have a primary key or if upsert
@@ -34763,11 +36815,11 @@ InsertRecordsResponse& insertRecords( const InsertRecordsRequest<TRequest>& requ
  *                                 <li>@ref gpudb::insert_records_true
  *                                     "insert_records_true": Ignore new
  *                                     records whose primary key values collide
- *                                     with those of existing records
+ *                                     with those of existing records.
  *                                 <li>@ref gpudb::insert_records_false
  *                                     "insert_records_false": Treat as errors
  *                                     any new records whose primary key values
- *                                     collide with those of existing records
+ *                                     collide with those of existing records.
  *                             </ul>
  *                             The default value is @ref
  *                             gpudb::insert_records_false
@@ -34821,7 +36873,7 @@ InsertRecordsResponse& insertRecords( const InsertRecordsRequest<TRequest>& requ
  *                             success will always be returned, and any errors
  *                             found will be included in the info map.  The
  *                             "bad_record_indices" entry is a comma-separated
- *                             list of bad records (0-based).  And if so, there
+ *                             list of bad records (0-based).  If so, there
  *                             will also be an "error_N" entry for each record
  *                             with an error, where N is the index (0-based).
  *                             Supported values:
@@ -34851,6 +36903,35 @@ InsertRecordsResponse& insertRecords( const InsertRecordsRequest<TRequest>& requ
  *                             The default value is @ref
  *                             gpudb::insert_records_false
  *                             "insert_records_false".
+ *                         <li>@ref gpudb::insert_records_error_handling
+ *                             "insert_records_error_handling": Specifies how
+ *                             errors should be handled upon insertion.  When
+ *                             set, this option is authoritative; supplying a
+ *                             contradictory @ref
+ *                             gpudb::insert_records_allow_partial_batch
+ *                             "allow_partial_batch" is an error.
+ *                             Supported values:
+ *                             <ul>
+ *                                 <li>@ref gpudb::insert_records_permissive
+ *                                     "insert_records_permissive": Records
+ *                                     with bad column values are kept when
+ *                                     possible: the offending column is filled
+ *                                     with its default value if one exists,
+ *                                     otherwise with null if the column is
+ *                                     nullable; if neither is possible the
+ *                                     record is skipped and reported.
+ *                                 <li>@ref gpudb::insert_records_skip
+ *                                     "insert_records_skip": Records with bad
+ *                                     values are skipped and reported; the
+ *                                     rest of the batch is inserted.
+ *                                 <li>@ref gpudb::insert_records_abort
+ *                                     "insert_records_abort": Stops the
+ *                                     insertion and rejects the entire batch
+ *                                     when any record is incorrect.
+ *                             </ul>
+ *                             The default value is @ref
+ *                             gpudb::insert_records_abort
+ *                             "insert_records_abort".
  *                         <li>@ref gpudb::insert_records_dry_run
  *                             "insert_records_dry_run": If set to @ref
  *                             gpudb::insert_records_true "true", no data will
@@ -34865,6 +36946,29 @@ InsertRecordsResponse& insertRecords( const InsertRecordsRequest<TRequest>& requ
  *                             The default value is @ref
  *                             gpudb::insert_records_false
  *                             "insert_records_false".
+ *                         <li>@ref gpudb::insert_records_request_schema_str
+ *                             "insert_records_request_schema_str": Type schema
+ *                             of  @a data (when @a listEncoding is @a binary),
+ *                             in [["{column_name}","{column_type}"]] format.
+ *                             When non-empty and different from the table's
+ *                             schema, the server remaps the incoming records
+ *                             to the table's full schema.  Columns present in
+ *                             the table but absent from this schema are filled
+ *                             using their default values, NULL (if nullable),
+ *                             or an error is returned.  If empty, records must
+ *                             match the table's full schema. The default value
+ *                             is ''.
+ *                         <li>@ref gpudb::insert_records_transformations
+ *                             "insert_records_transformations":
+ *                             Comma-separated expressions, one per target
+ *                             table column.  Each expression is evaluated per
+ *                             record.  Empty entries (two consecutive commas)
+ *                             mean no transformation for that column -- the
+ *                             value is resolved from the input record, table
+ *                             default, NULL, or an error. Expressions may
+ *                             reference input columns by name or by position
+ *                             ($1 for the first input column, $2 for the
+ *                             second, etc.). The default value is ''.
  *                     </ul>
  *                     The default value is an empty map.
  *
@@ -34934,7 +37038,7 @@ InsertRecordsResponse insertRecords( const std::string& tableName,
  *                             @ref gpudb::insert_records_ignore_existing_pk
  *                             "ignore_existing_pk", @ref
  *                             gpudb::insert_records_allow_partial_batch
- *                             "allow_partial_batch", & @ref
+ *                             "allow_partial_batch", and  @ref
  *                             gpudb::insert_records_return_individual_errors
  *                             "return_individual_errors".  If the specified
  *                             table does not have a primary key, then this
@@ -34944,15 +37048,41 @@ InsertRecordsResponse insertRecords( const std::string& tableName,
  *                                 <li>@ref gpudb::insert_records_true
  *                                     "insert_records_true": Upsert new
  *                                     records when primary keys match existing
- *                                     records
+ *                                     records.
  *                                 <li>@ref gpudb::insert_records_false
  *                                     "insert_records_false": Reject new
  *                                     records when primary keys match existing
- *                                     records
+ *                                     records.
  *                             </ul>
  *                             The default value is @ref
  *                             gpudb::insert_records_false
  *                             "insert_records_false".
+ *                         <li>@ref
+ *                             gpudb::insert_records_enable_inplace_updates
+ *                             "insert_records_enable_inplace_updates": Applies
+ *                             only when upserting (when @ref
+ *                             gpudb::insert_records_update_on_existing_pk
+ *                             "update_on_existing_pk" is @ref
+ *                             gpudb::insert_records_true "true"). If set to
+ *                             @ref gpudb::insert_records_true "true", an
+ *                             existing record matched by primary key is
+ *                             modified in place. If set to @ref
+ *                             gpudb::insert_records_false "false", it is
+ *                             updated by deleting the existing record and
+ *                             inserting a replacement (delete and insert),
+ *                             which prevents the change from being reflected
+ *                             in dependent materialized views until they are
+ *                             refreshed.
+ *                             Supported values:
+ *                             <ul>
+ *                                 <li>@ref gpudb::insert_records_true
+ *                                     "insert_records_true"
+ *                                 <li>@ref gpudb::insert_records_false
+ *                                     "insert_records_false"
+ *                             </ul>
+ *                             The default value is @ref
+ *                             gpudb::insert_records_true
+ *                             "insert_records_true".
  *                         <li>@ref gpudb::insert_records_ignore_existing_pk
  *                             "insert_records_ignore_existing_pk": Specifies
  *                             the record collision error-suppression policy
@@ -34973,7 +37103,7 @@ InsertRecordsResponse insertRecords( const std::string& tableName,
  *                             values matching an existing record will result
  *                             in an error being reported, as determined by
  *                             @ref gpudb::insert_records_allow_partial_batch
- *                             "allow_partial_batch" & @ref
+ *                             "allow_partial_batch" and @ref
  *                             gpudb::insert_records_return_individual_errors
  *                             "return_individual_errors".  If the specified
  *                             table does not have a primary key or if upsert
@@ -34987,11 +37117,11 @@ InsertRecordsResponse insertRecords( const std::string& tableName,
  *                                 <li>@ref gpudb::insert_records_true
  *                                     "insert_records_true": Ignore new
  *                                     records whose primary key values collide
- *                                     with those of existing records
+ *                                     with those of existing records.
  *                                 <li>@ref gpudb::insert_records_false
  *                                     "insert_records_false": Treat as errors
  *                                     any new records whose primary key values
- *                                     collide with those of existing records
+ *                                     collide with those of existing records.
  *                             </ul>
  *                             The default value is @ref
  *                             gpudb::insert_records_false
@@ -35045,7 +37175,7 @@ InsertRecordsResponse insertRecords( const std::string& tableName,
  *                             success will always be returned, and any errors
  *                             found will be included in the info map.  The
  *                             "bad_record_indices" entry is a comma-separated
- *                             list of bad records (0-based).  And if so, there
+ *                             list of bad records (0-based).  If so, there
  *                             will also be an "error_N" entry for each record
  *                             with an error, where N is the index (0-based).
  *                             Supported values:
@@ -35075,6 +37205,35 @@ InsertRecordsResponse insertRecords( const std::string& tableName,
  *                             The default value is @ref
  *                             gpudb::insert_records_false
  *                             "insert_records_false".
+ *                         <li>@ref gpudb::insert_records_error_handling
+ *                             "insert_records_error_handling": Specifies how
+ *                             errors should be handled upon insertion.  When
+ *                             set, this option is authoritative; supplying a
+ *                             contradictory @ref
+ *                             gpudb::insert_records_allow_partial_batch
+ *                             "allow_partial_batch" is an error.
+ *                             Supported values:
+ *                             <ul>
+ *                                 <li>@ref gpudb::insert_records_permissive
+ *                                     "insert_records_permissive": Records
+ *                                     with bad column values are kept when
+ *                                     possible: the offending column is filled
+ *                                     with its default value if one exists,
+ *                                     otherwise with null if the column is
+ *                                     nullable; if neither is possible the
+ *                                     record is skipped and reported.
+ *                                 <li>@ref gpudb::insert_records_skip
+ *                                     "insert_records_skip": Records with bad
+ *                                     values are skipped and reported; the
+ *                                     rest of the batch is inserted.
+ *                                 <li>@ref gpudb::insert_records_abort
+ *                                     "insert_records_abort": Stops the
+ *                                     insertion and rejects the entire batch
+ *                                     when any record is incorrect.
+ *                             </ul>
+ *                             The default value is @ref
+ *                             gpudb::insert_records_abort
+ *                             "insert_records_abort".
  *                         <li>@ref gpudb::insert_records_dry_run
  *                             "insert_records_dry_run": If set to @ref
  *                             gpudb::insert_records_true "true", no data will
@@ -35089,6 +37248,29 @@ InsertRecordsResponse insertRecords( const std::string& tableName,
  *                             The default value is @ref
  *                             gpudb::insert_records_false
  *                             "insert_records_false".
+ *                         <li>@ref gpudb::insert_records_request_schema_str
+ *                             "insert_records_request_schema_str": Type schema
+ *                             of  @a data (when @a listEncoding is @a binary),
+ *                             in [["{column_name}","{column_type}"]] format.
+ *                             When non-empty and different from the table's
+ *                             schema, the server remaps the incoming records
+ *                             to the table's full schema.  Columns present in
+ *                             the table but absent from this schema are filled
+ *                             using their default values, NULL (if nullable),
+ *                             or an error is returned.  If empty, records must
+ *                             match the table's full schema. The default value
+ *                             is ''.
+ *                         <li>@ref gpudb::insert_records_transformations
+ *                             "insert_records_transformations":
+ *                             Comma-separated expressions, one per target
+ *                             table column.  Each expression is evaluated per
+ *                             record.  Empty entries (two consecutive commas)
+ *                             mean no transformation for that column -- the
+ *                             value is resolved from the input record, table
+ *                             default, NULL, or an error. Expressions may
+ *                             reference input columns by name or by position
+ *                             ($1 for the first input column, $2 for the
+ *                             second, etc.). The default value is ''.
  *                     </ul>
  *                     The default value is an empty map.
  * @param[out] response_  @ref gpudb::InsertRecordsResponse "Response" object
@@ -35568,7 +37750,7 @@ InsertRecordsFromFilesResponse& insertRecordsFromFiles( const InsertRecordsFromF
  *                             will contain a mapping of one or more of its
  *                             column properties to an appropriate format for
  *                             each property.  Currently supported column
- *                             properties include date, time, & datetime. The
+ *                             properties include date, time, and datetime. The
  *                             parameter value must be formatted as a JSON
  *                             string of maps of column names to maps of column
  *                             properties to their corresponding column
@@ -35632,7 +37814,7 @@ InsertRecordsFromFilesResponse& insertRecordsFromFiles( const InsertRecordsFromF
  *                                 <li>@ref
  *                                     gpudb::insert_records_from_files_auto
  *                                     "insert_records_from_files_auto": Auto
- *                                     detect compression type
+ *                                     detect compression type.
  *                                 <li>@ref
  *                                     gpudb::insert_records_from_files_gzip
  *                                     "insert_records_from_files_gzip": gzip
@@ -35650,7 +37832,7 @@ InsertRecordsFromFilesResponse& insertRecordsFromFiles( const InsertRecordsFromF
  *                             "insert_records_from_files_datasource_name":
  *                             Name of an existing external data source from
  *                             which data file(s) specified in @a filepaths
- *                             will be loaded
+ *                             will be loaded.
  *                         <li>@ref
  *                             gpudb::insert_records_from_files_default_column_formats
  *                             "insert_records_from_files_default_column_formats":
@@ -35658,10 +37840,10 @@ InsertRecordsFromFilesResponse& insertRecordsFromFiles( const InsertRecordsFromF
  *                             source data loaded into columns with the
  *                             corresponding column property.  Currently
  *                             supported column properties include date, time,
- *                             & datetime.  This default column-property-bound
- *                             format can be overridden by specifying a column
- *                             property & format for a given target column in
- *                             @ref
+ *                             and datetime.  This default
+ *                             column-property-bound format can be overridden
+ *                             by specifying a column property and format for a
+ *                             given target column in @ref
  *                             gpudb::insert_records_from_files_column_formats
  *                             "column_formats". For each specified annotation,
  *                             the format will apply to all columns with that
@@ -35704,9 +37886,13 @@ InsertRecordsFromFilesResponse& insertRecordsFromFiles( const InsertRecordsFromF
  *                                     otherwise, the malformed records are
  *                                     skipped.
  *                                 <li>@ref
+ *                                     gpudb::insert_records_from_files_skip
+ *                                     "insert_records_from_files_skip":
+ *                                     Malformed records are skipped.
+ *                                 <li>@ref
  *                                     gpudb::insert_records_from_files_ignore_bad_records
  *                                     "insert_records_from_files_ignore_bad_records":
- *                                     Malformed records are skipped.
+ *                                     Alias for skip.
  *                                 <li>@ref
  *                                     gpudb::insert_records_from_files_abort
  *                                     "insert_records_from_files_abort": Stops
@@ -35727,7 +37913,7 @@ InsertRecordsFromFilesResponse& insertRecordsFromFiles( const InsertRecordsFromF
  *                                 <li>@ref
  *                                     gpudb::insert_records_from_files_avro
  *                                     "insert_records_from_files_avro": Avro
- *                                     file format
+ *                                     file format.
  *                                 <li>@ref
  *                                     gpudb::insert_records_from_files_delimited_text
  *                                     "insert_records_from_files_delimited_text":
@@ -35736,19 +37922,19 @@ InsertRecordsFromFilesResponse& insertRecordsFromFiles( const InsertRecordsFromF
  *                                 <li>@ref
  *                                     gpudb::insert_records_from_files_gdb
  *                                     "insert_records_from_files_gdb":
- *                                     Esri/GDB file format
+ *                                     Esri/GDB file format.
  *                                 <li>@ref
  *                                     gpudb::insert_records_from_files_json
- *                                     "insert_records_from_files_json": Json
- *                                     file format
+ *                                     "insert_records_from_files_json": JSON
+ *                                     file format.
  *                                 <li>@ref
  *                                     gpudb::insert_records_from_files_parquet
  *                                     "insert_records_from_files_parquet":
- *                                     Apache Parquet file format
+ *                                     Apache Parquet file format.
  *                                 <li>@ref
  *                                     gpudb::insert_records_from_files_shapefile
  *                                     "insert_records_from_files_shapefile":
- *                                     ShapeFile file format
+ *                                     ShapeFile file format.
  *                             </ul>
  *                             The default value is @ref
  *                             gpudb::insert_records_from_files_delimited_text
@@ -35762,12 +37948,12 @@ InsertRecordsFromFilesResponse& insertRecordsFromFiles( const InsertRecordsFromF
  *                                 <li>@ref
  *                                     gpudb::insert_records_from_files_true
  *                                     "insert_records_from_files_true": Break
- *                                     up nested columns to multiple columns
+ *                                     up nested columns to multiple columns.
  *                                 <li>@ref
  *                                     gpudb::insert_records_from_files_false
  *                                     "insert_records_from_files_false": Treat
- *                                     nested columns as json columns instead
- *                                     of flattening
+ *                                     nested columns as JSON columns instead
+ *                                     of flattening.
  *                             </ul>
  *                             The default value is @ref
  *                             gpudb::insert_records_from_files_false
@@ -35776,7 +37962,7 @@ InsertRecordsFromFilesResponse& insertRecordsFromFiles( const InsertRecordsFromF
  *                             gpudb::insert_records_from_files_gdal_configuration_options
  *                             "insert_records_from_files_gdal_configuration_options":
  *                             Comma separated list of gdal conf options, for
- *                             the specific requests: key=value
+ *                             the specific requests: key=value.
  *                         <li>@ref
  *                             gpudb::insert_records_from_files_ignore_existing_pk
  *                             "insert_records_from_files_ignore_existing_pk":
@@ -35814,13 +38000,13 @@ InsertRecordsFromFilesResponse& insertRecordsFromFiles( const InsertRecordsFromF
  *                                     gpudb::insert_records_from_files_true
  *                                     "insert_records_from_files_true": Ignore
  *                                     new records whose primary key values
- *                                     collide with those of existing records
+ *                                     collide with those of existing records.
  *                                 <li>@ref
  *                                     gpudb::insert_records_from_files_false
  *                                     "insert_records_from_files_false": Treat
  *                                     as errors any new records whose primary
  *                                     key values collide with those of
- *                                     existing records
+ *                                     existing records.
  *                             </ul>
  *                             The default value is @ref
  *                             gpudb::insert_records_from_files_false
@@ -35836,7 +38022,7 @@ InsertRecordsFromFilesResponse& insertRecordsFromFiles( const InsertRecordsFromF
  *                                     gpudb::insert_records_from_files_full
  *                                     "insert_records_from_files_full": Run a
  *                                     type inference on the source data (if
- *                                     needed) and ingest
+ *                                     needed) and ingest.
  *                                 <li>@ref
  *                                     gpudb::insert_records_from_files_dry_run
  *                                     "insert_records_from_files_dry_run":
@@ -35989,6 +38175,26 @@ InsertRecordsFromFilesResponse& insertRecordsFromFiles( const InsertRecordsFromF
  *                             gpudb::insert_records_from_files_batch_size
  *                             "batch_size" (per working thread).
  *                         <li>@ref
+ *                             gpudb::insert_records_from_files_name_columns_from_file
+ *                             "insert_records_from_files_name_columns_from_file":
+ *                             Specifies a comma-delimited list of column names
+ *                             to be used as the source-data column names.  If
+ *                             the file has a header row (i.e., @ref
+ *                             gpudb::insert_records_from_files_text_has_header
+ *                             "text_has_header" is @ref
+ *                             gpudb::insert_records_from_files_true "true"),
+ *                             these names override the file's header names.
+ *                             If the file has no header row, these names are
+ *                             used as the source-data column names. Either
+ *                             way, the i-th name in this list applies to the
+ *                             i-th column in the file, enabling name-based
+ *                             matching against the target table's columns (and
+ *                             use with @ref
+ *                             gpudb::insert_records_from_files_columns_to_load
+ *                             "columns_to_load" / @ref
+ *                             gpudb::insert_records_from_files_columns_to_skip
+ *                             "columns_to_skip").
+ *                         <li>@ref
  *                             gpudb::insert_records_from_files_num_tasks_per_rank
  *                             "insert_records_from_files_num_tasks_per_rank":
  *                             Number of tasks for reading file per rank.
@@ -36013,22 +38219,22 @@ InsertRecordsFromFilesResponse& insertRecordsFromFiles( const InsertRecordsFromF
  *                             gpudb::insert_records_from_files_schema_registry_connection_retries
  *                             "insert_records_from_files_schema_registry_connection_retries":
  *                             Confluent Schema registry connection timeout (in
- *                             Secs)
+ *                             secs).
  *                         <li>@ref
  *                             gpudb::insert_records_from_files_schema_registry_connection_timeout
  *                             "insert_records_from_files_schema_registry_connection_timeout":
  *                             Confluent Schema registry connection timeout (in
- *                             Secs)
+ *                             secs).
  *                         <li>@ref
  *                             gpudb::insert_records_from_files_schema_registry_max_consecutive_connection_failures
  *                             "insert_records_from_files_schema_registry_max_consecutive_connection_failures":
  *                             Max records to skip due to SR connection
- *                             failures, before failing
+ *                             failures, before failing.
  *                         <li>@ref
  *                             gpudb::insert_records_from_files_max_consecutive_invalid_schema_failure
  *                             "insert_records_from_files_max_consecutive_invalid_schema_failure":
  *                             Max records to skip due to schema related
- *                             errors, before failing
+ *                             errors, before failing.
  *                         <li>@ref
  *                             gpudb::insert_records_from_files_schema_registry_schema_name
  *                             "insert_records_from_files_schema_registry_schema_name":
@@ -36112,10 +38318,10 @@ InsertRecordsFromFilesResponse& insertRecordsFromFiles( const InsertRecordsFromF
  *                             'b', 'f', 'n', 'r', 't', or 'v' preceded by an
  *                             escape character will be interpreted as the
  *                             ASCII bell, backspace, form feed, line feed,
- *                             carriage return, horizontal tab, & vertical tab,
- *                             respectively.  For example, the escape character
- *                             followed by an 'n' will be interpreted as a
- *                             newline within a field value.  The escape
+ *                             carriage return, horizontal tab, and vertical
+ *                             tab, respectively.  For example, the escape
+ *                             character followed by an 'n' will be interpreted
+ *                             as a newline within a field value.  The escape
  *                             character can also be used to escape the quoting
  *                             character, and will be treated as an escape
  *                             character whether it is within a quoted field
@@ -36206,6 +38412,23 @@ InsertRecordsFromFilesResponse& insertRecordsFromFiles( const InsertRecordsFromF
  *                             @ref
  *                             gpudb::insert_records_from_files_text_search_columns
  *                             "text_search_columns" has a value.
+ *                         <li>@ref gpudb::insert_records_from_files_trim_space
+ *                             "insert_records_from_files_trim_space": If set
+ *                             to @ref gpudb::insert_records_from_files_true
+ *                             "true", remove leading or trailing space from
+ *                             fields.
+ *                             Supported values:
+ *                             <ul>
+ *                                 <li>@ref
+ *                                     gpudb::insert_records_from_files_true
+ *                                     "insert_records_from_files_true"
+ *                                 <li>@ref
+ *                                     gpudb::insert_records_from_files_false
+ *                                     "insert_records_from_files_false"
+ *                             </ul>
+ *                             The default value is @ref
+ *                             gpudb::insert_records_from_files_false
+ *                             "insert_records_from_files_false".
  *                         <li>@ref
  *                             gpudb::insert_records_from_files_truncate_strings
  *                             "insert_records_from_files_truncate_strings": If
@@ -36257,18 +38480,42 @@ InsertRecordsFromFilesResponse& insertRecordsFromFiles( const InsertRecordsFromF
  *                                 <li>@ref
  *                                     gpudb::insert_records_from_files_accuracy
  *                                     "insert_records_from_files_accuracy":
- *                                     Scans data to get exactly-typed & sized
- *                                     columns for all data scanned.
+ *                                     Scans data to get exactly-typed and
+ *                                     sized columns for all data scanned.
  *                                 <li>@ref
  *                                     gpudb::insert_records_from_files_speed
  *                                     "insert_records_from_files_speed": Scans
  *                                     data and picks the widest possible
  *                                     column types so that 'all' values will
- *                                     fit with minimum data scanned
+ *                                     fit with minimum data scanned.
  *                             </ul>
  *                             The default value is @ref
  *                             gpudb::insert_records_from_files_accuracy
  *                             "insert_records_from_files_accuracy".
+ *                         <li>@ref
+ *                             gpudb::insert_records_from_files_enable_inplace_updates
+ *                             "insert_records_from_files_enable_inplace_updates":
+ *                             Applies only when upserting (when
+ *                             update_on_existing_pk is true). If set to true
+ *                             (the default), an existing record matched by
+ *                             primary key is modified in place. If set to
+ *                             false, the matched record is updated by deleting
+ *                             it and inserting a replacement (delete and
+ *                             insert), which prevents the change from being
+ *                             reflected in dependent materialized views until
+ *                             they are refreshed.
+ *                             Supported values:
+ *                             <ul>
+ *                                 <li>@ref
+ *                                     gpudb::insert_records_from_files_true
+ *                                     "insert_records_from_files_true"
+ *                                 <li>@ref
+ *                                     gpudb::insert_records_from_files_false
+ *                                     "insert_records_from_files_false"
+ *                             </ul>
+ *                             The default value is @ref
+ *                             gpudb::insert_records_from_files_true
+ *                             "insert_records_from_files_true".
  *                         <li>@ref
  *                             gpudb::insert_records_from_files_update_on_existing_pk
  *                             "insert_records_from_files_update_on_existing_pk":
@@ -36288,7 +38535,7 @@ InsertRecordsFromFilesResponse& insertRecordsFromFiles( const InsertRecordsFromF
  *                             record will be rejected and the error handled as
  *                             determined by @ref
  *                             gpudb::insert_records_from_files_ignore_existing_pk
- *                             "ignore_existing_pk" & @ref
+ *                             "ignore_existing_pk" and @ref
  *                             gpudb::insert_records_from_files_error_handling
  *                             "error_handling".  If the specified table does
  *                             not have a primary key, then this option has no
@@ -36299,16 +38546,28 @@ InsertRecordsFromFilesResponse& insertRecordsFromFiles( const InsertRecordsFromF
  *                                     gpudb::insert_records_from_files_true
  *                                     "insert_records_from_files_true": Upsert
  *                                     new records when primary keys match
- *                                     existing records
+ *                                     existing records.
  *                                 <li>@ref
  *                                     gpudb::insert_records_from_files_false
  *                                     "insert_records_from_files_false":
  *                                     Reject new records when primary keys
- *                                     match existing records
+ *                                     match existing records.
  *                             </ul>
  *                             The default value is @ref
  *                             gpudb::insert_records_from_files_false
  *                             "insert_records_from_files_false".
+ *                         <li>@ref
+ *                             gpudb::insert_records_from_files_transformations
+ *                             "insert_records_from_files_transformations":
+ *                             Comma-separated expressions, one per target
+ *                             table column.  Each expression is evaluated per
+ *                             record.  Empty entries (two consecutive commas)
+ *                             mean no transformation for that column -- the
+ *                             value is resolved from the input record, table
+ *                             default, NULL, or an error. Expressions may
+ *                             reference input columns by name or by position
+ *                             ($1 for the first input column, $2 for the
+ *                             second, etc.). The default value is ''.
  *                     </ul>
  *                     The default value is an empty map.
  *
@@ -36696,7 +38955,7 @@ InsertRecordsFromFilesResponse insertRecordsFromFiles( const std::string& tableN
  *                             will contain a mapping of one or more of its
  *                             column properties to an appropriate format for
  *                             each property.  Currently supported column
- *                             properties include date, time, & datetime. The
+ *                             properties include date, time, and datetime. The
  *                             parameter value must be formatted as a JSON
  *                             string of maps of column names to maps of column
  *                             properties to their corresponding column
@@ -36760,7 +39019,7 @@ InsertRecordsFromFilesResponse insertRecordsFromFiles( const std::string& tableN
  *                                 <li>@ref
  *                                     gpudb::insert_records_from_files_auto
  *                                     "insert_records_from_files_auto": Auto
- *                                     detect compression type
+ *                                     detect compression type.
  *                                 <li>@ref
  *                                     gpudb::insert_records_from_files_gzip
  *                                     "insert_records_from_files_gzip": gzip
@@ -36778,7 +39037,7 @@ InsertRecordsFromFilesResponse insertRecordsFromFiles( const std::string& tableN
  *                             "insert_records_from_files_datasource_name":
  *                             Name of an existing external data source from
  *                             which data file(s) specified in @a filepaths
- *                             will be loaded
+ *                             will be loaded.
  *                         <li>@ref
  *                             gpudb::insert_records_from_files_default_column_formats
  *                             "insert_records_from_files_default_column_formats":
@@ -36786,10 +39045,10 @@ InsertRecordsFromFilesResponse insertRecordsFromFiles( const std::string& tableN
  *                             source data loaded into columns with the
  *                             corresponding column property.  Currently
  *                             supported column properties include date, time,
- *                             & datetime.  This default column-property-bound
- *                             format can be overridden by specifying a column
- *                             property & format for a given target column in
- *                             @ref
+ *                             and datetime.  This default
+ *                             column-property-bound format can be overridden
+ *                             by specifying a column property and format for a
+ *                             given target column in @ref
  *                             gpudb::insert_records_from_files_column_formats
  *                             "column_formats". For each specified annotation,
  *                             the format will apply to all columns with that
@@ -36832,9 +39091,13 @@ InsertRecordsFromFilesResponse insertRecordsFromFiles( const std::string& tableN
  *                                     otherwise, the malformed records are
  *                                     skipped.
  *                                 <li>@ref
+ *                                     gpudb::insert_records_from_files_skip
+ *                                     "insert_records_from_files_skip":
+ *                                     Malformed records are skipped.
+ *                                 <li>@ref
  *                                     gpudb::insert_records_from_files_ignore_bad_records
  *                                     "insert_records_from_files_ignore_bad_records":
- *                                     Malformed records are skipped.
+ *                                     Alias for skip.
  *                                 <li>@ref
  *                                     gpudb::insert_records_from_files_abort
  *                                     "insert_records_from_files_abort": Stops
@@ -36855,7 +39118,7 @@ InsertRecordsFromFilesResponse insertRecordsFromFiles( const std::string& tableN
  *                                 <li>@ref
  *                                     gpudb::insert_records_from_files_avro
  *                                     "insert_records_from_files_avro": Avro
- *                                     file format
+ *                                     file format.
  *                                 <li>@ref
  *                                     gpudb::insert_records_from_files_delimited_text
  *                                     "insert_records_from_files_delimited_text":
@@ -36864,19 +39127,19 @@ InsertRecordsFromFilesResponse insertRecordsFromFiles( const std::string& tableN
  *                                 <li>@ref
  *                                     gpudb::insert_records_from_files_gdb
  *                                     "insert_records_from_files_gdb":
- *                                     Esri/GDB file format
+ *                                     Esri/GDB file format.
  *                                 <li>@ref
  *                                     gpudb::insert_records_from_files_json
- *                                     "insert_records_from_files_json": Json
- *                                     file format
+ *                                     "insert_records_from_files_json": JSON
+ *                                     file format.
  *                                 <li>@ref
  *                                     gpudb::insert_records_from_files_parquet
  *                                     "insert_records_from_files_parquet":
- *                                     Apache Parquet file format
+ *                                     Apache Parquet file format.
  *                                 <li>@ref
  *                                     gpudb::insert_records_from_files_shapefile
  *                                     "insert_records_from_files_shapefile":
- *                                     ShapeFile file format
+ *                                     ShapeFile file format.
  *                             </ul>
  *                             The default value is @ref
  *                             gpudb::insert_records_from_files_delimited_text
@@ -36890,12 +39153,12 @@ InsertRecordsFromFilesResponse insertRecordsFromFiles( const std::string& tableN
  *                                 <li>@ref
  *                                     gpudb::insert_records_from_files_true
  *                                     "insert_records_from_files_true": Break
- *                                     up nested columns to multiple columns
+ *                                     up nested columns to multiple columns.
  *                                 <li>@ref
  *                                     gpudb::insert_records_from_files_false
  *                                     "insert_records_from_files_false": Treat
- *                                     nested columns as json columns instead
- *                                     of flattening
+ *                                     nested columns as JSON columns instead
+ *                                     of flattening.
  *                             </ul>
  *                             The default value is @ref
  *                             gpudb::insert_records_from_files_false
@@ -36904,7 +39167,7 @@ InsertRecordsFromFilesResponse insertRecordsFromFiles( const std::string& tableN
  *                             gpudb::insert_records_from_files_gdal_configuration_options
  *                             "insert_records_from_files_gdal_configuration_options":
  *                             Comma separated list of gdal conf options, for
- *                             the specific requests: key=value
+ *                             the specific requests: key=value.
  *                         <li>@ref
  *                             gpudb::insert_records_from_files_ignore_existing_pk
  *                             "insert_records_from_files_ignore_existing_pk":
@@ -36942,13 +39205,13 @@ InsertRecordsFromFilesResponse insertRecordsFromFiles( const std::string& tableN
  *                                     gpudb::insert_records_from_files_true
  *                                     "insert_records_from_files_true": Ignore
  *                                     new records whose primary key values
- *                                     collide with those of existing records
+ *                                     collide with those of existing records.
  *                                 <li>@ref
  *                                     gpudb::insert_records_from_files_false
  *                                     "insert_records_from_files_false": Treat
  *                                     as errors any new records whose primary
  *                                     key values collide with those of
- *                                     existing records
+ *                                     existing records.
  *                             </ul>
  *                             The default value is @ref
  *                             gpudb::insert_records_from_files_false
@@ -36964,7 +39227,7 @@ InsertRecordsFromFilesResponse insertRecordsFromFiles( const std::string& tableN
  *                                     gpudb::insert_records_from_files_full
  *                                     "insert_records_from_files_full": Run a
  *                                     type inference on the source data (if
- *                                     needed) and ingest
+ *                                     needed) and ingest.
  *                                 <li>@ref
  *                                     gpudb::insert_records_from_files_dry_run
  *                                     "insert_records_from_files_dry_run":
@@ -37117,6 +39380,26 @@ InsertRecordsFromFilesResponse insertRecordsFromFiles( const std::string& tableN
  *                             gpudb::insert_records_from_files_batch_size
  *                             "batch_size" (per working thread).
  *                         <li>@ref
+ *                             gpudb::insert_records_from_files_name_columns_from_file
+ *                             "insert_records_from_files_name_columns_from_file":
+ *                             Specifies a comma-delimited list of column names
+ *                             to be used as the source-data column names.  If
+ *                             the file has a header row (i.e., @ref
+ *                             gpudb::insert_records_from_files_text_has_header
+ *                             "text_has_header" is @ref
+ *                             gpudb::insert_records_from_files_true "true"),
+ *                             these names override the file's header names.
+ *                             If the file has no header row, these names are
+ *                             used as the source-data column names. Either
+ *                             way, the i-th name in this list applies to the
+ *                             i-th column in the file, enabling name-based
+ *                             matching against the target table's columns (and
+ *                             use with @ref
+ *                             gpudb::insert_records_from_files_columns_to_load
+ *                             "columns_to_load" / @ref
+ *                             gpudb::insert_records_from_files_columns_to_skip
+ *                             "columns_to_skip").
+ *                         <li>@ref
  *                             gpudb::insert_records_from_files_num_tasks_per_rank
  *                             "insert_records_from_files_num_tasks_per_rank":
  *                             Number of tasks for reading file per rank.
@@ -37141,22 +39424,22 @@ InsertRecordsFromFilesResponse insertRecordsFromFiles( const std::string& tableN
  *                             gpudb::insert_records_from_files_schema_registry_connection_retries
  *                             "insert_records_from_files_schema_registry_connection_retries":
  *                             Confluent Schema registry connection timeout (in
- *                             Secs)
+ *                             secs).
  *                         <li>@ref
  *                             gpudb::insert_records_from_files_schema_registry_connection_timeout
  *                             "insert_records_from_files_schema_registry_connection_timeout":
  *                             Confluent Schema registry connection timeout (in
- *                             Secs)
+ *                             secs).
  *                         <li>@ref
  *                             gpudb::insert_records_from_files_schema_registry_max_consecutive_connection_failures
  *                             "insert_records_from_files_schema_registry_max_consecutive_connection_failures":
  *                             Max records to skip due to SR connection
- *                             failures, before failing
+ *                             failures, before failing.
  *                         <li>@ref
  *                             gpudb::insert_records_from_files_max_consecutive_invalid_schema_failure
  *                             "insert_records_from_files_max_consecutive_invalid_schema_failure":
  *                             Max records to skip due to schema related
- *                             errors, before failing
+ *                             errors, before failing.
  *                         <li>@ref
  *                             gpudb::insert_records_from_files_schema_registry_schema_name
  *                             "insert_records_from_files_schema_registry_schema_name":
@@ -37240,10 +39523,10 @@ InsertRecordsFromFilesResponse insertRecordsFromFiles( const std::string& tableN
  *                             'b', 'f', 'n', 'r', 't', or 'v' preceded by an
  *                             escape character will be interpreted as the
  *                             ASCII bell, backspace, form feed, line feed,
- *                             carriage return, horizontal tab, & vertical tab,
- *                             respectively.  For example, the escape character
- *                             followed by an 'n' will be interpreted as a
- *                             newline within a field value.  The escape
+ *                             carriage return, horizontal tab, and vertical
+ *                             tab, respectively.  For example, the escape
+ *                             character followed by an 'n' will be interpreted
+ *                             as a newline within a field value.  The escape
  *                             character can also be used to escape the quoting
  *                             character, and will be treated as an escape
  *                             character whether it is within a quoted field
@@ -37334,6 +39617,23 @@ InsertRecordsFromFilesResponse insertRecordsFromFiles( const std::string& tableN
  *                             @ref
  *                             gpudb::insert_records_from_files_text_search_columns
  *                             "text_search_columns" has a value.
+ *                         <li>@ref gpudb::insert_records_from_files_trim_space
+ *                             "insert_records_from_files_trim_space": If set
+ *                             to @ref gpudb::insert_records_from_files_true
+ *                             "true", remove leading or trailing space from
+ *                             fields.
+ *                             Supported values:
+ *                             <ul>
+ *                                 <li>@ref
+ *                                     gpudb::insert_records_from_files_true
+ *                                     "insert_records_from_files_true"
+ *                                 <li>@ref
+ *                                     gpudb::insert_records_from_files_false
+ *                                     "insert_records_from_files_false"
+ *                             </ul>
+ *                             The default value is @ref
+ *                             gpudb::insert_records_from_files_false
+ *                             "insert_records_from_files_false".
  *                         <li>@ref
  *                             gpudb::insert_records_from_files_truncate_strings
  *                             "insert_records_from_files_truncate_strings": If
@@ -37385,18 +39685,42 @@ InsertRecordsFromFilesResponse insertRecordsFromFiles( const std::string& tableN
  *                                 <li>@ref
  *                                     gpudb::insert_records_from_files_accuracy
  *                                     "insert_records_from_files_accuracy":
- *                                     Scans data to get exactly-typed & sized
- *                                     columns for all data scanned.
+ *                                     Scans data to get exactly-typed and
+ *                                     sized columns for all data scanned.
  *                                 <li>@ref
  *                                     gpudb::insert_records_from_files_speed
  *                                     "insert_records_from_files_speed": Scans
  *                                     data and picks the widest possible
  *                                     column types so that 'all' values will
- *                                     fit with minimum data scanned
+ *                                     fit with minimum data scanned.
  *                             </ul>
  *                             The default value is @ref
  *                             gpudb::insert_records_from_files_accuracy
  *                             "insert_records_from_files_accuracy".
+ *                         <li>@ref
+ *                             gpudb::insert_records_from_files_enable_inplace_updates
+ *                             "insert_records_from_files_enable_inplace_updates":
+ *                             Applies only when upserting (when
+ *                             update_on_existing_pk is true). If set to true
+ *                             (the default), an existing record matched by
+ *                             primary key is modified in place. If set to
+ *                             false, the matched record is updated by deleting
+ *                             it and inserting a replacement (delete and
+ *                             insert), which prevents the change from being
+ *                             reflected in dependent materialized views until
+ *                             they are refreshed.
+ *                             Supported values:
+ *                             <ul>
+ *                                 <li>@ref
+ *                                     gpudb::insert_records_from_files_true
+ *                                     "insert_records_from_files_true"
+ *                                 <li>@ref
+ *                                     gpudb::insert_records_from_files_false
+ *                                     "insert_records_from_files_false"
+ *                             </ul>
+ *                             The default value is @ref
+ *                             gpudb::insert_records_from_files_true
+ *                             "insert_records_from_files_true".
  *                         <li>@ref
  *                             gpudb::insert_records_from_files_update_on_existing_pk
  *                             "insert_records_from_files_update_on_existing_pk":
@@ -37416,7 +39740,7 @@ InsertRecordsFromFilesResponse insertRecordsFromFiles( const std::string& tableN
  *                             record will be rejected and the error handled as
  *                             determined by @ref
  *                             gpudb::insert_records_from_files_ignore_existing_pk
- *                             "ignore_existing_pk" & @ref
+ *                             "ignore_existing_pk" and @ref
  *                             gpudb::insert_records_from_files_error_handling
  *                             "error_handling".  If the specified table does
  *                             not have a primary key, then this option has no
@@ -37427,16 +39751,28 @@ InsertRecordsFromFilesResponse insertRecordsFromFiles( const std::string& tableN
  *                                     gpudb::insert_records_from_files_true
  *                                     "insert_records_from_files_true": Upsert
  *                                     new records when primary keys match
- *                                     existing records
+ *                                     existing records.
  *                                 <li>@ref
  *                                     gpudb::insert_records_from_files_false
  *                                     "insert_records_from_files_false":
  *                                     Reject new records when primary keys
- *                                     match existing records
+ *                                     match existing records.
  *                             </ul>
  *                             The default value is @ref
  *                             gpudb::insert_records_from_files_false
  *                             "insert_records_from_files_false".
+ *                         <li>@ref
+ *                             gpudb::insert_records_from_files_transformations
+ *                             "insert_records_from_files_transformations":
+ *                             Comma-separated expressions, one per target
+ *                             table column.  Each expression is evaluated per
+ *                             record.  Empty entries (two consecutive commas)
+ *                             mean no transformation for that column -- the
+ *                             value is resolved from the input record, table
+ *                             default, NULL, or an error. Expressions may
+ *                             reference input columns by name or by position
+ *                             ($1 for the first input column, $2 for the
+ *                             second, etc.). The default value is ''.
  *                     </ul>
  *                     The default value is an empty map.
  * @param[out] response_  @ref gpudb::InsertRecordsFromFilesResponse "Response"
@@ -37507,8 +39843,8 @@ InsertRecordsFromPayloadResponse& insertRecordsFromPayload( const InsertRecordsF
  *                       table name will have to meet standard <a
  *                       href="../../../concepts/tables/#table-naming-criteria"
  *                       target="_top">table naming criteria</a>.
- * @param[in] dataText  Records formatted as delimited text
- * @param[in] dataBytes  Records formatted as binary data
+ * @param[in] dataText  Records formatted as delimited text.
+ * @param[in] dataBytes  Records formatted as binary data.
  * @param[in] modifyColumns  Not implemented yet. The default value is an empty
  *                           map.
  * @param[in] createTableOptions  Options used when creating the target table.
@@ -37775,16 +40111,16 @@ InsertRecordsFromPayloadResponse& insertRecordsFromPayload( const InsertRecordsF
  *                         <li>@ref
  *                             gpudb::insert_records_from_payload_bad_record_table_name
  *                             "insert_records_from_payload_bad_record_table_name":
- *                             Optional name of a table to which records that
- *                             were rejected are written.  The bad-record-table
- *                             has the following columns: line_number (long),
+ *                             Name of a table to which records that were
+ *                             rejected are written.  The bad-record-table has
+ *                             the following columns: line_number (long),
  *                             line_rejected (string), error_message (string).
  *                         <li>@ref
  *                             gpudb::insert_records_from_payload_bad_record_table_limit
  *                             "insert_records_from_payload_bad_record_table_limit":
  *                             A positive integer indicating the maximum number
  *                             of records that can be  written to the
- *                             bad-record-table.   Default value is 10000
+ *                             bad-record-table.   Default value is 10000.
  *                         <li>@ref
  *                             gpudb::insert_records_from_payload_bad_record_table_limit_per_input
  *                             "insert_records_from_payload_bad_record_table_limit_per_input":
@@ -37794,7 +40130,7 @@ InsertRecordsFromPayloadResponse& insertRecordsFromPayload( const InsertRecordsF
  *                             file/payload. Default value will be
  *                             'bad_record_table_limit' and total size of the
  *                             table per rank is limited to
- *                             'bad_record_table_limit'
+ *                             'bad_record_table_limit'.
  *                         <li>@ref
  *                             gpudb::insert_records_from_payload_batch_size
  *                             "insert_records_from_payload_batch_size":
@@ -37809,7 +40145,7 @@ InsertRecordsFromPayloadResponse& insertRecordsFromPayload( const InsertRecordsF
  *                             will contain a mapping of one or more of its
  *                             column properties to an appropriate format for
  *                             each property.  Currently supported column
- *                             properties include date, time, & datetime. The
+ *                             properties include date, time, and datetime. The
  *                             parameter value must be formatted as a JSON
  *                             string of maps of column names to maps of column
  *                             properties to their corresponding column
@@ -37863,17 +40199,17 @@ InsertRecordsFromPayloadResponse& insertRecordsFromPayload( const InsertRecordsF
  *                         <li>@ref
  *                             gpudb::insert_records_from_payload_compression_type
  *                             "insert_records_from_payload_compression_type":
- *                             Optional: payload compression type.
+ *                             Payload compression type.
  *                             Supported values:
  *                             <ul>
  *                                 <li>@ref
  *                                     gpudb::insert_records_from_payload_none
  *                                     "insert_records_from_payload_none":
- *                                     Uncompressed
+ *                                     Uncompressed.
  *                                 <li>@ref
  *                                     gpudb::insert_records_from_payload_auto
  *                                     "insert_records_from_payload_auto":
- *                                     Default. Auto detect compression type
+ *                                     Default. Auto detect compression type.
  *                                 <li>@ref
  *                                     gpudb::insert_records_from_payload_gzip
  *                                     "insert_records_from_payload_gzip": gzip
@@ -37893,10 +40229,10 @@ InsertRecordsFromPayloadResponse& insertRecordsFromPayload( const InsertRecordsF
  *                             source data loaded into columns with the
  *                             corresponding column property.  Currently
  *                             supported column properties include date, time,
- *                             & datetime.  This default column-property-bound
- *                             format can be overridden by specifying a column
- *                             property & format for a given target column in
- *                             @ref
+ *                             and datetime.  This default
+ *                             column-property-bound format can be overridden
+ *                             by specifying a column property and format for a
+ *                             given target column in @ref
  *                             gpudb::insert_records_from_payload_column_formats
  *                             "column_formats". For each specified annotation,
  *                             the format will apply to all columns with that
@@ -37939,9 +40275,13 @@ InsertRecordsFromPayloadResponse& insertRecordsFromPayload( const InsertRecordsF
  *                                     otherwise, the malformed records are
  *                                     skipped.
  *                                 <li>@ref
+ *                                     gpudb::insert_records_from_payload_skip
+ *                                     "insert_records_from_payload_skip":
+ *                                     Malformed records are skipped.
+ *                                 <li>@ref
  *                                     gpudb::insert_records_from_payload_ignore_bad_records
  *                                     "insert_records_from_payload_ignore_bad_records":
- *                                     Malformed records are skipped.
+ *                                     Alias for skip.
  *                                 <li>@ref
  *                                     gpudb::insert_records_from_payload_abort
  *                                     "insert_records_from_payload_abort":
@@ -37964,7 +40304,7 @@ InsertRecordsFromPayloadResponse& insertRecordsFromPayload( const InsertRecordsF
  *                                 <li>@ref
  *                                     gpudb::insert_records_from_payload_avro
  *                                     "insert_records_from_payload_avro": Avro
- *                                     file format
+ *                                     file format.
  *                                 <li>@ref
  *                                     gpudb::insert_records_from_payload_delimited_text
  *                                     "insert_records_from_payload_delimited_text":
@@ -37973,19 +40313,19 @@ InsertRecordsFromPayloadResponse& insertRecordsFromPayload( const InsertRecordsF
  *                                 <li>@ref
  *                                     gpudb::insert_records_from_payload_gdb
  *                                     "insert_records_from_payload_gdb":
- *                                     Esri/GDB file format
+ *                                     Esri/GDB file format.
  *                                 <li>@ref
  *                                     gpudb::insert_records_from_payload_json
- *                                     "insert_records_from_payload_json": Json
- *                                     file format
+ *                                     "insert_records_from_payload_json": JSON
+ *                                     file format.
  *                                 <li>@ref
  *                                     gpudb::insert_records_from_payload_parquet
  *                                     "insert_records_from_payload_parquet":
- *                                     Apache Parquet file format
+ *                                     Apache Parquet file format.
  *                                 <li>@ref
  *                                     gpudb::insert_records_from_payload_shapefile
  *                                     "insert_records_from_payload_shapefile":
- *                                     ShapeFile file format
+ *                                     ShapeFile file format.
  *                             </ul>
  *                             The default value is @ref
  *                             gpudb::insert_records_from_payload_delimited_text
@@ -38000,12 +40340,12 @@ InsertRecordsFromPayloadResponse& insertRecordsFromPayload( const InsertRecordsF
  *                                     gpudb::insert_records_from_payload_true
  *                                     "insert_records_from_payload_true":
  *                                     Break up nested columns to multiple
- *                                     columns
+ *                                     columns.
  *                                 <li>@ref
  *                                     gpudb::insert_records_from_payload_false
  *                                     "insert_records_from_payload_false":
- *                                     Treat nested columns as json columns
- *                                     instead of flattening
+ *                                     Treat nested columns as JSON columns
+ *                                     instead of flattening.
  *                             </ul>
  *                             The default value is @ref
  *                             gpudb::insert_records_from_payload_false
@@ -38054,13 +40394,13 @@ InsertRecordsFromPayloadResponse& insertRecordsFromPayload( const InsertRecordsF
  *                                     "insert_records_from_payload_true":
  *                                     Ignore new records whose primary key
  *                                     values collide with those of existing
- *                                     records
+ *                                     records.
  *                                 <li>@ref
  *                                     gpudb::insert_records_from_payload_false
  *                                     "insert_records_from_payload_false":
  *                                     Treat as errors any new records whose
  *                                     primary key values collide with those of
- *                                     existing records
+ *                                     existing records.
  *                             </ul>
  *                             The default value is @ref
  *                             gpudb::insert_records_from_payload_false
@@ -38076,7 +40416,7 @@ InsertRecordsFromPayloadResponse& insertRecordsFromPayload( const InsertRecordsF
  *                                     gpudb::insert_records_from_payload_full
  *                                     "insert_records_from_payload_full": Run
  *                                     a type inference on the source data (if
- *                                     needed) and ingest
+ *                                     needed) and ingest.
  *                                 <li>@ref
  *                                     gpudb::insert_records_from_payload_dry_run
  *                                     "insert_records_from_payload_dry_run":
@@ -38098,9 +40438,9 @@ InsertRecordsFromPayloadResponse& insertRecordsFromPayload( const InsertRecordsF
  *                             gpudb::insert_records_from_payload_full
  *                             "insert_records_from_payload_full".
  *                         <li>@ref gpudb::insert_records_from_payload_layer
- *                             "insert_records_from_payload_layer": Optional:
- *                             geo files layer(s) name(s): comma separated. The
- *                             default value is ''.
+ *                             "insert_records_from_payload_layer": Geo files
+ *                             layer(s) name(s): comma separated. The default
+ *                             value is ''.
  *                         <li>@ref
  *                             gpudb::insert_records_from_payload_loading_mode
  *                             "insert_records_from_payload_loading_mode":
@@ -38160,7 +40500,7 @@ InsertRecordsFromPayloadResponse& insertRecordsFromPayload( const InsertRecordsF
  *                         <li>@ref
  *                             gpudb::insert_records_from_payload_local_time_offset
  *                             "insert_records_from_payload_local_time_offset":
- *                             For Avro local timestamp columns
+ *                             For Avro local timestamp columns.
  *                         <li>@ref
  *                             gpudb::insert_records_from_payload_max_records_to_load
  *                             "insert_records_from_payload_max_records_to_load":
@@ -38171,11 +40511,30 @@ InsertRecordsFromPayloadResponse& insertRecordsFromPayload( const InsertRecordsF
  *                             batch_size (per working thread). The default
  *                             value is ''.
  *                         <li>@ref
+ *                             gpudb::insert_records_from_payload_name_columns_from_file
+ *                             "insert_records_from_payload_name_columns_from_file":
+ *                             Specifies a comma-delimited list of column names
+ *                             to be used as the source-data column names.  If
+ *                             the payload has a header row (i.e., @ref
+ *                             gpudb::insert_records_from_payload_text_has_header
+ *                             "text_has_header" is @ref
+ *                             gpudb::insert_records_from_payload_true "true"),
+ *                             these names override the payload's header names.
+ *                             If the payload has no header row, these names
+ *                             are used as the source-data column names. Either
+ *                             way, the i-th name in this list applies to the
+ *                             i-th column in the payload, enabling name-based
+ *                             matching against the target table's columns (and
+ *                             use with @ref
+ *                             gpudb::insert_records_from_payload_columns_to_load
+ *                             "columns_to_load" / @ref
+ *                             gpudb::insert_records_from_payload_columns_to_skip
+ *                             "columns_to_skip").
+ *                         <li>@ref
  *                             gpudb::insert_records_from_payload_num_tasks_per_rank
  *                             "insert_records_from_payload_num_tasks_per_rank":
- *                             Optional: number of tasks for reading file per
- *                             rank. Default will be
- *                             external_file_reader_num_tasks
+ *                             Number of tasks for reading file per rank.
+ *                             Default will be external_file_reader_num_tasks.
  *                         <li>@ref
  *                             gpudb::insert_records_from_payload_poll_interval
  *                             "insert_records_from_payload_poll_interval": If
@@ -38188,29 +40547,29 @@ InsertRecordsFromPayloadResponse& insertRecordsFromPayload( const InsertRecordsF
  *                         <li>@ref
  *                             gpudb::insert_records_from_payload_primary_keys
  *                             "insert_records_from_payload_primary_keys":
- *                             Optional: comma separated list of column names,
- *                             to set as primary keys, when not specified in
- *                             the type. The default value is ''.
+ *                             Comma separated list of column names, to set as
+ *                             primary keys, when not specified in the type.
+ *                             The default value is ''.
  *                         <li>@ref
  *                             gpudb::insert_records_from_payload_schema_registry_connection_retries
  *                             "insert_records_from_payload_schema_registry_connection_retries":
  *                             Confluent Schema registry connection timeout (in
- *                             Secs)
+ *                             secs).
  *                         <li>@ref
  *                             gpudb::insert_records_from_payload_schema_registry_connection_timeout
  *                             "insert_records_from_payload_schema_registry_connection_timeout":
  *                             Confluent Schema registry connection timeout (in
- *                             Secs)
+ *                             secs).
  *                         <li>@ref
  *                             gpudb::insert_records_from_payload_schema_registry_max_consecutive_connection_failures
  *                             "insert_records_from_payload_schema_registry_max_consecutive_connection_failures":
  *                             Max records to skip due to SR connection
- *                             failures, before failing
+ *                             failures, before failing.
  *                         <li>@ref
  *                             gpudb::insert_records_from_payload_max_consecutive_invalid_schema_failure
  *                             "insert_records_from_payload_max_consecutive_invalid_schema_failure":
  *                             Max records to skip due to schema related
- *                             errors, before failing
+ *                             errors, before failing.
  *                         <li>@ref
  *                             gpudb::insert_records_from_payload_schema_registry_schema_name
  *                             "insert_records_from_payload_schema_registry_schema_name":
@@ -38218,10 +40577,10 @@ InsertRecordsFromPayloadResponse& insertRecordsFromPayload( const InsertRecordsF
  *                             to use when reading Avro records.
  *                         <li>@ref
  *                             gpudb::insert_records_from_payload_shard_keys
- *                             "insert_records_from_payload_shard_keys":
- *                             Optional: comma separated list of column names,
- *                             to set as primary keys, when not specified in
- *                             the type. The default value is ''.
+ *                             "insert_records_from_payload_shard_keys": Comma
+ *                             separated list of column names, to set as shard
+ *                             keys, when not specified in the type. The
+ *                             default value is ''.
  *                         <li>@ref
  *                             gpudb::insert_records_from_payload_skip_lines
  *                             "insert_records_from_payload_skip_lines": Skip a
@@ -38246,10 +40605,12 @@ InsertRecordsFromPayloadResponse& insertRecordsFromPayload( const InsertRecordsF
  *                         <li>@ref
  *                             gpudb::insert_records_from_payload_table_insert_mode
  *                             "insert_records_from_payload_table_insert_mode":
- *                             Optional: table_insert_mode. When inserting
- *                             records from multiple files: if table_per_file
- *                             then insert from each file into a new table.
- *                             Currently supported only for shapefiles.
+ *                             When inserting records from multiple files: if
+ *                             @ref
+ *                             gpudb::insert_records_from_payload_table_per_file
+ *                             "table_per_file", then insert from each file
+ *                             into a new table. Currently supported only for
+ *                             shapefiles.
  *                             Supported values:
  *                             <ul>
  *                                 <li>@ref
@@ -38291,10 +40652,10 @@ InsertRecordsFromPayloadResponse& insertRecordsFromPayload( const InsertRecordsF
  *                             'b', 'f', 'n', 'r', 't', or 'v' preceded by an
  *                             escape character will be interpreted as the
  *                             ASCII bell, backspace, form feed, line feed,
- *                             carriage return, horizontal tab, & vertical tab,
- *                             respectively.  For example, the escape character
- *                             followed by an 'n' will be interpreted as a
- *                             newline within a field value.  The escape
+ *                             carriage return, horizontal tab, and vertical
+ *                             tab, respectively.  For example, the escape
+ *                             character followed by an 'n' will be interpreted
+ *                             as a newline within a field value.  The escape
  *                             character can also be used to escape the quoting
  *                             character, and will be treated as an escape
  *                             character whether it is within a quoted field
@@ -38374,12 +40735,30 @@ InsertRecordsFromPayloadResponse& insertRecordsFromPayload( const InsertRecordsF
  *                             of column names or '*' for all columns. To add
  *                             text_search property only to string columns of
  *                             minimum size, set also the option
- *                             'text_search_min_column_length'
+ *                             'text_search_min_column_length'.
  *                         <li>@ref
  *                             gpudb::insert_records_from_payload_text_search_min_column_length
  *                             "insert_records_from_payload_text_search_min_column_length":
  *                             Set minimum column size. Used only when
  *                             'text_search_columns' has a value.
+ *                         <li>@ref
+ *                             gpudb::insert_records_from_payload_trim_space
+ *                             "insert_records_from_payload_trim_space": If set
+ *                             to @ref gpudb::insert_records_from_payload_true
+ *                             "true", remove leading or trailing space from
+ *                             fields.
+ *                             Supported values:
+ *                             <ul>
+ *                                 <li>@ref
+ *                                     gpudb::insert_records_from_payload_true
+ *                                     "insert_records_from_payload_true"
+ *                                 <li>@ref
+ *                                     gpudb::insert_records_from_payload_false
+ *                                     "insert_records_from_payload_false"
+ *                             </ul>
+ *                             The default value is @ref
+ *                             gpudb::insert_records_from_payload_false
+ *                             "insert_records_from_payload_false".
  *                         <li>@ref
  *                             gpudb::insert_records_from_payload_truncate_strings
  *                             "insert_records_from_payload_truncate_strings":
@@ -38425,24 +40804,48 @@ InsertRecordsFromPayloadResponse& insertRecordsFromPayload( const InsertRecordsF
  *                         <li>@ref
  *                             gpudb::insert_records_from_payload_type_inference_mode
  *                             "insert_records_from_payload_type_inference_mode":
- *                             optimize type inference for:
+ *                             Optimize type inference mode.
  *                             Supported values:
  *                             <ul>
  *                                 <li>@ref
  *                                     gpudb::insert_records_from_payload_accuracy
  *                                     "insert_records_from_payload_accuracy":
- *                                     Scans data to get exactly-typed & sized
- *                                     columns for all data scanned.
+ *                                     Scans data to get exactly-typed and
+ *                                     sized columns for all data scanned.
  *                                 <li>@ref
  *                                     gpudb::insert_records_from_payload_speed
  *                                     "insert_records_from_payload_speed":
  *                                     Scans data and picks the widest possible
  *                                     column types so that 'all' values will
- *                                     fit with minimum data scanned
+ *                                     fit with minimum data scanned.
  *                             </ul>
  *                             The default value is @ref
  *                             gpudb::insert_records_from_payload_accuracy
  *                             "insert_records_from_payload_accuracy".
+ *                         <li>@ref
+ *                             gpudb::insert_records_from_payload_enable_inplace_updates
+ *                             "insert_records_from_payload_enable_inplace_updates":
+ *                             Applies only when upserting (when
+ *                             update_on_existing_pk is true). If set to true
+ *                             (the default), an existing record matched by
+ *                             primary key is modified in place. If set to
+ *                             false, the matched record is updated by deleting
+ *                             it and inserting a replacement (delete and
+ *                             insert), which prevents the change from being
+ *                             reflected in dependent materialized views until
+ *                             they are refreshed.
+ *                             Supported values:
+ *                             <ul>
+ *                                 <li>@ref
+ *                                     gpudb::insert_records_from_payload_true
+ *                                     "insert_records_from_payload_true"
+ *                                 <li>@ref
+ *                                     gpudb::insert_records_from_payload_false
+ *                                     "insert_records_from_payload_false"
+ *                             </ul>
+ *                             The default value is @ref
+ *                             gpudb::insert_records_from_payload_true
+ *                             "insert_records_from_payload_true".
  *                         <li>@ref
  *                             gpudb::insert_records_from_payload_update_on_existing_pk
  *                             "insert_records_from_payload_update_on_existing_pk":
@@ -38462,7 +40865,7 @@ InsertRecordsFromPayloadResponse& insertRecordsFromPayload( const InsertRecordsF
  *                             record will be rejected and the error handled as
  *                             determined by @ref
  *                             gpudb::insert_records_from_payload_ignore_existing_pk
- *                             "ignore_existing_pk" & @ref
+ *                             "ignore_existing_pk" and @ref
  *                             gpudb::insert_records_from_payload_error_handling
  *                             "error_handling".  If the specified table does
  *                             not have a primary key, then this option has no
@@ -38473,16 +40876,28 @@ InsertRecordsFromPayloadResponse& insertRecordsFromPayload( const InsertRecordsF
  *                                     gpudb::insert_records_from_payload_true
  *                                     "insert_records_from_payload_true":
  *                                     Upsert new records when primary keys
- *                                     match existing records
+ *                                     match existing records.
  *                                 <li>@ref
  *                                     gpudb::insert_records_from_payload_false
  *                                     "insert_records_from_payload_false":
  *                                     Reject new records when primary keys
- *                                     match existing records
+ *                                     match existing records.
  *                             </ul>
  *                             The default value is @ref
  *                             gpudb::insert_records_from_payload_false
  *                             "insert_records_from_payload_false".
+ *                         <li>@ref
+ *                             gpudb::insert_records_from_payload_transformations
+ *                             "insert_records_from_payload_transformations":
+ *                             Comma-separated expressions, one per target
+ *                             table column.  Each expression is evaluated per
+ *                             record.  Empty entries (two consecutive commas)
+ *                             mean no transformation for that column -- the
+ *                             value is resolved from the input record, table
+ *                             default, NULL, or an error. Expressions may
+ *                             reference input columns by name or by position
+ *                             ($1 for the first input column, $2 for the
+ *                             second, etc.). The default value is ''.
  *                     </ul>
  *                     The default value is an empty map.
  *
@@ -38515,8 +40930,8 @@ InsertRecordsFromPayloadResponse insertRecordsFromPayload( const std::string& ta
  *                       table name will have to meet standard <a
  *                       href="../../../concepts/tables/#table-naming-criteria"
  *                       target="_top">table naming criteria</a>.
- * @param[in] dataText  Records formatted as delimited text
- * @param[in] dataBytes  Records formatted as binary data
+ * @param[in] dataText  Records formatted as delimited text.
+ * @param[in] dataBytes  Records formatted as binary data.
  * @param[in] modifyColumns  Not implemented yet. The default value is an empty
  *                           map.
  * @param[in] createTableOptions  Options used when creating the target table.
@@ -38783,16 +41198,16 @@ InsertRecordsFromPayloadResponse insertRecordsFromPayload( const std::string& ta
  *                         <li>@ref
  *                             gpudb::insert_records_from_payload_bad_record_table_name
  *                             "insert_records_from_payload_bad_record_table_name":
- *                             Optional name of a table to which records that
- *                             were rejected are written.  The bad-record-table
- *                             has the following columns: line_number (long),
+ *                             Name of a table to which records that were
+ *                             rejected are written.  The bad-record-table has
+ *                             the following columns: line_number (long),
  *                             line_rejected (string), error_message (string).
  *                         <li>@ref
  *                             gpudb::insert_records_from_payload_bad_record_table_limit
  *                             "insert_records_from_payload_bad_record_table_limit":
  *                             A positive integer indicating the maximum number
  *                             of records that can be  written to the
- *                             bad-record-table.   Default value is 10000
+ *                             bad-record-table.   Default value is 10000.
  *                         <li>@ref
  *                             gpudb::insert_records_from_payload_bad_record_table_limit_per_input
  *                             "insert_records_from_payload_bad_record_table_limit_per_input":
@@ -38802,7 +41217,7 @@ InsertRecordsFromPayloadResponse insertRecordsFromPayload( const std::string& ta
  *                             file/payload. Default value will be
  *                             'bad_record_table_limit' and total size of the
  *                             table per rank is limited to
- *                             'bad_record_table_limit'
+ *                             'bad_record_table_limit'.
  *                         <li>@ref
  *                             gpudb::insert_records_from_payload_batch_size
  *                             "insert_records_from_payload_batch_size":
@@ -38817,7 +41232,7 @@ InsertRecordsFromPayloadResponse insertRecordsFromPayload( const std::string& ta
  *                             will contain a mapping of one or more of its
  *                             column properties to an appropriate format for
  *                             each property.  Currently supported column
- *                             properties include date, time, & datetime. The
+ *                             properties include date, time, and datetime. The
  *                             parameter value must be formatted as a JSON
  *                             string of maps of column names to maps of column
  *                             properties to their corresponding column
@@ -38871,17 +41286,17 @@ InsertRecordsFromPayloadResponse insertRecordsFromPayload( const std::string& ta
  *                         <li>@ref
  *                             gpudb::insert_records_from_payload_compression_type
  *                             "insert_records_from_payload_compression_type":
- *                             Optional: payload compression type.
+ *                             Payload compression type.
  *                             Supported values:
  *                             <ul>
  *                                 <li>@ref
  *                                     gpudb::insert_records_from_payload_none
  *                                     "insert_records_from_payload_none":
- *                                     Uncompressed
+ *                                     Uncompressed.
  *                                 <li>@ref
  *                                     gpudb::insert_records_from_payload_auto
  *                                     "insert_records_from_payload_auto":
- *                                     Default. Auto detect compression type
+ *                                     Default. Auto detect compression type.
  *                                 <li>@ref
  *                                     gpudb::insert_records_from_payload_gzip
  *                                     "insert_records_from_payload_gzip": gzip
@@ -38901,10 +41316,10 @@ InsertRecordsFromPayloadResponse insertRecordsFromPayload( const std::string& ta
  *                             source data loaded into columns with the
  *                             corresponding column property.  Currently
  *                             supported column properties include date, time,
- *                             & datetime.  This default column-property-bound
- *                             format can be overridden by specifying a column
- *                             property & format for a given target column in
- *                             @ref
+ *                             and datetime.  This default
+ *                             column-property-bound format can be overridden
+ *                             by specifying a column property and format for a
+ *                             given target column in @ref
  *                             gpudb::insert_records_from_payload_column_formats
  *                             "column_formats". For each specified annotation,
  *                             the format will apply to all columns with that
@@ -38947,9 +41362,13 @@ InsertRecordsFromPayloadResponse insertRecordsFromPayload( const std::string& ta
  *                                     otherwise, the malformed records are
  *                                     skipped.
  *                                 <li>@ref
+ *                                     gpudb::insert_records_from_payload_skip
+ *                                     "insert_records_from_payload_skip":
+ *                                     Malformed records are skipped.
+ *                                 <li>@ref
  *                                     gpudb::insert_records_from_payload_ignore_bad_records
  *                                     "insert_records_from_payload_ignore_bad_records":
- *                                     Malformed records are skipped.
+ *                                     Alias for skip.
  *                                 <li>@ref
  *                                     gpudb::insert_records_from_payload_abort
  *                                     "insert_records_from_payload_abort":
@@ -38972,7 +41391,7 @@ InsertRecordsFromPayloadResponse insertRecordsFromPayload( const std::string& ta
  *                                 <li>@ref
  *                                     gpudb::insert_records_from_payload_avro
  *                                     "insert_records_from_payload_avro": Avro
- *                                     file format
+ *                                     file format.
  *                                 <li>@ref
  *                                     gpudb::insert_records_from_payload_delimited_text
  *                                     "insert_records_from_payload_delimited_text":
@@ -38981,19 +41400,19 @@ InsertRecordsFromPayloadResponse insertRecordsFromPayload( const std::string& ta
  *                                 <li>@ref
  *                                     gpudb::insert_records_from_payload_gdb
  *                                     "insert_records_from_payload_gdb":
- *                                     Esri/GDB file format
+ *                                     Esri/GDB file format.
  *                                 <li>@ref
  *                                     gpudb::insert_records_from_payload_json
- *                                     "insert_records_from_payload_json": Json
- *                                     file format
+ *                                     "insert_records_from_payload_json": JSON
+ *                                     file format.
  *                                 <li>@ref
  *                                     gpudb::insert_records_from_payload_parquet
  *                                     "insert_records_from_payload_parquet":
- *                                     Apache Parquet file format
+ *                                     Apache Parquet file format.
  *                                 <li>@ref
  *                                     gpudb::insert_records_from_payload_shapefile
  *                                     "insert_records_from_payload_shapefile":
- *                                     ShapeFile file format
+ *                                     ShapeFile file format.
  *                             </ul>
  *                             The default value is @ref
  *                             gpudb::insert_records_from_payload_delimited_text
@@ -39008,12 +41427,12 @@ InsertRecordsFromPayloadResponse insertRecordsFromPayload( const std::string& ta
  *                                     gpudb::insert_records_from_payload_true
  *                                     "insert_records_from_payload_true":
  *                                     Break up nested columns to multiple
- *                                     columns
+ *                                     columns.
  *                                 <li>@ref
  *                                     gpudb::insert_records_from_payload_false
  *                                     "insert_records_from_payload_false":
- *                                     Treat nested columns as json columns
- *                                     instead of flattening
+ *                                     Treat nested columns as JSON columns
+ *                                     instead of flattening.
  *                             </ul>
  *                             The default value is @ref
  *                             gpudb::insert_records_from_payload_false
@@ -39062,13 +41481,13 @@ InsertRecordsFromPayloadResponse insertRecordsFromPayload( const std::string& ta
  *                                     "insert_records_from_payload_true":
  *                                     Ignore new records whose primary key
  *                                     values collide with those of existing
- *                                     records
+ *                                     records.
  *                                 <li>@ref
  *                                     gpudb::insert_records_from_payload_false
  *                                     "insert_records_from_payload_false":
  *                                     Treat as errors any new records whose
  *                                     primary key values collide with those of
- *                                     existing records
+ *                                     existing records.
  *                             </ul>
  *                             The default value is @ref
  *                             gpudb::insert_records_from_payload_false
@@ -39084,7 +41503,7 @@ InsertRecordsFromPayloadResponse insertRecordsFromPayload( const std::string& ta
  *                                     gpudb::insert_records_from_payload_full
  *                                     "insert_records_from_payload_full": Run
  *                                     a type inference on the source data (if
- *                                     needed) and ingest
+ *                                     needed) and ingest.
  *                                 <li>@ref
  *                                     gpudb::insert_records_from_payload_dry_run
  *                                     "insert_records_from_payload_dry_run":
@@ -39106,9 +41525,9 @@ InsertRecordsFromPayloadResponse insertRecordsFromPayload( const std::string& ta
  *                             gpudb::insert_records_from_payload_full
  *                             "insert_records_from_payload_full".
  *                         <li>@ref gpudb::insert_records_from_payload_layer
- *                             "insert_records_from_payload_layer": Optional:
- *                             geo files layer(s) name(s): comma separated. The
- *                             default value is ''.
+ *                             "insert_records_from_payload_layer": Geo files
+ *                             layer(s) name(s): comma separated. The default
+ *                             value is ''.
  *                         <li>@ref
  *                             gpudb::insert_records_from_payload_loading_mode
  *                             "insert_records_from_payload_loading_mode":
@@ -39168,7 +41587,7 @@ InsertRecordsFromPayloadResponse insertRecordsFromPayload( const std::string& ta
  *                         <li>@ref
  *                             gpudb::insert_records_from_payload_local_time_offset
  *                             "insert_records_from_payload_local_time_offset":
- *                             For Avro local timestamp columns
+ *                             For Avro local timestamp columns.
  *                         <li>@ref
  *                             gpudb::insert_records_from_payload_max_records_to_load
  *                             "insert_records_from_payload_max_records_to_load":
@@ -39179,11 +41598,30 @@ InsertRecordsFromPayloadResponse insertRecordsFromPayload( const std::string& ta
  *                             batch_size (per working thread). The default
  *                             value is ''.
  *                         <li>@ref
+ *                             gpudb::insert_records_from_payload_name_columns_from_file
+ *                             "insert_records_from_payload_name_columns_from_file":
+ *                             Specifies a comma-delimited list of column names
+ *                             to be used as the source-data column names.  If
+ *                             the payload has a header row (i.e., @ref
+ *                             gpudb::insert_records_from_payload_text_has_header
+ *                             "text_has_header" is @ref
+ *                             gpudb::insert_records_from_payload_true "true"),
+ *                             these names override the payload's header names.
+ *                             If the payload has no header row, these names
+ *                             are used as the source-data column names. Either
+ *                             way, the i-th name in this list applies to the
+ *                             i-th column in the payload, enabling name-based
+ *                             matching against the target table's columns (and
+ *                             use with @ref
+ *                             gpudb::insert_records_from_payload_columns_to_load
+ *                             "columns_to_load" / @ref
+ *                             gpudb::insert_records_from_payload_columns_to_skip
+ *                             "columns_to_skip").
+ *                         <li>@ref
  *                             gpudb::insert_records_from_payload_num_tasks_per_rank
  *                             "insert_records_from_payload_num_tasks_per_rank":
- *                             Optional: number of tasks for reading file per
- *                             rank. Default will be
- *                             external_file_reader_num_tasks
+ *                             Number of tasks for reading file per rank.
+ *                             Default will be external_file_reader_num_tasks.
  *                         <li>@ref
  *                             gpudb::insert_records_from_payload_poll_interval
  *                             "insert_records_from_payload_poll_interval": If
@@ -39196,29 +41634,29 @@ InsertRecordsFromPayloadResponse insertRecordsFromPayload( const std::string& ta
  *                         <li>@ref
  *                             gpudb::insert_records_from_payload_primary_keys
  *                             "insert_records_from_payload_primary_keys":
- *                             Optional: comma separated list of column names,
- *                             to set as primary keys, when not specified in
- *                             the type. The default value is ''.
+ *                             Comma separated list of column names, to set as
+ *                             primary keys, when not specified in the type.
+ *                             The default value is ''.
  *                         <li>@ref
  *                             gpudb::insert_records_from_payload_schema_registry_connection_retries
  *                             "insert_records_from_payload_schema_registry_connection_retries":
  *                             Confluent Schema registry connection timeout (in
- *                             Secs)
+ *                             secs).
  *                         <li>@ref
  *                             gpudb::insert_records_from_payload_schema_registry_connection_timeout
  *                             "insert_records_from_payload_schema_registry_connection_timeout":
  *                             Confluent Schema registry connection timeout (in
- *                             Secs)
+ *                             secs).
  *                         <li>@ref
  *                             gpudb::insert_records_from_payload_schema_registry_max_consecutive_connection_failures
  *                             "insert_records_from_payload_schema_registry_max_consecutive_connection_failures":
  *                             Max records to skip due to SR connection
- *                             failures, before failing
+ *                             failures, before failing.
  *                         <li>@ref
  *                             gpudb::insert_records_from_payload_max_consecutive_invalid_schema_failure
  *                             "insert_records_from_payload_max_consecutive_invalid_schema_failure":
  *                             Max records to skip due to schema related
- *                             errors, before failing
+ *                             errors, before failing.
  *                         <li>@ref
  *                             gpudb::insert_records_from_payload_schema_registry_schema_name
  *                             "insert_records_from_payload_schema_registry_schema_name":
@@ -39226,10 +41664,10 @@ InsertRecordsFromPayloadResponse insertRecordsFromPayload( const std::string& ta
  *                             to use when reading Avro records.
  *                         <li>@ref
  *                             gpudb::insert_records_from_payload_shard_keys
- *                             "insert_records_from_payload_shard_keys":
- *                             Optional: comma separated list of column names,
- *                             to set as primary keys, when not specified in
- *                             the type. The default value is ''.
+ *                             "insert_records_from_payload_shard_keys": Comma
+ *                             separated list of column names, to set as shard
+ *                             keys, when not specified in the type. The
+ *                             default value is ''.
  *                         <li>@ref
  *                             gpudb::insert_records_from_payload_skip_lines
  *                             "insert_records_from_payload_skip_lines": Skip a
@@ -39254,10 +41692,12 @@ InsertRecordsFromPayloadResponse insertRecordsFromPayload( const std::string& ta
  *                         <li>@ref
  *                             gpudb::insert_records_from_payload_table_insert_mode
  *                             "insert_records_from_payload_table_insert_mode":
- *                             Optional: table_insert_mode. When inserting
- *                             records from multiple files: if table_per_file
- *                             then insert from each file into a new table.
- *                             Currently supported only for shapefiles.
+ *                             When inserting records from multiple files: if
+ *                             @ref
+ *                             gpudb::insert_records_from_payload_table_per_file
+ *                             "table_per_file", then insert from each file
+ *                             into a new table. Currently supported only for
+ *                             shapefiles.
  *                             Supported values:
  *                             <ul>
  *                                 <li>@ref
@@ -39299,10 +41739,10 @@ InsertRecordsFromPayloadResponse insertRecordsFromPayload( const std::string& ta
  *                             'b', 'f', 'n', 'r', 't', or 'v' preceded by an
  *                             escape character will be interpreted as the
  *                             ASCII bell, backspace, form feed, line feed,
- *                             carriage return, horizontal tab, & vertical tab,
- *                             respectively.  For example, the escape character
- *                             followed by an 'n' will be interpreted as a
- *                             newline within a field value.  The escape
+ *                             carriage return, horizontal tab, and vertical
+ *                             tab, respectively.  For example, the escape
+ *                             character followed by an 'n' will be interpreted
+ *                             as a newline within a field value.  The escape
  *                             character can also be used to escape the quoting
  *                             character, and will be treated as an escape
  *                             character whether it is within a quoted field
@@ -39382,12 +41822,30 @@ InsertRecordsFromPayloadResponse insertRecordsFromPayload( const std::string& ta
  *                             of column names or '*' for all columns. To add
  *                             text_search property only to string columns of
  *                             minimum size, set also the option
- *                             'text_search_min_column_length'
+ *                             'text_search_min_column_length'.
  *                         <li>@ref
  *                             gpudb::insert_records_from_payload_text_search_min_column_length
  *                             "insert_records_from_payload_text_search_min_column_length":
  *                             Set minimum column size. Used only when
  *                             'text_search_columns' has a value.
+ *                         <li>@ref
+ *                             gpudb::insert_records_from_payload_trim_space
+ *                             "insert_records_from_payload_trim_space": If set
+ *                             to @ref gpudb::insert_records_from_payload_true
+ *                             "true", remove leading or trailing space from
+ *                             fields.
+ *                             Supported values:
+ *                             <ul>
+ *                                 <li>@ref
+ *                                     gpudb::insert_records_from_payload_true
+ *                                     "insert_records_from_payload_true"
+ *                                 <li>@ref
+ *                                     gpudb::insert_records_from_payload_false
+ *                                     "insert_records_from_payload_false"
+ *                             </ul>
+ *                             The default value is @ref
+ *                             gpudb::insert_records_from_payload_false
+ *                             "insert_records_from_payload_false".
  *                         <li>@ref
  *                             gpudb::insert_records_from_payload_truncate_strings
  *                             "insert_records_from_payload_truncate_strings":
@@ -39433,24 +41891,48 @@ InsertRecordsFromPayloadResponse insertRecordsFromPayload( const std::string& ta
  *                         <li>@ref
  *                             gpudb::insert_records_from_payload_type_inference_mode
  *                             "insert_records_from_payload_type_inference_mode":
- *                             optimize type inference for:
+ *                             Optimize type inference mode.
  *                             Supported values:
  *                             <ul>
  *                                 <li>@ref
  *                                     gpudb::insert_records_from_payload_accuracy
  *                                     "insert_records_from_payload_accuracy":
- *                                     Scans data to get exactly-typed & sized
- *                                     columns for all data scanned.
+ *                                     Scans data to get exactly-typed and
+ *                                     sized columns for all data scanned.
  *                                 <li>@ref
  *                                     gpudb::insert_records_from_payload_speed
  *                                     "insert_records_from_payload_speed":
  *                                     Scans data and picks the widest possible
  *                                     column types so that 'all' values will
- *                                     fit with minimum data scanned
+ *                                     fit with minimum data scanned.
  *                             </ul>
  *                             The default value is @ref
  *                             gpudb::insert_records_from_payload_accuracy
  *                             "insert_records_from_payload_accuracy".
+ *                         <li>@ref
+ *                             gpudb::insert_records_from_payload_enable_inplace_updates
+ *                             "insert_records_from_payload_enable_inplace_updates":
+ *                             Applies only when upserting (when
+ *                             update_on_existing_pk is true). If set to true
+ *                             (the default), an existing record matched by
+ *                             primary key is modified in place. If set to
+ *                             false, the matched record is updated by deleting
+ *                             it and inserting a replacement (delete and
+ *                             insert), which prevents the change from being
+ *                             reflected in dependent materialized views until
+ *                             they are refreshed.
+ *                             Supported values:
+ *                             <ul>
+ *                                 <li>@ref
+ *                                     gpudb::insert_records_from_payload_true
+ *                                     "insert_records_from_payload_true"
+ *                                 <li>@ref
+ *                                     gpudb::insert_records_from_payload_false
+ *                                     "insert_records_from_payload_false"
+ *                             </ul>
+ *                             The default value is @ref
+ *                             gpudb::insert_records_from_payload_true
+ *                             "insert_records_from_payload_true".
  *                         <li>@ref
  *                             gpudb::insert_records_from_payload_update_on_existing_pk
  *                             "insert_records_from_payload_update_on_existing_pk":
@@ -39470,7 +41952,7 @@ InsertRecordsFromPayloadResponse insertRecordsFromPayload( const std::string& ta
  *                             record will be rejected and the error handled as
  *                             determined by @ref
  *                             gpudb::insert_records_from_payload_ignore_existing_pk
- *                             "ignore_existing_pk" & @ref
+ *                             "ignore_existing_pk" and @ref
  *                             gpudb::insert_records_from_payload_error_handling
  *                             "error_handling".  If the specified table does
  *                             not have a primary key, then this option has no
@@ -39481,16 +41963,28 @@ InsertRecordsFromPayloadResponse insertRecordsFromPayload( const std::string& ta
  *                                     gpudb::insert_records_from_payload_true
  *                                     "insert_records_from_payload_true":
  *                                     Upsert new records when primary keys
- *                                     match existing records
+ *                                     match existing records.
  *                                 <li>@ref
  *                                     gpudb::insert_records_from_payload_false
  *                                     "insert_records_from_payload_false":
  *                                     Reject new records when primary keys
- *                                     match existing records
+ *                                     match existing records.
  *                             </ul>
  *                             The default value is @ref
  *                             gpudb::insert_records_from_payload_false
  *                             "insert_records_from_payload_false".
+ *                         <li>@ref
+ *                             gpudb::insert_records_from_payload_transformations
+ *                             "insert_records_from_payload_transformations":
+ *                             Comma-separated expressions, one per target
+ *                             table column.  Each expression is evaluated per
+ *                             record.  Empty entries (two consecutive commas)
+ *                             mean no transformation for that column -- the
+ *                             value is resolved from the input record, table
+ *                             default, NULL, or an error. Expressions may
+ *                             reference input columns by name or by position
+ *                             ($1 for the first input column, $2 for the
+ *                             second, etc.). The default value is ''.
  *                     </ul>
  *                     The default value is an empty map.
  * @param[out] response_  @ref gpudb::InsertRecordsFromPayloadResponse
@@ -39511,7 +42005,7 @@ InsertRecordsFromPayloadResponse& insertRecordsFromPayload( const std::string& t
 
 /**
  * Computes remote query result and inserts the result data into a new or
- * existing table
+ * existing table.
  *
  * @param[in] request_  @ref gpudb::InsertRecordsFromQueryRequest "Request"
  *                      object containing the parameters for the operation.
@@ -39523,7 +42017,7 @@ InsertRecordsFromQueryResponse insertRecordsFromQuery( const InsertRecordsFromQu
 
 /**
  * Computes remote query result and inserts the result data into a new or
- * existing table
+ * existing table.
  *
  * @param[in] request_  @ref gpudb::InsertRecordsFromQueryRequest "Request"
  *                      object containing the parameters for the operation.
@@ -39539,7 +42033,7 @@ InsertRecordsFromQueryResponse& insertRecordsFromQuery( const InsertRecordsFromQ
 
 /**
  * Computes remote query result and inserts the result data into a new or
- * existing table
+ * existing table.
  *
  * @param[in] tableName  Name of the table into which the data will be
  *                       inserted, in [schema_name.]table_name format, using
@@ -39553,7 +42047,7 @@ InsertRecordsFromQueryResponse& insertRecordsFromQuery( const InsertRecordsFromQ
  *                       table name will have to meet standard <a
  *                       href="../../../concepts/tables/#table-naming-criteria"
  *                       target="_top">table naming criteria</a>.
- * @param[in] remoteQuery  Query for which result data needs to be imported
+ * @param[in] remoteQuery  Query for which result data needs to be imported.
  * @param[in] modifyColumns  Not implemented yet. The default value is an empty
  *                           map.
  * @param[in] createTableOptions  Options used when creating the target table.
@@ -39803,9 +42297,9 @@ InsertRecordsFromQueryResponse& insertRecordsFromQuery( const InsertRecordsFromQ
  *                         <li>@ref
  *                             gpudb::insert_records_from_query_bad_record_table_name
  *                             "insert_records_from_query_bad_record_table_name":
- *                             Optional name of a table to which records that
- *                             were rejected are written.  The bad-record-table
- *                             has the following columns: line_number (long),
+ *                             Name of a table to which records that were
+ *                             rejected are written.  The bad-record-table has
+ *                             the following columns: line_number (long),
  *                             line_rejected (string), error_message (string).
  *                             When error handling is Abort, bad records table
  *                             is not populated.
@@ -39814,7 +42308,7 @@ InsertRecordsFromQueryResponse& insertRecordsFromQuery( const InsertRecordsFromQ
  *                             "insert_records_from_query_bad_record_table_limit":
  *                             A positive integer indicating the maximum number
  *                             of records that can be  written to the
- *                             bad-record-table.   Default value is 10000
+ *                             bad-record-table.   Default value is 10000.
  *                         <li>@ref gpudb::insert_records_from_query_batch_size
  *                             "insert_records_from_query_batch_size": Number
  *                             of records per batch when inserting data.
@@ -39822,7 +42316,7 @@ InsertRecordsFromQueryResponse& insertRecordsFromQuery( const InsertRecordsFromQ
  *                             gpudb::insert_records_from_query_datasource_name
  *                             "insert_records_from_query_datasource_name":
  *                             Name of an existing external data source from
- *                             which table will be loaded
+ *                             which table will be loaded.
  *                         <li>@ref
  *                             gpudb::insert_records_from_query_error_handling
  *                             "insert_records_from_query_error_handling":
@@ -39838,9 +42332,13 @@ InsertRecordsFromQueryResponse& insertRecordsFromQuery( const InsertRecordsFromQ
  *                                     otherwise, the malformed records are
  *                                     skipped.
  *                                 <li>@ref
+ *                                     gpudb::insert_records_from_query_skip
+ *                                     "insert_records_from_query_skip":
+ *                                     Malformed records are skipped.
+ *                                 <li>@ref
  *                                     gpudb::insert_records_from_query_ignore_bad_records
  *                                     "insert_records_from_query_ignore_bad_records":
- *                                     Malformed records are skipped.
+ *                                     Alias for skip.
  *                                 <li>@ref
  *                                     gpudb::insert_records_from_query_abort
  *                                     "insert_records_from_query_abort": Stops
@@ -39889,13 +42387,13 @@ InsertRecordsFromQueryResponse& insertRecordsFromQuery( const InsertRecordsFromQ
  *                                     gpudb::insert_records_from_query_true
  *                                     "insert_records_from_query_true": Ignore
  *                                     new records whose primary key values
- *                                     collide with those of existing records
+ *                                     collide with those of existing records.
  *                                 <li>@ref
  *                                     gpudb::insert_records_from_query_false
  *                                     "insert_records_from_query_false": Treat
  *                                     as errors any new records whose primary
  *                                     key values collide with those of
- *                                     existing records
+ *                                     existing records.
  *                             </ul>
  *                             The default value is @ref
  *                             gpudb::insert_records_from_query_false
@@ -39911,7 +42409,7 @@ InsertRecordsFromQueryResponse& insertRecordsFromQuery( const InsertRecordsFromQ
  *                                     gpudb::insert_records_from_query_full
  *                                     "insert_records_from_query_full": Run a
  *                                     type inference on the source data (if
- *                                     needed) and ingest
+ *                                     needed) and ingest.
  *                                 <li>@ref
  *                                     gpudb::insert_records_from_query_dry_run
  *                                     "insert_records_from_query_dry_run":
@@ -39940,33 +42438,31 @@ InsertRecordsFromQueryResponse& insertRecordsFromQuery( const InsertRecordsFromQ
  *                         <li>@ref
  *                             gpudb::insert_records_from_query_jdbc_session_init_statement
  *                             "insert_records_from_query_jdbc_session_init_statement":
- *                             Executes the statement per each jdbc session
+ *                             Executes the statement per each JDBC session
  *                             before doing actual load. The default value is
  *                             ''.
  *                         <li>@ref
  *                             gpudb::insert_records_from_query_num_splits_per_rank
  *                             "insert_records_from_query_num_splits_per_rank":
- *                             Optional: number of splits for reading data per
- *                             rank. Default will be
- *                             external_file_reader_num_tasks. The default
- *                             value is ''.
+ *                             Number of splits for reading data per rank.
+ *                             Default will be external_file_reader_num_tasks.
+ *                             The default value is ''.
  *                         <li>@ref
  *                             gpudb::insert_records_from_query_num_tasks_per_rank
  *                             "insert_records_from_query_num_tasks_per_rank":
- *                             Optional: number of tasks for reading data per
- *                             rank. Default will be
- *                             external_file_reader_num_tasks
+ *                             Number of tasks for reading data per rank.
+ *                             Default will be external_file_reader_num_tasks.
  *                         <li>@ref
  *                             gpudb::insert_records_from_query_primary_keys
- *                             "insert_records_from_query_primary_keys":
- *                             Optional: comma separated list of column names,
- *                             to set as primary keys, when not specified in
- *                             the type. The default value is ''.
+ *                             "insert_records_from_query_primary_keys": Comma
+ *                             separated list of column names, to set as
+ *                             primary keys, when not specified in the type.
+ *                             The default value is ''.
  *                         <li>@ref gpudb::insert_records_from_query_shard_keys
- *                             "insert_records_from_query_shard_keys":
- *                             Optional: comma separated list of column names,
- *                             to set as primary keys, when not specified in
- *                             the type. The default value is ''.
+ *                             "insert_records_from_query_shard_keys": Comma
+ *                             separated list of column names, to set as shard
+ *                             keys, when not specified in the type. The
+ *                             default value is ''.
  *                         <li>@ref gpudb::insert_records_from_query_subscribe
  *                             "insert_records_from_query_subscribe":
  *                             Continuously poll the data source to check for
@@ -40005,7 +42501,7 @@ InsertRecordsFromQueryResponse& insertRecordsFromQuery( const InsertRecordsFromQ
  *                         <li>@ref
  *                             gpudb::insert_records_from_query_remote_query
  *                             "insert_records_from_query_remote_query": Remote
- *                             SQL query from which data will be sourced
+ *                             SQL query from which data will be sourced.
  *                         <li>@ref
  *                             gpudb::insert_records_from_query_remote_query_order_by
  *                             "insert_records_from_query_remote_query_order_by":
@@ -40028,8 +42524,10 @@ InsertRecordsFromQueryResponse& insertRecordsFromQuery( const InsertRecordsFromQ
  *                         <li>@ref
  *                             gpudb::insert_records_from_query_remote_query_partition_column
  *                             "insert_records_from_query_remote_query_partition_column":
- *                             Alias name for remote_query_filter_column. The
- *                             default value is ''.
+ *                             Alias name for @ref
+ *                             gpudb::insert_records_from_query_remote_query_filter_column
+ *                             "remote_query_filter_column". The default value
+ *                             is ''.
  *                         <li>@ref
  *                             gpudb::insert_records_from_query_truncate_strings
  *                             "insert_records_from_query_truncate_strings": If
@@ -40050,6 +42548,30 @@ InsertRecordsFromQueryResponse& insertRecordsFromQuery( const InsertRecordsFromQ
  *                             gpudb::insert_records_from_query_false
  *                             "insert_records_from_query_false".
  *                         <li>@ref
+ *                             gpudb::insert_records_from_query_enable_inplace_updates
+ *                             "insert_records_from_query_enable_inplace_updates":
+ *                             Applies only when upserting (when
+ *                             update_on_existing_pk is true). If set to true
+ *                             (the default), an existing record matched by
+ *                             primary key is modified in place. If set to
+ *                             false, the matched record is updated by deleting
+ *                             it and inserting a replacement (delete and
+ *                             insert), which prevents the change from being
+ *                             reflected in dependent materialized views until
+ *                             they are refreshed.
+ *                             Supported values:
+ *                             <ul>
+ *                                 <li>@ref
+ *                                     gpudb::insert_records_from_query_true
+ *                                     "insert_records_from_query_true"
+ *                                 <li>@ref
+ *                                     gpudb::insert_records_from_query_false
+ *                                     "insert_records_from_query_false"
+ *                             </ul>
+ *                             The default value is @ref
+ *                             gpudb::insert_records_from_query_true
+ *                             "insert_records_from_query_true".
+ *                         <li>@ref
  *                             gpudb::insert_records_from_query_update_on_existing_pk
  *                             "insert_records_from_query_update_on_existing_pk":
  *                             Specifies the record collision policy for
@@ -40068,7 +42590,7 @@ InsertRecordsFromQueryResponse& insertRecordsFromQuery( const InsertRecordsFromQ
  *                             record will be rejected and the error handled as
  *                             determined by @ref
  *                             gpudb::insert_records_from_query_ignore_existing_pk
- *                             "ignore_existing_pk" & @ref
+ *                             "ignore_existing_pk" and @ref
  *                             gpudb::insert_records_from_query_error_handling
  *                             "error_handling".  If the specified table does
  *                             not have a primary key, then this option has no
@@ -40079,12 +42601,12 @@ InsertRecordsFromQueryResponse& insertRecordsFromQuery( const InsertRecordsFromQ
  *                                     gpudb::insert_records_from_query_true
  *                                     "insert_records_from_query_true": Upsert
  *                                     new records when primary keys match
- *                                     existing records
+ *                                     existing records.
  *                                 <li>@ref
  *                                     gpudb::insert_records_from_query_false
  *                                     "insert_records_from_query_false":
  *                                     Reject new records when primary keys
- *                                     match existing records
+ *                                     match existing records.
  *                             </ul>
  *                             The default value is @ref
  *                             gpudb::insert_records_from_query_false
@@ -40103,7 +42625,7 @@ InsertRecordsFromQueryResponse insertRecordsFromQuery( const std::string& tableN
 
 /**
  * Computes remote query result and inserts the result data into a new or
- * existing table
+ * existing table.
  *
  * @param[in] tableName  Name of the table into which the data will be
  *                       inserted, in [schema_name.]table_name format, using
@@ -40117,7 +42639,7 @@ InsertRecordsFromQueryResponse insertRecordsFromQuery( const std::string& tableN
  *                       table name will have to meet standard <a
  *                       href="../../../concepts/tables/#table-naming-criteria"
  *                       target="_top">table naming criteria</a>.
- * @param[in] remoteQuery  Query for which result data needs to be imported
+ * @param[in] remoteQuery  Query for which result data needs to be imported.
  * @param[in] modifyColumns  Not implemented yet. The default value is an empty
  *                           map.
  * @param[in] createTableOptions  Options used when creating the target table.
@@ -40367,9 +42889,9 @@ InsertRecordsFromQueryResponse insertRecordsFromQuery( const std::string& tableN
  *                         <li>@ref
  *                             gpudb::insert_records_from_query_bad_record_table_name
  *                             "insert_records_from_query_bad_record_table_name":
- *                             Optional name of a table to which records that
- *                             were rejected are written.  The bad-record-table
- *                             has the following columns: line_number (long),
+ *                             Name of a table to which records that were
+ *                             rejected are written.  The bad-record-table has
+ *                             the following columns: line_number (long),
  *                             line_rejected (string), error_message (string).
  *                             When error handling is Abort, bad records table
  *                             is not populated.
@@ -40378,7 +42900,7 @@ InsertRecordsFromQueryResponse insertRecordsFromQuery( const std::string& tableN
  *                             "insert_records_from_query_bad_record_table_limit":
  *                             A positive integer indicating the maximum number
  *                             of records that can be  written to the
- *                             bad-record-table.   Default value is 10000
+ *                             bad-record-table.   Default value is 10000.
  *                         <li>@ref gpudb::insert_records_from_query_batch_size
  *                             "insert_records_from_query_batch_size": Number
  *                             of records per batch when inserting data.
@@ -40386,7 +42908,7 @@ InsertRecordsFromQueryResponse insertRecordsFromQuery( const std::string& tableN
  *                             gpudb::insert_records_from_query_datasource_name
  *                             "insert_records_from_query_datasource_name":
  *                             Name of an existing external data source from
- *                             which table will be loaded
+ *                             which table will be loaded.
  *                         <li>@ref
  *                             gpudb::insert_records_from_query_error_handling
  *                             "insert_records_from_query_error_handling":
@@ -40402,9 +42924,13 @@ InsertRecordsFromQueryResponse insertRecordsFromQuery( const std::string& tableN
  *                                     otherwise, the malformed records are
  *                                     skipped.
  *                                 <li>@ref
+ *                                     gpudb::insert_records_from_query_skip
+ *                                     "insert_records_from_query_skip":
+ *                                     Malformed records are skipped.
+ *                                 <li>@ref
  *                                     gpudb::insert_records_from_query_ignore_bad_records
  *                                     "insert_records_from_query_ignore_bad_records":
- *                                     Malformed records are skipped.
+ *                                     Alias for skip.
  *                                 <li>@ref
  *                                     gpudb::insert_records_from_query_abort
  *                                     "insert_records_from_query_abort": Stops
@@ -40453,13 +42979,13 @@ InsertRecordsFromQueryResponse insertRecordsFromQuery( const std::string& tableN
  *                                     gpudb::insert_records_from_query_true
  *                                     "insert_records_from_query_true": Ignore
  *                                     new records whose primary key values
- *                                     collide with those of existing records
+ *                                     collide with those of existing records.
  *                                 <li>@ref
  *                                     gpudb::insert_records_from_query_false
  *                                     "insert_records_from_query_false": Treat
  *                                     as errors any new records whose primary
  *                                     key values collide with those of
- *                                     existing records
+ *                                     existing records.
  *                             </ul>
  *                             The default value is @ref
  *                             gpudb::insert_records_from_query_false
@@ -40475,7 +43001,7 @@ InsertRecordsFromQueryResponse insertRecordsFromQuery( const std::string& tableN
  *                                     gpudb::insert_records_from_query_full
  *                                     "insert_records_from_query_full": Run a
  *                                     type inference on the source data (if
- *                                     needed) and ingest
+ *                                     needed) and ingest.
  *                                 <li>@ref
  *                                     gpudb::insert_records_from_query_dry_run
  *                                     "insert_records_from_query_dry_run":
@@ -40504,33 +43030,31 @@ InsertRecordsFromQueryResponse insertRecordsFromQuery( const std::string& tableN
  *                         <li>@ref
  *                             gpudb::insert_records_from_query_jdbc_session_init_statement
  *                             "insert_records_from_query_jdbc_session_init_statement":
- *                             Executes the statement per each jdbc session
+ *                             Executes the statement per each JDBC session
  *                             before doing actual load. The default value is
  *                             ''.
  *                         <li>@ref
  *                             gpudb::insert_records_from_query_num_splits_per_rank
  *                             "insert_records_from_query_num_splits_per_rank":
- *                             Optional: number of splits for reading data per
- *                             rank. Default will be
- *                             external_file_reader_num_tasks. The default
- *                             value is ''.
+ *                             Number of splits for reading data per rank.
+ *                             Default will be external_file_reader_num_tasks.
+ *                             The default value is ''.
  *                         <li>@ref
  *                             gpudb::insert_records_from_query_num_tasks_per_rank
  *                             "insert_records_from_query_num_tasks_per_rank":
- *                             Optional: number of tasks for reading data per
- *                             rank. Default will be
- *                             external_file_reader_num_tasks
+ *                             Number of tasks for reading data per rank.
+ *                             Default will be external_file_reader_num_tasks.
  *                         <li>@ref
  *                             gpudb::insert_records_from_query_primary_keys
- *                             "insert_records_from_query_primary_keys":
- *                             Optional: comma separated list of column names,
- *                             to set as primary keys, when not specified in
- *                             the type. The default value is ''.
+ *                             "insert_records_from_query_primary_keys": Comma
+ *                             separated list of column names, to set as
+ *                             primary keys, when not specified in the type.
+ *                             The default value is ''.
  *                         <li>@ref gpudb::insert_records_from_query_shard_keys
- *                             "insert_records_from_query_shard_keys":
- *                             Optional: comma separated list of column names,
- *                             to set as primary keys, when not specified in
- *                             the type. The default value is ''.
+ *                             "insert_records_from_query_shard_keys": Comma
+ *                             separated list of column names, to set as shard
+ *                             keys, when not specified in the type. The
+ *                             default value is ''.
  *                         <li>@ref gpudb::insert_records_from_query_subscribe
  *                             "insert_records_from_query_subscribe":
  *                             Continuously poll the data source to check for
@@ -40569,7 +43093,7 @@ InsertRecordsFromQueryResponse insertRecordsFromQuery( const std::string& tableN
  *                         <li>@ref
  *                             gpudb::insert_records_from_query_remote_query
  *                             "insert_records_from_query_remote_query": Remote
- *                             SQL query from which data will be sourced
+ *                             SQL query from which data will be sourced.
  *                         <li>@ref
  *                             gpudb::insert_records_from_query_remote_query_order_by
  *                             "insert_records_from_query_remote_query_order_by":
@@ -40592,8 +43116,10 @@ InsertRecordsFromQueryResponse insertRecordsFromQuery( const std::string& tableN
  *                         <li>@ref
  *                             gpudb::insert_records_from_query_remote_query_partition_column
  *                             "insert_records_from_query_remote_query_partition_column":
- *                             Alias name for remote_query_filter_column. The
- *                             default value is ''.
+ *                             Alias name for @ref
+ *                             gpudb::insert_records_from_query_remote_query_filter_column
+ *                             "remote_query_filter_column". The default value
+ *                             is ''.
  *                         <li>@ref
  *                             gpudb::insert_records_from_query_truncate_strings
  *                             "insert_records_from_query_truncate_strings": If
@@ -40614,6 +43140,30 @@ InsertRecordsFromQueryResponse insertRecordsFromQuery( const std::string& tableN
  *                             gpudb::insert_records_from_query_false
  *                             "insert_records_from_query_false".
  *                         <li>@ref
+ *                             gpudb::insert_records_from_query_enable_inplace_updates
+ *                             "insert_records_from_query_enable_inplace_updates":
+ *                             Applies only when upserting (when
+ *                             update_on_existing_pk is true). If set to true
+ *                             (the default), an existing record matched by
+ *                             primary key is modified in place. If set to
+ *                             false, the matched record is updated by deleting
+ *                             it and inserting a replacement (delete and
+ *                             insert), which prevents the change from being
+ *                             reflected in dependent materialized views until
+ *                             they are refreshed.
+ *                             Supported values:
+ *                             <ul>
+ *                                 <li>@ref
+ *                                     gpudb::insert_records_from_query_true
+ *                                     "insert_records_from_query_true"
+ *                                 <li>@ref
+ *                                     gpudb::insert_records_from_query_false
+ *                                     "insert_records_from_query_false"
+ *                             </ul>
+ *                             The default value is @ref
+ *                             gpudb::insert_records_from_query_true
+ *                             "insert_records_from_query_true".
+ *                         <li>@ref
  *                             gpudb::insert_records_from_query_update_on_existing_pk
  *                             "insert_records_from_query_update_on_existing_pk":
  *                             Specifies the record collision policy for
@@ -40632,7 +43182,7 @@ InsertRecordsFromQueryResponse insertRecordsFromQuery( const std::string& tableN
  *                             record will be rejected and the error handled as
  *                             determined by @ref
  *                             gpudb::insert_records_from_query_ignore_existing_pk
- *                             "ignore_existing_pk" & @ref
+ *                             "ignore_existing_pk" and @ref
  *                             gpudb::insert_records_from_query_error_handling
  *                             "error_handling".  If the specified table does
  *                             not have a primary key, then this option has no
@@ -40643,12 +43193,12 @@ InsertRecordsFromQueryResponse insertRecordsFromQuery( const std::string& tableN
  *                                     gpudb::insert_records_from_query_true
  *                                     "insert_records_from_query_true": Upsert
  *                                     new records when primary keys match
- *                                     existing records
+ *                                     existing records.
  *                                 <li>@ref
  *                                     gpudb::insert_records_from_query_false
  *                                     "insert_records_from_query_false":
  *                                     Reject new records when primary keys
- *                                     match existing records
+ *                                     match existing records.
  *                             </ul>
  *                             The default value is @ref
  *                             gpudb::insert_records_from_query_false
@@ -40736,8 +43286,7 @@ InsertRecordsRandomResponse& insertRecordsRandom( const InsertRecordsRandomReque
  *                     are being specified, while the internal keys represents
  *                     which parameter is being specified.  These parameters
  *                     take on different meanings depending on the type of the
- *                     column.  Below follows a more detailed description of
- *                     the map:
+ *                     column.
  *                     <ul>
  *                         <li>@ref gpudb::insert_records_random_seed
  *                             "insert_records_random_seed": If provided, the
@@ -40755,7 +43304,7 @@ InsertRecordsRandomResponse& insertRecordsRandom( const InsertRecordsRandomReque
  *                             <ul>
  *                                 <li>@ref gpudb::insert_records_random_value
  *                                     "insert_records_random_value": The seed
- *                                     value to use
+ *                                     value to use.
  *                             </ul>
  *                         <li>@ref gpudb::insert_records_random_all
  *                             "insert_records_random_all": This key indicates
@@ -41014,8 +43563,7 @@ InsertRecordsRandomResponse insertRecordsRandom( const std::string& tableName,
  *                     are being specified, while the internal keys represents
  *                     which parameter is being specified.  These parameters
  *                     take on different meanings depending on the type of the
- *                     column.  Below follows a more detailed description of
- *                     the map:
+ *                     column.
  *                     <ul>
  *                         <li>@ref gpudb::insert_records_random_seed
  *                             "insert_records_random_seed": If provided, the
@@ -41033,7 +43581,7 @@ InsertRecordsRandomResponse insertRecordsRandom( const std::string& tableName,
  *                             <ul>
  *                                 <li>@ref gpudb::insert_records_random_value
  *                                     "insert_records_random_value": The seed
- *                                     value to use
+ *                                     value to use.
  *                             </ul>
  *                         <li>@ref gpudb::insert_records_random_all
  *                             "insert_records_random_all": This key indicates
@@ -41323,7 +43871,7 @@ InsertSymbolResponse& insertSymbol( const InsertSymbolRequest& request_,
  *
  * @param[in] symbolId  The id of the symbol being added. This is the same id
  *                      that should be in the 'SYMBOLCODE' column for objects
- *                      using this symbol
+ *                      using this symbol.
  * @param[in] symbolFormat  Specifies the symbol format. Must be either 'svg'
  *                          or 'svg_path'.
  *                          Supported values:
@@ -41336,8 +43884,8 @@ InsertSymbolResponse& insertSymbol( const InsertSymbolRequest& request_,
  * @param[in] symbolData  The actual symbol data. If @a symbolFormat is 'svg'
  *                        then this should be the raw bytes representing an svg
  *                        file. If @a symbolFormat is svg path then this should
- *                        be an svg path string, for example:
- *                        'M25.979,12.896,5.979,12.896,5.979,19.562,25.979,19.562z'
+ *                        be an svg path string; for example:
+ *                        'M25.979,12.896,5.979,12.896,5.979,19.562,25.979,19.562z'.
  * @param[in] options  Optional parameters.
  *                     <ul>
  *                         <li>@ref gpudb::insert_symbol_color
@@ -41372,7 +43920,7 @@ InsertSymbolResponse insertSymbol( const std::string& symbolId,
  *
  * @param[in] symbolId  The id of the symbol being added. This is the same id
  *                      that should be in the 'SYMBOLCODE' column for objects
- *                      using this symbol
+ *                      using this symbol.
  * @param[in] symbolFormat  Specifies the symbol format. Must be either 'svg'
  *                          or 'svg_path'.
  *                          Supported values:
@@ -41385,8 +43933,8 @@ InsertSymbolResponse insertSymbol( const std::string& symbolId,
  * @param[in] symbolData  The actual symbol data. If @a symbolFormat is 'svg'
  *                        then this should be the raw bytes representing an svg
  *                        file. If @a symbolFormat is svg path then this should
- *                        be an svg path string, for example:
- *                        'M25.979,12.896,5.979,12.896,5.979,19.562,25.979,19.562z'
+ *                        be an svg path string; for example:
+ *                        'M25.979,12.896,5.979,12.896,5.979,19.562,25.979,19.562z'.
  * @param[in] options  Optional parameters.
  *                     <ul>
  *                         <li>@ref gpudb::insert_symbol_color
@@ -41625,19 +44173,19 @@ LockTableResponse& lockTable( const LockTableRequest& request_,
  *                      Supported values:
  *                      <ul>
  *                          <li>@ref gpudb::lock_table_status
- *                              "lock_table_status": Show locked status
+ *                              "lock_table_status": Show locked status.
  *                          <li>@ref gpudb::lock_table_no_access
  *                              "lock_table_no_access": Allow no read/write
- *                              operations
+ *                              operations.
  *                          <li>@ref gpudb::lock_table_read_only
  *                              "lock_table_read_only": Allow only read
- *                              operations
+ *                              operations.
  *                          <li>@ref gpudb::lock_table_write_only
  *                              "lock_table_write_only": Allow only write
- *                              operations
+ *                              operations.
  *                          <li>@ref gpudb::lock_table_read_write
  *                              "lock_table_read_write": Allow all read/write
- *                              operations
+ *                              operations.
  *                      </ul>
  *                      The default value is @ref gpudb::lock_table_status
  *                      "lock_table_status".
@@ -41673,19 +44221,19 @@ LockTableResponse lockTable( const std::string& tableName,
  *                      Supported values:
  *                      <ul>
  *                          <li>@ref gpudb::lock_table_status
- *                              "lock_table_status": Show locked status
+ *                              "lock_table_status": Show locked status.
  *                          <li>@ref gpudb::lock_table_no_access
  *                              "lock_table_no_access": Allow no read/write
- *                              operations
+ *                              operations.
  *                          <li>@ref gpudb::lock_table_read_only
  *                              "lock_table_read_only": Allow only read
- *                              operations
+ *                              operations.
  *                          <li>@ref gpudb::lock_table_write_only
  *                              "lock_table_write_only": Allow only write
- *                              operations
+ *                              operations.
  *                          <li>@ref gpudb::lock_table_read_write
  *                              "lock_table_read_write": Allow all read/write
- *                              operations
+ *                              operations.
  *                      </ul>
  *                      The default value is @ref gpudb::lock_table_status
  *                      "lock_table_status".
@@ -41706,7 +44254,7 @@ LockTableResponse& lockTable( const std::string& tableName,
  * to an existing underlying road network graph using a given solution type.
  *
  * IMPORTANT: It's highly recommended that you review the <a
- * href="../../../graph_solver/network_graph_solver/" target="_top">Graphs &
+ * href="../../../graph_solver/network_graph_solver/" target="_top">Graphs and
  * Solvers</a> concepts documentation, the <a
  * href="../../../guides/graph_rest_guide/" target="_top">Graph REST
  * Tutorial</a>, and/or some <a href="../../../guide-tags/graph---match/"
@@ -41725,7 +44273,7 @@ MatchGraphResponse matchGraph( const MatchGraphRequest& request_ ) const;
  * to an existing underlying road network graph using a given solution type.
  *
  * IMPORTANT: It's highly recommended that you review the <a
- * href="../../../graph_solver/network_graph_solver/" target="_top">Graphs &
+ * href="../../../graph_solver/network_graph_solver/" target="_top">Graphs and
  * Solvers</a> concepts documentation, the <a
  * href="../../../guides/graph_rest_guide/" target="_top">Graph REST
  * Tutorial</a>, and/or some <a href="../../../guide-tags/graph---match/"
@@ -41747,7 +44295,7 @@ MatchGraphResponse& matchGraph( const MatchGraphRequest& request_,
  * to an existing underlying road network graph using a given solution type.
  *
  * IMPORTANT: It's highly recommended that you review the <a
- * href="../../../graph_solver/network_graph_solver/" target="_top">Graphs &
+ * href="../../../graph_solver/network_graph_solver/" target="_top">Graphs and
  * Solvers</a> concepts documentation, the <a
  * href="../../../guides/graph_rest_guide/" target="_top">Graph REST
  * Tutorial</a>, and/or some <a href="../../../guide-tags/graph---match/"
@@ -41828,20 +44376,24 @@ MatchGraphResponse& matchGraph( const MatchGraphRequest& request_,
  *                             <li>@ref gpudb::match_graph_match_pickup_dropoff
  *                                 "match_graph_match_pickup_dropoff": Matches
  *                                 the pickups and dropoffs by optimizing the
- *                                 total trip costs
+ *                                 total trip costs.
  *                             <li>@ref gpudb::match_graph_match_clusters
  *                                 "match_graph_match_clusters": Matches the
  *                                 graph nodes with a cluster index using
- *                                 Louvain clustering algorithm
+ *                                 Louvain clustering algorithm.
  *                             <li>@ref gpudb::match_graph_match_pattern
  *                                 "match_graph_match_pattern": Matches a
- *                                 pattern in the graph
+ *                                 pattern in the graph.
  *                             <li>@ref gpudb::match_graph_match_embedding
  *                                 "match_graph_match_embedding": Creates
- *                                 vector node embeddings
+ *                                 vector node embeddings.
  *                             <li>@ref gpudb::match_graph_match_isochrone
  *                                 "match_graph_match_isochrone": Solves for
- *                                 isochrones for a set of input sources
+ *                                 isochrones for a set of input sources.
+ *                             <li>@ref gpudb::match_graph_match_route_detour
+ *                                 "match_graph_match_route_detour": Computes
+ *                                 detour costs for nearby stations at a mark
+ *                                 point along each source-target route.
  *                         </ul>
  *                         The default value is @ref
  *                         gpudb::match_graph_markov_chain
@@ -41894,16 +44446,16 @@ MatchGraphResponse& matchGraph( const MatchGraphRequest& request_,
  *                             larger the number, the more accurate the
  *                             solution. The default value is '9'.
  *                         <li>@ref gpudb::match_graph_source
- *                             "match_graph_source": Optional WKT starting
- *                             point from @a samplePoints for the solver. The
- *                             default behavior for the endpoint is to use time
- *                             to determine the starting point. The default
- *                             value is 'POINT NULL'.
+ *                             "match_graph_source": WKT starting point from @a
+ *                             samplePoints for the solver. The default
+ *                             behavior for the endpoint is to use time to
+ *                             determine the starting point. The default value
+ *                             is 'POINT NULL'.
  *                         <li>@ref gpudb::match_graph_destination
- *                             "match_graph_destination": Optional WKT ending
- *                             point from @a samplePoints for the solver. The
- *                             default behavior for the endpoint is to use time
- *                             to determine the destination point. The default
+ *                             "match_graph_destination": WKT ending point from
+ *                             @a samplePoints for the solver. The default
+ *                             behavior for the endpoint is to use time to
+ *                             determine the destination point. The default
  *                             value is 'POINT NULL'.
  *                         <li>@ref gpudb::match_graph_partial_loading
  *                             "match_graph_partial_loading": For the @ref
@@ -41916,7 +44468,7 @@ MatchGraphResponse& matchGraph( const MatchGraphRequest& request_,
  *                             <ul>
  *                                 <li>@ref gpudb::match_graph_true
  *                                     "match_graph_true": Partial off-loading
- *                                     at multiple store (demand) locations
+ *                                     at multiple store (demand) locations.
  *                                 <li>@ref gpudb::match_graph_false
  *                                     "match_graph_false": No partial
  *                                     off-loading allowed if supply is less
@@ -42021,7 +44573,7 @@ MatchGraphResponse& matchGraph( const MatchGraphRequest& request_,
  *                                     folded paths.
  *                                 <li>@ref gpudb::match_graph_false
  *                                     "match_graph_false": Do not filter out
- *                                     the folded paths
+ *                                     the folded paths.
  *                             </ul>
  *                             The default value is @ref
  *                             gpudb::match_graph_false "match_graph_false".
@@ -42109,12 +44661,12 @@ MatchGraphResponse& matchGraph( const MatchGraphRequest& request_,
  *                                     "match_graph_true": Generates sequences
  *                                     over supply side permutations if total
  *                                     supply is less than twice the total
- *                                     demand
+ *                                     demand.
  *                                 <li>@ref gpudb::match_graph_false
  *                                     "match_graph_false": Permutations are
  *                                     not performed, rather a specific order
  *                                     of supplies based on capacity is
- *                                     computed
+ *                                     computed.
  *                             </ul>
  *                             The default value is @ref
  *                             gpudb::match_graph_true "match_graph_true".
@@ -42131,10 +44683,10 @@ MatchGraphResponse& matchGraph( const MatchGraphRequest& request_,
  *                                 <li>@ref gpudb::match_graph_true
  *                                     "match_graph_true": Sets only one visit
  *                                     per demand location by a salesman (TSM
- *                                     mode)
+ *                                     mode).
  *                                 <li>@ref gpudb::match_graph_false
  *                                     "match_graph_false": No preset limit
- *                                     (usual MSDO mode)
+ *                                     (usual MSDO mode).
  *                             </ul>
  *                             The default value is @ref
  *                             gpudb::match_graph_false "match_graph_false".
@@ -42150,7 +44702,7 @@ MatchGraphResponse& matchGraph( const MatchGraphRequest& request_,
  *                                     "match_graph_true": The optimization is
  *                                     done for trips in round trip manner
  *                                     always returning to originating
- *                                     locations
+ *                                     locations.
  *                                 <li>@ref gpudb::match_graph_false
  *                                     "match_graph_false": Supplies do not
  *                                     have to come back to their originating
@@ -42203,11 +44755,12 @@ MatchGraphResponse& matchGraph( const MatchGraphRequest& request_,
  *                             <ul>
  *                                 <li>@ref gpudb::match_graph_girvan
  *                                     "match_graph_girvan": Uses the Newman
- *                                     Girvan quality metric for cluster solver
+ *                                     Girvan quality metric for cluster
+ *                                     solver.
  *                                 <li>@ref gpudb::match_graph_spectral
  *                                     "match_graph_spectral": Applies
  *                                     recursive spectral bisection (RSB)
- *                                     partitioning solver
+ *                                     partitioning solver.
  *                             </ul>
  *                             The default value is @ref
  *                             gpudb::match_graph_girvan "match_graph_girvan".
@@ -42282,6 +44835,22 @@ MatchGraphResponse& matchGraph( const MatchGraphRequest& request_,
  *                             solver only. Uses this value as the batch size
  *                             of the number of loops in flushing(inserting) to
  *                             the output table. The default value is '1000'.
+ *                         <li>@ref gpudb::match_graph_multi_step
+ *                             "match_graph_multi_step": For the @ref
+ *                             gpudb::match_graph_match_supply_demand
+ *                             "match_supply_demand" solver only. Runs multiple
+ *                             supply demand solver repeatedly in a multi step
+ *                             cycle by switching supplies to demands until it
+ *                             reaches the main hub supply.
+ *                             Supported values:
+ *                             <ul>
+ *                                 <li>@ref gpudb::match_graph_true
+ *                                     "match_graph_true"
+ *                                 <li>@ref gpudb::match_graph_false
+ *                                     "match_graph_false"
+ *                             </ul>
+ *                             The default value is @ref
+ *                             gpudb::match_graph_false "match_graph_false".
  *                         <li>@ref gpudb::match_graph_charging_capacity
  *                             "match_graph_charging_capacity": For the @ref
  *                             gpudb::match_graph_match_charging_stations
@@ -42303,6 +44872,36 @@ MatchGraphResponse& matchGraph( const MatchGraphRequest& request_,
  *                             "match_charging_stations" solver only. This is
  *                             the penalty for full charging. The default value
  *                             is '30000.0'.
+ *                         <li>@ref gpudb::match_graph_detour_mark_cost
+ *                             "match_graph_detour_mark_cost": For the @ref
+ *                             gpudb::match_graph_match_route_detour
+ *                             "match_route_detour" solver only. Cost along the
+ *                             route at which to search for nearby stations If
+ *                             zero, it solves along the trip sliding the 3
+ *                             SSSP cycle kernel by radius amount. The default
+ *                             value is '3600.0'.
+ *                         <li>@ref gpudb::match_graph_detour_reentry_factor
+ *                             "match_graph_detour_reentry_factor": For the
+ *                             @ref gpudb::match_graph_match_route_detour
+ *                             "match_route_detour" solver only. Multiplier on
+ *                             detour_mark_cost to determine the reentry point
+ *                             on the route (default 1.2 means 20% further
+ *                             along). The default value is '1.2'.
+ *                         <li>@ref gpudb::match_graph_detour_search_radius
+ *                             "match_graph_detour_search_radius": For the @ref
+ *                             gpudb::match_graph_match_route_detour
+ *                             "match_route_detour" solver only. Search radius
+ *                             around the mark point for finding nearby
+ *                             prospective stations (e.g. cafes, pit stops, EV
+ *                             charging stations). The default value is
+ *                             '600.0'.
+ *                         <li>@ref gpudb::match_graph_detour_search_limit
+ *                             "match_graph_detour_search_limit": For the @ref
+ *                             gpudb::match_graph_match_route_detour
+ *                             "match_route_detour" solver only. Maximum number
+ *                             of nearby stations to consider within the search
+ *                             radius around the mark point. The default value
+ *                             is '10'.
  *                         <li>@ref gpudb::match_graph_max_hops
  *                             "match_graph_max_hops": For the @ref
  *                             gpudb::match_graph_match_similarity
@@ -42445,7 +45044,7 @@ MatchGraphResponse matchGraph( const std::string& graphName,
  * to an existing underlying road network graph using a given solution type.
  *
  * IMPORTANT: It's highly recommended that you review the <a
- * href="../../../graph_solver/network_graph_solver/" target="_top">Graphs &
+ * href="../../../graph_solver/network_graph_solver/" target="_top">Graphs and
  * Solvers</a> concepts documentation, the <a
  * href="../../../guides/graph_rest_guide/" target="_top">Graph REST
  * Tutorial</a>, and/or some <a href="../../../guide-tags/graph---match/"
@@ -42526,20 +45125,24 @@ MatchGraphResponse matchGraph( const std::string& graphName,
  *                             <li>@ref gpudb::match_graph_match_pickup_dropoff
  *                                 "match_graph_match_pickup_dropoff": Matches
  *                                 the pickups and dropoffs by optimizing the
- *                                 total trip costs
+ *                                 total trip costs.
  *                             <li>@ref gpudb::match_graph_match_clusters
  *                                 "match_graph_match_clusters": Matches the
  *                                 graph nodes with a cluster index using
- *                                 Louvain clustering algorithm
+ *                                 Louvain clustering algorithm.
  *                             <li>@ref gpudb::match_graph_match_pattern
  *                                 "match_graph_match_pattern": Matches a
- *                                 pattern in the graph
+ *                                 pattern in the graph.
  *                             <li>@ref gpudb::match_graph_match_embedding
  *                                 "match_graph_match_embedding": Creates
- *                                 vector node embeddings
+ *                                 vector node embeddings.
  *                             <li>@ref gpudb::match_graph_match_isochrone
  *                                 "match_graph_match_isochrone": Solves for
- *                                 isochrones for a set of input sources
+ *                                 isochrones for a set of input sources.
+ *                             <li>@ref gpudb::match_graph_match_route_detour
+ *                                 "match_graph_match_route_detour": Computes
+ *                                 detour costs for nearby stations at a mark
+ *                                 point along each source-target route.
  *                         </ul>
  *                         The default value is @ref
  *                         gpudb::match_graph_markov_chain
@@ -42592,16 +45195,16 @@ MatchGraphResponse matchGraph( const std::string& graphName,
  *                             larger the number, the more accurate the
  *                             solution. The default value is '9'.
  *                         <li>@ref gpudb::match_graph_source
- *                             "match_graph_source": Optional WKT starting
- *                             point from @a samplePoints for the solver. The
- *                             default behavior for the endpoint is to use time
- *                             to determine the starting point. The default
- *                             value is 'POINT NULL'.
+ *                             "match_graph_source": WKT starting point from @a
+ *                             samplePoints for the solver. The default
+ *                             behavior for the endpoint is to use time to
+ *                             determine the starting point. The default value
+ *                             is 'POINT NULL'.
  *                         <li>@ref gpudb::match_graph_destination
- *                             "match_graph_destination": Optional WKT ending
- *                             point from @a samplePoints for the solver. The
- *                             default behavior for the endpoint is to use time
- *                             to determine the destination point. The default
+ *                             "match_graph_destination": WKT ending point from
+ *                             @a samplePoints for the solver. The default
+ *                             behavior for the endpoint is to use time to
+ *                             determine the destination point. The default
  *                             value is 'POINT NULL'.
  *                         <li>@ref gpudb::match_graph_partial_loading
  *                             "match_graph_partial_loading": For the @ref
@@ -42614,7 +45217,7 @@ MatchGraphResponse matchGraph( const std::string& graphName,
  *                             <ul>
  *                                 <li>@ref gpudb::match_graph_true
  *                                     "match_graph_true": Partial off-loading
- *                                     at multiple store (demand) locations
+ *                                     at multiple store (demand) locations.
  *                                 <li>@ref gpudb::match_graph_false
  *                                     "match_graph_false": No partial
  *                                     off-loading allowed if supply is less
@@ -42719,7 +45322,7 @@ MatchGraphResponse matchGraph( const std::string& graphName,
  *                                     folded paths.
  *                                 <li>@ref gpudb::match_graph_false
  *                                     "match_graph_false": Do not filter out
- *                                     the folded paths
+ *                                     the folded paths.
  *                             </ul>
  *                             The default value is @ref
  *                             gpudb::match_graph_false "match_graph_false".
@@ -42807,12 +45410,12 @@ MatchGraphResponse matchGraph( const std::string& graphName,
  *                                     "match_graph_true": Generates sequences
  *                                     over supply side permutations if total
  *                                     supply is less than twice the total
- *                                     demand
+ *                                     demand.
  *                                 <li>@ref gpudb::match_graph_false
  *                                     "match_graph_false": Permutations are
  *                                     not performed, rather a specific order
  *                                     of supplies based on capacity is
- *                                     computed
+ *                                     computed.
  *                             </ul>
  *                             The default value is @ref
  *                             gpudb::match_graph_true "match_graph_true".
@@ -42829,10 +45432,10 @@ MatchGraphResponse matchGraph( const std::string& graphName,
  *                                 <li>@ref gpudb::match_graph_true
  *                                     "match_graph_true": Sets only one visit
  *                                     per demand location by a salesman (TSM
- *                                     mode)
+ *                                     mode).
  *                                 <li>@ref gpudb::match_graph_false
  *                                     "match_graph_false": No preset limit
- *                                     (usual MSDO mode)
+ *                                     (usual MSDO mode).
  *                             </ul>
  *                             The default value is @ref
  *                             gpudb::match_graph_false "match_graph_false".
@@ -42848,7 +45451,7 @@ MatchGraphResponse matchGraph( const std::string& graphName,
  *                                     "match_graph_true": The optimization is
  *                                     done for trips in round trip manner
  *                                     always returning to originating
- *                                     locations
+ *                                     locations.
  *                                 <li>@ref gpudb::match_graph_false
  *                                     "match_graph_false": Supplies do not
  *                                     have to come back to their originating
@@ -42901,11 +45504,12 @@ MatchGraphResponse matchGraph( const std::string& graphName,
  *                             <ul>
  *                                 <li>@ref gpudb::match_graph_girvan
  *                                     "match_graph_girvan": Uses the Newman
- *                                     Girvan quality metric for cluster solver
+ *                                     Girvan quality metric for cluster
+ *                                     solver.
  *                                 <li>@ref gpudb::match_graph_spectral
  *                                     "match_graph_spectral": Applies
  *                                     recursive spectral bisection (RSB)
- *                                     partitioning solver
+ *                                     partitioning solver.
  *                             </ul>
  *                             The default value is @ref
  *                             gpudb::match_graph_girvan "match_graph_girvan".
@@ -42980,6 +45584,22 @@ MatchGraphResponse matchGraph( const std::string& graphName,
  *                             solver only. Uses this value as the batch size
  *                             of the number of loops in flushing(inserting) to
  *                             the output table. The default value is '1000'.
+ *                         <li>@ref gpudb::match_graph_multi_step
+ *                             "match_graph_multi_step": For the @ref
+ *                             gpudb::match_graph_match_supply_demand
+ *                             "match_supply_demand" solver only. Runs multiple
+ *                             supply demand solver repeatedly in a multi step
+ *                             cycle by switching supplies to demands until it
+ *                             reaches the main hub supply.
+ *                             Supported values:
+ *                             <ul>
+ *                                 <li>@ref gpudb::match_graph_true
+ *                                     "match_graph_true"
+ *                                 <li>@ref gpudb::match_graph_false
+ *                                     "match_graph_false"
+ *                             </ul>
+ *                             The default value is @ref
+ *                             gpudb::match_graph_false "match_graph_false".
  *                         <li>@ref gpudb::match_graph_charging_capacity
  *                             "match_graph_charging_capacity": For the @ref
  *                             gpudb::match_graph_match_charging_stations
@@ -43001,6 +45621,36 @@ MatchGraphResponse matchGraph( const std::string& graphName,
  *                             "match_charging_stations" solver only. This is
  *                             the penalty for full charging. The default value
  *                             is '30000.0'.
+ *                         <li>@ref gpudb::match_graph_detour_mark_cost
+ *                             "match_graph_detour_mark_cost": For the @ref
+ *                             gpudb::match_graph_match_route_detour
+ *                             "match_route_detour" solver only. Cost along the
+ *                             route at which to search for nearby stations If
+ *                             zero, it solves along the trip sliding the 3
+ *                             SSSP cycle kernel by radius amount. The default
+ *                             value is '3600.0'.
+ *                         <li>@ref gpudb::match_graph_detour_reentry_factor
+ *                             "match_graph_detour_reentry_factor": For the
+ *                             @ref gpudb::match_graph_match_route_detour
+ *                             "match_route_detour" solver only. Multiplier on
+ *                             detour_mark_cost to determine the reentry point
+ *                             on the route (default 1.2 means 20% further
+ *                             along). The default value is '1.2'.
+ *                         <li>@ref gpudb::match_graph_detour_search_radius
+ *                             "match_graph_detour_search_radius": For the @ref
+ *                             gpudb::match_graph_match_route_detour
+ *                             "match_route_detour" solver only. Search radius
+ *                             around the mark point for finding nearby
+ *                             prospective stations (e.g. cafes, pit stops, EV
+ *                             charging stations). The default value is
+ *                             '600.0'.
+ *                         <li>@ref gpudb::match_graph_detour_search_limit
+ *                             "match_graph_detour_search_limit": For the @ref
+ *                             gpudb::match_graph_match_route_detour
+ *                             "match_route_detour" solver only. Maximum number
+ *                             of nearby stations to consider within the search
+ *                             radius around the mark point. The default value
+ *                             is '10'.
  *                         <li>@ref gpudb::match_graph_max_hops
  *                             "match_graph_max_hops": For the @ref
  *                             gpudb::match_graph_match_similarity
@@ -43146,7 +45796,7 @@ MatchGraphResponse& matchGraph( const std::string& graphName,
  * restrictions, and options.
  *
  * IMPORTANT: It's highly recommended that you review the <a
- * href="../../../graph_solver/network_graph_solver/" target="_top">Graphs &
+ * href="../../../graph_solver/network_graph_solver/" target="_top">Graphs and
  * Solvers</a> concepts documentation, and <a
  * href="../../../guides/graph_rest_guide/" target="_top">Graph REST
  * Tutorial</a> before using this endpoint.
@@ -43164,7 +45814,7 @@ ModifyGraphResponse modifyGraph( const ModifyGraphRequest& request_ ) const;
  * restrictions, and options.
  *
  * IMPORTANT: It's highly recommended that you review the <a
- * href="../../../graph_solver/network_graph_solver/" target="_top">Graphs &
+ * href="../../../graph_solver/network_graph_solver/" target="_top">Graphs and
  * Solvers</a> concepts documentation, and <a
  * href="../../../guides/graph_rest_guide/" target="_top">Graph REST
  * Tutorial</a> before using this endpoint.
@@ -43185,7 +45835,7 @@ ModifyGraphResponse& modifyGraph( const ModifyGraphRequest& request_,
  * restrictions, and options.
  *
  * IMPORTANT: It's highly recommended that you review the <a
- * href="../../../graph_solver/network_graph_solver/" target="_top">Graphs &
+ * href="../../../graph_solver/network_graph_solver/" target="_top">Graphs and
  * Solvers</a> concepts documentation, and <a
  * href="../../../guides/graph_rest_guide/" target="_top">Graph REST
  * Tutorial</a> before using this endpoint.
@@ -43473,7 +46123,7 @@ ModifyGraphResponse modifyGraph( const std::string& graphName,
  * restrictions, and options.
  *
  * IMPORTANT: It's highly recommended that you review the <a
- * href="../../../graph_solver/network_graph_solver/" target="_top">Graphs &
+ * href="../../../graph_solver/network_graph_solver/" target="_top">Graphs and
  * Solvers</a> concepts documentation, and <a
  * href="../../../guides/graph_rest_guide/" target="_top">Graph REST
  * Tutorial</a> before using this endpoint.
@@ -43777,7 +46427,7 @@ ModifyGraphResponse& modifyGraph( const std::string& graphName,
  * gpudb::QueryGraphRequest::adjacencyTable "adjacencyTable" empty.
  *
  * IMPORTANT: It's highly recommended that you review the <a
- * href="../../../graph_solver/network_graph_solver/" target="_top">Graphs &
+ * href="../../../graph_solver/network_graph_solver/" target="_top">Graphs and
  * Solvers</a> concepts documentation, the <a
  * href="../../../guides/graph_rest_guide/" target="_top">Graph REST
  * Tutorial</a>, and/or some <a href="../../../guide-tags/graph---query"
@@ -43809,7 +46459,7 @@ QueryGraphResponse queryGraph( const QueryGraphRequest& request_ ) const;
  * gpudb::QueryGraphRequest::adjacencyTable "adjacencyTable" empty.
  *
  * IMPORTANT: It's highly recommended that you review the <a
- * href="../../../graph_solver/network_graph_solver/" target="_top">Graphs &
+ * href="../../../graph_solver/network_graph_solver/" target="_top">Graphs and
  * Solvers</a> concepts documentation, the <a
  * href="../../../guides/graph_rest_guide/" target="_top">Graph REST
  * Tutorial</a>, and/or some <a href="../../../guide-tags/graph---query"
@@ -43843,7 +46493,7 @@ QueryGraphResponse& queryGraph( const QueryGraphRequest& request_,
  * To return the adjacency list in the response, leave @a adjacencyTable empty.
  *
  * IMPORTANT: It's highly recommended that you review the <a
- * href="../../../graph_solver/network_graph_solver/" target="_top">Graphs &
+ * href="../../../graph_solver/network_graph_solver/" target="_top">Graphs and
  * Solvers</a> concepts documentation, the <a
  * href="../../../guides/graph_rest_guide/" target="_top">Graph REST
  * Tutorial</a>, and/or some <a href="../../../guide-tags/graph---query"
@@ -44020,7 +46670,7 @@ QueryGraphResponse queryGraph( const std::string& graphName,
  * To return the adjacency list in the response, leave @a adjacencyTable empty.
  *
  * IMPORTANT: It's highly recommended that you review the <a
- * href="../../../graph_solver/network_graph_solver/" target="_top">Graphs &
+ * href="../../../graph_solver/network_graph_solver/" target="_top">Graphs and
  * Solvers</a> concepts documentation, the <a
  * href="../../../guides/graph_rest_guide/" target="_top">Graph REST
  * Tutorial</a>, and/or some <a href="../../../guide-tags/graph---query"
@@ -44187,7 +46837,7 @@ QueryGraphResponse& queryGraph( const std::string& graphName,
  * Rebalances an existing partitioned graph.
  *
  * IMPORTANT: It's highly recommended that you review the <a
- * href="../../../graph_solver/network_graph_solver/" target="_top">Graphs &
+ * href="../../../graph_solver/network_graph_solver/" target="_top">Graphs and
  * Solvers</a> concepts documentation, the <a
  * href="../../../guides/graph_rest_guide/" target="_top">Graph REST
  * Tutorial</a>, and/or some <a href="../../../guide-tags/graph/"
@@ -44205,7 +46855,7 @@ RepartitionGraphResponse repartitionGraph( const RepartitionGraphRequest& reques
  * Rebalances an existing partitioned graph.
  *
  * IMPORTANT: It's highly recommended that you review the <a
- * href="../../../graph_solver/network_graph_solver/" target="_top">Graphs &
+ * href="../../../graph_solver/network_graph_solver/" target="_top">Graphs and
  * Solvers</a> concepts documentation, the <a
  * href="../../../guides/graph_rest_guide/" target="_top">Graph REST
  * Tutorial</a>, and/or some <a href="../../../guide-tags/graph/"
@@ -44226,7 +46876,7 @@ RepartitionGraphResponse& repartitionGraph( const RepartitionGraphRequest& reque
  * Rebalances an existing partitioned graph.
  *
  * IMPORTANT: It's highly recommended that you review the <a
- * href="../../../graph_solver/network_graph_solver/" target="_top">Graphs &
+ * href="../../../graph_solver/network_graph_solver/" target="_top">Graphs and
  * Solvers</a> concepts documentation, the <a
  * href="../../../guides/graph_rest_guide/" target="_top">Graph REST
  * Tutorial</a>, and/or some <a href="../../../guide-tags/graph/"
@@ -44267,7 +46917,7 @@ RepartitionGraphResponse repartitionGraph( const std::string& graphName,
  * Rebalances an existing partitioned graph.
  *
  * IMPORTANT: It's highly recommended that you review the <a
- * href="../../../graph_solver/network_graph_solver/" target="_top">Graphs &
+ * href="../../../graph_solver/network_graph_solver/" target="_top">Graphs and
  * Solvers</a> concepts documentation, the <a
  * href="../../../guides/graph_rest_guide/" target="_top">Graph REST
  * Tutorial</a>, and/or some <a href="../../../guide-tags/graph/"
@@ -44332,8 +46982,12 @@ ReserveResourceResponse& reserveResource( const std::string& component,
                                           ReserveResourceResponse& response_ ) const;
 
 /**
- * Restores objects from a backup instance.
- * Response from a backup restoration operation.
+ * Restores database objects from a <a
+ * href="../../../admin/backup_restore/#database-backup"
+ * target="_top">backup</a> accessible via the <a
+ * href="../../../concepts/data_sources/" target="_top">data source</a>
+ * specified by @ref gpudb::RestoreBackupRequest::datasourceName
+ * "datasourceName".
  *
  * @param[in] request_  @ref gpudb::RestoreBackupRequest "Request" object
  *                      containing the parameters for the operation.
@@ -44344,8 +46998,12 @@ ReserveResourceResponse& reserveResource( const std::string& component,
 RestoreBackupResponse restoreBackup( const RestoreBackupRequest& request_ ) const;
 
 /**
- * Restores objects from a backup instance.
- * Response from a backup restoration operation.
+ * Restores database objects from a <a
+ * href="../../../admin/backup_restore/#database-backup"
+ * target="_top">backup</a> accessible via the <a
+ * href="../../../concepts/data_sources/" target="_top">data source</a>
+ * specified by @ref gpudb::RestoreBackupRequest::datasourceName
+ * "datasourceName".
  *
  * @param[in] request_  @ref gpudb::RestoreBackupRequest "Request" object
  *                      containing the parameters for the operation.
@@ -44359,146 +47017,168 @@ RestoreBackupResponse& restoreBackup( const RestoreBackupRequest& request_,
                                       RestoreBackupResponse& response_ ) const;
 
 /**
- * Restores objects from a backup instance.
- * Response from a backup restoration operation.
+ * Restores database objects from a <a
+ * href="../../../admin/backup_restore/#database-backup"
+ * target="_top">backup</a> accessible via the <a
+ * href="../../../concepts/data_sources/" target="_top">data source</a>
+ * specified by @a datasourceName.
  *
- * @param[in] backupName  Name of the backup object, which must refer to a
- *                        currently existing backup. The default value is ''.
- * @param[in] restoreObjectsMap  Map of objects to be restored from the backup.
- *                               Error if empty.
+ * @param[in] backupName  Name of the backup to restore from, which must refer
+ *                        to an existing backup. The default value is ''.
+ * @param[in] restoreObjectsMap  Map of database objects to be restored from
+ *                               the backup.
  *                               <ul>
  *                                   <li>@ref gpudb::restore_backup_all
  *                                       "restore_backup_all": All object types
- *                                       in a schema (excludes permissions,
- *                                       system configuration, host secret key,
- *                                       KiFS directories and user defined
- *                                       functions)
- *                                   <li>@ref gpudb::restore_backup_table
- *                                       "restore_backup_table": Database Table
- *                                   <li>@ref gpudb::restore_backup_credential
- *                                       "restore_backup_credential":
- *                                       Credential
+ *                                       and data contained in the given <a
+ *                                       href="../../../concepts/schemas/"
+ *                                       target="_top">schema(s)</a>.
+ *                                   <li>@ref gpudb::restore_backup_catalog
+ *                                       "restore_backup_catalog": Data Lake
+ *                                       catalog that is external to the
+ *                                       database.
  *                                   <li>@ref gpudb::restore_backup_context
- *                                       "restore_backup_context": Context
+ *                                       "restore_backup_context": <a
+ *                                       href="../../../sql-gpt/concepts/#sql-gpt-context"
+ *                                       target="_top">Context(s)</a>.
+ *                                   <li>@ref gpudb::restore_backup_credential
+ *                                       "restore_backup_credential": <a
+ *                                       href="../../../concepts/credentials/"
+ *                                       target="_top">Credential(s)</a>.
  *                                   <li>@ref gpudb::restore_backup_datasink
- *                                       "restore_backup_datasink": Data Sink
+ *                                       "restore_backup_datasink": <a
+ *                                       href="../../../concepts/data_sinks/"
+ *                                       target="_top">Data sink(s)</a>.
  *                                   <li>@ref gpudb::restore_backup_datasource
- *                                       "restore_backup_datasource": Data
- *                                       Source
+ *                                       "restore_backup_datasource": <a
+ *                                       href="../../../concepts/data_sources/"
+ *                                       target="_top">Data source(s)</a>.
+ *                                   <li>@ref gpudb::restore_backup_directory
+ *                                       "restore_backup_directory": KiFS <a
+ *                                       href="../../../tools/kifs/"
+ *                                       target="_top">File directory(ies)</a>.
+ *                                   <li>@ref
+ *                                       gpudb::restore_backup_function_environment
+ *                                       "restore_backup_function_environment":
+ *                                       <a
+ *                                       href="../../../udf/python/writing/#udf-python-func-env"
+ *                                       target="_top">Python UDF function
+ *                                       environment(s)</a>.
+ *                                   <li>@ref gpudb::restore_backup_graph
+ *                                       "restore_backup_graph": <a
+ *                                       href="../../../graph_solver/network_graph_solver/"
+ *                                       target="_top">Graph</a> definition(s).
+ *                                       Source table(s), if applicable, are
+ *                                       required in order to restore graph
+ *                                       objects.
+ *                                   <li>@ref gpudb::restore_backup_monitor
+ *                                       "restore_backup_monitor": <a
+ *                                       href="../../../concepts/table_monitors/"
+ *                                       target="_top">Table monitor(s)</a> /
+ *                                       <a
+ *                                       href="../../../sql/ddl/#create-stream"
+ *                                       target="_top">SQL stream(s)</a>.
+ *                                   <li>@ref
+ *                                       gpudb::restore_backup_resource_group
+ *                                       "restore_backup_resource_group": <a
+ *                                       href="../../../rm/concepts/#resource-groups"
+ *                                       target="_top">Resource group(s)</a>.
+ *                                   <li>@ref gpudb::restore_backup_role
+ *                                       "restore_backup_role": <a
+ *                                       href="../../../security/sec_concepts/#roles"
+ *                                       target="_top">Role(s)</a>, role
+ *                                       members (roles or users, recursively),
+ *                                       and associated permissions.
  *                                   <li>@ref
  *                                       gpudb::restore_backup_stored_procedure
- *                                       "restore_backup_stored_procedure": SQL
- *                                       Procedure
- *                                   <li>@ref gpudb::restore_backup_monitor
- *                                       "restore_backup_monitor": Table
- *                                       Monitor (Stream)
+ *                                       "restore_backup_stored_procedure": <a
+ *                                       href="../../../sql/procedure/"
+ *                                       target="_top">SQL procedure(s)</a>.
+ *                                   <li>@ref gpudb::restore_backup_table
+ *                                       "restore_backup_table": <a
+ *                                       href="../../../concepts/tables/"
+ *                                       target="_top">Table(s)</a> and <a
+ *                                       href="../../../sql/ddl/#create-view"
+ *                                       target="_top">SQL view(s)</a>.  Tables
+ *                                       with subscriptions will by default be
+ *                                       restored in the state they were in at
+ *                                       the time of the snapshot.  See @ref
+ *                                       gpudb::restore_backup_restore_subscriptions
+ *                                       "restore_subscriptions" for options to
+ *                                       override the default behavior.
  *                                   <li>@ref gpudb::restore_backup_user
- *                                       "restore_backup_user": User (internal
+ *                                       "restore_backup_user": <a
+ *                                       href="../../../security/sec_concepts/#security-concepts-users"
+ *                                       target="_top">User(s)</a> (internal
  *                                       and external) and associated
- *                                       permissions
- *                                   <li>@ref gpudb::restore_backup_role
- *                                       "restore_backup_role": Role, role
- *                                       members (roles or users, recursively)
- *                                       and associated permissions
+ *                                       permissions.
  *                                   <li>@ref
- *                                       gpudb::restore_backup_configuration
- *                                       "restore_backup_configuration": If
- *                                       @ref gpudb::restore_backup_true
- *                                       "true", restore the database
- *                                       configuration file.
- *                                       Supported values:
- *                                       <ul>
- *                                           <li>@ref
- *                                               gpudb::restore_backup_false
- *                                               "restore_backup_false"
- *                                           <li>@ref
- *                                               gpudb::restore_backup_true
- *                                               "restore_backup_true"
- *                                       </ul>
- *                                       The default value is @ref
- *                                       gpudb::restore_backup_false
- *                                       "restore_backup_false".
+ *                                       gpudb::restore_backup_user_defined_function
+ *                                       "restore_backup_user_defined_function":
+ *                                       <a href="../../../udf_overview"
+ *                                       target="_top">UDF(s)</a>.
  *                               </ul>
- * @param[in] datasourceName  Datasource where backup is located.
+ * @param[in] datasourceName  Data source through which the backup will be
+ *                            restored.
  * @param[in] options  Optional parameters.
  *                     <ul>
  *                         <li>@ref gpudb::restore_backup_backup_id
- *                             "restore_backup_backup_id": Backup instance ID
+ *                             "restore_backup_backup_id": ID of the snapshot
  *                             to restore. Leave empty to restore the most
- *                             recent backup instance. The default value is ''.
- *                         <li>@ref gpudb::restore_backup_restore_policy
- *                             "restore_backup_restore_policy": Behavior to
- *                             apply when restoring objects that already exist.
+ *                             recent snapshot in the backup. The default value
+ *                             is ''.
+ *                         <li>@ref gpudb::restore_backup_checksum
+ *                             "restore_backup_checksum": Whether or not to
+ *                             verify checksums for backup files when
+ *                             restoring.
  *                             Supported values:
  *                             <ul>
- *                                 <li>@ref gpudb::restore_backup_none
- *                                     "restore_backup_none": If an object to
- *                                     be restored currently exists with the
- *                                     same name, abort and return error
- *                                 <li>@ref gpudb::restore_backup_replace
- *                                     "restore_backup_replace": If an object
- *                                     to be restored currently exists with the
- *                                     same name, replace it with the backup
- *                                     version
- *                                 <li>@ref gpudb::restore_backup_rename
- *                                     "restore_backup_rename": If an object to
- *                                     be restored currently exists with the
- *                                     same name, rename the original version
+ *                                 <li>@ref gpudb::restore_backup_true
+ *                                     "restore_backup_true"
+ *                                 <li>@ref gpudb::restore_backup_false
+ *                                     "restore_backup_false"
  *                             </ul>
  *                             The default value is @ref
- *                             gpudb::restore_backup_none
- *                             "restore_backup_none".
- *                         <li>@ref
- *                             gpudb::restore_backup_renamed_objects_schema
- *                             "restore_backup_renamed_objects_schema": If the
- *                             restore policy is rename, optionally use this
- *                             schema for renamed objects instead of a default
- *                             generated one. The default value is ''.
+ *                             gpudb::restore_backup_false
+ *                             "restore_backup_false".
  *                         <li>@ref
  *                             gpudb::restore_backup_create_schema_if_not_exist
  *                             "restore_backup_create_schema_if_not_exist":
- *                             Create the schema for an object to be restored
- *                             if it does not currently exist. Error otherwise.
+ *                             Behavior to apply when the schema containing any
+ *                             database object to restore does not already
+ *                             exist.
  *                             Supported values:
  *                             <ul>
- *                                 <li>@ref gpudb::restore_backup_false
- *                                     "restore_backup_false"
  *                                 <li>@ref gpudb::restore_backup_true
- *                                     "restore_backup_true"
+ *                                     "restore_backup_true": If the schema
+ *                                     containing any restored object does not
+ *                                     exist, create it automatically.
+ *                                 <li>@ref gpudb::restore_backup_false
+ *                                     "restore_backup_false": If the schema
+ *                                     containing any restored object does not
+ *                                     exist, return an error.
  *                             </ul>
  *                             The default value is @ref
  *                             gpudb::restore_backup_true
  *                             "restore_backup_true".
  *                         <li>@ref gpudb::restore_backup_ddl_only
- *                             "restore_backup_ddl_only": Only recreates the
- *                             objects from their DDL, do not restore table
- *                             data.
+ *                             "restore_backup_ddl_only": Behavior to apply
+ *                             when restoring tables.
  *                             Supported values:
  *                             <ul>
  *                                 <li>@ref gpudb::restore_backup_true
- *                                     "restore_backup_true"
+ *                                     "restore_backup_true": Restore table
+ *                                     DDL, but do not restore data.
  *                                 <li>@ref gpudb::restore_backup_false
- *                                     "restore_backup_false"
+ *                                     "restore_backup_false": Restore tables
+ *                                     and their data.
  *                             </ul>
  *                             The default value is @ref
  *                             gpudb::restore_backup_false
  *                             "restore_backup_false".
- *                         <li>@ref gpudb::restore_backup_checksum
- *                             "restore_backup_checksum": Verify checksum for
- *                             backup files.
- *                             Supported values:
- *                             <ul>
- *                                 <li>@ref gpudb::restore_backup_false
- *                                     "restore_backup_false"
- *                                 <li>@ref gpudb::restore_backup_true
- *                                     "restore_backup_true"
- *                             </ul>
- *                             The default value is @ref
- *                             gpudb::restore_backup_true
- *                             "restore_backup_true".
  *                         <li>@ref gpudb::restore_backup_dry_run
- *                             "restore_backup_dry_run": Does a dry-run
- *                             restoration operation.
+ *                             "restore_backup_dry_run": Whether or not to
+ *                             perform a dry run of the restoration operation.
  *                             Supported values:
  *                             <ul>
  *                                 <li>@ref gpudb::restore_backup_true
@@ -44509,6 +47189,112 @@ RestoreBackupResponse& restoreBackup( const RestoreBackupRequest& request_,
  *                             The default value is @ref
  *                             gpudb::restore_backup_false
  *                             "restore_backup_false".
+ *                         <li>@ref gpudb::restore_backup_restore_subscriptions
+ *                             "restore_backup_restore_subscriptions": Behavior
+ *                             to apply when restoring datasource subscriptions
+ *                             on tables.
+ *                             Supported values:
+ *                             <ul>
+ *                                 <li>@ref gpudb::restore_backup_resume
+ *                                     "restore_backup_resume": Resume
+ *                                     subscriptions that were active when the
+ *                                     backup was made.
+ *                                 <li>@ref gpudb::restore_backup_pause
+ *                                     "restore_backup_pause": Pause
+ *                                     subscriptions that were active when the
+ *                                     backup was made.
+ *                                 <li>@ref gpudb::restore_backup_cancel
+ *                                     "restore_backup_cancel": Cancel active
+ *                                     subscriptions.
+ *                             </ul>
+ *                             The default value is @ref
+ *                             gpudb::restore_backup_resume
+ *                             "restore_backup_resume".
+ *                         <li>@ref gpudb::restore_backup_reingest
+ *                             "restore_backup_reingest": Behavior to apply
+ *                             when restoring table data.
+ *                             Supported values:
+ *                             <ul>
+ *                                 <li>@ref gpudb::restore_backup_true
+ *                                     "restore_backup_true": Restore table
+ *                                     data by re-ingesting it.  This is the
+ *                                     default behavior if the cluster topology
+ *                                     differs from that of the contained
+ *                                     backup.
+ *                                 <li>@ref gpudb::restore_backup_false
+ *                                     "restore_backup_false": Restore the
+ *                                     persisted data files directly.
+ *                             </ul>
+ *                             The default value is @ref
+ *                             gpudb::restore_backup_false
+ *                             "restore_backup_false".
+ *                         <li>@ref
+ *                             gpudb::restore_backup_renamed_objects_schema
+ *                             "restore_backup_renamed_objects_schema": If the
+ *                             @ref gpudb::restore_backup_restore_policy
+ *                             "restore_policy" is @ref
+ *                             gpudb::restore_backup_rename "rename", use this
+ *                             schema for relocated existing objects instead of
+ *                             the default generated one. The default value is
+ *                             ''.
+ *                         <li>@ref
+ *                             gpudb::restore_backup_restore_all_permissions
+ *                             "restore_backup_restore_all_permissions":
+ *                             Whether or not all permissions of restored
+ *                             principals should be restored or scoped to the
+ *                             restored objects.
+ *                             Supported values:
+ *                             <ul>
+ *                                 <li>@ref gpudb::restore_backup_true
+ *                                     "restore_backup_true": Restore all
+ *                                     permissions.
+ *                                 <li>@ref gpudb::restore_backup_false
+ *                                     "restore_backup_false": Restore only
+ *                                     permissions on restored objects.
+ *                             </ul>
+ *                             The default value is @ref
+ *                             gpudb::restore_backup_false
+ *                             "restore_backup_false".
+ *                         <li>@ref gpudb::restore_backup_restore_policy
+ *                             "restore_backup_restore_policy": Behavior to
+ *                             apply when any database object to restore
+ *                             already exists.
+ *                             Supported values:
+ *                             <ul>
+ *                                 <li>@ref gpudb::restore_backup_none
+ *                                     "restore_backup_none": If an object to
+ *                                     be restored already exists with the same
+ *                                     name, abort and return error.
+ *                                 <li>@ref gpudb::restore_backup_replace
+ *                                     "restore_backup_replace": If an object
+ *                                     to be restored already exists with the
+ *                                     same name, replace it with the backup
+ *                                     version.
+ *                                 <li>@ref gpudb::restore_backup_rename
+ *                                     "restore_backup_rename": If an object to
+ *                                     be restored already exists with the same
+ *                                     name, move that existing one to the
+ *                                     schema specified by @ref
+ *                                     gpudb::restore_backup_renamed_objects_schema
+ *                                     "renamed_objects_schema". This policy
+ *                                     does not apply to non-schema objects.
+ *                             </ul>
+ *                             The default value is @ref
+ *                             gpudb::restore_backup_none
+ *                             "restore_backup_none".
+ *                         <li>@ref gpudb::restore_backup_target_schema_map
+ *                             "restore_backup_target_schema_map": Restore
+ *                             schema-based objects to alternate schema. Value
+ *                             is a comma delimitted list of key:value pairs
+ *                             mapping the original (source) schema name as it
+ *                             exists in the backup to a target (destination)
+ *                             schema namespace:
+ *                             '&lt;src&gt;:&lt;dst&gt;,&lt;src&gt;:&lt;dst&gt;,...'.
+ *                             Note that schema names are case sensitive and
+ *                             must adhere to the database  schema <a
+ *                             href="../../../concepts/schemas/"
+ *                             target="_top">naming criteria</a>. The default
+ *                             value is ''.
  *                     </ul>
  *                     The default value is an empty map.
  *
@@ -44521,146 +47307,168 @@ RestoreBackupResponse restoreBackup( const std::string& backupName,
                                      const std::map<std::string, std::string>& options ) const;
 
 /**
- * Restores objects from a backup instance.
- * Response from a backup restoration operation.
+ * Restores database objects from a <a
+ * href="../../../admin/backup_restore/#database-backup"
+ * target="_top">backup</a> accessible via the <a
+ * href="../../../concepts/data_sources/" target="_top">data source</a>
+ * specified by @a datasourceName.
  *
- * @param[in] backupName  Name of the backup object, which must refer to a
- *                        currently existing backup. The default value is ''.
- * @param[in] restoreObjectsMap  Map of objects to be restored from the backup.
- *                               Error if empty.
+ * @param[in] backupName  Name of the backup to restore from, which must refer
+ *                        to an existing backup. The default value is ''.
+ * @param[in] restoreObjectsMap  Map of database objects to be restored from
+ *                               the backup.
  *                               <ul>
  *                                   <li>@ref gpudb::restore_backup_all
  *                                       "restore_backup_all": All object types
- *                                       in a schema (excludes permissions,
- *                                       system configuration, host secret key,
- *                                       KiFS directories and user defined
- *                                       functions)
- *                                   <li>@ref gpudb::restore_backup_table
- *                                       "restore_backup_table": Database Table
- *                                   <li>@ref gpudb::restore_backup_credential
- *                                       "restore_backup_credential":
- *                                       Credential
+ *                                       and data contained in the given <a
+ *                                       href="../../../concepts/schemas/"
+ *                                       target="_top">schema(s)</a>.
+ *                                   <li>@ref gpudb::restore_backup_catalog
+ *                                       "restore_backup_catalog": Data Lake
+ *                                       catalog that is external to the
+ *                                       database.
  *                                   <li>@ref gpudb::restore_backup_context
- *                                       "restore_backup_context": Context
+ *                                       "restore_backup_context": <a
+ *                                       href="../../../sql-gpt/concepts/#sql-gpt-context"
+ *                                       target="_top">Context(s)</a>.
+ *                                   <li>@ref gpudb::restore_backup_credential
+ *                                       "restore_backup_credential": <a
+ *                                       href="../../../concepts/credentials/"
+ *                                       target="_top">Credential(s)</a>.
  *                                   <li>@ref gpudb::restore_backup_datasink
- *                                       "restore_backup_datasink": Data Sink
+ *                                       "restore_backup_datasink": <a
+ *                                       href="../../../concepts/data_sinks/"
+ *                                       target="_top">Data sink(s)</a>.
  *                                   <li>@ref gpudb::restore_backup_datasource
- *                                       "restore_backup_datasource": Data
- *                                       Source
+ *                                       "restore_backup_datasource": <a
+ *                                       href="../../../concepts/data_sources/"
+ *                                       target="_top">Data source(s)</a>.
+ *                                   <li>@ref gpudb::restore_backup_directory
+ *                                       "restore_backup_directory": KiFS <a
+ *                                       href="../../../tools/kifs/"
+ *                                       target="_top">File directory(ies)</a>.
+ *                                   <li>@ref
+ *                                       gpudb::restore_backup_function_environment
+ *                                       "restore_backup_function_environment":
+ *                                       <a
+ *                                       href="../../../udf/python/writing/#udf-python-func-env"
+ *                                       target="_top">Python UDF function
+ *                                       environment(s)</a>.
+ *                                   <li>@ref gpudb::restore_backup_graph
+ *                                       "restore_backup_graph": <a
+ *                                       href="../../../graph_solver/network_graph_solver/"
+ *                                       target="_top">Graph</a> definition(s).
+ *                                       Source table(s), if applicable, are
+ *                                       required in order to restore graph
+ *                                       objects.
+ *                                   <li>@ref gpudb::restore_backup_monitor
+ *                                       "restore_backup_monitor": <a
+ *                                       href="../../../concepts/table_monitors/"
+ *                                       target="_top">Table monitor(s)</a> /
+ *                                       <a
+ *                                       href="../../../sql/ddl/#create-stream"
+ *                                       target="_top">SQL stream(s)</a>.
+ *                                   <li>@ref
+ *                                       gpudb::restore_backup_resource_group
+ *                                       "restore_backup_resource_group": <a
+ *                                       href="../../../rm/concepts/#resource-groups"
+ *                                       target="_top">Resource group(s)</a>.
+ *                                   <li>@ref gpudb::restore_backup_role
+ *                                       "restore_backup_role": <a
+ *                                       href="../../../security/sec_concepts/#roles"
+ *                                       target="_top">Role(s)</a>, role
+ *                                       members (roles or users, recursively),
+ *                                       and associated permissions.
  *                                   <li>@ref
  *                                       gpudb::restore_backup_stored_procedure
- *                                       "restore_backup_stored_procedure": SQL
- *                                       Procedure
- *                                   <li>@ref gpudb::restore_backup_monitor
- *                                       "restore_backup_monitor": Table
- *                                       Monitor (Stream)
+ *                                       "restore_backup_stored_procedure": <a
+ *                                       href="../../../sql/procedure/"
+ *                                       target="_top">SQL procedure(s)</a>.
+ *                                   <li>@ref gpudb::restore_backup_table
+ *                                       "restore_backup_table": <a
+ *                                       href="../../../concepts/tables/"
+ *                                       target="_top">Table(s)</a> and <a
+ *                                       href="../../../sql/ddl/#create-view"
+ *                                       target="_top">SQL view(s)</a>.  Tables
+ *                                       with subscriptions will by default be
+ *                                       restored in the state they were in at
+ *                                       the time of the snapshot.  See @ref
+ *                                       gpudb::restore_backup_restore_subscriptions
+ *                                       "restore_subscriptions" for options to
+ *                                       override the default behavior.
  *                                   <li>@ref gpudb::restore_backup_user
- *                                       "restore_backup_user": User (internal
+ *                                       "restore_backup_user": <a
+ *                                       href="../../../security/sec_concepts/#security-concepts-users"
+ *                                       target="_top">User(s)</a> (internal
  *                                       and external) and associated
- *                                       permissions
- *                                   <li>@ref gpudb::restore_backup_role
- *                                       "restore_backup_role": Role, role
- *                                       members (roles or users, recursively)
- *                                       and associated permissions
+ *                                       permissions.
  *                                   <li>@ref
- *                                       gpudb::restore_backup_configuration
- *                                       "restore_backup_configuration": If
- *                                       @ref gpudb::restore_backup_true
- *                                       "true", restore the database
- *                                       configuration file.
- *                                       Supported values:
- *                                       <ul>
- *                                           <li>@ref
- *                                               gpudb::restore_backup_false
- *                                               "restore_backup_false"
- *                                           <li>@ref
- *                                               gpudb::restore_backup_true
- *                                               "restore_backup_true"
- *                                       </ul>
- *                                       The default value is @ref
- *                                       gpudb::restore_backup_false
- *                                       "restore_backup_false".
+ *                                       gpudb::restore_backup_user_defined_function
+ *                                       "restore_backup_user_defined_function":
+ *                                       <a href="../../../udf_overview"
+ *                                       target="_top">UDF(s)</a>.
  *                               </ul>
- * @param[in] datasourceName  Datasource where backup is located.
+ * @param[in] datasourceName  Data source through which the backup will be
+ *                            restored.
  * @param[in] options  Optional parameters.
  *                     <ul>
  *                         <li>@ref gpudb::restore_backup_backup_id
- *                             "restore_backup_backup_id": Backup instance ID
+ *                             "restore_backup_backup_id": ID of the snapshot
  *                             to restore. Leave empty to restore the most
- *                             recent backup instance. The default value is ''.
- *                         <li>@ref gpudb::restore_backup_restore_policy
- *                             "restore_backup_restore_policy": Behavior to
- *                             apply when restoring objects that already exist.
+ *                             recent snapshot in the backup. The default value
+ *                             is ''.
+ *                         <li>@ref gpudb::restore_backup_checksum
+ *                             "restore_backup_checksum": Whether or not to
+ *                             verify checksums for backup files when
+ *                             restoring.
  *                             Supported values:
  *                             <ul>
- *                                 <li>@ref gpudb::restore_backup_none
- *                                     "restore_backup_none": If an object to
- *                                     be restored currently exists with the
- *                                     same name, abort and return error
- *                                 <li>@ref gpudb::restore_backup_replace
- *                                     "restore_backup_replace": If an object
- *                                     to be restored currently exists with the
- *                                     same name, replace it with the backup
- *                                     version
- *                                 <li>@ref gpudb::restore_backup_rename
- *                                     "restore_backup_rename": If an object to
- *                                     be restored currently exists with the
- *                                     same name, rename the original version
+ *                                 <li>@ref gpudb::restore_backup_true
+ *                                     "restore_backup_true"
+ *                                 <li>@ref gpudb::restore_backup_false
+ *                                     "restore_backup_false"
  *                             </ul>
  *                             The default value is @ref
- *                             gpudb::restore_backup_none
- *                             "restore_backup_none".
- *                         <li>@ref
- *                             gpudb::restore_backup_renamed_objects_schema
- *                             "restore_backup_renamed_objects_schema": If the
- *                             restore policy is rename, optionally use this
- *                             schema for renamed objects instead of a default
- *                             generated one. The default value is ''.
+ *                             gpudb::restore_backup_false
+ *                             "restore_backup_false".
  *                         <li>@ref
  *                             gpudb::restore_backup_create_schema_if_not_exist
  *                             "restore_backup_create_schema_if_not_exist":
- *                             Create the schema for an object to be restored
- *                             if it does not currently exist. Error otherwise.
+ *                             Behavior to apply when the schema containing any
+ *                             database object to restore does not already
+ *                             exist.
  *                             Supported values:
  *                             <ul>
- *                                 <li>@ref gpudb::restore_backup_false
- *                                     "restore_backup_false"
  *                                 <li>@ref gpudb::restore_backup_true
- *                                     "restore_backup_true"
+ *                                     "restore_backup_true": If the schema
+ *                                     containing any restored object does not
+ *                                     exist, create it automatically.
+ *                                 <li>@ref gpudb::restore_backup_false
+ *                                     "restore_backup_false": If the schema
+ *                                     containing any restored object does not
+ *                                     exist, return an error.
  *                             </ul>
  *                             The default value is @ref
  *                             gpudb::restore_backup_true
  *                             "restore_backup_true".
  *                         <li>@ref gpudb::restore_backup_ddl_only
- *                             "restore_backup_ddl_only": Only recreates the
- *                             objects from their DDL, do not restore table
- *                             data.
+ *                             "restore_backup_ddl_only": Behavior to apply
+ *                             when restoring tables.
  *                             Supported values:
  *                             <ul>
  *                                 <li>@ref gpudb::restore_backup_true
- *                                     "restore_backup_true"
+ *                                     "restore_backup_true": Restore table
+ *                                     DDL, but do not restore data.
  *                                 <li>@ref gpudb::restore_backup_false
- *                                     "restore_backup_false"
+ *                                     "restore_backup_false": Restore tables
+ *                                     and their data.
  *                             </ul>
  *                             The default value is @ref
  *                             gpudb::restore_backup_false
  *                             "restore_backup_false".
- *                         <li>@ref gpudb::restore_backup_checksum
- *                             "restore_backup_checksum": Verify checksum for
- *                             backup files.
- *                             Supported values:
- *                             <ul>
- *                                 <li>@ref gpudb::restore_backup_false
- *                                     "restore_backup_false"
- *                                 <li>@ref gpudb::restore_backup_true
- *                                     "restore_backup_true"
- *                             </ul>
- *                             The default value is @ref
- *                             gpudb::restore_backup_true
- *                             "restore_backup_true".
  *                         <li>@ref gpudb::restore_backup_dry_run
- *                             "restore_backup_dry_run": Does a dry-run
- *                             restoration operation.
+ *                             "restore_backup_dry_run": Whether or not to
+ *                             perform a dry run of the restoration operation.
  *                             Supported values:
  *                             <ul>
  *                                 <li>@ref gpudb::restore_backup_true
@@ -44671,6 +47479,112 @@ RestoreBackupResponse restoreBackup( const std::string& backupName,
  *                             The default value is @ref
  *                             gpudb::restore_backup_false
  *                             "restore_backup_false".
+ *                         <li>@ref gpudb::restore_backup_restore_subscriptions
+ *                             "restore_backup_restore_subscriptions": Behavior
+ *                             to apply when restoring datasource subscriptions
+ *                             on tables.
+ *                             Supported values:
+ *                             <ul>
+ *                                 <li>@ref gpudb::restore_backup_resume
+ *                                     "restore_backup_resume": Resume
+ *                                     subscriptions that were active when the
+ *                                     backup was made.
+ *                                 <li>@ref gpudb::restore_backup_pause
+ *                                     "restore_backup_pause": Pause
+ *                                     subscriptions that were active when the
+ *                                     backup was made.
+ *                                 <li>@ref gpudb::restore_backup_cancel
+ *                                     "restore_backup_cancel": Cancel active
+ *                                     subscriptions.
+ *                             </ul>
+ *                             The default value is @ref
+ *                             gpudb::restore_backup_resume
+ *                             "restore_backup_resume".
+ *                         <li>@ref gpudb::restore_backup_reingest
+ *                             "restore_backup_reingest": Behavior to apply
+ *                             when restoring table data.
+ *                             Supported values:
+ *                             <ul>
+ *                                 <li>@ref gpudb::restore_backup_true
+ *                                     "restore_backup_true": Restore table
+ *                                     data by re-ingesting it.  This is the
+ *                                     default behavior if the cluster topology
+ *                                     differs from that of the contained
+ *                                     backup.
+ *                                 <li>@ref gpudb::restore_backup_false
+ *                                     "restore_backup_false": Restore the
+ *                                     persisted data files directly.
+ *                             </ul>
+ *                             The default value is @ref
+ *                             gpudb::restore_backup_false
+ *                             "restore_backup_false".
+ *                         <li>@ref
+ *                             gpudb::restore_backup_renamed_objects_schema
+ *                             "restore_backup_renamed_objects_schema": If the
+ *                             @ref gpudb::restore_backup_restore_policy
+ *                             "restore_policy" is @ref
+ *                             gpudb::restore_backup_rename "rename", use this
+ *                             schema for relocated existing objects instead of
+ *                             the default generated one. The default value is
+ *                             ''.
+ *                         <li>@ref
+ *                             gpudb::restore_backup_restore_all_permissions
+ *                             "restore_backup_restore_all_permissions":
+ *                             Whether or not all permissions of restored
+ *                             principals should be restored or scoped to the
+ *                             restored objects.
+ *                             Supported values:
+ *                             <ul>
+ *                                 <li>@ref gpudb::restore_backup_true
+ *                                     "restore_backup_true": Restore all
+ *                                     permissions.
+ *                                 <li>@ref gpudb::restore_backup_false
+ *                                     "restore_backup_false": Restore only
+ *                                     permissions on restored objects.
+ *                             </ul>
+ *                             The default value is @ref
+ *                             gpudb::restore_backup_false
+ *                             "restore_backup_false".
+ *                         <li>@ref gpudb::restore_backup_restore_policy
+ *                             "restore_backup_restore_policy": Behavior to
+ *                             apply when any database object to restore
+ *                             already exists.
+ *                             Supported values:
+ *                             <ul>
+ *                                 <li>@ref gpudb::restore_backup_none
+ *                                     "restore_backup_none": If an object to
+ *                                     be restored already exists with the same
+ *                                     name, abort and return error.
+ *                                 <li>@ref gpudb::restore_backup_replace
+ *                                     "restore_backup_replace": If an object
+ *                                     to be restored already exists with the
+ *                                     same name, replace it with the backup
+ *                                     version.
+ *                                 <li>@ref gpudb::restore_backup_rename
+ *                                     "restore_backup_rename": If an object to
+ *                                     be restored already exists with the same
+ *                                     name, move that existing one to the
+ *                                     schema specified by @ref
+ *                                     gpudb::restore_backup_renamed_objects_schema
+ *                                     "renamed_objects_schema". This policy
+ *                                     does not apply to non-schema objects.
+ *                             </ul>
+ *                             The default value is @ref
+ *                             gpudb::restore_backup_none
+ *                             "restore_backup_none".
+ *                         <li>@ref gpudb::restore_backup_target_schema_map
+ *                             "restore_backup_target_schema_map": Restore
+ *                             schema-based objects to alternate schema. Value
+ *                             is a comma delimitted list of key:value pairs
+ *                             mapping the original (source) schema name as it
+ *                             exists in the backup to a target (destination)
+ *                             schema namespace:
+ *                             '&lt;src&gt;:&lt;dst&gt;,&lt;src&gt;:&lt;dst&gt;,...'.
+ *                             Note that schema names are case sensitive and
+ *                             must adhere to the database  schema <a
+ *                             href="../../../concepts/schemas/"
+ *                             target="_top">naming criteria</a>. The default
+ *                             value is ''.
  *                     </ul>
  *                     The default value is an empty map.
  * @param[out] response_  @ref gpudb::RestoreBackupResponse "Response" object
@@ -44721,6 +47635,8 @@ RevokePermissionResponse& revokePermission( const RevokePermissionRequest& reque
  * @param[in] objectType  The type of object being revoked.
  *                        Supported values:
  *                        <ul>
+ *                            <li>@ref gpudb::revoke_permission_catalog
+ *                                "revoke_permission_catalog": Catalog
  *                            <li>@ref gpudb::revoke_permission_context
  *                                "revoke_permission_context": Context
  *                            <li>@ref gpudb::revoke_permission_credential
@@ -44770,6 +47686,9 @@ RevokePermissionResponse& revokePermission( const RevokePermissionRequest& reque
  *                            <li>@ref gpudb::revoke_permission_insert
  *                                "revoke_permission_insert": Insert access to
  *                                tables.
+ *                            <li>@ref gpudb::revoke_permission_monitor
+ *                                "revoke_permission_monitor": Monitor logs and
+ *                                statistics.
  *                            <li>@ref gpudb::revoke_permission_read
  *                                "revoke_permission_read": Ability to read,
  *                                list and use the object.
@@ -44816,6 +47735,8 @@ RevokePermissionResponse revokePermission( const std::string& principal,
  * @param[in] objectType  The type of object being revoked.
  *                        Supported values:
  *                        <ul>
+ *                            <li>@ref gpudb::revoke_permission_catalog
+ *                                "revoke_permission_catalog": Catalog
  *                            <li>@ref gpudb::revoke_permission_context
  *                                "revoke_permission_context": Context
  *                            <li>@ref gpudb::revoke_permission_credential
@@ -44865,6 +47786,9 @@ RevokePermissionResponse revokePermission( const std::string& principal,
  *                            <li>@ref gpudb::revoke_permission_insert
  *                                "revoke_permission_insert": Insert access to
  *                                tables.
+ *                            <li>@ref gpudb::revoke_permission_monitor
+ *                                "revoke_permission_monitor": Monitor logs and
+ *                                statistics.
  *                            <li>@ref gpudb::revoke_permission_read
  *                                "revoke_permission_read": Ability to read,
  *                                list and use the object.
@@ -45048,11 +47972,11 @@ RevokePermissionDatasourceResponse& revokePermissionDatasource( const RevokePerm
  *                            <li>@ref
  *                                gpudb::revoke_permission_datasource_admin
  *                                "revoke_permission_datasource_admin": Admin
- *                                access on the given data source
+ *                                access on the given data source.
  *                            <li>@ref
  *                                gpudb::revoke_permission_datasource_connect
  *                                "revoke_permission_datasource_connect":
- *                                Connect access on the given data source
+ *                                Connect access on the given data source.
  *                        </ul>
  * @param[in] datasourceName  Name of the data source on which the permission
  *                            will be revoked. Must be an existing data source,
@@ -45080,11 +48004,11 @@ RevokePermissionDatasourceResponse revokePermissionDatasource( const std::string
  *                            <li>@ref
  *                                gpudb::revoke_permission_datasource_admin
  *                                "revoke_permission_datasource_admin": Admin
- *                                access on the given data source
+ *                                access on the given data source.
  *                            <li>@ref
  *                                gpudb::revoke_permission_datasource_connect
  *                                "revoke_permission_datasource_connect":
- *                                Connect access on the given data source
+ *                                Connect access on the given data source.
  *                        </ul>
  * @param[in] datasourceName  Name of the data source on which the permission
  *                            will be revoked. Must be an existing data source,
@@ -45157,7 +48081,7 @@ RevokePermissionDirectoryResponse& revokePermissionDirectory( const RevokePermis
  *                                write access automatically has read access.
  *                        </ul>
  * @param[in] directoryName  Name of the KiFS directory to which the permission
- *                           revokes access
+ *                           revokes access.
  * @param[in] options  Optional parameters. The default value is an empty map.
  *
  * @return @ref gpudb::RevokePermissionDirectoryResponse "Response" object
@@ -45191,7 +48115,7 @@ RevokePermissionDirectoryResponse revokePermissionDirectory( const std::string& 
  *                                write access automatically has read access.
  *                        </ul>
  * @param[in] directoryName  Name of the KiFS directory to which the permission
- *                           revokes access
+ *                           revokes access.
  * @param[in] options  Optional parameters. The default value is an empty map.
  * @param[out] response_  @ref gpudb::RevokePermissionDirectoryResponse
  *                        "Response" object containing the results of the
@@ -45600,8 +48524,11 @@ RevokeRoleResponse& revokeRole( const std::string& role,
                                 RevokeRoleResponse& response_ ) const;
 
 /**
- * Shows information about a backup
- * Returns detailed information about one or more backup instances.
+ * Shows information about one or more <a
+ * href="../../../admin/backup_restore/#database-backup"
+ * target="_top">backups</a> accessible via the <a
+ * href="../../../concepts/data_sources/" target="_top">data source</a>
+ * specified by @ref gpudb::ShowBackupRequest::datasourceName "datasourceName".
  *
  * @param[in] request_  @ref gpudb::ShowBackupRequest "Request" object
  *                      containing the parameters for the operation.
@@ -45612,8 +48539,11 @@ RevokeRoleResponse& revokeRole( const std::string& role,
 ShowBackupResponse showBackup( const ShowBackupRequest& request_ ) const;
 
 /**
- * Shows information about a backup
- * Returns detailed information about one or more backup instances.
+ * Shows information about one or more <a
+ * href="../../../admin/backup_restore/#database-backup"
+ * target="_top">backups</a> accessible via the <a
+ * href="../../../concepts/data_sources/" target="_top">data source</a>
+ * specified by @ref gpudb::ShowBackupRequest::datasourceName "datasourceName".
  *
  * @param[in] request_  @ref gpudb::ShowBackupRequest "Request" object
  *                      containing the parameters for the operation.
@@ -45627,42 +48557,70 @@ ShowBackupResponse& showBackup( const ShowBackupRequest& request_,
                                 ShowBackupResponse& response_ ) const;
 
 /**
- * Shows information about a backup
- * Returns detailed information about one or more backup instances.
+ * Shows information about one or more <a
+ * href="../../../admin/backup_restore/#database-backup"
+ * target="_top">backups</a> accessible via the <a
+ * href="../../../concepts/data_sources/" target="_top">data source</a>
+ * specified by @a datasourceName.
  *
- * @param[in] backupName  Name of the backup object. An empty string or '*'
- *                        will return all existing backups. The default value
- *                        is ''.
- * @param[in] datasourceName  Datasource where backup is located.
+ * @param[in] backupName  Name of the backup. An empty string or '*' will show
+ *                        all existing backups. Any text followed by a '*' will
+ *                        show backups whose name starts with that text. The
+ *                        default value is ''.
+ * @param[in] datasourceName  Data source through which the backup is
+ *                            accessible.
  * @param[in] options  Optional parameters.
  *                     <ul>
  *                         <li>@ref gpudb::show_backup_backup_id
- *                             "show_backup_backup_id": Backup instance ID to
+ *                             "show_backup_backup_id": ID of the snapshot to
  *                             show. Leave empty to show information from the
- *                             most recent backup instance in the container.
- *                             The default value is ''.
+ *                             most recent snapshot in the backup. The default
+ *                             value is ''.
+ *                         <li>@ref gpudb::show_backup_backup_type
+ *                             "show_backup_backup_type": Show backups by type.
+ *                             This option is ignored if @ref
+ *                             gpudb::show_backup_backup_id "backup_id" is
+ *                             non-empty.
+ *                             Supported values:
+ *                             <ul>
+ *                                 <li>@ref gpudb::show_backup_all
+ *                                     "show_backup_all": Show all backup
+ *                                     types.
+ *                                 <li>@ref gpudb::show_backup_full
+ *                                     "show_backup_full": Show full backups
+ *                                     only.
+ *                                 <li>@ref gpudb::show_backup_incremental
+ *                                     "show_backup_incremental": Show
+ *                                     incremental backups only.
+ *                                 <li>@ref gpudb::show_backup_differential
+ *                                     "show_backup_differential": Show
+ *                                     differential backups only.
+ *                             </ul>
+ *                             The default value is @ref gpudb::show_backup_all
+ *                             "show_backup_all".
  *                         <li>@ref gpudb::show_backup_show_contents
- *                             "show_backup_show_contents": Shows the contents
- *                             of the specified backup_id.
+ *                             "show_backup_show_contents": Show the contents
+ *                             of the backed-up snapshots.
  *                             Supported values:
  *                             <ul>
  *                                 <li>@ref gpudb::show_backup_none
- *                                     "show_backup_none": No backup contents
+ *                                     "show_backup_none": Don't show snapshot
+ *                                     contents.
  *                                 <li>@ref gpudb::show_backup_object_names
- *                                     "show_backup_object_names": Object names
- *                                     only
+ *                                     "show_backup_object_names": Show
+ *                                     backed-up object names, and for tables,
+ *                                     sizing detail.
  *                                 <li>@ref gpudb::show_backup_object_files
- *                                     "show_backup_object_files": Object names
- *                                     and files
+ *                                     "show_backup_object_files": Show
+ *                                     backed-up object names, and for tables,
+ *                                     sizing detail and associated files.
  *                             </ul>
  *                             The default value is @ref
  *                             gpudb::show_backup_none "show_backup_none".
  *                         <li>@ref gpudb::show_backup_no_error_if_not_exists
- *                             "show_backup_no_error_if_not_exists": If @ref
- *                             gpudb::show_backup_false "false" will return an
- *                             error if the provided @a backupName does not
- *                             exist. If @ref gpudb::show_backup_true "true"
- *                             then it will return an empty result.
+ *                             "show_backup_no_error_if_not_exists": Whether or
+ *                             not to suppress the error if the specified
+ *                             backup does not exist.
  *                             Supported values:
  *                             <ul>
  *                                 <li>@ref gpudb::show_backup_true
@@ -45683,42 +48641,70 @@ ShowBackupResponse showBackup( const std::string& backupName,
                                const std::map<std::string, std::string>& options ) const;
 
 /**
- * Shows information about a backup
- * Returns detailed information about one or more backup instances.
+ * Shows information about one or more <a
+ * href="../../../admin/backup_restore/#database-backup"
+ * target="_top">backups</a> accessible via the <a
+ * href="../../../concepts/data_sources/" target="_top">data source</a>
+ * specified by @a datasourceName.
  *
- * @param[in] backupName  Name of the backup object. An empty string or '*'
- *                        will return all existing backups. The default value
- *                        is ''.
- * @param[in] datasourceName  Datasource where backup is located.
+ * @param[in] backupName  Name of the backup. An empty string or '*' will show
+ *                        all existing backups. Any text followed by a '*' will
+ *                        show backups whose name starts with that text. The
+ *                        default value is ''.
+ * @param[in] datasourceName  Data source through which the backup is
+ *                            accessible.
  * @param[in] options  Optional parameters.
  *                     <ul>
  *                         <li>@ref gpudb::show_backup_backup_id
- *                             "show_backup_backup_id": Backup instance ID to
+ *                             "show_backup_backup_id": ID of the snapshot to
  *                             show. Leave empty to show information from the
- *                             most recent backup instance in the container.
- *                             The default value is ''.
+ *                             most recent snapshot in the backup. The default
+ *                             value is ''.
+ *                         <li>@ref gpudb::show_backup_backup_type
+ *                             "show_backup_backup_type": Show backups by type.
+ *                             This option is ignored if @ref
+ *                             gpudb::show_backup_backup_id "backup_id" is
+ *                             non-empty.
+ *                             Supported values:
+ *                             <ul>
+ *                                 <li>@ref gpudb::show_backup_all
+ *                                     "show_backup_all": Show all backup
+ *                                     types.
+ *                                 <li>@ref gpudb::show_backup_full
+ *                                     "show_backup_full": Show full backups
+ *                                     only.
+ *                                 <li>@ref gpudb::show_backup_incremental
+ *                                     "show_backup_incremental": Show
+ *                                     incremental backups only.
+ *                                 <li>@ref gpudb::show_backup_differential
+ *                                     "show_backup_differential": Show
+ *                                     differential backups only.
+ *                             </ul>
+ *                             The default value is @ref gpudb::show_backup_all
+ *                             "show_backup_all".
  *                         <li>@ref gpudb::show_backup_show_contents
- *                             "show_backup_show_contents": Shows the contents
- *                             of the specified backup_id.
+ *                             "show_backup_show_contents": Show the contents
+ *                             of the backed-up snapshots.
  *                             Supported values:
  *                             <ul>
  *                                 <li>@ref gpudb::show_backup_none
- *                                     "show_backup_none": No backup contents
+ *                                     "show_backup_none": Don't show snapshot
+ *                                     contents.
  *                                 <li>@ref gpudb::show_backup_object_names
- *                                     "show_backup_object_names": Object names
- *                                     only
+ *                                     "show_backup_object_names": Show
+ *                                     backed-up object names, and for tables,
+ *                                     sizing detail.
  *                                 <li>@ref gpudb::show_backup_object_files
- *                                     "show_backup_object_files": Object names
- *                                     and files
+ *                                     "show_backup_object_files": Show
+ *                                     backed-up object names, and for tables,
+ *                                     sizing detail and associated files.
  *                             </ul>
  *                             The default value is @ref
  *                             gpudb::show_backup_none "show_backup_none".
  *                         <li>@ref gpudb::show_backup_no_error_if_not_exists
- *                             "show_backup_no_error_if_not_exists": If @ref
- *                             gpudb::show_backup_false "false" will return an
- *                             error if the provided @a backupName does not
- *                             exist. If @ref gpudb::show_backup_true "true"
- *                             then it will return an empty result.
+ *                             "show_backup_no_error_if_not_exists": Whether or
+ *                             not to suppress the error if the specified
+ *                             backup does not exist.
  *                             Supported values:
  *                             <ul>
  *                                 <li>@ref gpudb::show_backup_true
@@ -46297,6 +49283,20 @@ ShowGraphResponse& showGraph( const ShowGraphRequest& request_,
  *                             "show_graph_server_id": Indicates which graph
  *                             server(s) to send the request to. Default is to
  *                             send to get information about all the servers.
+ *                         <li>@ref gpudb::show_graph_export_graph_schema
+ *                             "show_graph_export_graph_schema": If true,
+ *                             generates the graph ontology (schema) as a DOT
+ *                             format string in the response info field under
+ *                             the key 'dot'.
+ *                             Supported values:
+ *                             <ul>
+ *                                 <li>@ref gpudb::show_graph_true
+ *                                     "show_graph_true"
+ *                                 <li>@ref gpudb::show_graph_false
+ *                                     "show_graph_false"
+ *                             </ul>
+ *                             The default value is @ref
+ *                             gpudb::show_graph_false "show_graph_false".
  *                     </ul>
  *                     The default value is an empty map.
  *
@@ -46333,6 +49333,20 @@ ShowGraphResponse showGraph( const std::string& graphName,
  *                             "show_graph_server_id": Indicates which graph
  *                             server(s) to send the request to. Default is to
  *                             send to get information about all the servers.
+ *                         <li>@ref gpudb::show_graph_export_graph_schema
+ *                             "show_graph_export_graph_schema": If true,
+ *                             generates the graph ontology (schema) as a DOT
+ *                             format string in the response info field under
+ *                             the key 'dot'.
+ *                             Supported values:
+ *                             <ul>
+ *                                 <li>@ref gpudb::show_graph_true
+ *                                     "show_graph_true"
+ *                                 <li>@ref gpudb::show_graph_false
+ *                                     "show_graph_false"
+ *                             </ul>
+ *                             The default value is @ref
+ *                             gpudb::show_graph_false "show_graph_false".
  *                     </ul>
  *                     The default value is an empty map.
  * @param[out] response_  @ref gpudb::ShowGraphResponse "Response" object
@@ -46682,6 +49696,17 @@ ShowResourceObjectsResponse& showResourceObjects( const ShowResourceObjectsReque
  *                                 <li>@ref
  *                                     gpudb::show_resource_objects_evictable
  *                                     "show_resource_objects_evictable"
+ *                                 <li>@ref gpudb::show_resource_objects_locked
+ *                                     "show_resource_objects_locked"
+ *                                 <li>@ref
+ *                                     gpudb::show_resource_objects_pin_count
+ *                                     "show_resource_objects_pin_count"
+ *                                 <li>@ref
+ *                                     gpudb::show_resource_objects_ram_evictions
+ *                                     "show_resource_objects_ram_evictions"
+ *                                 <li>@ref
+ *                                     gpudb::show_resource_objects_persist_evictions
+ *                                     "show_resource_objects_persist_evictions"
  *                                 <li>@ref
  *                                     gpudb::show_resource_objects_owner_resource_group
  *                                     "show_resource_objects_owner_resource_group"
@@ -46752,6 +49777,17 @@ ShowResourceObjectsResponse showResourceObjects( const std::map<std::string, std
  *                                 <li>@ref
  *                                     gpudb::show_resource_objects_evictable
  *                                     "show_resource_objects_evictable"
+ *                                 <li>@ref gpudb::show_resource_objects_locked
+ *                                     "show_resource_objects_locked"
+ *                                 <li>@ref
+ *                                     gpudb::show_resource_objects_pin_count
+ *                                     "show_resource_objects_pin_count"
+ *                                 <li>@ref
+ *                                     gpudb::show_resource_objects_ram_evictions
+ *                                     "show_resource_objects_ram_evictions"
+ *                                 <li>@ref
+ *                                     gpudb::show_resource_objects_persist_evictions
+ *                                     "show_resource_objects_persist_evictions"
  *                                 <li>@ref
  *                                     gpudb::show_resource_objects_owner_resource_group
  *                                     "show_resource_objects_owner_resource_group"
@@ -47328,8 +50364,12 @@ ShowStatisticsResponse& showStatistics( const ShowStatisticsRequest& request_,
  * @param[in] tableNames  Names of tables whose metadata will be fetched, each
  *                        in [schema_name.]table_name format, using standard <a
  *                        href="../../../concepts/tables/#table-name-resolution"
- *                        target="_top">name resolution rules</a>.  All
- *                        provided tables must exist, or an error is returned.
+ *                        target="_top">name resolution rules</a>. All provided
+ *                        tables must exist, or an error is returned.  A single
+ *                        entry of '*' expands to every user table the caller
+ *                        may read (excluding system schemas, views, and
+ *                        temporary tables); when used it must be the only
+ *                        entry.
  * @param[in] options  Optional parameters.
  *                     <ul>
  *                         <li>@ref
@@ -47366,8 +50406,12 @@ ShowStatisticsResponse showStatistics( const std::vector<std::string>& tableName
  * @param[in] tableNames  Names of tables whose metadata will be fetched, each
  *                        in [schema_name.]table_name format, using standard <a
  *                        href="../../../concepts/tables/#table-name-resolution"
- *                        target="_top">name resolution rules</a>.  All
- *                        provided tables must exist, or an error is returned.
+ *                        target="_top">name resolution rules</a>. All provided
+ *                        tables must exist, or an error is returned.  A single
+ *                        entry of '*' expands to every user table the caller
+ *                        may read (excluding system schemas, views, and
+ *                        temporary tables); when used it must be the only
+ *                        entry.
  * @param[in] options  Optional parameters.
  *                     <ul>
  *                         <li>@ref
@@ -47771,6 +50815,20 @@ ShowTableResponse& showTable( const ShowTableRequest& request_,
  *                             </ul>
  *                             The default value is @ref
  *                             gpudb::show_table_false "show_table_false".
+ *                         <li>@ref
+ *                             gpudb::show_table_referencing_materialized_views
+ *                             "show_table_referencing_materialized_views":
+ *                             Include materialized views using this table as a
+ *                             source in the output.
+ *                             Supported values:
+ *                             <ul>
+ *                                 <li>@ref gpudb::show_table_true
+ *                                     "show_table_true"
+ *                                 <li>@ref gpudb::show_table_false
+ *                                     "show_table_false"
+ *                             </ul>
+ *                             The default value is @ref
+ *                             gpudb::show_table_false "show_table_false".
  *                         <li>@ref gpudb::show_table_skip_additional_info
  *                             "show_table_skip_additional_info": If @ref
  *                             gpudb::show_table_true "true" then the response
@@ -47956,6 +51014,20 @@ ShowTableResponse showTable( const std::string& tableName,
  *                             gpudb::show_table_true "true" then the number of
  *                             records in each table, along with a cumulative
  *                             count, will be returned; blank, otherwise.
+ *                             Supported values:
+ *                             <ul>
+ *                                 <li>@ref gpudb::show_table_true
+ *                                     "show_table_true"
+ *                                 <li>@ref gpudb::show_table_false
+ *                                     "show_table_false"
+ *                             </ul>
+ *                             The default value is @ref
+ *                             gpudb::show_table_false "show_table_false".
+ *                         <li>@ref
+ *                             gpudb::show_table_referencing_materialized_views
+ *                             "show_table_referencing_materialized_views":
+ *                             Include materialized views using this table as a
+ *                             source in the output.
  *                             Supported values:
  *                             <ul>
  *                                 <li>@ref gpudb::show_table_true
@@ -48577,7 +51649,7 @@ ShowWalResponse& showWal( const std::vector<std::string>& tableNames,
  * additional, optional weights and restrictions.
  *
  * IMPORTANT: It's highly recommended that you review the <a
- * href="../../../graph_solver/network_graph_solver/" target="_top">Graphs &
+ * href="../../../graph_solver/network_graph_solver/" target="_top">Graphs and
  * Solvers</a> concepts documentation, the <a
  * href="../../../guides/graph_rest_guide/" target="_top">Graph REST
  * Tutorial</a>, and/or some <a href="../../../guide-tags/graph---solve"
@@ -48597,7 +51669,7 @@ SolveGraphResponse solveGraph( const SolveGraphRequest& request_ ) const;
  * additional, optional weights and restrictions.
  *
  * IMPORTANT: It's highly recommended that you review the <a
- * href="../../../graph_solver/network_graph_solver/" target="_top">Graphs &
+ * href="../../../graph_solver/network_graph_solver/" target="_top">Graphs and
  * Solvers</a> concepts documentation, the <a
  * href="../../../guides/graph_rest_guide/" target="_top">Graph REST
  * Tutorial</a>, and/or some <a href="../../../guide-tags/graph---solve"
@@ -48620,7 +51692,7 @@ SolveGraphResponse& solveGraph( const SolveGraphRequest& request_,
  * additional, optional weights and restrictions.
  *
  * IMPORTANT: It's highly recommended that you review the <a
- * href="../../../graph_solver/network_graph_solver/" target="_top">Graphs &
+ * href="../../../graph_solver/network_graph_solver/" target="_top">Graphs and
  * Solvers</a> concepts documentation, the <a
  * href="../../../guides/graph_rest_guide/" target="_top">Graph REST
  * Tutorial</a>, and/or some <a href="../../../guide-tags/graph---solve"
@@ -48913,11 +51985,11 @@ SolveGraphResponse& solveGraph( const SolveGraphRequest& request_,
  *                             <ul>
  *                                 <li>@ref gpudb::solve_graph_true
  *                                     "solve_graph_true": An additional column
- *                                     'CLUSTER' will be added for each node
+ *                                     'CLUSTER' will be added for each node.
  *                                 <li>@ref gpudb::solve_graph_false
  *                                     "solve_graph_false": No extra cluster
  *                                     info per node will be available in the
- *                                     output
+ *                                     output.
  *                             </ul>
  *                             The default value is @ref
  *                             gpudb::solve_graph_false "solve_graph_false".
@@ -48930,10 +52002,10 @@ SolveGraphResponse& solveGraph( const SolveGraphRequest& request_,
  *                                 <li>@ref gpudb::solve_graph_astar
  *                                     "solve_graph_astar": Employs A-STAR
  *                                     heuristics to speed up the shortest path
- *                                     traversal
+ *                                     traversal.
  *                                 <li>@ref gpudb::solve_graph_none
  *                                     "solve_graph_none": No heuristics are
- *                                     applied
+ *                                     applied.
  *                             </ul>
  *                             The default value is @ref
  *                             gpudb::solve_graph_none "solve_graph_none".
@@ -48965,7 +52037,7 @@ SolveGraphResponse solveGraph( const std::string& graphName,
  * additional, optional weights and restrictions.
  *
  * IMPORTANT: It's highly recommended that you review the <a
- * href="../../../graph_solver/network_graph_solver/" target="_top">Graphs &
+ * href="../../../graph_solver/network_graph_solver/" target="_top">Graphs and
  * Solvers</a> concepts documentation, the <a
  * href="../../../guides/graph_rest_guide/" target="_top">Graph REST
  * Tutorial</a>, and/or some <a href="../../../guide-tags/graph---solve"
@@ -49258,11 +52330,11 @@ SolveGraphResponse solveGraph( const std::string& graphName,
  *                             <ul>
  *                                 <li>@ref gpudb::solve_graph_true
  *                                     "solve_graph_true": An additional column
- *                                     'CLUSTER' will be added for each node
+ *                                     'CLUSTER' will be added for each node.
  *                                 <li>@ref gpudb::solve_graph_false
  *                                     "solve_graph_false": No extra cluster
  *                                     info per node will be available in the
- *                                     output
+ *                                     output.
  *                             </ul>
  *                             The default value is @ref
  *                             gpudb::solve_graph_false "solve_graph_false".
@@ -49275,10 +52347,10 @@ SolveGraphResponse solveGraph( const std::string& graphName,
  *                                 <li>@ref gpudb::solve_graph_astar
  *                                     "solve_graph_astar": Employs A-STAR
  *                                     heuristics to speed up the shortest path
- *                                     traversal
+ *                                     traversal.
  *                                 <li>@ref gpudb::solve_graph_none
  *                                     "solve_graph_none": No heuristics are
- *                                     applied
+ *                                     applied.
  *                             </ul>
  *                             The default value is @ref
  *                             gpudb::solve_graph_none "solve_graph_none".
@@ -49660,11 +52732,11 @@ UpdateRecordsResponse& updateRecords( const UpdateRecordsRequest<TRequest>& requ
  *                                 <li>@ref gpudb::update_records_true
  *                                     "update_records_true": Ignore updates
  *                                     that result in primary key collisions
- *                                     with existing records
+ *                                     with existing records.
  *                                 <li>@ref gpudb::update_records_false
  *                                     "update_records_false": Treat as errors
  *                                     any updates that result in primary key
- *                                     collisions with existing records
+ *                                     collisions with existing records.
  *                             </ul>
  *                             The default value is @ref
  *                             gpudb::update_records_false
@@ -49684,6 +52756,50 @@ UpdateRecordsResponse& updateRecords( const UpdateRecordsRequest<TRequest>& requ
  *                             The default value is @ref
  *                             gpudb::update_records_false
  *                             "update_records_false".
+ *                         <li>@ref
+ *                             gpudb::update_records_enable_inplace_updates
+ *                             "update_records_enable_inplace_updates": If set
+ *                             to @ref gpudb::update_records_true "true",
+ *                             qualifying records are modified in place. If set
+ *                             to @ref gpudb::update_records_false "false",
+ *                             they are updated by deleting the existing record
+ *                             and inserting a replacement (delete and insert),
+ *                             which prevents the change from being reflected
+ *                             in dependent materialized views until they are
+ *                             refreshed.
+ *                             Supported values:
+ *                             <ul>
+ *                                 <li>@ref gpudb::update_records_true
+ *                                     "update_records_true"
+ *                                 <li>@ref gpudb::update_records_false
+ *                                     "update_records_false"
+ *                             </ul>
+ *                             The default value is @ref
+ *                             gpudb::update_records_true
+ *                             "update_records_true".
+ *                         <li>@ref
+ *                             gpudb::update_records_enable_worker_oop_update
+ *                             "update_records_enable_worker_oop_update": For
+ *                             an out-of-place update (delete and insert),
+ *                             controls where the replacement records are
+ *                             reinserted. If set to @ref
+ *                             gpudb::update_records_true "true", the workers
+ *                             that own the data reinsert them directly,
+ *                             avoiding a round trip through the head node; a
+ *                             shard-key change reshards the replacements to
+ *                             their new owning workers. If set to @ref
+ *                             gpudb::update_records_false "false", the
+ *                             replacement records are reinserted from the head
+ *                             node. Overrides the
+ *                             {feature.enable_worker_oop_update}@
+ *                             configuration default.
+ *                             Supported values:
+ *                             <ul>
+ *                                 <li>@ref gpudb::update_records_true
+ *                                     "update_records_true"
+ *                                 <li>@ref gpudb::update_records_false
+ *                                     "update_records_false"
+ *                             </ul>
  *                         <li>@ref gpudb::update_records_truncate_strings
  *                             "update_records_truncate_strings": If set to
  *                             @ref gpudb::update_records_true "true", any
@@ -49917,11 +53033,11 @@ UpdateRecordsResponse updateRecords( const std::string& tableName,
  *                                 <li>@ref gpudb::update_records_true
  *                                     "update_records_true": Ignore updates
  *                                     that result in primary key collisions
- *                                     with existing records
+ *                                     with existing records.
  *                                 <li>@ref gpudb::update_records_false
  *                                     "update_records_false": Treat as errors
  *                                     any updates that result in primary key
- *                                     collisions with existing records
+ *                                     collisions with existing records.
  *                             </ul>
  *                             The default value is @ref
  *                             gpudb::update_records_false
@@ -49941,6 +53057,50 @@ UpdateRecordsResponse updateRecords( const std::string& tableName,
  *                             The default value is @ref
  *                             gpudb::update_records_false
  *                             "update_records_false".
+ *                         <li>@ref
+ *                             gpudb::update_records_enable_inplace_updates
+ *                             "update_records_enable_inplace_updates": If set
+ *                             to @ref gpudb::update_records_true "true",
+ *                             qualifying records are modified in place. If set
+ *                             to @ref gpudb::update_records_false "false",
+ *                             they are updated by deleting the existing record
+ *                             and inserting a replacement (delete and insert),
+ *                             which prevents the change from being reflected
+ *                             in dependent materialized views until they are
+ *                             refreshed.
+ *                             Supported values:
+ *                             <ul>
+ *                                 <li>@ref gpudb::update_records_true
+ *                                     "update_records_true"
+ *                                 <li>@ref gpudb::update_records_false
+ *                                     "update_records_false"
+ *                             </ul>
+ *                             The default value is @ref
+ *                             gpudb::update_records_true
+ *                             "update_records_true".
+ *                         <li>@ref
+ *                             gpudb::update_records_enable_worker_oop_update
+ *                             "update_records_enable_worker_oop_update": For
+ *                             an out-of-place update (delete and insert),
+ *                             controls where the replacement records are
+ *                             reinserted. If set to @ref
+ *                             gpudb::update_records_true "true", the workers
+ *                             that own the data reinsert them directly,
+ *                             avoiding a round trip through the head node; a
+ *                             shard-key change reshards the replacements to
+ *                             their new owning workers. If set to @ref
+ *                             gpudb::update_records_false "false", the
+ *                             replacement records are reinserted from the head
+ *                             node. Overrides the
+ *                             {feature.enable_worker_oop_update}@
+ *                             configuration default.
+ *                             Supported values:
+ *                             <ul>
+ *                                 <li>@ref gpudb::update_records_true
+ *                                     "update_records_true"
+ *                                 <li>@ref gpudb::update_records_false
+ *                                     "update_records_false"
+ *                             </ul>
  *                         <li>@ref gpudb::update_records_truncate_strings
  *                             "update_records_truncate_strings": If set to
  *                             @ref gpudb::update_records_true "true", any
@@ -50011,114 +53171,6 @@ UpdateRecordsResponse& updateRecords( const std::string& tableName,
     submitRequest("/update/records", actualRequest_, response_, true);
     return response_;
 }
-
-/**
- * Updates the view specified by @ref
- * gpudb::UpdateRecordsBySeriesRequest::tableName "tableName" to include full
- * series (track) information from the @ref
- * gpudb::UpdateRecordsBySeriesRequest::worldTableName "worldTableName" for the
- * series (tracks) present in the @ref
- * gpudb::UpdateRecordsBySeriesRequest::viewName "viewName".
- *
- * @param[in] request_  @ref gpudb::UpdateRecordsBySeriesRequest "Request"
- *                      object containing the parameters for the operation.
- *
- * @return @ref gpudb::UpdateRecordsBySeriesResponse "Response" object
- *         containing the result of the operation.
- */
-UpdateRecordsBySeriesResponse updateRecordsBySeries( const UpdateRecordsBySeriesRequest& request_ ) const;
-
-/**
- * Updates the view specified by @ref
- * gpudb::UpdateRecordsBySeriesRequest::tableName "tableName" to include full
- * series (track) information from the @ref
- * gpudb::UpdateRecordsBySeriesRequest::worldTableName "worldTableName" for the
- * series (tracks) present in the @ref
- * gpudb::UpdateRecordsBySeriesRequest::viewName "viewName".
- *
- * @param[in] request_  @ref gpudb::UpdateRecordsBySeriesRequest "Request"
- *                      object containing the parameters for the operation.
- * @param[out] response_  @ref gpudb::UpdateRecordsBySeriesResponse "Response"
- *                        object containing the results of the operation.
- *
- * @return @ref gpudb::UpdateRecordsBySeriesResponse "Response" object
- *         containing the result of the operation (initially passed in by
- *         reference).
- */
-UpdateRecordsBySeriesResponse& updateRecordsBySeries( const UpdateRecordsBySeriesRequest& request_,
-                                                      UpdateRecordsBySeriesResponse& response_ ) const;
-
-/**
- * Updates the view specified by @a tableName to include full series (track)
- * information from the @a worldTableName for the series (tracks) present in
- * the @a viewName.
- *
- * @param[in] tableName  Name of the view on which the update operation will be
- *                       performed, in [schema_name.]view_name format, using
- *                       standard <a
- *                       href="../../../concepts/tables/#table-name-resolution"
- *                       target="_top">name resolution rules</a>.  Must be an
- *                       existing view.
- * @param[in] worldTableName  Name of the table containing the complete series
- *                            (track) information, in [schema_name.]table_name
- *                            format, using standard <a
- *                            href="../../../concepts/tables/#table-name-resolution"
- *                            target="_top">name resolution rules</a>.
- * @param[in] viewName  Name of the view containing the series (tracks) which
- *                      have to be updated, in [schema_name.]view_name format,
- *                      using standard <a
- *                      href="../../../concepts/tables/#table-name-resolution"
- *                      target="_top">name resolution rules</a>. The default
- *                      value is ''.
- * @param[in] reserved  The default value is an empty vector.
- * @param[in] options  Optional parameters. The default value is an empty map.
- *
- * @return @ref gpudb::UpdateRecordsBySeriesResponse "Response" object
- *         containing the result of the operation.
- */
-UpdateRecordsBySeriesResponse updateRecordsBySeries( const std::string& tableName,
-                                                     const std::string& worldTableName,
-                                                     const std::string& viewName,
-                                                     const std::vector<std::string>& reserved,
-                                                     const std::map<std::string, std::string>& options ) const;
-
-/**
- * Updates the view specified by @a tableName to include full series (track)
- * information from the @a worldTableName for the series (tracks) present in
- * the @a viewName.
- *
- * @param[in] tableName  Name of the view on which the update operation will be
- *                       performed, in [schema_name.]view_name format, using
- *                       standard <a
- *                       href="../../../concepts/tables/#table-name-resolution"
- *                       target="_top">name resolution rules</a>.  Must be an
- *                       existing view.
- * @param[in] worldTableName  Name of the table containing the complete series
- *                            (track) information, in [schema_name.]table_name
- *                            format, using standard <a
- *                            href="../../../concepts/tables/#table-name-resolution"
- *                            target="_top">name resolution rules</a>.
- * @param[in] viewName  Name of the view containing the series (tracks) which
- *                      have to be updated, in [schema_name.]view_name format,
- *                      using standard <a
- *                      href="../../../concepts/tables/#table-name-resolution"
- *                      target="_top">name resolution rules</a>. The default
- *                      value is ''.
- * @param[in] reserved  The default value is an empty vector.
- * @param[in] options  Optional parameters. The default value is an empty map.
- * @param[out] response_  @ref gpudb::UpdateRecordsBySeriesResponse "Response"
- *                        object containing the results of the operation.
- *
- * @return @ref gpudb::UpdateRecordsBySeriesResponse "Response" object
- *         containing the result of the operation (initially passed in by
- *         reference).
- */
-UpdateRecordsBySeriesResponse& updateRecordsBySeries( const std::string& tableName,
-                                                      const std::string& worldTableName,
-                                                      const std::string& viewName,
-                                                      const std::vector<std::string>& reserved,
-                                                      const std::map<std::string, std::string>& options,
-                                                      UpdateRecordsBySeriesResponse& response_ ) const;
 
 /**
  * Uploads one or more files to <a href="../../../tools/kifs/"
@@ -50351,26 +53403,26 @@ UploadFilesResponse& uploadFiles( const UploadFilesRequest& request_,
  *                             <ul>
  *                                 <li>@ref gpudb::upload_files_none
  *                                     "upload_files_none": Default, indicates
- *                                     this is not a multipart upload
+ *                                     this is not a multipart upload.
  *                                 <li>@ref gpudb::upload_files_init
  *                                     "upload_files_init": Initialize a
- *                                     multipart file upload
+ *                                     multipart file upload.
  *                                 <li>@ref gpudb::upload_files_upload_part
  *                                     "upload_files_upload_part": Uploads a
  *                                     part of the specified multipart file
- *                                     upload
+ *                                     upload.
  *                                 <li>@ref gpudb::upload_files_complete
  *                                     "upload_files_complete": Complete the
- *                                     specified multipart file upload
+ *                                     specified multipart file upload.
  *                                 <li>@ref gpudb::upload_files_cancel
  *                                     "upload_files_cancel": Cancel the
- *                                     specified multipart file upload
+ *                                     specified multipart file upload.
  *                             </ul>
  *                             The default value is @ref
  *                             gpudb::upload_files_none "upload_files_none".
  *                         <li>@ref gpudb::upload_files_multipart_upload_uuid
  *                             "upload_files_multipart_upload_uuid": UUID to
- *                             uniquely identify a multipart upload
+ *                             uniquely identify a multipart upload.
  *                         <li>@ref
  *                             gpudb::upload_files_multipart_upload_part_number
  *                             "upload_files_multipart_upload_part_number":
@@ -50500,26 +53552,26 @@ UploadFilesResponse uploadFiles( const std::vector<std::string>& fileNames,
  *                             <ul>
  *                                 <li>@ref gpudb::upload_files_none
  *                                     "upload_files_none": Default, indicates
- *                                     this is not a multipart upload
+ *                                     this is not a multipart upload.
  *                                 <li>@ref gpudb::upload_files_init
  *                                     "upload_files_init": Initialize a
- *                                     multipart file upload
+ *                                     multipart file upload.
  *                                 <li>@ref gpudb::upload_files_upload_part
  *                                     "upload_files_upload_part": Uploads a
  *                                     part of the specified multipart file
- *                                     upload
+ *                                     upload.
  *                                 <li>@ref gpudb::upload_files_complete
  *                                     "upload_files_complete": Complete the
- *                                     specified multipart file upload
+ *                                     specified multipart file upload.
  *                                 <li>@ref gpudb::upload_files_cancel
  *                                     "upload_files_cancel": Cancel the
- *                                     specified multipart file upload
+ *                                     specified multipart file upload.
  *                             </ul>
  *                             The default value is @ref
  *                             gpudb::upload_files_none "upload_files_none".
  *                         <li>@ref gpudb::upload_files_multipart_upload_uuid
  *                             "upload_files_multipart_upload_uuid": UUID to
- *                             uniquely identify a multipart upload
+ *                             uniquely identify a multipart upload.
  *                         <li>@ref
  *                             gpudb::upload_files_multipart_upload_part_number
  *                             "upload_files_multipart_upload_part_number":
@@ -50679,6 +53731,120 @@ UploadFilesFromurlResponse& uploadFilesFromurl( const std::vector<std::string>& 
                                                 const std::vector<std::string>& urls,
                                                 const std::map<std::string, std::string>& options,
                                                 UploadFilesFromurlResponse& response_ ) const;
+
+/**
+ * Inspects the requested database <a
+ * href="../../../admin/backup_restore/#database-backup"
+ * target="_top">backup(s)</a> for conformity at the remote file store
+ * accessible via the <a href="../../../concepts/data_sources/"
+ * target="_top">data source</a> specified by @ref
+ * gpudb::VerifyBackupRequest::datasourceName "datasourceName". By default all
+ * snapshots are inspected unless the option @ref
+ * gpudb::verify_backup_backup_id "backup_id" is used to target a specific
+ * instance.
+ * Returns backup verification results.
+ *
+ * @param[in] request_  @ref gpudb::VerifyBackupRequest "Request" object
+ *                      containing the parameters for the operation.
+ *
+ * @return @ref gpudb::VerifyBackupResponse "Response" object containing the
+ *         result of the operation.
+ */
+VerifyBackupResponse verifyBackup( const VerifyBackupRequest& request_ ) const;
+
+/**
+ * Inspects the requested database <a
+ * href="../../../admin/backup_restore/#database-backup"
+ * target="_top">backup(s)</a> for conformity at the remote file store
+ * accessible via the <a href="../../../concepts/data_sources/"
+ * target="_top">data source</a> specified by @ref
+ * gpudb::VerifyBackupRequest::datasourceName "datasourceName". By default all
+ * snapshots are inspected unless the option @ref
+ * gpudb::verify_backup_backup_id "backup_id" is used to target a specific
+ * instance.
+ * Returns backup verification results.
+ *
+ * @param[in] request_  @ref gpudb::VerifyBackupRequest "Request" object
+ *                      containing the parameters for the operation.
+ * @param[out] response_  @ref gpudb::VerifyBackupResponse "Response" object
+ *                        containing the results of the operation.
+ *
+ * @return @ref gpudb::VerifyBackupResponse "Response" object containing the
+ *         result of the operation (initially passed in by reference).
+ */
+VerifyBackupResponse& verifyBackup( const VerifyBackupRequest& request_,
+                                    VerifyBackupResponse& response_ ) const;
+
+/**
+ * Inspects the requested database <a
+ * href="../../../admin/backup_restore/#database-backup"
+ * target="_top">backup(s)</a> for conformity at the remote file store
+ * accessible via the <a href="../../../concepts/data_sources/"
+ * target="_top">data source</a> specified by @a datasourceName. By default all
+ * snapshots are inspected unless the option @ref
+ * gpudb::verify_backup_backup_id "backup_id" is used to target a specific
+ * instance.
+ * Returns backup verification results.
+ *
+ * @param[in] backupName  Name of the backup. An empty string or '*' will check
+ *                        all existing backups. Any text followed by a '*' will
+ *                        inspect backups whose name starts with that text. The
+ *                        default value is ''.
+ * @param[in] datasourceName  Data source through which the backup is
+ *                            accessible.
+ * @param[in] options  Optional parameters.
+ *                     <ul>
+ *                         <li>@ref gpudb::verify_backup_backup_id
+ *                             "verify_backup_backup_id": ID of the snapshot to
+ *                             verify. Set to '-1' to verify all snapshots in
+ *                             the backup.  Leave empty to verify only the most
+ *                             recent snapshot. The default value is '-1'.
+ *                     </ul>
+ *                     The default value is an empty map.
+ *
+ * @return @ref gpudb::VerifyBackupResponse "Response" object containing the
+ *         result of the operation.
+ */
+VerifyBackupResponse verifyBackup( const std::string& backupName,
+                                   const std::string& datasourceName,
+                                   const std::map<std::string, std::string>& options ) const;
+
+/**
+ * Inspects the requested database <a
+ * href="../../../admin/backup_restore/#database-backup"
+ * target="_top">backup(s)</a> for conformity at the remote file store
+ * accessible via the <a href="../../../concepts/data_sources/"
+ * target="_top">data source</a> specified by @a datasourceName. By default all
+ * snapshots are inspected unless the option @ref
+ * gpudb::verify_backup_backup_id "backup_id" is used to target a specific
+ * instance.
+ * Returns backup verification results.
+ *
+ * @param[in] backupName  Name of the backup. An empty string or '*' will check
+ *                        all existing backups. Any text followed by a '*' will
+ *                        inspect backups whose name starts with that text. The
+ *                        default value is ''.
+ * @param[in] datasourceName  Data source through which the backup is
+ *                            accessible.
+ * @param[in] options  Optional parameters.
+ *                     <ul>
+ *                         <li>@ref gpudb::verify_backup_backup_id
+ *                             "verify_backup_backup_id": ID of the snapshot to
+ *                             verify. Set to '-1' to verify all snapshots in
+ *                             the backup.  Leave empty to verify only the most
+ *                             recent snapshot. The default value is '-1'.
+ *                     </ul>
+ *                     The default value is an empty map.
+ * @param[out] response_  @ref gpudb::VerifyBackupResponse "Response" object
+ *                        containing the results of the operation.
+ *
+ * @return @ref gpudb::VerifyBackupResponse "Response" object containing the
+ *         result of the operation (initially passed in by reference).
+ */
+VerifyBackupResponse& verifyBackup( const std::string& backupName,
+                                    const std::string& datasourceName,
+                                    const std::map<std::string, std::string>& options,
+                                    VerifyBackupResponse& response_ ) const;
 
 /** @private */
 VisualizeGetFeatureInfoResponse visualizeGetFeatureInfo( const VisualizeGetFeatureInfoRequest& request_ ) const;
@@ -50984,12 +54150,12 @@ VisualizeImageChartResponse& visualizeImageChart( const VisualizeImageChartReque
  *                              <li>@ref
  *                                  gpudb::visualize_image_chart_min_max_scaled
  *                                  "visualize_image_chart_min_max_scaled": If
- *                                  this options is set to "false", this
+ *                                  this options is set to @a false, this
  *                                  endpoint expects request's min/max values
  *                                  are not yet scaled. They will be scaled
  *                                  according to scale_type_x or scale_type_y
- *                                  for response. If this options is set to
- *                                  "true", this endpoint expects request's
+ *                                  for response. If this options is set to @a
+ *                                  true, this endpoint expects request's
  *                                  min/max values are already scaled according
  *                                  to scale_type_x/scale_type_y. Response's
  *                                  min/max values will be equal to request's
@@ -51006,7 +54172,7 @@ VisualizeImageChartResponse& visualizeImageChart( const VisualizeImageChartReque
  *                                  column values. The default value is '0.0'.
  *                              <li>@ref gpudb::visualize_image_chart_plot_all
  *                                  "visualize_image_chart_plot_all": If this
- *                                  options is set to "true", all non-numeric
+ *                                  options is set to @a true, all non-numeric
  *                                  column values are plotted ignoring min_x,
  *                                  max_x, min_y and max_y parameters. The
  *                                  default value is 'false'.
@@ -51226,12 +54392,12 @@ VisualizeImageChartResponse visualizeImageChart( const std::string& tableName,
  *                              <li>@ref
  *                                  gpudb::visualize_image_chart_min_max_scaled
  *                                  "visualize_image_chart_min_max_scaled": If
- *                                  this options is set to "false", this
+ *                                  this options is set to @a false, this
  *                                  endpoint expects request's min/max values
  *                                  are not yet scaled. They will be scaled
  *                                  according to scale_type_x or scale_type_y
- *                                  for response. If this options is set to
- *                                  "true", this endpoint expects request's
+ *                                  for response. If this options is set to @a
+ *                                  true, this endpoint expects request's
  *                                  min/max values are already scaled according
  *                                  to scale_type_x/scale_type_y. Response's
  *                                  min/max values will be equal to request's
@@ -51248,7 +54414,7 @@ VisualizeImageChartResponse visualizeImageChart( const std::string& tableName,
  *                                  column values. The default value is '0.0'.
  *                              <li>@ref gpudb::visualize_image_chart_plot_all
  *                                  "visualize_image_chart_plot_all": If this
- *                                  options is set to "true", all non-numeric
+ *                                  options is set to @a true, all non-numeric
  *                                  column values are plotted ignoring min_x,
  *                                  max_x, min_y and max_y parameters. The
  *                                  default value is 'false'.
@@ -51511,7 +54677,7 @@ VisualizeImageLabelsResponse& visualizeImageLabels( const std::string& tableName
  * graph. Isolines represent curves of equal cost, with cost typically
  * referring to the time or distance assigned as the weights of the underlying
  * graph. See <a href="../../../graph_solver/network_graph_solver/"
- * target="_top">Graphs & Solvers</a> for more information on graphs.
+ * target="_top">Graphs and Solvers</a> for more information on graphs.
  *
  * @param[in] request_  @ref gpudb::VisualizeIsochroneRequest "Request" object
  *                      containing the parameters for the operation.
@@ -51526,7 +54692,7 @@ VisualizeIsochroneResponse visualizeIsochrone( const VisualizeIsochroneRequest& 
  * graph. Isolines represent curves of equal cost, with cost typically
  * referring to the time or distance assigned as the weights of the underlying
  * graph. See <a href="../../../graph_solver/network_graph_solver/"
- * target="_top">Graphs & Solvers</a> for more information on graphs.
+ * target="_top">Graphs and Solvers</a> for more information on graphs.
  *
  * @param[in] request_  @ref gpudb::VisualizeIsochroneRequest "Request" object
  *                      containing the parameters for the operation.
@@ -51544,7 +54710,7 @@ VisualizeIsochroneResponse& visualizeIsochrone( const VisualizeIsochroneRequest&
  * graph. Isolines represent curves of equal cost, with cost typically
  * referring to the time or distance assigned as the weights of the underlying
  * graph. See <a href="../../../graph_solver/network_graph_solver/"
- * target="_top">Graphs & Solvers</a> for more information on graphs.
+ * target="_top">Graphs and Solvers</a> for more information on graphs.
  *
  * @param[in] graphName  Name of the graph on which the isochrone is to be
  *                       computed.
@@ -51923,7 +55089,7 @@ VisualizeIsochroneResponse& visualizeIsochrone( const VisualizeIsochroneRequest&
  *                                  this value.
  *                          </ul>
  *                          The default value is an empty map.
- * @param[in] contourOptions  Solver specific parameters.
+ * @param[in] contourOptions  Contour specific parameters.
  *                            <ul>
  *                                <li>@ref
  *                                    gpudb::visualize_isochrone_projection
@@ -52159,19 +55325,22 @@ VisualizeIsochroneResponse& visualizeIsochrone( const VisualizeIsochroneRequest&
  *                         <li>@ref
  *                             gpudb::visualize_isochrone_use_priority_queue_solvers
  *                             "visualize_isochrone_use_priority_queue_solvers":
- *                             sets the solver methods explicitly if true.
+ *                             Sets the solver methods explicitly if true.
  *                             Supported values:
  *                             <ul>
  *                                 <li>@ref gpudb::visualize_isochrone_true
- *                                     "visualize_isochrone_true": uses the
+ *                                     "visualize_isochrone_true": Uses the
  *                                     solvers scheduled for 'shortest_path'
  *                                     and 'inverse_shortest_path' based on
- *                                     solve_direction
+ *                                     @ref
+ *                                     gpudb::visualize_isochrone_solve_direction
+ *                                     "solve_direction".
  *                                 <li>@ref gpudb::visualize_isochrone_false
- *                                     "visualize_isochrone_false": uses the
+ *                                     "visualize_isochrone_false": Uses the
  *                                     solvers 'priority_queue' and
- *                                     'inverse_priority_queue' based on
- *                                     solve_direction
+ *                                     'inverse_priority_queue' based on @ref
+ *                                     gpudb::visualize_isochrone_solve_direction
+ *                                     "solve_direction".
  *                             </ul>
  *                             The default value is @ref
  *                             gpudb::visualize_isochrone_false
@@ -52186,11 +55355,11 @@ VisualizeIsochroneResponse& visualizeIsochrone( const VisualizeIsochroneRequest&
  *                                     gpudb::visualize_isochrone_from_source
  *                                     "visualize_isochrone_from_source":
  *                                     Shortest path to get to the source
- *                                     (inverse Dijkstra)
+ *                                     (inverse Dijkstra).
  *                                 <li>@ref
  *                                     gpudb::visualize_isochrone_to_source
  *                                     "visualize_isochrone_to_source":
- *                                     Shortest path to source (Dijkstra)
+ *                                     Shortest path to source (Dijkstra).
  *                             </ul>
  *                             The default value is @ref
  *                             gpudb::visualize_isochrone_from_source
@@ -52219,7 +55388,7 @@ VisualizeIsochroneResponse visualizeIsochrone( const std::string& graphName,
  * graph. Isolines represent curves of equal cost, with cost typically
  * referring to the time or distance assigned as the weights of the underlying
  * graph. See <a href="../../../graph_solver/network_graph_solver/"
- * target="_top">Graphs & Solvers</a> for more information on graphs.
+ * target="_top">Graphs and Solvers</a> for more information on graphs.
  *
  * @param[in] graphName  Name of the graph on which the isochrone is to be
  *                       computed.
@@ -52598,7 +55767,7 @@ VisualizeIsochroneResponse visualizeIsochrone( const std::string& graphName,
  *                                  this value.
  *                          </ul>
  *                          The default value is an empty map.
- * @param[in] contourOptions  Solver specific parameters.
+ * @param[in] contourOptions  Contour specific parameters.
  *                            <ul>
  *                                <li>@ref
  *                                    gpudb::visualize_isochrone_projection
@@ -52834,19 +56003,22 @@ VisualizeIsochroneResponse visualizeIsochrone( const std::string& graphName,
  *                         <li>@ref
  *                             gpudb::visualize_isochrone_use_priority_queue_solvers
  *                             "visualize_isochrone_use_priority_queue_solvers":
- *                             sets the solver methods explicitly if true.
+ *                             Sets the solver methods explicitly if true.
  *                             Supported values:
  *                             <ul>
  *                                 <li>@ref gpudb::visualize_isochrone_true
- *                                     "visualize_isochrone_true": uses the
+ *                                     "visualize_isochrone_true": Uses the
  *                                     solvers scheduled for 'shortest_path'
  *                                     and 'inverse_shortest_path' based on
- *                                     solve_direction
+ *                                     @ref
+ *                                     gpudb::visualize_isochrone_solve_direction
+ *                                     "solve_direction".
  *                                 <li>@ref gpudb::visualize_isochrone_false
- *                                     "visualize_isochrone_false": uses the
+ *                                     "visualize_isochrone_false": Uses the
  *                                     solvers 'priority_queue' and
- *                                     'inverse_priority_queue' based on
- *                                     solve_direction
+ *                                     'inverse_priority_queue' based on @ref
+ *                                     gpudb::visualize_isochrone_solve_direction
+ *                                     "solve_direction".
  *                             </ul>
  *                             The default value is @ref
  *                             gpudb::visualize_isochrone_false
@@ -52861,11 +56033,11 @@ VisualizeIsochroneResponse visualizeIsochrone( const std::string& graphName,
  *                                     gpudb::visualize_isochrone_from_source
  *                                     "visualize_isochrone_from_source":
  *                                     Shortest path to get to the source
- *                                     (inverse Dijkstra)
+ *                                     (inverse Dijkstra).
  *                                 <li>@ref
  *                                     gpudb::visualize_isochrone_to_source
  *                                     "visualize_isochrone_to_source":
- *                                     Shortest path to source (Dijkstra)
+ *                                     Shortest path to source (Dijkstra).
  *                             </ul>
  *                             The default value is @ref
  *                             gpudb::visualize_isochrone_from_source

@@ -3,50 +3,49 @@
  *
  *  DO NOT EDIT DIRECTLY.
  */
-#ifndef __HAS_SCHEMA_H__
-#define __HAS_SCHEMA_H__
+#ifndef __DROP_CATALOG_H__
+#define __DROP_CATALOG_H__
 
 namespace gpudb
 {
     /**
      * A set of parameters for @ref
-     * GPUdb::hasSchema(const HasSchemaRequest&) const "GPUdb::hasSchema".
+     * GPUdb::dropCatalog(const DropCatalogRequest&) const
+     * "GPUdb::dropCatalog".
      *
-     * Checks for the existence of a schema with the given name.
+     * Drops an existing catalog.  Any external tables that depend on the
+     * catalog must be dropped before it can be dropped.
      */
-    struct HasSchemaRequest
+    struct DropCatalogRequest
     {
         /**
-         * Constructs a HasSchemaRequest object with default parameters.
+         * Constructs a DropCatalogRequest object with default parameters.
          */
-        HasSchemaRequest() :
-            schemaName(std::string()),
+        DropCatalogRequest() :
+            name(std::string()),
             options(std::map<std::string, std::string>())
         {
         }
 
         /**
-         * Constructs a HasSchemaRequest object with the specified parameters.
+         * Constructs a DropCatalogRequest object with the specified
+         * parameters.
          *
-         * @param[in] schemaName_  Name of the schema to check for existence,
-         *                         in root, using standard <a
-         *                         href="../../../concepts/tables/#table-name-resolution"
-         *                         target="_top">name resolution rules</a>.
+         * @param[in] name_  Name of the catalog to be dropped. Must be an
+         *                   existing catalog.
          * @param[in] options_  Optional parameters. The default value is an
          *                      empty map.
          */
-        HasSchemaRequest(const std::string& schemaName_, const std::map<std::string, std::string>& options_):
-            schemaName( schemaName_ ),
+        DropCatalogRequest(const std::string& name_, const std::map<std::string, std::string>& options_):
+            name( name_ ),
             options( options_ )
         {
         }
 
         /**
-         * Name of the schema to check for existence, in root, using standard
-         * <a href="../../../concepts/tables/#table-name-resolution"
-         * target="_top">name resolution rules</a>.
+         * Name of the catalog to be dropped. Must be an existing catalog.
          */
-        std::string schemaName;
+        std::string name;
 
         /**
          * Optional parameters. The default value is an empty map.
@@ -57,15 +56,15 @@ namespace gpudb
 
 namespace avro
 {
-    template<> struct codec_traits<gpudb::HasSchemaRequest>
+    template<> struct codec_traits<gpudb::DropCatalogRequest>
     {
-        static void encode(Encoder& e, const gpudb::HasSchemaRequest& v)
+        static void encode(Encoder& e, const gpudb::DropCatalogRequest& v)
         {
-            ::avro::encode(e, v.schemaName);
+            ::avro::encode(e, v.name);
             ::avro::encode(e, v.options);
         }
 
-        static void decode(Decoder& d, gpudb::HasSchemaRequest& v)
+        static void decode(Decoder& d, gpudb::DropCatalogRequest& v)
         {
             if (::avro::ResolvingDecoder *rd = dynamic_cast< ::avro::ResolvingDecoder*>(&d))
             {
@@ -76,7 +75,7 @@ namespace avro
                     switch (*it)
                     {
                         case 0:
-                            ::avro::decode(d, v.schemaName);
+                            ::avro::decode(d, v.name);
                             break;
 
                         case 1:
@@ -90,7 +89,7 @@ namespace avro
             }
             else
             {
-                ::avro::decode(d, v.schemaName);
+                ::avro::decode(d, v.name);
                 ::avro::decode(d, v.options);
             }
         }
@@ -101,34 +100,24 @@ namespace gpudb
 {
     /**
      * A set of results returned by @ref
-     * GPUdb::hasSchema(const HasSchemaRequest&) const "GPUdb::hasSchema".
+     * GPUdb::dropCatalog(const DropCatalogRequest&) const
+     * "GPUdb::dropCatalog".
      */
-    struct HasSchemaResponse
+    struct DropCatalogResponse
     {
         /**
-         * Constructs a HasSchemaResponse object with default parameters.
+         * Constructs a DropCatalogResponse object with default parameters.
          */
-        HasSchemaResponse() :
-            schemaName(std::string()),
-            schemaExists(bool()),
+        DropCatalogResponse() :
+            name(std::string()),
             info(std::map<std::string, std::string>())
         {
         }
 
         /**
-         * Value of @ref gpudb::HasSchemaRequest::schemaName "schemaName".
+         * Value of @ref gpudb::DropCatalogRequest::name "name".
          */
-        std::string schemaName;
-
-        /**
-         * Indicates whether the schema exists or not.
-         * Supported values:
-         * <ul>
-         *     <li>true
-         *     <li>false
-         * </ul>
-         */
-        bool schemaExists;
+        std::string name;
 
         /**
          * Additional information.
@@ -139,16 +128,15 @@ namespace gpudb
 
 namespace avro
 {
-    template<> struct codec_traits<gpudb::HasSchemaResponse>
+    template<> struct codec_traits<gpudb::DropCatalogResponse>
     {
-        static void encode(Encoder& e, const gpudb::HasSchemaResponse& v)
+        static void encode(Encoder& e, const gpudb::DropCatalogResponse& v)
         {
-            ::avro::encode(e, v.schemaName);
-            ::avro::encode(e, v.schemaExists);
+            ::avro::encode(e, v.name);
             ::avro::encode(e, v.info);
         }
 
-        static void decode(Decoder& d, gpudb::HasSchemaResponse& v)
+        static void decode(Decoder& d, gpudb::DropCatalogResponse& v)
         {
             if (::avro::ResolvingDecoder *rd = dynamic_cast< ::avro::ResolvingDecoder*>(&d))
             {
@@ -159,14 +147,10 @@ namespace avro
                     switch (*it)
                     {
                         case 0:
-                            ::avro::decode(d, v.schemaName);
+                            ::avro::decode(d, v.name);
                             break;
 
                         case 1:
-                            ::avro::decode(d, v.schemaExists);
-                            break;
-
-                        case 2:
                             ::avro::decode(d, v.info);
                             break;
 
@@ -177,12 +161,11 @@ namespace avro
             }
             else
             {
-                ::avro::decode(d, v.schemaName);
-                ::avro::decode(d, v.schemaExists);
+                ::avro::decode(d, v.name);
                 ::avro::decode(d, v.info);
             }
         }
     };
 } // end namespace avro
 
-#endif // __HAS_SCHEMA_H__
+#endif // __DROP_CATALOG_H__

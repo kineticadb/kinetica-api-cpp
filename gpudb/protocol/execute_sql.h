@@ -59,7 +59,7 @@ namespace gpudb
          * parameters.
          *
          * @param[in] statement_  SQL statement (query, DML, or DDL) to be
-         *                        executed
+         *                        executed.
          * @param[in] offset_  A positive integer indicating the number of
          *                     initial results to skip (this can be useful for
          *                     paging through the results). The default value
@@ -76,7 +76,7 @@ namespace gpudb
          *                    in the server configuration. Use @ref
          *                    gpudb::RawExecuteSqlResponse::hasMoreRecords
          *                    "hasMoreRecords" to see if more records exist in
-         *                    the result to be fetched, and @a offset_ & @a
+         *                    the result to be fetched, and @a offset_ and @a
          *                    limit_ to request subsequent pages of results.
          *                    The default value is -9999.
          * @param[in] requestSchemaStr_  Avro schema of @a data_. The default
@@ -181,13 +181,13 @@ namespace gpudb
          *                                      "execute_sql_true": Ignore
          *                                      inserts/updates that result in
          *                                      primary key collisions with
-         *                                      existing records
+         *                                      existing records.
          *                                  <li>@ref gpudb::execute_sql_false
          *                                      "execute_sql_false": Treat as
          *                                      errors any inserts/updates that
          *                                      result in primary key
          *                                      collisions with existing
-         *                                      records
+         *                                      records.
          *                              </ul>
          *                              The default value is @ref
          *                              gpudb::execute_sql_false
@@ -407,13 +407,13 @@ namespace gpudb
          *                                      record inserted or updated when
          *                                      a new/modified record causes a
          *                                      primary key collision with an
-         *                                      existing record
+         *                                      existing record.
          *                                  <li>@ref gpudb::execute_sql_false
          *                                      "execute_sql_false": Reject the
          *                                      insert or update when it
          *                                      results in a primary key
          *                                      collision with an existing
-         *                                      record
+         *                                      record.
          *                              </ul>
          *                              The default value is @ref
          *                              gpudb::execute_sql_false
@@ -466,7 +466,7 @@ namespace gpudb
          * parameters.
          *
          * @param[in] statement_  SQL statement (query, DML, or DDL) to be
-         *                        executed
+         *                        executed.
          * @param[in] offset_  A positive integer indicating the number of
          *                     initial results to skip (this can be useful for
          *                     paging through the results). The default value
@@ -483,7 +483,7 @@ namespace gpudb
          *                    in the server configuration. Use @ref
          *                    gpudb::RawExecuteSqlResponse::hasMoreRecords
          *                    "hasMoreRecords" to see if more records exist in
-         *                    the result to be fetched, and @a offset_ & @a
+         *                    the result to be fetched, and @a offset_ and @a
          *                    limit_ to request subsequent pages of results.
          *                    The default value is -9999.
          * @param[in] encoding_  Specifies the encoding for returned records;
@@ -600,13 +600,13 @@ namespace gpudb
          *                                      "execute_sql_true": Ignore
          *                                      inserts/updates that result in
          *                                      primary key collisions with
-         *                                      existing records
+         *                                      existing records.
          *                                  <li>@ref gpudb::execute_sql_false
          *                                      "execute_sql_false": Treat as
          *                                      errors any inserts/updates that
          *                                      result in primary key
          *                                      collisions with existing
-         *                                      records
+         *                                      records.
          *                              </ul>
          *                              The default value is @ref
          *                              gpudb::execute_sql_false
@@ -826,13 +826,13 @@ namespace gpudb
          *                                      record inserted or updated when
          *                                      a new/modified record causes a
          *                                      primary key collision with an
-         *                                      existing record
+         *                                      existing record.
          *                                  <li>@ref gpudb::execute_sql_false
          *                                      "execute_sql_false": Reject the
          *                                      insert or update when it
          *                                      results in a primary key
          *                                      collision with an existing
-         *                                      record
+         *                                      record.
          *                              </ul>
          *                              The default value is @ref
          *                              gpudb::execute_sql_false
@@ -881,7 +881,7 @@ namespace gpudb
         }
 
         /**
-         * SQL statement (query, DML, or DDL) to be executed
+         * SQL statement (query, DML, or DDL) to be executed.
          */
         std::string statement;
 
@@ -902,8 +902,8 @@ namespace gpudb
          * target="_top">max_get_records_size</a> parameter in the server
          * configuration. Use @ref gpudb::RawExecuteSqlResponse::hasMoreRecords
          * "hasMoreRecords" to see if more records exist in the result to be
-         * fetched, and @ref offset & @ref limit to request subsequent pages of
-         * results. The default value is -9999.
+         * fetched, and @ref offset and @ref limit to request subsequent pages
+         * of results. The default value is -9999.
          */
         int64_t limit;
 
@@ -999,10 +999,10 @@ namespace gpudb
          *         <ul>
          *             <li>@ref gpudb::execute_sql_true "execute_sql_true":
          *                 Ignore inserts/updates that result in primary key
-         *                 collisions with existing records
+         *                 collisions with existing records.
          *             <li>@ref gpudb::execute_sql_false "execute_sql_false":
          *                 Treat as errors any inserts/updates that result in
-         *                 primary key collisions with existing records
+         *                 primary key collisions with existing records.
          *         </ul>
          *         The default value is @ref gpudb::execute_sql_false
          *         "execute_sql_false".
@@ -1150,10 +1150,10 @@ namespace gpudb
          *                 Replace the collided-into record with the record
          *                 inserted or updated when a new/modified record
          *                 causes a primary key collision with an existing
-         *                 record
+         *                 record.
          *             <li>@ref gpudb::execute_sql_false "execute_sql_false":
          *                 Reject the insert or update when it results in a
-         *                 primary key collision with an existing record
+         *                 primary key collision with an existing record.
          *         </ul>
          *         The default value is @ref gpudb::execute_sql_false
          *         "execute_sql_false".
@@ -1329,7 +1329,7 @@ namespace gpudb
          * Additional information.
          * <ul>
          *     <li>@ref gpudb::execute_sql_count "execute_sql_count": Number of
-         *         records without final limits applied
+         *         records without final limits applied.
          *     <li>@ref gpudb::execute_sql_result_table_list
          *         "execute_sql_result_table_list": List of tables,
          *         comma-separated, in addition to the @ref pagingTable,
@@ -1486,7 +1486,7 @@ namespace gpudb
          * Additional information.
          * <ul>
          *     <li>@ref gpudb::execute_sql_count "execute_sql_count": Number of
-         *         records without final limits applied
+         *         records without final limits applied.
          *     <li>@ref gpudb::execute_sql_result_table_list
          *         "execute_sql_result_table_list": List of tables,
          *         comma-separated, in addition to the @ref pagingTable,

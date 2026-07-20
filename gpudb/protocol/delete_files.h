@@ -157,7 +157,7 @@ namespace gpudb
         }
 
         /**
-         * Names of the files deleted from KiFS
+         * Names of the files deleted from KiFS.
          */
         std::vector<std::string> fileNames;
 

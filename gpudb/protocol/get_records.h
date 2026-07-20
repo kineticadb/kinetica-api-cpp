@@ -62,14 +62,13 @@ namespace gpudb
          *                    in the server configuration. Use @ref
          *                    gpudb::RawGetRecordsResponse::hasMoreRecords
          *                    "hasMoreRecords" to see if more records exist in
-         *                    the result to be fetched, and @a offset_ & @a
+         *                    the result to be fetched, and @a offset_ and @a
          *                    limit_ to request subsequent pages of results.
          *                    The default value is -9999.
          * @param[in] options_  <ul>
          *                          <li>@ref gpudb::get_records_expression
-         *                              "get_records_expression": Optional
-         *                              filter expression to apply to the
-         *                              table.
+         *                              "get_records_expression": Filter
+         *                              expression to apply to the table.
          *                          <li>@ref
          *                              gpudb::get_records_fast_index_lookup
          *                              "get_records_fast_index_lookup":
@@ -92,10 +91,9 @@ namespace gpudb
          *                              gpudb::get_records_true
          *                              "get_records_true".
          *                          <li>@ref gpudb::get_records_sort_by
-         *                              "get_records_sort_by": Optional column
-         *                              that the data should be sorted by.
-         *                              Empty by default (i.e. no sorting is
-         *                              applied).
+         *                              "get_records_sort_by": Column that the
+         *                              data should be sorted by. Empty by
+         *                              default (i.e. no sorting is applied).
          *                          <li>@ref gpudb::get_records_sort_order
          *                              "get_records_sort_order": String
          *                              indicating how the returned values
@@ -151,7 +149,7 @@ namespace gpudb
          *                    in the server configuration. Use @ref
          *                    gpudb::RawGetRecordsResponse::hasMoreRecords
          *                    "hasMoreRecords" to see if more records exist in
-         *                    the result to be fetched, and @a offset_ & @a
+         *                    the result to be fetched, and @a offset_ and @a
          *                    limit_ to request subsequent pages of results.
          *                    The default value is -9999.
          * @param[in] encoding_  Specifies the encoding for returned records;
@@ -174,9 +172,8 @@ namespace gpudb
          *                       "get_records_binary".
          * @param[in] options_  <ul>
          *                          <li>@ref gpudb::get_records_expression
-         *                              "get_records_expression": Optional
-         *                              filter expression to apply to the
-         *                              table.
+         *                              "get_records_expression": Filter
+         *                              expression to apply to the table.
          *                          <li>@ref
          *                              gpudb::get_records_fast_index_lookup
          *                              "get_records_fast_index_lookup":
@@ -199,10 +196,9 @@ namespace gpudb
          *                              gpudb::get_records_true
          *                              "get_records_true".
          *                          <li>@ref gpudb::get_records_sort_by
-         *                              "get_records_sort_by": Optional column
-         *                              that the data should be sorted by.
-         *                              Empty by default (i.e. no sorting is
-         *                              applied).
+         *                              "get_records_sort_by": Column that the
+         *                              data should be sorted by. Empty by
+         *                              default (i.e. no sorting is applied).
          *                          <li>@ref gpudb::get_records_sort_order
          *                              "get_records_sort_order": String
          *                              indicating how the returned values
@@ -258,8 +254,8 @@ namespace gpudb
          * target="_top">max_get_records_size</a> parameter in the server
          * configuration. Use @ref gpudb::RawGetRecordsResponse::hasMoreRecords
          * "hasMoreRecords" to see if more records exist in the result to be
-         * fetched, and @ref offset & @ref limit to request subsequent pages of
-         * results. The default value is -9999.
+         * fetched, and @ref offset and @ref limit to request subsequent pages
+         * of results. The default value is -9999.
          */
         int64_t limit;
 
@@ -282,7 +278,7 @@ namespace gpudb
         /**
          * <ul>
          *     <li>@ref gpudb::get_records_expression "get_records_expression":
-         *         Optional filter expression to apply to the table.
+         *         Filter expression to apply to the table.
          *     <li>@ref gpudb::get_records_fast_index_lookup
          *         "get_records_fast_index_lookup": Indicates if indexes should
          *         be used to perform the lookup for a given expression if
@@ -298,8 +294,8 @@ namespace gpudb
          *         The default value is @ref gpudb::get_records_true
          *         "get_records_true".
          *     <li>@ref gpudb::get_records_sort_by "get_records_sort_by":
-         *         Optional column that the data should be sorted by. Empty by
-         *         default (i.e. no sorting is applied).
+         *         Column that the data should be sorted by. Empty by default
+         *         (i.e. no sorting is applied).
          *     <li>@ref gpudb::get_records_sort_order "get_records_sort_order":
          *         String indicating how the returned values should be sorted -
          *         ascending or descending. If sort_order is provided, sort_by
@@ -409,10 +405,13 @@ namespace gpudb
          */
         std::string tableName;
 
+        /**
+         * The name of the type of the returned records.
+         */
         std::string typeName;
 
         /**
-         * Avro schema of @ref recordsBinary or @ref recordsJson
+         * Avro schema of @ref recordsBinary or @ref recordsJson.
          */
         std::string typeSchema;
 
@@ -558,10 +557,13 @@ namespace gpudb
          */
         std::string tableName;
 
+        /**
+         * The name of the type of the returned records.
+         */
         std::string typeName;
 
         /**
-         * Avro schema of @ref data or @a recordsJson
+         * Avro schema of @ref data or @a recordsJson.
          */
         std::string typeSchema;
 

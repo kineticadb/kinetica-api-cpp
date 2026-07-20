@@ -18,7 +18,7 @@ namespace gpudb
      * typically referring to the time or distance assigned as the weights of
      * the underlying graph. See <a
      * href="../../../graph_solver/network_graph_solver/" target="_top">Graphs
-     * & Solvers</a> for more information on graphs.
+     * and Solvers</a> for more information on graphs.
      */
     struct VisualizeIsochroneRequest
     {
@@ -453,7 +453,7 @@ namespace gpudb
          *                                   override this value.
          *                           </ul>
          *                           The default value is an empty map.
-         * @param[in] contourOptions_  Solver specific parameters.
+         * @param[in] contourOptions_  Contour specific parameters.
          *                             <ul>
          *                                 <li>@ref
          *                                     gpudb::visualize_isochrone_projection
@@ -730,24 +730,28 @@ namespace gpudb
          *                          <li>@ref
          *                              gpudb::visualize_isochrone_use_priority_queue_solvers
          *                              "visualize_isochrone_use_priority_queue_solvers":
-         *                              sets the solver methods explicitly if
+         *                              Sets the solver methods explicitly if
          *                              true.
          *                              Supported values:
          *                              <ul>
          *                                  <li>@ref
          *                                      gpudb::visualize_isochrone_true
          *                                      "visualize_isochrone_true":
-         *                                      uses the solvers scheduled for
+         *                                      Uses the solvers scheduled for
          *                                      'shortest_path' and
          *                                      'inverse_shortest_path' based
-         *                                      on solve_direction
+         *                                      on @ref
+         *                                      gpudb::visualize_isochrone_solve_direction
+         *                                      "solve_direction".
          *                                  <li>@ref
          *                                      gpudb::visualize_isochrone_false
          *                                      "visualize_isochrone_false":
-         *                                      uses the solvers
+         *                                      Uses the solvers
          *                                      'priority_queue' and
          *                                      'inverse_priority_queue' based
-         *                                      on solve_direction
+         *                                      on @ref
+         *                                      gpudb::visualize_isochrone_solve_direction
+         *                                      "solve_direction".
          *                              </ul>
          *                              The default value is @ref
          *                              gpudb::visualize_isochrone_false
@@ -763,12 +767,12 @@ namespace gpudb
          *                                      gpudb::visualize_isochrone_from_source
          *                                      "visualize_isochrone_from_source":
          *                                      Shortest path to get to the
-         *                                      source (inverse Dijkstra)
+         *                                      source (inverse Dijkstra).
          *                                  <li>@ref
          *                                      gpudb::visualize_isochrone_to_source
          *                                      "visualize_isochrone_to_source":
          *                                      Shortest path to source
-         *                                      (Dijkstra)
+         *                                      (Dijkstra).
          *                              </ul>
          *                              The default value is @ref
          *                              gpudb::visualize_isochrone_from_source
@@ -1102,7 +1106,7 @@ namespace gpudb
         std::map<std::string, std::string> solveOptions;
 
         /**
-         * Solver specific parameters.
+         * Contour specific parameters.
          * <ul>
          *     <li>@ref gpudb::visualize_isochrone_projection
          *         "visualize_isochrone_projection": Spatial Reference System
@@ -1278,18 +1282,21 @@ namespace gpudb
          *         the most concave). The default value is '0.5'. The minimum
          *         allowed value is '0'. The maximum allowed value is '1'.
          *     <li>@ref gpudb::visualize_isochrone_use_priority_queue_solvers
-         *         "visualize_isochrone_use_priority_queue_solvers": sets the
+         *         "visualize_isochrone_use_priority_queue_solvers": Sets the
          *         solver methods explicitly if true.
          *         Supported values:
          *         <ul>
          *             <li>@ref gpudb::visualize_isochrone_true
-         *                 "visualize_isochrone_true": uses the solvers
+         *                 "visualize_isochrone_true": Uses the solvers
          *                 scheduled for 'shortest_path' and
-         *                 'inverse_shortest_path' based on solve_direction
+         *                 'inverse_shortest_path' based on @ref
+         *                 gpudb::visualize_isochrone_solve_direction
+         *                 "solve_direction".
          *             <li>@ref gpudb::visualize_isochrone_false
-         *                 "visualize_isochrone_false": uses the solvers
+         *                 "visualize_isochrone_false": Uses the solvers
          *                 'priority_queue' and 'inverse_priority_queue' based
-         *                 on solve_direction
+         *                 on @ref gpudb::visualize_isochrone_solve_direction
+         *                 "solve_direction".
          *         </ul>
          *         The default value is @ref gpudb::visualize_isochrone_false
          *         "visualize_isochrone_false".
@@ -1300,10 +1307,10 @@ namespace gpudb
          *         <ul>
          *             <li>@ref gpudb::visualize_isochrone_from_source
          *                 "visualize_isochrone_from_source": Shortest path to
-         *                 get to the source (inverse Dijkstra)
+         *                 get to the source (inverse Dijkstra).
          *             <li>@ref gpudb::visualize_isochrone_to_source
          *                 "visualize_isochrone_to_source": Shortest path to
-         *                 source (Dijkstra)
+         *                 source (Dijkstra).
          *         </ul>
          *         The default value is @ref
          *         gpudb::visualize_isochrone_from_source

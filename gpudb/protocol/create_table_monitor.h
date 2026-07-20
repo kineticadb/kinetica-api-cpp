@@ -91,14 +91,39 @@ namespace gpudb
          *                              gpudb::create_table_monitor_monitor_id
          *                              "create_table_monitor_monitor_id": ID
          *                              to use for this monitor instead of a
-         *                              randomly generated one
+         *                              randomly generated one.
          *                          <li>@ref
          *                              gpudb::create_table_monitor_datasink_name
          *                              "create_table_monitor_datasink_name":
          *                              Name of an existing <a
          *                              href="../../../concepts/data_sinks/"
          *                              target="_top">data sink</a> to send
-         *                              change data notifications to
+         *                              change data notifications to.
+         *                          <li>@ref
+         *                              gpudb::create_table_monitor_max_consecutive_failures
+         *                              "create_table_monitor_max_consecutive_failures":
+         *                              Maximum number of consecutive failed
+         *                              notification attempts before suspending
+         *                              the stream.  A value of -1 (default)
+         *                              disables auto-suspend. This value is by
+         *                              rank and not overall.
+         *                          <li>@ref
+         *                              gpudb::create_table_monitor_failed_notifications_table_name
+         *                              "create_table_monitor_failed_notifications_table_name":
+         *                              Name of a <a
+         *                              href="../../../concepts/tables/"
+         *                              target="_top">table</a> to which failed
+         *                              stream notifications are written when
+         *                              the stream is suspended.  The database
+         *                              will attempt to send notifications
+         *                              persisted in this table when the stream
+         *                              is resumed.  The table has the
+         *                              following columns: rank (long), job_id
+         *                              (long), uuid (uuid), timestamp
+         *                              (timestamp), error_msg (string),
+         *                              payload (bytes).  Leave this option
+         *                              empty to disable persisting failed
+         *                              notification events.
          *                          <li>@ref
          *                              gpudb::create_table_monitor_destination
          *                              "create_table_monitor_destination":
@@ -114,7 +139,7 @@ namespace gpudb
          *                              if @ref
          *                              gpudb::create_table_monitor_destination
          *                              "destination" in @a options_ is
-         *                              specified and is a Kafka broker
+         *                              specified and is a Kafka broker.
          *                          <li>@ref
          *                              gpudb::create_table_monitor_increasing_column
          *                              "create_table_monitor_increasing_column":
@@ -125,7 +150,7 @@ namespace gpudb
          *                              gpudb::create_table_monitor_expression
          *                              "create_table_monitor_expression":
          *                              Filter expression to limit records for
-         *                              notification
+         *                              notification.
          *                          <li>@ref
          *                              gpudb::create_table_monitor_join_table_names
          *                              "create_table_monitor_join_table_names":
@@ -153,14 +178,14 @@ namespace gpudb
          *                          <li>@ref
          *                              gpudb::create_table_monitor_join_expressions
          *                              "create_table_monitor_join_expressions":
-         *                              Optional filter or join expressions to
-         *                              apply when combining the tables.
-         *                              Expressions are standard SQL-style
-         *                              conditions and can reference any table
-         *                              or alias listed in 'join_table_names'.
-         *                              This corresponds to the WHERE clause of
-         *                              the underlying join, and can include
-         *                              conditions to filter the delta rows.
+         *                              Filter or join expressions to apply
+         *                              when combining the tables. Expressions
+         *                              are standard SQL-style conditions and
+         *                              can reference any table or alias listed
+         *                              in 'join_table_names'. This corresponds
+         *                              to the WHERE clause of the underlying
+         *                              join, and can include conditions to
+         *                              filter the delta rows.
          *                          <li>@ref
          *                              gpudb::create_table_monitor_refresh_method
          *                              "create_table_monitor_refresh_method":
@@ -246,11 +271,28 @@ namespace gpudb
          *         "create_table_monitor_insert".
          *     <li>@ref gpudb::create_table_monitor_monitor_id
          *         "create_table_monitor_monitor_id": ID to use for this
-         *         monitor instead of a randomly generated one
+         *         monitor instead of a randomly generated one.
          *     <li>@ref gpudb::create_table_monitor_datasink_name
          *         "create_table_monitor_datasink_name": Name of an existing <a
          *         href="../../../concepts/data_sinks/" target="_top">data
-         *         sink</a> to send change data notifications to
+         *         sink</a> to send change data notifications to.
+         *     <li>@ref gpudb::create_table_monitor_max_consecutive_failures
+         *         "create_table_monitor_max_consecutive_failures": Maximum
+         *         number of consecutive failed notification attempts before
+         *         suspending the stream.  A value of -1 (default) disables
+         *         auto-suspend. This value is by rank and not overall.
+         *     <li>@ref
+         *         gpudb::create_table_monitor_failed_notifications_table_name
+         *         "create_table_monitor_failed_notifications_table_name": Name
+         *         of a <a href="../../../concepts/tables/"
+         *         target="_top">table</a> to which failed stream notifications
+         *         are written when the stream is suspended.  The database will
+         *         attempt to send notifications persisted in this table when
+         *         the stream is resumed.  The table has the following columns:
+         *         rank (long), job_id (long), uuid (uuid), timestamp
+         *         (timestamp), error_msg (string), payload (bytes).  Leave
+         *         this option empty to disable persisting failed notification
+         *         events.
          *     <li>@ref gpudb::create_table_monitor_destination
          *         "create_table_monitor_destination": Destination for the
          *         output data in format 'destination_type://path[:port]'.
@@ -259,14 +301,14 @@ namespace gpudb
          *         "create_table_monitor_kafka_topic_name": Name of the Kafka
          *         topic to publish to if @ref
          *         gpudb::create_table_monitor_destination "destination" in
-         *         @ref options is specified and is a Kafka broker
+         *         @ref options is specified and is a Kafka broker.
          *     <li>@ref gpudb::create_table_monitor_increasing_column
          *         "create_table_monitor_increasing_column": Column on
          *         subscribed table that will increase for new records (e.g.,
          *         TIMESTAMP).
          *     <li>@ref gpudb::create_table_monitor_expression
          *         "create_table_monitor_expression": Filter expression to
-         *         limit records for notification
+         *         limit records for notification.
          *     <li>@ref gpudb::create_table_monitor_join_table_names
          *         "create_table_monitor_join_table_names": A comma-separated
          *         list of tables (optionally with aliases) to include in the
@@ -283,12 +325,12 @@ namespace gpudb
          *         aliased using 'as'. The selected columns will also appear in
          *         the notification output.
          *     <li>@ref gpudb::create_table_monitor_join_expressions
-         *         "create_table_monitor_join_expressions": Optional filter or
-         *         join expressions to apply when combining the tables.
-         *         Expressions are standard SQL-style conditions and can
-         *         reference any table or alias listed in 'join_table_names'.
-         *         This corresponds to the WHERE clause of the underlying join,
-         *         and can include conditions to filter the delta rows.
+         *         "create_table_monitor_join_expressions": Filter or join
+         *         expressions to apply when combining the tables. Expressions
+         *         are standard SQL-style conditions and can reference any
+         *         table or alias listed in 'join_table_names'. This
+         *         corresponds to the WHERE clause of the underlying join, and
+         *         can include conditions to filter the delta rows.
          *     <li>@ref gpudb::create_table_monitor_refresh_method
          *         "create_table_monitor_refresh_method": Method controlling
          *         when the table monitor reports changes to the @ref
@@ -416,24 +458,24 @@ namespace gpudb
          *     <li>@ref gpudb::create_table_monitor_insert_topic_id
          *         "create_table_monitor_insert_topic_id": The topic id for
          *         'insert' @ref gpudb::create_table_monitor_event "event" in
-         *         @ref gpudb::CreateTableMonitorRequest::options "options"
+         *         @ref gpudb::CreateTableMonitorRequest::options "options".
          *     <li>@ref gpudb::create_table_monitor_update_topic_id
          *         "create_table_monitor_update_topic_id": The topic id for
          *         'update' @ref gpudb::create_table_monitor_event "event" in
-         *         @ref gpudb::CreateTableMonitorRequest::options "options"
+         *         @ref gpudb::CreateTableMonitorRequest::options "options".
          *     <li>@ref gpudb::create_table_monitor_delete_topic_id
          *         "create_table_monitor_delete_topic_id": The topic id for
          *         'delete' @ref gpudb::create_table_monitor_event "event" in
-         *         @ref gpudb::CreateTableMonitorRequest::options "options"
+         *         @ref gpudb::CreateTableMonitorRequest::options "options".
          *     <li>@ref gpudb::create_table_monitor_insert_type_schema
          *         "create_table_monitor_insert_type_schema": The JSON Avro
-         *         schema of the table in @ref tableName
+         *         schema of the table in @ref tableName.
          *     <li>@ref gpudb::create_table_monitor_update_type_schema
          *         "create_table_monitor_update_type_schema": The JSON Avro
-         *         schema for 'update' events
+         *         schema for 'update' events.
          *     <li>@ref gpudb::create_table_monitor_delete_type_schema
          *         "create_table_monitor_delete_type_schema": The JSON Avro
-         *         schema for 'delete' events
+         *         schema for 'delete' events.
          * </ul>
          * The default value is an empty map.
          */

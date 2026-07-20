@@ -118,7 +118,7 @@ namespace gpudb
         }
 
         /**
-         * Value of @ref gpudb::HasTableRequest::tableName "tableName"
+         * Value of @ref gpudb::HasTableRequest::tableName "tableName".
          */
         std::string tableName;
 

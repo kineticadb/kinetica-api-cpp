@@ -232,7 +232,7 @@ namespace gpudb
         /**
          * Tier usage across ranks. Layout is:
          * response.rank_usage[rank_number][resource_group_name] = group_usage
-         * (as stringified json)
+         * (as stringified JSON).
          */
         std::map<std::string, std::string> rankUsage;
 

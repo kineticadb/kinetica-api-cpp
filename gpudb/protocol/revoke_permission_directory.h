@@ -54,7 +54,7 @@ namespace gpudb
          *                                 has read access.
          *                         </ul>
          * @param[in] directoryName_  Name of the KiFS directory to which the
-         *                            permission revokes access
+         *                            permission revokes access.
          * @param[in] options_  Optional parameters. The default value is an
          *                      empty map.
          */
@@ -89,7 +89,7 @@ namespace gpudb
         std::string permission;
 
         /**
-         * Name of the KiFS directory to which the permission revokes access
+         * Name of the KiFS directory to which the permission revokes access.
          */
         std::string directoryName;
 

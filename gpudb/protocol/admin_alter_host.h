@@ -34,7 +34,7 @@ namespace gpudb
          *
          * @param[in] host_  Identifies the host this applies to. Can be the
          *                   host address, or formatted as 'hostN' where N is
-         *                   the host number as specified in gpudb.conf
+         *                   the host number as specified in gpudb.conf.
          * @param[in] options_  Optional parameters.
          *                      <ul>
          *                          <li>@ref
@@ -70,7 +70,7 @@ namespace gpudb
         /**
          * Identifies the host this applies to. Can be the host address, or
          * formatted as 'hostN' where N is the host number as specified in
-         * gpudb.conf
+         * gpudb.conf.
          */
         std::string host;
 

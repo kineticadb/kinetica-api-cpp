@@ -45,27 +45,27 @@ namespace gpudb
          *                              gpudb::create_datasink_connection_timeout
          *                              "create_datasink_connection_timeout":
          *                              Timeout in seconds for connecting to
-         *                              this data sink
+         *                              this data sink.
          *                          <li>@ref
          *                              gpudb::create_datasink_wait_timeout
          *                              "create_datasink_wait_timeout": Timeout
          *                              in seconds for waiting for a response
-         *                              from this data sink
+         *                              from this data sink.
          *                          <li>@ref gpudb::create_datasink_credential
          *                              "create_datasink_credential": Name of
          *                              the <a
          *                              href="../../../concepts/credentials/"
          *                              target="_top">credential</a> object to
-         *                              be used in this data sink
+         *                              be used in this data sink.
          *                          <li>@ref
          *                              gpudb::create_datasink_s3_bucket_name
          *                              "create_datasink_s3_bucket_name": Name
          *                              of the Amazon S3 bucket to use as the
-         *                              data sink
+         *                              data sink.
          *                          <li>@ref gpudb::create_datasink_s3_region
          *                              "create_datasink_s3_region": Name of
          *                              the Amazon S3 region where the given
-         *                              bucket is located
+         *                              bucket is located.
          *                          <li>@ref
          *                              gpudb::create_datasink_s3_verify_ssl
          *                              "create_datasink_s3_verify_ssl":
@@ -75,7 +75,7 @@ namespace gpudb
          *                                  <li>@ref
          *                                      gpudb::create_datasink_true
          *                                      "create_datasink_true": Connect
-         *                                      with SSL verification
+         *                                      with SSL verification.
          *                                  <li>@ref
          *                                      gpudb::create_datasink_false
          *                                      "create_datasink_false":
@@ -115,25 +115,25 @@ namespace gpudb
          *                              "create_datasink_s3_aws_role_arn":
          *                              Amazon IAM Role ARN which has required
          *                              S3 permissions that can be assumed for
-         *                              the given S3 IAM user
+         *                              the given S3 IAM user.
          *                          <li>@ref
          *                              gpudb::create_datasink_s3_encryption_customer_algorithm
          *                              "create_datasink_s3_encryption_customer_algorithm":
          *                              Customer encryption algorithm used
-         *                              encrypting data
+         *                              encrypting data.
          *                          <li>@ref
          *                              gpudb::create_datasink_s3_encryption_customer_key
          *                              "create_datasink_s3_encryption_customer_key":
          *                              Customer encryption key to encrypt or
-         *                              decrypt data
+         *                              decrypt data.
          *                          <li>@ref
          *                              gpudb::create_datasink_s3_encryption_type
          *                              "create_datasink_s3_encryption_type":
-         *                              Server side encryption type
+         *                              Server side encryption type.
          *                          <li>@ref
          *                              gpudb::create_datasink_s3_kms_key_id
          *                              "create_datasink_s3_kms_key_id": KMS
-         *                              key
+         *                              key.
          *                          <li>@ref
          *                              gpudb::create_datasink_hdfs_kerberos_keytab
          *                              "create_datasink_hdfs_kerberos_keytab":
@@ -144,7 +144,7 @@ namespace gpudb
          *                              gpudb::create_datasink_hdfs_delegation_token
          *                              "create_datasink_hdfs_delegation_token":
          *                              Delegation token for the given HDFS
-         *                              user
+         *                              user.
          *                          <li>@ref
          *                              gpudb::create_datasink_hdfs_use_kerberos
          *                              "create_datasink_hdfs_use_kerberos":
@@ -167,55 +167,79 @@ namespace gpudb
          *                              "create_datasink_azure_storage_account_name":
          *                              Name of the Azure storage account to
          *                              use as the data sink, this is valid
-         *                              only if tenant_id is specified
+         *                              only if tenant_id is specified.
          *                          <li>@ref
          *                              gpudb::create_datasink_azure_container_name
          *                              "create_datasink_azure_container_name":
          *                              Name of the Azure storage container to
-         *                              use as the data sink
+         *                              use as the data sink.
          *                          <li>@ref
          *                              gpudb::create_datasink_azure_tenant_id
          *                              "create_datasink_azure_tenant_id":
          *                              Active Directory tenant ID (or
-         *                              directory ID)
+         *                              directory ID).
          *                          <li>@ref
          *                              gpudb::create_datasink_azure_sas_token
          *                              "create_datasink_azure_sas_token":
          *                              Shared access signature token for Azure
-         *                              storage account to use as the data sink
+         *                              storage account to use as the data
+         *                              sink.
          *                          <li>@ref
          *                              gpudb::create_datasink_azure_oauth_token
          *                              "create_datasink_azure_oauth_token":
          *                              Oauth token to access given storage
-         *                              container
+         *                              container.
+         *                          <li>@ref
+         *                              gpudb::create_datasink_azure_use_virtual_addressing
+         *                              "create_datasink_azure_use_virtual_addressing":
+         *                              Whether to use virtual addressing when
+         *                              referencing the Azure source.
+         *                              Supported values:
+         *                              <ul>
+         *                                  <li>@ref
+         *                                      gpudb::create_datasink_true
+         *                                      "create_datasink_true": The
+         *                                      requests URI should be
+         *                                      specified in
+         *                                      virtual-hosted-style format
+         *                                      where the bucket name is part
+         *                                      of the domain name in the URL.
+         *                                  <li>@ref
+         *                                      gpudb::create_datasink_false
+         *                                      "create_datasink_false": Use
+         *                                      path-style URI for requests.
+         *                              </ul>
+         *                              The default value is @ref
+         *                              gpudb::create_datasink_true
+         *                              "create_datasink_true".
          *                          <li>@ref
          *                              gpudb::create_datasink_gcs_bucket_name
          *                              "create_datasink_gcs_bucket_name": Name
          *                              of the Google Cloud Storage bucket to
-         *                              use as the data sink
+         *                              use as the data sink.
          *                          <li>@ref
          *                              gpudb::create_datasink_gcs_project_id
          *                              "create_datasink_gcs_project_id": Name
          *                              of the Google Cloud project to use as
-         *                              the data sink
+         *                              the data sink.
          *                          <li>@ref
          *                              gpudb::create_datasink_gcs_service_account_keys
          *                              "create_datasink_gcs_service_account_keys":
          *                              Google Cloud service account keys to
-         *                              use for authenticating the data sink
+         *                              use for authenticating the data sink.
          *                          <li>@ref
          *                              gpudb::create_datasink_jdbc_driver_jar_path
          *                              "create_datasink_jdbc_driver_jar_path":
-         *                              JDBC driver jar file location
+         *                              JDBC driver jar file location.
          *                          <li>@ref
          *                              gpudb::create_datasink_jdbc_driver_class_name
          *                              "create_datasink_jdbc_driver_class_name":
-         *                              Name of the JDBC driver class
+         *                              Name of the JDBC driver class.
          *                          <li>@ref
          *                              gpudb::create_datasink_kafka_topic_name
          *                              "create_datasink_kafka_topic_name":
          *                              Name of the Kafka topic to publish to
-         *                              if @a destination_ is a Kafka broker
+         *                              if @a destination_ is a Kafka broker.
          *                          <li>@ref
          *                              gpudb::create_datasink_max_batch_size
          *                              "create_datasink_max_batch_size":
@@ -238,12 +262,12 @@ namespace gpudb
          *                                      gpudb::create_datasink_flat
          *                                      "create_datasink_flat": A
          *                                      single record is returned per
-         *                                      message
+         *                                      message.
          *                                  <li>@ref
          *                                      gpudb::create_datasink_nested
          *                                      "create_datasink_nested":
          *                                      Records are returned as an
-         *                                      array per message
+         *                                      array per message.
          *                              </ul>
          *                              The default value is @ref
          *                              gpudb::create_datasink_flat
@@ -268,9 +292,9 @@ namespace gpudb
          *                              gpudb::create_datasink_false
          *                              "create_datasink_false".
          *                          <li>@ref gpudb::create_datasink_use_https
-         *                              "create_datasink_use_https": Use https
+         *                              "create_datasink_use_https": Use HTTPS
          *                              to connect to datasink if true,
-         *                              otherwise use http.
+         *                              otherwise use HTTP.
          *                              Supported values:
          *                              <ul>
          *                                  <li>@ref
@@ -329,21 +353,21 @@ namespace gpudb
          * <ul>
          *     <li>@ref gpudb::create_datasink_connection_timeout
          *         "create_datasink_connection_timeout": Timeout in seconds for
-         *         connecting to this data sink
+         *         connecting to this data sink.
          *     <li>@ref gpudb::create_datasink_wait_timeout
          *         "create_datasink_wait_timeout": Timeout in seconds for
-         *         waiting for a response from this data sink
+         *         waiting for a response from this data sink.
          *     <li>@ref gpudb::create_datasink_credential
          *         "create_datasink_credential": Name of the <a
          *         href="../../../concepts/credentials/"
          *         target="_top">credential</a> object to be used in this data
-         *         sink
+         *         sink.
          *     <li>@ref gpudb::create_datasink_s3_bucket_name
          *         "create_datasink_s3_bucket_name": Name of the Amazon S3
-         *         bucket to use as the data sink
+         *         bucket to use as the data sink.
          *     <li>@ref gpudb::create_datasink_s3_region
          *         "create_datasink_s3_region": Name of the Amazon S3 region
-         *         where the given bucket is located
+         *         where the given bucket is located.
          *     <li>@ref gpudb::create_datasink_s3_verify_ssl
          *         "create_datasink_s3_verify_ssl": Whether to verify SSL
          *         connections.
@@ -351,7 +375,7 @@ namespace gpudb
          *         <ul>
          *             <li>@ref gpudb::create_datasink_true
          *                 "create_datasink_true": Connect with SSL
-         *                 verification
+         *                 verification.
          *             <li>@ref gpudb::create_datasink_false
          *                 "create_datasink_false": Connect without verifying
          *                 the SSL connection; for testing purposes, bypassing
@@ -377,24 +401,24 @@ namespace gpudb
          *     <li>@ref gpudb::create_datasink_s3_aws_role_arn
          *         "create_datasink_s3_aws_role_arn": Amazon IAM Role ARN which
          *         has required S3 permissions that can be assumed for the
-         *         given S3 IAM user
+         *         given S3 IAM user.
          *     <li>@ref gpudb::create_datasink_s3_encryption_customer_algorithm
          *         "create_datasink_s3_encryption_customer_algorithm": Customer
-         *         encryption algorithm used encrypting data
+         *         encryption algorithm used encrypting data.
          *     <li>@ref gpudb::create_datasink_s3_encryption_customer_key
          *         "create_datasink_s3_encryption_customer_key": Customer
-         *         encryption key to encrypt or decrypt data
+         *         encryption key to encrypt or decrypt data.
          *     <li>@ref gpudb::create_datasink_s3_encryption_type
          *         "create_datasink_s3_encryption_type": Server side encryption
-         *         type
+         *         type.
          *     <li>@ref gpudb::create_datasink_s3_kms_key_id
-         *         "create_datasink_s3_kms_key_id": KMS key
+         *         "create_datasink_s3_kms_key_id": KMS key.
          *     <li>@ref gpudb::create_datasink_hdfs_kerberos_keytab
          *         "create_datasink_hdfs_kerberos_keytab": Kerberos keytab file
          *         location for the given HDFS user.  This may be a KIFS file.
          *     <li>@ref gpudb::create_datasink_hdfs_delegation_token
          *         "create_datasink_hdfs_delegation_token": Delegation token
-         *         for the given HDFS user
+         *         for the given HDFS user.
          *     <li>@ref gpudb::create_datasink_hdfs_use_kerberos
          *         "create_datasink_hdfs_use_kerberos": Use kerberos
          *         authentication for the given HDFS cluster.
@@ -410,37 +434,53 @@ namespace gpudb
          *     <li>@ref gpudb::create_datasink_azure_storage_account_name
          *         "create_datasink_azure_storage_account_name": Name of the
          *         Azure storage account to use as the data sink, this is valid
-         *         only if tenant_id is specified
+         *         only if tenant_id is specified.
          *     <li>@ref gpudb::create_datasink_azure_container_name
          *         "create_datasink_azure_container_name": Name of the Azure
-         *         storage container to use as the data sink
+         *         storage container to use as the data sink.
          *     <li>@ref gpudb::create_datasink_azure_tenant_id
          *         "create_datasink_azure_tenant_id": Active Directory tenant
-         *         ID (or directory ID)
+         *         ID (or directory ID).
          *     <li>@ref gpudb::create_datasink_azure_sas_token
          *         "create_datasink_azure_sas_token": Shared access signature
-         *         token for Azure storage account to use as the data sink
+         *         token for Azure storage account to use as the data sink.
          *     <li>@ref gpudb::create_datasink_azure_oauth_token
          *         "create_datasink_azure_oauth_token": Oauth token to access
-         *         given storage container
+         *         given storage container.
+         *     <li>@ref gpudb::create_datasink_azure_use_virtual_addressing
+         *         "create_datasink_azure_use_virtual_addressing": Whether to
+         *         use virtual addressing when referencing the Azure source.
+         *         Supported values:
+         *         <ul>
+         *             <li>@ref gpudb::create_datasink_true
+         *                 "create_datasink_true": The requests URI should be
+         *                 specified in virtual-hosted-style format where the
+         *                 bucket name is part of the domain name in the URL.
+         *             <li>@ref gpudb::create_datasink_false
+         *                 "create_datasink_false": Use path-style URI for
+         *                 requests.
+         *         </ul>
+         *         The default value is @ref gpudb::create_datasink_true
+         *         "create_datasink_true".
          *     <li>@ref gpudb::create_datasink_gcs_bucket_name
          *         "create_datasink_gcs_bucket_name": Name of the Google Cloud
-         *         Storage bucket to use as the data sink
+         *         Storage bucket to use as the data sink.
          *     <li>@ref gpudb::create_datasink_gcs_project_id
          *         "create_datasink_gcs_project_id": Name of the Google Cloud
-         *         project to use as the data sink
+         *         project to use as the data sink.
          *     <li>@ref gpudb::create_datasink_gcs_service_account_keys
          *         "create_datasink_gcs_service_account_keys": Google Cloud
-         *         service account keys to use for authenticating the data sink
+         *         service account keys to use for authenticating the data
+         *         sink.
          *     <li>@ref gpudb::create_datasink_jdbc_driver_jar_path
          *         "create_datasink_jdbc_driver_jar_path": JDBC driver jar file
-         *         location
+         *         location.
          *     <li>@ref gpudb::create_datasink_jdbc_driver_class_name
          *         "create_datasink_jdbc_driver_class_name": Name of the JDBC
-         *         driver class
+         *         driver class.
          *     <li>@ref gpudb::create_datasink_kafka_topic_name
          *         "create_datasink_kafka_topic_name": Name of the Kafka topic
-         *         to publish to if @ref destination is a Kafka broker
+         *         to publish to if @ref destination is a Kafka broker.
          *     <li>@ref gpudb::create_datasink_max_batch_size
          *         "create_datasink_max_batch_size": Maximum number of records
          *         per notification message. The default value is '1'.
@@ -454,10 +494,10 @@ namespace gpudb
          *         <ul>
          *             <li>@ref gpudb::create_datasink_flat
          *                 "create_datasink_flat": A single record is returned
-         *                 per message
+         *                 per message.
          *             <li>@ref gpudb::create_datasink_nested
          *                 "create_datasink_nested": Records are returned as an
-         *                 array per message
+         *                 array per message.
          *         </ul>
          *         The default value is @ref gpudb::create_datasink_flat
          *         "create_datasink_flat".
@@ -476,8 +516,8 @@ namespace gpudb
          *         The default value is @ref gpudb::create_datasink_false
          *         "create_datasink_false".
          *     <li>@ref gpudb::create_datasink_use_https
-         *         "create_datasink_use_https": Use https to connect to
-         *         datasink if true, otherwise use http.
+         *         "create_datasink_use_https": Use HTTPS to connect to
+         *         datasink if true, otherwise use HTTP.
          *         Supported values:
          *         <ul>
          *             <li>@ref gpudb::create_datasink_true

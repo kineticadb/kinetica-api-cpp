@@ -137,12 +137,12 @@ namespace gpudb
          * <ul>
          *     <li>@ref gpudb::show_datasink_destination
          *         "show_datasink_destination": Destination for the output data
-         *         in 'destination_type://path[:port]' format
+         *         in 'destination_type://path[:port]' format.
          *     <li>@ref gpudb::show_datasink_kafka_topic_name
          *         "show_datasink_kafka_topic_name": Kafka topic if the data
-         *         sink type is a Kafka broker
+         *         sink type is a Kafka broker.
          *     <li>@ref gpudb::show_datasink_user_name
-         *         "show_datasink_user_name": Name of the remote system user
+         *         "show_datasink_user_name": Name of the remote system user.
          * </ul>
          */
         std::vector<std::map<std::string, std::string> > additionalInfo;

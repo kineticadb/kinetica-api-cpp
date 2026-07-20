@@ -78,6 +78,8 @@ namespace gpudb
          *                       <li>@ref
          *                           gpudb::create_credential_openai_api_key
          *                           "create_credential_openai_api_key"
+         *                       <li>@ref gpudb::create_credential_rest
+         *                           "create_credential_rest"
          *                   </ul>
          * @param[in] identity_  User of the credential to be created.
          * @param[in] secret_  Password of the credential to be created.
@@ -132,6 +134,7 @@ namespace gpudb
          *         "create_credential_nvidia_api_key"
          *     <li>@ref gpudb::create_credential_openai_api_key
          *         "create_credential_openai_api_key"
+         *     <li>@ref gpudb::create_credential_rest "create_credential_rest"
          * </ul>
          */
         std::string type;

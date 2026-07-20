@@ -132,24 +132,24 @@ namespace gpudb
          *                                  <li>@ref gpudb::upload_files_none
          *                                      "upload_files_none": Default,
          *                                      indicates this is not a
-         *                                      multipart upload
+         *                                      multipart upload.
          *                                  <li>@ref gpudb::upload_files_init
          *                                      "upload_files_init": Initialize
-         *                                      a multipart file upload
+         *                                      a multipart file upload.
          *                                  <li>@ref
          *                                      gpudb::upload_files_upload_part
          *                                      "upload_files_upload_part":
          *                                      Uploads a part of the specified
-         *                                      multipart file upload
+         *                                      multipart file upload.
          *                                  <li>@ref
          *                                      gpudb::upload_files_complete
          *                                      "upload_files_complete":
          *                                      Complete the specified
-         *                                      multipart file upload
+         *                                      multipart file upload.
          *                                  <li>@ref gpudb::upload_files_cancel
          *                                      "upload_files_cancel": Cancel
          *                                      the specified multipart file
-         *                                      upload
+         *                                      upload.
          *                              </ul>
          *                              The default value is @ref
          *                              gpudb::upload_files_none
@@ -158,7 +158,7 @@ namespace gpudb
          *                              gpudb::upload_files_multipart_upload_uuid
          *                              "upload_files_multipart_upload_uuid":
          *                              UUID to uniquely identify a multipart
-         *                              upload
+         *                              upload.
          *                          <li>@ref
          *                              gpudb::upload_files_multipart_upload_part_number
          *                              "upload_files_multipart_upload_part_number":
@@ -238,24 +238,24 @@ namespace gpudb
          *         Supported values:
          *         <ul>
          *             <li>@ref gpudb::upload_files_none "upload_files_none":
-         *                 Default, indicates this is not a multipart upload
+         *                 Default, indicates this is not a multipart upload.
          *             <li>@ref gpudb::upload_files_init "upload_files_init":
-         *                 Initialize a multipart file upload
+         *                 Initialize a multipart file upload.
          *             <li>@ref gpudb::upload_files_upload_part
          *                 "upload_files_upload_part": Uploads a part of the
-         *                 specified multipart file upload
+         *                 specified multipart file upload.
          *             <li>@ref gpudb::upload_files_complete
          *                 "upload_files_complete": Complete the specified
-         *                 multipart file upload
+         *                 multipart file upload.
          *             <li>@ref gpudb::upload_files_cancel
          *                 "upload_files_cancel": Cancel the specified
-         *                 multipart file upload
+         *                 multipart file upload.
          *         </ul>
          *         The default value is @ref gpudb::upload_files_none
          *         "upload_files_none".
          *     <li>@ref gpudb::upload_files_multipart_upload_uuid
          *         "upload_files_multipart_upload_uuid": UUID to uniquely
-         *         identify a multipart upload
+         *         identify a multipart upload.
          *     <li>@ref gpudb::upload_files_multipart_upload_part_number
          *         "upload_files_multipart_upload_part_number": Incremental
          *         part number for each part in a multipart upload. Part

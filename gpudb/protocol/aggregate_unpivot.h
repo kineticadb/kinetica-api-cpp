@@ -221,7 +221,7 @@ namespace gpudb
          *                              gpudb::aggregate_unpivot_result_table
          *                              "result_table".
          *                          <li>@ref gpudb::aggregate_unpivot_view_id
-         *                              "aggregate_unpivot_view_id": view this
+         *                              "aggregate_unpivot_view_id": View this
          *                              result table is part of. The default
          *                              value is ''.
          *                          <li>@ref
@@ -302,7 +302,7 @@ namespace gpudb
          *                           <li>@ref gpudb::aggregate_unpivot_json
          *                               "aggregate_unpivot_json": Indicates
          *                               that the returned records should be
-         *                               json encoded.
+         *                               JSON-encoded.
          *                       </ul>
          *                       The default value is @ref
          *                       gpudb::aggregate_unpivot_binary
@@ -456,7 +456,7 @@ namespace gpudb
          *                              gpudb::aggregate_unpivot_result_table
          *                              "result_table".
          *                          <li>@ref gpudb::aggregate_unpivot_view_id
-         *                              "aggregate_unpivot_view_id": view this
+         *                              "aggregate_unpivot_view_id": View this
          *                              result table is part of. The default
          *                              value is ''.
          *                          <li>@ref
@@ -545,7 +545,7 @@ namespace gpudb
          *         "aggregate_unpivot_binary": Indicates that the returned
          *         records should be binary encoded.
          *     <li>@ref gpudb::aggregate_unpivot_json "aggregate_unpivot_json":
-         *         Indicates that the returned records should be json encoded.
+         *         Indicates that the returned records should be JSON-encoded.
          * </ul>
          * The default value is @ref gpudb::aggregate_unpivot_binary
          * "aggregate_unpivot_binary".
@@ -654,7 +654,7 @@ namespace gpudb
          *         target="_top">TTL</a> of the table specified in @ref
          *         gpudb::aggregate_unpivot_result_table "result_table".
          *     <li>@ref gpudb::aggregate_unpivot_view_id
-         *         "aggregate_unpivot_view_id": view this result table is part
+         *         "aggregate_unpivot_view_id": View this result table is part
          *         of. The default value is ''.
          *     <li>@ref gpudb::aggregate_unpivot_create_indexes
          *         "aggregate_unpivot_create_indexes": Comma-separated list of

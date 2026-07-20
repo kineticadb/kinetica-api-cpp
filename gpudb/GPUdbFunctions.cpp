@@ -5,7 +5,7 @@
  */
 
 // GPUdb Version
-const std::string GPUdb::API_VERSION( "7.2.3.0" );
+const std::string GPUdb::API_VERSION( "7.2.3.1" );
 
 AdminAddHostResponse GPUdb::adminAddHost( const AdminAddHostRequest& request_ ) const
 {
@@ -446,10 +446,12 @@ AdminRepairTableResponse& GPUdb::adminRepairTable( const AdminRepairTableRequest
 }
 
 AdminRepairTableResponse GPUdb::adminRepairTable( const std::vector<std::string>& tableNames,
+                                                  const std::map<std::string, std::string>& tableTypes,
                                                   const std::map<std::string, std::string>& options ) const
 {
     AdminRepairTableRequest actualRequest_;
     actualRequest_.tableNames = tableNames;
+    actualRequest_.tableTypes = tableTypes;
     actualRequest_.options = options;
     AdminRepairTableResponse actualResponse_;
     submitRequest("/admin/repair/table", actualRequest_, actualResponse_, false);
@@ -457,11 +459,13 @@ AdminRepairTableResponse GPUdb::adminRepairTable( const std::vector<std::string>
 }
 
 AdminRepairTableResponse& GPUdb::adminRepairTable( const std::vector<std::string>& tableNames,
+                                                   const std::map<std::string, std::string>& tableTypes,
                                                    const std::map<std::string, std::string>& options,
                                                    AdminRepairTableResponse& response_ ) const
 {
     AdminRepairTableRequest actualRequest_;
     actualRequest_.tableNames = tableNames;
+    actualRequest_.tableTypes = tableTypes;
     actualRequest_.options = options;
     submitRequest("/admin/repair/table", actualRequest_, response_, false);
     return response_;
@@ -2247,6 +2251,42 @@ AppendRecordsResponse& GPUdb::appendRecords( const std::string& tableName,
     return response_;
 }
 
+CheckTableResponse GPUdb::checkTable( const CheckTableRequest& request_ ) const
+{
+    CheckTableResponse actualResponse_;
+    submitRequest("/check/table", request_, actualResponse_, false);
+    return actualResponse_;
+}
+
+CheckTableResponse& GPUdb::checkTable( const CheckTableRequest& request_,
+                                       CheckTableResponse& response_ ) const
+{
+    submitRequest("/check/table", request_, response_, false);
+    return response_;
+}
+
+CheckTableResponse GPUdb::checkTable( const std::vector<std::string>& tableNames,
+                                      const std::map<std::string, std::string>& options ) const
+{
+    CheckTableRequest actualRequest_;
+    actualRequest_.tableNames = tableNames;
+    actualRequest_.options = options;
+    CheckTableResponse actualResponse_;
+    submitRequest("/check/table", actualRequest_, actualResponse_, false);
+    return actualResponse_;
+}
+
+CheckTableResponse& GPUdb::checkTable( const std::vector<std::string>& tableNames,
+                                       const std::map<std::string, std::string>& options,
+                                       CheckTableResponse& response_ ) const
+{
+    CheckTableRequest actualRequest_;
+    actualRequest_.tableNames = tableNames;
+    actualRequest_.options = options;
+    submitRequest("/check/table", actualRequest_, response_, false);
+    return response_;
+}
+
 ClearStatisticsResponse GPUdb::clearStatistics( const ClearStatisticsRequest& request_ ) const
 {
     ClearStatisticsResponse actualResponse_;
@@ -2520,6 +2560,62 @@ CreateBackupResponse& GPUdb::createBackup( const std::string& backupName,
     actualRequest_.datasinkName = datasinkName;
     actualRequest_.options = options;
     submitRequest("/create/backup", actualRequest_, response_, false);
+    return response_;
+}
+
+CreateCatalogResponse GPUdb::createCatalog( const CreateCatalogRequest& request_ ) const
+{
+    CreateCatalogResponse actualResponse_;
+    submitRequest("/create/catalog", request_, actualResponse_, false);
+    return actualResponse_;
+}
+
+CreateCatalogResponse& GPUdb::createCatalog( const CreateCatalogRequest& request_,
+                                             CreateCatalogResponse& response_ ) const
+{
+    submitRequest("/create/catalog", request_, response_, false);
+    return response_;
+}
+
+CreateCatalogResponse GPUdb::createCatalog( const std::string& name,
+                                            const std::string& tableFormat,
+                                            const std::string& location,
+                                            const std::string& type,
+                                            const std::string& credential,
+                                            const std::string& datasource,
+                                            const std::map<std::string, std::string>& options ) const
+{
+    CreateCatalogRequest actualRequest_;
+    actualRequest_.name = name;
+    actualRequest_.tableFormat = tableFormat;
+    actualRequest_.location = location;
+    actualRequest_.type = type;
+    actualRequest_.credential = credential;
+    actualRequest_.datasource = datasource;
+    actualRequest_.options = options;
+    CreateCatalogResponse actualResponse_;
+    submitRequest("/create/catalog", actualRequest_, actualResponse_, false);
+    return actualResponse_;
+}
+
+CreateCatalogResponse& GPUdb::createCatalog( const std::string& name,
+                                             const std::string& tableFormat,
+                                             const std::string& location,
+                                             const std::string& type,
+                                             const std::string& credential,
+                                             const std::string& datasource,
+                                             const std::map<std::string, std::string>& options,
+                                             CreateCatalogResponse& response_ ) const
+{
+    CreateCatalogRequest actualRequest_;
+    actualRequest_.name = name;
+    actualRequest_.tableFormat = tableFormat;
+    actualRequest_.location = location;
+    actualRequest_.type = type;
+    actualRequest_.credential = credential;
+    actualRequest_.datasource = datasource;
+    actualRequest_.options = options;
+    submitRequest("/create/catalog", actualRequest_, response_, false);
     return response_;
 }
 
@@ -4079,6 +4175,82 @@ DownloadFilesResponse& GPUdb::downloadFiles( const std::vector<std::string>& fil
     return response_;
 }
 
+DropBackupResponse GPUdb::dropBackup( const DropBackupRequest& request_ ) const
+{
+    DropBackupResponse actualResponse_;
+    submitRequest("/drop/backup", request_, actualResponse_, false);
+    return actualResponse_;
+}
+
+DropBackupResponse& GPUdb::dropBackup( const DropBackupRequest& request_,
+                                       DropBackupResponse& response_ ) const
+{
+    submitRequest("/drop/backup", request_, response_, false);
+    return response_;
+}
+
+DropBackupResponse GPUdb::dropBackup( const std::string& backupName,
+                                      const std::string& datasinkName,
+                                      const std::map<std::string, std::string>& options ) const
+{
+    DropBackupRequest actualRequest_;
+    actualRequest_.backupName = backupName;
+    actualRequest_.datasinkName = datasinkName;
+    actualRequest_.options = options;
+    DropBackupResponse actualResponse_;
+    submitRequest("/drop/backup", actualRequest_, actualResponse_, false);
+    return actualResponse_;
+}
+
+DropBackupResponse& GPUdb::dropBackup( const std::string& backupName,
+                                       const std::string& datasinkName,
+                                       const std::map<std::string, std::string>& options,
+                                       DropBackupResponse& response_ ) const
+{
+    DropBackupRequest actualRequest_;
+    actualRequest_.backupName = backupName;
+    actualRequest_.datasinkName = datasinkName;
+    actualRequest_.options = options;
+    submitRequest("/drop/backup", actualRequest_, response_, false);
+    return response_;
+}
+
+DropCatalogResponse GPUdb::dropCatalog( const DropCatalogRequest& request_ ) const
+{
+    DropCatalogResponse actualResponse_;
+    submitRequest("/drop/catalog", request_, actualResponse_, false);
+    return actualResponse_;
+}
+
+DropCatalogResponse& GPUdb::dropCatalog( const DropCatalogRequest& request_,
+                                         DropCatalogResponse& response_ ) const
+{
+    submitRequest("/drop/catalog", request_, response_, false);
+    return response_;
+}
+
+DropCatalogResponse GPUdb::dropCatalog( const std::string& name,
+                                        const std::map<std::string, std::string>& options ) const
+{
+    DropCatalogRequest actualRequest_;
+    actualRequest_.name = name;
+    actualRequest_.options = options;
+    DropCatalogResponse actualResponse_;
+    submitRequest("/drop/catalog", actualRequest_, actualResponse_, false);
+    return actualResponse_;
+}
+
+DropCatalogResponse& GPUdb::dropCatalog( const std::string& name,
+                                         const std::map<std::string, std::string>& options,
+                                         DropCatalogResponse& response_ ) const
+{
+    DropCatalogRequest actualRequest_;
+    actualRequest_.name = name;
+    actualRequest_.options = options;
+    submitRequest("/drop/catalog", actualRequest_, response_, false);
+    return response_;
+}
+
 DropContainerRegistryResponse GPUdb::dropContainerRegistry( const DropContainerRegistryRequest& request_ ) const
 {
     DropContainerRegistryResponse actualResponse_;
@@ -5400,6 +5572,50 @@ FilterByValueResponse& GPUdb::filterByValue( const std::string& tableName,
     actualRequest_.columnName = columnName;
     actualRequest_.options = options;
     submitRequest("/filter/byvalue", actualRequest_, response_, false);
+    return response_;
+}
+
+GetGraphEntitiesResponse GPUdb::getGraphEntities( const GetGraphEntitiesRequest& request_ ) const
+{
+    GetGraphEntitiesResponse actualResponse_;
+    submitRequest("/get/graph/entities", request_, actualResponse_, false);
+    return actualResponse_;
+}
+
+GetGraphEntitiesResponse& GPUdb::getGraphEntities( const GetGraphEntitiesRequest& request_,
+                                                   GetGraphEntitiesResponse& response_ ) const
+{
+    submitRequest("/get/graph/entities", request_, response_, false);
+    return response_;
+}
+
+GetGraphEntitiesResponse GPUdb::getGraphEntities( const std::string& graphName,
+                                                  const int64_t offset,
+                                                  const int64_t limit,
+                                                  const std::map<std::string, std::string>& options ) const
+{
+    GetGraphEntitiesRequest actualRequest_;
+    actualRequest_.graphName = graphName;
+    actualRequest_.offset = offset;
+    actualRequest_.limit = limit;
+    actualRequest_.options = options;
+    GetGraphEntitiesResponse actualResponse_;
+    submitRequest("/get/graph/entities", actualRequest_, actualResponse_, false);
+    return actualResponse_;
+}
+
+GetGraphEntitiesResponse& GPUdb::getGraphEntities( const std::string& graphName,
+                                                   const int64_t offset,
+                                                   const int64_t limit,
+                                                   const std::map<std::string, std::string>& options,
+                                                   GetGraphEntitiesResponse& response_ ) const
+{
+    GetGraphEntitiesRequest actualRequest_;
+    actualRequest_.graphName = graphName;
+    actualRequest_.offset = offset;
+    actualRequest_.limit = limit;
+    actualRequest_.options = options;
+    submitRequest("/get/graph/entities", actualRequest_, response_, false);
     return response_;
 }
 
@@ -8995,54 +9211,6 @@ UpdateRecordsResponse& GPUdb::updateRecordsRaw( const RawUpdateRecordsRequest& r
     return response_;
 }
 
-UpdateRecordsBySeriesResponse GPUdb::updateRecordsBySeries( const UpdateRecordsBySeriesRequest& request_ ) const
-{
-    UpdateRecordsBySeriesResponse actualResponse_;
-    submitRequest("/update/records/byseries", request_, actualResponse_, false);
-    return actualResponse_;
-}
-
-UpdateRecordsBySeriesResponse& GPUdb::updateRecordsBySeries( const UpdateRecordsBySeriesRequest& request_,
-                                                             UpdateRecordsBySeriesResponse& response_ ) const
-{
-    submitRequest("/update/records/byseries", request_, response_, false);
-    return response_;
-}
-
-UpdateRecordsBySeriesResponse GPUdb::updateRecordsBySeries( const std::string& tableName,
-                                                            const std::string& worldTableName,
-                                                            const std::string& viewName,
-                                                            const std::vector<std::string>& reserved,
-                                                            const std::map<std::string, std::string>& options ) const
-{
-    UpdateRecordsBySeriesRequest actualRequest_;
-    actualRequest_.tableName = tableName;
-    actualRequest_.worldTableName = worldTableName;
-    actualRequest_.viewName = viewName;
-    actualRequest_.reserved = reserved;
-    actualRequest_.options = options;
-    UpdateRecordsBySeriesResponse actualResponse_;
-    submitRequest("/update/records/byseries", actualRequest_, actualResponse_, false);
-    return actualResponse_;
-}
-
-UpdateRecordsBySeriesResponse& GPUdb::updateRecordsBySeries( const std::string& tableName,
-                                                             const std::string& worldTableName,
-                                                             const std::string& viewName,
-                                                             const std::vector<std::string>& reserved,
-                                                             const std::map<std::string, std::string>& options,
-                                                             UpdateRecordsBySeriesResponse& response_ ) const
-{
-    UpdateRecordsBySeriesRequest actualRequest_;
-    actualRequest_.tableName = tableName;
-    actualRequest_.worldTableName = worldTableName;
-    actualRequest_.viewName = viewName;
-    actualRequest_.reserved = reserved;
-    actualRequest_.options = options;
-    submitRequest("/update/records/byseries", actualRequest_, response_, false);
-    return response_;
-}
-
 UploadFilesResponse GPUdb::uploadFiles( const UploadFilesRequest& request_ ) const
 {
     UploadFilesResponse actualResponse_;
@@ -9120,6 +9288,46 @@ UploadFilesFromurlResponse& GPUdb::uploadFilesFromurl( const std::vector<std::st
     actualRequest_.urls = urls;
     actualRequest_.options = options;
     submitRequest("/upload/files/fromurl", actualRequest_, response_, false);
+    return response_;
+}
+
+VerifyBackupResponse GPUdb::verifyBackup( const VerifyBackupRequest& request_ ) const
+{
+    VerifyBackupResponse actualResponse_;
+    submitRequest("/verify/backup", request_, actualResponse_, false);
+    return actualResponse_;
+}
+
+VerifyBackupResponse& GPUdb::verifyBackup( const VerifyBackupRequest& request_,
+                                           VerifyBackupResponse& response_ ) const
+{
+    submitRequest("/verify/backup", request_, response_, false);
+    return response_;
+}
+
+VerifyBackupResponse GPUdb::verifyBackup( const std::string& backupName,
+                                          const std::string& datasourceName,
+                                          const std::map<std::string, std::string>& options ) const
+{
+    VerifyBackupRequest actualRequest_;
+    actualRequest_.backupName = backupName;
+    actualRequest_.datasourceName = datasourceName;
+    actualRequest_.options = options;
+    VerifyBackupResponse actualResponse_;
+    submitRequest("/verify/backup", actualRequest_, actualResponse_, false);
+    return actualResponse_;
+}
+
+VerifyBackupResponse& GPUdb::verifyBackup( const std::string& backupName,
+                                           const std::string& datasourceName,
+                                           const std::map<std::string, std::string>& options,
+                                           VerifyBackupResponse& response_ ) const
+{
+    VerifyBackupRequest actualRequest_;
+    actualRequest_.backupName = backupName;
+    actualRequest_.datasourceName = datasourceName;
+    actualRequest_.options = options;
+    submitRequest("/verify/backup", actualRequest_, response_, false);
     return response_;
 }
 

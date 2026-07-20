@@ -13,8 +13,12 @@ namespace gpudb
      * GPUdb::createBackup(const CreateBackupRequest&) const
      * "GPUdb::createBackup".
      *
-     * Creates a database backup containing a current snapshot of existing
-     * objects.
+     * Creates a database <a
+     * href="../../../admin/backup_restore/#database-backup"
+     * target="_top">backup</a>, containing a snapshot of existing objects, at
+     * the remote file store accessible via the <a
+     * href="../../../concepts/data_sinks/" target="_top">data sink</a>
+     * specified by @ref datasinkName.
      */
     struct CreateBackupRequest
     {
@@ -34,114 +38,230 @@ namespace gpudb
          * Constructs a CreateBackupRequest object with the specified
          * parameters.
          *
-         * @param[in] backupName_  Name for this backup object. If the backup
-         *                         object already exists, only an incremental
-         *                         or differential backup can be made, unless
-         *                         recreate is specified
-         * @param[in] backupType_  Type of backup to create.
+         * @param[in] backupName_  Name for this backup. If the backup already
+         *                         exists, only an incremental or differential
+         *                         backup can be made, unless @ref
+         *                         gpudb::create_backup_recreate "recreate" is
+         *                         set to @ref gpudb::create_backup_true
+         *                         "true".
+         * @param[in] backupType_  Type of snapshot to create.
          *                         Supported values:
          *                         <ul>
          *                             <li>@ref
-         *                                 gpudb::create_backup_incremental
-         *                                 "create_backup_incremental"
-         *                             <li>@ref
          *                                 gpudb::create_backup_differential
-         *                                 "create_backup_differential"
+         *                                 "create_backup_differential":
+         *                                 Snapshot of changes in the database
+         *                                 objects and data since the last full
+         *                                 snapshot.
          *                             <li>@ref gpudb::create_backup_full
-         *                                 "create_backup_full"
+         *                                 "create_backup_full": Snapshot of
+         *                                 the given database objects and data.
+         *                             <li>@ref
+         *                                 gpudb::create_backup_incremental
+         *                                 "create_backup_incremental":
+         *                                 Snapshot of changes in the database
+         *                                 objects and data since the last
+         *                                 snapshot of any kind.
          *                         </ul>
          * @param[in] backupObjectsMap_  Map of objects to be captured in the
-         *                               backup. Error if empty and creating
-         *                               full backup. Error if non-empty when
-         *                               creating an incremental or
-         *                               differential backup.
+         *                               backup; must be specified when
+         *                               creating a full snapshot and left
+         *                               unspecified when creating an
+         *                               incremental or differential snapshot.
          *                               <ul>
          *                                   <li>@ref gpudb::create_backup_all
          *                                       "create_backup_all": All
-         *                                       object types in a schema
-         *                                       (excludes permissions, system
-         *                                       configuration, host secret
-         *                                       key, KiFS directories and user
-         *                                       defined functions)
+         *                                       object types and data
+         *                                       contained in the given <a
+         *                                       href="../../../concepts/schemas/"
+         *                                       target="_top">schema(s)</a>.
          *                                   <li>@ref
-         *                                       gpudb::create_backup_table
-         *                                       "create_backup_table":
-         *                                       Database Table
-         *                                   <li>@ref
-         *                                       gpudb::create_backup_credential
-         *                                       "create_backup_credential":
-         *                                       Credential
+         *                                       gpudb::create_backup_catalog
+         *                                       "create_backup_catalog": Data
+         *                                       Lake catalog that is external
+         *                                       to the database.
          *                                   <li>@ref
          *                                       gpudb::create_backup_context
-         *                                       "create_backup_context":
-         *                                       Context
+         *                                       "create_backup_context": <a
+         *                                       href="../../../sql-gpt/concepts/#sql-gpt-context"
+         *                                       target="_top">Context(s)</a>.
+         *                                   <li>@ref
+         *                                       gpudb::create_backup_credential
+         *                                       "create_backup_credential": <a
+         *                                       href="../../../concepts/credentials/"
+         *                                       target="_top">Credential(s)</a>.
          *                                   <li>@ref
          *                                       gpudb::create_backup_datasink
-         *                                       "create_backup_datasink": Data
-         *                                       Sink
+         *                                       "create_backup_datasink": <a
+         *                                       href="../../../concepts/data_sinks/"
+         *                                       target="_top">Data
+         *                                       sink(s)</a>.
          *                                   <li>@ref
          *                                       gpudb::create_backup_datasource
-         *                                       "create_backup_datasource":
-         *                                       Data Source
+         *                                       "create_backup_datasource": <a
+         *                                       href="../../../concepts/data_sources/"
+         *                                       target="_top">Data
+         *                                       source(s)</a>.
+         *                                   <li>@ref
+         *                                       gpudb::create_backup_directory
+         *                                       "create_backup_directory":
+         *                                       KiFS <a
+         *                                       href="../../../tools/kifs/"
+         *                                       target="_top">File
+         *                                       directory(ies)</a>.
+         *                                   <li>@ref
+         *                                       gpudb::create_backup_function_environment
+         *                                       "create_backup_function_environment":
+         *                                       <a
+         *                                       href="../../../udf/python/writing/#udf-python-func-env"
+         *                                       target="_top">Python UDF
+         *                                       function environment(s)</a>.
+         *                                   <li>@ref
+         *                                       gpudb::create_backup_graph
+         *                                       "create_backup_graph": <a
+         *                                       href="../../../graph_solver/network_graph_solver/"
+         *                                       target="_top">Graph</a>
+         *                                       definition(s).  Source
+         *                                       table(s), if applicable, are
+         *                                       required in order to restore
+         *                                       graph objects.
+         *                                   <li>@ref
+         *                                       gpudb::create_backup_monitor
+         *                                       "create_backup_monitor": <a
+         *                                       href="../../../concepts/table_monitors/"
+         *                                       target="_top">Table
+         *                                       monitor(s)</a> / <a
+         *                                       href="../../../sql/ddl/#create-stream"
+         *                                       target="_top">SQL
+         *                                       stream(s)</a>.
+         *                                   <li>@ref
+         *                                       gpudb::create_backup_resource_group
+         *                                       "create_backup_resource_group":
+         *                                       <a
+         *                                       href="../../../rm/concepts/#resource-groups"
+         *                                       target="_top">Resource
+         *                                       group(s)</a>.
+         *                                   <li>@ref gpudb::create_backup_role
+         *                                       "create_backup_role": <a
+         *                                       href="../../../security/sec_concepts/#roles"
+         *                                       target="_top">Role(s)</a>,
+         *                                       role members (roles or users,
+         *                                       recursively), and associated
+         *                                       permissions.
          *                                   <li>@ref
          *                                       gpudb::create_backup_stored_procedure
          *                                       "create_backup_stored_procedure":
-         *                                       SQL Procedure
+         *                                       <a
+         *                                       href="../../../sql/procedure/"
+         *                                       target="_top">SQL
+         *                                       procedure(s)</a>.
          *                                   <li>@ref
-         *                                       gpudb::create_backup_monitor
-         *                                       "create_backup_monitor": Table
-         *                                       Monitor (Stream)
+         *                                       gpudb::create_backup_table
+         *                                       "create_backup_table": <a
+         *                                       href="../../../concepts/tables/"
+         *                                       target="_top">Table(s)</a> and
+         *                                       <a
+         *                                       href="../../../sql/ddl/#create-view"
+         *                                       target="_top">SQL view(s)</a>.
+         *                                       Active subscriptions on any
+         *                                       tables to be backed up will be
+         *                                       temporarily suspended while
+         *                                       the backup is active.
          *                                   <li>@ref gpudb::create_backup_user
-         *                                       "create_backup_user": User
+         *                                       "create_backup_user": <a
+         *                                       href="../../../security/sec_concepts/#security-concepts-users"
+         *                                       target="_top">User(s)</a>
          *                                       (internal and external) and
-         *                                       associated permissions
-         *                                   <li>@ref gpudb::create_backup_role
-         *                                       "create_backup_role": Role,
-         *                                       role members (roles or users,
-         *                                       recursively) and associated
-         *                                       permissions
+         *                                       associated permissions.
          *                                   <li>@ref
-         *                                       gpudb::create_backup_configuration
-         *                                       "create_backup_configuration":
-         *                                       If @ref
-         *                                       gpudb::create_backup_true
-         *                                       "true", backup the database
-         *                                       configuration file.
-         *                                       Supported values:
-         *                                       <ul>
-         *                                           <li>@ref
-         *                                               gpudb::create_backup_false
-         *                                               "create_backup_false"
-         *                                           <li>@ref
-         *                                               gpudb::create_backup_true
-         *                                               "create_backup_true"
-         *                                       </ul>
-         *                                       The default value is @ref
-         *                                       gpudb::create_backup_false
-         *                                       "create_backup_false".
+         *                                       gpudb::create_backup_user_defined_function
+         *                                       "create_backup_user_defined_function":
+         *                                       <a
+         *                                       href="../../../udf_overview"
+         *                                       target="_top">UDF(s)</a>.
          *                               </ul>
-         * @param[in] datasinkName_  Datasink where backup will be stored.
+         *                               The default value is an empty map.
+         * @param[in] datasinkName_  Data sink through which the backup will be
+         *                           stored.
          * @param[in] options_  Optional parameters.
          *                      <ul>
-         *                          <li>@ref gpudb::create_backup_comment
-         *                              "create_backup_comment": Comments to
-         *                              store with this backup
-         *                          <li>@ref gpudb::create_backup_checksum
-         *                              "create_backup_checksum": Calculate
-         *                              checksum for backup files.
+         *                          <li>@ref
+         *                              gpudb::create_backup_block_table_mutations
+         *                              "create_backup_block_table_mutations":
+         *                              Whether or not to block all mutations
+         *                              on target tables while they are being
+         *                              backed up.
          *                              Supported values:
          *                              <ul>
-         *                                  <li>@ref gpudb::create_backup_false
-         *                                      "create_backup_false"
          *                                  <li>@ref gpudb::create_backup_true
-         *                                      "create_backup_true"
+         *                                      "create_backup_true": Block all
+         *                                      mutations on target tables
+         *                                      while they are being backed up.
+         *                                  <li>@ref gpudb::create_backup_false
+         *                                      "create_backup_false": Only
+         *                                      block mutations on a target
+         *                                      table at the point a disk
+         *                                      eviction is necessary.
          *                              </ul>
          *                              The default value is @ref
-         *                              gpudb::create_backup_true
-         *                              "create_backup_true".
+         *                              gpudb::create_backup_false
+         *                              "create_backup_false".
+         *                          <li>@ref gpudb::create_backup_checksum
+         *                              "create_backup_checksum": Whether or
+         *                              not to calculate checksums for backup
+         *                              files.
+         *                              Supported values:
+         *                              <ul>
+         *                                  <li>@ref gpudb::create_backup_true
+         *                                      "create_backup_true"
+         *                                  <li>@ref gpudb::create_backup_false
+         *                                      "create_backup_false"
+         *                              </ul>
+         *                              The default value is @ref
+         *                              gpudb::create_backup_false
+         *                              "create_backup_false".
+         *                          <li>@ref gpudb::create_backup_comment
+         *                              "create_backup_comment": Comments to
+         *                              store with this backup.
          *                          <li>@ref gpudb::create_backup_ddl_only
-         *                              "create_backup_ddl_only": Only save the
-         *                              DDL, do not backup table data.
+         *                              "create_backup_ddl_only": Whether or
+         *                              not, for tables, to only backup DDL and
+         *                              not table data.
+         *                              Supported values:
+         *                              <ul>
+         *                                  <li>@ref gpudb::create_backup_true
+         *                                      "create_backup_true": For
+         *                                      tables, only back up DDL, not
+         *                                      data.
+         *                                  <li>@ref gpudb::create_backup_false
+         *                                      "create_backup_false": For
+         *                                      tables, back up DDL and data.
+         *                              </ul>
+         *                              The default value is @ref
+         *                              gpudb::create_backup_false
+         *                              "create_backup_false".
+         *                          <li>@ref
+         *                              gpudb::create_backup_delete_intermediate_backups
+         *                              "create_backup_delete_intermediate_backups":
+         *                              Whether or not to delete any
+         *                              intermediate snapshots when the @a
+         *                              backupType_ is set to @ref
+         *                              gpudb::create_backup_differential
+         *                              "differential".
+         *                              Supported values:
+         *                              <ul>
+         *                                  <li>@ref gpudb::create_backup_true
+         *                                      "create_backup_true"
+         *                                  <li>@ref gpudb::create_backup_false
+         *                                      "create_backup_false"
+         *                              </ul>
+         *                              The default value is @ref
+         *                              gpudb::create_backup_false
+         *                              "create_backup_false".
+         *                          <li>@ref gpudb::create_backup_dry_run
+         *                              "create_backup_dry_run": Whether or not
+         *                              to perform a dry run of a backup
+         *                              operation.
          *                              Supported values:
          *                              <ul>
          *                                  <li>@ref gpudb::create_backup_true
@@ -155,50 +275,19 @@ namespace gpudb
          *                          <li>@ref
          *                              gpudb::create_backup_max_incremental_backups_to_keep
          *                              "create_backup_max_incremental_backups_to_keep":
-         *                              Maximum number of incremental backups
+         *                              Maximum number of incremental snapshots
          *                              to keep. The default value is '-1'.
-         *                          <li>@ref
-         *                              gpudb::create_backup_delete_intermediate_backups
-         *                              "create_backup_delete_intermediate_backups":
-         *                              When the backup type is differential,
-         *                              delete any intermediate incremental or
-         *                              differential backups. This overrides
-         *                              @ref
-         *                              gpudb::create_backup_max_incremental_backups_to_keep
-         *                              "max_incremental_backups_to_keep".
-         *                              Supported values:
-         *                              <ul>
-         *                                  <li>@ref gpudb::create_backup_false
-         *                                      "create_backup_false"
-         *                                  <li>@ref gpudb::create_backup_true
-         *                                      "create_backup_true"
-         *                              </ul>
-         *                              The default value is @ref
-         *                              gpudb::create_backup_false
-         *                              "create_backup_false".
          *                          <li>@ref gpudb::create_backup_recreate
-         *                              "create_backup_recreate": Replace the
-         *                              existing backup object with a new full
-         *                              backup if it already exists.
+         *                              "create_backup_recreate": Whether or
+         *                              not to replace an existing backup
+         *                              object with a new backup with a full
+         *                              snapshot, if one already exists.
          *                              Supported values:
          *                              <ul>
-         *                                  <li>@ref gpudb::create_backup_false
-         *                                      "create_backup_false"
          *                                  <li>@ref gpudb::create_backup_true
          *                                      "create_backup_true"
-         *                              </ul>
-         *                              The default value is @ref
-         *                              gpudb::create_backup_false
-         *                              "create_backup_false".
-         *                          <li>@ref gpudb::create_backup_dry_run
-         *                              "create_backup_dry_run": Dry run of
-         *                              backup.
-         *                              Supported values:
-         *                              <ul>
          *                                  <li>@ref gpudb::create_backup_false
          *                                      "create_backup_false"
-         *                                  <li>@ref gpudb::create_backup_true
-         *                                      "create_backup_true"
          *                              </ul>
          *                              The default value is @ref
          *                              gpudb::create_backup_false
@@ -216,91 +305,166 @@ namespace gpudb
         }
 
         /**
-         * Name for this backup object. If the backup object already exists,
-         * only an incremental or differential backup can be made, unless
-         * recreate is specified
+         * Name for this backup. If the backup already exists, only an
+         * incremental or differential backup can be made, unless @ref
+         * gpudb::create_backup_recreate "recreate" is set to @ref
+         * gpudb::create_backup_true "true".
          */
         std::string backupName;
 
         /**
-         * Type of backup to create.
+         * Type of snapshot to create.
          * Supported values:
          * <ul>
-         *     <li>@ref gpudb::create_backup_incremental
-         *         "create_backup_incremental"
          *     <li>@ref gpudb::create_backup_differential
-         *         "create_backup_differential"
-         *     <li>@ref gpudb::create_backup_full "create_backup_full"
+         *         "create_backup_differential": Snapshot of changes in the
+         *         database objects and data since the last full snapshot.
+         *     <li>@ref gpudb::create_backup_full "create_backup_full":
+         *         Snapshot of the given database objects and data.
+         *     <li>@ref gpudb::create_backup_incremental
+         *         "create_backup_incremental": Snapshot of changes in the
+         *         database objects and data since the last snapshot of any
+         *         kind.
          * </ul>
          */
         std::string backupType;
 
         /**
-         * Map of objects to be captured in the backup. Error if empty and
-         * creating full backup. Error if non-empty when creating an
-         * incremental or differential backup.
+         * Map of objects to be captured in the backup; must be specified when
+         * creating a full snapshot and left unspecified when creating an
+         * incremental or differential snapshot.
          * <ul>
          *     <li>@ref gpudb::create_backup_all "create_backup_all": All
-         *         object types in a schema (excludes permissions, system
-         *         configuration, host secret key, KiFS directories and user
-         *         defined functions)
-         *     <li>@ref gpudb::create_backup_table "create_backup_table":
-         *         Database Table
-         *     <li>@ref gpudb::create_backup_credential
-         *         "create_backup_credential": Credential
+         *         object types and data contained in the given <a
+         *         href="../../../concepts/schemas/"
+         *         target="_top">schema(s)</a>.
+         *     <li>@ref gpudb::create_backup_catalog "create_backup_catalog":
+         *         Data Lake catalog that is external to the database.
          *     <li>@ref gpudb::create_backup_context "create_backup_context":
-         *         Context
+         *         <a href="../../../sql-gpt/concepts/#sql-gpt-context"
+         *         target="_top">Context(s)</a>.
+         *     <li>@ref gpudb::create_backup_credential
+         *         "create_backup_credential": <a
+         *         href="../../../concepts/credentials/"
+         *         target="_top">Credential(s)</a>.
          *     <li>@ref gpudb::create_backup_datasink "create_backup_datasink":
-         *         Data Sink
+         *         <a href="../../../concepts/data_sinks/" target="_top">Data
+         *         sink(s)</a>.
          *     <li>@ref gpudb::create_backup_datasource
-         *         "create_backup_datasource": Data Source
-         *     <li>@ref gpudb::create_backup_stored_procedure
-         *         "create_backup_stored_procedure": SQL Procedure
+         *         "create_backup_datasource": <a
+         *         href="../../../concepts/data_sources/" target="_top">Data
+         *         source(s)</a>.
+         *     <li>@ref gpudb::create_backup_directory
+         *         "create_backup_directory": KiFS <a
+         *         href="../../../tools/kifs/" target="_top">File
+         *         directory(ies)</a>.
+         *     <li>@ref gpudb::create_backup_function_environment
+         *         "create_backup_function_environment": <a
+         *         href="../../../udf/python/writing/#udf-python-func-env"
+         *         target="_top">Python UDF function environment(s)</a>.
+         *     <li>@ref gpudb::create_backup_graph "create_backup_graph": <a
+         *         href="../../../graph_solver/network_graph_solver/"
+         *         target="_top">Graph</a> definition(s).  Source table(s), if
+         *         applicable, are required in order to restore graph objects.
          *     <li>@ref gpudb::create_backup_monitor "create_backup_monitor":
-         *         Table Monitor (Stream)
-         *     <li>@ref gpudb::create_backup_user "create_backup_user": User
-         *         (internal and external) and associated permissions
-         *     <li>@ref gpudb::create_backup_role "create_backup_role": Role,
-         *         role members (roles or users, recursively) and associated
-         *         permissions
-         *     <li>@ref gpudb::create_backup_configuration
-         *         "create_backup_configuration": If @ref
-         *         gpudb::create_backup_true "true", backup the database
-         *         configuration file.
-         *         Supported values:
-         *         <ul>
-         *             <li>@ref gpudb::create_backup_false
-         *                 "create_backup_false"
-         *             <li>@ref gpudb::create_backup_true "create_backup_true"
-         *         </ul>
-         *         The default value is @ref gpudb::create_backup_false
-         *         "create_backup_false".
+         *         <a href="../../../concepts/table_monitors/"
+         *         target="_top">Table monitor(s)</a> / <a
+         *         href="../../../sql/ddl/#create-stream" target="_top">SQL
+         *         stream(s)</a>.
+         *     <li>@ref gpudb::create_backup_resource_group
+         *         "create_backup_resource_group": <a
+         *         href="../../../rm/concepts/#resource-groups"
+         *         target="_top">Resource group(s)</a>.
+         *     <li>@ref gpudb::create_backup_role "create_backup_role": <a
+         *         href="../../../security/sec_concepts/#roles"
+         *         target="_top">Role(s)</a>, role members (roles or users,
+         *         recursively), and associated permissions.
+         *     <li>@ref gpudb::create_backup_stored_procedure
+         *         "create_backup_stored_procedure": <a
+         *         href="../../../sql/procedure/" target="_top">SQL
+         *         procedure(s)</a>.
+         *     <li>@ref gpudb::create_backup_table "create_backup_table": <a
+         *         href="../../../concepts/tables/" target="_top">Table(s)</a>
+         *         and <a href="../../../sql/ddl/#create-view"
+         *         target="_top">SQL view(s)</a>.  Active subscriptions on any
+         *         tables to be backed up will be temporarily suspended while
+         *         the backup is active.
+         *     <li>@ref gpudb::create_backup_user "create_backup_user": <a
+         *         href="../../../security/sec_concepts/#security-concepts-users"
+         *         target="_top">User(s)</a> (internal and external) and
+         *         associated permissions.
+         *     <li>@ref gpudb::create_backup_user_defined_function
+         *         "create_backup_user_defined_function": <a
+         *         href="../../../udf_overview" target="_top">UDF(s)</a>.
          * </ul>
+         * The default value is an empty map.
          */
         std::map<std::string, std::string> backupObjectsMap;
 
         /**
-         * Datasink where backup will be stored.
+         * Data sink through which the backup will be stored.
          */
         std::string datasinkName;
 
         /**
          * Optional parameters.
          * <ul>
-         *     <li>@ref gpudb::create_backup_comment "create_backup_comment":
-         *         Comments to store with this backup
-         *     <li>@ref gpudb::create_backup_checksum "create_backup_checksum":
-         *         Calculate checksum for backup files.
+         *     <li>@ref gpudb::create_backup_block_table_mutations
+         *         "create_backup_block_table_mutations": Whether or not to
+         *         block all mutations on target tables while they are being
+         *         backed up.
          *         Supported values:
          *         <ul>
+         *             <li>@ref gpudb::create_backup_true "create_backup_true":
+         *                 Block all mutations on target tables while they are
+         *                 being backed up.
+         *             <li>@ref gpudb::create_backup_false
+         *                 "create_backup_false": Only block mutations on a
+         *                 target table at the point a disk eviction is
+         *                 necessary.
+         *         </ul>
+         *         The default value is @ref gpudb::create_backup_false
+         *         "create_backup_false".
+         *     <li>@ref gpudb::create_backup_checksum "create_backup_checksum":
+         *         Whether or not to calculate checksums for backup files.
+         *         Supported values:
+         *         <ul>
+         *             <li>@ref gpudb::create_backup_true "create_backup_true"
          *             <li>@ref gpudb::create_backup_false
          *                 "create_backup_false"
-         *             <li>@ref gpudb::create_backup_true "create_backup_true"
          *         </ul>
-         *         The default value is @ref gpudb::create_backup_true
-         *         "create_backup_true".
+         *         The default value is @ref gpudb::create_backup_false
+         *         "create_backup_false".
+         *     <li>@ref gpudb::create_backup_comment "create_backup_comment":
+         *         Comments to store with this backup.
          *     <li>@ref gpudb::create_backup_ddl_only "create_backup_ddl_only":
-         *         Only save the DDL, do not backup table data.
+         *         Whether or not, for tables, to only backup DDL and not table
+         *         data.
+         *         Supported values:
+         *         <ul>
+         *             <li>@ref gpudb::create_backup_true "create_backup_true":
+         *                 For tables, only back up DDL, not data.
+         *             <li>@ref gpudb::create_backup_false
+         *                 "create_backup_false": For tables, back up DDL and
+         *                 data.
+         *         </ul>
+         *         The default value is @ref gpudb::create_backup_false
+         *         "create_backup_false".
+         *     <li>@ref gpudb::create_backup_delete_intermediate_backups
+         *         "create_backup_delete_intermediate_backups": Whether or not
+         *         to delete any intermediate snapshots when the @ref
+         *         backupType is set to @ref gpudb::create_backup_differential
+         *         "differential".
+         *         Supported values:
+         *         <ul>
+         *             <li>@ref gpudb::create_backup_true "create_backup_true"
+         *             <li>@ref gpudb::create_backup_false
+         *                 "create_backup_false"
+         *         </ul>
+         *         The default value is @ref gpudb::create_backup_false
+         *         "create_backup_false".
+         *     <li>@ref gpudb::create_backup_dry_run "create_backup_dry_run":
+         *         Whether or not to perform a dry run of a backup operation.
          *         Supported values:
          *         <ul>
          *             <li>@ref gpudb::create_backup_true "create_backup_true"
@@ -311,40 +475,16 @@ namespace gpudb
          *         "create_backup_false".
          *     <li>@ref gpudb::create_backup_max_incremental_backups_to_keep
          *         "create_backup_max_incremental_backups_to_keep": Maximum
-         *         number of incremental backups to keep. The default value is
-         *         '-1'.
-         *     <li>@ref gpudb::create_backup_delete_intermediate_backups
-         *         "create_backup_delete_intermediate_backups": When the backup
-         *         type is differential, delete any intermediate incremental or
-         *         differential backups. This overrides @ref
-         *         gpudb::create_backup_max_incremental_backups_to_keep
-         *         "max_incremental_backups_to_keep".
-         *         Supported values:
-         *         <ul>
-         *             <li>@ref gpudb::create_backup_false
-         *                 "create_backup_false"
-         *             <li>@ref gpudb::create_backup_true "create_backup_true"
-         *         </ul>
-         *         The default value is @ref gpudb::create_backup_false
-         *         "create_backup_false".
+         *         number of incremental snapshots to keep. The default value
+         *         is '-1'.
          *     <li>@ref gpudb::create_backup_recreate "create_backup_recreate":
-         *         Replace the existing backup object with a new full backup if
-         *         it already exists.
+         *         Whether or not to replace an existing backup object with a
+         *         new backup with a full snapshot, if one already exists.
          *         Supported values:
          *         <ul>
+         *             <li>@ref gpudb::create_backup_true "create_backup_true"
          *             <li>@ref gpudb::create_backup_false
          *                 "create_backup_false"
-         *             <li>@ref gpudb::create_backup_true "create_backup_true"
-         *         </ul>
-         *         The default value is @ref gpudb::create_backup_false
-         *         "create_backup_false".
-         *     <li>@ref gpudb::create_backup_dry_run "create_backup_dry_run":
-         *         Dry run of backup.
-         *         Supported values:
-         *         <ul>
-         *             <li>@ref gpudb::create_backup_false
-         *                 "create_backup_false"
-         *             <li>@ref gpudb::create_backup_true "create_backup_true"
          *         </ul>
          *         The default value is @ref gpudb::create_backup_false
          *         "create_backup_false".
@@ -444,27 +584,27 @@ namespace gpudb
         std::string backupName;
 
         /**
-         * Backup ID.
+         * ID of the snapshot created.
          */
         int64_t backupId;
 
         /**
-         * Total size of all files copied for this snapshot
+         * Total size of all files copied for this snapshot.
          */
         int64_t copiedBytes;
 
         /**
-         * Total number of files copied for this snapshot
+         * Total number of files copied for this snapshot.
          */
         int64_t copiedFiles;
 
         /**
-         * Total number of records in all files copied for this snapshot
+         * Total number of records in all files copied for this snapshot.
          */
         int64_t copiedRecords;
 
         /**
-         * Total number of records that can be restored from this snapshot
+         * Total number of records that can be restored from this snapshot.
          */
         int64_t totalNumberOfRecords;
 

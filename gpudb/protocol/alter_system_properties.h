@@ -102,7 +102,7 @@ namespace gpudb
          *                                         device, default (engine
          *                                         decides) or an integer value
          *                                         that indicates max chunk
-         *                                         size to exec on host
+         *                                         size to exec on host.
          *                                     <li>@ref
          *                                         gpudb::alter_system_properties_external_files_directory
          *                                         "alter_system_properties_external_files_directory":
@@ -110,7 +110,7 @@ namespace gpudb
          *                                         where external table data
          *                                         files are accessed from.
          *                                         Path must exist on the head
-         *                                         node
+         *                                         node.
          *                                     <li>@ref
          *                                         gpudb::alter_system_properties_request_timeout
          *                                         "alter_system_properties_request_timeout":
@@ -206,7 +206,7 @@ namespace gpudb
          *                                         "alter_system_properties_kafka_poll_timeout":
          *                                         Maximum time (milliseconds)
          *                                         for each poll to get records
-         *                                         from kafka. The default
+         *                                         from Kafka. The default
          *                                         value is '0'. The minimum
          *                                         allowed value is '0'. The
          *                                         maximum allowed value is
@@ -216,11 +216,47 @@ namespace gpudb
          *                                         "alter_system_properties_kafka_wait_time":
          *                                         Maximum time (seconds) to
          *                                         buffer records received from
-         *                                         kafka before ingestion. The
+         *                                         Kafka before ingestion. The
          *                                         default value is '30'. The
          *                                         minimum allowed value is
          *                                         '1'. The maximum allowed
          *                                         value is '120'.
+         *                                     <li>@ref
+         *                                         gpudb::alter_system_properties_iceberg_table_metadata_cache_enabled
+         *                                         "alter_system_properties_iceberg_table_metadata_cache_enabled":
+         *                                         Enable caching of Iceberg
+         *                                         table metadata.
+         *                                     <li>@ref
+         *                                         gpudb::alter_system_properties_iceberg_table_metadata_cache_size
+         *                                         "alter_system_properties_iceberg_table_metadata_cache_size":
+         *                                         Maximum number of Iceberg
+         *                                         table metadata entries to
+         *                                         cache.
+         *                                     <li>@ref
+         *                                         gpudb::alter_system_properties_iceberg_table_metadata_cache_ttl
+         *                                         "alter_system_properties_iceberg_table_metadata_cache_ttl":
+         *                                         Time-to-live (seconds) for
+         *                                         cached Iceberg table
+         *                                         metadata entries.
+         *                                     <li>@ref
+         *                                         gpudb::alter_system_properties_iceberg_table_metadata_cache_snapshot_check
+         *                                         "alter_system_properties_iceberg_table_metadata_cache_snapshot_check":
+         *                                         When enabled, check the
+         *                                         current Iceberg snapshot on
+         *                                         cache hits and invalidate
+         *                                         entries that have changed.
+         *                                     <li>@ref
+         *                                         gpudb::alter_system_properties_iceberg_catalog_connection_cache_size
+         *                                         "alter_system_properties_iceberg_catalog_connection_cache_size":
+         *                                         Maximum number of cached
+         *                                         Iceberg REST catalog
+         *                                         connections.
+         *                                     <li>@ref
+         *                                         gpudb::alter_system_properties_iceberg_manifest_cache_enabled
+         *                                         "alter_system_properties_iceberg_manifest_cache_enabled":
+         *                                         Enable caching of parsed
+         *                                         Iceberg manifest and
+         *                                         manifest-list files.
          *                                     <li>@ref
          *                                         gpudb::alter_system_properties_egress_parquet_compression
          *                                         "alter_system_properties_egress_parquet_compression":
@@ -287,13 +323,22 @@ namespace gpudb
          *                                         Size of the worker rank data
          *                                         processing thread pool.
          *                                         This includes operations
-         *                                         such as inserts, updates, &
-         *                                         deletes on table data.
+         *                                         such as inserts, updates,
+         *                                         and deletes on table data.
          *                                         Multi-head inserts are not
          *                                         affected by this limit. The
          *                                         minimum allowed value is
          *                                         '2'. The maximum allowed
          *                                         value is '8192'.
+         *                                     <li>@ref
+         *                                         gpudb::alter_system_properties_remote_io_threads
+         *                                         "alter_system_properties_remote_io_threads":
+         *                                         Size of the worker rank IO
+         *                                         thread pool. This is used
+         *                                         for blocking IO operations
+         *                                         such as reads from object
+         *                                         storage or external file
+         *                                         systems.
          *                                     <li>@ref
          *                                         gpudb::alter_system_properties_background_worker_threads
          *                                         "alter_system_properties_background_worker_threads":
@@ -328,38 +373,44 @@ namespace gpudb
          *                                     <li>@ref
          *                                         gpudb::alter_system_properties_ai_api_provider
          *                                         "alter_system_properties_ai_api_provider":
-         *                                         AI API provider type
+         *                                         AI API provider type.
          *                                     <li>@ref
          *                                         gpudb::alter_system_properties_ai_api_url
          *                                         "alter_system_properties_ai_api_url":
-         *                                         AI API URL
+         *                                         AI API URL.
          *                                     <li>@ref
          *                                         gpudb::alter_system_properties_ai_api_key
          *                                         "alter_system_properties_ai_api_key":
-         *                                         AI API key
+         *                                         AI API key.
          *                                     <li>@ref
          *                                         gpudb::alter_system_properties_ai_api_connection_timeout
          *                                         "alter_system_properties_ai_api_connection_timeout":
          *                                         AI API connection timeout in
-         *                                         seconds
+         *                                         seconds.
          *                                     <li>@ref
          *                                         gpudb::alter_system_properties_ai_api_embeddings_model
          *                                         "alter_system_properties_ai_api_embeddings_model":
-         *                                         AI API model name
+         *                                         AI API model name.
          *                                     <li>@ref
          *                                         gpudb::alter_system_properties_telm_persist_query_metrics
          *                                         "alter_system_properties_telm_persist_query_metrics":
          *                                         Enable or disable persisting
          *                                         of query metrics.
          *                                     <li>@ref
+         *                                         gpudb::alter_system_properties_telm_force_metrics_duration
+         *                                         "alter_system_properties_telm_force_metrics_duration":
+         *                                         Capture metrics for any
+         *                                         query exceeding this
+         *                                         duration in seconds.
+         *                                     <li>@ref
          *                                         gpudb::alter_system_properties_postgres_proxy_idle_connection_timeout
          *                                         "alter_system_properties_postgres_proxy_idle_connection_timeout":
          *                                         Idle connection timeout in
-         *                                         seconds
+         *                                         seconds.
          *                                     <li>@ref
          *                                         gpudb::alter_system_properties_postgres_proxy_keep_alive
          *                                         "alter_system_properties_postgres_proxy_keep_alive":
-         *                                         Enable  postgres proxy keep
+         *                                         Enable postgres proxy keep
          *                                         alive. The default value is
          *                                         'false'.
          *                                     <li>@ref
@@ -381,7 +432,7 @@ namespace gpudb
          *                                         column-level or table-level
          *                                         default compression
          *                                         specified at the time it was
-         *                                         created
+         *                                         created.
          *                                     <li>@ref
          *                                         gpudb::alter_system_properties_disk_auto_optimize_timeout
          *                                         "alter_system_properties_disk_auto_optimize_timeout":
@@ -400,6 +451,12 @@ namespace gpudb
          *                                         milliseconds since unix
          *                                         epoch). The minimum allowed
          *                                         value is '-1'.
+         *                                     <li>@ref
+         *                                         gpudb::alter_system_properties_admin_access_only
+         *                                         "alter_system_properties_admin_access_only":
+         *                                         Restricts access to system
+         *                                         admin users only. The
+         *                                         default value is 'false'.
          *                                 </ul>
          * @param[in] options_  Optional parameters.
          *                      <ul>
@@ -492,11 +549,11 @@ namespace gpudb
          *         execution_mode for kernel executions to the specified string
          *         value. Possible values are host, device, default (engine
          *         decides) or an integer value that indicates max chunk size
-         *         to exec on host
+         *         to exec on host.
          *     <li>@ref gpudb::alter_system_properties_external_files_directory
          *         "alter_system_properties_external_files_directory": Sets the
          *         root directory path where external table data files are
-         *         accessed from.  Path must exist on the head node
+         *         accessed from.  Path must exist on the head node.
          *     <li>@ref gpudb::alter_system_properties_request_timeout
          *         "alter_system_properties_request_timeout": Number of minutes
          *         after which filtering (e.g., @ref
@@ -554,14 +611,41 @@ namespace gpudb
          *         maximum allowed value is '10000000'.
          *     <li>@ref gpudb::alter_system_properties_kafka_poll_timeout
          *         "alter_system_properties_kafka_poll_timeout": Maximum time
-         *         (milliseconds) for each poll to get records from kafka. The
+         *         (milliseconds) for each poll to get records from Kafka. The
          *         default value is '0'. The minimum allowed value is '0'. The
          *         maximum allowed value is '1000'.
          *     <li>@ref gpudb::alter_system_properties_kafka_wait_time
          *         "alter_system_properties_kafka_wait_time": Maximum time
-         *         (seconds) to buffer records received from kafka before
+         *         (seconds) to buffer records received from Kafka before
          *         ingestion. The default value is '30'. The minimum allowed
          *         value is '1'. The maximum allowed value is '120'.
+         *     <li>@ref
+         *         gpudb::alter_system_properties_iceberg_table_metadata_cache_enabled
+         *         "alter_system_properties_iceberg_table_metadata_cache_enabled":
+         *         Enable caching of Iceberg table metadata.
+         *     <li>@ref
+         *         gpudb::alter_system_properties_iceberg_table_metadata_cache_size
+         *         "alter_system_properties_iceberg_table_metadata_cache_size":
+         *         Maximum number of Iceberg table metadata entries to cache.
+         *     <li>@ref
+         *         gpudb::alter_system_properties_iceberg_table_metadata_cache_ttl
+         *         "alter_system_properties_iceberg_table_metadata_cache_ttl":
+         *         Time-to-live (seconds) for cached Iceberg table metadata
+         *         entries.
+         *     <li>@ref
+         *         gpudb::alter_system_properties_iceberg_table_metadata_cache_snapshot_check
+         *         "alter_system_properties_iceberg_table_metadata_cache_snapshot_check":
+         *         When enabled, check the current Iceberg snapshot on cache
+         *         hits and invalidate entries that have changed.
+         *     <li>@ref
+         *         gpudb::alter_system_properties_iceberg_catalog_connection_cache_size
+         *         "alter_system_properties_iceberg_catalog_connection_cache_size":
+         *         Maximum number of cached Iceberg REST catalog connections.
+         *     <li>@ref
+         *         gpudb::alter_system_properties_iceberg_manifest_cache_enabled
+         *         "alter_system_properties_iceberg_manifest_cache_enabled":
+         *         Enable caching of parsed Iceberg manifest and manifest-list
+         *         files.
          *     <li>@ref
          *         gpudb::alter_system_properties_egress_parquet_compression
          *         "alter_system_properties_egress_parquet_compression":
@@ -603,10 +687,15 @@ namespace gpudb
          *     <li>@ref gpudb::alter_system_properties_tps_per_tom
          *         "alter_system_properties_tps_per_tom": Size of the worker
          *         rank data processing thread pool.  This includes operations
-         *         such as inserts, updates, & deletes on table data.
+         *         such as inserts, updates, and deletes on table data.
          *         Multi-head inserts are not affected by this limit. The
          *         minimum allowed value is '2'. The maximum allowed value is
          *         '8192'.
+         *     <li>@ref gpudb::alter_system_properties_remote_io_threads
+         *         "alter_system_properties_remote_io_threads": Size of the
+         *         worker rank IO thread pool. This is used for blocking IO
+         *         operations such as reads from object storage or external
+         *         file systems.
          *     <li>@ref
          *         gpudb::alter_system_properties_background_worker_threads
          *         "alter_system_properties_background_worker_threads": Size of
@@ -629,26 +718,31 @@ namespace gpudb
          *         default value is 'false'.
          *     <li>@ref gpudb::alter_system_properties_ai_api_provider
          *         "alter_system_properties_ai_api_provider": AI API provider
-         *         type
+         *         type.
          *     <li>@ref gpudb::alter_system_properties_ai_api_url
-         *         "alter_system_properties_ai_api_url": AI API URL
+         *         "alter_system_properties_ai_api_url": AI API URL.
          *     <li>@ref gpudb::alter_system_properties_ai_api_key
-         *         "alter_system_properties_ai_api_key": AI API key
+         *         "alter_system_properties_ai_api_key": AI API key.
          *     <li>@ref
          *         gpudb::alter_system_properties_ai_api_connection_timeout
          *         "alter_system_properties_ai_api_connection_timeout": AI API
-         *         connection timeout in seconds
+         *         connection timeout in seconds.
          *     <li>@ref gpudb::alter_system_properties_ai_api_embeddings_model
          *         "alter_system_properties_ai_api_embeddings_model": AI API
-         *         model name
+         *         model name.
          *     <li>@ref
          *         gpudb::alter_system_properties_telm_persist_query_metrics
          *         "alter_system_properties_telm_persist_query_metrics": Enable
          *         or disable persisting of query metrics.
          *     <li>@ref
+         *         gpudb::alter_system_properties_telm_force_metrics_duration
+         *         "alter_system_properties_telm_force_metrics_duration":
+         *         Capture metrics for any query exceeding this duration in
+         *         seconds.
+         *     <li>@ref
          *         gpudb::alter_system_properties_postgres_proxy_idle_connection_timeout
          *         "alter_system_properties_postgres_proxy_idle_connection_timeout":
-         *         Idle connection timeout in seconds
+         *         Idle connection timeout in seconds.
          *     <li>@ref
          *         gpudb::alter_system_properties_postgres_proxy_keep_alive
          *         "alter_system_properties_postgres_proxy_keep_alive": Enable
@@ -663,7 +757,7 @@ namespace gpudb
          *         href="../../../concepts/column_compression/"
          *         target="_top">compression algorithm</a> applied to any
          *         column without a column-level or table-level default
-         *         compression specified at the time it was created
+         *         compression specified at the time it was created.
          *     <li>@ref
          *         gpudb::alter_system_properties_disk_auto_optimize_timeout
          *         "alter_system_properties_disk_auto_optimize_timeout": Time
@@ -676,6 +770,10 @@ namespace gpudb
          *         Initializes HA replay from the given timestamp (as
          *         milliseconds since unix epoch). The minimum allowed value is
          *         '-1'.
+         *     <li>@ref gpudb::alter_system_properties_admin_access_only
+         *         "alter_system_properties_admin_access_only": Restricts
+         *         access to system admin users only. The default value is
+         *         'false'.
          * </ul>
          */
         std::map<std::string, std::string> propertyUpdatesMap;
@@ -782,7 +880,7 @@ namespace gpudb
 
         /**
          * Map of values updated; for speed tests, a map of values measured to
-         * the measurement
+         * the measurement.
          */
         std::map<std::string, std::string> updatedPropertiesMap;
 

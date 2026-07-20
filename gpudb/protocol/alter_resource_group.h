@@ -44,9 +44,9 @@ namespace gpudb
          *                             their respective attribute group limits.
          *                             The only valid attribute limit that can
          *                             be set is max_memory (in bytes) for the
-         *                             VRAM & RAM tiers.  For instance, to set
-         *                             max VRAM capacity to 1GB per rank per
-         *                             GPU and max RAM capacity to 10GB per
+         *                             VRAM and RAM tiers.  For instance, to
+         *                             set max VRAM capacity to 1GB per rank
+         *                             per GPU and max RAM capacity to 10GB per
          *                             rank, use:
          *                             {'VRAM':{'max_memory':'1000000000'},
          *                             'RAM':{'max_memory':'10000000000'}}.
@@ -71,25 +71,25 @@ namespace gpudb
          *                          <li>@ref
          *                              gpudb::alter_resource_group_empty_string
          *                              "alter_resource_group_empty_string":
-         *                              Don't change the ranking
+         *                              Don't change the ranking.
          *                          <li>@ref gpudb::alter_resource_group_first
          *                              "alter_resource_group_first": Make this
          *                              resource group the new first one in the
-         *                              ordering
+         *                              ordering.
          *                          <li>@ref gpudb::alter_resource_group_last
          *                              "alter_resource_group_last": Make this
          *                              resource group the new last one in the
-         *                              ordering
+         *                              ordering.
          *                          <li>@ref gpudb::alter_resource_group_before
          *                              "alter_resource_group_before": Place
          *                              this resource group before the one
          *                              specified by @a adjoiningResourceGroup_
-         *                              in the ordering
+         *                              in the ordering.
          *                          <li>@ref gpudb::alter_resource_group_after
          *                              "alter_resource_group_after": Place
          *                              this resource group after the one
          *                              specified by @a adjoiningResourceGroup_
-         *                              in the ordering
+         *                              in the ordering.
          *                      </ul>
          *                      The default value is @ref
          *                      gpudb::alter_resource_group_empty_string
@@ -202,7 +202,7 @@ namespace gpudb
         /**
          * Optional map containing tier names and their respective attribute
          * group limits.  The only valid attribute limit that can be set is
-         * max_memory (in bytes) for the VRAM & RAM tiers.
+         * max_memory (in bytes) for the VRAM and RAM tiers.
          *
          * For instance, to set max VRAM capacity to 1GB per rank per GPU and
          * max RAM capacity to 10GB per rank, use:
@@ -227,21 +227,21 @@ namespace gpudb
          * <ul>
          *     <li>@ref gpudb::alter_resource_group_empty_string
          *         "alter_resource_group_empty_string": Don't change the
-         *         ranking
+         *         ranking.
          *     <li>@ref gpudb::alter_resource_group_first
          *         "alter_resource_group_first": Make this resource group the
-         *         new first one in the ordering
+         *         new first one in the ordering.
          *     <li>@ref gpudb::alter_resource_group_last
          *         "alter_resource_group_last": Make this resource group the
-         *         new last one in the ordering
+         *         new last one in the ordering.
          *     <li>@ref gpudb::alter_resource_group_before
          *         "alter_resource_group_before": Place this resource group
          *         before the one specified by @ref adjoiningResourceGroup in
-         *         the ordering
+         *         the ordering.
          *     <li>@ref gpudb::alter_resource_group_after
          *         "alter_resource_group_after": Place this resource group
          *         after the one specified by @ref adjoiningResourceGroup in
-         *         the ordering
+         *         the ordering.
          * </ul>
          * The default value is @ref gpudb::alter_resource_group_empty_string
          * "alter_resource_group_empty_string".

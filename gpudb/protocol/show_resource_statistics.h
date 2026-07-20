@@ -103,7 +103,7 @@ namespace gpudb
         }
 
         /**
-         * Map of resource statistics
+         * Map of resource statistics.
          */
         std::map<std::string, std::string> statisticsMap;
 

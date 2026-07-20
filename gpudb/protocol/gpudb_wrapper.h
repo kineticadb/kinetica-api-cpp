@@ -25,10 +25,33 @@ namespace gpudb
         {
         }
 
+        /**
+         * Indicates the success ("OK") or failure ("ERROR") of the request.
+         */
         std::string status;
+
+        /**
+         * Empty on success; otherwise the error message describing the
+         * failure.
+         */
         std::string message;
+
+        /**
+         * The fully-qualified name of the response's data type, or "none" if
+         * there is no data payload.
+         */
         std::string dataType;
+
+        /**
+         * The Avro binary-encoded response payload; populated when binary
+         * encoding was requested.
+         */
         std::vector<uint8_t> data;
+
+        /**
+         * The JSON-encoded response payload; populated when JSON encoding was
+         * requested.
+         */
         std::string dataStr;
     };
 } // end namespace gpudb

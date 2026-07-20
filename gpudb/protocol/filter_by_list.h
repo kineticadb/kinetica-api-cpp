@@ -64,7 +64,7 @@ namespace gpudb
          *                       not be an already existing table or view. The
          *                       default value is ''.
          * @param[in] columnValuesMap_  List of values for the corresponding
-         *                              column in the table
+         *                              column in the table.
          * @param[in] options_  Optional parameters.
          *                      <ul>
          *                          <li>@ref
@@ -156,7 +156,7 @@ namespace gpudb
         std::string viewName;
 
         /**
-         * List of values for the corresponding column in the table
+         * List of values for the corresponding column in the table.
          */
         std::map<std::string, std::vector<std::string> > columnValuesMap;
 
@@ -292,7 +292,7 @@ namespace gpudb
          * <ul>
          *     <li>@ref gpudb::filter_by_list_qualified_view_name
          *         "filter_by_list_qualified_view_name": The fully qualified
-         *         name of the view (i.e. including the schema)
+         *         name of the view (i.e. including the schema).
          * </ul>
          * The default value is an empty map.
          */

@@ -214,6 +214,19 @@ namespace gpudb
          *                             "alter_table_delete_column": Deletes the
          *                             column specified in @a value_ from the
          *                             table specified in @a tableName_.
+         *                         <li>@ref gpudb::alter_table_set_default
+         *                             "alter_table_set_default": Sets or
+         *                             replaces the default value expression
+         *                             for the column specified in @a value_.
+         *                             The new default is taken from @ref
+         *                             gpudb::alter_table_add_column_expression
+         *                             "add_column_expression".  Existing
+         *                             properties on the column are preserved.
+         *                         <li>@ref gpudb::alter_table_delete_default
+         *                             "alter_table_delete_default": Removes
+         *                             the default value expression from the
+         *                             column specified in @a value_.  Other
+         *                             column properties are preserved.
          *                         <li>@ref
          *                             gpudb::alter_table_create_foreign_key
          *                             "alter_table_create_foreign_key":
@@ -372,20 +385,25 @@ namespace gpudb
          *                             Permanently unsubscribe a data source
          *                             that is loading continuously as a
          *                             stream. The data source can be Kafka /
-         *                             S3 / Azure.
+         *                             S3 / Azure / GCS.
+         *                         <li>@ref
+         *                             gpudb::alter_table_drop_datasource_subscription
+         *                             "alter_table_drop_datasource_subscription":
+         *                             Permanently delete a cancelled data
+         *                             source subscription.
          *                         <li>@ref
          *                             gpudb::alter_table_pause_datasource_subscription
          *                             "alter_table_pause_datasource_subscription":
          *                             Temporarily unsubscribe a data source
          *                             that is loading continuously as a
          *                             stream. The data source can be Kafka /
-         *                             S3 / Azure.
+         *                             S3 / Azure / GCS.
          *                         <li>@ref
          *                             gpudb::alter_table_resume_datasource_subscription
          *                             "alter_table_resume_datasource_subscription":
          *                             Resubscribe to a paused data source
          *                             subscription. The data source can be
-         *                             Kafka / S3 / Azure.
+         *                             Kafka / S3 / Azure / GCS.
          *                         <li>@ref gpudb::alter_table_change_owner
          *                             "alter_table_change_owner": Change the
          *                             owner resource group of the table.
@@ -397,7 +415,7 @@ namespace gpudb
          *                             'load_vectors_policy' in @ref
          *                             GPUdb::createTable(const CreateTableRequest&) const
          *                             "GPUdb::createTable" for possible values
-         *                             for @a value_
+         *                             for @a value_.
          *                         <li>@ref
          *                             gpudb::alter_table_set_build_pk_index_policy
          *                             "alter_table_set_build_pk_index_policy":
@@ -406,7 +424,7 @@ namespace gpudb
          *                             'build_pk_index_policy' in @ref
          *                             GPUdb::createTable(const CreateTableRequest&) const
          *                             "GPUdb::createTable" for possible values
-         *                             for @a value_
+         *                             for @a value_.
          *                         <li>@ref
          *                             gpudb::alter_table_set_build_materialized_view_policy
          *                             "alter_table_set_build_materialized_view_policy":
@@ -415,7 +433,27 @@ namespace gpudb
          *                             'build_materialized_view_policy' in @ref
          *                             GPUdb::createMaterializedView(const CreateMaterializedViewRequest&) const
          *                             "GPUdb::createMaterializedView" for
-         *                             possible values for @a value_
+         *                             possible values for @a value_.
+         *                         <li>@ref
+         *                             gpudb::alter_table_rebuild_text_search_index
+         *                             "alter_table_rebuild_text_search_index":
+         *                             Drops and rebuilds the <a
+         *                             href="../../../concepts/full_text_search/"
+         *                             target="_top">text search</a> index for
+         *                             the table from current type metadata and
+         *                             chunk storage. Use this to repair a
+         *                             text-search index left incomplete by an
+         *                             interrupted or failed rebuild (for
+         *                             example, after a crash during an
+         *                             add-column that requested text search):
+         *                             re-running the original add_column will
+         *                             not work because the column already
+         *                             exists. This action is also dispatched
+         *                             automatically by @ref
+         *                             GPUdb::alterTableColumns(const AlterTableColumnsRequest&) const
+         *                             "GPUdb::alterTableColumns" after
+         *                             add_column completions that require a
+         *                             full re-index. The @a value_ is ignored.
          *                     </ul>
          * @param[in] value_  The value of the modification, depending on @a
          *                    action_. For example, if @a action_ is @ref
@@ -444,10 +482,13 @@ namespace gpudb
          *                          <li>@ref
          *                              gpudb::alter_table_column_default_value
          *                              "alter_table_column_default_value":
-         *                              When adding a column, set a default
-         *                              value for existing records.  For
-         *                              nullable columns, the default value
+         *                              When adding a column, set a literal
+         *                              default value for existing records.
+         *                              For nullable columns, the default value
          *                              will be null, regardless of data type.
+         *                              Also persisted as the column's default
+         *                              for future inserts that omit the
+         *                              column.
          *                          <li>@ref
          *                              gpudb::alter_table_column_properties
          *                              "alter_table_column_properties": When
@@ -463,9 +504,9 @@ namespace gpudb
          *                          <li>@ref
          *                              gpudb::alter_table_copy_values_from_column
          *                              "alter_table_copy_values_from_column":
-         *                              [DEPRECATED--please use @ref
+         *                              [DEPRECATED]  Please use @ref
          *                              gpudb::alter_table_add_column_expression
-         *                              "add_column_expression" instead.]
+         *                              "add_column_expression" instead.
          *                          <li>@ref gpudb::alter_table_rename_column
          *                              "alter_table_rename_column": When
          *                              changing a column, specify new column
@@ -517,17 +558,33 @@ namespace gpudb
          *                          <li>@ref
          *                              gpudb::alter_table_add_column_expression
          *                              "alter_table_add_column_expression":
-         *                              When adding a column, an optional
-         *                              expression to use for the new column's
-         *                              values. Any valid expression may be
+         *                              When adding a column or setting a new
+         *                              default with @a action_ set to @ref
+         *                              gpudb::alter_table_set_default
+         *                              "set_default", the new default
+         *                              expression (GPUdb-syntax) for the
+         *                              column.  Any valid expression may be
          *                              used, including one containing
          *                              references to existing columns in the
-         *                              same table.
+         *                              same table.  Persisted as the column's
+         *                              default for future inserts that omit
+         *                              the column; for add_column, also used
+         *                              to backfill existing rows.
+         *                          <li>@ref
+         *                              gpudb::alter_table_add_column_expression_sql
+         *                              "alter_table_add_column_expression_sql":
+         *                              Optional SQL-syntax form of @ref
+         *                              gpudb::alter_table_add_column_expression
+         *                              "add_column_expression", used only when
+         *                              the SQL syntax differs from the GPUdb
+         *                              syntax.  Persisted alongside the GPUdb
+         *                              form so SHOW CREATE TABLE /
+         *                              information_schema can reproduce the
+         *                              original SQL.
          *                          <li>@ref
          *                              gpudb::alter_table_strategy_definition
          *                              "alter_table_strategy_definition":
-         *                              Optional parameter for specifying the
-         *                              <a
+         *                              Parameter for specifying the <a
          *                              href="../../../rm/concepts/#tier-strategies"
          *                              target="_top">tier strategy</a> for the
          *                              table and its columns when @a action_
@@ -575,7 +632,7 @@ namespace gpudb
          *                                      Create or delete a <a
          *                                      href="../../../concepts/indexes/#geospatial-index"
          *                                      target="_top">geospatial
-         *                                      index</a>
+         *                                      index</a>.
          *                                  <li>@ref gpudb::alter_table_cagra
          *                                      "alter_table_cagra": Create or
          *                                      delete a <a
@@ -583,7 +640,8 @@ namespace gpudb
          *                                      target="_top">CAGRA index</a>
          *                                      on a <a
          *                                      href="../../../vector_search/#vector-type"
-         *                                      target="_top">vector column</a>
+         *                                      target="_top">vector
+         *                                      column</a>.
          *                                  <li>@ref gpudb::alter_table_hnsw
          *                                      "alter_table_hnsw": Create or
          *                                      delete an <a
@@ -591,7 +649,8 @@ namespace gpudb
          *                                      target="_top">HNSW index</a> on
          *                                      a <a
          *                                      href="../../../vector_search/#vector-type"
-         *                                      target="_top">vector column</a>
+         *                                      target="_top">vector
+         *                                      column</a>.
          *                              </ul>
          *                              The default value is @ref
          *                              gpudb::alter_table_column
@@ -717,6 +776,17 @@ namespace gpudb
          *     <li>@ref gpudb::alter_table_delete_column
          *         "alter_table_delete_column": Deletes the column specified in
          *         @ref value from the table specified in @ref tableName.
+         *     <li>@ref gpudb::alter_table_set_default
+         *         "alter_table_set_default": Sets or replaces the default
+         *         value expression for the column specified in @ref value.
+         *         The new default is taken from @ref
+         *         gpudb::alter_table_add_column_expression
+         *         "add_column_expression".  Existing properties on the column
+         *         are preserved.
+         *     <li>@ref gpudb::alter_table_delete_default
+         *         "alter_table_delete_default": Removes the default value
+         *         expression from the column specified in @ref value.  Other
+         *         column properties are preserved.
          *     <li>@ref gpudb::alter_table_create_foreign_key
          *         "alter_table_create_foreign_key": Creates a <a
          *         href="../../../concepts/tables/#foreign-key"
@@ -824,15 +894,18 @@ namespace gpudb
          *     <li>@ref gpudb::alter_table_cancel_datasource_subscription
          *         "alter_table_cancel_datasource_subscription": Permanently
          *         unsubscribe a data source that is loading continuously as a
-         *         stream. The data source can be Kafka / S3 / Azure.
+         *         stream. The data source can be Kafka / S3 / Azure / GCS.
+         *     <li>@ref gpudb::alter_table_drop_datasource_subscription
+         *         "alter_table_drop_datasource_subscription": Permanently
+         *         delete a cancelled data source subscription.
          *     <li>@ref gpudb::alter_table_pause_datasource_subscription
          *         "alter_table_pause_datasource_subscription": Temporarily
          *         unsubscribe a data source that is loading continuously as a
-         *         stream. The data source can be Kafka / S3 / Azure.
+         *         stream. The data source can be Kafka / S3 / Azure / GCS.
          *     <li>@ref gpudb::alter_table_resume_datasource_subscription
          *         "alter_table_resume_datasource_subscription": Resubscribe to
          *         a paused data source subscription. The data source can be
-         *         Kafka / S3 / Azure.
+         *         Kafka / S3 / Azure / GCS.
          *     <li>@ref gpudb::alter_table_change_owner
          *         "alter_table_change_owner": Change the owner resource group
          *         of the table.
@@ -841,20 +914,33 @@ namespace gpudb
          *         loading scheme for the table; see description of
          *         'load_vectors_policy' in @ref
          *         GPUdb::createTable(const CreateTableRequest&) const
-         *         "GPUdb::createTable" for possible values for @ref value
+         *         "GPUdb::createTable" for possible values for @ref value.
          *     <li>@ref gpudb::alter_table_set_build_pk_index_policy
          *         "alter_table_set_build_pk_index_policy": Set startup primary
          *         key generation scheme for the table; see description of
          *         'build_pk_index_policy' in @ref
          *         GPUdb::createTable(const CreateTableRequest&) const
-         *         "GPUdb::createTable" for possible values for @ref value
+         *         "GPUdb::createTable" for possible values for @ref value.
          *     <li>@ref gpudb::alter_table_set_build_materialized_view_policy
          *         "alter_table_set_build_materialized_view_policy": Set
          *         startup rebuilding scheme for the materialized view; see
          *         description of 'build_materialized_view_policy' in @ref
          *         GPUdb::createMaterializedView(const CreateMaterializedViewRequest&) const
          *         "GPUdb::createMaterializedView" for possible values for @ref
-         *         value
+         *         value.
+         *     <li>@ref gpudb::alter_table_rebuild_text_search_index
+         *         "alter_table_rebuild_text_search_index": Drops and rebuilds
+         *         the <a href="../../../concepts/full_text_search/"
+         *         target="_top">text search</a> index for the table from
+         *         current type metadata and chunk storage. Use this to repair
+         *         a text-search index left incomplete by an interrupted or
+         *         failed rebuild (for example, after a crash during an
+         *         add-column that requested text search): re-running the
+         *         original add_column will not work because the column already
+         *         exists. This action is also dispatched automatically by @ref
+         *         GPUdb::alterTableColumns(const AlterTableColumnsRequest&) const
+         *         "GPUdb::alterTableColumns" after add_column completions that
+         *         require a full re-index. The @ref value is ignored.
          * </ul>
          */
         std::string action;
@@ -884,9 +970,10 @@ namespace gpudb
          *     <li>@ref gpudb::alter_table_table_name "alter_table_table_name"
          *     <li>@ref gpudb::alter_table_column_default_value
          *         "alter_table_column_default_value": When adding a column,
-         *         set a default value for existing records.  For nullable
-         *         columns, the default value will be null, regardless of data
-         *         type.
+         *         set a literal default value for existing records.  For
+         *         nullable columns, the default value will be null, regardless
+         *         of data type.  Also persisted as the column's default for
+         *         future inserts that omit the column.
          *     <li>@ref gpudb::alter_table_column_properties
          *         "alter_table_column_properties": When adding or changing a
          *         column, set the column properties (strings, separated by a
@@ -896,9 +983,9 @@ namespace gpudb
          *         set the column type (strings, separated by a comma: int,
          *         double, string, null etc).
          *     <li>@ref gpudb::alter_table_copy_values_from_column
-         *         "alter_table_copy_values_from_column": [DEPRECATED--please
+         *         "alter_table_copy_values_from_column": [DEPRECATED]  Please
          *         use @ref gpudb::alter_table_add_column_expression
-         *         "add_column_expression" instead.]
+         *         "add_column_expression" instead.
          *     <li>@ref gpudb::alter_table_rename_column
          *         "alter_table_rename_column": When changing a column, specify
          *         new column name.
@@ -934,14 +1021,24 @@ namespace gpudb
          *         The default value is @ref gpudb::alter_table_true
          *         "alter_table_true".
          *     <li>@ref gpudb::alter_table_add_column_expression
-         *         "alter_table_add_column_expression": When adding a column,
-         *         an optional expression to use for the new column's values.
-         *         Any valid expression may be used, including one containing
-         *         references to existing columns in the same table.
+         *         "alter_table_add_column_expression": When adding a column or
+         *         setting a new default with @ref action set to @ref
+         *         gpudb::alter_table_set_default "set_default", the new
+         *         default expression (GPUdb-syntax) for the column.  Any valid
+         *         expression may be used, including one containing references
+         *         to existing columns in the same table.  Persisted as the
+         *         column's default for future inserts that omit the column;
+         *         for add_column, also used to backfill existing rows.
+         *     <li>@ref gpudb::alter_table_add_column_expression_sql
+         *         "alter_table_add_column_expression_sql": Optional SQL-syntax
+         *         form of @ref gpudb::alter_table_add_column_expression
+         *         "add_column_expression", used only when the SQL syntax
+         *         differs from the GPUdb syntax.  Persisted alongside the
+         *         GPUdb form so SHOW CREATE TABLE / information_schema can
+         *         reproduce the original SQL.
          *     <li>@ref gpudb::alter_table_strategy_definition
-         *         "alter_table_strategy_definition": Optional parameter for
-         *         specifying the <a
-         *         href="../../../rm/concepts/#tier-strategies"
+         *         "alter_table_strategy_definition": Parameter for specifying
+         *         the <a href="../../../rm/concepts/#tier-strategies"
          *         target="_top">tier strategy</a> for the table and its
          *         columns when @ref action is @ref
          *         gpudb::alter_table_set_strategy_definition
@@ -971,19 +1068,19 @@ namespace gpudb
          *             <li>@ref gpudb::alter_table_geospatial
          *                 "alter_table_geospatial": Create or delete a <a
          *                 href="../../../concepts/indexes/#geospatial-index"
-         *                 target="_top">geospatial index</a>
+         *                 target="_top">geospatial index</a>.
          *             <li>@ref gpudb::alter_table_cagra "alter_table_cagra":
          *                 Create or delete a <a
          *                 href="../../../concepts/indexes/#cagra-index"
          *                 target="_top">CAGRA index</a> on a <a
          *                 href="../../../vector_search/#vector-type"
-         *                 target="_top">vector column</a>
+         *                 target="_top">vector column</a>.
          *             <li>@ref gpudb::alter_table_hnsw "alter_table_hnsw":
          *                 Create or delete an <a
          *                 href="../../../concepts/indexes/#hnsw-index"
          *                 target="_top">HNSW index</a> on a <a
          *                 href="../../../vector_search/#vector-type"
-         *                 target="_top">vector column</a>
+         *                 target="_top">vector column</a>.
          *         </ul>
          *         The default value is @ref gpudb::alter_table_column
          *         "alter_table_column".
@@ -1091,26 +1188,26 @@ namespace gpudb
         std::string value;
 
         /**
-         * return the type_id (when changing a table, a new type may be
-         * created)
+         * Return the type_id (when changing a table, a new type may be
+         * created).
          */
         std::string typeId;
 
         /**
-         * return the type_definition  (when changing a table, a new type may
-         * be created)
+         * Return the type_definition  (when changing a table, a new type may
+         * be created).
          */
         std::string typeDefinition;
 
         /**
-         * return the type properties  (when changing a table, a new type may
-         * be created)
+         * Return the type properties  (when changing a table, a new type may
+         * be created).
          */
         std::map<std::string, std::vector<std::string> > properties;
 
         /**
-         * return the type label  (when changing a table, a new type may be
-         * created)
+         * Return the type label  (when changing a table, a new type may be
+         * created).
          */
         std::string label;
 

@@ -42,9 +42,9 @@ namespace gpudb
          *                             their respective attribute group limits.
          *                             The only valid attribute limit that can
          *                             be set is max_memory (in bytes) for the
-         *                             VRAM & RAM tiers.  For instance, to set
-         *                             max VRAM capacity to 1GB per rank per
-         *                             GPU and max RAM capacity to 10GB per
+         *                             VRAM and RAM tiers.  For instance, to
+         *                             set max VRAM capacity to 1GB per rank
+         *                             per GPU and max RAM capacity to 10GB per
          *                             rank, use:
          *                             {'VRAM':{'max_memory':'1000000000'},
          *                             'RAM':{'max_memory':'10000000000'}}.
@@ -68,22 +68,22 @@ namespace gpudb
          *                          <li>@ref gpudb::create_resource_group_first
          *                              "create_resource_group_first": Make
          *                              this resource group the new first one
-         *                              in the ordering
+         *                              in the ordering.
          *                          <li>@ref gpudb::create_resource_group_last
          *                              "create_resource_group_last": Make this
          *                              resource group the new last one in the
-         *                              ordering
+         *                              ordering.
          *                          <li>@ref
          *                              gpudb::create_resource_group_before
          *                              "create_resource_group_before": Place
          *                              this resource group before the one
          *                              specified by @a adjoiningResourceGroup_
-         *                              in the ordering
+         *                              in the ordering.
          *                          <li>@ref gpudb::create_resource_group_after
          *                              "create_resource_group_after": Place
          *                              this resource group after the one
          *                              specified by @a adjoiningResourceGroup_
-         *                              in the ordering
+         *                              in the ordering.
          *                      </ul>
          * @param[in] adjoiningResourceGroup_  If @a ranking_ is @ref
          *                                     gpudb::create_resource_group_before
@@ -147,7 +147,7 @@ namespace gpudb
         /**
          * Optional map containing tier names and their respective attribute
          * group limits.  The only valid attribute limit that can be set is
-         * max_memory (in bytes) for the VRAM & RAM tiers.
+         * max_memory (in bytes) for the VRAM and RAM tiers.
          *
          * For instance, to set max VRAM capacity to 1GB per rank per GPU and
          * max RAM capacity to 10GB per rank, use:
@@ -171,18 +171,18 @@ namespace gpudb
          * <ul>
          *     <li>@ref gpudb::create_resource_group_first
          *         "create_resource_group_first": Make this resource group the
-         *         new first one in the ordering
+         *         new first one in the ordering.
          *     <li>@ref gpudb::create_resource_group_last
          *         "create_resource_group_last": Make this resource group the
-         *         new last one in the ordering
+         *         new last one in the ordering.
          *     <li>@ref gpudb::create_resource_group_before
          *         "create_resource_group_before": Place this resource group
          *         before the one specified by @ref adjoiningResourceGroup in
-         *         the ordering
+         *         the ordering.
          *     <li>@ref gpudb::create_resource_group_after
          *         "create_resource_group_after": Place this resource group
          *         after the one specified by @ref adjoiningResourceGroup in
-         *         the ordering
+         *         the ordering.
          * </ul>
          */
         std::string ranking;

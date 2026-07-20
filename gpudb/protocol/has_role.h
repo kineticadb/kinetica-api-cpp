@@ -199,13 +199,13 @@ namespace gpudb
         }
 
         /**
-         * Value of @ref gpudb::HasRoleRequest::principal "principal"
+         * Value of @ref gpudb::HasRoleRequest::principal "principal".
          */
         std::string principal;
 
         /**
          * @ref gpudb::HasRoleRequest::role "role" for which membership is
-         * being checked
+         * being checked.
          */
         std::string role;
 
@@ -214,8 +214,8 @@ namespace gpudb
          * target @ref gpudb::HasRoleRequest::role "role".
          * Supported values:
          * <ul>
-         *     <li>true: User has membership in the role
-         *     <li>false: User does not have membership in the role
+         *     <li>true: User has membership in the role.
+         *     <li>false: User does not have membership in the role.
          * </ul>
          */
         bool hasRole;

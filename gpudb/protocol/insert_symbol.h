@@ -43,7 +43,7 @@ namespace gpudb
          *
          * @param[in] symbolId_  The id of the symbol being added. This is the
          *                       same id that should be in the 'SYMBOLCODE'
-         *                       column for objects using this symbol
+         *                       column for objects using this symbol.
          * @param[in] symbolFormat_  Specifies the symbol format. Must be
          *                           either 'svg' or 'svg_path'.
          *                           Supported values:
@@ -57,8 +57,8 @@ namespace gpudb
          *                         is 'svg' then this should be the raw bytes
          *                         representing an svg file. If @a
          *                         symbolFormat_ is svg path then this should
-         *                         be an svg path string, for example:
-         *                         'M25.979,12.896,5.979,12.896,5.979,19.562,25.979,19.562z'
+         *                         be an svg path string; for example:
+         *                         'M25.979,12.896,5.979,12.896,5.979,19.562,25.979,19.562z'.
          * @param[in] options_  Optional parameters.
          *                      <ul>
          *                          <li>@ref gpudb::insert_symbol_color
@@ -84,7 +84,7 @@ namespace gpudb
 
         /**
          * The id of the symbol being added. This is the same id that should be
-         * in the 'SYMBOLCODE' column for objects using this symbol
+         * in the 'SYMBOLCODE' column for objects using this symbol.
          */
         std::string symbolId;
 
@@ -101,8 +101,8 @@ namespace gpudb
         /**
          * The actual symbol data. If @ref symbolFormat is 'svg' then this
          * should be the raw bytes representing an svg file. If @ref
-         * symbolFormat is svg path then this should be an svg path string, for
-         * example: 'M25.979,12.896,5.979,12.896,5.979,19.562,25.979,19.562z'
+         * symbolFormat is svg path then this should be an svg path string; for
+         * example: 'M25.979,12.896,5.979,12.896,5.979,19.562,25.979,19.562z'.
          */
         std::vector<uint8_t> symbolData;
 

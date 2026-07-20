@@ -47,11 +47,11 @@ namespace gpudb
          *                                  <li>@ref
          *                                      gpudb::create_user_external_true
          *                                      "create_user_external_true":
-         *                                      User may login
+         *                                      User may login.
          *                                  <li>@ref
          *                                      gpudb::create_user_external_false
          *                                      "create_user_external_false":
-         *                                      User may not login
+         *                                      User may not login.
          *                              </ul>
          *                              The default value is @ref
          *                              gpudb::create_user_external_true
@@ -79,7 +79,7 @@ namespace gpudb
          *                              gpudb::create_user_external_default_schema
          *                              "create_user_external_default_schema":
          *                              Default schema to associate with this
-         *                              user
+         *                              user.
          *                          <li>@ref
          *                              gpudb::create_user_external_directory_data_limit
          *                              "create_user_external_directory_data_limit":
@@ -95,7 +95,7 @@ namespace gpudb
          *                              gpudb::create_user_external_resource_group
          *                              "create_user_external_resource_group":
          *                              Name of an existing resource group to
-         *                              associate with this user
+         *                              associate with this user.
          *                      </ul>
          *                      The default value is an empty map.
          */
@@ -121,9 +121,9 @@ namespace gpudb
          *         Supported values:
          *         <ul>
          *             <li>@ref gpudb::create_user_external_true
-         *                 "create_user_external_true": User may login
+         *                 "create_user_external_true": User may login.
          *             <li>@ref gpudb::create_user_external_false
-         *                 "create_user_external_false": User may not login
+         *                 "create_user_external_false": User may not login.
          *         </ul>
          *         The default value is @ref gpudb::create_user_external_true
          *         "create_user_external_true".
@@ -142,7 +142,7 @@ namespace gpudb
          *         "create_user_external_true".
          *     <li>@ref gpudb::create_user_external_default_schema
          *         "create_user_external_default_schema": Default schema to
-         *         associate with this user
+         *         associate with this user.
          *     <li>@ref gpudb::create_user_external_directory_data_limit
          *         "create_user_external_directory_data_limit": The maximum
          *         capacity to apply to the created directory if @ref
@@ -153,7 +153,7 @@ namespace gpudb
          *         is applied.
          *     <li>@ref gpudb::create_user_external_resource_group
          *         "create_user_external_resource_group": Name of an existing
-         *         resource group to associate with this user
+         *         resource group to associate with this user.
          * </ul>
          * The default value is an empty map.
          */

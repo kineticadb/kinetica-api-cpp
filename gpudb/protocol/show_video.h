@@ -155,7 +155,7 @@ namespace gpudb
         std::vector<int64_t> renderedFrames;
 
         /**
-         * Percent completion of each video's rendering process (0-100)
+         * Percent completion of each video's rendering process (0-100).
          */
         std::vector<int64_t> renderedPercents;
 

@@ -1,7 +1,11 @@
 #include "gpudb/GPUdb.hpp"
 #include "gpudb/FailbackPollerService.hpp"
 
+#include <boost/property_tree/ptree.hpp>
+#include <boost/property_tree/json_parser.hpp>
+
 #include <iostream>
+#include <sstream>
 #include <thread>
 #include <mutex>
 #include <memory>
@@ -9,6 +13,9 @@
 #include <chrono>
 
 namespace gpudb {
+
+const int FailbackPollerService::DEFAULT_START_DELAY = 0;
+const int FailbackPollerService::DEFAULT_POLLING_INTERVAL = 5;
 
 
     /// @brief The main method that is run in a background thread
@@ -33,37 +40,59 @@ namespace gpudb {
     /// can be made
     /// @return true or false
     bool FailbackPollerService::poll() {
-        bool kineticaRunning = db.isKineticaRunning(primaryUrl);
+        // 1) Liveness ping: is the primary answering at all?
+        if (!db.isKineticaRunning(primaryUrl)) {
+            return false;
+        }
 
-        if (kineticaRunning) {
-            gpudb::GPUdb::Options options;
-            options.setDisableAutoDiscovery(true);
-            options.setDisableFailover(true);
-            options.setUsername(db.getUsername());
-            options.setPassword(db.getPassword());
+        // Use a DIRECT connection to the primary (failover AND auto-discovery
+        // disabled) so we can observe the primary even while it is draining.
+        gpudb::GPUdb::Options options;
+        options.setDisableAutoDiscovery(true);
+        options.setDisableFailover(true);
+        options.setUsername(db.getUsername());
+        options.setPassword(db.getPassword());
 
-            try {
-                gpudb::GPUdb conn(db.getPrimaryURL(), options);
-                std::map<std::string, std::string> empty_params;
-                auto statusMap = db.showSystemStatus(empty_params).statusMap;
+        try {
+            gpudb::GPUdb conn(db.getPrimaryURL(), options);
 
-                auto it = statusMap.find("ha_status");
-                if (it != statusMap.end()) {
-                    const std::string& haStatus = it->second;
-                    if (haStatus == "drained") {
-                        std::stringstream ss;
-                        ss << "Failback to primary cluster at [" << primaryUrl << "] succeeded";
-                        std::cout << ss.str() << std::endl;
-                    } else {
-                        kineticaRunning = false;
-                    }
+            // 2) Drain check: read ha_status.drained directly from the PRIMARY
+            // (via conn), NOT from the main client db (which is on the backup).
+            // The ha_status map value is a JSON object like {"drained":"..."}.
+            std::map<std::string, std::string> empty_params;
+            std::map<std::string, std::string> statusMap =
+                conn.showSystemStatus(empty_params).statusMap;
+
+            std::map<std::string, std::string>::const_iterator it =
+                statusMap.find("ha_status");
+            if (it != statusMap.end()) {
+                std::string drained;
+                try {
+                    boost::property_tree::ptree pt;
+                    std::istringstream ss(it->second);
+                    boost::property_tree::json_parser::read_json(ss, pt);
+                    drained = pt.get<std::string>("drained", "");
+                } catch (const std::exception&) {
+                    // Malformed ha_status: treat as not-ready and keep polling.
+                    return false;
                 }
-            } catch (const gpudb::GPUdbException& e) {
-                kineticaRunning = false;
+                if (drained == "draining") {
+                    return false;   // still catching up
+                }
             }
-        } 
 
-        return kineticaRunning;
+            // 3) Readiness probe: prove the primary can actually serve a query.
+            std::vector<std::vector<uint8_t> > noData;
+            std::map<std::string, std::string> noOptions;
+            conn.executeSql("SELECT 1", 0, 1, "", noData, noOptions);
+
+            std::stringstream ss;
+            ss << "Failback to primary cluster at [" << primaryUrl << "] succeeded";
+            std::cout << ss.str() << std::endl;
+            return true;
+        } catch (const gpudb::GPUdbException& e) {
+            return false;
+        }
     }
 
     /// @brief Sets the `m_currentUrl` member to 0 once the connection to

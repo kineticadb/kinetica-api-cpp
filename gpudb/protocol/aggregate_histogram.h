@@ -75,6 +75,16 @@ namespace gpudb
          *                              summed).  The column must be a
          *                              numerical type (int, double, long,
          *                              float).
+         *                          <li>@ref gpudb::aggregate_histogram_start
+         *                              "aggregate_histogram_start": The start
+         *                              parameter for char types.
+         *                          <li>@ref gpudb::aggregate_histogram_end
+         *                              "aggregate_histogram_end": The end
+         *                              parameter for char types.
+         *                          <li>@ref
+         *                              gpudb::aggregate_histogram_interval
+         *                              "aggregate_histogram_interval": The
+         *                              interval parameter for char types.
          *                      </ul>
          *                      The default value is an empty map.
          */
@@ -125,6 +135,14 @@ namespace gpudb
          *         to use when calculating the bin values (values are summed).
          *         The column must be a numerical type (int, double, long,
          *         float).
+         *     <li>@ref gpudb::aggregate_histogram_start
+         *         "aggregate_histogram_start": The start parameter for char
+         *         types.
+         *     <li>@ref gpudb::aggregate_histogram_end
+         *         "aggregate_histogram_end": The end parameter for char types.
+         *     <li>@ref gpudb::aggregate_histogram_interval
+         *         "aggregate_histogram_interval": The interval parameter for
+         *         char types.
          * </ul>
          * The default value is an empty map.
          */

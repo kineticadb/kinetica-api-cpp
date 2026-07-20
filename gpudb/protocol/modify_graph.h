@@ -18,7 +18,7 @@ namespace gpudb
      *
      * IMPORTANT: It's highly recommended that you review the <a
      * href="../../../graph_solver/network_graph_solver/" target="_top">Graphs
-     * & Solvers</a> concepts documentation, and <a
+     * and Solvers</a> concepts documentation, and <a
      * href="../../../guides/graph_rest_guide/" target="_top">Graph REST
      * Tutorial</a> before using this endpoint.
      */

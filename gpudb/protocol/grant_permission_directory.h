@@ -44,19 +44,19 @@ namespace gpudb
          *                                 "grant_permission_directory_directory_read":
          *                                 For files in the directory, access
          *                                 to list files, download files, or
-         *                                 use files in server side functions
+         *                                 use files in server side functions.
          *                             <li>@ref
          *                                 gpudb::grant_permission_directory_directory_write
          *                                 "grant_permission_directory_directory_write":
          *                                 Access to upload files to, or delete
          *                                 files from, the directory. A user or
          *                                 role with write access automatically
-         *                                 has read access
+         *                                 has read access.
          *                         </ul>
          * @param[in] directoryName_  Name of the KiFS directory to which the
          *                            permission grants access. An empty
          *                            directory name grants access to all KiFS
-         *                            directories
+         *                            directories.
          * @param[in] options_  Optional parameters. The default value is an
          *                      empty map.
          */
@@ -81,18 +81,18 @@ namespace gpudb
          *     <li>@ref gpudb::grant_permission_directory_directory_read
          *         "grant_permission_directory_directory_read": For files in
          *         the directory, access to list files, download files, or use
-         *         files in server side functions
+         *         files in server side functions.
          *     <li>@ref gpudb::grant_permission_directory_directory_write
          *         "grant_permission_directory_directory_write": Access to
          *         upload files to, or delete files from, the directory. A user
-         *         or role with write access automatically has read access
+         *         or role with write access automatically has read access.
          * </ul>
          */
         std::string permission;
 
         /**
          * Name of the KiFS directory to which the permission grants access. An
-         * empty directory name grants access to all KiFS directories
+         * empty directory name grants access to all KiFS directories.
          */
         std::string directoryName;
 

@@ -127,22 +127,22 @@ namespace gpudb
         }
 
         /**
-         * A listing of files in the paths specified
+         * A listing of files in the paths specified.
          */
         std::vector<std::string> fileNames;
 
         /**
-         * Size of each file, in bytes
+         * Size of each file, in bytes.
          */
         std::vector<int64_t> sizes;
 
         /**
-         * User that created the file
+         * User that created the file.
          */
         std::vector<std::string> users;
 
         /**
-         * Creation time for each file, in milliseconds since epoch
+         * Creation time for each file, in milliseconds since epoch.
          */
         std::vector<int64_t> creationTimes;
 
@@ -151,7 +151,7 @@ namespace gpudb
          * <ul>
          *     <li>@ref gpudb::show_files_multipart_uploads
          *         "show_files_multipart_uploads": JSON-encoded information
-         *         about multipart uploads in progress
+         *         about multipart uploads in progress.
          * </ul>
          */
         std::map<std::string, std::string> info;

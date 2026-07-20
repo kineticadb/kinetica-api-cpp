@@ -77,6 +77,18 @@ namespace gpudb
          *                                      gpudb::show_resource_objects_evictable
          *                                      "show_resource_objects_evictable"
          *                                  <li>@ref
+         *                                      gpudb::show_resource_objects_locked
+         *                                      "show_resource_objects_locked"
+         *                                  <li>@ref
+         *                                      gpudb::show_resource_objects_pin_count
+         *                                      "show_resource_objects_pin_count"
+         *                                  <li>@ref
+         *                                      gpudb::show_resource_objects_ram_evictions
+         *                                      "show_resource_objects_ram_evictions"
+         *                                  <li>@ref
+         *                                      gpudb::show_resource_objects_persist_evictions
+         *                                      "show_resource_objects_persist_evictions"
+         *                                  <li>@ref
          *                                      gpudb::show_resource_objects_owner_resource_group
          *                                      "show_resource_objects_owner_resource_group"
          *                              </ul>
@@ -136,6 +148,14 @@ namespace gpudb
          *                 "show_resource_objects_tier"
          *             <li>@ref gpudb::show_resource_objects_evictable
          *                 "show_resource_objects_evictable"
+         *             <li>@ref gpudb::show_resource_objects_locked
+         *                 "show_resource_objects_locked"
+         *             <li>@ref gpudb::show_resource_objects_pin_count
+         *                 "show_resource_objects_pin_count"
+         *             <li>@ref gpudb::show_resource_objects_ram_evictions
+         *                 "show_resource_objects_ram_evictions"
+         *             <li>@ref gpudb::show_resource_objects_persist_evictions
+         *                 "show_resource_objects_persist_evictions"
          *             <li>@ref
          *                 gpudb::show_resource_objects_owner_resource_group
          *                 "show_resource_objects_owner_resource_group"
@@ -218,7 +238,7 @@ namespace gpudb
         /**
          * Tier usage across ranks. Layout is:
          * response.rank_usage[rank_number][resource_group_name] = group_usage
-         * (as stringified json)
+         * (as stringified JSON).
          */
         std::map<std::string, std::string> rankObjects;
 

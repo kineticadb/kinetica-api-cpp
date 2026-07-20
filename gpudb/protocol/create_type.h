@@ -76,8 +76,8 @@ namespace gpudb
         /**
          * Constructs a CreateTypeRequest object with the specified parameters.
          *
-         * @param[in] typeDefinition_  a JSON string describing the columns of
-         *                             the type to be registered, as described
+         * @param[in] typeDefinition_  JSON string defining the columns of the
+         *                             type to be registered, as described
          *                             above.
          * @param[in] label_  A user-defined description string which can be
          *                    used to differentiate between tables and types
@@ -377,9 +377,33 @@ namespace gpudb
          *                                 gpudb::create_type_update_with_now
          *                                 "create_type_update_with_now": For
          *                                 'date', 'time', 'datetime', or
-         *                                 'timestamp' column types, always
-         *                                 update the field with 'NOW()' upon
-         *                                 any update.
+         *                                 'timestamp' column types, update the
+         *                                 field with 'NOW()' upon any update.
+         *                             <li>@ref
+         *                                 gpudb::create_type_update_with_user
+         *                                 "create_type_update_with_user": For
+         *                                 'charN' or 'string' column types,
+         *                                 update the field with the current
+         *                                 user's name upon any update.
+         *                             <li>@ref gpudb::create_type_default
+         *                                 "create_type_default": Sets a
+         *                                 default value expression for this
+         *                                 column, e.g. 'default(0)',
+         *                                 'default(''pending'')', or
+         *                                 'default(NOW())'.  When the column
+         *                                 is omitted from an insert via
+         *                                 request_schema_str, the expression
+         *                                 is evaluated and the result is used
+         *                                 as the column value.
+         *                             <li>@ref gpudb::create_type_default_sql
+         *                                 "create_type_default_sql": Sets a
+         *                                 default value expression for this
+         *                                 column with SQL syntax, e.g.
+         *                                 'default(0)',
+         *                                 'default(''pending'')', or
+         *                                 'default(NOW())'.  Only used for
+         *                                 showing the expression when
+         *                                 generating SQL DDL.
          *                         </ul>
          *                         The default value is an empty map.
          * @param[in] options_  Optional parameters.
@@ -403,8 +427,8 @@ namespace gpudb
         }
 
         /**
-         * a JSON string describing the columns of the type to be registered,
-         * as described above.
+         * JSON string defining the columns of the type to be registered, as
+         * described above.
          */
         std::string typeDefinition;
 
@@ -600,8 +624,23 @@ namespace gpudb
          *         UUIDs upon insert.
          *     <li>@ref gpudb::create_type_update_with_now
          *         "create_type_update_with_now": For 'date', 'time',
-         *         'datetime', or 'timestamp' column types, always update the
-         *         field with 'NOW()' upon any update.
+         *         'datetime', or 'timestamp' column types, update the field
+         *         with 'NOW()' upon any update.
+         *     <li>@ref gpudb::create_type_update_with_user
+         *         "create_type_update_with_user": For 'charN' or 'string'
+         *         column types, update the field with the current user's name
+         *         upon any update.
+         *     <li>@ref gpudb::create_type_default "create_type_default": Sets
+         *         a default value expression for this column, e.g.
+         *         'default(0)', 'default(''pending'')', or 'default(NOW())'.
+         *         When the column is omitted from an insert via
+         *         request_schema_str, the expression is evaluated and the
+         *         result is used as the column value.
+         *     <li>@ref gpudb::create_type_default_sql
+         *         "create_type_default_sql": Sets a default value expression
+         *         for this column with SQL syntax, e.g. 'default(0)',
+         *         'default(''pending'')', or 'default(NOW())'.  Only used for
+         *         showing the expression when generating SQL DDL.
          * </ul>
          * The default value is an empty map.
          */
@@ -698,7 +737,8 @@ namespace gpudb
         /**
          * An identifier representing the created type. This type_id can be
          * used in subsequent calls to @ref
-         * GPUdb::createTable(const CreateTableRequest&) const "create a table"
+         * GPUdb::createTable(const CreateTableRequest&) const "create a
+         * table".
          */
         std::string typeId;
 

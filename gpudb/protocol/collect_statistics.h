@@ -35,11 +35,18 @@ namespace gpudb
          * @param[in] tableName_  Name of a table, in [schema_name.]table_name
          *                        format, using standard <a
          *                        href="../../../concepts/tables/#table-name-resolution"
-         *                        target="_top">name resolution rules</a>.
-         *                        Must be an existing table.
+         *                        target="_top">name resolution rules</a>. Must
+         *                        be an existing table.  A value of '*'
+         *                        collects statistics on every user table the
+         *                        caller may read (excluding system schemas,
+         *                        views, and temporary tables); when used, @a
+         *                        columnNames_ must be '*'.
          * @param[in] columnNames_  List of one or more column names in @a
          *                          tableName_ for which to collect statistics
-         *                          (cardinality, mean value, etc.).
+         *                          (cardinality, mean value, etc.). A single
+         *                          entry of '*' expands to every collectable
+         *                          column on the table (geometry, vector,
+         *                          JSON, and array columns are skipped).
          * @param[in] options_  Optional parameters. The default value is an
          *                      empty map.
          */
@@ -53,13 +60,18 @@ namespace gpudb
         /**
          * Name of a table, in [ schema_name.\ ]table_name format, using
          * standard <a href="../../../concepts/tables/#table-name-resolution"
-         * target="_top">name resolution rules</a>.  Must be an existing table.
+         * target="_top">name resolution rules</a>. Must be an existing table.
+         * A value of '*' collects statistics on every user table the caller
+         * may read (excluding system schemas, views, and temporary tables);
+         * when used, @ref columnNames must be '*'.
          */
         std::string tableName;
 
         /**
          * List of one or more column names in @ref tableName for which to
-         * collect statistics (cardinality, mean value, etc.).
+         * collect statistics (cardinality, mean value, etc.). A single entry
+         * of '*' expands to every collectable column on the table (geometry,
+         * vector, JSON, and array columns are skipped).
          */
         std::vector<std::string> columnNames;
 

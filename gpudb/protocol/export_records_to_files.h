@@ -50,7 +50,8 @@ namespace gpudb
          * Constructs an ExportRecordsToFilesRequest object with the specified
          * parameters.
          *
-         * @param[in] tableName_
+         * @param[in] tableName_  The name of the table whose records are to be
+         *                        exported.
          * @param[in] filepath_  Path to data export target.  If @a filepath_
          *                       has a file extension, it is read as the name
          *                       of a file. If @a filepath_ is a directory,
@@ -76,7 +77,7 @@ namespace gpudb
          *                              For each source column specified,
          *                              applies the column-property-bound
          *                              format.  Currently supported column
-         *                              properties include date, time, &
+         *                              properties include date, time, and
          *                              datetime. The parameter value must be
          *                              formatted as a JSON string of maps of
          *                              column names to maps of column
@@ -134,11 +135,11 @@ namespace gpudb
          *                              "export_records_to_files_default_column_formats":
          *                              Specifies the default format to use to
          *                              write data.  Currently supported column
-         *                              properties include date, time, &
+         *                              properties include date, time, and
          *                              datetime.  This default
          *                              column-property-bound format can be
          *                              overridden by specifying a column
-         *                              property & format for a given source
+         *                              property and format for a given source
          *                              column in @ref
          *                              gpudb::export_records_to_files_column_formats
          *                              "column_formats". For each specified
@@ -334,6 +335,9 @@ namespace gpudb
         {
         }
 
+        /**
+         * The name of the table whose records are to be exported.
+         */
         std::string tableName;
 
         /**
@@ -357,12 +361,12 @@ namespace gpudb
          *     <li>@ref gpudb::export_records_to_files_column_formats
          *         "export_records_to_files_column_formats": For each source
          *         column specified, applies the column-property-bound format.
-         *         Currently supported column properties include date, time, &
-         *         datetime. The parameter value must be formatted as a JSON
-         *         string of maps of column names to maps of column properties
-         *         to their corresponding column formats, e.g., '{ "order_date"
-         *         : { "date" : "%Y.%m.%d" }, "order_time" : { "time" :
-         *         "%H:%M:%S" } }'.  See @ref
+         *         Currently supported column properties include date, time,
+         *         and datetime. The parameter value must be formatted as a
+         *         JSON string of maps of column names to maps of column
+         *         properties to their corresponding column formats, e.g., '{
+         *         "order_date" : { "date" : "%Y.%m.%d" }, "order_time" : {
+         *         "time" : "%H:%M:%S" } }'.  See @ref
          *         gpudb::export_records_to_files_default_column_formats
          *         "default_column_formats" for valid format syntax.
          *     <li>@ref gpudb::export_records_to_files_columns_to_export
@@ -397,10 +401,11 @@ namespace gpudb
          *     <li>@ref gpudb::export_records_to_files_default_column_formats
          *         "export_records_to_files_default_column_formats": Specifies
          *         the default format to use to write data.  Currently
-         *         supported column properties include date, time, & datetime.
-         *         This default column-property-bound format can be overridden
-         *         by specifying a column property & format for a given source
-         *         column in @ref gpudb::export_records_to_files_column_formats
+         *         supported column properties include date, time, and
+         *         datetime.  This default column-property-bound format can be
+         *         overridden by specifying a column property and format for a
+         *         given source column in @ref
+         *         gpudb::export_records_to_files_column_formats
          *         "column_formats". For each specified annotation, the format
          *         will apply to all columns with that annotation unless custom
          *         @ref gpudb::export_records_to_files_column_formats
@@ -612,36 +617,42 @@ namespace gpudb
         }
 
         /**
-         * Name of source table
+         * Name of source table.
          */
         std::string tableName;
 
         /**
-         * Number of source table records exported
+         * Number of source table records exported.
          */
         int64_t countExported;
 
         /**
-         * Number of source table records skipped
+         * Number of source table records skipped.
          */
         int64_t countSkipped;
 
         /**
-         * Names of all exported files
+         * Names of all exported files.
          */
         std::vector<std::string> files;
 
         /**
-         * Timestamp of last file scanned
+         * Timestamp of last file scanned.
          */
         int64_t lastTimestamp;
 
+        /**
+         * [Not used].
+         */
         std::vector<std::string> dataText;
 
+        /**
+         * [Not used].
+         */
         std::vector<std::vector<uint8_t> > dataBytes;
 
         /**
-         * Additional information
+         * Additional information.
          */
         std::map<std::string, std::string> info;
     };

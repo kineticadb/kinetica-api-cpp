@@ -95,7 +95,7 @@ namespace gpudb
          *                              the schema is non-existent, it will be
          *                              automatically created.
          *                          <li>@ref gpudb::filter_view_id
-         *                              "filter_view_id": view this
+         *                              "filter_view_id": View this
          *                              filtered-view is part of. The default
          *                              value is ''.
          *                          <li>@ref gpudb::filter_ttl "filter_ttl":
@@ -166,7 +166,7 @@ namespace gpudb
          *         "GPUdb::createSchema" to create the schema if non-existent]
          *         Name of a schema for the newly created view. If the schema
          *         is non-existent, it will be automatically created.
-         *     <li>@ref gpudb::filter_view_id "filter_view_id": view this
+         *     <li>@ref gpudb::filter_view_id "filter_view_id": View this
          *         filtered-view is part of. The default value is ''.
          *     <li>@ref gpudb::filter_ttl "filter_ttl": Sets the <a
          *         href="../../../concepts/ttl/" target="_top">TTL</a> of the
@@ -259,7 +259,7 @@ namespace gpudb
          * <ul>
          *     <li>@ref gpudb::filter_qualified_view_name
          *         "filter_qualified_view_name": The fully qualified name of
-         *         the view (i.e. including the schema)
+         *         the view (i.e. including the schema).
          * </ul>
          * The default value is an empty map.
          */

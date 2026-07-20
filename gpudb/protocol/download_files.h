@@ -215,12 +215,12 @@ namespace gpudb
         }
 
         /**
-         * Names of the files downloaded from KiFS
+         * Names of the files downloaded from KiFS.
          */
         std::vector<std::string> fileNames;
 
         /**
-         * Data for the respective downloaded files listed in @ref fileNames
+         * Data for the respective downloaded files listed in @ref fileNames.
          */
         std::vector<std::vector<uint8_t> > fileData;
 

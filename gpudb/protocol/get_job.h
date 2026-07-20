@@ -37,7 +37,7 @@ namespace gpudb
          *                      <ul>
          *                          <li>@ref gpudb::get_job_job_tag
          *                              "get_job_job_tag": Job tag returned in
-         *                              call to create the job
+         *                              call to create the job.
          *                      </ul>
          *                      The default value is an empty map.
          */
@@ -57,7 +57,7 @@ namespace gpudb
          * Optional parameters.
          * <ul>
          *     <li>@ref gpudb::get_job_job_tag "get_job_job_tag": Job tag
-         *         returned in call to create the job
+         *         returned in call to create the job.
          * </ul>
          * The default value is an empty map.
          */
@@ -146,10 +146,10 @@ namespace gpudb
          *         currently executing.
          *     <li>@ref gpudb::get_job_DONE "get_job_DONE": The job execution
          *         has successfully completed and the response is included in
-         *         the @ref jobResponse or @ref jobResponseStr field
+         *         the @ref jobResponse or @ref jobResponseStr field.
          *     <li>@ref gpudb::get_job_ERROR "get_job_ERROR": The job was
          *         attempted, but an error was encountered.  The @ref statusMap
-         *         contains the details of the error in error_message
+         *         contains the details of the error in error_message.
          *     <li>@ref gpudb::get_job_CANCELLED "get_job_CANCELLED": Job
          *         cancellation was requested while the execution was in
          *         progress.
@@ -180,7 +180,7 @@ namespace gpudb
          *     <li>@ref gpudb::get_job_binary "get_job_binary": The job result
          *         is binary-encoded.  It is contained in @ref jobResponse.
          *     <li>@ref gpudb::get_job_json "get_job_json": The job result is
-         *         json-encoded.  It is contained in @ref jobResponseStr.
+         *         JSON-encoded.  It is contained in @ref jobResponseStr.
          * </ul>
          */
         std::string responseEncoding;
@@ -188,14 +188,14 @@ namespace gpudb
         /**
          * The binary-encoded response of the job.  This field is populated
          * only when the job has completed and @ref responseEncoding is @ref
-         * gpudb::get_job_binary "binary"
+         * gpudb::get_job_binary "binary".
          */
         std::vector<uint8_t> jobResponse;
 
         /**
          * The json-encoded response of the job.  This field is populated only
          * when the job has completed and @ref responseEncoding is @ref
-         * gpudb::get_job_json "json"
+         * gpudb::get_job_json "json".
          */
         std::string jobResponseStr;
 

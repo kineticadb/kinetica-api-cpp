@@ -18,7 +18,7 @@ namespace gpudb
      *
      * IMPORTANT: It's highly recommended that you review the <a
      * href="../../../graph_solver/network_graph_solver/" target="_top">Graphs
-     * & Solvers</a> concepts documentation, the <a
+     * and Solvers</a> concepts documentation, the <a
      * href="../../../guides/graph_rest_guide/" target="_top">Graph REST
      * Tutorial</a>, and/or some <a href="../../../guide-tags/graph---match/"
      * target="_top">/match/graph examples</a> before using this endpoint.
@@ -134,26 +134,32 @@ namespace gpudb
          *                                  gpudb::match_graph_match_pickup_dropoff
          *                                  "match_graph_match_pickup_dropoff":
          *                                  Matches the pickups and dropoffs by
-         *                                  optimizing the total trip costs
+         *                                  optimizing the total trip costs.
          *                              <li>@ref
          *                                  gpudb::match_graph_match_clusters
          *                                  "match_graph_match_clusters":
          *                                  Matches the graph nodes with a
          *                                  cluster index using Louvain
-         *                                  clustering algorithm
+         *                                  clustering algorithm.
          *                              <li>@ref
          *                                  gpudb::match_graph_match_pattern
          *                                  "match_graph_match_pattern":
-         *                                  Matches a pattern in the graph
+         *                                  Matches a pattern in the graph.
          *                              <li>@ref
          *                                  gpudb::match_graph_match_embedding
          *                                  "match_graph_match_embedding":
-         *                                  Creates vector node embeddings
+         *                                  Creates vector node embeddings.
          *                              <li>@ref
          *                                  gpudb::match_graph_match_isochrone
          *                                  "match_graph_match_isochrone":
          *                                  Solves for isochrones for a set of
-         *                                  input sources
+         *                                  input sources.
+         *                              <li>@ref
+         *                                  gpudb::match_graph_match_route_detour
+         *                                  "match_graph_match_route_detour":
+         *                                  Computes detour costs for nearby
+         *                                  stations at a mark point along each
+         *                                  source-target route.
          *                          </ul>
          *                          The default value is @ref
          *                          gpudb::match_graph_markov_chain
@@ -210,19 +216,19 @@ namespace gpudb
          *                              the number, the more accurate the
          *                              solution. The default value is '9'.
          *                          <li>@ref gpudb::match_graph_source
-         *                              "match_graph_source": Optional WKT
-         *                              starting point from @a samplePoints_
-         *                              for the solver. The default behavior
-         *                              for the endpoint is to use time to
-         *                              determine the starting point. The
-         *                              default value is 'POINT NULL'.
+         *                              "match_graph_source": WKT starting
+         *                              point from @a samplePoints_ for the
+         *                              solver. The default behavior for the
+         *                              endpoint is to use time to determine
+         *                              the starting point. The default value
+         *                              is 'POINT NULL'.
          *                          <li>@ref gpudb::match_graph_destination
-         *                              "match_graph_destination": Optional WKT
-         *                              ending point from @a samplePoints_ for
-         *                              the solver. The default behavior for
-         *                              the endpoint is to use time to
-         *                              determine the destination point. The
-         *                              default value is 'POINT NULL'.
+         *                              "match_graph_destination": WKT ending
+         *                              point from @a samplePoints_ for the
+         *                              solver. The default behavior for the
+         *                              endpoint is to use time to determine
+         *                              the destination point. The default
+         *                              value is 'POINT NULL'.
          *                          <li>@ref gpudb::match_graph_partial_loading
          *                              "match_graph_partial_loading": For the
          *                              @ref
@@ -237,7 +243,7 @@ namespace gpudb
          *                                  <li>@ref gpudb::match_graph_true
          *                                      "match_graph_true": Partial
          *                                      off-loading at multiple store
-         *                                      (demand) locations
+         *                                      (demand) locations.
          *                                  <li>@ref gpudb::match_graph_false
          *                                      "match_graph_false": No partial
          *                                      off-loading allowed if supply
@@ -373,7 +379,7 @@ namespace gpudb
          *                                      the folded paths.
          *                                  <li>@ref gpudb::match_graph_false
          *                                      "match_graph_false": Do not
-         *                                      filter out the folded paths
+         *                                      filter out the folded paths.
          *                              </ul>
          *                              The default value is @ref
          *                              gpudb::match_graph_false
@@ -482,13 +488,13 @@ namespace gpudb
          *                                      sequences over supply side
          *                                      permutations if total supply is
          *                                      less than twice the total
-         *                                      demand
+         *                                      demand.
          *                                  <li>@ref gpudb::match_graph_false
          *                                      "match_graph_false":
          *                                      Permutations are not performed,
          *                                      rather a specific order of
          *                                      supplies based on capacity is
-         *                                      computed
+         *                                      computed.
          *                              </ul>
          *                              The default value is @ref
          *                              gpudb::match_graph_true
@@ -508,10 +514,10 @@ namespace gpudb
          *                                  <li>@ref gpudb::match_graph_true
          *                                      "match_graph_true": Sets only
          *                                      one visit per demand location
-         *                                      by a salesman (TSM mode)
+         *                                      by a salesman (TSM mode).
          *                                  <li>@ref gpudb::match_graph_false
          *                                      "match_graph_false": No preset
-         *                                      limit (usual MSDO mode)
+         *                                      limit (usual MSDO mode).
          *                              </ul>
          *                              The default value is @ref
          *                              gpudb::match_graph_false
@@ -529,7 +535,7 @@ namespace gpudb
          *                                      optimization is done for trips
          *                                      in round trip manner always
          *                                      returning to originating
-         *                                      locations
+         *                                      locations.
          *                                  <li>@ref gpudb::match_graph_false
          *                                      "match_graph_false": Supplies
          *                                      do not have to come back to
@@ -597,12 +603,12 @@ namespace gpudb
          *                                  <li>@ref gpudb::match_graph_girvan
          *                                      "match_graph_girvan": Uses the
          *                                      Newman Girvan quality metric
-         *                                      for cluster solver
+         *                                      for cluster solver.
          *                                  <li>@ref
          *                                      gpudb::match_graph_spectral
          *                                      "match_graph_spectral": Applies
          *                                      recursive spectral bisection
-         *                                      (RSB) partitioning solver
+         *                                      (RSB) partitioning solver.
          *                              </ul>
          *                              The default value is @ref
          *                              gpudb::match_graph_girvan
@@ -694,6 +700,24 @@ namespace gpudb
          *                              of loops in flushing(inserting) to the
          *                              output table. The default value is
          *                              '1000'.
+         *                          <li>@ref gpudb::match_graph_multi_step
+         *                              "match_graph_multi_step": For the @ref
+         *                              gpudb::match_graph_match_supply_demand
+         *                              "match_supply_demand" solver only. Runs
+         *                              multiple supply demand solver
+         *                              repeatedly in a multi step cycle by
+         *                              switching supplies to demands until it
+         *                              reaches the main hub supply.
+         *                              Supported values:
+         *                              <ul>
+         *                                  <li>@ref gpudb::match_graph_true
+         *                                      "match_graph_true"
+         *                                  <li>@ref gpudb::match_graph_false
+         *                                      "match_graph_false"
+         *                              </ul>
+         *                              The default value is @ref
+         *                              gpudb::match_graph_false
+         *                              "match_graph_false".
          *                          <li>@ref
          *                              gpudb::match_graph_charging_capacity
          *                              "match_graph_charging_capacity": For
@@ -723,6 +747,48 @@ namespace gpudb
          *                              "match_charging_stations" solver only.
          *                              This is the penalty for full charging.
          *                              The default value is '30000.0'.
+         *                          <li>@ref
+         *                              gpudb::match_graph_detour_mark_cost
+         *                              "match_graph_detour_mark_cost": For the
+         *                              @ref
+         *                              gpudb::match_graph_match_route_detour
+         *                              "match_route_detour" solver only. Cost
+         *                              along the route at which to search for
+         *                              nearby stations If zero, it solves
+         *                              along the trip sliding the 3 SSSP cycle
+         *                              kernel by radius amount. The default
+         *                              value is '3600.0'.
+         *                          <li>@ref
+         *                              gpudb::match_graph_detour_reentry_factor
+         *                              "match_graph_detour_reentry_factor":
+         *                              For the @ref
+         *                              gpudb::match_graph_match_route_detour
+         *                              "match_route_detour" solver only.
+         *                              Multiplier on detour_mark_cost to
+         *                              determine the reentry point on the
+         *                              route (default 1.2 means 20% further
+         *                              along). The default value is '1.2'.
+         *                          <li>@ref
+         *                              gpudb::match_graph_detour_search_radius
+         *                              "match_graph_detour_search_radius": For
+         *                              the @ref
+         *                              gpudb::match_graph_match_route_detour
+         *                              "match_route_detour" solver only.
+         *                              Search radius around the mark point for
+         *                              finding nearby prospective stations
+         *                              (e.g. cafes, pit stops, EV charging
+         *                              stations). The default value is
+         *                              '600.0'.
+         *                          <li>@ref
+         *                              gpudb::match_graph_detour_search_limit
+         *                              "match_graph_detour_search_limit": For
+         *                              the @ref
+         *                              gpudb::match_graph_match_route_detour
+         *                              "match_route_detour" solver only.
+         *                              Maximum number of nearby stations to
+         *                              consider within the search radius
+         *                              around the mark point. The default
+         *                              value is '10'.
          *                          <li>@ref gpudb::match_graph_max_hops
          *                              "match_graph_max_hops": For the @ref
          *                              gpudb::match_graph_match_similarity
@@ -955,18 +1021,22 @@ namespace gpudb
          *         node pairs.
          *     <li>@ref gpudb::match_graph_match_pickup_dropoff
          *         "match_graph_match_pickup_dropoff": Matches the pickups and
-         *         dropoffs by optimizing the total trip costs
+         *         dropoffs by optimizing the total trip costs.
          *     <li>@ref gpudb::match_graph_match_clusters
          *         "match_graph_match_clusters": Matches the graph nodes with a
-         *         cluster index using Louvain clustering algorithm
+         *         cluster index using Louvain clustering algorithm.
          *     <li>@ref gpudb::match_graph_match_pattern
-         *         "match_graph_match_pattern": Matches a pattern in the graph
+         *         "match_graph_match_pattern": Matches a pattern in the graph.
          *     <li>@ref gpudb::match_graph_match_embedding
          *         "match_graph_match_embedding": Creates vector node
-         *         embeddings
+         *         embeddings.
          *     <li>@ref gpudb::match_graph_match_isochrone
          *         "match_graph_match_isochrone": Solves for isochrones for a
-         *         set of input sources
+         *         set of input sources.
+         *     <li>@ref gpudb::match_graph_match_route_detour
+         *         "match_graph_match_route_detour": Computes detour costs for
+         *         nearby stations at a mark point along each source-target
+         *         route.
          * </ul>
          * The default value is @ref gpudb::match_graph_markov_chain
          * "match_graph_markov_chain".
@@ -1014,16 +1084,16 @@ namespace gpudb
          *         Length of the sample points lookahead window within the
          *         Markov kernel; the larger the number, the more accurate the
          *         solution. The default value is '9'.
-         *     <li>@ref gpudb::match_graph_source "match_graph_source":
-         *         Optional WKT starting point from @ref samplePoints for the
-         *         solver. The default behavior for the endpoint is to use time
-         *         to determine the starting point. The default value is 'POINT
+         *     <li>@ref gpudb::match_graph_source "match_graph_source": WKT
+         *         starting point from @ref samplePoints for the solver. The
+         *         default behavior for the endpoint is to use time to
+         *         determine the starting point. The default value is 'POINT
          *         NULL'.
          *     <li>@ref gpudb::match_graph_destination
-         *         "match_graph_destination": Optional WKT ending point from
-         *         @ref samplePoints for the solver. The default behavior for
-         *         the endpoint is to use time to determine the destination
-         *         point. The default value is 'POINT NULL'.
+         *         "match_graph_destination": WKT ending point from @ref
+         *         samplePoints for the solver. The default behavior for the
+         *         endpoint is to use time to determine the destination point.
+         *         The default value is 'POINT NULL'.
          *     <li>@ref gpudb::match_graph_partial_loading
          *         "match_graph_partial_loading": For the @ref
          *         gpudb::match_graph_match_supply_demand "match_supply_demand"
@@ -1034,7 +1104,7 @@ namespace gpudb
          *         <ul>
          *             <li>@ref gpudb::match_graph_true "match_graph_true":
          *                 Partial off-loading at multiple store (demand)
-         *                 locations
+         *                 locations.
          *             <li>@ref gpudb::match_graph_false "match_graph_false":
          *                 No partial off-loading allowed if supply is less
          *                 than the store's demand.
@@ -1121,7 +1191,7 @@ namespace gpudb
          *             <li>@ref gpudb::match_graph_true "match_graph_true":
          *                 Filter out the folded paths.
          *             <li>@ref gpudb::match_graph_false "match_graph_false":
-         *                 Do not filter out the folded paths
+         *                 Do not filter out the folded paths.
          *         </ul>
          *         The default value is @ref gpudb::match_graph_false
          *         "match_graph_false".
@@ -1193,10 +1263,10 @@ namespace gpudb
          *         <ul>
          *             <li>@ref gpudb::match_graph_true "match_graph_true":
          *                 Generates sequences over supply side permutations if
-         *                 total supply is less than twice the total demand
+         *                 total supply is less than twice the total demand.
          *             <li>@ref gpudb::match_graph_false "match_graph_false":
          *                 Permutations are not performed, rather a specific
-         *                 order of supplies based on capacity is computed
+         *                 order of supplies based on capacity is computed.
          *         </ul>
          *         The default value is @ref gpudb::match_graph_true
          *         "match_graph_true".
@@ -1210,9 +1280,9 @@ namespace gpudb
          *         <ul>
          *             <li>@ref gpudb::match_graph_true "match_graph_true":
          *                 Sets only one visit per demand location by a
-         *                 salesman (TSM mode)
+         *                 salesman (TSM mode).
          *             <li>@ref gpudb::match_graph_false "match_graph_false":
-         *                 No preset limit (usual MSDO mode)
+         *                 No preset limit (usual MSDO mode).
          *         </ul>
          *         The default value is @ref gpudb::match_graph_false
          *         "match_graph_false".
@@ -1224,7 +1294,7 @@ namespace gpudb
          *         <ul>
          *             <li>@ref gpudb::match_graph_true "match_graph_true": The
          *                 optimization is done for trips in round trip manner
-         *                 always returning to originating locations
+         *                 always returning to originating locations.
          *             <li>@ref gpudb::match_graph_false "match_graph_false":
          *                 Supplies do not have to come back to their
          *                 originating locations in their routes. The routes
@@ -1267,10 +1337,10 @@ namespace gpudb
          *         <ul>
          *             <li>@ref gpudb::match_graph_girvan "match_graph_girvan":
          *                 Uses the Newman Girvan quality metric for cluster
-         *                 solver
+         *                 solver.
          *             <li>@ref gpudb::match_graph_spectral
          *                 "match_graph_spectral": Applies recursive spectral
-         *                 bisection (RSB) partitioning solver
+         *                 bisection (RSB) partitioning solver.
          *         </ul>
          *         The default value is @ref gpudb::match_graph_girvan
          *         "match_graph_girvan".
@@ -1335,6 +1405,18 @@ namespace gpudb
          *         Uses this value as the batch size of the number of loops in
          *         flushing(inserting) to the output table. The default value
          *         is '1000'.
+         *     <li>@ref gpudb::match_graph_multi_step "match_graph_multi_step":
+         *         For the @ref gpudb::match_graph_match_supply_demand
+         *         "match_supply_demand" solver only. Runs multiple supply
+         *         demand solver repeatedly in a multi step cycle by switching
+         *         supplies to demands until it reaches the main hub supply.
+         *         Supported values:
+         *         <ul>
+         *             <li>@ref gpudb::match_graph_true "match_graph_true"
+         *             <li>@ref gpudb::match_graph_false "match_graph_false"
+         *         </ul>
+         *         The default value is @ref gpudb::match_graph_false
+         *         "match_graph_false".
          *     <li>@ref gpudb::match_graph_charging_capacity
          *         "match_graph_charging_capacity": For the @ref
          *         gpudb::match_graph_match_charging_stations
@@ -1354,6 +1436,31 @@ namespace gpudb
          *         gpudb::match_graph_match_charging_stations
          *         "match_charging_stations" solver only. This is the penalty
          *         for full charging. The default value is '30000.0'.
+         *     <li>@ref gpudb::match_graph_detour_mark_cost
+         *         "match_graph_detour_mark_cost": For the @ref
+         *         gpudb::match_graph_match_route_detour "match_route_detour"
+         *         solver only. Cost along the route at which to search for
+         *         nearby stations If zero, it solves along the trip sliding
+         *         the 3 SSSP cycle kernel by radius amount. The default value
+         *         is '3600.0'.
+         *     <li>@ref gpudb::match_graph_detour_reentry_factor
+         *         "match_graph_detour_reentry_factor": For the @ref
+         *         gpudb::match_graph_match_route_detour "match_route_detour"
+         *         solver only. Multiplier on detour_mark_cost to determine the
+         *         reentry point on the route (default 1.2 means 20% further
+         *         along). The default value is '1.2'.
+         *     <li>@ref gpudb::match_graph_detour_search_radius
+         *         "match_graph_detour_search_radius": For the @ref
+         *         gpudb::match_graph_match_route_detour "match_route_detour"
+         *         solver only. Search radius around the mark point for finding
+         *         nearby prospective stations (e.g. cafes, pit stops, EV
+         *         charging stations). The default value is '600.0'.
+         *     <li>@ref gpudb::match_graph_detour_search_limit
+         *         "match_graph_detour_search_limit": For the @ref
+         *         gpudb::match_graph_match_route_detour "match_route_detour"
+         *         solver only. Maximum number of nearby stations to consider
+         *         within the search radius around the mark point. The default
+         *         value is '10'.
          *     <li>@ref gpudb::match_graph_max_hops "match_graph_max_hops": For
          *         the @ref gpudb::match_graph_match_similarity
          *         "match_similarity" and @ref

@@ -57,6 +57,23 @@ namespace gpudb
          *                              graph server(s) to send the request to.
          *                              Default is to send to get information
          *                              about all the servers.
+         *                          <li>@ref
+         *                              gpudb::show_graph_export_graph_schema
+         *                              "show_graph_export_graph_schema": If
+         *                              true, generates the graph ontology
+         *                              (schema) as a DOT format string in the
+         *                              response info field under the key
+         *                              'dot'.
+         *                              Supported values:
+         *                              <ul>
+         *                                  <li>@ref gpudb::show_graph_true
+         *                                      "show_graph_true"
+         *                                  <li>@ref gpudb::show_graph_false
+         *                                      "show_graph_false"
+         *                              </ul>
+         *                              The default value is @ref
+         *                              gpudb::show_graph_false
+         *                              "show_graph_false".
          *                      </ul>
          *                      The default value is an empty map.
          */
@@ -91,6 +108,17 @@ namespace gpudb
          *     <li>@ref gpudb::show_graph_server_id "show_graph_server_id":
          *         Indicates which graph server(s) to send the request to.
          *         Default is to send to get information about all the servers.
+         *     <li>@ref gpudb::show_graph_export_graph_schema
+         *         "show_graph_export_graph_schema": If true, generates the
+         *         graph ontology (schema) as a DOT format string in the
+         *         response info field under the key 'dot'.
+         *         Supported values:
+         *         <ul>
+         *             <li>@ref gpudb::show_graph_true "show_graph_true"
+         *             <li>@ref gpudb::show_graph_false "show_graph_false"
+         *         </ul>
+         *         The default value is @ref gpudb::show_graph_false
+         *         "show_graph_false".
          * </ul>
          * The default value is an empty map.
          */

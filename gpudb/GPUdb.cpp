@@ -7,7 +7,11 @@
 #include <boost/lexical_cast.hpp>
 #include <boost/random.hpp>
 #include <boost/algorithm/string.hpp>
+#include <boost/property_tree/ptree.hpp>
+#include <boost/property_tree/json_parser.hpp>
 #include <snappy.h>
+
+#include <sstream>
 
 #include <algorithm>  // for std::random_shuffle, std::iter_swap
 #include <iostream>
@@ -32,6 +36,11 @@ namespace gpudb {
     const std::string GPUdb::DB_OFFLINE_ERROR_MESSAGE            = "Kinetica is offline";
     const std::string GPUdb::DB_SYSTEM_LIMITED_ERROR_MESSAGE     = "system-limited-fatal";
     const std::string GPUdb::DB_HM_OFFLINE_ERROR_MESSAGE         = "System is offline";
+    // A cluster that (re)joined the ring is replaying its HA queue and is not
+    // ready to serve queries/DML yet; route elsewhere.
+    const std::string GPUdb::DB_DRAINING_HA_QUEUE_ERROR_MESSAGE  = "Unavailable: Draining HA queue";
+    const std::string GPUdb::DB_SHUTTING_DOWN_ERROR_MESSAGE      = "System shutting down";
+    const std::string GPUdb::DB_QUERY_PLANNER_ERROR_MESSAGE      = "Query planner is not running";
 
     const std::string GPUdb::FAILOVER_TRIGGER_MESSAGES[] = {
         DB_CONNECTION_RESET_ERROR_MESSAGE,
@@ -39,7 +48,10 @@ namespace gpudb {
         DB_OFFLINE_ERROR_MESSAGE,
         DB_EXITING_ERROR_MESSAGE,
         DB_SYSTEM_LIMITED_ERROR_MESSAGE,
-        DB_HM_OFFLINE_ERROR_MESSAGE
+        DB_HM_OFFLINE_ERROR_MESSAGE,
+        DB_DRAINING_HA_QUEUE_ERROR_MESSAGE,
+        DB_SHUTTING_DOWN_ERROR_MESSAGE,
+        DB_QUERY_PLANNER_ERROR_MESSAGE
     };
 
     const size_t GPUdb::NUM_TRIGGER_MESSAGES = sizeof(FAILOVER_TRIGGER_MESSAGES)/sizeof(FAILOVER_TRIGGER_MESSAGES[0]); 
@@ -50,11 +62,13 @@ namespace gpudb {
     const std::string GPUdb::HEADER_CONTENT_TYPE   = "Content-type";
     const std::string GPUdb::HEADER_CONTENT_LENGTH = "Content-length";
     const std::string GPUdb::HEADER_HA_SYNC_MODE   = "X-Kinetica-Group";
+    const std::string GPUdb::HEADER_USER_AGENT     = "User-Agent";
 
     const std::string GPUdb::PROTECTED_HEADERS[] = { HEADER_AUTHORIZATION,
                                                      HEADER_CONTENT_TYPE,
                                                      HEADER_CONTENT_LENGTH,
-                                                     HEADER_HA_SYNC_MODE
+                                                     HEADER_HA_SYNC_MODE,
+                                                     HEADER_USER_AGENT
     };
 
     const std::string GPUdb::HA_SYNCHRONICITY_MODE_VALUES[] = {
@@ -358,6 +372,9 @@ namespace gpudb {
         // Seed the RNG for later use
         std::srand( std::time( NULL ) );
 
+        // Build the User-Agent string from options
+        m_userAgent = buildUserAgentString();
+
         // Handle the primary host URL, if any is given
         m_primaryUrlStr = m_options.getPrimaryUrl();
         handlePrimaryURL();
@@ -375,6 +392,27 @@ namespace gpudb {
         // Randomly shuffle the URL list handler (not the list of URLs
         // itself, but another list which keeps the former's indices)
         randomizeURLs();
+
+        // Full HA-aware connections only: if the initially-selected cluster is
+        // not usable (down or draining), fail over to a usable one via the SAME
+        // switchUrl() used at runtime.  A draining node answers status endpoints,
+        // so we must detect draining explicitly rather than rely on a request
+        // failing.  Direct connections (failover or auto-discovery disabled)
+        // connect to the given URL as-is -- this is required so status probes and
+        // the failback poller can still read a draining primary.
+        if ( !m_disableFailover && !m_disableAutoDiscovery && (m_urls.size() > 1) )
+        {
+            const HttpUrl* currentUrl = getUrlPointer();
+            if ( !isClusterUsable( currentUrl->getUrl() ) )
+            {
+                // switchUrl() walks the ring to the first usable cluster, or
+                // throws GPUdbHAUnavailableException if none are usable.  It also
+                // starts the failback poller when a primary is configured, so a
+                // client that connects to a backup because the primary was
+                // draining will automatically fail back once the primary drains.
+                switchUrl( currentUrl );
+            }
+        }
 
         // Ensure that the default synchronicity mode is set in the headers
         setHASyncMode( m_haSyncMode );
@@ -491,13 +529,53 @@ namespace gpudb {
     {
         if( !m_oauthToken.empty()) {
             return "Bearer " + m_oauthToken;
-        } 
+        }
         else if ( !m_username.empty() || !m_password.empty() ) {
             return "Basic " + base64Encode( m_username + ":" + m_password );
         } else {
             return "";
         }
 
+    }
+
+    std::string GPUdb::sanitizeUserAgentToken(const std::string& value)
+    {
+        // Replace any characters that are not alphanumeric, hyphen, underscore,
+        // period, or forward slash with underscores (similar to Python's regex
+        // pattern [^a-zA-Z0-9\-_./])
+        std::string result;
+        result.reserve(value.size());
+        for (char c : value)
+        {
+            if (std::isalnum(static_cast<unsigned char>(c)) ||
+                c == '-' || c == '_' || c == '.' || c == '/')
+            {
+                result.push_back(c);
+            }
+            else
+            {
+                result.push_back('_');
+            }
+        }
+        return result;
+    }
+
+    std::string GPUdb::buildUserAgentString() const
+    {
+        // Format: [<client_name>/<client_version> ]kinetica-api-cpp/<ver>
+        // Similar to Python: [<client_name>/<client_version> ]kinetica-api-python/<ver> (Python/...; OS/...; arch)
+        std::string clientToken;
+        std::string clientName = m_options.getClientName();
+        std::string clientVersion = m_options.getClientVersion();
+
+        if (!clientName.empty() && !clientVersion.empty())
+        {
+            std::string name = sanitizeUserAgentToken(clientName);
+            std::string version = sanitizeUserAgentToken(clientVersion);
+            clientToken = name + "/" + version + " ";
+        }
+
+        return clientToken + "kinetica-api-cpp/" + API_VERSION;
     }
 
     gpudb::GPUdb::HASynchronicityMode GPUdb::createHASyncModeHeader() const {
@@ -636,6 +714,67 @@ namespace gpudb {
             return false;
         }
 
+    }
+
+    bool GPUdb::getSystemRunningStatus(const std::string& url,
+                                       std::string& haStatusOut) const
+    {
+        haStatusOut.clear();
+
+        ShowSystemStatusRequest  request;
+        ShowSystemStatusResponse response;
+        HttpUrl statusUrl( url, "/show/system/status" );
+        response = submitRequest( statusUrl, request, response );
+
+        // "system" value is a JSON object like {"status":"running", ...}.
+        // is_running reflects ONLY whether the process reports "running"; it is
+        // drain-agnostic.  A draining cluster is running (is_running == true)
+        // with ha_status == "draining"; the drain state is carried separately.
+        bool isRunning = false;
+        std::map<std::string, std::string>::const_iterator sysIt =
+            response.statusMap.find( "system" );
+        if ( sysIt != response.statusMap.end() )
+        {
+            try {
+                boost::property_tree::ptree pt;
+                std::istringstream ss( sysIt->second );
+                boost::property_tree::json_parser::read_json( ss, pt );
+                isRunning = ( pt.get<std::string>( "status", "" ) == "running" );
+            } catch (const std::exception&) {
+                // Malformed status JSON: treat as not running.
+            }
+        }
+
+        // "ha_status" value is a JSON object like {"drained":"draining", ...}.
+        std::map<std::string, std::string>::const_iterator haIt =
+            response.statusMap.find( "ha_status" );
+        if ( haIt != response.statusMap.end() )
+        {
+            try {
+                boost::property_tree::ptree pt;
+                std::istringstream ss( haIt->second );
+                boost::property_tree::json_parser::read_json( ss, pt );
+                haStatusOut = pt.get<std::string>( "drained", "" );
+            } catch (const std::exception&) {
+                // Malformed ha_status JSON: leave haStatusOut empty.
+            }
+        }
+
+        return isRunning;
+    }
+
+    bool GPUdb::isClusterUsable(const std::string& url) const
+    {
+        try {
+            std::string haStatus;
+            bool isRunning = getSystemRunningStatus( url, haStatus );
+            // Running but draining => not usable (skip it; route elsewhere).
+            return ( isRunning && (haStatus != "draining") );
+        } catch (const std::exception&) {
+            // Unreachable / error / auth failure => not usable.  Never raise so
+            // this can be used as a loop condition.
+            return false;
+        }
     }
 
     /**
@@ -1054,6 +1193,11 @@ namespace gpudb {
         {
             httpRequest.addRequestHeader( HEADER_HA_SYNC_MODE, HA_SYNCHRONICITY_MODE_VALUES[m_haSyncMode] );
         }
+
+        if (!m_userAgent.empty())
+        {
+            httpRequest.addRequestHeader( HEADER_USER_AGENT, m_userAgent );
+        }
     }
 
 
@@ -1445,10 +1589,14 @@ namespace gpudb {
             throw GPUdbHAUnavailableException( "GPUdb unavailable (no backup cluster exists); ", m_urls );
         }
 
-        while( !isKineticaRunning(m_urls[ m_urlIndices[ m_currentUrl ] ].getUrl())) {
+        // Advance to the next cluster FIRST, then accept only a cluster that is usable
+        // (running AND not draining).  Using isClusterUsable() here -- the same
+        // predicate used at initial connect -- means draining and down clusters
+        // are skipped identically everywhere.
+        do {
             // Increment the index by one (mod url list length)
             m_currentUrl = (m_currentUrl + 1) % m_urls.size();
-            
+
             // If we've circled back; shuffle the indices again so that future
             // requests go to a different randomly selected cluster, but also
             // let the caller know that we've circled back
@@ -1462,7 +1610,7 @@ namespace gpudb {
                 // Let the user know that we've circled back
                 throw GPUdbHAUnavailableException( "GPUdb unavailable (backup clusters exist, but all failed); ", m_urls );
             }
-        }
+        } while( !isClusterUsable( m_urls[ m_urlIndices[ m_currentUrl ] ].getUrl() ) );
 
         if( checkFailbackConditions()) {
             if( !pollerService ) {
@@ -1697,6 +1845,28 @@ namespace gpudb {
     GPUdb::Options& GPUdb::Options::setDisableAutoDiscovery(const bool value)
     {
         m_disableAutoDiscovery = value;
+        return *this;
+    }
+
+    std::string GPUdb::Options::getClientName() const
+    {
+        return m_clientName;
+    }
+
+    std::string GPUdb::Options::getClientVersion() const
+    {
+        return m_clientVersion;
+    }
+
+    GPUdb::Options& GPUdb::Options::setClientName(const std::string& value)
+    {
+        m_clientName = value;
+        return *this;
+    }
+
+    GPUdb::Options& GPUdb::Options::setClientVersion(const std::string& value)
+    {
+        m_clientVersion = value;
         return *this;
     }
 

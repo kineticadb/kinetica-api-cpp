@@ -28,10 +28,7 @@ namespace gpudb
      *
      * Any column(s) can be grouped on, and all column types except
      * unrestricted-length strings may be used for computing applicable
-     * aggregates; columns marked as <a
-     * href="../../../concepts/types/#data-handling"
-     * target="_top">store-only</a> are unable to be used in grouping or
-     * aggregation.
+     * aggregates.
      *
      * The results can be paged via the @ref offset and @ref limit parameters.
      * For example, to get 10 groups with the largest counts the inputs would
@@ -127,7 +124,7 @@ namespace gpudb
          *                    in the server configuration. Use @ref
          *                    gpudb::RawAggregateGroupByResponse::hasMoreRecords
          *                    "hasMoreRecords" to see if more records exist in
-         *                    the result to be fetched, and @a offset_ & @a
+         *                    the result to be fetched, and @a offset_ and @a
          *                    limit_ to request subsequent pages of results.
          *                    The default value is -9999.
          * @param[in] options_  Optional parameters.
@@ -186,7 +183,7 @@ namespace gpudb
          *                          <li>@ref
          *                              gpudb::aggregate_group_by_pipelined_expression_evaluation
          *                              "aggregate_group_by_pipelined_expression_evaluation":
-         *                              evaluate the group-by during last
+         *                              Evaluate the group-by during last
          *                              JoinedSet filter plan step.
          *                              Supported values:
          *                              <ul>
@@ -438,19 +435,119 @@ namespace gpudb
          *                              the @ref
          *                              gpudb::aggregate_group_by_result_table
          *                              "result_table" option.
+         *                          <li>@ref
+         *                              gpudb::aggregate_group_by_partition_type
+         *                              "aggregate_group_by_partition_type": <a
+         *                              href="../../../concepts/tables/#partitioning"
+         *                              target="_top">Partitioning</a> scheme
+         *                              to use for the result table.
+         *                              Supported values:
+         *                              <ul>
+         *                                  <li>@ref
+         *                                      gpudb::aggregate_group_by_RANGE
+         *                                      "aggregate_group_by_RANGE": Use
+         *                                      <a
+         *                                      href="../../../concepts/tables/#partitioning-by-range"
+         *                                      target="_top">range
+         *                                      partitioning</a>.
+         *                                  <li>@ref
+         *                                      gpudb::aggregate_group_by_INTERVAL
+         *                                      "aggregate_group_by_INTERVAL":
+         *                                      Use <a
+         *                                      href="../../../concepts/tables/#partitioning-by-interval"
+         *                                      target="_top">interval
+         *                                      partitioning</a>.
+         *                                  <li>@ref
+         *                                      gpudb::aggregate_group_by_LIST
+         *                                      "aggregate_group_by_LIST": Use
+         *                                      <a
+         *                                      href="../../../concepts/tables/#partitioning-by-list"
+         *                                      target="_top">list
+         *                                      partitioning</a>.
+         *                                  <li>@ref
+         *                                      gpudb::aggregate_group_by_HASH
+         *                                      "aggregate_group_by_HASH": Use
+         *                                      <a
+         *                                      href="../../../concepts/tables/#partitioning-by-hash"
+         *                                      target="_top">hash
+         *                                      partitioning</a>.
+         *                                  <li>@ref
+         *                                      gpudb::aggregate_group_by_SERIES
+         *                                      "aggregate_group_by_SERIES":
+         *                                      Use <a
+         *                                      href="../../../concepts/tables/#partitioning-by-series"
+         *                                      target="_top">series
+         *                                      partitioning</a>.
+         *                              </ul>
+         *                          <li>@ref
+         *                              gpudb::aggregate_group_by_partition_keys
+         *                              "aggregate_group_by_partition_keys":
+         *                              Comma-separated list of partition keys,
+         *                              which are the columns or column
+         *                              expressions by which records will be
+         *                              assigned to partitions defined by @ref
+         *                              gpudb::aggregate_group_by_partition_definitions
+         *                              "partition_definitions".
+         *                          <li>@ref
+         *                              gpudb::aggregate_group_by_partition_definitions
+         *                              "aggregate_group_by_partition_definitions":
+         *                              Comma-separated list of partition
+         *                              definitions, whose format depends on
+         *                              the choice of @ref
+         *                              gpudb::aggregate_group_by_partition_type
+         *                              "partition_type".  See <a
+         *                              href="../../../concepts/tables/#partitioning-by-range"
+         *                              target="_top">range partitioning</a>,
+         *                              <a
+         *                              href="../../../concepts/tables/#partitioning-by-interval"
+         *                              target="_top">interval
+         *                              partitioning</a>, <a
+         *                              href="../../../concepts/tables/#partitioning-by-list"
+         *                              target="_top">list partitioning</a>, <a
+         *                              href="../../../concepts/tables/#partitioning-by-hash"
+         *                              target="_top">hash partitioning</a>, or
+         *                              <a
+         *                              href="../../../concepts/tables/#partitioning-by-series"
+         *                              target="_top">series partitioning</a>
+         *                              for example formats.
+         *                          <li>@ref
+         *                              gpudb::aggregate_group_by_is_automatic_partition
+         *                              "aggregate_group_by_is_automatic_partition":
+         *                              If @ref gpudb::aggregate_group_by_true
+         *                              "true", a new partition will be created
+         *                              for values which don't fall into an
+         *                              existing partition.  Currently only
+         *                              supported for <a
+         *                              href="../../../concepts/tables/#partitioning-by-list"
+         *                              target="_top">list partitions</a>.
+         *                              Supported values:
+         *                              <ul>
+         *                                  <li>@ref
+         *                                      gpudb::aggregate_group_by_true
+         *                                      "aggregate_group_by_true"
+         *                                  <li>@ref
+         *                                      gpudb::aggregate_group_by_false
+         *                                      "aggregate_group_by_false"
+         *                              </ul>
+         *                              The default value is @ref
+         *                              gpudb::aggregate_group_by_false
+         *                              "aggregate_group_by_false".
          *                          <li>@ref gpudb::aggregate_group_by_view_id
          *                              "aggregate_group_by_view_id": ID of
          *                              view of which the result table will be
          *                              a member. The default value is ''.
          *                          <li>@ref gpudb::aggregate_group_by_pivot
-         *                              "aggregate_group_by_pivot": pivot
-         *                              column
+         *                              "aggregate_group_by_pivot": Pivot
+         *                              column.
          *                          <li>@ref
          *                              gpudb::aggregate_group_by_pivot_values
-         *                              "aggregate_group_by_pivot_values": The
-         *                              value list provided will become the
-         *                              column headers in the output. Should be
-         *                              the values from the pivot_column.
+         *                              "aggregate_group_by_pivot_values":
+         *                              Comma-separated list of the values in
+         *                              the @ref
+         *                              gpudb::aggregate_group_by_pivot "pivot"
+         *                              column.  The list provided will become
+         *                              the column header prefixes in the
+         *                              output.
          *                          <li>@ref
          *                              gpudb::aggregate_group_by_grouping_sets
          *                              "aggregate_group_by_grouping_sets":
@@ -521,7 +618,7 @@ namespace gpudb
          *                    in the server configuration. Use @ref
          *                    gpudb::RawAggregateGroupByResponse::hasMoreRecords
          *                    "hasMoreRecords" to see if more records exist in
-         *                    the result to be fetched, and @a offset_ & @a
+         *                    the result to be fetched, and @a offset_ and @a
          *                    limit_ to request subsequent pages of results.
          *                    The default value is -9999.
          * @param[in] encoding_  Specifies the encoding for returned records.
@@ -534,7 +631,7 @@ namespace gpudb
          *                           <li>@ref gpudb::aggregate_group_by_json
          *                               "aggregate_group_by_json": Indicates
          *                               that the returned records should be
-         *                               json encoded.
+         *                               JSON-encoded.
          *                       </ul>
          *                       The default value is @ref
          *                       gpudb::aggregate_group_by_binary
@@ -595,7 +692,7 @@ namespace gpudb
          *                          <li>@ref
          *                              gpudb::aggregate_group_by_pipelined_expression_evaluation
          *                              "aggregate_group_by_pipelined_expression_evaluation":
-         *                              evaluate the group-by during last
+         *                              Evaluate the group-by during last
          *                              JoinedSet filter plan step.
          *                              Supported values:
          *                              <ul>
@@ -847,19 +944,119 @@ namespace gpudb
          *                              the @ref
          *                              gpudb::aggregate_group_by_result_table
          *                              "result_table" option.
+         *                          <li>@ref
+         *                              gpudb::aggregate_group_by_partition_type
+         *                              "aggregate_group_by_partition_type": <a
+         *                              href="../../../concepts/tables/#partitioning"
+         *                              target="_top">Partitioning</a> scheme
+         *                              to use for the result table.
+         *                              Supported values:
+         *                              <ul>
+         *                                  <li>@ref
+         *                                      gpudb::aggregate_group_by_RANGE
+         *                                      "aggregate_group_by_RANGE": Use
+         *                                      <a
+         *                                      href="../../../concepts/tables/#partitioning-by-range"
+         *                                      target="_top">range
+         *                                      partitioning</a>.
+         *                                  <li>@ref
+         *                                      gpudb::aggregate_group_by_INTERVAL
+         *                                      "aggregate_group_by_INTERVAL":
+         *                                      Use <a
+         *                                      href="../../../concepts/tables/#partitioning-by-interval"
+         *                                      target="_top">interval
+         *                                      partitioning</a>.
+         *                                  <li>@ref
+         *                                      gpudb::aggregate_group_by_LIST
+         *                                      "aggregate_group_by_LIST": Use
+         *                                      <a
+         *                                      href="../../../concepts/tables/#partitioning-by-list"
+         *                                      target="_top">list
+         *                                      partitioning</a>.
+         *                                  <li>@ref
+         *                                      gpudb::aggregate_group_by_HASH
+         *                                      "aggregate_group_by_HASH": Use
+         *                                      <a
+         *                                      href="../../../concepts/tables/#partitioning-by-hash"
+         *                                      target="_top">hash
+         *                                      partitioning</a>.
+         *                                  <li>@ref
+         *                                      gpudb::aggregate_group_by_SERIES
+         *                                      "aggregate_group_by_SERIES":
+         *                                      Use <a
+         *                                      href="../../../concepts/tables/#partitioning-by-series"
+         *                                      target="_top">series
+         *                                      partitioning</a>.
+         *                              </ul>
+         *                          <li>@ref
+         *                              gpudb::aggregate_group_by_partition_keys
+         *                              "aggregate_group_by_partition_keys":
+         *                              Comma-separated list of partition keys,
+         *                              which are the columns or column
+         *                              expressions by which records will be
+         *                              assigned to partitions defined by @ref
+         *                              gpudb::aggregate_group_by_partition_definitions
+         *                              "partition_definitions".
+         *                          <li>@ref
+         *                              gpudb::aggregate_group_by_partition_definitions
+         *                              "aggregate_group_by_partition_definitions":
+         *                              Comma-separated list of partition
+         *                              definitions, whose format depends on
+         *                              the choice of @ref
+         *                              gpudb::aggregate_group_by_partition_type
+         *                              "partition_type".  See <a
+         *                              href="../../../concepts/tables/#partitioning-by-range"
+         *                              target="_top">range partitioning</a>,
+         *                              <a
+         *                              href="../../../concepts/tables/#partitioning-by-interval"
+         *                              target="_top">interval
+         *                              partitioning</a>, <a
+         *                              href="../../../concepts/tables/#partitioning-by-list"
+         *                              target="_top">list partitioning</a>, <a
+         *                              href="../../../concepts/tables/#partitioning-by-hash"
+         *                              target="_top">hash partitioning</a>, or
+         *                              <a
+         *                              href="../../../concepts/tables/#partitioning-by-series"
+         *                              target="_top">series partitioning</a>
+         *                              for example formats.
+         *                          <li>@ref
+         *                              gpudb::aggregate_group_by_is_automatic_partition
+         *                              "aggregate_group_by_is_automatic_partition":
+         *                              If @ref gpudb::aggregate_group_by_true
+         *                              "true", a new partition will be created
+         *                              for values which don't fall into an
+         *                              existing partition.  Currently only
+         *                              supported for <a
+         *                              href="../../../concepts/tables/#partitioning-by-list"
+         *                              target="_top">list partitions</a>.
+         *                              Supported values:
+         *                              <ul>
+         *                                  <li>@ref
+         *                                      gpudb::aggregate_group_by_true
+         *                                      "aggregate_group_by_true"
+         *                                  <li>@ref
+         *                                      gpudb::aggregate_group_by_false
+         *                                      "aggregate_group_by_false"
+         *                              </ul>
+         *                              The default value is @ref
+         *                              gpudb::aggregate_group_by_false
+         *                              "aggregate_group_by_false".
          *                          <li>@ref gpudb::aggregate_group_by_view_id
          *                              "aggregate_group_by_view_id": ID of
          *                              view of which the result table will be
          *                              a member. The default value is ''.
          *                          <li>@ref gpudb::aggregate_group_by_pivot
-         *                              "aggregate_group_by_pivot": pivot
-         *                              column
+         *                              "aggregate_group_by_pivot": Pivot
+         *                              column.
          *                          <li>@ref
          *                              gpudb::aggregate_group_by_pivot_values
-         *                              "aggregate_group_by_pivot_values": The
-         *                              value list provided will become the
-         *                              column headers in the output. Should be
-         *                              the values from the pivot_column.
+         *                              "aggregate_group_by_pivot_values":
+         *                              Comma-separated list of the values in
+         *                              the @ref
+         *                              gpudb::aggregate_group_by_pivot "pivot"
+         *                              column.  The list provided will become
+         *                              the column header prefixes in the
+         *                              output.
          *                          <li>@ref
          *                              gpudb::aggregate_group_by_grouping_sets
          *                              "aggregate_group_by_grouping_sets":
@@ -934,7 +1131,7 @@ namespace gpudb
          * configuration. Use @ref
          * gpudb::RawAggregateGroupByResponse::hasMoreRecords "hasMoreRecords"
          * to see if more records exist in the result to be fetched, and @ref
-         * offset & @ref limit to request subsequent pages of results. The
+         * offset and @ref limit to request subsequent pages of results. The
          * default value is -9999.
          */
         int64_t limit;
@@ -948,7 +1145,7 @@ namespace gpudb
          *         records should be binary encoded.
          *     <li>@ref gpudb::aggregate_group_by_json
          *         "aggregate_group_by_json": Indicates that the returned
-         *         records should be json encoded.
+         *         records should be JSON-encoded.
          * </ul>
          * The default value is @ref gpudb::aggregate_group_by_binary
          * "aggregate_group_by_binary".
@@ -998,7 +1195,7 @@ namespace gpudb
          *     <li>@ref
          *         gpudb::aggregate_group_by_pipelined_expression_evaluation
          *         "aggregate_group_by_pipelined_expression_evaluation":
-         *         evaluate the group-by during last JoinedSet filter plan
+         *         Evaluate the group-by during last JoinedSet filter plan
          *         step.
          *         Supported values:
          *         <ul>
@@ -1171,15 +1368,81 @@ namespace gpudb
          *         be used in combination with the @ref
          *         gpudb::aggregate_group_by_result_table "result_table"
          *         option.
+         *     <li>@ref gpudb::aggregate_group_by_partition_type
+         *         "aggregate_group_by_partition_type": <a
+         *         href="../../../concepts/tables/#partitioning"
+         *         target="_top">Partitioning</a> scheme to use for the result
+         *         table.
+         *         Supported values:
+         *         <ul>
+         *             <li>@ref gpudb::aggregate_group_by_RANGE
+         *                 "aggregate_group_by_RANGE": Use <a
+         *                 href="../../../concepts/tables/#partitioning-by-range"
+         *                 target="_top">range partitioning</a>.
+         *             <li>@ref gpudb::aggregate_group_by_INTERVAL
+         *                 "aggregate_group_by_INTERVAL": Use <a
+         *                 href="../../../concepts/tables/#partitioning-by-interval"
+         *                 target="_top">interval partitioning</a>.
+         *             <li>@ref gpudb::aggregate_group_by_LIST
+         *                 "aggregate_group_by_LIST": Use <a
+         *                 href="../../../concepts/tables/#partitioning-by-list"
+         *                 target="_top">list partitioning</a>.
+         *             <li>@ref gpudb::aggregate_group_by_HASH
+         *                 "aggregate_group_by_HASH": Use <a
+         *                 href="../../../concepts/tables/#partitioning-by-hash"
+         *                 target="_top">hash partitioning</a>.
+         *             <li>@ref gpudb::aggregate_group_by_SERIES
+         *                 "aggregate_group_by_SERIES": Use <a
+         *                 href="../../../concepts/tables/#partitioning-by-series"
+         *                 target="_top">series partitioning</a>.
+         *         </ul>
+         *     <li>@ref gpudb::aggregate_group_by_partition_keys
+         *         "aggregate_group_by_partition_keys": Comma-separated list of
+         *         partition keys, which are the columns or column expressions
+         *         by which records will be assigned to partitions defined by
+         *         @ref gpudb::aggregate_group_by_partition_definitions
+         *         "partition_definitions".
+         *     <li>@ref gpudb::aggregate_group_by_partition_definitions
+         *         "aggregate_group_by_partition_definitions": Comma-separated
+         *         list of partition definitions, whose format depends on the
+         *         choice of @ref gpudb::aggregate_group_by_partition_type
+         *         "partition_type".  See <a
+         *         href="../../../concepts/tables/#partitioning-by-range"
+         *         target="_top">range partitioning</a>, <a
+         *         href="../../../concepts/tables/#partitioning-by-interval"
+         *         target="_top">interval partitioning</a>, <a
+         *         href="../../../concepts/tables/#partitioning-by-list"
+         *         target="_top">list partitioning</a>, <a
+         *         href="../../../concepts/tables/#partitioning-by-hash"
+         *         target="_top">hash partitioning</a>, or <a
+         *         href="../../../concepts/tables/#partitioning-by-series"
+         *         target="_top">series partitioning</a> for example formats.
+         *     <li>@ref gpudb::aggregate_group_by_is_automatic_partition
+         *         "aggregate_group_by_is_automatic_partition": If @ref
+         *         gpudb::aggregate_group_by_true "true", a new partition will
+         *         be created for values which don't fall into an existing
+         *         partition.  Currently only supported for <a
+         *         href="../../../concepts/tables/#partitioning-by-list"
+         *         target="_top">list partitions</a>.
+         *         Supported values:
+         *         <ul>
+         *             <li>@ref gpudb::aggregate_group_by_true
+         *                 "aggregate_group_by_true"
+         *             <li>@ref gpudb::aggregate_group_by_false
+         *                 "aggregate_group_by_false"
+         *         </ul>
+         *         The default value is @ref gpudb::aggregate_group_by_false
+         *         "aggregate_group_by_false".
          *     <li>@ref gpudb::aggregate_group_by_view_id
          *         "aggregate_group_by_view_id": ID of view of which the result
          *         table will be a member. The default value is ''.
          *     <li>@ref gpudb::aggregate_group_by_pivot
-         *         "aggregate_group_by_pivot": pivot column
+         *         "aggregate_group_by_pivot": Pivot column.
          *     <li>@ref gpudb::aggregate_group_by_pivot_values
-         *         "aggregate_group_by_pivot_values": The value list provided
-         *         will become the column headers in the output. Should be the
-         *         values from the pivot_column.
+         *         "aggregate_group_by_pivot_values": Comma-separated list of
+         *         the values in the @ref gpudb::aggregate_group_by_pivot
+         *         "pivot" column.  The list provided will become the column
+         *         header prefixes in the output.
          *     <li>@ref gpudb::aggregate_group_by_grouping_sets
          *         "aggregate_group_by_grouping_sets": Customize the grouping
          *         attribute sets to compute the aggregates. These sets can

@@ -14,7 +14,7 @@ namespace gpudb
      * "GPUdb::exportRecordsToTable".
      *
      * Exports records from source table to the specified target table in an
-     * external database
+     * external database.
      */
     struct ExportRecordsToTableRequest
     {
@@ -55,7 +55,7 @@ namespace gpudb
          *                              "export_records_to_table_datasink_name":
          *                              Name of an existing external data sink
          *                              to which table name specified in @a
-         *                              tableName_ will be exported
+         *                              tableName_ will be exported.
          *                          <li>@ref
          *                              gpudb::export_records_to_table_jdbc_session_init_statement
          *                              "export_records_to_table_jdbc_session_init_statement":
@@ -144,7 +144,7 @@ namespace gpudb
          *     <li>@ref gpudb::export_records_to_table_datasink_name
          *         "export_records_to_table_datasink_name": Name of an existing
          *         external data sink to which table name specified in @ref
-         *         tableName will be exported
+         *         tableName will be exported.
          *     <li>@ref
          *         gpudb::export_records_to_table_jdbc_session_init_statement
          *         "export_records_to_table_jdbc_session_init_statement":

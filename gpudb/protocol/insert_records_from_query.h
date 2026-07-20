@@ -14,7 +14,7 @@ namespace gpudb
      * "GPUdb::insertRecordsFromQuery".
      *
      * Computes remote query result and inserts the result data into a new or
-     * existing table
+     * existing table.
      */
     struct InsertRecordsFromQueryRequest
     {
@@ -49,7 +49,7 @@ namespace gpudb
          *                        href="../../../concepts/tables/#table-naming-criteria"
          *                        target="_top">table naming criteria</a>.
          * @param[in] remoteQuery_  Query for which result data needs to be
-         *                          imported
+         *                          imported.
          * @param[in] modifyColumns_  Not implemented yet. The default value is
          *                            an empty map.
          * @param[in] createTableOptions_  Options used when creating the
@@ -323,9 +323,9 @@ namespace gpudb
          *                          <li>@ref
          *                              gpudb::insert_records_from_query_bad_record_table_name
          *                              "insert_records_from_query_bad_record_table_name":
-         *                              Optional name of a table to which
-         *                              records that were rejected are written.
-         *                              The bad-record-table has the following
+         *                              Name of a table to which records that
+         *                              were rejected are written.  The
+         *                              bad-record-table has the following
          *                              columns: line_number (long),
          *                              line_rejected (string), error_message
          *                              (string). When error handling is Abort,
@@ -336,7 +336,7 @@ namespace gpudb
          *                              A positive integer indicating the
          *                              maximum number of records that can be
          *                              written to the bad-record-table.
-         *                              Default value is 10000
+         *                              Default value is 10000.
          *                          <li>@ref
          *                              gpudb::insert_records_from_query_batch_size
          *                              "insert_records_from_query_batch_size":
@@ -346,7 +346,7 @@ namespace gpudb
          *                              gpudb::insert_records_from_query_datasource_name
          *                              "insert_records_from_query_datasource_name":
          *                              Name of an existing external data
-         *                              source from which table will be loaded
+         *                              source from which table will be loaded.
          *                          <li>@ref
          *                              gpudb::insert_records_from_query_error_handling
          *                              "insert_records_from_query_error_handling":
@@ -362,9 +362,13 @@ namespace gpudb
          *                                      possible; otherwise, the
          *                                      malformed records are skipped.
          *                                  <li>@ref
+         *                                      gpudb::insert_records_from_query_skip
+         *                                      "insert_records_from_query_skip":
+         *                                      Malformed records are skipped.
+         *                                  <li>@ref
          *                                      gpudb::insert_records_from_query_ignore_bad_records
          *                                      "insert_records_from_query_ignore_bad_records":
-         *                                      Malformed records are skipped.
+         *                                      Alias for skip.
          *                                  <li>@ref
          *                                      gpudb::insert_records_from_query_abort
          *                                      "insert_records_from_query_abort":
@@ -419,14 +423,14 @@ namespace gpudb
          *                                      "insert_records_from_query_true":
          *                                      Ignore new records whose
          *                                      primary key values collide with
-         *                                      those of existing records
+         *                                      those of existing records.
          *                                  <li>@ref
          *                                      gpudb::insert_records_from_query_false
          *                                      "insert_records_from_query_false":
          *                                      Treat as errors any new records
          *                                      whose primary key values
          *                                      collide with those of existing
-         *                                      records
+         *                                      records.
          *                              </ul>
          *                              The default value is @ref
          *                              gpudb::insert_records_from_query_false
@@ -444,7 +448,7 @@ namespace gpudb
          *                                      "insert_records_from_query_full":
          *                                      Run a type inference on the
          *                                      source data (if needed) and
-         *                                      ingest
+         *                                      ingest.
          *                                  <li>@ref
          *                                      gpudb::insert_records_from_query_dry_run
          *                                      "insert_records_from_query_dry_run":
@@ -475,36 +479,36 @@ namespace gpudb
          *                          <li>@ref
          *                              gpudb::insert_records_from_query_jdbc_session_init_statement
          *                              "insert_records_from_query_jdbc_session_init_statement":
-         *                              Executes the statement per each jdbc
+         *                              Executes the statement per each JDBC
          *                              session before doing actual load. The
          *                              default value is ''.
          *                          <li>@ref
          *                              gpudb::insert_records_from_query_num_splits_per_rank
          *                              "insert_records_from_query_num_splits_per_rank":
-         *                              Optional: number of splits for reading
-         *                              data per rank. Default will be
+         *                              Number of splits for reading data per
+         *                              rank. Default will be
          *                              external_file_reader_num_tasks. The
          *                              default value is ''.
          *                          <li>@ref
          *                              gpudb::insert_records_from_query_num_tasks_per_rank
          *                              "insert_records_from_query_num_tasks_per_rank":
-         *                              Optional: number of tasks for reading
-         *                              data per rank. Default will be
-         *                              external_file_reader_num_tasks
+         *                              Number of tasks for reading data per
+         *                              rank. Default will be
+         *                              external_file_reader_num_tasks.
          *                          <li>@ref
          *                              gpudb::insert_records_from_query_primary_keys
          *                              "insert_records_from_query_primary_keys":
-         *                              Optional: comma separated list of
-         *                              column names, to set as primary keys,
-         *                              when not specified in the type. The
-         *                              default value is ''.
+         *                              Comma separated list of column names,
+         *                              to set as primary keys, when not
+         *                              specified in the type. The default
+         *                              value is ''.
          *                          <li>@ref
          *                              gpudb::insert_records_from_query_shard_keys
          *                              "insert_records_from_query_shard_keys":
-         *                              Optional: comma separated list of
-         *                              column names, to set as primary keys,
-         *                              when not specified in the type. The
-         *                              default value is ''.
+         *                              Comma separated list of column names,
+         *                              to set as shard keys, when not
+         *                              specified in the type. The default
+         *                              value is ''.
          *                          <li>@ref
          *                              gpudb::insert_records_from_query_subscribe
          *                              "insert_records_from_query_subscribe":
@@ -547,7 +551,7 @@ namespace gpudb
          *                              gpudb::insert_records_from_query_remote_query
          *                              "insert_records_from_query_remote_query":
          *                              Remote SQL query from which data will
-         *                              be sourced
+         *                              be sourced.
          *                          <li>@ref
          *                              gpudb::insert_records_from_query_remote_query_order_by
          *                              "insert_records_from_query_remote_query_order_by":
@@ -572,9 +576,10 @@ namespace gpudb
          *                          <li>@ref
          *                              gpudb::insert_records_from_query_remote_query_partition_column
          *                              "insert_records_from_query_remote_query_partition_column":
-         *                              Alias name for
-         *                              remote_query_filter_column. The default
-         *                              value is ''.
+         *                              Alias name for @ref
+         *                              gpudb::insert_records_from_query_remote_query_filter_column
+         *                              "remote_query_filter_column". The
+         *                              default value is ''.
          *                          <li>@ref
          *                              gpudb::insert_records_from_query_truncate_strings
          *                              "insert_records_from_query_truncate_strings":
@@ -594,6 +599,32 @@ namespace gpudb
          *                              The default value is @ref
          *                              gpudb::insert_records_from_query_false
          *                              "insert_records_from_query_false".
+         *                          <li>@ref
+         *                              gpudb::insert_records_from_query_enable_inplace_updates
+         *                              "insert_records_from_query_enable_inplace_updates":
+         *                              Applies only when upserting (when
+         *                              update_on_existing_pk is true). If set
+         *                              to true (the default), an existing
+         *                              record matched by primary key is
+         *                              modified in place. If set to false, the
+         *                              matched record is updated by deleting
+         *                              it and inserting a replacement (delete
+         *                              and insert), which prevents the change
+         *                              from being reflected in dependent
+         *                              materialized views until they are
+         *                              refreshed.
+         *                              Supported values:
+         *                              <ul>
+         *                                  <li>@ref
+         *                                      gpudb::insert_records_from_query_true
+         *                                      "insert_records_from_query_true"
+         *                                  <li>@ref
+         *                                      gpudb::insert_records_from_query_false
+         *                                      "insert_records_from_query_false"
+         *                              </ul>
+         *                              The default value is @ref
+         *                              gpudb::insert_records_from_query_true
+         *                              "insert_records_from_query_true".
          *                          <li>@ref
          *                              gpudb::insert_records_from_query_update_on_existing_pk
          *                              "insert_records_from_query_update_on_existing_pk":
@@ -617,7 +648,7 @@ namespace gpudb
          *                              rejected and the error handled as
          *                              determined by @ref
          *                              gpudb::insert_records_from_query_ignore_existing_pk
-         *                              "ignore_existing_pk" & @ref
+         *                              "ignore_existing_pk" and @ref
          *                              gpudb::insert_records_from_query_error_handling
          *                              "error_handling".  If the specified
          *                              table does not have a primary key, then
@@ -628,12 +659,12 @@ namespace gpudb
          *                                      gpudb::insert_records_from_query_true
          *                                      "insert_records_from_query_true":
          *                                      Upsert new records when primary
-         *                                      keys match existing records
+         *                                      keys match existing records.
          *                                  <li>@ref
          *                                      gpudb::insert_records_from_query_false
          *                                      "insert_records_from_query_false":
          *                                      Reject new records when primary
-         *                                      keys match existing records
+         *                                      keys match existing records.
          *                              </ul>
          *                              The default value is @ref
          *                              gpudb::insert_records_from_query_false
@@ -665,7 +696,7 @@ namespace gpudb
         std::string tableName;
 
         /**
-         * Query for which result data needs to be imported
+         * Query for which result data needs to be imported.
          */
         std::string remoteQuery;
 
@@ -850,24 +881,23 @@ namespace gpudb
          * Optional parameters.
          * <ul>
          *     <li>@ref gpudb::insert_records_from_query_bad_record_table_name
-         *         "insert_records_from_query_bad_record_table_name": Optional
-         *         name of a table to which records that were rejected are
-         *         written.  The bad-record-table has the following columns:
-         *         line_number (long), line_rejected (string), error_message
-         *         (string). When error handling is Abort, bad records table is
-         *         not populated.
+         *         "insert_records_from_query_bad_record_table_name": Name of a
+         *         table to which records that were rejected are written.  The
+         *         bad-record-table has the following columns: line_number
+         *         (long), line_rejected (string), error_message (string). When
+         *         error handling is Abort, bad records table is not populated.
          *     <li>@ref gpudb::insert_records_from_query_bad_record_table_limit
          *         "insert_records_from_query_bad_record_table_limit": A
          *         positive integer indicating the maximum number of records
          *         that can be  written to the bad-record-table.   Default
-         *         value is 10000
+         *         value is 10000.
          *     <li>@ref gpudb::insert_records_from_query_batch_size
          *         "insert_records_from_query_batch_size": Number of records
          *         per batch when inserting data.
          *     <li>@ref gpudb::insert_records_from_query_datasource_name
          *         "insert_records_from_query_datasource_name": Name of an
          *         existing external data source from which table will be
-         *         loaded
+         *         loaded.
          *     <li>@ref gpudb::insert_records_from_query_error_handling
          *         "insert_records_from_query_error_handling": Specifies how
          *         errors should be handled upon insertion.
@@ -878,10 +908,13 @@ namespace gpudb
          *                 missing columns are populated with nulls if
          *                 possible; otherwise, the malformed records are
          *                 skipped.
+         *             <li>@ref gpudb::insert_records_from_query_skip
+         *                 "insert_records_from_query_skip": Malformed records
+         *                 are skipped.
          *             <li>@ref
          *                 gpudb::insert_records_from_query_ignore_bad_records
          *                 "insert_records_from_query_ignore_bad_records":
-         *                 Malformed records are skipped.
+         *                 Alias for skip.
          *             <li>@ref gpudb::insert_records_from_query_abort
          *                 "insert_records_from_query_abort": Stops current
          *                 insertion and aborts entire operation when an error
@@ -921,11 +954,11 @@ namespace gpudb
          *             <li>@ref gpudb::insert_records_from_query_true
          *                 "insert_records_from_query_true": Ignore new records
          *                 whose primary key values collide with those of
-         *                 existing records
+         *                 existing records.
          *             <li>@ref gpudb::insert_records_from_query_false
          *                 "insert_records_from_query_false": Treat as errors
          *                 any new records whose primary key values collide
-         *                 with those of existing records
+         *                 with those of existing records.
          *         </ul>
          *         The default value is @ref
          *         gpudb::insert_records_from_query_false
@@ -938,7 +971,7 @@ namespace gpudb
          *         <ul>
          *             <li>@ref gpudb::insert_records_from_query_full
          *                 "insert_records_from_query_full": Run a type
-         *                 inference on the source data (if needed) and ingest
+         *                 inference on the source data (if needed) and ingest.
          *             <li>@ref gpudb::insert_records_from_query_dry_run
          *                 "insert_records_from_query_dry_run": Does not load
          *                 data, but walks through the source data and
@@ -963,24 +996,24 @@ namespace gpudb
          *     <li>@ref
          *         gpudb::insert_records_from_query_jdbc_session_init_statement
          *         "insert_records_from_query_jdbc_session_init_statement":
-         *         Executes the statement per each jdbc session before doing
+         *         Executes the statement per each JDBC session before doing
          *         actual load. The default value is ''.
          *     <li>@ref gpudb::insert_records_from_query_num_splits_per_rank
-         *         "insert_records_from_query_num_splits_per_rank": Optional:
-         *         number of splits for reading data per rank. Default will be
+         *         "insert_records_from_query_num_splits_per_rank": Number of
+         *         splits for reading data per rank. Default will be
          *         external_file_reader_num_tasks. The default value is ''.
          *     <li>@ref gpudb::insert_records_from_query_num_tasks_per_rank
-         *         "insert_records_from_query_num_tasks_per_rank": Optional:
-         *         number of tasks for reading data per rank. Default will be
-         *         external_file_reader_num_tasks
+         *         "insert_records_from_query_num_tasks_per_rank": Number of
+         *         tasks for reading data per rank. Default will be
+         *         external_file_reader_num_tasks.
          *     <li>@ref gpudb::insert_records_from_query_primary_keys
-         *         "insert_records_from_query_primary_keys": Optional: comma
-         *         separated list of column names, to set as primary keys, when
-         *         not specified in the type. The default value is ''.
+         *         "insert_records_from_query_primary_keys": Comma separated
+         *         list of column names, to set as primary keys, when not
+         *         specified in the type. The default value is ''.
          *     <li>@ref gpudb::insert_records_from_query_shard_keys
-         *         "insert_records_from_query_shard_keys": Optional: comma
-         *         separated list of column names, to set as primary keys, when
-         *         not specified in the type. The default value is ''.
+         *         "insert_records_from_query_shard_keys": Comma separated list
+         *         of column names, to set as shard keys, when not specified in
+         *         the type. The default value is ''.
          *     <li>@ref gpudb::insert_records_from_query_subscribe
          *         "insert_records_from_query_subscribe": Continuously poll the
          *         data source to check for new data and load it into the
@@ -1011,7 +1044,7 @@ namespace gpudb
          *         "insert_records_from_query_false".
          *     <li>@ref gpudb::insert_records_from_query_remote_query
          *         "insert_records_from_query_remote_query": Remote SQL query
-         *         from which data will be sourced
+         *         from which data will be sourced.
          *     <li>@ref gpudb::insert_records_from_query_remote_query_order_by
          *         "insert_records_from_query_remote_query_order_by": Name of
          *         column to be used for splitting the query into multiple
@@ -1031,8 +1064,9 @@ namespace gpudb
          *     <li>@ref
          *         gpudb::insert_records_from_query_remote_query_partition_column
          *         "insert_records_from_query_remote_query_partition_column":
-         *         Alias name for remote_query_filter_column. The default value
-         *         is ''.
+         *         Alias name for @ref
+         *         gpudb::insert_records_from_query_remote_query_filter_column
+         *         "remote_query_filter_column". The default value is ''.
          *     <li>@ref gpudb::insert_records_from_query_truncate_strings
          *         "insert_records_from_query_truncate_strings": If set to @ref
          *         gpudb::insert_records_from_query_true "true", truncate
@@ -1047,6 +1081,25 @@ namespace gpudb
          *         The default value is @ref
          *         gpudb::insert_records_from_query_false
          *         "insert_records_from_query_false".
+         *     <li>@ref gpudb::insert_records_from_query_enable_inplace_updates
+         *         "insert_records_from_query_enable_inplace_updates": Applies
+         *         only when upserting (when update_on_existing_pk is true). If
+         *         set to true (the default), an existing record matched by
+         *         primary key is modified in place. If set to false, the
+         *         matched record is updated by deleting it and inserting a
+         *         replacement (delete and insert), which prevents the change
+         *         from being reflected in dependent materialized views until
+         *         they are refreshed.
+         *         Supported values:
+         *         <ul>
+         *             <li>@ref gpudb::insert_records_from_query_true
+         *                 "insert_records_from_query_true"
+         *             <li>@ref gpudb::insert_records_from_query_false
+         *                 "insert_records_from_query_false"
+         *         </ul>
+         *         The default value is @ref
+         *         gpudb::insert_records_from_query_true
+         *         "insert_records_from_query_true".
          *     <li>@ref gpudb::insert_records_from_query_update_on_existing_pk
          *         "insert_records_from_query_update_on_existing_pk": Specifies
          *         the record collision policy for inserting into a table with
@@ -1061,7 +1114,7 @@ namespace gpudb
          *         record being inserted will remain unchanged, while the new
          *         record will be rejected and the error handled as determined
          *         by @ref gpudb::insert_records_from_query_ignore_existing_pk
-         *         "ignore_existing_pk" & @ref
+         *         "ignore_existing_pk" and @ref
          *         gpudb::insert_records_from_query_error_handling
          *         "error_handling".  If the specified table does not have a
          *         primary key, then this option has no effect.
@@ -1069,10 +1122,10 @@ namespace gpudb
          *         <ul>
          *             <li>@ref gpudb::insert_records_from_query_true
          *                 "insert_records_from_query_true": Upsert new records
-         *                 when primary keys match existing records
+         *                 when primary keys match existing records.
          *             <li>@ref gpudb::insert_records_from_query_false
          *                 "insert_records_from_query_false": Reject new
-         *                 records when primary keys match existing records
+         *                 records when primary keys match existing records.
          *         </ul>
          *         The default value is @ref
          *         gpudb::insert_records_from_query_false
@@ -1179,24 +1232,24 @@ namespace gpudb
         /**
          * ID of the currently registered table structure <a
          * href="../../../concepts/types/" target="_top">type</a> for the
-         * target table
+         * target table.
          */
         std::string typeId;
 
         /**
-         * A JSON string describing the columns of the target table
+         * A JSON string describing the columns of the target table.
          */
         std::string typeDefinition;
 
         /**
          * The user-defined description associated with the target table's
-         * structure
+         * structure.
          */
         std::string typeLabel;
 
         /**
          * A mapping of each target table column name to an array of column
-         * properties associated with that column
+         * properties associated with that column.
          */
         std::map<std::string, std::vector<std::string> > typeProperties;
 

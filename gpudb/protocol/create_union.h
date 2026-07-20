@@ -19,30 +19,21 @@ namespace gpudb
      * The following merges are supported:
      *
      * UNION (DISTINCT/ALL) - For data set union details and examples, see <a
-     * href="../../../concepts/unions/" target="_top">Union</a>.  For
+     * href="../../../concepts/unions/" target="_top">Union</a>. For
      * limitations, see <a
      * href="../../../concepts/unions/#limitations-and-cautions"
      * target="_top">Union Limitations and Cautions</a>.
      *
      * INTERSECT (DISTINCT/ALL) - For data set intersection details and
      * examples, see <a href="../../../concepts/intersect/"
-     * target="_top">Intersect</a>.  For limitations, see <a
+     * target="_top">Intersect</a>. For limitations, see <a
      * href="../../../concepts/intersect/#limitations" target="_top">Intersect
      * Limitations</a>.
      *
      * EXCEPT (DISTINCT/ALL) - For data set subtraction details and examples,
-     * see <a href="../../../concepts/except/" target="_top">Except</a>.  For
+     * see <a href="../../../concepts/except/" target="_top">Except</a>. For
      * limitations, see <a href="../../../concepts/except/#limitations"
      * target="_top">Except Limitations</a>.
-     *
-     * MERGE VIEWS - For a given set of <a
-     * href="../../../concepts/filtered_views/" target="_top">filtered
-     * views</a> on a single table, creates a single filtered view containing
-     * all of the unique records across all of the given filtered data sets.
-     *
-     * Non-charN 'string' and 'bytes' column types cannot be merged, nor can
-     * columns marked as <a href="../../../concepts/types/#data-handling"
-     * target="_top">store-only</a>.
      */
     struct CreateUnionRequest
     {
@@ -176,12 +167,6 @@ namespace gpudb
          *                              The default value is @ref
          *                              gpudb::create_union_union_all
          *                              "create_union_union_all".
-         *                          <li>@ref gpudb::create_union_long_hash
-         *                              "create_union_long_hash": When true use
-         *                              128 bit hash for union-distinct,
-         *                              except, except_all, intersect and
-         *                              intersect_all modes. Otherwise use 64
-         *                              bit hash.
          *                          <li>@ref gpudb::create_union_chunk_size
          *                              "create_union_chunk_size": Indicates
          *                              the number of records per chunk to be
@@ -204,6 +189,90 @@ namespace gpudb
          *                              which to create indexes on the output
          *                              table.  The columns specified must be
          *                              present in @a outputColumnNames_.
+         *                          <li>@ref gpudb::create_union_partition_type
+         *                              "create_union_partition_type": <a
+         *                              href="../../../concepts/tables/#partitioning"
+         *                              target="_top">Partitioning</a> scheme
+         *                              to use for the output table.
+         *                              Supported values:
+         *                              <ul>
+         *                                  <li>@ref gpudb::create_union_RANGE
+         *                                      "create_union_RANGE": Use <a
+         *                                      href="../../../concepts/tables/#partitioning-by-range"
+         *                                      target="_top">range
+         *                                      partitioning</a>.
+         *                                  <li>@ref
+         *                                      gpudb::create_union_INTERVAL
+         *                                      "create_union_INTERVAL": Use <a
+         *                                      href="../../../concepts/tables/#partitioning-by-interval"
+         *                                      target="_top">interval
+         *                                      partitioning</a>.
+         *                                  <li>@ref gpudb::create_union_LIST
+         *                                      "create_union_LIST": Use <a
+         *                                      href="../../../concepts/tables/#partitioning-by-list"
+         *                                      target="_top">list
+         *                                      partitioning</a>.
+         *                                  <li>@ref gpudb::create_union_HASH
+         *                                      "create_union_HASH": Use <a
+         *                                      href="../../../concepts/tables/#partitioning-by-hash"
+         *                                      target="_top">hash
+         *                                      partitioning</a>.
+         *                                  <li>@ref gpudb::create_union_SERIES
+         *                                      "create_union_SERIES": Use <a
+         *                                      href="../../../concepts/tables/#partitioning-by-series"
+         *                                      target="_top">series
+         *                                      partitioning</a>.
+         *                              </ul>
+         *                          <li>@ref gpudb::create_union_partition_keys
+         *                              "create_union_partition_keys":
+         *                              Comma-separated list of partition keys,
+         *                              which are the columns or column
+         *                              expressions by which records will be
+         *                              assigned to partitions defined by @ref
+         *                              gpudb::create_union_partition_definitions
+         *                              "partition_definitions".
+         *                          <li>@ref
+         *                              gpudb::create_union_partition_definitions
+         *                              "create_union_partition_definitions":
+         *                              Comma-separated list of partition
+         *                              definitions, whose format depends on
+         *                              the choice of @ref
+         *                              gpudb::create_union_partition_type
+         *                              "partition_type".  See <a
+         *                              href="../../../concepts/tables/#partitioning-by-range"
+         *                              target="_top">range partitioning</a>,
+         *                              <a
+         *                              href="../../../concepts/tables/#partitioning-by-interval"
+         *                              target="_top">interval
+         *                              partitioning</a>, <a
+         *                              href="../../../concepts/tables/#partitioning-by-list"
+         *                              target="_top">list partitioning</a>, <a
+         *                              href="../../../concepts/tables/#partitioning-by-hash"
+         *                              target="_top">hash partitioning</a>, or
+         *                              <a
+         *                              href="../../../concepts/tables/#partitioning-by-series"
+         *                              target="_top">series partitioning</a>
+         *                              for example formats.
+         *                          <li>@ref
+         *                              gpudb::create_union_is_automatic_partition
+         *                              "create_union_is_automatic_partition":
+         *                              If @ref gpudb::create_union_true
+         *                              "true", a new partition will be created
+         *                              for values which don't fall into an
+         *                              existing partition.  Currently only
+         *                              supported for <a
+         *                              href="../../../concepts/tables/#partitioning-by-list"
+         *                              target="_top">list partitions</a>.
+         *                              Supported values:
+         *                              <ul>
+         *                                  <li>@ref gpudb::create_union_true
+         *                                      "create_union_true"
+         *                                  <li>@ref gpudb::create_union_false
+         *                                      "create_union_false"
+         *                              </ul>
+         *                              The default value is @ref
+         *                              gpudb::create_union_false
+         *                              "create_union_false".
          *                          <li>@ref gpudb::create_union_ttl
          *                              "create_union_ttl": Sets the <a
          *                              href="../../../concepts/ttl/"
@@ -272,7 +341,7 @@ namespace gpudb
          *                              of 0 for the union table response to
          *                              avoid the cost of counting;
          *                              optimization needed for many chunk
-         *                              virtual_union's. The default value is
+         *                              virtual unions. The default value is
          *                              'false'.
          *                      </ul>
          *                      The default value is an empty map.
@@ -380,10 +449,6 @@ namespace gpudb
          *         </ul>
          *         The default value is @ref gpudb::create_union_union_all
          *         "create_union_union_all".
-         *     <li>@ref gpudb::create_union_long_hash "create_union_long_hash":
-         *         When true use 128 bit hash for union-distinct, except,
-         *         except_all, intersect and intersect_all modes. Otherwise use
-         *         64 bit hash.
          *     <li>@ref gpudb::create_union_chunk_size
          *         "create_union_chunk_size": Indicates the number of records
          *         per chunk to be used for this output table.
@@ -399,6 +464,69 @@ namespace gpudb
          *         "create_union_create_indexes": Comma-separated list of
          *         columns on which to create indexes on the output table.  The
          *         columns specified must be present in @ref outputColumnNames.
+         *     <li>@ref gpudb::create_union_partition_type
+         *         "create_union_partition_type": <a
+         *         href="../../../concepts/tables/#partitioning"
+         *         target="_top">Partitioning</a> scheme to use for the output
+         *         table.
+         *         Supported values:
+         *         <ul>
+         *             <li>@ref gpudb::create_union_RANGE "create_union_RANGE":
+         *                 Use <a
+         *                 href="../../../concepts/tables/#partitioning-by-range"
+         *                 target="_top">range partitioning</a>.
+         *             <li>@ref gpudb::create_union_INTERVAL
+         *                 "create_union_INTERVAL": Use <a
+         *                 href="../../../concepts/tables/#partitioning-by-interval"
+         *                 target="_top">interval partitioning</a>.
+         *             <li>@ref gpudb::create_union_LIST "create_union_LIST":
+         *                 Use <a
+         *                 href="../../../concepts/tables/#partitioning-by-list"
+         *                 target="_top">list partitioning</a>.
+         *             <li>@ref gpudb::create_union_HASH "create_union_HASH":
+         *                 Use <a
+         *                 href="../../../concepts/tables/#partitioning-by-hash"
+         *                 target="_top">hash partitioning</a>.
+         *             <li>@ref gpudb::create_union_SERIES
+         *                 "create_union_SERIES": Use <a
+         *                 href="../../../concepts/tables/#partitioning-by-series"
+         *                 target="_top">series partitioning</a>.
+         *         </ul>
+         *     <li>@ref gpudb::create_union_partition_keys
+         *         "create_union_partition_keys": Comma-separated list of
+         *         partition keys, which are the columns or column expressions
+         *         by which records will be assigned to partitions defined by
+         *         @ref gpudb::create_union_partition_definitions
+         *         "partition_definitions".
+         *     <li>@ref gpudb::create_union_partition_definitions
+         *         "create_union_partition_definitions": Comma-separated list
+         *         of partition definitions, whose format depends on the choice
+         *         of @ref gpudb::create_union_partition_type "partition_type".
+         *         See <a
+         *         href="../../../concepts/tables/#partitioning-by-range"
+         *         target="_top">range partitioning</a>, <a
+         *         href="../../../concepts/tables/#partitioning-by-interval"
+         *         target="_top">interval partitioning</a>, <a
+         *         href="../../../concepts/tables/#partitioning-by-list"
+         *         target="_top">list partitioning</a>, <a
+         *         href="../../../concepts/tables/#partitioning-by-hash"
+         *         target="_top">hash partitioning</a>, or <a
+         *         href="../../../concepts/tables/#partitioning-by-series"
+         *         target="_top">series partitioning</a> for example formats.
+         *     <li>@ref gpudb::create_union_is_automatic_partition
+         *         "create_union_is_automatic_partition": If @ref
+         *         gpudb::create_union_true "true", a new partition will be
+         *         created for values which don't fall into an existing
+         *         partition.  Currently only supported for <a
+         *         href="../../../concepts/tables/#partitioning-by-list"
+         *         target="_top">list partitions</a>.
+         *         Supported values:
+         *         <ul>
+         *             <li>@ref gpudb::create_union_true "create_union_true"
+         *             <li>@ref gpudb::create_union_false "create_union_false"
+         *         </ul>
+         *         The default value is @ref gpudb::create_union_false
+         *         "create_union_false".
          *     <li>@ref gpudb::create_union_ttl "create_union_ttl": Sets the <a
          *         href="../../../concepts/ttl/" target="_top">TTL</a> of the
          *         output table specified in @ref tableName.
@@ -445,7 +573,7 @@ namespace gpudb
          *     <li>@ref gpudb::create_union_no_count "create_union_no_count":
          *         Return a count of 0 for the union table response to avoid
          *         the cost of counting; optimization needed for many chunk
-         *         virtual_union's. The default value is 'false'.
+         *         virtual unions. The default value is 'false'.
          * </ul>
          * The default value is an empty map.
          */
@@ -540,10 +668,10 @@ namespace gpudb
          * Additional information.
          * <ul>
          *     <li>@ref gpudb::create_union_count "create_union_count": Number
-         *         of records in the final table
+         *         of records in the final table.
          *     <li>@ref gpudb::create_union_qualified_table_name
          *         "create_union_qualified_table_name": The fully qualified
-         *         name of the result table (i.e. including the schema)
+         *         name of the result table (i.e. including the schema).
          * </ul>
          * The default value is an empty map.
          */

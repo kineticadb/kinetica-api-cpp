@@ -52,19 +52,19 @@ namespace gpudb
          *                       <ul>
          *                           <li>@ref gpudb::lock_table_status
          *                               "lock_table_status": Show locked
-         *                               status
+         *                               status.
          *                           <li>@ref gpudb::lock_table_no_access
          *                               "lock_table_no_access": Allow no
-         *                               read/write operations
+         *                               read/write operations.
          *                           <li>@ref gpudb::lock_table_read_only
          *                               "lock_table_read_only": Allow only
-         *                               read operations
+         *                               read operations.
          *                           <li>@ref gpudb::lock_table_write_only
          *                               "lock_table_write_only": Allow only
-         *                               write operations
+         *                               write operations.
          *                           <li>@ref gpudb::lock_table_read_write
          *                               "lock_table_read_write": Allow all
-         *                               read/write operations
+         *                               read/write operations.
          *                       </ul>
          *                       The default value is @ref
          *                       gpudb::lock_table_status "lock_table_status".
@@ -94,15 +94,15 @@ namespace gpudb
          * Supported values:
          * <ul>
          *     <li>@ref gpudb::lock_table_status "lock_table_status": Show
-         *         locked status
+         *         locked status.
          *     <li>@ref gpudb::lock_table_no_access "lock_table_no_access":
-         *         Allow no read/write operations
+         *         Allow no read/write operations.
          *     <li>@ref gpudb::lock_table_read_only "lock_table_read_only":
-         *         Allow only read operations
+         *         Allow only read operations.
          *     <li>@ref gpudb::lock_table_write_only "lock_table_write_only":
-         *         Allow only write operations
+         *         Allow only write operations.
          *     <li>@ref gpudb::lock_table_read_write "lock_table_read_write":
-         *         Allow all read/write operations
+         *         Allow all read/write operations.
          * </ul>
          * The default value is @ref gpudb::lock_table_status
          * "lock_table_status".

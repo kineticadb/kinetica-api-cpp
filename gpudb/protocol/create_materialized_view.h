@@ -69,7 +69,8 @@ namespace gpudb
          *                          <li>@ref
          *                              gpudb::create_materialized_view_execute_as
          *                              "create_materialized_view_execute_as":
-         *                              User name to use to run the refresh job
+         *                              User name to use to run the refresh
+         *                              job.
          *                          <li>@ref
          *                              gpudb::create_materialized_view_build_materialized_view_policy
          *                              "create_materialized_view_build_materialized_view_policy":
@@ -134,10 +135,36 @@ namespace gpudb
          *                              gpudb::create_materialized_view_false
          *                              "create_materialized_view_false".
          *                          <li>@ref
+         *                              gpudb::create_materialized_view_enable_mv_input_wrappers
+         *                              "create_materialized_view_enable_mv_input_wrappers":
+         *                              If @ref
+         *                              gpudb::create_materialized_view_true
+         *                              "true", each base table the view reads
+         *                              is accessed through a wrapper view so
+         *                              an in-progress out-of-place update
+         *                              cannot make a record momentarily
+         *                              disappear from the view, and a long
+         *                              refresh does not block updates to the
+         *                              base tables.  Overrides the
+         *                              {gaia.enable_mv_input_wrappers}
+         *                              configuration default when set.
+         *                              Supported values:
+         *                              <ul>
+         *                                  <li>@ref
+         *                                      gpudb::create_materialized_view_true
+         *                                      "create_materialized_view_true"
+         *                                  <li>@ref
+         *                                      gpudb::create_materialized_view_false
+         *                                      "create_materialized_view_false"
+         *                              </ul>
+         *                              The default value is @ref
+         *                              gpudb::create_materialized_view_false
+         *                              "create_materialized_view_false".
+         *                          <li>@ref
          *                              gpudb::create_materialized_view_refresh_span
          *                              "create_materialized_view_refresh_span":
          *                              Sets the future time-offset(in seconds)
-         *                              at which periodic refresh stops
+         *                              at which periodic refresh stops.
          *                          <li>@ref
          *                              gpudb::create_materialized_view_refresh_stop_time
          *                              "create_materialized_view_refresh_stop_time":
@@ -165,7 +192,7 @@ namespace gpudb
          *                                      @ref
          *                                      GPUdb::alterTable(const AlterTableRequest&) const
          *                                      "GPUdb::alterTable" with an
-         *                                      'action' of 'refresh'
+         *                                      'action' of 'refresh'.
          *                                  <li>@ref
          *                                      gpudb::create_materialized_view_on_query
          *                                      "create_materialized_view_on_query":
@@ -188,7 +215,7 @@ namespace gpudb
          *                                      Refresh table periodically at
          *                                      rate specified by @ref
          *                                      gpudb::create_materialized_view_refresh_period
-         *                                      "refresh_period"
+         *                                      "refresh_period".
          *                              </ul>
          *                              The default value is @ref
          *                              gpudb::create_materialized_view_manual
@@ -201,7 +228,7 @@ namespace gpudb
          *                              "refresh_method" is @ref
          *                              gpudb::create_materialized_view_periodic
          *                              "periodic", specifies the period in
-         *                              seconds at which refresh occurs
+         *                              seconds at which refresh occurs.
          *                          <li>@ref
          *                              gpudb::create_materialized_view_refresh_start_time
          *                              "create_materialized_view_refresh_start_time":
@@ -252,7 +279,7 @@ namespace gpudb
          *         automatically created.
          *     <li>@ref gpudb::create_materialized_view_execute_as
          *         "create_materialized_view_execute_as": User name to use to
-         *         run the refresh job
+         *         run the refresh job.
          *     <li>@ref
          *         gpudb::create_materialized_view_build_materialized_view_policy
          *         "create_materialized_view_build_materialized_view_policy":
@@ -298,9 +325,29 @@ namespace gpudb
          *         The default value is @ref
          *         gpudb::create_materialized_view_false
          *         "create_materialized_view_false".
+         *     <li>@ref
+         *         gpudb::create_materialized_view_enable_mv_input_wrappers
+         *         "create_materialized_view_enable_mv_input_wrappers": If @ref
+         *         gpudb::create_materialized_view_true "true", each base table
+         *         the view reads is accessed through a wrapper view so an
+         *         in-progress out-of-place update cannot make a record
+         *         momentarily disappear from the view, and a long refresh does
+         *         not block updates to the base tables.  Overrides the
+         *         {gaia.enable_mv_input_wrappers} configuration default when
+         *         set.
+         *         Supported values:
+         *         <ul>
+         *             <li>@ref gpudb::create_materialized_view_true
+         *                 "create_materialized_view_true"
+         *             <li>@ref gpudb::create_materialized_view_false
+         *                 "create_materialized_view_false"
+         *         </ul>
+         *         The default value is @ref
+         *         gpudb::create_materialized_view_false
+         *         "create_materialized_view_false".
          *     <li>@ref gpudb::create_materialized_view_refresh_span
          *         "create_materialized_view_refresh_span": Sets the future
-         *         time-offset(in seconds) at which periodic refresh stops
+         *         time-offset(in seconds) at which periodic refresh stops.
          *     <li>@ref gpudb::create_materialized_view_refresh_stop_time
          *         "create_materialized_view_refresh_stop_time": When @ref
          *         gpudb::create_materialized_view_refresh_method
@@ -319,7 +366,7 @@ namespace gpudb
          *                 "create_materialized_view_manual": Refresh only
          *                 occurs when manually requested by calling @ref
          *                 GPUdb::alterTable(const AlterTableRequest&) const
-         *                 "GPUdb::alterTable" with an 'action' of 'refresh'
+         *                 "GPUdb::alterTable" with an 'action' of 'refresh'.
          *             <li>@ref gpudb::create_materialized_view_on_query
          *                 "create_materialized_view_on_query": Refresh any
          *                 time the view is queried.
@@ -333,7 +380,7 @@ namespace gpudb
          *                 "create_materialized_view_periodic": Refresh table
          *                 periodically at rate specified by @ref
          *                 gpudb::create_materialized_view_refresh_period
-         *                 "refresh_period"
+         *                 "refresh_period".
          *         </ul>
          *         The default value is @ref
          *         gpudb::create_materialized_view_manual
@@ -343,7 +390,7 @@ namespace gpudb
          *         gpudb::create_materialized_view_refresh_method
          *         "refresh_method" is @ref
          *         gpudb::create_materialized_view_periodic "periodic",
-         *         specifies the period in seconds at which refresh occurs
+         *         specifies the period in seconds at which refresh occurs.
          *     <li>@ref gpudb::create_materialized_view_refresh_start_time
          *         "create_materialized_view_refresh_start_time": When @ref
          *         gpudb::create_materialized_view_refresh_method
@@ -442,7 +489,7 @@ namespace gpudb
          *     <li>@ref gpudb::create_materialized_view_qualified_table_name
          *         "create_materialized_view_qualified_table_name": The fully
          *         qualified name of the result table (i.e. including the
-         *         schema)
+         *         schema).
          * </ul>
          * The default value is an empty map.
          */

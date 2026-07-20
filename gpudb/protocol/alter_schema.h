@@ -40,7 +40,7 @@ namespace gpudb
          *                     <ul>
          *                         <li>@ref gpudb::alter_schema_add_comment
          *                             "alter_schema_add_comment": Adds a
-         *                             comment describing the schema
+         *                             comment describing the schema.
          *                         <li>@ref gpudb::alter_schema_rename_schema
          *                             "alter_schema_rename_schema": Renames a
          *                             schema to @a value_. Has the same naming
@@ -75,7 +75,7 @@ namespace gpudb
          * <ul>
          *     <li>@ref gpudb::alter_schema_add_comment
          *         "alter_schema_add_comment": Adds a comment describing the
-         *         schema
+         *         schema.
          *     <li>@ref gpudb::alter_schema_rename_schema
          *         "alter_schema_rename_schema": Renames a schema to @ref
          *         value. Has the same naming restrictions as <a

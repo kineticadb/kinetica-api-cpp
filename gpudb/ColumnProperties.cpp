@@ -45,5 +45,8 @@ namespace gpudb
         const std::string INIT_WITH_NOW   ( "init_with_now"    );
         const std::string INIT_WITH_UUID  ( "init_with_uuid"   );
         const std::string UPDATE_WITH_NOW ( "update_with_now"  );
+        const std::string UPDATE_WITH_USER( "update_with_user" );
+        const std::string DEFAULT         ( "default"          );
+        const std::string DEFAULT_SQL     ( "default_sql"      );
     } // end namespace ColumnProperty
 } // end namespace gpudb

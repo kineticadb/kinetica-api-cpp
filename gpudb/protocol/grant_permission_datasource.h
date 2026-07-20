@@ -43,12 +43,12 @@ namespace gpudb
          *                                 gpudb::grant_permission_datasource_admin
          *                                 "grant_permission_datasource_admin":
          *                                 Admin access on the given data
-         *                                 source
+         *                                 source.
          *                             <li>@ref
          *                                 gpudb::grant_permission_datasource_connect
          *                                 "grant_permission_datasource_connect":
          *                                 Connect access on the given data
-         *                                 source
+         *                                 source.
          *                         </ul>
          * @param[in] datasourceName_  Name of the data source on which the
          *                             permission will be granted. Must be an
@@ -77,10 +77,10 @@ namespace gpudb
          * <ul>
          *     <li>@ref gpudb::grant_permission_datasource_admin
          *         "grant_permission_datasource_admin": Admin access on the
-         *         given data source
+         *         given data source.
          *     <li>@ref gpudb::grant_permission_datasource_connect
          *         "grant_permission_datasource_connect": Connect access on the
-         *         given data source
+         *         given data source.
          * </ul>
          */
         std::string permission;

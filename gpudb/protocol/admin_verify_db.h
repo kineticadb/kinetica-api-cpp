@@ -36,8 +36,8 @@ namespace gpudb
          *                          <li>@ref
          *                              gpudb::admin_verify_db_rebuild_on_error
          *                              "admin_verify_db_rebuild_on_error":
-         *                              [DEPRECATED -- Use the Rebuild DB
-         *                              feature of GAdmin instead.].
+         *                              [DEPRECATED]  Use the Rebuild DB
+         *                              feature of GAdmin instead.
          *                              Supported values:
          *                              <ul>
          *                                  <li>@ref
@@ -207,8 +207,8 @@ namespace gpudb
          * Optional parameters.
          * <ul>
          *     <li>@ref gpudb::admin_verify_db_rebuild_on_error
-         *         "admin_verify_db_rebuild_on_error": [DEPRECATED -- Use the
-         *         Rebuild DB feature of GAdmin instead.].
+         *         "admin_verify_db_rebuild_on_error": [DEPRECATED]  Use the
+         *         Rebuild DB feature of GAdmin instead.
          *         Supported values:
          *         <ul>
          *             <li>@ref gpudb::admin_verify_db_true

@@ -42,9 +42,9 @@ namespace gpudb
          *                       'azure', 'gcs', 'hdfs', 'jdbc', 'kafka',
          *                       'confluent', and 's3'.
          * @param[in] userName_  Name of the remote system user; may be an
-         *                       empty string
+         *                       empty string.
          * @param[in] password_  Password for the remote system user; may be an
-         *                       empty string
+         *                       empty string.
          * @param[in] options_  Optional parameters.
          *                      <ul>
          *                          <li>@ref
@@ -68,28 +68,28 @@ namespace gpudb
          *                              gpudb::create_datasource_connection_timeout
          *                              "create_datasource_connection_timeout":
          *                              Timeout in seconds for connecting to
-         *                              this storage provider
+         *                              this storage provider.
          *                          <li>@ref
          *                              gpudb::create_datasource_wait_timeout
          *                              "create_datasource_wait_timeout":
          *                              Timeout in seconds for reading from
-         *                              this storage provider
+         *                              this storage provider.
          *                          <li>@ref
          *                              gpudb::create_datasource_credential
          *                              "create_datasource_credential": Name of
          *                              the <a
          *                              href="../../../concepts/credentials"
          *                              target="_top">credential</a> object to
-         *                              be used in data source
+         *                              be used in data source.
          *                          <li>@ref
          *                              gpudb::create_datasource_s3_bucket_name
          *                              "create_datasource_s3_bucket_name":
          *                              Name of the Amazon S3 bucket to use as
-         *                              the data source
+         *                              the data source.
          *                          <li>@ref gpudb::create_datasource_s3_region
          *                              "create_datasource_s3_region": Name of
          *                              the Amazon S3 region where the given
-         *                              bucket is located
+         *                              bucket is located.
          *                          <li>@ref
          *                              gpudb::create_datasource_s3_verify_ssl
          *                              "create_datasource_s3_verify_ssl":
@@ -99,7 +99,7 @@ namespace gpudb
          *                                  <li>@ref
          *                                      gpudb::create_datasource_true
          *                                      "create_datasource_true":
-         *                                      Connect with SSL verification
+         *                                      Connect with SSL verification.
          *                                  <li>@ref
          *                                      gpudb::create_datasource_false
          *                                      "create_datasource_false":
@@ -139,17 +139,17 @@ namespace gpudb
          *                              "create_datasource_s3_aws_role_arn":
          *                              Amazon IAM Role ARN which has required
          *                              S3 permissions that can be assumed for
-         *                              the given S3 IAM user
+         *                              the given S3 IAM user.
          *                          <li>@ref
          *                              gpudb::create_datasource_s3_encryption_customer_algorithm
          *                              "create_datasource_s3_encryption_customer_algorithm":
          *                              Customer encryption algorithm used
-         *                              encrypting data
+         *                              encrypting data.
          *                          <li>@ref
          *                              gpudb::create_datasource_s3_encryption_customer_key
          *                              "create_datasource_s3_encryption_customer_key":
          *                              Customer encryption key to encrypt or
-         *                              decrypt data
+         *                              decrypt data.
          *                          <li>@ref
          *                              gpudb::create_datasource_hdfs_kerberos_keytab
          *                              "create_datasource_hdfs_kerberos_keytab":
@@ -160,7 +160,7 @@ namespace gpudb
          *                              gpudb::create_datasource_hdfs_delegation_token
          *                              "create_datasource_hdfs_delegation_token":
          *                              Delegation token for the given HDFS
-         *                              user
+         *                              user.
          *                          <li>@ref
          *                              gpudb::create_datasource_hdfs_use_kerberos
          *                              "create_datasource_hdfs_use_kerberos":
@@ -183,43 +183,66 @@ namespace gpudb
          *                              "create_datasource_azure_storage_account_name":
          *                              Name of the Azure storage account to
          *                              use as the data source, this is valid
-         *                              only if tenant_id is specified
+         *                              only if tenant_id is specified.
          *                          <li>@ref
          *                              gpudb::create_datasource_azure_container_name
          *                              "create_datasource_azure_container_name":
          *                              Name of the Azure storage container to
-         *                              use as the data source
+         *                              use as the data source.
          *                          <li>@ref
          *                              gpudb::create_datasource_azure_tenant_id
          *                              "create_datasource_azure_tenant_id":
          *                              Active Directory tenant ID (or
-         *                              directory ID)
+         *                              directory ID).
          *                          <li>@ref
          *                              gpudb::create_datasource_azure_sas_token
          *                              "create_datasource_azure_sas_token":
          *                              Shared access signature token for Azure
          *                              storage account to use as the data
-         *                              source
+         *                              source.
          *                          <li>@ref
          *                              gpudb::create_datasource_azure_oauth_token
          *                              "create_datasource_azure_oauth_token":
          *                              OAuth token to access given storage
-         *                              container
+         *                              container.
+         *                          <li>@ref
+         *                              gpudb::create_datasource_azure_use_virtual_addressing
+         *                              "create_datasource_azure_use_virtual_addressing":
+         *                              Whether to use virtual addressing when
+         *                              referencing the Azure source.
+         *                              Supported values:
+         *                              <ul>
+         *                                  <li>@ref
+         *                                      gpudb::create_datasource_true
+         *                                      "create_datasource_true": The
+         *                                      requests URI should be
+         *                                      specified in
+         *                                      virtual-hosted-style format
+         *                                      where the bucket name is part
+         *                                      of the domain name in the URL.
+         *                                  <li>@ref
+         *                                      gpudb::create_datasource_false
+         *                                      "create_datasource_false": Use
+         *                                      path-style URI for requests.
+         *                              </ul>
+         *                              The default value is @ref
+         *                              gpudb::create_datasource_true
+         *                              "create_datasource_true".
          *                          <li>@ref
          *                              gpudb::create_datasource_gcs_bucket_name
          *                              "create_datasource_gcs_bucket_name":
          *                              Name of the Google Cloud Storage bucket
-         *                              to use as the data source
+         *                              to use as the data source.
          *                          <li>@ref
          *                              gpudb::create_datasource_gcs_project_id
          *                              "create_datasource_gcs_project_id":
          *                              Name of the Google Cloud project to use
-         *                              as the data source
+         *                              as the data source.
          *                          <li>@ref
          *                              gpudb::create_datasource_gcs_service_account_keys
          *                              "create_datasource_gcs_service_account_keys":
          *                              Google Cloud service account keys to
-         *                              use for authenticating the data source
+         *                              use for authenticating the data source.
          *                          <li>@ref gpudb::create_datasource_is_stream
          *                              "create_datasource_is_stream": To load
          *                              from Azure/GCS/S3 as a stream
@@ -240,7 +263,7 @@ namespace gpudb
          *                              gpudb::create_datasource_kafka_topic_name
          *                              "create_datasource_kafka_topic_name":
          *                              Name of the Kafka topic to use as the
-         *                              data source
+         *                              data source.
          *                          <li>@ref
          *                              gpudb::create_datasource_jdbc_driver_jar_path
          *                              "create_datasource_jdbc_driver_jar_path":
@@ -249,7 +272,7 @@ namespace gpudb
          *                          <li>@ref
          *                              gpudb::create_datasource_jdbc_driver_class_name
          *                              "create_datasource_jdbc_driver_class_name":
-         *                              Name of the JDBC driver class
+         *                              Name of the JDBC driver class.
          *                          <li>@ref gpudb::create_datasource_anonymous
          *                              "create_datasource_anonymous": Use
          *                              anonymous connection to storage
@@ -290,8 +313,8 @@ namespace gpudb
          *                              "create_datasource_false".
          *                          <li>@ref gpudb::create_datasource_use_https
          *                              "create_datasource_use_https": Use
-         *                              https to connect to datasource if true,
-         *                              otherwise use http.
+         *                              HTTPS to connect to datasource if true,
+         *                              otherwise use HTTP.
          *                              Supported values:
          *                              <ul>
          *                                  <li>@ref
@@ -326,12 +349,12 @@ namespace gpudb
          *                              gpudb::create_datasource_schema_registry_connection_retries
          *                              "create_datasource_schema_registry_connection_retries":
          *                              Confluent Schema registry connection
-         *                              timeout (in Secs)
+         *                              timeout (in secs).
          *                          <li>@ref
          *                              gpudb::create_datasource_schema_registry_connection_timeout
          *                              "create_datasource_schema_registry_connection_timeout":
          *                              Confluent Schema registry connection
-         *                              timeout (in Secs)
+         *                              timeout (in secs).
          *                      </ul>
          *                      The default value is an empty map.
          */
@@ -359,12 +382,12 @@ namespace gpudb
         std::string location;
 
         /**
-         * Name of the remote system user; may be an empty string
+         * Name of the remote system user; may be an empty string.
          */
         std::string userName;
 
         /**
-         * Password for the remote system user; may be an empty string
+         * Password for the remote system user; may be an empty string.
          */
         std::string password;
 
@@ -385,21 +408,21 @@ namespace gpudb
          *         "create_datasource_false".
          *     <li>@ref gpudb::create_datasource_connection_timeout
          *         "create_datasource_connection_timeout": Timeout in seconds
-         *         for connecting to this storage provider
+         *         for connecting to this storage provider.
          *     <li>@ref gpudb::create_datasource_wait_timeout
          *         "create_datasource_wait_timeout": Timeout in seconds for
-         *         reading from this storage provider
+         *         reading from this storage provider.
          *     <li>@ref gpudb::create_datasource_credential
          *         "create_datasource_credential": Name of the <a
          *         href="../../../concepts/credentials"
          *         target="_top">credential</a> object to be used in data
-         *         source
+         *         source.
          *     <li>@ref gpudb::create_datasource_s3_bucket_name
          *         "create_datasource_s3_bucket_name": Name of the Amazon S3
-         *         bucket to use as the data source
+         *         bucket to use as the data source.
          *     <li>@ref gpudb::create_datasource_s3_region
          *         "create_datasource_s3_region": Name of the Amazon S3 region
-         *         where the given bucket is located
+         *         where the given bucket is located.
          *     <li>@ref gpudb::create_datasource_s3_verify_ssl
          *         "create_datasource_s3_verify_ssl": Whether to verify SSL
          *         connections.
@@ -407,7 +430,7 @@ namespace gpudb
          *         <ul>
          *             <li>@ref gpudb::create_datasource_true
          *                 "create_datasource_true": Connect with SSL
-         *                 verification
+         *                 verification.
          *             <li>@ref gpudb::create_datasource_false
          *                 "create_datasource_false": Connect without verifying
          *                 the SSL connection; for testing purposes, bypassing
@@ -434,21 +457,21 @@ namespace gpudb
          *     <li>@ref gpudb::create_datasource_s3_aws_role_arn
          *         "create_datasource_s3_aws_role_arn": Amazon IAM Role ARN
          *         which has required S3 permissions that can be assumed for
-         *         the given S3 IAM user
+         *         the given S3 IAM user.
          *     <li>@ref
          *         gpudb::create_datasource_s3_encryption_customer_algorithm
          *         "create_datasource_s3_encryption_customer_algorithm":
-         *         Customer encryption algorithm used encrypting data
+         *         Customer encryption algorithm used encrypting data.
          *     <li>@ref gpudb::create_datasource_s3_encryption_customer_key
          *         "create_datasource_s3_encryption_customer_key": Customer
-         *         encryption key to encrypt or decrypt data
+         *         encryption key to encrypt or decrypt data.
          *     <li>@ref gpudb::create_datasource_hdfs_kerberos_keytab
          *         "create_datasource_hdfs_kerberos_keytab": Kerberos keytab
          *         file location for the given HDFS user.  This may be a KIFS
          *         file.
          *     <li>@ref gpudb::create_datasource_hdfs_delegation_token
          *         "create_datasource_hdfs_delegation_token": Delegation token
-         *         for the given HDFS user
+         *         for the given HDFS user.
          *     <li>@ref gpudb::create_datasource_hdfs_use_kerberos
          *         "create_datasource_hdfs_use_kerberos": Use kerberos
          *         authentication for the given HDFS cluster.
@@ -464,29 +487,44 @@ namespace gpudb
          *     <li>@ref gpudb::create_datasource_azure_storage_account_name
          *         "create_datasource_azure_storage_account_name": Name of the
          *         Azure storage account to use as the data source, this is
-         *         valid only if tenant_id is specified
+         *         valid only if tenant_id is specified.
          *     <li>@ref gpudb::create_datasource_azure_container_name
          *         "create_datasource_azure_container_name": Name of the Azure
-         *         storage container to use as the data source
+         *         storage container to use as the data source.
          *     <li>@ref gpudb::create_datasource_azure_tenant_id
          *         "create_datasource_azure_tenant_id": Active Directory tenant
-         *         ID (or directory ID)
+         *         ID (or directory ID).
          *     <li>@ref gpudb::create_datasource_azure_sas_token
          *         "create_datasource_azure_sas_token": Shared access signature
-         *         token for Azure storage account to use as the data source
+         *         token for Azure storage account to use as the data source.
          *     <li>@ref gpudb::create_datasource_azure_oauth_token
          *         "create_datasource_azure_oauth_token": OAuth token to access
-         *         given storage container
+         *         given storage container.
+         *     <li>@ref gpudb::create_datasource_azure_use_virtual_addressing
+         *         "create_datasource_azure_use_virtual_addressing": Whether to
+         *         use virtual addressing when referencing the Azure source.
+         *         Supported values:
+         *         <ul>
+         *             <li>@ref gpudb::create_datasource_true
+         *                 "create_datasource_true": The requests URI should be
+         *                 specified in virtual-hosted-style format where the
+         *                 bucket name is part of the domain name in the URL.
+         *             <li>@ref gpudb::create_datasource_false
+         *                 "create_datasource_false": Use path-style URI for
+         *                 requests.
+         *         </ul>
+         *         The default value is @ref gpudb::create_datasource_true
+         *         "create_datasource_true".
          *     <li>@ref gpudb::create_datasource_gcs_bucket_name
          *         "create_datasource_gcs_bucket_name": Name of the Google
-         *         Cloud Storage bucket to use as the data source
+         *         Cloud Storage bucket to use as the data source.
          *     <li>@ref gpudb::create_datasource_gcs_project_id
          *         "create_datasource_gcs_project_id": Name of the Google Cloud
-         *         project to use as the data source
+         *         project to use as the data source.
          *     <li>@ref gpudb::create_datasource_gcs_service_account_keys
          *         "create_datasource_gcs_service_account_keys": Google Cloud
          *         service account keys to use for authenticating the data
-         *         source
+         *         source.
          *     <li>@ref gpudb::create_datasource_is_stream
          *         "create_datasource_is_stream": To load from Azure/GCS/S3 as
          *         a stream continuously.
@@ -501,13 +539,13 @@ namespace gpudb
          *         "create_datasource_false".
          *     <li>@ref gpudb::create_datasource_kafka_topic_name
          *         "create_datasource_kafka_topic_name": Name of the Kafka
-         *         topic to use as the data source
+         *         topic to use as the data source.
          *     <li>@ref gpudb::create_datasource_jdbc_driver_jar_path
          *         "create_datasource_jdbc_driver_jar_path": JDBC driver jar
          *         file location.  This may be a KIFS file.
          *     <li>@ref gpudb::create_datasource_jdbc_driver_class_name
          *         "create_datasource_jdbc_driver_class_name": Name of the JDBC
-         *         driver class
+         *         driver class.
          *     <li>@ref gpudb::create_datasource_anonymous
          *         "create_datasource_anonymous": Use anonymous connection to
          *         storage provider--DEPRECATED: this is now the default.
@@ -537,8 +575,8 @@ namespace gpudb
          *         The default value is @ref gpudb::create_datasource_false
          *         "create_datasource_false".
          *     <li>@ref gpudb::create_datasource_use_https
-         *         "create_datasource_use_https": Use https to connect to
-         *         datasource if true, otherwise use http.
+         *         "create_datasource_use_https": Use HTTPS to connect to
+         *         datasource if true, otherwise use HTTP.
          *         Supported values:
          *         <ul>
          *             <li>@ref gpudb::create_datasource_true
@@ -562,11 +600,11 @@ namespace gpudb
          *     <li>@ref
          *         gpudb::create_datasource_schema_registry_connection_retries
          *         "create_datasource_schema_registry_connection_retries":
-         *         Confluent Schema registry connection timeout (in Secs)
+         *         Confluent Schema registry connection timeout (in secs).
          *     <li>@ref
          *         gpudb::create_datasource_schema_registry_connection_timeout
          *         "create_datasource_schema_registry_connection_timeout":
-         *         Confluent Schema registry connection timeout (in Secs)
+         *         Confluent Schema registry connection timeout (in secs).
          * </ul>
          * The default value is an empty map.
          */

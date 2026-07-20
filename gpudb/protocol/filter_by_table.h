@@ -174,7 +174,7 @@ namespace gpudb
          *                                      gpudb::filter_by_table_geos
          *                                      "filter_by_table_geos": Use
          *                                      geos 1 edge per corner
-         *                                      algorithm
+         *                                      algorithm.
          *                              </ul>
          *                              The default value is @ref
          *                              gpudb::filter_by_table_normal
@@ -333,7 +333,7 @@ namespace gpudb
          *                 "filter_by_table_normal"
          *             <li>@ref gpudb::filter_by_table_geos
          *                 "filter_by_table_geos": Use geos 1 edge per corner
-         *                 algorithm
+         *                 algorithm.
          *         </ul>
          *         The default value is @ref gpudb::filter_by_table_normal
          *         "filter_by_table_normal".
@@ -463,7 +463,7 @@ namespace gpudb
          * <ul>
          *     <li>@ref gpudb::filter_by_table_qualified_view_name
          *         "filter_by_table_qualified_view_name": The fully qualified
-         *         name of the view (i.e. including the schema)
+         *         name of the view (i.e. including the schema).
          * </ul>
          * The default value is an empty map.
          */

@@ -43,6 +43,8 @@ namespace gpudb
          * @param[in] objectType_  The type of object being granted to.
          *                         Supported values:
          *                         <ul>
+         *                             <li>@ref gpudb::grant_permission_catalog
+         *                                 "grant_permission_catalog": Catalog
          *                             <li>@ref gpudb::grant_permission_context
          *                                 "grant_permission_context": Context
          *                             <li>@ref
@@ -107,6 +109,9 @@ namespace gpudb
          *                             <li>@ref gpudb::grant_permission_insert
          *                                 "grant_permission_insert": Insert
          *                                 access to tables.
+         *                             <li>@ref gpudb::grant_permission_monitor
+         *                                 "grant_permission_monitor": Monitor
+         *                                 logs and statistics.
          *                             <li>@ref gpudb::grant_permission_read
          *                                 "grant_permission_read": Ability to
          *                                 read, list and use the object.
@@ -137,10 +142,10 @@ namespace gpudb
          *                          <li>@ref
          *                              gpudb::grant_permission_filter_expression
          *                              "grant_permission_filter_expression":
-         *                              Optional filter expression to apply to
-         *                              this grant.  Only rows that match the
-         *                              filter will be affected. The default
-         *                              value is ''.
+         *                              Filter expression to apply to this
+         *                              grant.  Only rows that match the filter
+         *                              will be affected. The default value is
+         *                              ''.
          *                          <li>@ref
          *                              gpudb::grant_permission_with_grant_option
          *                              "grant_permission_with_grant_option":
@@ -186,6 +191,8 @@ namespace gpudb
          * The type of object being granted to.
          * Supported values:
          * <ul>
+         *     <li>@ref gpudb::grant_permission_catalog
+         *         "grant_permission_catalog": Catalog
          *     <li>@ref gpudb::grant_permission_context
          *         "grant_permission_context": Context
          *     <li>@ref gpudb::grant_permission_credential
@@ -233,6 +240,8 @@ namespace gpudb
          *         object.
          *     <li>@ref gpudb::grant_permission_insert
          *         "grant_permission_insert": Insert access to tables.
+         *     <li>@ref gpudb::grant_permission_monitor
+         *         "grant_permission_monitor": Monitor logs and statistics.
          *     <li>@ref gpudb::grant_permission_read "grant_permission_read":
          *         Ability to read, list and use the object.
          *     <li>@ref gpudb::grant_permission_send_alert
@@ -256,9 +265,9 @@ namespace gpudb
          *         "grant_permission_columns": Apply table security to these
          *         columns, comma-separated. The default value is ''.
          *     <li>@ref gpudb::grant_permission_filter_expression
-         *         "grant_permission_filter_expression": Optional filter
-         *         expression to apply to this grant.  Only rows that match the
-         *         filter will be affected. The default value is ''.
+         *         "grant_permission_filter_expression": Filter expression to
+         *         apply to this grant.  Only rows that match the filter will
+         *         be affected. The default value is ''.
          *     <li>@ref gpudb::grant_permission_with_grant_option
          *         "grant_permission_with_grant_option": Allow the recipient to
          *         grant the same permission (or subset) to others.

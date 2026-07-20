@@ -83,12 +83,12 @@ namespace gpudb
          *                                           gpudb::alter_credential_identity
          *                                           "alter_credential_identity":
          *                                           New user for the
-         *                                           credential
+         *                                           credential.
          *                                       <li>@ref
          *                                           gpudb::alter_credential_secret
          *                                           "alter_credential_secret":
          *                                           New password for the
-         *                                           credential
+         *                                           credential.
          *                                       <li>@ref
          *                                           gpudb::alter_credential_schema_name
          *                                           "alter_credential_schema_name":
@@ -151,9 +151,9 @@ namespace gpudb
          *                 "alter_credential_kafka"
          *         </ul>
          *     <li>@ref gpudb::alter_credential_identity
-         *         "alter_credential_identity": New user for the credential
+         *         "alter_credential_identity": New user for the credential.
          *     <li>@ref gpudb::alter_credential_secret
-         *         "alter_credential_secret": New password for the credential
+         *         "alter_credential_secret": New password for the credential.
          *     <li>@ref gpudb::alter_credential_schema_name
          *         "alter_credential_schema_name": Updates the schema name.  If
          *         @ref gpudb::alter_credential_schema_name "schema_name"

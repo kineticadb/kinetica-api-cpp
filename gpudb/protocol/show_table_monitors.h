@@ -128,6 +128,9 @@ namespace gpudb
             refreshPeriod(std::vector<std::string>()),
             refreshStartTime(std::vector<std::string>()),
             datasinkNames(std::vector<std::string>()),
+            maxConsecutiveFailures(std::vector<int32_t>()),
+            failedNotificationsTableNames(std::vector<std::string>()),
+            statuses(std::vector<std::string>()),
             additionalInfo(std::vector<std::map<std::string, std::string> >()),
             info(std::map<std::string, std::string>())
         {
@@ -162,12 +165,12 @@ namespace gpudb
         std::vector<std::string> filterExpressions;
 
         /**
-         * List of join_table_names.
+         * List of join table names.
          */
         std::vector<std::string> joinTableNames;
 
         /**
-         * List of join_column_names
+         * List of join column names.
          */
         std::vector<std::string> joinColumnNames;
 
@@ -201,6 +204,23 @@ namespace gpudb
         std::vector<std::string> datasinkNames;
 
         /**
+         * Maximum number of consecutive failures for the respective @ref
+         * monitorIds before stream is automatically suspended.
+         */
+        std::vector<int32_t> maxConsecutiveFailures;
+
+        /**
+         * List of table names that will hold failed notification events when
+         * the respective @ref monitorIds is suspended.
+         */
+        std::vector<std::string> failedNotificationsTableNames;
+
+        /**
+         * Status of stream for the respective @ref monitorIds.
+         */
+        std::vector<std::string> statuses;
+
+        /**
          * Additional information about the respective monitors in @ref
          * monitorIds.
          * <ul>
@@ -215,7 +235,7 @@ namespace gpudb
          *     <li>@ref
          *         gpudb::show_table_monitors_materialized_view_for_change_detector
          *         "show_table_monitors_materialized_view_for_change_detector":
-         *         Materialized view that implements the change detector
+         *         Materialized view that implements the change detector.
          *     <li>@ref gpudb::show_table_monitors_materialized_view_for_filter
          *         "show_table_monitors_materialized_view_for_filter":
          *         Materialized views created for the @ref filterExpressions.
@@ -256,6 +276,9 @@ namespace avro
             ::avro::encode(e, v.refreshPeriod);
             ::avro::encode(e, v.refreshStartTime);
             ::avro::encode(e, v.datasinkNames);
+            ::avro::encode(e, v.maxConsecutiveFailures);
+            ::avro::encode(e, v.failedNotificationsTableNames);
+            ::avro::encode(e, v.statuses);
             ::avro::encode(e, v.additionalInfo);
             ::avro::encode(e, v.info);
         }
@@ -319,10 +342,22 @@ namespace avro
                             break;
 
                         case 12:
-                            ::avro::decode(d, v.additionalInfo);
+                            ::avro::decode(d, v.maxConsecutiveFailures);
                             break;
 
                         case 13:
+                            ::avro::decode(d, v.failedNotificationsTableNames);
+                            break;
+
+                        case 14:
+                            ::avro::decode(d, v.statuses);
+                            break;
+
+                        case 15:
+                            ::avro::decode(d, v.additionalInfo);
+                            break;
+
+                        case 16:
                             ::avro::decode(d, v.info);
                             break;
 
@@ -345,6 +380,9 @@ namespace avro
                 ::avro::decode(d, v.refreshPeriod);
                 ::avro::decode(d, v.refreshStartTime);
                 ::avro::decode(d, v.datasinkNames);
+                ::avro::decode(d, v.maxConsecutiveFailures);
+                ::avro::decode(d, v.failedNotificationsTableNames);
+                ::avro::decode(d, v.statuses);
                 ::avro::decode(d, v.additionalInfo);
                 ::avro::decode(d, v.info);
             }

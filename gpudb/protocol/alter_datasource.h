@@ -14,7 +14,7 @@ namespace gpudb
      * "GPUdb::alterDatasource".
      *
      * Alters the properties of an existing <a
-     * href="../../../concepts/data_sources/" target="_top">data source</a>
+     * href="../../../concepts/data_sources/" target="_top">data source</a>.
      */
     struct AlterDatasourceRequest
     {
@@ -54,13 +54,13 @@ namespace gpudb
          *                                           "alter_datasource_user_name":
          *                                           Name of the remote system
          *                                           user; may be an empty
-         *                                           string
+         *                                           string.
          *                                       <li>@ref
          *                                           gpudb::alter_datasource_password
          *                                           "alter_datasource_password":
          *                                           Password for the remote
          *                                           system user; may be an
-         *                                           empty string
+         *                                           empty string.
          *                                       <li>@ref
          *                                           gpudb::alter_datasource_skip_validation
          *                                           "alter_datasource_skip_validation":
@@ -84,13 +84,13 @@ namespace gpudb
          *                                           "alter_datasource_connection_timeout":
          *                                           Timeout in seconds for
          *                                           connecting to this storage
-         *                                           provider
+         *                                           provider.
          *                                       <li>@ref
          *                                           gpudb::alter_datasource_wait_timeout
          *                                           "alter_datasource_wait_timeout":
          *                                           Timeout in seconds for
          *                                           reading from this storage
-         *                                           provider
+         *                                           provider.
          *                                       <li>@ref
          *                                           gpudb::alter_datasource_credential
          *                                           "alter_datasource_credential":
@@ -98,19 +98,19 @@ namespace gpudb
          *                                           href="../../../concepts/credentials"
          *                                           target="_top">credential</a>
          *                                           object to be used in data
-         *                                           source
+         *                                           source.
          *                                       <li>@ref
          *                                           gpudb::alter_datasource_s3_bucket_name
          *                                           "alter_datasource_s3_bucket_name":
          *                                           Name of the Amazon S3
          *                                           bucket to use as the data
-         *                                           source
+         *                                           source.
          *                                       <li>@ref
          *                                           gpudb::alter_datasource_s3_region
          *                                           "alter_datasource_s3_region":
          *                                           Name of the Amazon S3
          *                                           region where the given
-         *                                           bucket is located
+         *                                           bucket is located.
          *                                       <li>@ref
          *                                           gpudb::alter_datasource_s3_verify_ssl
          *                                           "alter_datasource_s3_verify_ssl":
@@ -122,7 +122,7 @@ namespace gpudb
          *                                                   gpudb::alter_datasource_true
          *                                                   "alter_datasource_true":
          *                                                   Connect with SSL
-         *                                                   verification
+         *                                                   verification.
          *                                               <li>@ref
          *                                                   gpudb::alter_datasource_false
          *                                                   "alter_datasource_false":
@@ -174,18 +174,18 @@ namespace gpudb
          *                                           has required S3
          *                                           permissions that can be
          *                                           assumed for the given S3
-         *                                           IAM user
+         *                                           IAM user.
          *                                       <li>@ref
          *                                           gpudb::alter_datasource_s3_encryption_customer_algorithm
          *                                           "alter_datasource_s3_encryption_customer_algorithm":
          *                                           Customer encryption
          *                                           algorithm used encrypting
-         *                                           data
+         *                                           data.
          *                                       <li>@ref
          *                                           gpudb::alter_datasource_s3_encryption_customer_key
          *                                           "alter_datasource_s3_encryption_customer_key":
          *                                           Customer encryption key to
-         *                                           encrypt or decrypt data
+         *                                           encrypt or decrypt data.
          *                                       <li>@ref
          *                                           gpudb::alter_datasource_hdfs_kerberos_keytab
          *                                           "alter_datasource_hdfs_kerberos_keytab":
@@ -197,7 +197,7 @@ namespace gpudb
          *                                           gpudb::alter_datasource_hdfs_delegation_token
          *                                           "alter_datasource_hdfs_delegation_token":
          *                                           Delegation token for the
-         *                                           given HDFS user
+         *                                           given HDFS user.
          *                                       <li>@ref
          *                                           gpudb::alter_datasource_hdfs_use_kerberos
          *                                           "alter_datasource_hdfs_use_kerberos":
@@ -222,49 +222,78 @@ namespace gpudb
          *                                           Name of the Azure storage
          *                                           account to use as the data
          *                                           source, this is valid only
-         *                                           if tenant_id is specified
+         *                                           if tenant_id is specified.
          *                                       <li>@ref
          *                                           gpudb::alter_datasource_azure_container_name
          *                                           "alter_datasource_azure_container_name":
          *                                           Name of the Azure storage
          *                                           container to use as the
-         *                                           data source
+         *                                           data source.
          *                                       <li>@ref
          *                                           gpudb::alter_datasource_azure_tenant_id
          *                                           "alter_datasource_azure_tenant_id":
          *                                           Active Directory tenant ID
-         *                                           (or directory ID)
+         *                                           (or directory ID).
          *                                       <li>@ref
          *                                           gpudb::alter_datasource_azure_sas_token
          *                                           "alter_datasource_azure_sas_token":
          *                                           Shared access signature
          *                                           token for Azure storage
          *                                           account to use as the data
-         *                                           source
+         *                                           source.
          *                                       <li>@ref
          *                                           gpudb::alter_datasource_azure_oauth_token
          *                                           "alter_datasource_azure_oauth_token":
          *                                           OAuth token to access
-         *                                           given storage container
+         *                                           given storage container.
+         *                                       <li>@ref
+         *                                           gpudb::alter_datasource_azure_use_virtual_addressing
+         *                                           "alter_datasource_azure_use_virtual_addressing":
+         *                                           Whether to use virtual
+         *                                           addressing when
+         *                                           referencing the Azure
+         *                                           source.
+         *                                           Supported values:
+         *                                           <ul>
+         *                                               <li>@ref
+         *                                                   gpudb::alter_datasource_true
+         *                                                   "alter_datasource_true":
+         *                                                   The requests URI
+         *                                                   should be
+         *                                                   specified in
+         *                                                   virtual-hosted-style
+         *                                                   format where the
+         *                                                   bucket name is
+         *                                                   part of the domain
+         *                                                   name in the URL.
+         *                                               <li>@ref
+         *                                                   gpudb::alter_datasource_false
+         *                                                   "alter_datasource_false":
+         *                                                   Use path-style URI
+         *                                                   for requests.
+         *                                           </ul>
+         *                                           The default value is @ref
+         *                                           gpudb::alter_datasource_true
+         *                                           "alter_datasource_true".
          *                                       <li>@ref
          *                                           gpudb::alter_datasource_gcs_bucket_name
          *                                           "alter_datasource_gcs_bucket_name":
          *                                           Name of the Google Cloud
          *                                           Storage bucket to use as
-         *                                           the data source
+         *                                           the data source.
          *                                       <li>@ref
          *                                           gpudb::alter_datasource_gcs_project_id
          *                                           "alter_datasource_gcs_project_id":
          *                                           Name of the Google Cloud
          *                                           project to use as the data
-         *                                           source
+         *                                           source.
          *                                       <li>@ref
          *                                           gpudb::alter_datasource_gcs_service_account_keys
          *                                           "alter_datasource_gcs_service_account_keys":
          *                                           Google Cloud service
          *                                           account keys to use for
          *                                           authenticating the data
-         *                                           source
+         *                                           source.
          *                                       <li>@ref
          *                                           gpudb::alter_datasource_jdbc_driver_jar_path
          *                                           "alter_datasource_jdbc_driver_jar_path":
@@ -275,7 +304,7 @@ namespace gpudb
          *                                           gpudb::alter_datasource_jdbc_driver_class_name
          *                                           "alter_datasource_jdbc_driver_class_name":
          *                                           Name of the JDBC driver
-         *                                           class
+         *                                           class.
          *                                       <li>@ref
          *                                           gpudb::alter_datasource_kafka_url
          *                                           "alter_datasource_kafka_url":
@@ -287,7 +316,7 @@ namespace gpudb
          *                                           gpudb::alter_datasource_kafka_topic_name
          *                                           "alter_datasource_kafka_topic_name":
          *                                           Name of the Kafka topic to
-         *                                           use as the data source
+         *                                           use as the data source.
          *                                       <li>@ref
          *                                           gpudb::alter_datasource_anonymous
          *                                           "alter_datasource_anonymous":
@@ -335,9 +364,9 @@ namespace gpudb
          *                                       <li>@ref
          *                                           gpudb::alter_datasource_use_https
          *                                           "alter_datasource_use_https":
-         *                                           Use https to connect to
+         *                                           Use HTTPS to connect to
          *                                           datasource if true,
-         *                                           otherwise use http.
+         *                                           otherwise use HTTP.
          *                                           Supported values:
          *                                           <ul>
          *                                               <li>@ref
@@ -368,13 +397,13 @@ namespace gpudb
          *                                           "alter_datasource_schema_registry_connection_retries":
          *                                           Confluent Schema registry
          *                                           connection timeout (in
-         *                                           Secs)
+         *                                           secs).
          *                                       <li>@ref
          *                                           gpudb::alter_datasource_schema_registry_connection_timeout
          *                                           "alter_datasource_schema_registry_connection_timeout":
          *                                           Confluent Schema registry
          *                                           connection timeout (in
-         *                                           Secs)
+         *                                           secs).
          *                                       <li>@ref
          *                                           gpudb::alter_datasource_schema_registry_credential
          *                                           "alter_datasource_schema_registry_credential":
@@ -422,10 +451,10 @@ namespace gpudb
          *         'gcs', 'hdfs', 'jdbc', 'kafka', 'confluent', and 's3'.
          *     <li>@ref gpudb::alter_datasource_user_name
          *         "alter_datasource_user_name": Name of the remote system
-         *         user; may be an empty string
+         *         user; may be an empty string.
          *     <li>@ref gpudb::alter_datasource_password
          *         "alter_datasource_password": Password for the remote system
-         *         user; may be an empty string
+         *         user; may be an empty string.
          *     <li>@ref gpudb::alter_datasource_skip_validation
          *         "alter_datasource_skip_validation": Bypass validation of
          *         connection to remote source.
@@ -440,21 +469,21 @@ namespace gpudb
          *         "alter_datasource_false".
          *     <li>@ref gpudb::alter_datasource_connection_timeout
          *         "alter_datasource_connection_timeout": Timeout in seconds
-         *         for connecting to this storage provider
+         *         for connecting to this storage provider.
          *     <li>@ref gpudb::alter_datasource_wait_timeout
          *         "alter_datasource_wait_timeout": Timeout in seconds for
-         *         reading from this storage provider
+         *         reading from this storage provider.
          *     <li>@ref gpudb::alter_datasource_credential
          *         "alter_datasource_credential": Name of the <a
          *         href="../../../concepts/credentials"
          *         target="_top">credential</a> object to be used in data
-         *         source
+         *         source.
          *     <li>@ref gpudb::alter_datasource_s3_bucket_name
          *         "alter_datasource_s3_bucket_name": Name of the Amazon S3
-         *         bucket to use as the data source
+         *         bucket to use as the data source.
          *     <li>@ref gpudb::alter_datasource_s3_region
          *         "alter_datasource_s3_region": Name of the Amazon S3 region
-         *         where the given bucket is located
+         *         where the given bucket is located.
          *     <li>@ref gpudb::alter_datasource_s3_verify_ssl
          *         "alter_datasource_s3_verify_ssl": Whether to verify SSL
          *         connections.
@@ -462,7 +491,7 @@ namespace gpudb
          *         <ul>
          *             <li>@ref gpudb::alter_datasource_true
          *                 "alter_datasource_true": Connect with SSL
-         *                 verification
+         *                 verification.
          *             <li>@ref gpudb::alter_datasource_false
          *                 "alter_datasource_false": Connect without verifying
          *                 the SSL connection; for testing purposes, bypassing
@@ -488,21 +517,21 @@ namespace gpudb
          *     <li>@ref gpudb::alter_datasource_s3_aws_role_arn
          *         "alter_datasource_s3_aws_role_arn": Amazon IAM Role ARN
          *         which has required S3 permissions that can be assumed for
-         *         the given S3 IAM user
+         *         the given S3 IAM user.
          *     <li>@ref
          *         gpudb::alter_datasource_s3_encryption_customer_algorithm
          *         "alter_datasource_s3_encryption_customer_algorithm":
-         *         Customer encryption algorithm used encrypting data
+         *         Customer encryption algorithm used encrypting data.
          *     <li>@ref gpudb::alter_datasource_s3_encryption_customer_key
          *         "alter_datasource_s3_encryption_customer_key": Customer
-         *         encryption key to encrypt or decrypt data
+         *         encryption key to encrypt or decrypt data.
          *     <li>@ref gpudb::alter_datasource_hdfs_kerberos_keytab
          *         "alter_datasource_hdfs_kerberos_keytab": Kerberos keytab
          *         file location for the given HDFS user.  This may be a KIFS
          *         file.
          *     <li>@ref gpudb::alter_datasource_hdfs_delegation_token
          *         "alter_datasource_hdfs_delegation_token": Delegation token
-         *         for the given HDFS user
+         *         for the given HDFS user.
          *     <li>@ref gpudb::alter_datasource_hdfs_use_kerberos
          *         "alter_datasource_hdfs_use_kerberos": Use kerberos
          *         authentication for the given HDFS cluster.
@@ -518,42 +547,57 @@ namespace gpudb
          *     <li>@ref gpudb::alter_datasource_azure_storage_account_name
          *         "alter_datasource_azure_storage_account_name": Name of the
          *         Azure storage account to use as the data source, this is
-         *         valid only if tenant_id is specified
+         *         valid only if tenant_id is specified.
          *     <li>@ref gpudb::alter_datasource_azure_container_name
          *         "alter_datasource_azure_container_name": Name of the Azure
-         *         storage container to use as the data source
+         *         storage container to use as the data source.
          *     <li>@ref gpudb::alter_datasource_azure_tenant_id
          *         "alter_datasource_azure_tenant_id": Active Directory tenant
-         *         ID (or directory ID)
+         *         ID (or directory ID).
          *     <li>@ref gpudb::alter_datasource_azure_sas_token
          *         "alter_datasource_azure_sas_token": Shared access signature
-         *         token for Azure storage account to use as the data source
+         *         token for Azure storage account to use as the data source.
          *     <li>@ref gpudb::alter_datasource_azure_oauth_token
          *         "alter_datasource_azure_oauth_token": OAuth token to access
-         *         given storage container
+         *         given storage container.
+         *     <li>@ref gpudb::alter_datasource_azure_use_virtual_addressing
+         *         "alter_datasource_azure_use_virtual_addressing": Whether to
+         *         use virtual addressing when referencing the Azure source.
+         *         Supported values:
+         *         <ul>
+         *             <li>@ref gpudb::alter_datasource_true
+         *                 "alter_datasource_true": The requests URI should be
+         *                 specified in virtual-hosted-style format where the
+         *                 bucket name is part of the domain name in the URL.
+         *             <li>@ref gpudb::alter_datasource_false
+         *                 "alter_datasource_false": Use path-style URI for
+         *                 requests.
+         *         </ul>
+         *         The default value is @ref gpudb::alter_datasource_true
+         *         "alter_datasource_true".
          *     <li>@ref gpudb::alter_datasource_gcs_bucket_name
          *         "alter_datasource_gcs_bucket_name": Name of the Google Cloud
-         *         Storage bucket to use as the data source
+         *         Storage bucket to use as the data source.
          *     <li>@ref gpudb::alter_datasource_gcs_project_id
          *         "alter_datasource_gcs_project_id": Name of the Google Cloud
-         *         project to use as the data source
+         *         project to use as the data source.
          *     <li>@ref gpudb::alter_datasource_gcs_service_account_keys
          *         "alter_datasource_gcs_service_account_keys": Google Cloud
          *         service account keys to use for authenticating the data
-         *         source
+         *         source.
          *     <li>@ref gpudb::alter_datasource_jdbc_driver_jar_path
          *         "alter_datasource_jdbc_driver_jar_path": JDBC driver jar
          *         file location.  This may be a KIFS file.
          *     <li>@ref gpudb::alter_datasource_jdbc_driver_class_name
          *         "alter_datasource_jdbc_driver_class_name": Name of the JDBC
-         *         driver class
+         *         driver class.
          *     <li>@ref gpudb::alter_datasource_kafka_url
          *         "alter_datasource_kafka_url": The publicly-accessible full
          *         path URL to the Kafka broker, e.g.,
          *         'http://172.123.45.67:9300'.
          *     <li>@ref gpudb::alter_datasource_kafka_topic_name
          *         "alter_datasource_kafka_topic_name": Name of the Kafka topic
-         *         to use as the data source
+         *         to use as the data source.
          *     <li>@ref gpudb::alter_datasource_anonymous
          *         "alter_datasource_anonymous": Create an anonymous connection
          *         to the storage provider--DEPRECATED: this is now the
@@ -583,8 +627,8 @@ namespace gpudb
          *         The default value is @ref gpudb::alter_datasource_false
          *         "alter_datasource_false".
          *     <li>@ref gpudb::alter_datasource_use_https
-         *         "alter_datasource_use_https": Use https to connect to
-         *         datasource if true, otherwise use http.
+         *         "alter_datasource_use_https": Use HTTPS to connect to
+         *         datasource if true, otherwise use HTTP.
          *         Supported values:
          *         <ul>
          *             <li>@ref gpudb::alter_datasource_true
@@ -603,11 +647,11 @@ namespace gpudb
          *     <li>@ref
          *         gpudb::alter_datasource_schema_registry_connection_retries
          *         "alter_datasource_schema_registry_connection_retries":
-         *         Confluent Schema registry connection timeout (in Secs)
+         *         Confluent Schema registry connection timeout (in secs).
          *     <li>@ref
          *         gpudb::alter_datasource_schema_registry_connection_timeout
          *         "alter_datasource_schema_registry_connection_timeout":
-         *         Confluent Schema registry connection timeout (in Secs)
+         *         Confluent Schema registry connection timeout (in secs).
          *     <li>@ref gpudb::alter_datasource_schema_registry_credential
          *         "alter_datasource_schema_registry_credential": Confluent
          *         Schema Registry <a href="../../../concepts/credentials"
@@ -698,7 +742,7 @@ namespace gpudb
         }
 
         /**
-         * Map of values updated
+         * Map of values updated.
          */
         std::map<std::string, std::string> updatedPropertiesMap;
 

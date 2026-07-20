@@ -94,6 +94,20 @@ namespace gpudb
          *                           the column is a string type (non-charN)
          *                           and the number of records is too large, it
          *                           will return 0.
+         *                       <li>@ref gpudb::filter_by_string_search_stats
+         *                           "filter_by_string_search_stats":
+         *                           Cross-shard BM25 corpus statistics for one
+         *                           (column, query) pair. Returns the merged
+         *                           BM25 statistics (max_doc, doc_count,
+         *                           sum_total_term_freq, per-term doc_freq /
+         *                           total_term_freq) needed by callers that
+         *                           score documents themselves (e.g.
+         *                           text_match_bm25_global SQL function
+         *                           pre-pass). Requires @a column_names to
+         *                           contain exactly one column with text
+         *                           search enabled. The @a view_name field is
+         *                           ignored — this mode does not produce a
+         *                           result table.
          *                   </ul>
          * @param[in] columnNames_  List of columns on which to apply the
          *                          filter. Ignored for @ref
@@ -222,6 +236,16 @@ namespace gpudb
          *         Full regular expression search (not accelerated). If the
          *         column is a string type (non-charN) and the number of
          *         records is too large, it will return 0.
+         *     <li>@ref gpudb::filter_by_string_search_stats
+         *         "filter_by_string_search_stats": Cross-shard BM25 corpus
+         *         statistics for one (column, query) pair. Returns the merged
+         *         BM25 statistics (max_doc, doc_count, sum_total_term_freq,
+         *         per-term doc_freq / total_term_freq) needed by callers that
+         *         score documents themselves (e.g. text_match_bm25_global SQL
+         *         function pre-pass). Requires @a column_names to contain
+         *         exactly one column with text search enabled. The @a
+         *         view_name field is ignored — this mode does not produce a
+         *         result table.
          * </ul>
          */
         std::string mode;
@@ -362,7 +386,8 @@ namespace gpudb
          */
         FilterByStringResponse() :
             count(int64_t()),
-            info(std::map<std::string, std::string>())
+            info(std::map<std::string, std::string>()),
+            statsData(std::vector<uint8_t>())
         {
         }
 
@@ -376,11 +401,23 @@ namespace gpudb
          * <ul>
          *     <li>@ref gpudb::filter_by_string_qualified_view_name
          *         "filter_by_string_qualified_view_name": The fully qualified
-         *         name of the view (i.e. including the schema)
+         *         name of the view (i.e. including the schema).
          * </ul>
          * The default value is an empty map.
          */
         std::map<std::string, std::string> info;
+
+        /**
+         * Serialized cross-shard BM25 corpus statistics, populated for @ref
+         * gpudb::filter_by_string_search_stats "search_stats" mode and empty
+         * otherwise. Wire format matches the merged BM25GlobalStats blob the
+         * BM25 stats worker produces internally (max_doc, doc_count,
+         * sum_total_term_freq, sum_doc_freq, num_terms, then per term: term,
+         * doc_freq, total_term_freq). Clients that consume this perform their
+         * own scoring; the gpudb client library will expose a parser as a
+         * future convenience. The default value is ''.
+         */
+        std::vector<uint8_t> statsData;
     };
 } // end namespace gpudb
 
@@ -392,6 +429,7 @@ namespace avro
         {
             ::avro::encode(e, v.count);
             ::avro::encode(e, v.info);
+            ::avro::encode(e, v.statsData);
         }
 
         static void decode(Decoder& d, gpudb::FilterByStringResponse& v)
@@ -412,6 +450,10 @@ namespace avro
                             ::avro::decode(d, v.info);
                             break;
 
+                        case 2:
+                            ::avro::decode(d, v.statsData);
+                            break;
+
                         default:
                             break;
                     }
@@ -421,6 +463,7 @@ namespace avro
             {
                 ::avro::decode(d, v.count);
                 ::avro::decode(d, v.info);
+                ::avro::decode(d, v.statsData);
             }
         }
     };

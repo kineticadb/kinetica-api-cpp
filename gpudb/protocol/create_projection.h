@@ -412,6 +412,20 @@ namespace gpudb
          *                              which require a reshard will be
          *                              computed separately and joined back
          *                              together. The default value is ''.
+         *                          <li>@ref
+         *                              gpudb::create_projection_qualify_filter
+         *                              "create_projection_qualify_filter": An
+         *                              optional filter <a
+         *                              href="../../../concepts/expressions/"
+         *                              target="_top">expression</a> applied to
+         *                              the projection after window function
+         *                              evaluation, equivalent to a SQL QUALIFY
+         *                              clause.  May reference window function
+         *                              aliases as well as any other column in
+         *                              the projection.  Rows for which the
+         *                              expression evaluates to false (or NULL)
+         *                              are removed from the projection. The
+         *                              default value is ''.
          *                      </ul>
          *                      The default value is an empty map.
          */
@@ -678,6 +692,15 @@ namespace gpudb
          *         window functions which require a reshard will be computed
          *         separately and joined back together. The default value is
          *         ''.
+         *     <li>@ref gpudb::create_projection_qualify_filter
+         *         "create_projection_qualify_filter": An optional filter <a
+         *         href="../../../concepts/expressions/"
+         *         target="_top">expression</a> applied to the projection after
+         *         window function evaluation, equivalent to a SQL QUALIFY
+         *         clause.  May reference window function aliases as well as
+         *         any other column in the projection.  Rows for which the
+         *         expression evaluates to false (or NULL) are removed from the
+         *         projection. The default value is ''.
          * </ul>
          * The default value is an empty map.
          */
@@ -769,7 +792,7 @@ namespace gpudb
          * <ul>
          *     <li>@ref gpudb::create_projection_count
          *         "create_projection_count": Number of records in the final
-         *         table
+         *         table.
          *     <li>@ref gpudb::create_projection_qualified_projection_name
          *         "create_projection_qualified_projection_name": The fully
          *         qualified name of the projection (i.e. including the

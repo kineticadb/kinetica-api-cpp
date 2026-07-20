@@ -13,8 +13,11 @@ namespace gpudb
      * GPUdb::alterBackup(const AlterBackupRequest&) const
      * "GPUdb::alterBackup".
      *
-     * Alters an existing database backup containing a current snapshot of
-     * existing objects.
+     * Alters an existing database <a
+     * href="../../../admin/backup_restore/#database-backup"
+     * target="_top">backup</a>, accessible via the <a
+     * href="../../../concepts/data_sinks/" target="_top">data sink</a>
+     * specified by @ref datasinkName.
      */
     struct AlterBackupRequest
     {
@@ -34,45 +37,55 @@ namespace gpudb
          * Constructs an AlterBackupRequest object with the specified
          * parameters.
          *
-         * @param[in] backupName_  Name of the backup object to be altered
+         * @param[in] backupName_  Name of the backup to be altered.
          * @param[in] action_  Operation to be applied.
          *                     Supported values:
          *                     <ul>
          *                         <li>@ref gpudb::alter_backup_checksum
          *                             "alter_backup_checksum": Calculate
-         *                             checksum for backup files
+         *                             checksum for backed-up files.
          *                         <li>@ref gpudb::alter_backup_ddl_only
-         *                             "alter_backup_ddl_only": Only save the
-         *                             DDL, do not backup table data
+         *                             "alter_backup_ddl_only": Whether or not
+         *                             to only save DDL and not back up table
+         *                             data, when taking future snapshots; set
+         *                             @a value_ to 'true' or 'false' for DDL
+         *                             only or DDL and table data,
+         *                             respectively.
          *                         <li>@ref
          *                             gpudb::alter_backup_max_incremental_backups_to_keep
          *                             "alter_backup_max_incremental_backups_to_keep":
-         *                             Maximum number of incremental backups to
-         *                             keep
+         *                             Maximum number of incremental snapshots
+         *                             to keep, when taking future snapshots;
+         *                             set @a value_ to the number of snapshots
+         *                             to keep.
          *                         <li>@ref gpudb::alter_backup_merge
-         *                             "alter_backup_merge": Merges all backup
-         *                             instances and creates a single full
-         *                             backup
+         *                             "alter_backup_merge": Merges all
+         *                             snapshots within a backup and creates a
+         *                             single full snapshot.
          *                         <li>@ref gpudb::alter_backup_purge
-         *                             "alter_backup_purge": Purges backup
-         *                             instances
+         *                             "alter_backup_purge": Deletes a snapshot
+         *                             from a backup; set @a value_ to the
+         *                             snapshot ID to purge.
          *                     </ul>
-         * @param[in] value_  Action specific argument.
-         * @param[in] datasinkName_  Datasink where backup will be stored.
+         * @param[in] value_  Value of the modification, depending on @a
+         *                    action_.
+         * @param[in] datasinkName_  Data sink through which the backup is
+         *                           accessible.
          * @param[in] options_  Optional parameters.
          *                      <ul>
          *                          <li>@ref gpudb::alter_backup_comment
          *                              "alter_backup_comment": Comments to
-         *                              store with the new backup instance
+         *                              store with the backup.
          *                          <li>@ref gpudb::alter_backup_dry_run
-         *                              "alter_backup_dry_run": Dry run of
-         *                              backup changes.
+         *                              "alter_backup_dry_run": Whether or not
+         *                              to perform a dry run of a backup
+         *                              alteration.
          *                              Supported values:
          *                              <ul>
-         *                                  <li>@ref gpudb::alter_backup_false
-         *                                      "alter_backup_false"
          *                                  <li>@ref gpudb::alter_backup_true
          *                                      "alter_backup_true"
+         *                                  <li>@ref gpudb::alter_backup_false
+         *                                      "alter_backup_false"
          *                              </ul>
          *                              The default value is @ref
          *                              gpudb::alter_backup_false
@@ -90,7 +103,7 @@ namespace gpudb
         }
 
         /**
-         * Name of the backup object to be altered
+         * Name of the backup to be altered.
          */
         std::string backupName;
 
@@ -99,27 +112,33 @@ namespace gpudb
          * Supported values:
          * <ul>
          *     <li>@ref gpudb::alter_backup_checksum "alter_backup_checksum":
-         *         Calculate checksum for backup files
+         *         Calculate checksum for backed-up files.
          *     <li>@ref gpudb::alter_backup_ddl_only "alter_backup_ddl_only":
-         *         Only save the DDL, do not backup table data
+         *         Whether or not to only save DDL and not back up table data,
+         *         when taking future snapshots; set @ref value to 'true' or
+         *         'false' for DDL only or DDL and table data, respectively.
          *     <li>@ref gpudb::alter_backup_max_incremental_backups_to_keep
          *         "alter_backup_max_incremental_backups_to_keep": Maximum
-         *         number of incremental backups to keep
+         *         number of incremental snapshots to keep, when taking future
+         *         snapshots; set @ref value to the number of snapshots to
+         *         keep.
          *     <li>@ref gpudb::alter_backup_merge "alter_backup_merge": Merges
-         *         all backup instances and creates a single full backup
-         *     <li>@ref gpudb::alter_backup_purge "alter_backup_purge": Purges
-         *         backup instances
+         *         all snapshots within a backup and creates a single full
+         *         snapshot.
+         *     <li>@ref gpudb::alter_backup_purge "alter_backup_purge": Deletes
+         *         a snapshot from a backup; set @ref value to the snapshot ID
+         *         to purge.
          * </ul>
          */
         std::string action;
 
         /**
-         * Action specific argument.
+         * Value of the modification, depending on @ref action.
          */
         std::string value;
 
         /**
-         * Datasink where backup will be stored.
+         * Data sink through which the backup is accessible.
          */
         std::string datasinkName;
 
@@ -127,13 +146,13 @@ namespace gpudb
          * Optional parameters.
          * <ul>
          *     <li>@ref gpudb::alter_backup_comment "alter_backup_comment":
-         *         Comments to store with the new backup instance
-         *     <li>@ref gpudb::alter_backup_dry_run "alter_backup_dry_run": Dry
-         *         run of backup changes.
+         *         Comments to store with the backup.
+         *     <li>@ref gpudb::alter_backup_dry_run "alter_backup_dry_run":
+         *         Whether or not to perform a dry run of a backup alteration.
          *         Supported values:
          *         <ul>
-         *             <li>@ref gpudb::alter_backup_false "alter_backup_false"
          *             <li>@ref gpudb::alter_backup_true "alter_backup_true"
+         *             <li>@ref gpudb::alter_backup_false "alter_backup_false"
          *         </ul>
          *         The default value is @ref gpudb::alter_backup_false
          *         "alter_backup_false".
@@ -231,17 +250,17 @@ namespace gpudb
         std::string backupName;
 
         /**
-         * Backup ID.
+         * ID of the snapshot affected by the alter operation, if any.
          */
         int64_t backupId;
 
         /**
-         * Total size of files affected by alter operation
+         * Total size of files affected by the alter operation.
          */
         int64_t totalBytes;
 
         /**
-         * Total number of records affected alter operation
+         * Total number of records affected by the alter operation.
          */
         int64_t totalNumberOfRecords;
 

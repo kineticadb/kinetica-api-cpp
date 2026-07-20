@@ -44,6 +44,9 @@ namespace gpudb
          *                         Supported values:
          *                         <ul>
          *                             <li>@ref
+         *                                 gpudb::revoke_permission_catalog
+         *                                 "revoke_permission_catalog": Catalog
+         *                             <li>@ref
          *                                 gpudb::revoke_permission_context
          *                                 "revoke_permission_context": Context
          *                             <li>@ref
@@ -110,6 +113,10 @@ namespace gpudb
          *                             <li>@ref gpudb::revoke_permission_insert
          *                                 "revoke_permission_insert": Insert
          *                                 access to tables.
+         *                             <li>@ref
+         *                                 gpudb::revoke_permission_monitor
+         *                                 "revoke_permission_monitor": Monitor
+         *                                 logs and statistics.
          *                             <li>@ref gpudb::revoke_permission_read
          *                                 "revoke_permission_read": Ability to
          *                                 read, list and use the object.
@@ -165,6 +172,8 @@ namespace gpudb
          * The type of object being revoked.
          * Supported values:
          * <ul>
+         *     <li>@ref gpudb::revoke_permission_catalog
+         *         "revoke_permission_catalog": Catalog
          *     <li>@ref gpudb::revoke_permission_context
          *         "revoke_permission_context": Context
          *     <li>@ref gpudb::revoke_permission_credential
@@ -213,6 +222,8 @@ namespace gpudb
          *         Procedure object.
          *     <li>@ref gpudb::revoke_permission_insert
          *         "revoke_permission_insert": Insert access to tables.
+         *     <li>@ref gpudb::revoke_permission_monitor
+         *         "revoke_permission_monitor": Monitor logs and statistics.
          *     <li>@ref gpudb::revoke_permission_read "revoke_permission_read":
          *         Ability to read, list and use the object.
          *     <li>@ref gpudb::revoke_permission_send_alert

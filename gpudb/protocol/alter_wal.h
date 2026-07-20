@@ -35,7 +35,7 @@ namespace gpudb
          *                      <ul>
          *                          <li>@ref gpudb::alter_wal_max_segment_size
          *                              "alter_wal_max_segment_size": Maximum
-         *                              size of an individual segment file
+         *                              size of an individual segment file.
          *                          <li>@ref gpudb::alter_wal_segment_count
          *                              "alter_wal_segment_count": Approximate
          *                              number of segment files to split the
@@ -47,21 +47,21 @@ namespace gpudb
          *                              <ul>
          *                                  <li>@ref gpudb::alter_wal_none
          *                                      "alter_wal_none": Disables the
-         *                                      WAL
+         *                                      WAL.
          *                                  <li>@ref
          *                                      gpudb::alter_wal_background
          *                                      "alter_wal_background": WAL
          *                                      entries are periodically
          *                                      written instead of immediately
-         *                                      after each operation
+         *                                      after each operation.
          *                                  <li>@ref gpudb::alter_wal_flush
          *                                      "alter_wal_flush": Protects
          *                                      entries in the event of a
-         *                                      database crash
+         *                                      database crash.
          *                                  <li>@ref gpudb::alter_wal_fsync
          *                                      "alter_wal_fsync": Protects
          *                                      entries in the event of an OS
-         *                                      crash
+         *                                      crash.
          *                              </ul>
          *                          <li>@ref gpudb::alter_wal_flush_frequency
          *                              "alter_wal_flush_frequency": Specifies
@@ -156,7 +156,7 @@ namespace gpudb
          * <ul>
          *     <li>@ref gpudb::alter_wal_max_segment_size
          *         "alter_wal_max_segment_size": Maximum size of an individual
-         *         segment file
+         *         segment file.
          *     <li>@ref gpudb::alter_wal_segment_count
          *         "alter_wal_segment_count": Approximate number of segment
          *         files to split the WAL across. Must be at least two.
@@ -165,14 +165,14 @@ namespace gpudb
          *         Supported values:
          *         <ul>
          *             <li>@ref gpudb::alter_wal_none "alter_wal_none":
-         *                 Disables the WAL
+         *                 Disables the WAL.
          *             <li>@ref gpudb::alter_wal_background
          *                 "alter_wal_background": WAL entries are periodically
-         *                 written instead of immediately after each operation
+         *                 written instead of immediately after each operation.
          *             <li>@ref gpudb::alter_wal_flush "alter_wal_flush":
-         *                 Protects entries in the event of a database crash
+         *                 Protects entries in the event of a database crash.
          *             <li>@ref gpudb::alter_wal_fsync "alter_wal_fsync":
-         *                 Protects entries in the event of an OS crash
+         *                 Protects entries in the event of an OS crash.
          *         </ul>
          *     <li>@ref gpudb::alter_wal_flush_frequency
          *         "alter_wal_flush_frequency": Specifies how frequently WAL

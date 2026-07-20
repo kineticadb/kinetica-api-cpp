@@ -449,7 +449,7 @@ namespace gpudb
          *                              column properties to an appropriate
          *                              format for each property.  Currently
          *                              supported column properties include
-         *                              date, time, & datetime. The parameter
+         *                              date, time, and datetime. The parameter
          *                              value must be formatted as a JSON
          *                              string of maps of column names to maps
          *                              of column properties to their
@@ -521,7 +521,7 @@ namespace gpudb
          *                                  <li>@ref
          *                                      gpudb::insert_records_from_files_auto
          *                                      "insert_records_from_files_auto":
-         *                                      Auto detect compression type
+         *                                      Auto detect compression type.
          *                                  <li>@ref
          *                                      gpudb::insert_records_from_files_gzip
          *                                      "insert_records_from_files_gzip":
@@ -540,7 +540,7 @@ namespace gpudb
          *                              Name of an existing external data
          *                              source from which data file(s)
          *                              specified in @a filepaths_ will be
-         *                              loaded
+         *                              loaded.
          *                          <li>@ref
          *                              gpudb::insert_records_from_files_default_column_formats
          *                              "insert_records_from_files_default_column_formats":
@@ -548,11 +548,11 @@ namespace gpudb
          *                              applied to source data loaded into
          *                              columns with the corresponding column
          *                              property.  Currently supported column
-         *                              properties include date, time, &
+         *                              properties include date, time, and
          *                              datetime.  This default
          *                              column-property-bound format can be
          *                              overridden by specifying a column
-         *                              property & format for a given target
+         *                              property and format for a given target
          *                              column in @ref
          *                              gpudb::insert_records_from_files_column_formats
          *                              "column_formats". For each specified
@@ -603,9 +603,13 @@ namespace gpudb
          *                                      possible; otherwise, the
          *                                      malformed records are skipped.
          *                                  <li>@ref
+         *                                      gpudb::insert_records_from_files_skip
+         *                                      "insert_records_from_files_skip":
+         *                                      Malformed records are skipped.
+         *                                  <li>@ref
          *                                      gpudb::insert_records_from_files_ignore_bad_records
          *                                      "insert_records_from_files_ignore_bad_records":
-         *                                      Malformed records are skipped.
+         *                                      Alias for skip.
          *                                  <li>@ref
          *                                      gpudb::insert_records_from_files_abort
          *                                      "insert_records_from_files_abort":
@@ -628,7 +632,7 @@ namespace gpudb
          *                                  <li>@ref
          *                                      gpudb::insert_records_from_files_avro
          *                                      "insert_records_from_files_avro":
-         *                                      Avro file format
+         *                                      Avro file format.
          *                                  <li>@ref
          *                                      gpudb::insert_records_from_files_delimited_text
          *                                      "insert_records_from_files_delimited_text":
@@ -637,19 +641,19 @@ namespace gpudb
          *                                  <li>@ref
          *                                      gpudb::insert_records_from_files_gdb
          *                                      "insert_records_from_files_gdb":
-         *                                      Esri/GDB file format
+         *                                      Esri/GDB file format.
          *                                  <li>@ref
          *                                      gpudb::insert_records_from_files_json
          *                                      "insert_records_from_files_json":
-         *                                      Json file format
+         *                                      JSON file format.
          *                                  <li>@ref
          *                                      gpudb::insert_records_from_files_parquet
          *                                      "insert_records_from_files_parquet":
-         *                                      Apache Parquet file format
+         *                                      Apache Parquet file format.
          *                                  <li>@ref
          *                                      gpudb::insert_records_from_files_shapefile
          *                                      "insert_records_from_files_shapefile":
-         *                                      ShapeFile file format
+         *                                      ShapeFile file format.
          *                              </ul>
          *                              The default value is @ref
          *                              gpudb::insert_records_from_files_delimited_text
@@ -664,12 +668,12 @@ namespace gpudb
          *                                      gpudb::insert_records_from_files_true
          *                                      "insert_records_from_files_true":
          *                                      Break up nested columns to
-         *                                      multiple columns
+         *                                      multiple columns.
          *                                  <li>@ref
          *                                      gpudb::insert_records_from_files_false
          *                                      "insert_records_from_files_false":
-         *                                      Treat nested columns as json
-         *                                      columns instead of flattening
+         *                                      Treat nested columns as JSON
+         *                                      columns instead of flattening.
          *                              </ul>
          *                              The default value is @ref
          *                              gpudb::insert_records_from_files_false
@@ -679,7 +683,7 @@ namespace gpudb
          *                              "insert_records_from_files_gdal_configuration_options":
          *                              Comma separated list of gdal conf
          *                              options, for the specific requests:
-         *                              key=value
+         *                              key=value.
          *                          <li>@ref
          *                              gpudb::insert_records_from_files_ignore_existing_pk
          *                              "insert_records_from_files_ignore_existing_pk":
@@ -722,14 +726,14 @@ namespace gpudb
          *                                      "insert_records_from_files_true":
          *                                      Ignore new records whose
          *                                      primary key values collide with
-         *                                      those of existing records
+         *                                      those of existing records.
          *                                  <li>@ref
          *                                      gpudb::insert_records_from_files_false
          *                                      "insert_records_from_files_false":
          *                                      Treat as errors any new records
          *                                      whose primary key values
          *                                      collide with those of existing
-         *                                      records
+         *                                      records.
          *                              </ul>
          *                              The default value is @ref
          *                              gpudb::insert_records_from_files_false
@@ -747,7 +751,7 @@ namespace gpudb
          *                                      "insert_records_from_files_full":
          *                                      Run a type inference on the
          *                                      source data (if needed) and
-         *                                      ingest
+         *                                      ingest.
          *                                  <li>@ref
          *                                      gpudb::insert_records_from_files_dry_run
          *                                      "insert_records_from_files_dry_run":
@@ -921,6 +925,29 @@ namespace gpudb
          *                              gpudb::insert_records_from_files_batch_size
          *                              "batch_size" (per working thread).
          *                          <li>@ref
+         *                              gpudb::insert_records_from_files_name_columns_from_file
+         *                              "insert_records_from_files_name_columns_from_file":
+         *                              Specifies a comma-delimited list of
+         *                              column names to be used as the
+         *                              source-data column names.  If the file
+         *                              has a header row (i.e., @ref
+         *                              gpudb::insert_records_from_files_text_has_header
+         *                              "text_has_header" is @ref
+         *                              gpudb::insert_records_from_files_true
+         *                              "true"), these names override the
+         *                              file's header names.  If the file has
+         *                              no header row, these names are used as
+         *                              the source-data column names. Either
+         *                              way, the i-th name in this list applies
+         *                              to the i-th column in the file,
+         *                              enabling name-based matching against
+         *                              the target table's columns (and use
+         *                              with @ref
+         *                              gpudb::insert_records_from_files_columns_to_load
+         *                              "columns_to_load" / @ref
+         *                              gpudb::insert_records_from_files_columns_to_skip
+         *                              "columns_to_skip").
+         *                          <li>@ref
          *                              gpudb::insert_records_from_files_num_tasks_per_rank
          *                              "insert_records_from_files_num_tasks_per_rank":
          *                              Number of tasks for reading file per
@@ -949,22 +976,22 @@ namespace gpudb
          *                              gpudb::insert_records_from_files_schema_registry_connection_retries
          *                              "insert_records_from_files_schema_registry_connection_retries":
          *                              Confluent Schema registry connection
-         *                              timeout (in Secs)
+         *                              timeout (in secs).
          *                          <li>@ref
          *                              gpudb::insert_records_from_files_schema_registry_connection_timeout
          *                              "insert_records_from_files_schema_registry_connection_timeout":
          *                              Confluent Schema registry connection
-         *                              timeout (in Secs)
+         *                              timeout (in secs).
          *                          <li>@ref
          *                              gpudb::insert_records_from_files_schema_registry_max_consecutive_connection_failures
          *                              "insert_records_from_files_schema_registry_max_consecutive_connection_failures":
          *                              Max records to skip due to SR
-         *                              connection failures, before failing
+         *                              connection failures, before failing.
          *                          <li>@ref
          *                              gpudb::insert_records_from_files_max_consecutive_invalid_schema_failure
          *                              "insert_records_from_files_max_consecutive_invalid_schema_failure":
          *                              Max records to skip due to schema
-         *                              related errors, before failing
+         *                              related errors, before failing.
          *                          <li>@ref
          *                              gpudb::insert_records_from_files_schema_registry_schema_name
          *                              "insert_records_from_files_schema_registry_schema_name":
@@ -1062,7 +1089,7 @@ namespace gpudb
          *                              or 'v' preceded by an escape character
          *                              will be interpreted as the ASCII bell,
          *                              backspace, form feed, line feed,
-         *                              carriage return, horizontal tab, &
+         *                              carriage return, horizontal tab, and
          *                              vertical tab, respectively.  For
          *                              example, the escape character followed
          *                              by an 'n' will be interpreted as a
@@ -1165,6 +1192,25 @@ namespace gpudb
          *                              gpudb::insert_records_from_files_text_search_columns
          *                              "text_search_columns" has a value.
          *                          <li>@ref
+         *                              gpudb::insert_records_from_files_trim_space
+         *                              "insert_records_from_files_trim_space":
+         *                              If set to @ref
+         *                              gpudb::insert_records_from_files_true
+         *                              "true", remove leading or trailing
+         *                              space from fields.
+         *                              Supported values:
+         *                              <ul>
+         *                                  <li>@ref
+         *                                      gpudb::insert_records_from_files_true
+         *                                      "insert_records_from_files_true"
+         *                                  <li>@ref
+         *                                      gpudb::insert_records_from_files_false
+         *                                      "insert_records_from_files_false"
+         *                              </ul>
+         *                              The default value is @ref
+         *                              gpudb::insert_records_from_files_false
+         *                              "insert_records_from_files_false".
+         *                          <li>@ref
          *                              gpudb::insert_records_from_files_truncate_strings
          *                              "insert_records_from_files_truncate_strings":
          *                              If set to @ref
@@ -1217,7 +1263,7 @@ namespace gpudb
          *                                      gpudb::insert_records_from_files_accuracy
          *                                      "insert_records_from_files_accuracy":
          *                                      Scans data to get exactly-typed
-         *                                      & sized columns for all data
+         *                                      and sized columns for all data
          *                                      scanned.
          *                                  <li>@ref
          *                                      gpudb::insert_records_from_files_speed
@@ -1225,11 +1271,37 @@ namespace gpudb
          *                                      Scans data and picks the widest
          *                                      possible column types so that
          *                                      'all' values will fit with
-         *                                      minimum data scanned
+         *                                      minimum data scanned.
          *                              </ul>
          *                              The default value is @ref
          *                              gpudb::insert_records_from_files_accuracy
          *                              "insert_records_from_files_accuracy".
+         *                          <li>@ref
+         *                              gpudb::insert_records_from_files_enable_inplace_updates
+         *                              "insert_records_from_files_enable_inplace_updates":
+         *                              Applies only when upserting (when
+         *                              update_on_existing_pk is true). If set
+         *                              to true (the default), an existing
+         *                              record matched by primary key is
+         *                              modified in place. If set to false, the
+         *                              matched record is updated by deleting
+         *                              it and inserting a replacement (delete
+         *                              and insert), which prevents the change
+         *                              from being reflected in dependent
+         *                              materialized views until they are
+         *                              refreshed.
+         *                              Supported values:
+         *                              <ul>
+         *                                  <li>@ref
+         *                                      gpudb::insert_records_from_files_true
+         *                                      "insert_records_from_files_true"
+         *                                  <li>@ref
+         *                                      gpudb::insert_records_from_files_false
+         *                                      "insert_records_from_files_false"
+         *                              </ul>
+         *                              The default value is @ref
+         *                              gpudb::insert_records_from_files_true
+         *                              "insert_records_from_files_true".
          *                          <li>@ref
          *                              gpudb::insert_records_from_files_update_on_existing_pk
          *                              "insert_records_from_files_update_on_existing_pk":
@@ -1253,7 +1325,7 @@ namespace gpudb
          *                              rejected and the error handled as
          *                              determined by @ref
          *                              gpudb::insert_records_from_files_ignore_existing_pk
-         *                              "ignore_existing_pk" & @ref
+         *                              "ignore_existing_pk" and @ref
          *                              gpudb::insert_records_from_files_error_handling
          *                              "error_handling".  If the specified
          *                              table does not have a primary key, then
@@ -1264,16 +1336,30 @@ namespace gpudb
          *                                      gpudb::insert_records_from_files_true
          *                                      "insert_records_from_files_true":
          *                                      Upsert new records when primary
-         *                                      keys match existing records
+         *                                      keys match existing records.
          *                                  <li>@ref
          *                                      gpudb::insert_records_from_files_false
          *                                      "insert_records_from_files_false":
          *                                      Reject new records when primary
-         *                                      keys match existing records
+         *                                      keys match existing records.
          *                              </ul>
          *                              The default value is @ref
          *                              gpudb::insert_records_from_files_false
          *                              "insert_records_from_files_false".
+         *                          <li>@ref
+         *                              gpudb::insert_records_from_files_transformations
+         *                              "insert_records_from_files_transformations":
+         *                              Comma-separated expressions, one per
+         *                              target table column.  Each expression
+         *                              is evaluated per record.  Empty entries
+         *                              (two consecutive commas) mean no
+         *                              transformation for that column -- the
+         *                              value is resolved from the input
+         *                              record, table default, NULL, or an
+         *                              error. Expressions may reference input
+         *                              columns by name or by position ($1 for
+         *                              the first input column, $2 for the
+         *                              second, etc.). The default value is ''.
          *                      </ul>
          *                      The default value is an empty map.
          */
@@ -1559,12 +1645,12 @@ namespace gpudb
          *         to the source data loaded into that column.  Each column
          *         format will contain a mapping of one or more of its column
          *         properties to an appropriate format for each property.
-         *         Currently supported column properties include date, time, &
-         *         datetime. The parameter value must be formatted as a JSON
-         *         string of maps of column names to maps of column properties
-         *         to their corresponding column formats, e.g., '{ "order_date"
-         *         : { "date" : "%Y.%m.%d" }, "order_time" : { "time" :
-         *         "%H:%M:%S" } }'.  See @ref
+         *         Currently supported column properties include date, time,
+         *         and datetime. The parameter value must be formatted as a
+         *         JSON string of maps of column names to maps of column
+         *         properties to their corresponding column formats, e.g., '{
+         *         "order_date" : { "date" : "%Y.%m.%d" }, "order_time" : {
+         *         "time" : "%H:%M:%S" } }'.  See @ref
          *         gpudb::insert_records_from_files_default_column_formats
          *         "default_column_formats" for valid format syntax.
          *     <li>@ref gpudb::insert_records_from_files_columns_to_load
@@ -1608,7 +1694,7 @@ namespace gpudb
          *                 "insert_records_from_files_none": No compression.
          *             <li>@ref gpudb::insert_records_from_files_auto
          *                 "insert_records_from_files_auto": Auto detect
-         *                 compression type
+         *                 compression type.
          *             <li>@ref gpudb::insert_records_from_files_gzip
          *                 "insert_records_from_files_gzip": gzip file
          *                 compression.
@@ -1622,15 +1708,15 @@ namespace gpudb
          *     <li>@ref gpudb::insert_records_from_files_datasource_name
          *         "insert_records_from_files_datasource_name": Name of an
          *         existing external data source from which data file(s)
-         *         specified in @ref filepaths will be loaded
+         *         specified in @ref filepaths will be loaded.
          *     <li>@ref gpudb::insert_records_from_files_default_column_formats
          *         "insert_records_from_files_default_column_formats":
          *         Specifies the default format to be applied to source data
          *         loaded into columns with the corresponding column property.
-         *         Currently supported column properties include date, time, &
-         *         datetime.  This default column-property-bound format can be
-         *         overridden by specifying a column property & format for a
-         *         given target column in @ref
+         *         Currently supported column properties include date, time,
+         *         and datetime.  This default column-property-bound format can
+         *         be overridden by specifying a column property and format for
+         *         a given target column in @ref
          *         gpudb::insert_records_from_files_column_formats
          *         "column_formats". For each specified annotation, the format
          *         will apply to all columns with that annotation unless a
@@ -1663,10 +1749,13 @@ namespace gpudb
          *                 missing columns are populated with nulls if
          *                 possible; otherwise, the malformed records are
          *                 skipped.
+         *             <li>@ref gpudb::insert_records_from_files_skip
+         *                 "insert_records_from_files_skip": Malformed records
+         *                 are skipped.
          *             <li>@ref
          *                 gpudb::insert_records_from_files_ignore_bad_records
          *                 "insert_records_from_files_ignore_bad_records":
-         *                 Malformed records are skipped.
+         *                 Alias for skip.
          *             <li>@ref gpudb::insert_records_from_files_abort
          *                 "insert_records_from_files_abort": Stops current
          *                 insertion and aborts entire operation when an error
@@ -1682,22 +1771,22 @@ namespace gpudb
          *         Supported values:
          *         <ul>
          *             <li>@ref gpudb::insert_records_from_files_avro
-         *                 "insert_records_from_files_avro": Avro file format
+         *                 "insert_records_from_files_avro": Avro file format.
          *             <li>@ref gpudb::insert_records_from_files_delimited_text
          *                 "insert_records_from_files_delimited_text":
          *                 Delimited text file format; e.g., CSV, TSV, PSV,
          *                 etc.
          *             <li>@ref gpudb::insert_records_from_files_gdb
          *                 "insert_records_from_files_gdb": Esri/GDB file
-         *                 format
+         *                 format.
          *             <li>@ref gpudb::insert_records_from_files_json
-         *                 "insert_records_from_files_json": Json file format
+         *                 "insert_records_from_files_json": JSON file format.
          *             <li>@ref gpudb::insert_records_from_files_parquet
          *                 "insert_records_from_files_parquet": Apache Parquet
-         *                 file format
+         *                 file format.
          *             <li>@ref gpudb::insert_records_from_files_shapefile
          *                 "insert_records_from_files_shapefile": ShapeFile
-         *                 file format
+         *                 file format.
          *         </ul>
          *         The default value is @ref
          *         gpudb::insert_records_from_files_delimited_text
@@ -1709,10 +1798,10 @@ namespace gpudb
          *         <ul>
          *             <li>@ref gpudb::insert_records_from_files_true
          *                 "insert_records_from_files_true": Break up nested
-         *                 columns to multiple columns
+         *                 columns to multiple columns.
          *             <li>@ref gpudb::insert_records_from_files_false
          *                 "insert_records_from_files_false": Treat nested
-         *                 columns as json columns instead of flattening
+         *                 columns as JSON columns instead of flattening.
          *         </ul>
          *         The default value is @ref
          *         gpudb::insert_records_from_files_false
@@ -1721,7 +1810,7 @@ namespace gpudb
          *         gpudb::insert_records_from_files_gdal_configuration_options
          *         "insert_records_from_files_gdal_configuration_options":
          *         Comma separated list of gdal conf options, for the specific
-         *         requests: key=value
+         *         requests: key=value.
          *     <li>@ref gpudb::insert_records_from_files_ignore_existing_pk
          *         "insert_records_from_files_ignore_existing_pk": Specifies
          *         the record collision error-suppression policy for inserting
@@ -1752,11 +1841,11 @@ namespace gpudb
          *             <li>@ref gpudb::insert_records_from_files_true
          *                 "insert_records_from_files_true": Ignore new records
          *                 whose primary key values collide with those of
-         *                 existing records
+         *                 existing records.
          *             <li>@ref gpudb::insert_records_from_files_false
          *                 "insert_records_from_files_false": Treat as errors
          *                 any new records whose primary key values collide
-         *                 with those of existing records
+         *                 with those of existing records.
          *         </ul>
          *         The default value is @ref
          *         gpudb::insert_records_from_files_false
@@ -1769,7 +1858,7 @@ namespace gpudb
          *         <ul>
          *             <li>@ref gpudb::insert_records_from_files_full
          *                 "insert_records_from_files_full": Run a type
-         *                 inference on the source data (if needed) and ingest
+         *                 inference on the source data (if needed) and ingest.
          *             <li>@ref gpudb::insert_records_from_files_dry_run
          *                 "insert_records_from_files_dry_run": Does not load
          *                 data, but walks through the source data and
@@ -1896,6 +1985,23 @@ namespace gpudb
          *         limited to the next whole number of @ref
          *         gpudb::insert_records_from_files_batch_size "batch_size"
          *         (per working thread).
+         *     <li>@ref gpudb::insert_records_from_files_name_columns_from_file
+         *         "insert_records_from_files_name_columns_from_file":
+         *         Specifies a comma-delimited list of column names to be used
+         *         as the source-data column names.  If the file has a header
+         *         row (i.e., @ref
+         *         gpudb::insert_records_from_files_text_has_header
+         *         "text_has_header" is @ref
+         *         gpudb::insert_records_from_files_true "true"), these names
+         *         override the file's header names.  If the file has no header
+         *         row, these names are used as the source-data column names.
+         *         Either way, the i-th name in this list applies to the i-th
+         *         column in the file, enabling name-based matching against the
+         *         target table's columns (and use with @ref
+         *         gpudb::insert_records_from_files_columns_to_load
+         *         "columns_to_load" / @ref
+         *         gpudb::insert_records_from_files_columns_to_skip
+         *         "columns_to_skip").
          *     <li>@ref gpudb::insert_records_from_files_num_tasks_per_rank
          *         "insert_records_from_files_num_tasks_per_rank": Number of
          *         tasks for reading file per rank. Default will be system
@@ -1915,21 +2021,21 @@ namespace gpudb
          *     <li>@ref
          *         gpudb::insert_records_from_files_schema_registry_connection_retries
          *         "insert_records_from_files_schema_registry_connection_retries":
-         *         Confluent Schema registry connection timeout (in Secs)
+         *         Confluent Schema registry connection timeout (in secs).
          *     <li>@ref
          *         gpudb::insert_records_from_files_schema_registry_connection_timeout
          *         "insert_records_from_files_schema_registry_connection_timeout":
-         *         Confluent Schema registry connection timeout (in Secs)
+         *         Confluent Schema registry connection timeout (in secs).
          *     <li>@ref
          *         gpudb::insert_records_from_files_schema_registry_max_consecutive_connection_failures
          *         "insert_records_from_files_schema_registry_max_consecutive_connection_failures":
          *         Max records to skip due to SR connection failures, before
-         *         failing
+         *         failing.
          *     <li>@ref
          *         gpudb::insert_records_from_files_max_consecutive_invalid_schema_failure
          *         "insert_records_from_files_max_consecutive_invalid_schema_failure":
          *         Max records to skip due to schema related errors, before
-         *         failing
+         *         failing.
          *     <li>@ref
          *         gpudb::insert_records_from_files_schema_registry_schema_name
          *         "insert_records_from_files_schema_registry_schema_name":
@@ -2000,7 +2106,7 @@ namespace gpudb
          *         source data.  An 'a', 'b', 'f', 'n', 'r', 't', or 'v'
          *         preceded by an escape character will be interpreted as the
          *         ASCII bell, backspace, form feed, line feed, carriage
-         *         return, horizontal tab, & vertical tab, respectively.  For
+         *         return, horizontal tab, and vertical tab, respectively.  For
          *         example, the escape character followed by an 'n' will be
          *         interpreted as a newline within a field value.  The escape
          *         character can also be used to escape the quoting character,
@@ -2076,6 +2182,20 @@ namespace gpudb
          *         'text_search' property to. Used only when @ref
          *         gpudb::insert_records_from_files_text_search_columns
          *         "text_search_columns" has a value.
+         *     <li>@ref gpudb::insert_records_from_files_trim_space
+         *         "insert_records_from_files_trim_space": If set to @ref
+         *         gpudb::insert_records_from_files_true "true", remove leading
+         *         or trailing space from fields.
+         *         Supported values:
+         *         <ul>
+         *             <li>@ref gpudb::insert_records_from_files_true
+         *                 "insert_records_from_files_true"
+         *             <li>@ref gpudb::insert_records_from_files_false
+         *                 "insert_records_from_files_false"
+         *         </ul>
+         *         The default value is @ref
+         *         gpudb::insert_records_from_files_false
+         *         "insert_records_from_files_false".
          *     <li>@ref gpudb::insert_records_from_files_truncate_strings
          *         "insert_records_from_files_truncate_strings": If set to @ref
          *         gpudb::insert_records_from_files_true "true", truncate
@@ -2115,16 +2235,35 @@ namespace gpudb
          *         <ul>
          *             <li>@ref gpudb::insert_records_from_files_accuracy
          *                 "insert_records_from_files_accuracy": Scans data to
-         *                 get exactly-typed & sized columns for all data
+         *                 get exactly-typed and sized columns for all data
          *                 scanned.
          *             <li>@ref gpudb::insert_records_from_files_speed
          *                 "insert_records_from_files_speed": Scans data and
          *                 picks the widest possible column types so that 'all'
-         *                 values will fit with minimum data scanned
+         *                 values will fit with minimum data scanned.
          *         </ul>
          *         The default value is @ref
          *         gpudb::insert_records_from_files_accuracy
          *         "insert_records_from_files_accuracy".
+         *     <li>@ref gpudb::insert_records_from_files_enable_inplace_updates
+         *         "insert_records_from_files_enable_inplace_updates": Applies
+         *         only when upserting (when update_on_existing_pk is true). If
+         *         set to true (the default), an existing record matched by
+         *         primary key is modified in place. If set to false, the
+         *         matched record is updated by deleting it and inserting a
+         *         replacement (delete and insert), which prevents the change
+         *         from being reflected in dependent materialized views until
+         *         they are refreshed.
+         *         Supported values:
+         *         <ul>
+         *             <li>@ref gpudb::insert_records_from_files_true
+         *                 "insert_records_from_files_true"
+         *             <li>@ref gpudb::insert_records_from_files_false
+         *                 "insert_records_from_files_false"
+         *         </ul>
+         *         The default value is @ref
+         *         gpudb::insert_records_from_files_true
+         *         "insert_records_from_files_true".
          *     <li>@ref gpudb::insert_records_from_files_update_on_existing_pk
          *         "insert_records_from_files_update_on_existing_pk": Specifies
          *         the record collision policy for inserting into a table with
@@ -2139,7 +2278,7 @@ namespace gpudb
          *         record being inserted will remain unchanged, while the new
          *         record will be rejected and the error handled as determined
          *         by @ref gpudb::insert_records_from_files_ignore_existing_pk
-         *         "ignore_existing_pk" & @ref
+         *         "ignore_existing_pk" and @ref
          *         gpudb::insert_records_from_files_error_handling
          *         "error_handling".  If the specified table does not have a
          *         primary key, then this option has no effect.
@@ -2147,14 +2286,23 @@ namespace gpudb
          *         <ul>
          *             <li>@ref gpudb::insert_records_from_files_true
          *                 "insert_records_from_files_true": Upsert new records
-         *                 when primary keys match existing records
+         *                 when primary keys match existing records.
          *             <li>@ref gpudb::insert_records_from_files_false
          *                 "insert_records_from_files_false": Reject new
-         *                 records when primary keys match existing records
+         *                 records when primary keys match existing records.
          *         </ul>
          *         The default value is @ref
          *         gpudb::insert_records_from_files_false
          *         "insert_records_from_files_false".
+         *     <li>@ref gpudb::insert_records_from_files_transformations
+         *         "insert_records_from_files_transformations": Comma-separated
+         *         expressions, one per target table column.  Each expression
+         *         is evaluated per record.  Empty entries (two consecutive
+         *         commas) mean no transformation for that column -- the value
+         *         is resolved from the input record, table default, NULL, or
+         *         an error. Expressions may reference input columns by name or
+         *         by position ($1 for the first input column, $2 for the
+         *         second, etc.). The default value is ''.
          * </ul>
          * The default value is an empty map.
          */
@@ -2258,24 +2406,24 @@ namespace gpudb
         /**
          * ID of the currently registered table structure <a
          * href="../../../concepts/types/" target="_top">type</a> for the
-         * target table
+         * target table.
          */
         std::string typeId;
 
         /**
-         * A JSON string describing the columns of the target table
+         * A JSON string describing the columns of the target table.
          */
         std::string typeDefinition;
 
         /**
          * The user-defined description associated with the target table's
-         * structure
+         * structure.
          */
         std::string typeLabel;
 
         /**
          * A mapping of each target table column name to an array of column
-         * properties associated with that column
+         * properties associated with that column.
          */
         std::map<std::string, std::vector<std::string> > typeProperties;
 
@@ -2301,6 +2449,12 @@ namespace gpudb
          */
         std::map<std::string, std::string> info;
 
+        /**
+         * The list of source files from which records would be inserted; only
+         * filled in when @ref gpudb::insert_records_from_files_ingestion_mode
+         * "ingestion_mode" is @ref gpudb::insert_records_from_files_dry_run
+         * "dry_run".
+         */
         std::vector<std::string> files;
     };
 } // end namespace gpudb

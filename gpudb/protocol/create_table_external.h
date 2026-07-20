@@ -426,7 +426,7 @@ namespace gpudb
          *                              column properties to an appropriate
          *                              format for each property.  Currently
          *                              supported column properties include
-         *                              date, time, & datetime. The parameter
+         *                              date, time, and datetime. The parameter
          *                              value must be formatted as a JSON
          *                              string of maps of column names to maps
          *                              of column properties to their
@@ -498,7 +498,7 @@ namespace gpudb
          *                                  <li>@ref
          *                                      gpudb::create_table_external_auto
          *                                      "create_table_external_auto":
-         *                                      Auto detect compression type
+         *                                      Auto detect compression type.
          *                                  <li>@ref
          *                                      gpudb::create_table_external_gzip
          *                                      "create_table_external_gzip":
@@ -517,7 +517,7 @@ namespace gpudb
          *                              Name of an existing external data
          *                              source from which data file(s)
          *                              specified in @a filepaths_ will be
-         *                              loaded
+         *                              loaded.
          *                          <li>@ref
          *                              gpudb::create_table_external_default_column_formats
          *                              "create_table_external_default_column_formats":
@@ -525,11 +525,11 @@ namespace gpudb
          *                              applied to source data loaded into
          *                              columns with the corresponding column
          *                              property.  Currently supported column
-         *                              properties include date, time, &
+         *                              properties include date, time, and
          *                              datetime.  This default
          *                              column-property-bound format can be
          *                              overridden by specifying a column
-         *                              property & format for a given target
+         *                              property and format for a given target
          *                              column in @ref
          *                              gpudb::create_table_external_column_formats
          *                              "column_formats". For each specified
@@ -564,7 +564,21 @@ namespace gpudb
          *                              requirements. For example, '{"datetime"
          *                              : "%m/%d/%Y %H:%M:%S" }' would be used
          *                              to interpret text as "05/04/2000
-         *                              12:12:11"
+         *                              12:12:11".
+         *                          <li>@ref
+         *                              gpudb::create_table_external_datalake_catalog
+         *                              "create_table_external_datalake_catalog":
+         *                              Name of an existing datalake(iceberg)
+         *                              catalog used in loading files.
+         *                          <li>@ref
+         *                              gpudb::create_table_external_datalake_path
+         *                              "create_table_external_datalake_path":
+         *                              Path of datalake(iceberg) object.
+         *                          <li>@ref
+         *                              gpudb::create_table_external_datalake_snapshot
+         *                              "create_table_external_datalake_snapshot":
+         *                              Snapshot ID of datalake(iceberg)
+         *                              object.
          *                          <li>@ref
          *                              gpudb::create_table_external_error_handling
          *                              "create_table_external_error_handling":
@@ -580,9 +594,13 @@ namespace gpudb
          *                                      possible; otherwise, the
          *                                      malformed records are skipped.
          *                                  <li>@ref
+         *                                      gpudb::create_table_external_skip
+         *                                      "create_table_external_skip":
+         *                                      Malformed records are skipped.
+         *                                  <li>@ref
          *                                      gpudb::create_table_external_ignore_bad_records
          *                                      "create_table_external_ignore_bad_records":
-         *                                      Malformed records are skipped.
+         *                                      Alias for skip.
          *                                  <li>@ref
          *                                      gpudb::create_table_external_abort
          *                                      "create_table_external_abort":
@@ -608,7 +626,7 @@ namespace gpudb
          *                                      "create_table_external_materialized":
          *                                      Loads a copy of the external
          *                                      data into the database,
-         *                                      refreshed on demand
+         *                                      refreshed on demand.
          *                                  <li>@ref
          *                                      gpudb::create_table_external_logical
          *                                      "create_table_external_logical":
@@ -617,7 +635,7 @@ namespace gpudb
          *                                      data will be retrieved from the
          *                                      source upon servicing each
          *                                      query against the external
-         *                                      table
+         *                                      table.
          *                              </ul>
          *                              The default value is @ref
          *                              gpudb::create_table_external_materialized
@@ -632,7 +650,7 @@ namespace gpudb
          *                                  <li>@ref
          *                                      gpudb::create_table_external_avro
          *                                      "create_table_external_avro":
-         *                                      Avro file format
+         *                                      Avro file format.
          *                                  <li>@ref
          *                                      gpudb::create_table_external_delimited_text
          *                                      "create_table_external_delimited_text":
@@ -641,19 +659,19 @@ namespace gpudb
          *                                  <li>@ref
          *                                      gpudb::create_table_external_gdb
          *                                      "create_table_external_gdb":
-         *                                      Esri/GDB file format
+         *                                      Esri/GDB file format.
          *                                  <li>@ref
          *                                      gpudb::create_table_external_json
          *                                      "create_table_external_json":
-         *                                      Json file format
+         *                                      JSON file format.
          *                                  <li>@ref
          *                                      gpudb::create_table_external_parquet
          *                                      "create_table_external_parquet":
-         *                                      Apache Parquet file format
+         *                                      Apache Parquet file format.
          *                                  <li>@ref
          *                                      gpudb::create_table_external_shapefile
          *                                      "create_table_external_shapefile":
-         *                                      ShapeFile file format
+         *                                      ShapeFile file format.
          *                              </ul>
          *                              The default value is @ref
          *                              gpudb::create_table_external_delimited_text
@@ -668,12 +686,12 @@ namespace gpudb
          *                                      gpudb::create_table_external_true
          *                                      "create_table_external_true":
          *                                      Break up nested columns to
-         *                                      multiple columns
+         *                                      multiple columns.
          *                                  <li>@ref
          *                                      gpudb::create_table_external_false
          *                                      "create_table_external_false":
-         *                                      Treat nested columns as json
-         *                                      columns instead of flattening
+         *                                      Treat nested columns as JSON
+         *                                      columns instead of flattening.
          *                              </ul>
          *                              The default value is @ref
          *                              gpudb::create_table_external_false
@@ -683,7 +701,7 @@ namespace gpudb
          *                              "create_table_external_gdal_configuration_options":
          *                              Comma separated list of gdal conf
          *                              options, for the specific requests:
-         *                              key=value
+         *                              key=value.
          *                          <li>@ref
          *                              gpudb::create_table_external_ignore_existing_pk
          *                              "create_table_external_ignore_existing_pk":
@@ -726,14 +744,14 @@ namespace gpudb
          *                                      "create_table_external_true":
          *                                      Ignore new records whose
          *                                      primary key values collide with
-         *                                      those of existing records
+         *                                      those of existing records.
          *                                  <li>@ref
          *                                      gpudb::create_table_external_false
          *                                      "create_table_external_false":
          *                                      Treat as errors any new records
          *                                      whose primary key values
          *                                      collide with those of existing
-         *                                      records
+         *                                      records.
          *                              </ul>
          *                              The default value is @ref
          *                              gpudb::create_table_external_false
@@ -751,7 +769,7 @@ namespace gpudb
          *                                      "create_table_external_full":
          *                                      Run a type inference on the
          *                                      source data (if needed) and
-         *                                      ingest
+         *                                      ingest.
          *                                  <li>@ref
          *                                      gpudb::create_table_external_dry_run
          *                                      "create_table_external_dry_run":
@@ -930,6 +948,29 @@ namespace gpudb
          *                              gpudb::create_table_external_batch_size
          *                              "batch_size" (per working thread).
          *                          <li>@ref
+         *                              gpudb::create_table_external_name_columns_from_file
+         *                              "create_table_external_name_columns_from_file":
+         *                              Specifies a comma-delimited list of
+         *                              column names to be used as the
+         *                              source-data column names.  If the file
+         *                              has a header row (i.e., @ref
+         *                              gpudb::create_table_external_text_has_header
+         *                              "text_has_header" is @ref
+         *                              gpudb::create_table_external_true
+         *                              "true"), these names override the
+         *                              file's header names.  If the file has
+         *                              no header row, these names are used as
+         *                              the source-data column names. Either
+         *                              way, the i-th name in this list applies
+         *                              to the i-th column in the file,
+         *                              enabling name-based matching against
+         *                              the target table's columns (and use
+         *                              with @ref
+         *                              gpudb::create_table_external_columns_to_load
+         *                              "columns_to_load" / @ref
+         *                              gpudb::create_table_external_columns_to_skip
+         *                              "columns_to_skip").
+         *                          <li>@ref
          *                              gpudb::create_table_external_num_tasks_per_rank
          *                              "create_table_external_num_tasks_per_rank":
          *                              Number of tasks for reading file per
@@ -988,22 +1029,22 @@ namespace gpudb
          *                              gpudb::create_table_external_schema_registry_connection_retries
          *                              "create_table_external_schema_registry_connection_retries":
          *                              Confluent Schema registry connection
-         *                              timeout (in Secs)
+         *                              timeout (in secs).
          *                          <li>@ref
          *                              gpudb::create_table_external_schema_registry_connection_timeout
          *                              "create_table_external_schema_registry_connection_timeout":
          *                              Confluent Schema registry connection
-         *                              timeout (in Secs)
+         *                              timeout (in secs).
          *                          <li>@ref
          *                              gpudb::create_table_external_schema_registry_max_consecutive_connection_failures
          *                              "create_table_external_schema_registry_max_consecutive_connection_failures":
          *                              Max records to skip due to SR
-         *                              connection failures, before failing
+         *                              connection failures, before failing.
          *                          <li>@ref
          *                              gpudb::create_table_external_max_consecutive_invalid_schema_failure
          *                              "create_table_external_max_consecutive_invalid_schema_failure":
          *                              Max records to skip due to schema
-         *                              related errors, before failing
+         *                              related errors, before failing.
          *                          <li>@ref
          *                              gpudb::create_table_external_schema_registry_schema_name
          *                              "create_table_external_schema_registry_schema_name":
@@ -1101,7 +1142,7 @@ namespace gpudb
          *                              or 'v' preceded by an escape character
          *                              will be interpreted as the ASCII bell,
          *                              backspace, form feed, line feed,
-         *                              carriage return, horizontal tab, &
+         *                              carriage return, horizontal tab, and
          *                              vertical tab, respectively.  For
          *                              example, the escape character followed
          *                              by an 'n' will be interpreted as a
@@ -1204,6 +1245,39 @@ namespace gpudb
          *                              gpudb::create_table_external_text_search_columns
          *                              "text_search_columns" has a value.
          *                          <li>@ref
+         *                              gpudb::create_table_external_transformations
+         *                              "create_table_external_transformations":
+         *                              Comma-separated expressions, one per
+         *                              target table column.  Each expression
+         *                              is evaluated per record.  Empty entries
+         *                              (two consecutive commas) mean no
+         *                              transformation for that column -- the
+         *                              value is resolved from the input
+         *                              record, table default, NULL, or an
+         *                              error. Expressions may reference input
+         *                              columns by name or by position ($1 for
+         *                              the first input column, $2 for the
+         *                              second, etc.). The default value is ''.
+         *                          <li>@ref
+         *                              gpudb::create_table_external_trim_space
+         *                              "create_table_external_trim_space": If
+         *                              set to @ref
+         *                              gpudb::create_table_external_true
+         *                              "true", remove leading or trailing
+         *                              space from fields.
+         *                              Supported values:
+         *                              <ul>
+         *                                  <li>@ref
+         *                                      gpudb::create_table_external_true
+         *                                      "create_table_external_true"
+         *                                  <li>@ref
+         *                                      gpudb::create_table_external_false
+         *                                      "create_table_external_false"
+         *                              </ul>
+         *                              The default value is @ref
+         *                              gpudb::create_table_external_false
+         *                              "create_table_external_false".
+         *                          <li>@ref
          *                              gpudb::create_table_external_truncate_strings
          *                              "create_table_external_truncate_strings":
          *                              If set to @ref
@@ -1256,7 +1330,7 @@ namespace gpudb
          *                                      gpudb::create_table_external_accuracy
          *                                      "create_table_external_accuracy":
          *                                      Scans data to get exactly-typed
-         *                                      & sized columns for all data
+         *                                      and sized columns for all data
          *                                      scanned.
          *                                  <li>@ref
          *                                      gpudb::create_table_external_speed
@@ -1264,7 +1338,7 @@ namespace gpudb
          *                                      Scans data and picks the widest
          *                                      possible column types so that
          *                                      'all' values will fit with
-         *                                      minimum data scanned
+         *                                      minimum data scanned.
          *                              </ul>
          *                              The default value is @ref
          *                              gpudb::create_table_external_speed
@@ -1273,7 +1347,7 @@ namespace gpudb
          *                              gpudb::create_table_external_remote_query
          *                              "create_table_external_remote_query":
          *                              Remote SQL query from which data will
-         *                              be sourced
+         *                              be sourced.
          *                          <li>@ref
          *                              gpudb::create_table_external_remote_query_filter_column
          *                              "create_table_external_remote_query_filter_column":
@@ -1282,7 +1356,7 @@ namespace gpudb
          *                              gpudb::create_table_external_remote_query
          *                              "remote_query" into multiple
          *                              sub-queries using the data distribution
-         *                              of given column
+         *                              of given column.
          *                          <li>@ref
          *                              gpudb::create_table_external_remote_query_increasing_column
          *                              "create_table_external_remote_query_increasing_column":
@@ -1295,6 +1369,32 @@ namespace gpudb
          *                              Alias name for @ref
          *                              gpudb::create_table_external_remote_query_filter_column
          *                              "remote_query_filter_column".
+         *                          <li>@ref
+         *                              gpudb::create_table_external_enable_inplace_updates
+         *                              "create_table_external_enable_inplace_updates":
+         *                              Applies only when upserting (when
+         *                              update_on_existing_pk is true). If set
+         *                              to true (the default), an existing
+         *                              record matched by primary key is
+         *                              modified in place. If set to false, the
+         *                              matched record is updated by deleting
+         *                              it and inserting a replacement (delete
+         *                              and insert), which prevents the change
+         *                              from being reflected in dependent
+         *                              materialized views until they are
+         *                              refreshed.
+         *                              Supported values:
+         *                              <ul>
+         *                                  <li>@ref
+         *                                      gpudb::create_table_external_true
+         *                                      "create_table_external_true"
+         *                                  <li>@ref
+         *                                      gpudb::create_table_external_false
+         *                                      "create_table_external_false"
+         *                              </ul>
+         *                              The default value is @ref
+         *                              gpudb::create_table_external_true
+         *                              "create_table_external_true".
          *                          <li>@ref
          *                              gpudb::create_table_external_update_on_existing_pk
          *                              "create_table_external_update_on_existing_pk":
@@ -1317,7 +1417,7 @@ namespace gpudb
          *                              rejected and the error handled as
          *                              determined by @ref
          *                              gpudb::create_table_external_ignore_existing_pk
-         *                              "ignore_existing_pk" & @ref
+         *                              "ignore_existing_pk" and @ref
          *                              gpudb::create_table_external_error_handling
          *                              "error_handling".  If the specified
          *                              table does not have a primary key, then
@@ -1328,12 +1428,12 @@ namespace gpudb
          *                                      gpudb::create_table_external_true
          *                                      "create_table_external_true":
          *                                      Upsert new records when primary
-         *                                      keys match existing records
+         *                                      keys match existing records.
          *                                  <li>@ref
          *                                      gpudb::create_table_external_false
          *                                      "create_table_external_false":
          *                                      Reject new records when primary
-         *                                      keys match existing records
+         *                                      keys match existing records.
          *                              </ul>
          *                              The default value is @ref
          *                              gpudb::create_table_external_false
@@ -1612,12 +1712,12 @@ namespace gpudb
          *         to the source data loaded into that column.  Each column
          *         format will contain a mapping of one or more of its column
          *         properties to an appropriate format for each property.
-         *         Currently supported column properties include date, time, &
-         *         datetime. The parameter value must be formatted as a JSON
-         *         string of maps of column names to maps of column properties
-         *         to their corresponding column formats, e.g., '{ "order_date"
-         *         : { "date" : "%Y.%m.%d" }, "order_time" : { "time" :
-         *         "%H:%M:%S" } }'.  See @ref
+         *         Currently supported column properties include date, time,
+         *         and datetime. The parameter value must be formatted as a
+         *         JSON string of maps of column names to maps of column
+         *         properties to their corresponding column formats, e.g., '{
+         *         "order_date" : { "date" : "%Y.%m.%d" }, "order_time" : {
+         *         "time" : "%H:%M:%S" } }'.  See @ref
          *         gpudb::create_table_external_default_column_formats
          *         "default_column_formats" for valid format syntax.
          *     <li>@ref gpudb::create_table_external_columns_to_load
@@ -1661,7 +1761,7 @@ namespace gpudb
          *                 "create_table_external_none": No compression.
          *             <li>@ref gpudb::create_table_external_auto
          *                 "create_table_external_auto": Auto detect
-         *                 compression type
+         *                 compression type.
          *             <li>@ref gpudb::create_table_external_gzip
          *                 "create_table_external_gzip": gzip file compression.
          *             <li>@ref gpudb::create_table_external_bzip2
@@ -1673,15 +1773,16 @@ namespace gpudb
          *     <li>@ref gpudb::create_table_external_datasource_name
          *         "create_table_external_datasource_name": Name of an existing
          *         external data source from which data file(s) specified in
-         *         @ref filepaths will be loaded
+         *         @ref filepaths will be loaded.
          *     <li>@ref gpudb::create_table_external_default_column_formats
          *         "create_table_external_default_column_formats": Specifies
          *         the default format to be applied to source data loaded into
          *         columns with the corresponding column property.  Currently
-         *         supported column properties include date, time, & datetime.
-         *         This default column-property-bound format can be overridden
-         *         by specifying a column property & format for a given target
-         *         column in @ref gpudb::create_table_external_column_formats
+         *         supported column properties include date, time, and
+         *         datetime.  This default column-property-bound format can be
+         *         overridden by specifying a column property and format for a
+         *         given target column in @ref
+         *         gpudb::create_table_external_column_formats
          *         "column_formats". For each specified annotation, the format
          *         will apply to all columns with that annotation unless a
          *         custom @ref gpudb::create_table_external_column_formats
@@ -1702,7 +1803,16 @@ namespace gpudb
          *         'datetime' annotation meet both the 'date' and 'time'
          *         control character requirements. For example, '{"datetime" :
          *         "%m/%d/%Y %H:%M:%S" }' would be used to interpret text as
-         *         "05/04/2000 12:12:11"
+         *         "05/04/2000 12:12:11".
+         *     <li>@ref gpudb::create_table_external_datalake_catalog
+         *         "create_table_external_datalake_catalog": Name of an
+         *         existing datalake(iceberg) catalog used in loading files.
+         *     <li>@ref gpudb::create_table_external_datalake_path
+         *         "create_table_external_datalake_path": Path of
+         *         datalake(iceberg) object.
+         *     <li>@ref gpudb::create_table_external_datalake_snapshot
+         *         "create_table_external_datalake_snapshot": Snapshot ID of
+         *         datalake(iceberg) object.
          *     <li>@ref gpudb::create_table_external_error_handling
          *         "create_table_external_error_handling": Specifies how errors
          *         should be handled upon insertion.
@@ -1713,9 +1823,12 @@ namespace gpudb
          *                 missing columns are populated with nulls if
          *                 possible; otherwise, the malformed records are
          *                 skipped.
+         *             <li>@ref gpudb::create_table_external_skip
+         *                 "create_table_external_skip": Malformed records are
+         *                 skipped.
          *             <li>@ref gpudb::create_table_external_ignore_bad_records
-         *                 "create_table_external_ignore_bad_records":
-         *                 Malformed records are skipped.
+         *                 "create_table_external_ignore_bad_records": Alias
+         *                 for skip.
          *             <li>@ref gpudb::create_table_external_abort
          *                 "create_table_external_abort": Stops current
          *                 insertion and aborts entire operation when an error
@@ -1733,12 +1846,12 @@ namespace gpudb
          *             <li>@ref gpudb::create_table_external_materialized
          *                 "create_table_external_materialized": Loads a copy
          *                 of the external data into the database, refreshed on
-         *                 demand
+         *                 demand.
          *             <li>@ref gpudb::create_table_external_logical
          *                 "create_table_external_logical": External data will
          *                 not be loaded into the database; the data will be
          *                 retrieved from the source upon servicing each query
-         *                 against the external table
+         *                 against the external table.
          *         </ul>
          *         The default value is @ref
          *         gpudb::create_table_external_materialized
@@ -1749,20 +1862,20 @@ namespace gpudb
          *         Supported values:
          *         <ul>
          *             <li>@ref gpudb::create_table_external_avro
-         *                 "create_table_external_avro": Avro file format
+         *                 "create_table_external_avro": Avro file format.
          *             <li>@ref gpudb::create_table_external_delimited_text
          *                 "create_table_external_delimited_text": Delimited
          *                 text file format; e.g., CSV, TSV, PSV, etc.
          *             <li>@ref gpudb::create_table_external_gdb
-         *                 "create_table_external_gdb": Esri/GDB file format
+         *                 "create_table_external_gdb": Esri/GDB file format.
          *             <li>@ref gpudb::create_table_external_json
-         *                 "create_table_external_json": Json file format
+         *                 "create_table_external_json": JSON file format.
          *             <li>@ref gpudb::create_table_external_parquet
          *                 "create_table_external_parquet": Apache Parquet file
-         *                 format
+         *                 format.
          *             <li>@ref gpudb::create_table_external_shapefile
          *                 "create_table_external_shapefile": ShapeFile file
-         *                 format
+         *                 format.
          *         </ul>
          *         The default value is @ref
          *         gpudb::create_table_external_delimited_text
@@ -1774,17 +1887,17 @@ namespace gpudb
          *         <ul>
          *             <li>@ref gpudb::create_table_external_true
          *                 "create_table_external_true": Break up nested
-         *                 columns to multiple columns
+         *                 columns to multiple columns.
          *             <li>@ref gpudb::create_table_external_false
          *                 "create_table_external_false": Treat nested columns
-         *                 as json columns instead of flattening
+         *                 as JSON columns instead of flattening.
          *         </ul>
          *         The default value is @ref gpudb::create_table_external_false
          *         "create_table_external_false".
          *     <li>@ref gpudb::create_table_external_gdal_configuration_options
          *         "create_table_external_gdal_configuration_options": Comma
          *         separated list of gdal conf options, for the specific
-         *         requests: key=value
+         *         requests: key=value.
          *     <li>@ref gpudb::create_table_external_ignore_existing_pk
          *         "create_table_external_ignore_existing_pk": Specifies the
          *         record collision error-suppression policy for inserting into
@@ -1815,11 +1928,11 @@ namespace gpudb
          *             <li>@ref gpudb::create_table_external_true
          *                 "create_table_external_true": Ignore new records
          *                 whose primary key values collide with those of
-         *                 existing records
+         *                 existing records.
          *             <li>@ref gpudb::create_table_external_false
          *                 "create_table_external_false": Treat as errors any
          *                 new records whose primary key values collide with
-         *                 those of existing records
+         *                 those of existing records.
          *         </ul>
          *         The default value is @ref gpudb::create_table_external_false
          *         "create_table_external_false".
@@ -1831,7 +1944,7 @@ namespace gpudb
          *         <ul>
          *             <li>@ref gpudb::create_table_external_full
          *                 "create_table_external_full": Run a type inference
-         *                 on the source data (if needed) and ingest
+         *                 on the source data (if needed) and ingest.
          *             <li>@ref gpudb::create_table_external_dry_run
          *                 "create_table_external_dry_run": Does not load data,
          *                 but walks through the source data and determines the
@@ -1952,6 +2065,21 @@ namespace gpudb
          *         limited to the next whole number of @ref
          *         gpudb::create_table_external_batch_size "batch_size" (per
          *         working thread).
+         *     <li>@ref gpudb::create_table_external_name_columns_from_file
+         *         "create_table_external_name_columns_from_file": Specifies a
+         *         comma-delimited list of column names to be used as the
+         *         source-data column names.  If the file has a header row
+         *         (i.e., @ref gpudb::create_table_external_text_has_header
+         *         "text_has_header" is @ref gpudb::create_table_external_true
+         *         "true"), these names override the file's header names.  If
+         *         the file has no header row, these names are used as the
+         *         source-data column names. Either way, the i-th name in this
+         *         list applies to the i-th column in the file, enabling
+         *         name-based matching against the target table's columns (and
+         *         use with @ref gpudb::create_table_external_columns_to_load
+         *         "columns_to_load" / @ref
+         *         gpudb::create_table_external_columns_to_skip
+         *         "columns_to_skip").
          *     <li>@ref gpudb::create_table_external_num_tasks_per_rank
          *         "create_table_external_num_tasks_per_rank": Number of tasks
          *         for reading file per rank. Default will be system
@@ -1992,21 +2120,21 @@ namespace gpudb
          *     <li>@ref
          *         gpudb::create_table_external_schema_registry_connection_retries
          *         "create_table_external_schema_registry_connection_retries":
-         *         Confluent Schema registry connection timeout (in Secs)
+         *         Confluent Schema registry connection timeout (in secs).
          *     <li>@ref
          *         gpudb::create_table_external_schema_registry_connection_timeout
          *         "create_table_external_schema_registry_connection_timeout":
-         *         Confluent Schema registry connection timeout (in Secs)
+         *         Confluent Schema registry connection timeout (in secs).
          *     <li>@ref
          *         gpudb::create_table_external_schema_registry_max_consecutive_connection_failures
          *         "create_table_external_schema_registry_max_consecutive_connection_failures":
          *         Max records to skip due to SR connection failures, before
-         *         failing
+         *         failing.
          *     <li>@ref
          *         gpudb::create_table_external_max_consecutive_invalid_schema_failure
          *         "create_table_external_max_consecutive_invalid_schema_failure":
          *         Max records to skip due to schema related errors, before
-         *         failing
+         *         failing.
          *     <li>@ref
          *         gpudb::create_table_external_schema_registry_schema_name
          *         "create_table_external_schema_registry_schema_name": Name of
@@ -2073,7 +2201,7 @@ namespace gpudb
          *         source data.  An 'a', 'b', 'f', 'n', 'r', 't', or 'v'
          *         preceded by an escape character will be interpreted as the
          *         ASCII bell, backspace, form feed, line feed, carriage
-         *         return, horizontal tab, & vertical tab, respectively.  For
+         *         return, horizontal tab, and vertical tab, respectively.  For
          *         example, the escape character followed by an 'n' will be
          *         interpreted as a newline within a field value.  The escape
          *         character can also be used to escape the quoting character,
@@ -2145,6 +2273,28 @@ namespace gpudb
          *         'text_search' property to. Used only when @ref
          *         gpudb::create_table_external_text_search_columns
          *         "text_search_columns" has a value.
+         *     <li>@ref gpudb::create_table_external_transformations
+         *         "create_table_external_transformations": Comma-separated
+         *         expressions, one per target table column.  Each expression
+         *         is evaluated per record.  Empty entries (two consecutive
+         *         commas) mean no transformation for that column -- the value
+         *         is resolved from the input record, table default, NULL, or
+         *         an error. Expressions may reference input columns by name or
+         *         by position ($1 for the first input column, $2 for the
+         *         second, etc.). The default value is ''.
+         *     <li>@ref gpudb::create_table_external_trim_space
+         *         "create_table_external_trim_space": If set to @ref
+         *         gpudb::create_table_external_true "true", remove leading or
+         *         trailing space from fields.
+         *         Supported values:
+         *         <ul>
+         *             <li>@ref gpudb::create_table_external_true
+         *                 "create_table_external_true"
+         *             <li>@ref gpudb::create_table_external_false
+         *                 "create_table_external_false"
+         *         </ul>
+         *         The default value is @ref gpudb::create_table_external_false
+         *         "create_table_external_false".
          *     <li>@ref gpudb::create_table_external_truncate_strings
          *         "create_table_external_truncate_strings": If set to @ref
          *         gpudb::create_table_external_true "true", truncate string
@@ -2182,23 +2332,24 @@ namespace gpudb
          *         <ul>
          *             <li>@ref gpudb::create_table_external_accuracy
          *                 "create_table_external_accuracy": Scans data to get
-         *                 exactly-typed & sized columns for all data scanned.
+         *                 exactly-typed and sized columns for all data
+         *                 scanned.
          *             <li>@ref gpudb::create_table_external_speed
          *                 "create_table_external_speed": Scans data and picks
          *                 the widest possible column types so that 'all'
-         *                 values will fit with minimum data scanned
+         *                 values will fit with minimum data scanned.
          *         </ul>
          *         The default value is @ref gpudb::create_table_external_speed
          *         "create_table_external_speed".
          *     <li>@ref gpudb::create_table_external_remote_query
          *         "create_table_external_remote_query": Remote SQL query from
-         *         which data will be sourced
+         *         which data will be sourced.
          *     <li>@ref gpudb::create_table_external_remote_query_filter_column
          *         "create_table_external_remote_query_filter_column": Name of
          *         column to be used for splitting @ref
          *         gpudb::create_table_external_remote_query "remote_query"
          *         into multiple sub-queries using the data distribution of
-         *         given column
+         *         given column.
          *     <li>@ref
          *         gpudb::create_table_external_remote_query_increasing_column
          *         "create_table_external_remote_query_increasing_column":
@@ -2210,6 +2361,24 @@ namespace gpudb
          *         name for @ref
          *         gpudb::create_table_external_remote_query_filter_column
          *         "remote_query_filter_column".
+         *     <li>@ref gpudb::create_table_external_enable_inplace_updates
+         *         "create_table_external_enable_inplace_updates": Applies only
+         *         when upserting (when update_on_existing_pk is true). If set
+         *         to true (the default), an existing record matched by primary
+         *         key is modified in place. If set to false, the matched
+         *         record is updated by deleting it and inserting a replacement
+         *         (delete and insert), which prevents the change from being
+         *         reflected in dependent materialized views until they are
+         *         refreshed.
+         *         Supported values:
+         *         <ul>
+         *             <li>@ref gpudb::create_table_external_true
+         *                 "create_table_external_true"
+         *             <li>@ref gpudb::create_table_external_false
+         *                 "create_table_external_false"
+         *         </ul>
+         *         The default value is @ref gpudb::create_table_external_true
+         *         "create_table_external_true".
          *     <li>@ref gpudb::create_table_external_update_on_existing_pk
          *         "create_table_external_update_on_existing_pk": Specifies the
          *         record collision policy for inserting into a table with a <a
@@ -2224,7 +2393,7 @@ namespace gpudb
          *         record being inserted will remain unchanged, while the new
          *         record will be rejected and the error handled as determined
          *         by @ref gpudb::create_table_external_ignore_existing_pk
-         *         "ignore_existing_pk" & @ref
+         *         "ignore_existing_pk" and @ref
          *         gpudb::create_table_external_error_handling
          *         "error_handling".  If the specified table does not have a
          *         primary key, then this option has no effect.
@@ -2232,10 +2401,10 @@ namespace gpudb
          *         <ul>
          *             <li>@ref gpudb::create_table_external_true
          *                 "create_table_external_true": Upsert new records
-         *                 when primary keys match existing records
+         *                 when primary keys match existing records.
          *             <li>@ref gpudb::create_table_external_false
          *                 "create_table_external_false": Reject new records
-         *                 when primary keys match existing records
+         *                 when primary keys match existing records.
          *         </ul>
          *         The default value is @ref gpudb::create_table_external_false
          *         "create_table_external_false".
@@ -2342,23 +2511,23 @@ namespace gpudb
         /**
          * ID of the currently registered table structure <a
          * href="../../../concepts/types/" target="_top">type</a> for this
-         * external table
+         * external table.
          */
         std::string typeId;
 
         /**
-         * A JSON string describing the columns of the created external table
+         * A JSON string describing the columns of the created external table.
          */
         std::string typeDefinition;
 
         /**
-         * The user-defined description associated with the table's structure
+         * The user-defined description associated with the table's structure.
          */
         std::string typeLabel;
 
         /**
          * A mapping of each external table column name to an array of column
-         * properties associated with that column
+         * properties associated with that column.
          */
         std::map<std::string, std::vector<std::string> > typeProperties;
 
@@ -2384,6 +2553,9 @@ namespace gpudb
          */
         std::map<std::string, std::string> info;
 
+        /**
+         * The list of source files used to create the external table.
+         */
         std::vector<std::string> files;
     };
 } // end namespace gpudb

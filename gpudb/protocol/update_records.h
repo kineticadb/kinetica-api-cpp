@@ -229,14 +229,14 @@ namespace gpudb
          *                                      "update_records_true": Ignore
          *                                      updates that result in primary
          *                                      key collisions with existing
-         *                                      records
+         *                                      records.
          *                                  <li>@ref
          *                                      gpudb::update_records_false
          *                                      "update_records_false": Treat
          *                                      as errors any updates that
          *                                      result in primary key
          *                                      collisions with existing
-         *                                      records
+         *                                      records.
          *                              </ul>
          *                              The default value is @ref
          *                              gpudb::update_records_false
@@ -258,6 +258,56 @@ namespace gpudb
          *                              The default value is @ref
          *                              gpudb::update_records_false
          *                              "update_records_false".
+         *                          <li>@ref
+         *                              gpudb::update_records_enable_inplace_updates
+         *                              "update_records_enable_inplace_updates":
+         *                              If set to @ref
+         *                              gpudb::update_records_true "true",
+         *                              qualifying records are modified in
+         *                              place. If set to @ref
+         *                              gpudb::update_records_false "false",
+         *                              they are updated by deleting the
+         *                              existing record and inserting a
+         *                              replacement (delete and insert), which
+         *                              prevents the change from being
+         *                              reflected in dependent materialized
+         *                              views until they are refreshed.
+         *                              Supported values:
+         *                              <ul>
+         *                                  <li>@ref gpudb::update_records_true
+         *                                      "update_records_true"
+         *                                  <li>@ref
+         *                                      gpudb::update_records_false
+         *                                      "update_records_false"
+         *                              </ul>
+         *                              The default value is @ref
+         *                              gpudb::update_records_true
+         *                              "update_records_true".
+         *                          <li>@ref
+         *                              gpudb::update_records_enable_worker_oop_update
+         *                              "update_records_enable_worker_oop_update":
+         *                              For an out-of-place update (delete and
+         *                              insert), controls where the replacement
+         *                              records are reinserted. If set to @ref
+         *                              gpudb::update_records_true "true", the
+         *                              workers that own the data reinsert them
+         *                              directly, avoiding a round trip through
+         *                              the head node; a shard-key change
+         *                              reshards the replacements to their new
+         *                              owning workers. If set to @ref
+         *                              gpudb::update_records_false "false",
+         *                              the replacement records are reinserted
+         *                              from the head node. Overrides the
+         *                              {feature.enable_worker_oop_update}@
+         *                              configuration default.
+         *                              Supported values:
+         *                              <ul>
+         *                                  <li>@ref gpudb::update_records_true
+         *                                      "update_records_true"
+         *                                  <li>@ref
+         *                                      gpudb::update_records_false
+         *                                      "update_records_false"
+         *                              </ul>
          *                          <li>@ref
          *                              gpudb::update_records_truncate_strings
          *                              "update_records_truncate_strings": If
@@ -514,14 +564,14 @@ namespace gpudb
          *                                      "update_records_true": Ignore
          *                                      updates that result in primary
          *                                      key collisions with existing
-         *                                      records
+         *                                      records.
          *                                  <li>@ref
          *                                      gpudb::update_records_false
          *                                      "update_records_false": Treat
          *                                      as errors any updates that
          *                                      result in primary key
          *                                      collisions with existing
-         *                                      records
+         *                                      records.
          *                              </ul>
          *                              The default value is @ref
          *                              gpudb::update_records_false
@@ -543,6 +593,56 @@ namespace gpudb
          *                              The default value is @ref
          *                              gpudb::update_records_false
          *                              "update_records_false".
+         *                          <li>@ref
+         *                              gpudb::update_records_enable_inplace_updates
+         *                              "update_records_enable_inplace_updates":
+         *                              If set to @ref
+         *                              gpudb::update_records_true "true",
+         *                              qualifying records are modified in
+         *                              place. If set to @ref
+         *                              gpudb::update_records_false "false",
+         *                              they are updated by deleting the
+         *                              existing record and inserting a
+         *                              replacement (delete and insert), which
+         *                              prevents the change from being
+         *                              reflected in dependent materialized
+         *                              views until they are refreshed.
+         *                              Supported values:
+         *                              <ul>
+         *                                  <li>@ref gpudb::update_records_true
+         *                                      "update_records_true"
+         *                                  <li>@ref
+         *                                      gpudb::update_records_false
+         *                                      "update_records_false"
+         *                              </ul>
+         *                              The default value is @ref
+         *                              gpudb::update_records_true
+         *                              "update_records_true".
+         *                          <li>@ref
+         *                              gpudb::update_records_enable_worker_oop_update
+         *                              "update_records_enable_worker_oop_update":
+         *                              For an out-of-place update (delete and
+         *                              insert), controls where the replacement
+         *                              records are reinserted. If set to @ref
+         *                              gpudb::update_records_true "true", the
+         *                              workers that own the data reinsert them
+         *                              directly, avoiding a round trip through
+         *                              the head node; a shard-key change
+         *                              reshards the replacements to their new
+         *                              owning workers. If set to @ref
+         *                              gpudb::update_records_false "false",
+         *                              the replacement records are reinserted
+         *                              from the head node. Overrides the
+         *                              {feature.enable_worker_oop_update}@
+         *                              configuration default.
+         *                              Supported values:
+         *                              <ul>
+         *                                  <li>@ref gpudb::update_records_true
+         *                                      "update_records_true"
+         *                                  <li>@ref
+         *                                      gpudb::update_records_false
+         *                                      "update_records_false"
+         *                              </ul>
          *                          <li>@ref
          *                              gpudb::update_records_truncate_strings
          *                              "update_records_truncate_strings": If
@@ -755,11 +855,11 @@ namespace gpudb
          *         <ul>
          *             <li>@ref gpudb::update_records_true
          *                 "update_records_true": Ignore updates that result in
-         *                 primary key collisions with existing records
+         *                 primary key collisions with existing records.
          *             <li>@ref gpudb::update_records_false
          *                 "update_records_false": Treat as errors any updates
          *                 that result in primary key collisions with existing
-         *                 records
+         *                 records.
          *         </ul>
          *         The default value is @ref gpudb::update_records_false
          *         "update_records_false".
@@ -776,6 +876,42 @@ namespace gpudb
          *         </ul>
          *         The default value is @ref gpudb::update_records_false
          *         "update_records_false".
+         *     <li>@ref gpudb::update_records_enable_inplace_updates
+         *         "update_records_enable_inplace_updates": If set to @ref
+         *         gpudb::update_records_true "true", qualifying records are
+         *         modified in place. If set to @ref
+         *         gpudb::update_records_false "false", they are updated by
+         *         deleting the existing record and inserting a replacement
+         *         (delete and insert), which prevents the change from being
+         *         reflected in dependent materialized views until they are
+         *         refreshed.
+         *         Supported values:
+         *         <ul>
+         *             <li>@ref gpudb::update_records_true
+         *                 "update_records_true"
+         *             <li>@ref gpudb::update_records_false
+         *                 "update_records_false"
+         *         </ul>
+         *         The default value is @ref gpudb::update_records_true
+         *         "update_records_true".
+         *     <li>@ref gpudb::update_records_enable_worker_oop_update
+         *         "update_records_enable_worker_oop_update": For an
+         *         out-of-place update (delete and insert), controls where the
+         *         replacement records are reinserted. If set to @ref
+         *         gpudb::update_records_true "true", the workers that own the
+         *         data reinsert them directly, avoiding a round trip through
+         *         the head node; a shard-key change reshards the replacements
+         *         to their new owning workers. If set to @ref
+         *         gpudb::update_records_false "false", the replacement records
+         *         are reinserted from the head node. Overrides the
+         *         {feature.enable_worker_oop_update}@ configuration default.
+         *         Supported values:
+         *         <ul>
+         *             <li>@ref gpudb::update_records_true
+         *                 "update_records_true"
+         *             <li>@ref gpudb::update_records_false
+         *                 "update_records_false"
+         *         </ul>
          *     <li>@ref gpudb::update_records_truncate_strings
          *         "update_records_truncate_strings": If set to @ref
          *         gpudb::update_records_true "true", any strings which are too
@@ -1115,14 +1251,14 @@ namespace gpudb
          *                                      "update_records_true": Ignore
          *                                      updates that result in primary
          *                                      key collisions with existing
-         *                                      records
+         *                                      records.
          *                                  <li>@ref
          *                                      gpudb::update_records_false
          *                                      "update_records_false": Treat
          *                                      as errors any updates that
          *                                      result in primary key
          *                                      collisions with existing
-         *                                      records
+         *                                      records.
          *                              </ul>
          *                              The default value is @ref
          *                              gpudb::update_records_false
@@ -1144,6 +1280,56 @@ namespace gpudb
          *                              The default value is @ref
          *                              gpudb::update_records_false
          *                              "update_records_false".
+         *                          <li>@ref
+         *                              gpudb::update_records_enable_inplace_updates
+         *                              "update_records_enable_inplace_updates":
+         *                              If set to @ref
+         *                              gpudb::update_records_true "true",
+         *                              qualifying records are modified in
+         *                              place. If set to @ref
+         *                              gpudb::update_records_false "false",
+         *                              they are updated by deleting the
+         *                              existing record and inserting a
+         *                              replacement (delete and insert), which
+         *                              prevents the change from being
+         *                              reflected in dependent materialized
+         *                              views until they are refreshed.
+         *                              Supported values:
+         *                              <ul>
+         *                                  <li>@ref gpudb::update_records_true
+         *                                      "update_records_true"
+         *                                  <li>@ref
+         *                                      gpudb::update_records_false
+         *                                      "update_records_false"
+         *                              </ul>
+         *                              The default value is @ref
+         *                              gpudb::update_records_true
+         *                              "update_records_true".
+         *                          <li>@ref
+         *                              gpudb::update_records_enable_worker_oop_update
+         *                              "update_records_enable_worker_oop_update":
+         *                              For an out-of-place update (delete and
+         *                              insert), controls where the replacement
+         *                              records are reinserted. If set to @ref
+         *                              gpudb::update_records_true "true", the
+         *                              workers that own the data reinsert them
+         *                              directly, avoiding a round trip through
+         *                              the head node; a shard-key change
+         *                              reshards the replacements to their new
+         *                              owning workers. If set to @ref
+         *                              gpudb::update_records_false "false",
+         *                              the replacement records are reinserted
+         *                              from the head node. Overrides the
+         *                              {feature.enable_worker_oop_update}@
+         *                              configuration default.
+         *                              Supported values:
+         *                              <ul>
+         *                                  <li>@ref gpudb::update_records_true
+         *                                      "update_records_true"
+         *                                  <li>@ref
+         *                                      gpudb::update_records_false
+         *                                      "update_records_false"
+         *                              </ul>
          *                          <li>@ref
          *                              gpudb::update_records_truncate_strings
          *                              "update_records_truncate_strings": If
@@ -1334,11 +1520,11 @@ namespace gpudb
          *         <ul>
          *             <li>@ref gpudb::update_records_true
          *                 "update_records_true": Ignore updates that result in
-         *                 primary key collisions with existing records
+         *                 primary key collisions with existing records.
          *             <li>@ref gpudb::update_records_false
          *                 "update_records_false": Treat as errors any updates
          *                 that result in primary key collisions with existing
-         *                 records
+         *                 records.
          *         </ul>
          *         The default value is @ref gpudb::update_records_false
          *         "update_records_false".
@@ -1355,6 +1541,42 @@ namespace gpudb
          *         </ul>
          *         The default value is @ref gpudb::update_records_false
          *         "update_records_false".
+         *     <li>@ref gpudb::update_records_enable_inplace_updates
+         *         "update_records_enable_inplace_updates": If set to @ref
+         *         gpudb::update_records_true "true", qualifying records are
+         *         modified in place. If set to @ref
+         *         gpudb::update_records_false "false", they are updated by
+         *         deleting the existing record and inserting a replacement
+         *         (delete and insert), which prevents the change from being
+         *         reflected in dependent materialized views until they are
+         *         refreshed.
+         *         Supported values:
+         *         <ul>
+         *             <li>@ref gpudb::update_records_true
+         *                 "update_records_true"
+         *             <li>@ref gpudb::update_records_false
+         *                 "update_records_false"
+         *         </ul>
+         *         The default value is @ref gpudb::update_records_true
+         *         "update_records_true".
+         *     <li>@ref gpudb::update_records_enable_worker_oop_update
+         *         "update_records_enable_worker_oop_update": For an
+         *         out-of-place update (delete and insert), controls where the
+         *         replacement records are reinserted. If set to @ref
+         *         gpudb::update_records_true "true", the workers that own the
+         *         data reinsert them directly, avoiding a round trip through
+         *         the head node; a shard-key change reshards the replacements
+         *         to their new owning workers. If set to @ref
+         *         gpudb::update_records_false "false", the replacement records
+         *         are reinserted from the head node. Overrides the
+         *         {feature.enable_worker_oop_update}@ configuration default.
+         *         Supported values:
+         *         <ul>
+         *             <li>@ref gpudb::update_records_true
+         *                 "update_records_true"
+         *             <li>@ref gpudb::update_records_false
+         *                 "update_records_false"
+         *         </ul>
          *     <li>@ref gpudb::update_records_truncate_strings
          *         "update_records_truncate_strings": If set to @ref
          *         gpudb::update_records_true "true", any strings which are too

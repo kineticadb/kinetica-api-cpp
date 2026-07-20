@@ -92,21 +92,20 @@ namespace gpudb
          *                    in the server configuration. Use @ref
          *                    gpudb::RawGetRecordsByColumnResponse::hasMoreRecords
          *                    "hasMoreRecords" to see if more records exist in
-         *                    the result to be fetched, and @a offset_ & @a
+         *                    the result to be fetched, and @a offset_ and @a
          *                    limit_ to request subsequent pages of results.
          *                    The default value is -9999.
          * @param[in] options_  <ul>
          *                          <li>@ref
          *                              gpudb::get_records_by_column_expression
          *                              "get_records_by_column_expression":
-         *                              Optional filter expression to apply to
-         *                              the table.
+         *                              Filter expression to apply to the
+         *                              table.
          *                          <li>@ref
          *                              gpudb::get_records_by_column_sort_by
-         *                              "get_records_by_column_sort_by":
-         *                              Optional column that the data should be
-         *                              sorted by. Used in conjunction with
-         *                              @ref
+         *                              "get_records_by_column_sort_by": Column
+         *                              that the data should be sorted by. Used
+         *                              in conjunction with @ref
          *                              gpudb::get_records_by_column_sort_order
          *                              "sort_order". The @ref
          *                              gpudb::get_records_by_column_order_by
@@ -217,7 +216,7 @@ namespace gpudb
          *                    in the server configuration. Use @ref
          *                    gpudb::RawGetRecordsByColumnResponse::hasMoreRecords
          *                    "hasMoreRecords" to see if more records exist in
-         *                    the result to be fetched, and @a offset_ & @a
+         *                    the result to be fetched, and @a offset_ and @a
          *                    limit_ to request subsequent pages of results.
          *                    The default value is -9999.
          * @param[in] encoding_  Specifies the encoding for returned records;
@@ -240,14 +239,13 @@ namespace gpudb
          *                          <li>@ref
          *                              gpudb::get_records_by_column_expression
          *                              "get_records_by_column_expression":
-         *                              Optional filter expression to apply to
-         *                              the table.
+         *                              Filter expression to apply to the
+         *                              table.
          *                          <li>@ref
          *                              gpudb::get_records_by_column_sort_by
-         *                              "get_records_by_column_sort_by":
-         *                              Optional column that the data should be
-         *                              sorted by. Used in conjunction with
-         *                              @ref
+         *                              "get_records_by_column_sort_by": Column
+         *                              that the data should be sorted by. Used
+         *                              in conjunction with @ref
          *                              gpudb::get_records_by_column_sort_order
          *                              "sort_order". The @ref
          *                              gpudb::get_records_by_column_order_by
@@ -360,8 +358,8 @@ namespace gpudb
          * configuration. Use @ref
          * gpudb::RawGetRecordsByColumnResponse::hasMoreRecords
          * "hasMoreRecords" to see if more records exist in the result to be
-         * fetched, and @ref offset & @ref limit to request subsequent pages of
-         * results. The default value is -9999.
+         * fetched, and @ref offset and @ref limit to request subsequent pages
+         * of results. The default value is -9999.
          */
         int64_t limit;
 
@@ -384,11 +382,11 @@ namespace gpudb
         /**
          * <ul>
          *     <li>@ref gpudb::get_records_by_column_expression
-         *         "get_records_by_column_expression": Optional filter
-         *         expression to apply to the table.
+         *         "get_records_by_column_expression": Filter expression to
+         *         apply to the table.
          *     <li>@ref gpudb::get_records_by_column_sort_by
-         *         "get_records_by_column_sort_by": Optional column that the
-         *         data should be sorted by. Used in conjunction with @ref
+         *         "get_records_by_column_sort_by": Column that the data should
+         *         be sorted by. Used in conjunction with @ref
          *         gpudb::get_records_by_column_sort_order "sort_order". The
          *         @ref gpudb::get_records_by_column_order_by "order_by" option
          *         can be used in lieu of @ref

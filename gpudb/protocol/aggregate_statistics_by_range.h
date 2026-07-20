@@ -89,7 +89,7 @@ namespace gpudb
          * @param[in] interval_  The interval of a bin. Set members fall into
          *                       bin i if the binning-column falls in the range
          *                       [start+interval*i, start+interval*(i+1)).
-         * @param[in] options_  Map of optional parameters:
+         * @param[in] options_  Optional parameters.
          *                      <ul>
          *                          <li>@ref
          *                              gpudb::aggregate_statistics_by_range_additional_column_names
@@ -181,7 +181,7 @@ namespace gpudb
         double interval;
 
         /**
-         * Map of optional parameters:
+         * Optional parameters.
          * <ul>
          *     <li>@ref
          *         gpudb::aggregate_statistics_by_range_additional_column_names

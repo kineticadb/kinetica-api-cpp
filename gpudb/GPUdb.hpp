@@ -89,6 +89,8 @@ public:
         uint16_t getHostManagerPort() const;
         bool getDisableFailover() const;
         bool getDisableAutoDiscovery() const;
+        std::string getClientName() const;
+        std::string getClientVersion() const;
 
 #ifndef GPUDB_NO_HTTPS
         Options& setSslContext(boost::asio::ssl::context* value);
@@ -109,6 +111,8 @@ public:
         Options& setHostManagerPort(const uint16_t value);
         Options& setDisableFailover(const bool value);
         Options& setDisableAutoDiscovery(const bool value);
+        Options& setClientName(const std::string& value);
+        Options& setClientVersion(const std::string& value);
 
     private:
 
@@ -129,6 +133,8 @@ public:
         std::map<std::string, std::string> m_httpHeaders;
         size_t   m_timeout;
         uint16_t m_hmPort;
+        std::string m_clientName;
+        std::string m_clientVersion;
     };
 
 
@@ -166,16 +172,24 @@ public:
     static const std::string DB_OFFLINE_ERROR_MESSAGE;
     static const std::string DB_SYSTEM_LIMITED_ERROR_MESSAGE;
     static const std::string DB_HM_OFFLINE_ERROR_MESSAGE;
-    
+    static const std::string DB_DRAINING_HA_QUEUE_ERROR_MESSAGE;
+    static const std::string DB_SHUTTING_DOWN_ERROR_MESSAGE;
+    static const std::string DB_QUERY_PLANNER_ERROR_MESSAGE;
+
     /// Headers used internally; MUST add each of them to PROTECTED_HEADERS
     /// in the .cpp file
     static const std::string HEADER_AUTHORIZATION;
     static const std::string HEADER_CONTENT_TYPE;
     static const std::string HEADER_CONTENT_LENGTH;
     static const std::string HEADER_HA_SYNC_MODE;
+    static const std::string HEADER_USER_AGENT;
     
     
     static inline std::string getApiVersion() { return GPUdb::API_VERSION; }
+
+    /// Sanitizes a token for use in the User-Agent header by replacing
+    /// disallowed characters with underscores.
+    static std::string sanitizeUserAgentToken(const std::string& value);
 
     /**
      * Pass a single HttpURL and options to instantiate a GPUdb object.
@@ -581,6 +595,7 @@ private:
     std::string m_password;
     std::string m_oauthToken;
     std::string m_authorization;
+    std::string m_userAgent;
     bool m_useSnappy;
     bool m_disableFailover;
     bool m_bypassSslCertCheck;
@@ -610,6 +625,9 @@ private:
 
     const std::string createAuthorizationHeader() const;
 
+    /// Builds the User-Agent string sent in the HTTP header of each request.
+    std::string buildUserAgentString() const;
+
     void getAuthorizationFromHttpHeaders();
 
     gpudb::GPUdb::HASynchronicityMode createHASyncModeHeader() const;
@@ -617,8 +635,23 @@ private:
 
     // Update the URLs with the available HA ring information
     void getHAringHeadNodeAddresses();
+
+    /// Liveness check: true if the cluster answers /show/system/status.  A
+    /// draining cluster answers here, so this alone is NOT sufficient to decide
+    /// routing (see isClusterUsable()).
     bool isKineticaRunning(const std::string& primaryURL) const;
-    
+
+    /// Single /show/system/status call that extracts both facts: returns whether
+    /// the process reports "running" (drain-agnostic), and writes the
+    /// ha_status.drained value ("drained"/"draining"/"not_drained", or empty if
+    /// absent) into @a haStatusOut.  May throw (e.g. on connection/auth failure).
+    bool getSystemRunningStatus(const std::string& url, std::string& haStatusOut) const;
+
+    /// The single, shared routing predicate used by both the initial connection
+    /// and the failover loop: reachable AND running AND not draining.  Never
+    /// throws, so it can be used directly in a loop condition.
+    bool isClusterUsable(const std::string& url) const;
+
     /// Host manager related methods
     void updateHostManagerUrls();
     void setHostManagerPort(uint16_t value);

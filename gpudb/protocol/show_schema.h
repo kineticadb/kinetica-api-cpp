@@ -161,7 +161,7 @@ namespace gpudb
         std::string schemaName;
 
         /**
-         * A list of all schema names for which information is returned
+         * A list of all schema names for which information is returned.
          */
         std::vector<std::string> schemaNames;
 

@@ -231,15 +231,16 @@ namespace gpudb
          *                               <li>@ref
          *                                   gpudb::visualize_image_chart_min_max_scaled
          *                                   "visualize_image_chart_min_max_scaled":
-         *                                   If this options is set to "false",
-         *                                   this endpoint expects request's
-         *                                   min/max values are not yet scaled.
-         *                                   They will be scaled according to
-         *                                   scale_type_x or scale_type_y for
-         *                                   response. If this options is set
-         *                                   to "true", this endpoint expects
-         *                                   request's min/max values are
-         *                                   already scaled according to
+         *                                   If this options is set to @a
+         *                                   false, this endpoint expects
+         *                                   request's min/max values are not
+         *                                   yet scaled. They will be scaled
+         *                                   according to scale_type_x or
+         *                                   scale_type_y for response. If this
+         *                                   options is set to @a true, this
+         *                                   endpoint expects request's min/max
+         *                                   values are already scaled
+         *                                   according to
          *                                   scale_type_x/scale_type_y.
          *                                   Response's min/max values will be
          *                                   equal to request's min/max values.
@@ -261,7 +262,7 @@ namespace gpudb
          *                               <li>@ref
          *                                   gpudb::visualize_image_chart_plot_all
          *                                   "visualize_image_chart_plot_all":
-         *                                   If this options is set to "true",
+         *                                   If this options is set to @a true,
          *                                   all non-numeric column values are
          *                                   plotted ignoring min_x, max_x,
          *                                   min_y and max_y parameters. The
@@ -473,10 +474,10 @@ namespace gpudb
          *         "visualize_image_chart_none".
          *     <li>@ref gpudb::visualize_image_chart_min_max_scaled
          *         "visualize_image_chart_min_max_scaled": If this options is
-         *         set to "false", this endpoint expects request's min/max
+         *         set to @a false, this endpoint expects request's min/max
          *         values are not yet scaled. They will be scaled according to
          *         scale_type_x or scale_type_y for response. If this options
-         *         is set to "true", this endpoint expects request's min/max
+         *         is set to @a true, this endpoint expects request's min/max
          *         values are already scaled according to
          *         scale_type_x/scale_type_y. Response's min/max values will be
          *         equal to request's min/max values. The default value is
@@ -491,7 +492,7 @@ namespace gpudb
          *         value is '0.0'.
          *     <li>@ref gpudb::visualize_image_chart_plot_all
          *         "visualize_image_chart_plot_all": If this options is set to
-         *         "true", all non-numeric column values are plotted ignoring
+         *         @a true, all non-numeric column values are plotted ignoring
          *         min_x, max_x, min_y and max_y parameters. The default value
          *         is 'false'.
          * </ul>

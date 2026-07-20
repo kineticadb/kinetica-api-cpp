@@ -15,8 +15,8 @@
 namespace gpudb {
     class FailbackPollerService {
         public:
-            static constexpr int DEFAULT_START_DELAY = 0;
-            static constexpr int DEFAULT_POLLING_INTERVAL = 5; // seconds
+            static const int DEFAULT_START_DELAY;
+            static const int DEFAULT_POLLING_INTERVAL; // seconds
         
         private:
         

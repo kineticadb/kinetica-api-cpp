@@ -166,9 +166,24 @@ namespace gpudb
         {
         }
 
+        /**
+         * The type IDs of the matching types.
+         */
         std::vector<std::string> typeIds;
+
+        /**
+         * The Avro schema strings describing each matching type.
+         */
         std::vector<std::string> typeSchemas;
+
+        /**
+         * The user-defined labels of each matching type.
+         */
         std::vector<std::string> labels;
+
+        /**
+         * The column properties of each matching type.
+         */
         std::vector<std::map<std::string, std::vector<std::string> > > properties;
 
         /**

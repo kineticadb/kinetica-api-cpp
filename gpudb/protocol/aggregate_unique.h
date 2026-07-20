@@ -25,16 +25,9 @@ namespace gpudb
      * "jsonEncodedResponse".  The results can be paged via @ref offset and
      * @ref limit parameters.
      *
-     * Columns marked as <a href="../../../concepts/types/#data-handling"
-     * target="_top">store-only</a> are unable to be used with this function.
      *
-     * To get the first 10 unique values sorted in descending order @ref
-     * options would be:
-     * @code
+     * {"limit":"10","sort_order":"descending"}
      *
-     *     {"limit":"10","sort_order":"descending"}
-     *
-     * @endcode
      * The response is returned as a dynamic schema. For details see: <a
      * href="../../../api/concepts/#dynamic-schemas" target="_top">dynamic
      * schemas documentation</a>.
@@ -97,7 +90,7 @@ namespace gpudb
          *                    in the server configuration. Use @ref
          *                    gpudb::RawAggregateUniqueResponse::hasMoreRecords
          *                    "hasMoreRecords" to see if more records exist in
-         *                    the result to be fetched, and @a offset_ & @a
+         *                    the result to be fetched, and @a offset_ and @a
          *                    limit_ to request subsequent pages of results.
          *                    The default value is -9999.
          * @param[in] options_  Optional parameters.
@@ -149,9 +142,8 @@ namespace gpudb
          *                              is non-existent, it will be
          *                              automatically created.
          *                          <li>@ref gpudb::aggregate_unique_expression
-         *                              "aggregate_unique_expression": Optional
-         *                              filter expression to apply to the
-         *                              table.
+         *                              "aggregate_unique_expression": Filter
+         *                              expression to apply to the table.
          *                          <li>@ref gpudb::aggregate_unique_sort_order
          *                              "aggregate_unique_sort_order": String
          *                              indicating how the returned values
@@ -344,7 +336,7 @@ namespace gpudb
          *                    in the server configuration. Use @ref
          *                    gpudb::RawAggregateUniqueResponse::hasMoreRecords
          *                    "hasMoreRecords" to see if more records exist in
-         *                    the result to be fetched, and @a offset_ & @a
+         *                    the result to be fetched, and @a offset_ and @a
          *                    limit_ to request subsequent pages of results.
          *                    The default value is -9999.
          * @param[in] encoding_  Specifies the encoding for returned records.
@@ -357,7 +349,7 @@ namespace gpudb
          *                           <li>@ref gpudb::aggregate_unique_json
          *                               "aggregate_unique_json": Indicates
          *                               that the returned records should be
-         *                               json encoded.
+         *                               JSON-encoded.
          *                       </ul>
          *                       The default value is @ref
          *                       gpudb::aggregate_unique_binary
@@ -411,9 +403,8 @@ namespace gpudb
          *                              is non-existent, it will be
          *                              automatically created.
          *                          <li>@ref gpudb::aggregate_unique_expression
-         *                              "aggregate_unique_expression": Optional
-         *                              filter expression to apply to the
-         *                              table.
+         *                              "aggregate_unique_expression": Filter
+         *                              expression to apply to the table.
          *                          <li>@ref gpudb::aggregate_unique_sort_order
          *                              "aggregate_unique_sort_order": String
          *                              indicating how the returned values
@@ -609,7 +600,7 @@ namespace gpudb
          * configuration. Use @ref
          * gpudb::RawAggregateUniqueResponse::hasMoreRecords "hasMoreRecords"
          * to see if more records exist in the result to be fetched, and @ref
-         * offset & @ref limit to request subsequent pages of results. The
+         * offset and @ref limit to request subsequent pages of results. The
          * default value is -9999.
          */
         int64_t limit;
@@ -622,7 +613,7 @@ namespace gpudb
          *         "aggregate_unique_binary": Indicates that the returned
          *         records should be binary encoded.
          *     <li>@ref gpudb::aggregate_unique_json "aggregate_unique_json":
-         *         Indicates that the returned records should be json encoded.
+         *         Indicates that the returned records should be JSON-encoded.
          * </ul>
          * The default value is @ref gpudb::aggregate_unique_binary
          * "aggregate_unique_binary".
@@ -665,8 +656,8 @@ namespace gpudb
          *         the schema provided is non-existent, it will be
          *         automatically created.
          *     <li>@ref gpudb::aggregate_unique_expression
-         *         "aggregate_unique_expression": Optional filter expression to
-         *         apply to the table.
+         *         "aggregate_unique_expression": Filter expression to apply to
+         *         the table.
          *     <li>@ref gpudb::aggregate_unique_sort_order
          *         "aggregate_unique_sort_order": String indicating how the
          *         returned values should be sorted.

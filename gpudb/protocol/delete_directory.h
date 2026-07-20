@@ -36,7 +36,7 @@ namespace gpudb
          *                            files, unless @ref
          *                            gpudb::delete_directory_recursive
          *                            "recursive" is @ref
-         *                            gpudb::delete_directory_true "true"
+         *                            gpudb::delete_directory_true "true".
          * @param[in] options_  Optional parameters.
          *                      <ul>
          *                          <li>@ref gpudb::delete_directory_recursive
@@ -87,7 +87,7 @@ namespace gpudb
         /**
          * Name of the directory in KiFS to be deleted. The directory must
          * contain no files, unless @ref gpudb::delete_directory_recursive
-         * "recursive" is @ref gpudb::delete_directory_true "true"
+         * "recursive" is @ref gpudb::delete_directory_true "true".
          */
         std::string directoryName;
 

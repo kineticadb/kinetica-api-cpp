@@ -174,7 +174,7 @@ function build_snappy
         else
             run_cmd "./configure --prefix=$INSTALL_DIR"
         fi
-        run_cmd "make -j '$NUM_PROCESSORS' install"
+        run_cmd "make -j '$NUM_PROCESSORS' -l '$NUM_PROCESSORS' install"
 
         run_cmd "date > $BUILD_DIR/snappy-1.1.3.built"
 
@@ -184,7 +184,7 @@ function build_snappy
         echo | tee -a "$LOG"
         echo "Skipping snappy-1.1.3 build, already built, installing from $SNAPPY_BUILD_DIR" | tee -a "$LOG"
         pushd "$SNAPPY_BUILD_DIR" > /dev/null || exit 1
-            run_cmd "make -j '$NUM_PROCESSORS' install"
+            run_cmd "make -j '$NUM_PROCESSORS' -l '$NUM_PROCESSORS' install"
         popd > /dev/null
     fi
 }
@@ -253,7 +253,7 @@ function build_avro
     fi
 
     pushd "$AVRO_BUILD_DIR" > /dev/null || exit 1
-        run_cmd "make -j '$NUM_PROCESSORS' install"
+        run_cmd "make -j '$NUM_PROCESSORS' -l '$NUM_PROCESSORS' install"
         run_cmd "date > '$BUILD_DIR/$AVRO_ARCHIVE_NAME.built'"
     popd > /dev/null
     echo

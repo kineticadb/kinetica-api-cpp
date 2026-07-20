@@ -24,6 +24,7 @@ namespace gpudb
          */
         AdminRepairTableRequest() :
             tableNames(std::vector<std::string>()),
+            tableTypes(std::map<std::string, std::string>()),
             options(std::map<std::string, std::string>())
         {
         }
@@ -34,6 +35,7 @@ namespace gpudb
          *
          * @param[in] tableNames_  List of tables to query. An asterisk returns
          *                         all tables.
+         * @param[in] tableTypes_  ID of the type per table.
          * @param[in] options_  Optional parameters.
          *                      <ul>
          *                          <li>@ref
@@ -45,17 +47,22 @@ namespace gpudb
          *                                  <li>@ref
          *                                      gpudb::admin_repair_table_delete_chunks
          *                                      "admin_repair_table_delete_chunks":
-         *                                      Deletes any corrupted chunks
+         *                                      Deletes any corrupted chunks.
          *                                  <li>@ref
          *                                      gpudb::admin_repair_table_shrink_columns
          *                                      "admin_repair_table_shrink_columns":
          *                                      Shrinks corrupted chunks to the
-         *                                      shortest column
+         *                                      shortest column.
          *                                  <li>@ref
          *                                      gpudb::admin_repair_table_replay_wal
          *                                      "admin_repair_table_replay_wal":
          *                                      Manually invokes write-ahead
-         *                                      log (WAL) replay on the table
+         *                                      log (WAL) replay on the table.
+         *                                  <li>@ref
+         *                                      gpudb::admin_repair_table_alter_table
+         *                                      "admin_repair_table_alter_table":
+         *                                      Reset columns modification
+         *                                      after incomplete alter column.
          *                              </ul>
          *                          <li>@ref
          *                              gpudb::admin_repair_table_verify_all
@@ -81,8 +88,9 @@ namespace gpudb
          *                      </ul>
          *                      The default value is an empty map.
          */
-        AdminRepairTableRequest(const std::vector<std::string>& tableNames_, const std::map<std::string, std::string>& options_):
+        AdminRepairTableRequest(const std::vector<std::string>& tableNames_, const std::map<std::string, std::string>& tableTypes_, const std::map<std::string, std::string>& options_):
             tableNames( tableNames_ ),
+            tableTypes( tableTypes_ ),
             options( options_ )
         {
         }
@@ -91,6 +99,11 @@ namespace gpudb
          * List of tables to query. An asterisk returns all tables.
          */
         std::vector<std::string> tableNames;
+
+        /**
+         * ID of the type per table.
+         */
+        std::map<std::string, std::string> tableTypes;
 
         /**
          * Optional parameters.
@@ -102,13 +115,16 @@ namespace gpudb
          *         <ul>
          *             <li>@ref gpudb::admin_repair_table_delete_chunks
          *                 "admin_repair_table_delete_chunks": Deletes any
-         *                 corrupted chunks
+         *                 corrupted chunks.
          *             <li>@ref gpudb::admin_repair_table_shrink_columns
          *                 "admin_repair_table_shrink_columns": Shrinks
-         *                 corrupted chunks to the shortest column
+         *                 corrupted chunks to the shortest column.
          *             <li>@ref gpudb::admin_repair_table_replay_wal
          *                 "admin_repair_table_replay_wal": Manually invokes
-         *                 write-ahead log (WAL) replay on the table
+         *                 write-ahead log (WAL) replay on the table.
+         *             <li>@ref gpudb::admin_repair_table_alter_table
+         *                 "admin_repair_table_alter_table": Reset columns
+         *                 modification after incomplete alter column.
          *         </ul>
          *     <li>@ref gpudb::admin_repair_table_verify_all
          *         "admin_repair_table_verify_all": If @ref
@@ -139,6 +155,7 @@ namespace avro
         static void encode(Encoder& e, const gpudb::AdminRepairTableRequest& v)
         {
             ::avro::encode(e, v.tableNames);
+            ::avro::encode(e, v.tableTypes);
             ::avro::encode(e, v.options);
         }
 
@@ -157,6 +174,10 @@ namespace avro
                             break;
 
                         case 1:
+                            ::avro::decode(d, v.tableTypes);
+                            break;
+
+                        case 2:
                             ::avro::decode(d, v.options);
                             break;
 
@@ -168,6 +189,7 @@ namespace avro
             else
             {
                 ::avro::decode(d, v.tableNames);
+                ::avro::decode(d, v.tableTypes);
                 ::avro::decode(d, v.options);
             }
         }

@@ -12,8 +12,11 @@ namespace gpudb
      * A set of parameters for @ref
      * GPUdb::showBackup(const ShowBackupRequest&) const "GPUdb::showBackup".
      *
-     * Shows information about a backup
-     * Returns detailed information about one or more backup instances.
+     * Shows information about one or more <a
+     * href="../../../admin/backup_restore/#database-backup"
+     * target="_top">backups</a> accessible via the <a
+     * href="../../../concepts/data_sources/" target="_top">data source</a>
+     * specified by @ref datasourceName.
      */
     struct ShowBackupRequest
     {
@@ -30,34 +33,65 @@ namespace gpudb
         /**
          * Constructs a ShowBackupRequest object with the specified parameters.
          *
-         * @param[in] backupName_  Name of the backup object. An empty string
-         *                         or '*' will return all existing backups. The
-         *                         default value is ''.
-         * @param[in] datasourceName_  Datasource where backup is located.
+         * @param[in] backupName_  Name of the backup. An empty string or '*'
+         *                         will show all existing backups. Any text
+         *                         followed by a '*' will show backups whose
+         *                         name starts with that text. The default
+         *                         value is ''.
+         * @param[in] datasourceName_  Data source through which the backup is
+         *                             accessible.
          * @param[in] options_  Optional parameters.
          *                      <ul>
          *                          <li>@ref gpudb::show_backup_backup_id
-         *                              "show_backup_backup_id": Backup
-         *                              instance ID to show. Leave empty to
-         *                              show information from the most recent
-         *                              backup instance in the container. The
-         *                              default value is ''.
+         *                              "show_backup_backup_id": ID of the
+         *                              snapshot to show. Leave empty to show
+         *                              information from the most recent
+         *                              snapshot in the backup. The default
+         *                              value is ''.
+         *                          <li>@ref gpudb::show_backup_backup_type
+         *                              "show_backup_backup_type": Show backups
+         *                              by type. This option is ignored if @ref
+         *                              gpudb::show_backup_backup_id
+         *                              "backup_id" is non-empty.
+         *                              Supported values:
+         *                              <ul>
+         *                                  <li>@ref gpudb::show_backup_all
+         *                                      "show_backup_all": Show all
+         *                                      backup types.
+         *                                  <li>@ref gpudb::show_backup_full
+         *                                      "show_backup_full": Show full
+         *                                      backups only.
+         *                                  <li>@ref
+         *                                      gpudb::show_backup_incremental
+         *                                      "show_backup_incremental": Show
+         *                                      incremental backups only.
+         *                                  <li>@ref
+         *                                      gpudb::show_backup_differential
+         *                                      "show_backup_differential":
+         *                                      Show differential backups only.
+         *                              </ul>
+         *                              The default value is @ref
+         *                              gpudb::show_backup_all
+         *                              "show_backup_all".
          *                          <li>@ref gpudb::show_backup_show_contents
-         *                              "show_backup_show_contents": Shows the
-         *                              contents of the specified backup_id.
+         *                              "show_backup_show_contents": Show the
+         *                              contents of the backed-up snapshots.
          *                              Supported values:
          *                              <ul>
          *                                  <li>@ref gpudb::show_backup_none
-         *                                      "show_backup_none": No backup
-         *                                      contents
+         *                                      "show_backup_none": Don't show
+         *                                      snapshot contents.
          *                                  <li>@ref
          *                                      gpudb::show_backup_object_names
          *                                      "show_backup_object_names":
-         *                                      Object names only
+         *                                      Show backed-up object names,
+         *                                      and for tables, sizing detail.
          *                                  <li>@ref
          *                                      gpudb::show_backup_object_files
          *                                      "show_backup_object_files":
-         *                                      Object names and files
+         *                                      Show backed-up object names,
+         *                                      and for tables, sizing detail
+         *                                      and associated files.
          *                              </ul>
          *                              The default value is @ref
          *                              gpudb::show_backup_none
@@ -65,11 +99,8 @@ namespace gpudb
          *                          <li>@ref
          *                              gpudb::show_backup_no_error_if_not_exists
          *                              "show_backup_no_error_if_not_exists":
-         *                              If @ref gpudb::show_backup_false
-         *                              "false" will return an error if the
-         *                              provided @a backupName_ does not exist.
-         *                              If @ref gpudb::show_backup_true "true"
-         *                              then it will return an empty result.
+         *                              Whether or not to suppress the error if
+         *                              the specified backup does not exist.
          *                              Supported values:
          *                              <ul>
          *                                  <li>@ref gpudb::show_backup_true
@@ -91,13 +122,14 @@ namespace gpudb
         }
 
         /**
-         * Name of the backup object. An empty string or '*' will return all
-         * existing backups. The default value is ''.
+         * Name of the backup. An empty string or '*' will show all existing
+         * backups. Any text followed by a '*' will show backups whose name
+         * starts with that text. The default value is ''.
          */
         std::string backupName;
 
         /**
-         * Datasource where backup is located.
+         * Data source through which the backup is accessible.
          */
         std::string datasourceName;
 
@@ -105,29 +137,48 @@ namespace gpudb
          * Optional parameters.
          * <ul>
          *     <li>@ref gpudb::show_backup_backup_id "show_backup_backup_id":
-         *         Backup instance ID to show. Leave empty to show information
-         *         from the most recent backup instance in the container. The
-         *         default value is ''.
-         *     <li>@ref gpudb::show_backup_show_contents
-         *         "show_backup_show_contents": Shows the contents of the
-         *         specified backup_id.
+         *         ID of the snapshot to show. Leave empty to show information
+         *         from the most recent snapshot in the backup. The default
+         *         value is ''.
+         *     <li>@ref gpudb::show_backup_backup_type
+         *         "show_backup_backup_type": Show backups by type. This option
+         *         is ignored if @ref gpudb::show_backup_backup_id "backup_id"
+         *         is non-empty.
          *         Supported values:
          *         <ul>
-         *             <li>@ref gpudb::show_backup_none "show_backup_none": No
-         *                 backup contents
+         *             <li>@ref gpudb::show_backup_all "show_backup_all": Show
+         *                 all backup types.
+         *             <li>@ref gpudb::show_backup_full "show_backup_full":
+         *                 Show full backups only.
+         *             <li>@ref gpudb::show_backup_incremental
+         *                 "show_backup_incremental": Show incremental backups
+         *                 only.
+         *             <li>@ref gpudb::show_backup_differential
+         *                 "show_backup_differential": Show differential
+         *                 backups only.
+         *         </ul>
+         *         The default value is @ref gpudb::show_backup_all
+         *         "show_backup_all".
+         *     <li>@ref gpudb::show_backup_show_contents
+         *         "show_backup_show_contents": Show the contents of the
+         *         backed-up snapshots.
+         *         Supported values:
+         *         <ul>
+         *             <li>@ref gpudb::show_backup_none "show_backup_none":
+         *                 Don't show snapshot contents.
          *             <li>@ref gpudb::show_backup_object_names
-         *                 "show_backup_object_names": Object names only
+         *                 "show_backup_object_names": Show backed-up object
+         *                 names, and for tables, sizing detail.
          *             <li>@ref gpudb::show_backup_object_files
-         *                 "show_backup_object_files": Object names and files
+         *                 "show_backup_object_files": Show backed-up object
+         *                 names, and for tables, sizing detail and associated
+         *                 files.
          *         </ul>
          *         The default value is @ref gpudb::show_backup_none
          *         "show_backup_none".
          *     <li>@ref gpudb::show_backup_no_error_if_not_exists
-         *         "show_backup_no_error_if_not_exists": If @ref
-         *         gpudb::show_backup_false "false" will return an error if the
-         *         provided @ref backupName does not exist. If @ref
-         *         gpudb::show_backup_true "true" then it will return an empty
-         *         result.
+         *         "show_backup_no_error_if_not_exists": Whether or not to
+         *         suppress the error if the specified backup does not exist.
          *         Supported values:
          *         <ul>
          *             <li>@ref gpudb::show_backup_true "show_backup_true"
@@ -217,22 +268,29 @@ namespace gpudb
         std::string backupName;
 
         /**
-         * Backup description
+         * Details about the overall backup(s).
          */
         std::vector<std::map<std::string, std::string> > backupDescription;
 
         /**
-         * Backup instances in this backup
+         * Details about the individual snapshots contained within the
+         * backup(s).
          */
         std::vector<std::map<std::string, std::string> > backupIds;
 
         /**
-         * Backup contents
+         * When @ref gpudb::show_backup_show_contents "show_contents" is @ref
+         * gpudb::show_backup_object_names "object_names", the names of the
+         * backed-up objects as well as sizing detail of any backed-up tables;
+         * when @ref gpudb::show_backup_object_files "object_files", the names
+         * of the backed-up objects as well as sizing detail and associated
+         * data files of any backed-up tables.
          */
         std::vector<std::map<std::string, std::string> > backupContents;
 
         /**
-         * Backup instances that have been deleted from this backup object
+         * IDs of any snapshots that have been deleted from the containing
+         * backup(s).
          */
         std::vector<std::map<std::string, std::string> > deletedBackupIds;
 

@@ -117,23 +117,6 @@ namespace gpudb
          *                              "create_join_table_max_query_dimensions":
          *                              No longer used.
          *                          <li>@ref
-         *                              gpudb::create_join_table_optimize_lookups
-         *                              "create_join_table_optimize_lookups":
-         *                              Use more memory to speed up the joining
-         *                              of tables.
-         *                              Supported values:
-         *                              <ul>
-         *                                  <li>@ref
-         *                                      gpudb::create_join_table_true
-         *                                      "create_join_table_true"
-         *                                  <li>@ref
-         *                                      gpudb::create_join_table_false
-         *                                      "create_join_table_false"
-         *                              </ul>
-         *                              The default value is @ref
-         *                              gpudb::create_join_table_false
-         *                              "create_join_table_false".
-         *                          <li>@ref
          *                              gpudb::create_join_table_strategy_definition
          *                              "create_join_table_strategy_definition":
          *                              The <a
@@ -146,7 +129,7 @@ namespace gpudb
          *                              target="_top">TTL</a> of the join table
          *                              specified in @a joinTableName_.
          *                          <li>@ref gpudb::create_join_table_view_id
-         *                              "create_join_table_view_id": view this
+         *                              "create_join_table_view_id": View this
          *                              projection is part of. The default
          *                              value is ''.
          *                          <li>@ref gpudb::create_join_table_no_count
@@ -162,7 +145,7 @@ namespace gpudb
          *                              "create_join_table_chunk_size": Maximum
          *                              number of records per joined-chunk for
          *                              this table. Defaults to the gpudb.conf
-         *                              file chunk size
+         *                              file chunk size.
          *                          <li>@ref
          *                              gpudb::create_join_table_enable_virtual_chunking
          *                              "create_join_table_enable_virtual_chunking":
@@ -188,7 +171,7 @@ namespace gpudb
          *                          <li>@ref
          *                              gpudb::create_join_table_enable_sparse_virtual_chunking
          *                              "create_join_table_enable_sparse_virtual_chunking":
-         *                              materialize virtual chunks with only
+         *                              Materialize virtual chunks with only
          *                              non-deleted values. The default value
          *                              is 'false'.
          *                          <li>@ref
@@ -199,7 +182,7 @@ namespace gpudb
          *                              multichunk equi-join.  Reduces
          *                              computation but also reduces
          *                              parallelism to the number of chunks on
-         *                              the other side of the equi-join
+         *                              the other side of the equi-join.
          *                          <li>@ref
          *                              gpudb::create_join_table_enable_predicate_equi_join_lazy_result_store
          *                              "create_join_table_enable_predicate_equi_join_lazy_result_store":
@@ -208,12 +191,12 @@ namespace gpudb
          *                              multichunk predicate-equi-join. Reduces
          *                              computation but also reduces
          *                              parallelism to the number of chunks on
-         *                              the other side of the equi-join
+         *                              the other side of the equi-join.
          *                          <li>@ref
          *                              gpudb::create_join_table_enable_pk_equi_join
          *                              "create_join_table_enable_pk_equi_join":
          *                              Use equi-join to do primary key joins
-         *                              rather than using primary-key-index
+         *                              rather than using primary key index.
          *                      </ul>
          *                      The default value is an empty map.
          */
@@ -297,18 +280,6 @@ namespace gpudb
          *         value is ''.
          *     <li>@ref gpudb::create_join_table_max_query_dimensions
          *         "create_join_table_max_query_dimensions": No longer used.
-         *     <li>@ref gpudb::create_join_table_optimize_lookups
-         *         "create_join_table_optimize_lookups": Use more memory to
-         *         speed up the joining of tables.
-         *         Supported values:
-         *         <ul>
-         *             <li>@ref gpudb::create_join_table_true
-         *                 "create_join_table_true"
-         *             <li>@ref gpudb::create_join_table_false
-         *                 "create_join_table_false"
-         *         </ul>
-         *         The default value is @ref gpudb::create_join_table_false
-         *         "create_join_table_false".
          *     <li>@ref gpudb::create_join_table_strategy_definition
          *         "create_join_table_strategy_definition": The <a
          *         href="../../../rm/concepts/#tier-strategies"
@@ -319,7 +290,7 @@ namespace gpudb
          *         target="_top">TTL</a> of the join table specified in @ref
          *         joinTableName.
          *     <li>@ref gpudb::create_join_table_view_id
-         *         "create_join_table_view_id": view this projection is part
+         *         "create_join_table_view_id": View this projection is part
          *         of. The default value is ''.
          *     <li>@ref gpudb::create_join_table_no_count
          *         "create_join_table_no_count": Return a count of 0 for the
@@ -330,7 +301,7 @@ namespace gpudb
          *     <li>@ref gpudb::create_join_table_chunk_size
          *         "create_join_table_chunk_size": Maximum number of records
          *         per joined-chunk for this table. Defaults to the gpudb.conf
-         *         file chunk size
+         *         file chunk size.
          *     <li>@ref gpudb::create_join_table_enable_virtual_chunking
          *         "create_join_table_enable_virtual_chunking": Collect chunks
          *         with accumulated size less than chunk_size into a single
@@ -347,7 +318,7 @@ namespace gpudb
          *         otherwise enabled.
          *     <li>@ref gpudb::create_join_table_enable_sparse_virtual_chunking
          *         "create_join_table_enable_sparse_virtual_chunking":
-         *         materialize virtual chunks with only non-deleted values. The
+         *         Materialize virtual chunks with only non-deleted values. The
          *         default value is 'false'.
          *     <li>@ref
          *         gpudb::create_join_table_enable_equi_join_lazy_result_store
@@ -355,17 +326,17 @@ namespace gpudb
          *         Allow using the lazy result store to cache computation of
          *         one side of a multichunk equi-join.  Reduces computation but
          *         also reduces parallelism to the number of chunks on the
-         *         other side of the equi-join
+         *         other side of the equi-join.
          *     <li>@ref
          *         gpudb::create_join_table_enable_predicate_equi_join_lazy_result_store
          *         "create_join_table_enable_predicate_equi_join_lazy_result_store":
          *         Allow using the lazy result store to cache computation of
          *         one side of a multichunk predicate-equi-join. Reduces
          *         computation but also reduces parallelism to the number of
-         *         chunks on the other side of the equi-join
+         *         chunks on the other side of the equi-join.
          *     <li>@ref gpudb::create_join_table_enable_pk_equi_join
          *         "create_join_table_enable_pk_equi_join": Use equi-join to do
-         *         primary key joins rather than using primary-key-index
+         *         primary key joins rather than using primary key index.
          * </ul>
          * The default value is an empty map.
          */
@@ -469,7 +440,8 @@ namespace gpudb
          * <ul>
          *     <li>@ref gpudb::create_join_table_qualified_join_table_name
          *         "create_join_table_qualified_join_table_name": The fully
-         *         qualified name of the join table (i.e. including the schema)
+         *         qualified name of the join table (i.e. including the
+         *         schema).
          * </ul>
          * The default value is an empty map.
          */

@@ -60,7 +60,7 @@ namespace gpudb
          *                                map as the column name and the
          *                                action. For example:
          *                                [{'column_name':'col_1','action':'change_column','rename_column':'col_2'},{'column_name':'col_1','action':'add_column',
-         *                                'type':'int','default_value':'1'}]
+         *                                'type':'int','default_value':'1'}].
          * @param[in] options_  Optional parameters.
          */
         AlterTableColumnsRequest(const std::string& tableName_, const std::vector<std::map<std::string, std::string> >& columnAlterations_, const std::map<std::string, std::string>& options_):
@@ -85,7 +85,7 @@ namespace gpudb
          * options as in alter table requests but in the same map as the column
          * name and the action. For example:
          * [{'column_name':'col_1','action':'change_column','rename_column':'col_2'},{'column_name':'col_1','action':'add_column',
-         * 'type':'int','default_value':'1'}]
+         * 'type':'int','default_value':'1'}].
          */
         std::vector<std::map<std::string, std::string> > columnAlterations;
 
@@ -174,26 +174,26 @@ namespace gpudb
         std::string tableName;
 
         /**
-         * return the type_id (when changing a table, a new type may be
-         * created)
+         * Return the type_id (when changing a table, a new type may be
+         * created).
          */
         std::string typeId;
 
         /**
-         * return the type_definition  (when changing a table, a new type may
-         * be created)
+         * Return the type_definition  (when changing a table, a new type may
+         * be created).
          */
         std::string typeDefinition;
 
         /**
-         * return the type properties  (when changing a table, a new type may
-         * be created)
+         * Return the type properties  (when changing a table, a new type may
+         * be created).
          */
         std::map<std::string, std::vector<std::string> > properties;
 
         /**
-         * return the type label  (when changing a table, a new type may be
-         * created)
+         * Return the type label  (when changing a table, a new type may be
+         * created).
          */
         std::string label;
 
@@ -204,7 +204,7 @@ namespace gpudb
          * options as in alter table requests but in the same map as the column
          * name and the action. For example:
          * [{'column_name':'col_1','action':'change_column','rename_column':'col_2'},{'column_name':'col_1','action':'add_column',
-         * 'type':'int','default_value':'1'}]
+         * 'type':'int','default_value':'1'}].
          */
         std::vector<std::map<std::string, std::string> > columnAlterations;
 
